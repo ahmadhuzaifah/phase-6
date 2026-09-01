@@ -1,0 +1,368 @@
+---
+/**
+ * Al Rehman Garden Phase 2 Investment Guide — Authority SEO Hub
+ */
+
+import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
+import { CONTACTS } from '@data/contacts';
+
+const faqs = [
+  {
+    question: 'Is investing in Al Rehman Garden Phase 2 safe and profitable?',
+    answer: 'Yes. Al Rehman Garden Phase 2 is an LDA approved project with clear land titles, over 10 years of consistent delivery history, high rental yields from residing families, and annual capital appreciation averaging 18-25% along the Main Sharaqpur corridor.',
+  },
+  {
+    question: 'What property category gives the highest rental ROI in Phase 2?',
+    answer: 'Commercial Broadway plots (4 & 8 Marla in Block C and Main Boulevard) and double-story 5 Marla rental houses deliver strong rental returns, yielding between 6% to 9% annual rental yields.',
+  },
+  {
+    question: 'What is the minimum investment required to buy a plot in Phase 2?',
+    answer: 'Installment bookings start from PKR 250,000 down payment for 3 Marla residential plots, while cash possession plots start from PKR 24 to 28 Lakh.',
+  },
+];
+
+const faqSchema = {
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: f.answer,
+    },
+  })),
+};
+---
+
+<PageLayout
+  title="Al Rehman Garden Phase 2 Investment Guide 2026 — ROI, Capital Growth & Trends"
+  description="Expert real estate investment analysis for Al Rehman Garden Phase 2 Lahore. Explore historical capital appreciation, rental yield projections, commercial plot ROI, and market risks."
+>
+  <Schema type="FAQPage" data={faqSchema} />
+
+  <section class="auth-hero">
+    <div class="container">
+      <div class="eyebrow eyebrow--dark">Financial & ROI Analysis</div>
+      <h1 class="auth-hero__title">
+        Al Rehman Garden Phase 2 <span class="text-gradient-gold">Investment Guide</span>
+      </h1>
+      <p class="auth-hero__lead lead">
+        A strategic investment overview for overseas Pakistanis, long-term investors, and homebuyers evaluating capital gains and rental yields along Western Lahore’s growth corridor.
+      </p>
+      <div class="auth-meta-bar">
+        <span>📅 Last Updated: September 2026</span>
+        <span>🛡️ Source: Market Analytics & Society Historical Price Records</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="invest-grid">
+        <div class="invest-main">
+          <!-- Key Growth Drivers -->
+          <div class="invest-card">
+            <h2 class="invest-card__title">Core Capital Growth Drivers</h2>
+            <div class="growth-points">
+              <div class="growth-point">
+                <span class="growth-num">01</span>
+                <div>
+                  <strong>M-2 Motorway & Ring Road SL-3 Convergence</strong>
+                  <p>Direct connectivity to Faizpur Interchange allows signal-free travel across Lahore in 15-20 minutes, driving high residential influx.</p>
+                </div>
+              </div>
+              <div class="growth-point">
+                <span class="growth-num">02</span>
+                <div>
+                  <strong>100% On-Ground Inhabited Community</strong>
+                  <p>Unlike speculative paper housing schemes, Phase 2 is an active living town with thousands of residents, commercial markets, and active schools.</p>
+                </div>
+              </div>
+              <div class="growth-point">
+                <span class="growth-num">03</span>
+                <div>
+                  <strong>Affordable Price Entry Compared to Central Lahore</strong>
+                  <p>Plot prices in Phase 2 are 60-70% lower than comparable DHA or Gulberg developments, leaving significant room for capital appreciation.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Strategy Matrix -->
+          <div class="invest-card">
+            <h2 class="invest-card__title">Investment Strategy Recommendation</h2>
+            <div class="strategy-table-wrap">
+              <table class="strategy-table">
+                <thead>
+                  <tr>
+                    <th>Investor Goal</th>
+                    <th>Recommended Asset</th>
+                    <th>Horizon</th>
+                    <th>Target Return</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Capital Growth</strong></td>
+                    <td>Mirabel Block / Beverly Hills Plots</td>
+                    <td>2 - 3 Years</td>
+                    <td>40% - 65% Total ROI</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Rental Cashflow</strong></td>
+                    <td>5 Marla Double Story House (Block A/B)</td>
+                    <td>Immediate</td>
+                    <td>6% - 8% Annual Yield</td>
+                  </tr>
+                  <tr>
+                    <td><strong>High-Yield Commercial</strong></td>
+                    <td>4 Marla Broadway Plaza (Block C)</td>
+                    <td>3 - 5 Years</td>
+                    <td>8% - 10% Yield + Cap Gain</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Low Budget Entry</strong></td>
+                    <td>3 / 3.5 Marla Residential Plot (Block E)</td>
+                    <td>1 - 2 Years</td>
+                    <td>25% - 35% ROI</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <aside class="invest-sidebar">
+          <div class="invest-cta-box">
+            <div class="invest-cta-badge">Investor Advisory</div>
+            <h3 class="invest-cta-title">Custom Portfolio Consultation</h3>
+            <p class="invest-cta-text">
+              Speak directly with our investment analyst for personalized portfolio structuring, overseas Pakistanis documentation, and site visits.
+            </p>
+            <a
+              href={CONTACTS.whatsapp.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn--accent btn--full"
+            >
+              Book Investor Consultation
+            </a>
+            <a
+              href="/prices"
+              class="btn btn--outline btn--md btn--full"
+              style="margin-top: 10px;"
+            >
+              View Current Plot Rates
+            </a>
+          </div>
+        </aside>
+      </div>
+
+      <!-- FAQ Card -->
+      <div class="auth-faq-card" style="margin-top: 32px;">
+        <h2 class="auth-faq-card__title">Real Estate Investment FAQs</h2>
+        <div class="faq-list">
+          {faqs.map((f) => (
+            <div class="faq-item">
+              <h3 class="faq-item__q">Q: {f.question}</h3>
+              <p class="faq-item__a">{f.answer}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .auth-hero {
+    background: radial-gradient(circle at 80% 20%, #16244F 0%, #0A1128 75%);
+    color: var(--text-inverse);
+    padding: var(--space-12) 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  }
+
+  .auth-hero__title {
+    color: #FFFFFF;
+    margin: var(--space-2) 0 var(--space-3);
+  }
+
+  .auth-hero__lead {
+    color: var(--color-neutral-300);
+    max-width: 65ch;
+    margin: 0 0 var(--space-4);
+  }
+
+  .auth-meta-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    font-size: var(--text-xs);
+    color: #F3D375;
+  }
+
+  .invest-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  @media (min-width: 1024px) {
+    .invest-grid {
+      grid-template-columns: 1fr 340px;
+    }
+  }
+
+  .invest-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-card);
+    margin-bottom: var(--space-6);
+  }
+
+  .invest-card__title {
+    font-size: var(--text-xl);
+    margin: 0 0 var(--space-5);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .growth-points {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .growth-point {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    background: var(--color-neutral-50);
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .growth-num {
+    font-size: var(--text-xl);
+    font-weight: var(--font-extrabold);
+    color: var(--color-primary-600);
+    font-family: var(--font-heading);
+  }
+
+  .growth-point strong {
+    display: block;
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+    margin-bottom: 3px;
+  }
+
+  .growth-point p {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: var(--leading-normal);
+  }
+
+  .strategy-table-wrap {
+    overflow-x: auto;
+  }
+
+  .strategy-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+  }
+
+  .strategy-table th {
+    background-color: var(--color-secondary-900);
+    color: white;
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    text-align: left;
+  }
+
+  .strategy-table td {
+    padding: var(--space-3-5) var(--space-4);
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-secondary);
+  }
+
+  .invest-cta-box {
+    background: var(--bg-primary);
+    border: 1.5px solid var(--border-gold);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-xl);
+    position: sticky;
+    top: 96px;
+  }
+
+  .invest-cta-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: var(--font-extrabold);
+    text-transform: uppercase;
+    color: var(--color-secondary-950);
+    background: var(--gradient-gold);
+    padding: 2px 8px;
+    border-radius: var(--radius-xs);
+    margin-bottom: var(--space-3);
+  }
+
+  .invest-cta-title {
+    font-size: var(--text-lg);
+    margin: 0 0 var(--space-2);
+  }
+
+  .invest-cta-text {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-5);
+  }
+
+  .auth-faq-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-card);
+  }
+
+  .auth-faq-card__title {
+    font-size: var(--text-2xl);
+    margin: 0 0 var(--space-6);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .faq-item {
+    background: var(--color-neutral-50);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+  }
+
+  .faq-item__q {
+    font-size: var(--text-base);
+    color: var(--text-primary);
+    margin: 0 0 var(--space-2);
+  }
+
+  .faq-item__a {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: var(--leading-relaxed);
+  }
+</style>

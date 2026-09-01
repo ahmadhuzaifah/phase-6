@@ -1,0 +1,115 @@
+---
+/**
+ * PropertyWatermark.astro — Real Estate Authority Watermark Overlay
+ * Provides a security seal and copyright branding watermark on property images.
+ */
+
+interface Props {
+  position?: 'bottom-right' | 'bottom-left' | 'top-right' | 'center';
+  opacity?: number;
+  class?: string;
+}
+
+const {
+  position = 'bottom-right',
+  opacity = 0.85,
+  class: className,
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    'property-watermark',
+    `property-watermark--${position}`,
+    className,
+  ]}
+  style={`opacity: ${opacity};`}
+  aria-hidden="true"
+>
+  <div class="property-watermark__pill">
+    <!-- Mini Brand Shield -->
+    <svg class="property-watermark__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2 C16 2 20 5 20 10 C20 17 12 22 12 22 C12 22 4 17 4 10 C4 5 8 2 12 2 Z" fill="#0A1128" stroke="#D4AF37" stroke-width="1.5"/>
+      <path d="M8 15 L8 10 C8 7 16 7 16 10 L16 15" stroke="#D4AF37" stroke-width="1.2" stroke-linecap="round"/>
+      <circle cx="12" cy="12" r="1.2" fill="#D4AF37"/>
+    </svg>
+
+    <!-- Watermark Text -->
+    <div class="property-watermark__text">
+      <span class="property-watermark__brand">AL REHMAN GARDEN</span>
+      <span class="property-watermark__phase">PHASE 2 • LAHORE</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .property-watermark {
+    position: absolute;
+    z-index: 10;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .property-watermark--bottom-right {
+    bottom: var(--space-3);
+    right: var(--space-3);
+  }
+
+  .property-watermark--bottom-left {
+    bottom: var(--space-3);
+    left: var(--space-3);
+  }
+
+  .property-watermark--top-right {
+    top: var(--space-3);
+    right: var(--space-3);
+  }
+
+  .property-watermark--center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .property-watermark__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-1-5) var(--space-2-5);
+    background: rgba(10, 17, 40, 0.78);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  }
+
+  .property-watermark__icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  .property-watermark__text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+
+  .property-watermark__brand {
+    font-family: var(--font-body);
+    font-size: 8.5px;
+    font-weight: var(--font-extrabold);
+    color: #FFFFFF;
+    letter-spacing: 0.8px;
+  }
+
+  .property-watermark__phase {
+    font-family: var(--font-body);
+    font-size: 7px;
+    font-weight: var(--font-bold);
+    color: #E5C158;
+    letter-spacing: 0.6px;
+    margin-top: 1px;
+  }
+</style>

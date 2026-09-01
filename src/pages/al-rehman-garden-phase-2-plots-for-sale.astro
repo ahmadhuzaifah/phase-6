@@ -1,0 +1,115 @@
+---
+/**
+ * Al Rehman Garden Phase 2 Plots For Sale — High-Intent SEO Landing Page
+ */
+
+import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
+import PropertyCard from '@components/property/PropertyCard.astro';
+import Button from '@components/global/Button.astro';
+import { SITE } from '@data/site';
+import propertiesData from '@data/properties-import.json';
+
+// Filter plot listings
+const plotListings = propertiesData.filter((p) =>
+  p.propertyType.includes('plot')
+);
+
+const plotsSchema = {
+  name: 'Residential & Commercial Plots for Sale in Al Rehman Garden Phase 2 Lahore',
+  description: 'Verified 3, 5, 8, 10 Marla and 1 Kanal residential & commercial plots for sale in Al Rehman Garden Phase 2 on Main Sharaqpur Road.',
+  url: `${SITE.url}/al-rehman-garden-phase-2-plots-for-sale`,
+};
+---
+
+<PageLayout
+  title="Al Rehman Garden Phase 2 Plots for Sale Lahore — 3, 5, 10 Marla & 1 Kanal"
+  description="Explore verified residential and commercial plots for sale in Al Rehman Garden Phase 2 Lahore. Ready possession in Block A, B, C, D, E & Mirabel Block."
+>
+  <Schema type="WebSite" data={plotsSchema} />
+
+  <!-- Hero Header -->
+  <section class="seo-hero">
+    <div class="container">
+      <div class="eyebrow eyebrow--dark">Verified Plot Inventory</div>
+      <h1 class="seo-hero__title">
+        Plots for Sale in <span class="text-gradient-gold">Al Rehman Garden Phase 2</span>
+      </h1>
+      <p class="seo-hero__lead lead">
+        Find LDA approved residential plots (3, 5, 8, 10 Marla & 1 Kanal) and commercial plots on Main Sharaqpur Road with 100% on-ground development, ready possession, and underground utilities.
+      </p>
+    </div>
+  </section>
+
+  <!-- Plot Listings Grid -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-header-row">
+        <div>
+          <span class="eyebrow">On-Ground Availability</span>
+          <h2 class="section-header__title">Available Plot Listings</h2>
+        </div>
+        <Button href="/properties" variant="outline" size="sm">
+          All Properties & Filters →
+        </Button>
+      </div>
+
+      <div class="seo-plots-grid">
+        {plotListings.map((prop) => (
+          <PropertyCard
+            title={prop.title}
+            slug={prop.slug}
+            propertyType={prop.propertyType}
+            purpose={prop.purpose}
+            price={prop.price}
+            priceUnit={prop.priceUnit}
+            size={prop.size}
+            sizeUnit={prop.unit}
+            block={prop.block}
+            location={prop.location.address}
+            verificationStatus={prop.verificationStatus}
+            isFeatured={prop.isFeatured}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .seo-hero {
+    background: radial-gradient(circle at 80% 20%, #16244F 0%, #0A1128 75%);
+    color: var(--text-inverse);
+    padding: var(--space-12) 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  }
+
+  .seo-hero__title {
+    color: #FFFFFF;
+    margin: var(--space-2) 0 var(--space-3);
+  }
+
+  .seo-hero__lead {
+    color: var(--color-neutral-300);
+    max-width: 65ch;
+    margin: 0;
+  }
+
+  .seo-plots-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 640px) {
+    .seo-plots-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .seo-plots-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

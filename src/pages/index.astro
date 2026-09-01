@@ -1,0 +1,1864 @@
+---
+/**
+ * Homepage — Al Rehman Garden Phase 2 Lahore
+ * Premium Real Estate Authority Website Landing Page
+ */
+
+import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
+import Button from '@components/global/Button.astro';
+import PropertyCard from '@components/property/PropertyCard.astro';
+import BlockCard from '@components/blocks/BlockCard.astro';
+import { SITE } from '@data/site';
+import { CONTACTS } from '@data/contacts';
+import { BLOCKS } from '@data/blocks';
+import { AMENITIES } from '@data/amenities';
+
+const websiteSchema = {
+  name: SITE.name,
+  url: SITE.url,
+  description: SITE.description,
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: `${SITE.url}/properties?q={search_term_string}`,
+    'query-input': 'required name=search_term_string',
+  },
+};
+
+// Structured Preview Properties (Representative placeholders ready for Phase 3 database)
+const featuredProperties = [
+  {
+    title: '5 Marla Prime Residential Plot in Block A',
+    slug: '5-marla-residential-plot-block-a',
+    propertyType: 'Residential Plot',
+    purpose: 'sale',
+    price: 4500000,
+    size: '5',
+    sizeUnit: 'Marla',
+    block: 'Block A (Executive)',
+    verificationStatus: 'verified',
+    isFeatured: true,
+  },
+  {
+    title: '10 Marla Corner Plot on 60ft Wide Boulevard',
+    slug: '10-marla-corner-plot-block-b',
+    propertyType: 'Residential Plot',
+    purpose: 'sale',
+    price: 8500000,
+    size: '10',
+    sizeUnit: 'Marla',
+    block: 'Block B',
+    verificationStatus: 'verified',
+    isFeatured: true,
+  },
+  {
+    title: '4 Marla Main Commercial Plot in Sector C',
+    slug: '4-marla-commercial-plot-block-c',
+    propertyType: 'Commercial Plot',
+    purpose: 'sale',
+    price: 16500000,
+    size: '4',
+    sizeUnit: 'Marla',
+    block: 'Block C (Commercial)',
+    verificationStatus: 'verified',
+    isFeatured: true,
+  },
+  {
+    title: '3.5 Marla Affordable Residential Plot in Block E',
+    slug: '3-5-marla-residential-plot-block-e',
+    propertyType: 'Residential Plot',
+    purpose: 'sale',
+    price: 2850000,
+    size: '3.5',
+    sizeUnit: 'Marla',
+    block: 'Block E',
+    verificationStatus: 'verified',
+    isFeatured: false,
+  },
+  {
+    title: '1 Kanal Luxury Villa Plot in Mirabel Enclave',
+    slug: '1-kanal-luxury-plot-mirabel-block',
+    propertyType: 'Residential Plot',
+    purpose: 'sale',
+    price: 18000000,
+    size: '1',
+    sizeUnit: 'Kanal',
+    block: 'Mirabel Block',
+    verificationStatus: 'verified',
+    isFeatured: true,
+  },
+  {
+    title: '2 Marla Commercial Plaza Shop Front in Royal Block',
+    slug: '2-marla-commercial-shop-royal-block',
+    propertyType: 'Commercial Plot',
+    purpose: 'sale',
+    price: 7800000,
+    size: '2',
+    sizeUnit: 'Marla',
+    block: 'Royal Block',
+    verificationStatus: 'verified',
+    isFeatured: false,
+  },
+];
+
+// Connectivity Locations Matrix
+const travelConnectivity = [
+  { name: 'M-2 Motorway (Faizpur Interchange)', time: '2 Minutes', icon: '🛣️', note: 'Direct signal-free exit' },
+  { name: 'Mall Road & Lower Mall Lahore', time: '10 Minutes', icon: '🏛️', note: 'Via Sagian Bridge / Ring Road' },
+  { name: 'Thokar Niaz Baig Interchange', time: '12 Minutes', icon: '🚗', note: 'Via M-2 Motorway link' },
+  { name: 'District Courts & Civil Lines', time: '12 Minutes', icon: '⚖️', note: 'Fast central artery commute' },
+  { name: 'Lahore Ring Road Access', time: '5 Minutes', icon: '🔄', note: 'Connecting all Lahore sectors' },
+  { name: 'Allama Iqbal International Airport', time: '25 Minutes', icon: '✈️', note: 'Direct via Ring Road expressway' },
+];
+
+// FAQs
+const faqs = [
+  {
+    q: 'Is Al Rehman Garden Phase 2 approved by LDA?',
+    a: 'Yes, Al Rehman Garden Phase 2 is an authorized and legally compliant master-planned housing society with sanctioned NOC status from Lahore Development Authority (LDA) and relevant regulatory bodies, ensuring clear ownership titles.',
+  },
+  {
+    q: 'Where is Al Rehman Garden Phase 2 located in Lahore?',
+    a: 'Al Rehman Garden Phase 2 is strategically located on Main Sharaqpur Road, just 2 minutes drive from the M-2 Motorway (Faizpur Interchange) and 10 minutes from Mall Road and Lower Mall Lahore.',
+  },
+  {
+    q: 'Are plots available on cash and installment plans?',
+    a: 'Yes! Developed sectors (Block A, B, C, D, E, F) offer instant possession on full cash payments, while upcoming sectors (Mirabel Block, Royal Block, Beverly Hills) offer convenient 3-to-5 year flexible monthly installment plans.',
+  },
+  {
+    q: 'What amenities and underground utilities are operational?',
+    a: 'The society features 100% operational underground electricity, dedicated Sui gas connections, RO water filtration plants, 24/7 security with CCTV monitoring, 150ft main boulevards, Al-Rehman Hospital, schools, grand mosques, and lush family parks.',
+  },
+  {
+    q: 'How can I verify plot title and schedule a site visit?',
+    a: 'You can directly contact our official property advisory helpline or click the WhatsApp Inquiry button to verify plot numbers, check map locations, and book a guided on-ground site visit.',
+  },
+];
+---
+
+<PageLayout
+  title="Al Rehman Garden Phase 2 Lahore — Premium Real Estate & Property Authority"
+  description="Discover Al Rehman Garden Phase 2 Lahore on Main Sharaqpur Road near M2 Motorway. Explore LDA approved residential and commercial plots, block maps, current market prices, and flexible installment plans."
+>
+  <Schema type="WebSite" data={websiteSchema} />
+
+  <!-- ══════════════════════════════════════════════════════════════════════════
+       SECTION 1: HERO & PROPERTY QUICK FINDER
+       ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="hero" id="hero">
+    <div class="container hero__container">
+      <div class="hero__content">
+        <!-- Eyebrow Tag -->
+        <div class="eyebrow eyebrow--dark">
+          <span class="hero__pulse-dot"></span>
+          <span>Official Information & Property Portal</span>
+        </div>
+
+        <!-- Main Headline -->
+        <h1 class="hero__title">
+          Al Rehman Garden <br />
+          <span class="text-gradient-gold">Phase 2 Lahore</span>
+        </h1>
+
+        <!-- Value Proposition -->
+        <p class="hero__lead lead">
+          The premier master-planned housing community on <strong>Main Sharaqpur Road</strong>, just 2 minutes from <strong>M-2 Motorway Faizpur Interchange</strong>. Secure your dream home with 100% on-ground infrastructure, instant possession, and high-ROI investment potential.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="hero__actions">
+          <Button href="#properties-preview" variant="primary" size="lg">
+            Explore Plots & Properties
+          </Button>
+          <a
+            href={CONTACTS.whatsapp.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn--accent btn--lg"
+          >
+            <svg class="hero__btn-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/>
+            </svg>
+            <span>WhatsApp Advisory</span>
+          </a>
+        </div>
+
+        <!-- Quick Society Highlights Badges -->
+        <div class="hero__highlights">
+          <div class="hero__highlight-pill">
+            <span class="hero__highlight-icon">🏛️</span>
+            <span>LDA Approved</span>
+          </div>
+          <div class="hero__highlight-pill">
+            <span class="hero__highlight-icon">⚡</span>
+            <span>Underground Grid</span>
+          </div>
+          <div class="hero__highlight-pill">
+            <span class="hero__highlight-icon">🔑</span>
+            <span>Ready Possession</span>
+          </div>
+          <div class="hero__highlight-pill">
+            <span class="hero__highlight-icon">🛡️</span>
+            <span>24/7 Gated Security</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Property Finder Card -->
+      <div class="hero__finder-card">
+        <div class="finder-card__header">
+          <h2 class="finder-card__title">Find Plots & Properties</h2>
+          <p class="finder-card__subtitle">Instant search across all Phase 2 sectors</p>
+        </div>
+
+        <form class="finder-card__form" action="/properties" method="get">
+          <!-- Property Purpose -->
+          <div class="finder-card__group">
+            <label class="finder-card__label" for="hero-purpose">Purpose</label>
+            <select id="hero-purpose" name="purpose" class="finder-card__select">
+              <option value="sale" selected>For Sale (Buy Plot / House)</option>
+              <option value="rent">For Rent</option>
+              <option value="lease">Commercial Lease</option>
+            </select>
+          </div>
+
+          <!-- Property Type -->
+          <div class="finder-card__group">
+            <label class="finder-card__label" for="hero-type">Property Category</label>
+            <select id="hero-type" name="type" class="finder-card__select">
+              <option value="">All Categories</option>
+              <option value="residential" selected>Residential Plots</option>
+              <option value="commercial">Commercial Plots</option>
+              <option value="luxury-villas">Villas & Houses</option>
+            </select>
+          </div>
+
+          <!-- Plot Size -->
+          <div class="finder-card__group">
+            <label class="finder-card__label" for="hero-size">Plot Size</label>
+            <select id="hero-size" name="size" class="finder-card__select">
+              <option value="">Any Size</option>
+              <option value="3-marla">3 Marla</option>
+              <option value="5-marla" selected>5 Marla (Most Popular)</option>
+              <option value="7-marla">7 Marla</option>
+              <option value="10-marla">10 Marla</option>
+              <option value="1-kanal">1 Kanal</option>
+            </select>
+          </div>
+
+          <!-- Block -->
+          <div class="finder-card__group">
+            <label class="finder-card__label" for="hero-block">Block / Sector</label>
+            <select id="hero-block" name="block" class="finder-card__select">
+              <option value="">All Society Blocks</option>
+              {BLOCKS.map((b) => (
+                <option value={b.slug}>{b.name}</option>
+              ))}
+            </select>
+          </div>
+
+          <!-- Submit Action -->
+          <button type="submit" class="btn btn--primary btn--full finder-card__submit">
+            Search Available Plots →
+          </button>
+        </form>
+
+        <div class="finder-card__footer">
+          <span>Need custom assistance?</span>
+          <a href={CONTACTS.whatsapp.url} target="_blank" rel="noopener noreferrer">Ask Advisor on WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════════════════════
+       SECTION 2: PROJECT OVERVIEW & AUTHORITY METRICS
+       ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="section section--overview" id="overview">
+    <div class="container">
+      <!-- Section Header -->
+      <div class="section-header text-center">
+        <span class="eyebrow">Master Development Vision</span>
+        <h2 class="section-header__title">Why Al Rehman Garden Phase 2?</h2>
+        <p class="section-header__desc lead">
+          Setting the benchmark for secure, modern, and affordable luxury real estate in Lahore with complete civic amenities and unmatched connectivity.
+        </p>
+      </div>
+
+      <!-- Key Metrics Counters -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <span class="stat-number">15+</span>
+          <span class="stat-label">Master-Planned Blocks</span>
+          <p class="metric-card__desc">From executive sectors to luxury villa enclaves</p>
+        </div>
+        <div class="metric-card">
+          <span class="stat-number">5,000+</span>
+          <span class="stat-label">Residing Families</span>
+          <p class="metric-card__desc">Vibrant on-ground community with thriving lifestyle</p>
+        </div>
+        <div class="metric-card">
+          <span class="stat-number">150ft</span>
+          <span class="stat-label">Main Entrance Boulevard</span>
+          <p class="metric-card__desc">Signal-free wide network of carpeted roads</p>
+        </div>
+        <div class="metric-card">
+          <span class="stat-number">100%</span>
+          <span class="stat-label">Live Utilities</span>
+          <p class="metric-card__desc">Underground electricity, Sui gas & pure RO water</p>
+        </div>
+      </div>
+
+      <!-- Feature Grid -->
+      <div class="overview-features">
+        <div class="overview-feature">
+          <div class="overview-feature__icon">🏛️</div>
+          <h3 class="overview-feature__title">Approved & Clear Legal Title</h3>
+          <p class="overview-feature__text">
+            Peace of mind with LDA approval, prompt on-ground registries, and transparent society transfer procedures.
+          </p>
+        </div>
+        <div class="overview-feature">
+          <div class="overview-feature__icon">📍</div>
+          <h3 class="overview-feature__title">Unrivaled Strategic Location</h3>
+          <p class="overview-feature__text">
+            Directly connected to Main Sharaqpur Road and M2 Motorway, offering instant connectivity to all Lahore centers.
+          </p>
+        </div>
+        <div class="overview-feature">
+          <div class="overview-feature__icon">📈</div>
+          <h3 class="overview-feature__title">Exponential Capital Growth</h3>
+          <p class="overview-feature__text">
+            Consistently delivering high capital appreciation and strong rental yields due to rapid western Lahore expansion.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════════════════════
+       SECTION 3: STRATEGIC LOCATION & CONNECTIVITY
+       ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="section section--alt section--location" id="location">
+    <div class="container">
+      <div class="location-layout">
+        <!-- Location Info -->
+        <div class="location-info">
+          <span class="eyebrow">Prime Lahore Location</span>
+          <h2 class="location-info__title">Connected to Everything That Matters</h2>
+          <p class="location-info__text lead">
+            Situated on <strong>Main Sharaqpur Road</strong>, Al Rehman Garden Phase 2 provides frictionless travel to downtown Lahore, Thokar Niaz Baig, civil courts, and the international airport via the M-2 Motorway and Lahore Ring Road.
+          </p>
+
+          <div class="location-matrix">
+            {travelConnectivity.map((item) => (
+              <div class="location-matrix__item">
+                <span class="location-matrix__icon">{item.icon}</span>
+                <div class="location-matrix__details">
+                  <div class="location-matrix__name-row">
+                    <strong class="location-matrix__name">{item.name}</strong>
+                    <span class="location-matrix__time">{item.time}</span>
+                  </div>
+                  <span class="location-matrix__note">{item.note}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div class="location-actions">
+            <Button href="/map" variant="primary" size="md">
+              Explore Interactive Society Map
+            </Button>
+            <a
+              href="https://maps.google.com/?q=Al+Rehman+Garden+Phase+2+Lahore"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn--outline btn--md"
+            >
+              Get Google Maps Directions ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- Location Map Visual Showcase -->
+        <div class="location-visual">
+          <div class="location-card">
+            <div class="location-card__map-preview">
+              <div class="location-card__pin-badge">
+                <span class="location-card__pin-icon">📍</span>
+                <div>
+                  <strong>Al Rehman Garden Phase 2</strong>
+                  <span>Main Sharaqpur Road, Lahore</span>
+                </div>
+              </div>
+              <div class="location-card__coordinates">
+                31.5768° N, 74.2254° E • Near M2 Faizpur Interchange
+              </div>
+            </div>
+            <div class="location-card__info-strip">
+              <div class="location-card__stat">
+                <span class="location-card__stat-val">2 Min</span>
+                <span class="location-card__stat-lbl">M2 Motorway</span>
+              </div>
+              <div class="location-card__stat">
+                <span class="location-card__stat-val">10 Min</span>
+                <span class="location-card__stat-lbl">Mall Road</span>
+              </div>
+              <div class="location-card__stat">
+                <span class="location-card__stat-val">5 Min</span>
+                <span class="location-card__stat-lbl">Ring Road</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════════════════════
+       SECTION 4: MASTER-PLANNED BLOCKS SHOWCASE
+       ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="section" id="blocks">
+    <div class="container">
+      <div class="section-header-row">
+        <div>
+          <span class="eyebrow">Society Masterplan</span>
+          <h2 class="section-header__title">Explore Society Blocks & Sectors</h2>
+          <p class="section-header__desc">
+            Discover developed blocks with ready possession and high-potential sectors under fast-track development.
+          </p>
+        </div>
+        <Button href="/blocks" variant="outline" size="sm">
+          View All Blocks →
+        </Button>
+      </div>
+
+      <!-- Blocks Grid -->
+      <div class="blocks-grid">
+        {BLOCKS.slice(0, 6).map((block) => (
+          <BlockCard
+            name={block.name}
+            slug={block.slug}
+            category={block.category}
+            status={block.status}
+            possessionPercentage={block.possessionPercentage}
+            description={block.description}
+            plotSizes={block.plotSizes}
+            features={block.features}
+            locationHighlight={block.locationHighlight}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════════════════════
+       SECTION 5: FEATURED PROPERTIES & PLOTS PREVIEW
+       ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="section section--alt" id="properties-preview">
+    <div class="container">
+      <div class="section-header-row">
+        <div>
+          <span class="eyebrow">Verified Inventory</span>
+          <h2 class="section-header__title">Latest Available Plots for Sale</h2>
+          <p class="section-header__desc">
+            Hand-picked residential & commercial options with verified status and competitive market pricing.
+          </p>
+        </div>
+        <Button href="/properties" variant="primary" size="sm">
+          Browse All Properties →
+        </Button>
+      </div>
+
+      <!-- Property Cards Grid -->
+      <div class="properties-grid">
+        {featuredProperties.map((prop) => (
+          <PropertyCard
+            title={prop.title}
+            slug={prop.slug}
+            propertyType={prop.propertyType}
+            purpose={prop.purpose}
+            price={prop.price}
+            size={prop.size}
+            sizeUnit={prop.sizeUnit}
+            block={prop.block}
+            verificationStatus={prop.verificationStatus}
+            isFeatured={prop.isFeatured}
+          />
+        ))}
+      </div>
+
+      <!-- Bottom Category Shortcut Pills -->
+      <div class="plot-categories-strip">
+        <span class="plot-categories__label">Quick Browse by Plot Size:</span>
+        <div class="plot-categories__pills">
+          <a href="/plots?size=3-marla" class="plot-cat-pill">3 Marla Plots</a>
+          <a href="/plots?size=5-marla" class="plot-cat-pill plot-cat-pill--featured">5 Marla Plots</a>
+          <a href="/plots?size=8-marla" class="plot-cat-pill">8 Marla Plots</a>
+          <a href="/plots?size=10-marla" class="plot-cat-pill">10 Marla Plots</a>
+          <a href="/plots?size=1-kanal" class="plot-cat-pill">1 Kanal Plots</a>
+          <a href="/properties?type=commercial" class="plot-cat-pill plot-cat-pill--comm">Commercial Plots</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════════════════════
+       SECTION 6: INVESTMENT OPPORTUNITY & HIGH ROI
+       ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="section section--dark section--investment" id="investment">
+    <div class="container">
+      <div class="investment-grid">
+        <div class="investment-content">
+          <span class="eyebrow eyebrow--dark">High-ROI Real Estate</span>
+          <h2 class="investment-title">Why Smart Investors Choose Al Rehman Garden Phase 2</h2>
+          <p class="investment-lead lead">
+            Lahore's urban growth is expanding aggressively toward the Western M2 corridor. Al Rehman Garden Phase 2 stands out as the highest-yielding asset class with guaranteed infrastructure, LDA compliance, and rapid population density.
+          </p>
+
+          <div class="investment-points">
+            <div class="investment-point">
+              <span class="investment-point__badge">01</span>
+              <div>
+                <h3 class="investment-point__title">High Capital Appreciation</h3>
+                <p class="investment-point__desc">Historical values have appreciated over 35-45% across developed sectors over the last 36 months.</p>
+              </div>
+            </div>
+            <div class="investment-point">
+              <span class="investment-point__badge">02</span>
+              <div>
+                <h3 class="investment-point__title">Instant Rental Returns</h3>
+                <p class="investment-point__desc">Ready-to-build possession lets you construct rental homes or commercial retail plazas immediately.</p>
+              </div>
+            </div>
+            <div class="investment-point">
+              <span class="investment-point__badge">03</span>
+              <div>
+                <h3 class="investment-point__title">Safe & Clear Registration</h3>
+                <p class="investment-point__desc">Clear title allotment without litigation risks or delayed infrastructure promises.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="investment-cta">
+            <Button href="/prices" variant="primary" size="md">
+              View Plot Price Rate Lists
+            </Button>
+            <a
+              href={CONTACTS.whatsapp.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn--glass btn--md"
+            >
+              Get Investor Consultation ↗
+            </a>
+          </div>
+        </div>
+
+        <div class="investment-stat-box">
+          <div class="stat-highlight-card">
+            <div class="stat-highlight-card__badge">ARG Phase 2 ROI Index</div>
+            <div class="stat-highlight-card__big-stat">+40%</div>
+            <div class="stat-highlight-card__sub">Average 3-Year Capital Gain</div>
+            <hr class="stat-highlight-card__hr" />
+            <ul class="stat-highlight-card__list">
+              <li><span>Plot Possession:</span> <strong>Immediate on Cash</strong></li>
+              <li><span>Installment Duration:</span> <strong>3 to 5 Years</strong></li>
+              <li><span>Commercial Returns:</span> <strong>8 - 12% Annual Yield</strong></li>
+              <li><span>Transfer Office:</span> <strong>On-Site Verified</strong></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════════════════════
+       SECTION 7: WORLD-CLASS AMENITIES & INFRASTRUCTURE
+       ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="section" id="amenities">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="eyebrow">Lifestyle & Infrastructure</span>
+        <h2 class="section-header__title">Complete Modern Living Infrastructure</h2>
+        <p class="section-header__desc lead">
+          Everything your family needs for an upscale, secure, and serene living experience inside society gates.
+        </p>
+      </div>
+
+      <div class="amenities-grid">
+        {AMENITIES.map((item) => (
+          <div class="amenity-card">
+            <div class="amenity-card__icon-wrap">
+              <span class="amenity-card__icon">{item.icon}</span>
+            </div>
+            <h3 class="amenity-card__title">{item.name}</h3>
+            <span class="amenity-card__highlight">{item.highlight}</span>
+            <p class="amenity-card__desc">{item.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════════════════════
+       SECTION 8: PAYMENT PLANS & PRICING PREVIEW
+       ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="section section--alt" id="payment-plans">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="eyebrow">Transparent Pricing</span>
+        <h2 class="section-header__title">Flexible Payment Plans & Plot Rates</h2>
+        <p class="section-header__desc lead">
+          Clear, upfront pricing with easy installment options tailored for homeowners and real estate investors.
+        </p>
+      </div>
+
+      <div class="pricing-preview-grid">
+        <!-- Plan 1: 3 Marla Residential -->
+        <div class="plan-card">
+          <div class="plan-card__header">
+            <span class="plan-card__tag">Budget Starter</span>
+            <h3 class="plan-card__size">3 Marla Plot</h3>
+            <span class="plan-card__type">Residential Plot</span>
+          </div>
+          <div class="plan-card__price">
+            <span class="plan-card__from">Starting From</span>
+            <div class="price price-md">PKR 24 - 30 Lakh</div>
+          </div>
+          <ul class="plan-card__features">
+            <li>✓ Ideal for small families</li>
+            <li>✓ Possession ready in Block B, D, E</li>
+            <li>✓ Underground electricity & gas</li>
+            <li>✓ High rental demand zone</li>
+          </ul>
+          <div class="plan-card__action">
+            <Button href="/prices" variant="secondary" size="sm" fullWidth>
+              View Detailed Rates
+            </Button>
+          </div>
+        </div>
+
+        <!-- Plan 2: 5 Marla (Featured) -->
+        <div class="plan-card plan-card--featured">
+          <div class="plan-card__ribbon">Most Popular</div>
+          <div class="plan-card__header">
+            <span class="plan-card__tag">Prime Choice</span>
+            <h3 class="plan-card__size">5 Marla Plot</h3>
+            <span class="plan-card__type">Residential Plot</span>
+          </div>
+          <div class="plan-card__price">
+            <span class="plan-card__from">Starting From</span>
+            <div class="price price-lg text-gradient-gold">PKR 40 - 55 Lakh</div>
+          </div>
+          <ul class="plan-card__features">
+            <li>✓ Standard luxury family house size</li>
+            <li>✓ Available in Block A, B, C, D, Mirabel</li>
+            <li>✓ Installment options available</li>
+            <li>✓ Immediate construction approved</li>
+          </ul>
+          <div class="plan-card__action">
+            <Button href="/prices" variant="primary" size="md" fullWidth>
+              Get Payment Plan Details
+            </Button>
+          </div>
+        </div>
+
+        <!-- Plan 3: 10 Marla / 1 Kanal -->
+        <div class="plan-card">
+          <div class="plan-card__header">
+            <span class="plan-card__tag">Executive Luxury</span>
+            <h3 class="plan-card__size">10 Marla & 1 Kanal</h3>
+            <span class="plan-card__type">Executive Villa Plots</span>
+          </div>
+          <div class="plan-card__price">
+            <span class="plan-card__from">Starting From</span>
+            <div class="price price-md">PKR 75 Lakh - 1.8 Cr</div>
+          </div>
+          <ul class="plan-card__features">
+            <li>✓ Boulevard & park facing options</li>
+            <li>✓ Executive Blocks A & Mirabel Enclave</li>
+            <li>✓ 100% on-ground ready possession</li>
+            <li>✓ Custom luxury villa architecture</li>
+          </ul>
+          <div class="plan-card__action">
+            <Button href="/prices" variant="secondary" size="sm" fullWidth>
+              View Detailed Rates
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════════════════════
+       SECTION 9: FREQUENTLY ASKED QUESTIONS (FAQ)
+       ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="section" id="faqs">
+    <div class="container container--narrow">
+      <div class="section-header text-center">
+        <span class="eyebrow">Buyer Knowledge Base</span>
+        <h2 class="section-header__title">Frequently Asked Questions</h2>
+        <p class="section-header__desc">
+          Key answers regarding legality, plot possession, utilities, and transfer procedures in Al Rehman Garden Phase 2.
+        </p>
+      </div>
+
+      <div class="faq-accordion">
+        {faqs.map((faq, idx) => (
+          <details class="faq-item" open={idx === 0}>
+            <summary class="faq-question">
+              <span>{faq.q}</span>
+              <span class="faq-toggle-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+              <p>{faq.a}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════════════════════
+       SECTION 10: LEAD GENERATION & CONVERSION CTA
+       ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="section section--dark cta-section" id="contact-advisory">
+    <div class="container">
+      <div class="cta-banner">
+        <div class="cta-banner__content">
+          <span class="eyebrow eyebrow--dark">Official Real Estate Helpdesk</span>
+          <h2 class="cta-banner__title">
+            Ready to Secure Your Plot in Al Rehman Garden Phase 2?
+          </h2>
+          <p class="cta-banner__text lead">
+            Connect with authorized property specialists for verified plot availability, rate comparisons, map coordinates, and on-site visits.
+          </p>
+
+          <div class="cta-banner__contacts">
+            <div class="cta-contact-item">
+              <span class="cta-contact-icon">📞</span>
+              <div>
+                <span class="cta-contact-label">Helpline</span>
+                <a href={`tel:${CONTACTS.phone.primary}`} class="cta-contact-val">{CONTACTS.phone.display}</a>
+              </div>
+            </div>
+            <div class="cta-contact-item">
+              <span class="cta-contact-icon">📍</span>
+              <div>
+                <span class="cta-contact-label">Site Office</span>
+                <span class="cta-contact-val">{CONTACTS.address.short}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Inquiry Action Box -->
+        <div class="cta-banner__box">
+          <h3 class="cta-box__title">Instant WhatsApp Advisory</h3>
+          <p class="cta-box__desc">Get live rate lists, payment schedules, and verified plot numbers sent directly to your WhatsApp.</p>
+          
+          <a
+            href={CONTACTS.whatsapp.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn--accent btn--lg btn--full"
+          >
+            <svg class="hero__btn-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/>
+            </svg>
+            <span>Start WhatsApp Chat Now</span>
+          </a>
+
+          <div class="cta-box__footer">
+            <span>✓ Verified Response within 5 Minutes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  /* ══════════════════════════════════════════════════════════════════════════
+     HERO SECTION
+     ══════════════════════════════════════════════════════════════════════════ */
+  .hero {
+    position: relative;
+    background: radial-gradient(circle at 80% 20%, #16244F 0%, #0A1128 70%);
+    color: var(--text-inverse);
+    padding: var(--space-12) 0 var(--space-20);
+    overflow: hidden;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+      radial-gradient(rgba(212, 175, 55, 0.08) 1px, transparent 1px);
+    background-size: 32px 32px;
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  .hero__container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  @media (min-width: 1024px) {
+    .hero__container {
+      grid-template-columns: 1.25fr 0.95fr;
+      gap: var(--space-12);
+    }
+  }
+
+  .hero__pulse-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #10B981;
+    border-radius: var(--radius-full);
+    box-shadow: 0 0 8px #10B981;
+    display: inline-block;
+  }
+
+  .hero__title {
+    color: #FFFFFF;
+    margin: var(--space-2) 0 var(--space-4);
+  }
+
+  .hero__lead {
+    color: var(--color-neutral-300);
+    margin-bottom: var(--space-8);
+    max-width: 58ch;
+  }
+
+  .hero__lead strong {
+    color: #FFFFFF;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
+  }
+
+  .hero__btn-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .hero__highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .hero__highlight-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+    font-weight: var(--font-bold);
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: var(--space-1-5) var(--space-3);
+    border-radius: var(--radius-full);
+    color: var(--color-neutral-200);
+  }
+
+  .hero__highlight-icon {
+    font-size: 14px;
+  }
+
+  /* ── Hero Finder Card ───────────────────────────────────────────── */
+  .hero__finder-card {
+    background: rgba(16, 31, 68, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1.5px solid rgba(212, 175, 55, 0.35);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 24px rgba(197, 155, 39, 0.15);
+  }
+
+  .finder-card__header {
+    margin-bottom: var(--space-6);
+  }
+
+  .finder-card__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-2xl);
+    color: #FFFFFF;
+    margin: 0 0 var(--space-1);
+  }
+
+  .finder-card__subtitle {
+    font-size: var(--text-xs);
+    color: #F3D375;
+    margin: 0;
+  }
+
+  .finder-card__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .finder-card__group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1-5);
+  }
+
+  .finder-card__label {
+    font-size: var(--text-xs);
+    font-weight: var(--font-bold);
+    color: var(--color-neutral-300);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .finder-card__select {
+    width: 100%;
+    padding: var(--space-3) var(--space-3-5);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    border-radius: var(--radius-md);
+    background-color: rgba(10, 17, 40, 0.95);
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all var(--transition-fast);
+  }
+
+  .finder-card__select:focus {
+    border-color: #D4AF37;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.25);
+  }
+
+  .finder-card__submit {
+    margin-top: var(--space-2);
+  }
+
+  .finder-card__footer {
+    margin-top: var(--space-4);
+    padding-top: var(--space-4);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: var(--text-xs);
+    color: var(--color-neutral-400);
+  }
+
+  .finder-card__footer a {
+    color: #34D399;
+    font-weight: var(--font-bold);
+    text-decoration: underline;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     GENERAL SECTIONS & HEADERS
+     ══════════════════════════════════════════════════════════════════════════ */
+  .section {
+    padding: var(--space-20) 0;
+  }
+
+  .section--alt {
+    background-color: var(--bg-secondary);
+  }
+
+  .section--dark {
+    background-color: var(--color-secondary-950);
+    color: var(--text-inverse);
+  }
+
+  .container--narrow {
+    max-width: 860px;
+  }
+
+  .section-header {
+    margin-bottom: var(--space-12);
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .section-header__title {
+    margin: var(--space-2) 0 var(--space-3);
+  }
+
+  .section-header__desc {
+    max-width: 65ch;
+    margin: 0 auto;
+    color: var(--text-secondary);
+  }
+
+  .section-header-row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-bottom: var(--space-10);
+  }
+
+  @media (min-width: 768px) {
+    .section-header-row {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     SECTION 2: METRICS COUNTERS & OVERVIEW
+     ══════════════════════════════════════════════════════════════════════════ */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
+    margin-bottom: var(--space-16);
+  }
+
+  @media (min-width: 1024px) {
+    .metrics-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .metric-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-card);
+    text-align: center;
+    transition: all var(--transition-base);
+  }
+
+  .metric-card:hover {
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--color-primary-400);
+    transform: translateY(-3px);
+  }
+
+  .metric-card__desc {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    margin: var(--space-2) 0 0;
+  }
+
+  .overview-features {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  @media (min-width: 768px) {
+    .overview-features {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .overview-feature {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    transition: all var(--transition-base);
+  }
+
+  .overview-feature:hover {
+    background: var(--bg-primary);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-primary-300);
+  }
+
+  .overview-feature__icon {
+    font-size: 36px;
+    margin-bottom: var(--space-4);
+  }
+
+  .overview-feature__title {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-2);
+  }
+
+  .overview-feature__text {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     SECTION 3: LOCATION & CONNECTIVITY
+     ══════════════════════════════════════════════════════════════════════════ */
+  .location-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .location-layout {
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: var(--space-12);
+    }
+  }
+
+  .location-info__title {
+    margin: var(--space-2) 0 var(--space-4);
+  }
+
+  .location-info__text {
+    margin-bottom: var(--space-6);
+  }
+
+  .location-matrix {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+    margin-bottom: var(--space-8);
+  }
+
+  @media (min-width: 640px) {
+    .location-matrix {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .location-matrix__item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    background: var(--bg-primary);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-light);
+  }
+
+  .location-matrix__icon {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .location-matrix__details {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .location-matrix__name-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+
+  .location-matrix__name {
+    font-size: var(--text-xs);
+    color: var(--text-primary);
+  }
+
+  .location-matrix__time {
+    font-size: 11px;
+    font-weight: var(--font-extrabold);
+    color: var(--color-primary-700);
+    background: var(--color-primary-50);
+    padding: 1px 6px;
+    border-radius: var(--radius-xs);
+  }
+
+  .location-matrix__note {
+    font-size: 10.5px;
+    color: var(--text-muted);
+  }
+
+  .location-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  /* Location Card Visual */
+  .location-card {
+    background: var(--color-secondary-900);
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .location-card__map-preview {
+    aspect-ratio: 16 / 11;
+    background: linear-gradient(135deg, #182F63 0%, #0A1128 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-6);
+    text-align: center;
+    position: relative;
+  }
+
+  .location-card__pin-badge {
+    background: rgba(10, 17, 40, 0.9);
+    border: 1.5px solid #D4AF37;
+    border-radius: var(--radius-xl);
+    padding: var(--space-3) var(--space-5);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: white;
+    margin-bottom: var(--space-3);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
+
+  .location-card__pin-icon {
+    font-size: 24px;
+  }
+
+  .location-card__pin-badge strong {
+    display: block;
+    font-size: var(--text-sm);
+    color: #FFFFFF;
+  }
+
+  .location-card__pin-badge span {
+    font-size: var(--text-xs);
+    color: #F3D375;
+  }
+
+  .location-card__coordinates {
+    font-size: var(--text-xs);
+    color: var(--color-neutral-400);
+    font-family: var(--font-mono);
+  }
+
+  .location-card__info-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background: #060B1C;
+    padding: var(--space-4);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    text-align: center;
+  }
+
+  .location-card__stat-val {
+    display: block;
+    font-size: var(--text-lg);
+    font-weight: var(--font-extrabold);
+    color: #D4AF37;
+  }
+
+  .location-card__stat-lbl {
+    font-size: 11px;
+    color: var(--color-neutral-400);
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     SECTION 4: BLOCKS & PROPERTIES GRIDS
+     ══════════════════════════════════════════════════════════════════════════ */
+  .blocks-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 768px) {
+    .blocks-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .blocks-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .properties-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    margin-bottom: var(--space-10);
+  }
+
+  @media (min-width: 640px) {
+    .properties-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .properties-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* Plot Categories Strip */
+  .plot-categories-strip {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    padding: var(--space-5) var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  @media (min-width: 768px) {
+    .plot-categories-strip {
+      flex-direction: row;
+    }
+  }
+
+  .plot-categories__label {
+    font-size: var(--text-xs);
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+  }
+
+  .plot-categories__pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .plot-cat-pill {
+    padding: var(--space-1-5) var(--space-3);
+    font-size: var(--text-xs);
+    font-weight: var(--font-bold);
+    background-color: var(--color-neutral-100);
+    color: var(--color-secondary-900);
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+
+  .plot-cat-pill:hover {
+    background-color: var(--color-primary-500);
+    color: white;
+    transform: translateY(-1px);
+  }
+
+  .plot-cat-pill--featured {
+    background-color: var(--color-primary-50);
+    color: var(--color-primary-800);
+    border: 1px solid var(--border-gold);
+  }
+
+  .plot-cat-pill--comm {
+    background-color: #ECFDF5;
+    color: #065F46;
+    border: 1px solid #A7F3D0;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     SECTION 6: INVESTMENT SECTION
+     ══════════════════════════════════════════════════════════════════════════ */
+  .section--investment {
+    background: radial-gradient(circle at 20% 30%, #182F63 0%, #0A1128 75%);
+    border-top: 1px solid rgba(212, 175, 55, 0.2);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  }
+
+  .investment-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .investment-grid {
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: var(--space-12);
+    }
+  }
+
+  .investment-title {
+    color: #FFFFFF;
+    margin: var(--space-2) 0 var(--space-4);
+  }
+
+  .investment-lead {
+    color: var(--color-neutral-300);
+    margin-bottom: var(--space-8);
+  }
+
+  .investment-points {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    margin-bottom: var(--space-8);
+  }
+
+  .investment-point {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+
+  .investment-point__badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-full);
+    background: rgba(212, 175, 55, 0.15);
+    color: #F3D375;
+    font-family: var(--font-heading);
+    font-weight: var(--font-bold);
+    font-size: var(--text-sm);
+    flex-shrink: 0;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+  }
+
+  .investment-point__title {
+    font-size: var(--text-base);
+    color: #FFFFFF;
+    margin: 0 0 2px;
+  }
+
+  .investment-point__desc {
+    font-size: var(--text-xs);
+    color: var(--color-neutral-400);
+    margin: 0;
+  }
+
+  .investment-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  /* Stat Box */
+  .stat-highlight-card {
+    background: rgba(16, 31, 68, 0.9);
+    backdrop-filter: blur(14px);
+    border: 1.5px solid rgba(212, 175, 55, 0.45);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    text-align: center;
+  }
+
+  .stat-highlight-card__badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: var(--font-bold);
+    color: #F3D375;
+    background: rgba(212, 175, 55, 0.12);
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+    letter-spacing: 0.5px;
+    margin-bottom: var(--space-3);
+  }
+
+  .stat-highlight-card__big-stat {
+    font-family: var(--font-heading);
+    font-size: 4rem;
+    font-weight: var(--font-black);
+    color: #E5C158;
+    line-height: 1;
+    margin-bottom: var(--space-1);
+  }
+
+  .stat-highlight-card__sub {
+    font-size: var(--text-sm);
+    font-weight: var(--font-bold);
+    color: #FFFFFF;
+  }
+
+  .stat-highlight-card__hr {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: var(--space-6) 0;
+  }
+
+  .stat-highlight-card__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    text-align: left;
+    font-size: var(--text-xs);
+  }
+
+  .stat-highlight-card__list li {
+    display: flex;
+    justify-content: space-between;
+    color: var(--color-neutral-300);
+  }
+
+  .stat-highlight-card__list strong {
+    color: #F3D375;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     SECTION 7: AMENITIES GRID
+     ══════════════════════════════════════════════════════════════════════════ */
+  .amenities-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 640px) {
+    .amenities-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .amenities-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .amenity-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-card);
+    transition: all var(--transition-base);
+  }
+
+  .amenity-card:hover {
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--color-primary-400);
+    transform: translateY(-3px);
+  }
+
+  .amenity-card__icon-wrap {
+    width: 50px;
+    height: 50px;
+    background: var(--color-primary-50);
+    border: 1px solid var(--border-gold);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-4);
+  }
+
+  .amenity-card__icon {
+    font-size: 24px;
+  }
+
+  .amenity-card__title {
+    font-size: var(--text-base);
+    margin: 0 0 var(--space-1);
+  }
+
+  .amenity-card__highlight {
+    display: block;
+    font-size: 11px;
+    font-weight: var(--font-bold);
+    color: var(--color-primary-700);
+    margin-bottom: var(--space-2);
+  }
+
+  .amenity-card__desc {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: var(--leading-normal);
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     SECTION 8: PAYMENT PLANS & PRICING
+     ══════════════════════════════════════════════════════════════════════════ */
+  .pricing-preview-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 1024px) {
+    .pricing-preview-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .plan-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all var(--transition-base);
+  }
+
+  .plan-card:hover {
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--color-primary-400);
+    transform: translateY(-4px);
+  }
+
+  .plan-card--featured {
+    border: 2px solid #D4AF37;
+    background: linear-gradient(180deg, #FFFFFF 0%, #FCF9EE 100%);
+    box-shadow: 0 12px 32px rgba(197, 155, 39, 0.2);
+  }
+
+  .plan-card__ribbon {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gradient-gold);
+    color: var(--color-secondary-950);
+    font-size: 11px;
+    font-weight: var(--font-extrabold);
+    padding: 3px 14px;
+    border-radius: var(--radius-full);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .plan-card__tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--color-primary-700);
+    margin-bottom: 2px;
+  }
+
+  .plan-card__size {
+    font-family: var(--font-heading);
+    font-size: var(--text-2xl);
+    margin: 0;
+  }
+
+  .plan-card__type {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+
+  .plan-card__price {
+    margin: var(--space-6) 0;
+    padding: var(--space-4) 0;
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .plan-card__from {
+    display: block;
+    font-size: 10px;
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+  }
+
+  .plan-card__features {
+    list-style: none;
+    margin: 0 0 var(--space-8);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2-5);
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+  }
+
+  .plan-card__action {
+    margin-top: auto;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     SECTION 9: FAQ ACCORDION
+     ══════════════════════════════════════════════════════════════════════════ */
+  .faq-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .faq-item {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: border-color var(--transition-fast);
+  }
+
+  .faq-item[open] {
+    border-color: var(--color-primary-400);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    font-size: var(--text-base);
+    font-weight: var(--font-bold);
+    color: var(--text-primary);
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-toggle-icon {
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--color-primary-600);
+    transition: transform var(--transition-fast);
+  }
+
+  .faq-item[open] .faq-toggle-icon {
+    transform: rotate(45deg);
+  }
+
+  .faq-answer {
+    padding: 0 var(--space-5) var(--space-5);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  .faq-answer p {
+    margin: 0;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     SECTION 10: LEAD GENERATION CTA
+     ══════════════════════════════════════════════════════════════════════════ */
+  .cta-section {
+    padding: var(--space-16) 0 var(--space-20);
+  }
+
+  .cta-banner {
+    background: linear-gradient(135deg, #142147 0%, #0A1128 100%);
+    border: 1.5px solid rgba(212, 175, 55, 0.4);
+    border-radius: var(--radius-3xl);
+    padding: var(--space-10);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+    align-items: center;
+    box-shadow: var(--shadow-2xl);
+  }
+
+  @media (min-width: 1024px) {
+    .cta-banner {
+      grid-template-columns: 1.2fr 0.8fr;
+      padding: var(--space-12);
+    }
+  }
+
+  .cta-banner__title {
+    color: #FFFFFF;
+    margin: var(--space-2) 0 var(--space-4);
+  }
+
+  .cta-banner__text {
+    color: var(--color-neutral-300);
+    margin-bottom: var(--space-8);
+  }
+
+  .cta-banner__contacts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+  }
+
+  .cta-contact-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .cta-contact-icon {
+    font-size: 24px;
+  }
+
+  .cta-contact-label {
+    display: block;
+    font-size: 10px;
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #F3D375;
+  }
+
+  .cta-contact-val {
+    font-size: var(--text-base);
+    font-weight: var(--font-bold);
+    color: #FFFFFF;
+    text-decoration: none;
+  }
+
+  /* Box */
+  .cta-banner__box {
+    background: rgba(10, 17, 40, 0.95);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+    text-align: center;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+  }
+
+  .cta-box__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    color: #FFFFFF;
+    margin: 0 0 var(--space-2);
+  }
+
+  .cta-box__desc {
+    font-size: var(--text-xs);
+    color: var(--color-neutral-300);
+    margin-bottom: var(--space-6);
+    line-height: var(--leading-normal);
+  }
+
+  .cta-box__footer {
+    margin-top: var(--space-4);
+    font-size: 11px;
+    color: #34D399;
+    font-weight: var(--font-bold);
+  }
+</style>

@@ -1,0 +1,229 @@
+---
+/**
+ * Prices Page — Al Rehman Garden Phase 2 Lahore
+ * Plot Price Index & Payment Plans
+ */
+
+import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
+import { SITE } from '@data/site';
+import { CONTACTS } from '@data/contacts';
+
+const pricesSchema = {
+  name: 'Al Rehman Garden Phase 2 Plot Rates & Price Index',
+  description: 'Complete 2026 plot price list and installment schedules for Al Rehman Garden Phase 2 Lahore.',
+  url: `${SITE.url}/prices`,
+};
+
+const residentialPrices = [
+  { size: '3 Marla', cash: 'PKR 24 - 30 Lakh', installment: '3 - 5 Year Plans Available', status: 'Ready in Block B, E' },
+  { size: '3.5 Marla', cash: 'PKR 27 - 33 Lakh', installment: 'Flexible Booking', status: 'Ready Possession' },
+  { size: '5 Marla (Standard)', cash: 'PKR 40 - 55 Lakh', installment: 'Available in Royal / Mirabel', status: 'Ready in Block A, B, C, D' },
+  { size: '7 Marla', cash: 'PKR 58 - 68 Lakh', installment: 'Selective Installment', status: 'Ready in Block B' },
+  { size: '8 Marla', cash: 'PKR 68 - 80 Lakh', installment: 'Cash Only', status: 'Ready in Block C' },
+  { size: '10 Marla', cash: 'PKR 80 Lakh - 1.10 Cr', installment: 'Available in Mirabel', status: 'Ready in Block A, B' },
+  { size: '1 Kanal (Luxury)', cash: 'PKR 1.65 - 2.20 Cr', installment: 'Executive Sector Enclave', status: 'Ready in Block A, Mirabel' },
+];
+
+const commercialPrices = [
+  { size: '2 Marla (Shop / Front)', cash: 'PKR 60 - 85 Lakh', installment: 'Commercial Plan', status: 'Ready in Block A, Royal' },
+  { size: '4 Marla (Broadway)', cash: 'PKR 1.50 - 2.00 Cr', installment: 'High-Yield Commercial', status: 'Ready in Block C Broadway' },
+  { size: '8 Marla (150ft Boulevard)', cash: 'PKR 3.00 - 4.20 Cr', installment: 'Corporate Flagship', status: 'Ready in Block A Boulevard' },
+];
+---
+
+<PageLayout
+  title={`Plot Prices 2026 & Payment Plans — ${SITE.name}`}
+  description={`Official 2026 price list for Al Rehman Garden Phase 2 Lahore. View updated market rates for 3, 5, 8, 10 Marla and 1 Kanal residential & commercial plots.`}
+>
+  <Schema type="WebSite" data={pricesSchema} />
+
+  <!-- Header -->
+  <section class="price-hero">
+    <div class="container">
+      <div class="eyebrow eyebrow--dark">Official Rate List 2026</div>
+      <h1 class="price-hero__title">
+        Al Rehman Garden Phase 2 <span class="text-gradient-gold">Plot Prices</span>
+      </h1>
+      <p class="price-hero__lead lead">
+        Compare cash possession rates and flexible installment schedules for residential and commercial plots across all blocks on Main Sharaqpur Road.
+      </p>
+    </div>
+  </section>
+
+  <!-- Prices Content -->
+  <section class="section section--alt">
+    <div class="container">
+      <!-- Residential Table -->
+      <div class="rate-card">
+        <div class="rate-card__header">
+          <div>
+            <span class="rate-card__tag">Residential Sectors</span>
+            <h2 class="rate-card__title">Residential Plot Price Index</h2>
+          </div>
+          <a
+            href={CONTACTS.whatsapp.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn--accent btn--sm"
+          >
+            WhatsApp Rate Inquiry
+          </a>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Plot Size</th>
+                <th>Estimated Cash Price</th>
+                <th>Installment Option</th>
+                <th>Possession Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {residentialPrices.map((item) => (
+                <tr>
+                  <td><strong>{item.size}</strong></td>
+                  <td><span class="price-highlight">{item.cash}</span></td>
+                  <td>{item.installment}</td>
+                  <td><span class="status-badge">✓ {item.status}</span></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Commercial Table -->
+      <div class="rate-card" style="margin-top: 32px;">
+        <div class="rate-card__header">
+          <div>
+            <span class="rate-card__tag">Commercial Broadway</span>
+            <h2 class="rate-card__title">Commercial Plot & Shop Price Index</h2>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Commercial Size</th>
+                <th>Estimated Cash Price</th>
+                <th>Installment Option</th>
+                <th>Location Sector</th>
+              </tr>
+            </thead>
+            <tbody>
+              {commercialPrices.map((item) => (
+                <tr>
+                  <td><strong>{item.size}</strong></td>
+                  <td><span class="price-highlight">{item.cash}</span></td>
+                  <td>{item.installment}</td>
+                  <td><span class="status-badge">✓ {item.status}</span></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .price-hero {
+    background: radial-gradient(circle at 80% 20%, #16244F 0%, #0A1128 75%);
+    color: var(--text-inverse);
+    padding: var(--space-12) 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  }
+
+  .price-hero__title {
+    color: #FFFFFF;
+    margin: var(--space-2) 0 var(--space-3);
+  }
+
+  .price-hero__lead {
+    color: var(--color-neutral-300);
+    max-width: 65ch;
+    margin: 0;
+  }
+
+  .rate-card {
+    background: var(--bg-primary);
+    border: 1.5px solid var(--border-gold);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .rate-card__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  @media (min-width: 640px) {
+    .rate-card__header {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .rate-card__tag {
+    font-size: 11px;
+    font-weight: var(--font-bold);
+    color: var(--color-primary-700);
+    text-transform: uppercase;
+  }
+
+  .rate-card__title {
+    font-size: var(--text-2xl);
+    margin: 0;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+  }
+
+  .data-table th {
+    background-color: var(--color-secondary-900);
+    color: white;
+    padding: var(--space-3-5) var(--space-4);
+    text-align: left;
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+  }
+
+  .data-table td {
+    padding: var(--space-3-5) var(--space-4);
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-secondary);
+  }
+
+  .data-table tbody tr:hover {
+    background-color: var(--color-primary-50);
+  }
+
+  .price-highlight {
+    font-weight: var(--font-extrabold);
+    color: var(--color-secondary-900);
+  }
+
+  .status-badge {
+    font-size: var(--text-xs);
+    font-weight: var(--font-bold);
+    color: #059669;
+  }
+</style>

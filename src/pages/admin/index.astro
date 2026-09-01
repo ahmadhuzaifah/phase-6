@@ -1,0 +1,444 @@
+---
+/**
+ * Admin Dashboard Overview — Al Rehman Garden Phase 2 Operations System
+ */
+
+import AdminLayout from '@layouts/AdminLayout.astro';
+import propertiesData from '@data/properties-import.json';
+import { DEALERS } from '@data/dealers';
+import { BLOCKS } from '@data/blocks';
+import { computeDashboardMetrics } from '@utils/dashboardMetrics';
+
+const metrics = computeDashboardMetrics(propertiesData as any);
+
+// Mock CRM inquiries
+const recentLeads = [
+  { id: 'LD-001', name: 'Dr. Hamza Tariq', phone: '+923001234567', property: '5 Marla Spanish House Block A', budget: '1.45 Cr', status: 'New', time: '10 mins ago' },
+  { id: 'LD-002', name: 'Chaudhry Rizwan', phone: '+923219876543', property: '1 Kanal Luxury Plot Mirabel', budget: '1.80 Cr', status: 'Contacted', time: '1 hour ago' },
+  { id: 'LD-003', name: 'Syed Ali Raza', phone: '+923334567890', property: '4 Marla Broadway Comm Block C', budget: '1.65 Cr', status: 'Follow-up', time: '3 hours ago' },
+  { id: 'LD-004', name: 'Noman Siddiqui', phone: '+923027654321', property: '3.5 Marla Plot Block E', budget: '28.5 Lakh', status: 'Converted', time: '1 day ago' },
+];
+
+const auditLogs = [
+  { action: 'Scale Batch Imported', details: '100 verified listings exported to production', user: 'System Auto-Engine', timestamp: 'Today, 22:50' },
+  { action: 'Duplicate Check Executed', details: '0 duplicates detected in batch ARG-P2-V6', user: 'Quality Validator', timestamp: 'Today, 22:48' },
+  { action: 'Watermark Pipeline Processed', details: '100 images enriched with 35% opacity crest', user: 'Image Automation', timestamp: 'Today, 22:45' },
+];
+---
+
+<AdminLayout title="Operations Overview" activeSection="overview">
+  <!-- KPI Grid -->
+  <section class="admin-kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-card__top">
+        <span class="kpi-card__lbl">Total Properties</span>
+        <span class="kpi-card__icon">🏡</span>
+      </div>
+      <div class="kpi-card__val text-gradient-gold">{metrics.totalProperties}</div>
+      <div class="kpi-card__sub text-success">✓ 100% Verified Demarcation</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-card__top">
+        <span class="kpi-card__lbl">Active Live Listings</span>
+        <span class="kpi-card__icon">⚡</span>
+      </div>
+      <div class="kpi-card__val" style="color: #10B981;">{metrics.activeProperties}</div>
+      <div class="kpi-card__sub">Audited &lt; 90 Days</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-card__top">
+        <span class="kpi-card__lbl">Leads & Inquiries</span>
+        <span class="kpi-card__icon">👥</span>
+      </div>
+      <div class="kpi-card__val" style="color: #60A5FA;">18</div>
+      <div class="kpi-card__sub">+4 new today</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-card__top">
+        <span class="kpi-card__lbl">Authorized Dealers</span>
+        <span class="kpi-card__icon">🤝</span>
+      </div>
+      <div class="kpi-card__val" style="color: #F3D375;">{DEALERS.length}</div>
+      <div class="kpi-card__sub">Direct Society Network</div>
+    </div>
+  </section>
+
+  <!-- Quick Action Shortcuts -->
+  <section class="admin-quick-actions">
+    <a href="/admin/properties" class="qa-btn">
+      <span>➕ Manage / Add Properties</span>
+    </a>
+    <a href="/admin/leads" class="qa-btn">
+      <span>💬 Review New Leads ({recentLeads.length})</span>
+    </a>
+    <a href="/admin/images" class="qa-btn">
+      <span>🖼️ Inspect Watermarked Media</span>
+    </a>
+    <a href="/admin/analytics" class="qa-btn">
+      <span>📈 View Search & View Analytics</span>
+    </a>
+  </section>
+
+  <!-- Two Column Layout: Sector Breakdown & Recent Leads -->
+  <div class="admin-two-col">
+    <!-- Left: Sector Inventory Breakdown -->
+    <div class="admin-card">
+      <div class="admin-card__header">
+        <h2 class="admin-card__title">Sector Inventory Distribution</h2>
+        <a href="/admin/properties" class="admin-card__link">View All →</a>
+      </div>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Sector / Block</th>
+              <th>Status</th>
+              <th>Live Listings</th>
+              <th>Possession</th>
+            </tr>
+          </thead>
+          <tbody>
+            {BLOCKS.map((b) => {
+              const count = propertiesData.filter((p) => p.block.includes(b.name.split(' ')[0])).length;
+              return (
+                <tr>
+                  <td><strong>{b.name}</strong></td>
+                  <td>
+                    <span class="badge badge--success" style="text-transform: capitalize;">{b.status.replace('-', ' ')}</span>
+                  </td>
+                  <td><strong>{count} listings</strong></td>
+                  <td>{b.possessionPercentage}% On-Ground</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Right: Recent CRM Inquiries -->
+    <div class="admin-card">
+      <div class="admin-card__header">
+        <h2 class="admin-card__title">Recent Buyer Inquiries (CRM)</h2>
+        <a href="/admin/leads" class="admin-card__link">Open CRM →</a>
+      </div>
+
+      <div class="leads-compact-list">
+        {recentLeads.map((ld) => (
+          <div class="lead-compact-item">
+            <div class="lead-compact-top">
+              <strong>{ld.name}</strong>
+              <span class="lead-status-pill">{ld.status}</span>
+            </div>
+            <p class="lead-compact-prop">{ld.property} • {ld.budget}</p>
+            <div class="lead-compact-foot">
+              <span class="lead-compact-time">{ld.time}</span>
+              <a
+                href={`https://wa.me/${ld.phone.replace(/[^0-9]/g, '')}`}
+                target="_blank"
+                class="lead-wa-link"
+              >
+                💬 WhatsApp Client
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Audit Log -->
+  <div class="admin-card" style="margin-top: 24px;">
+    <h2 class="admin-card__title" style="margin-bottom: 16px;">Automated Pipeline Audit Trail</h2>
+    <div class="audit-list">
+      {auditLogs.map((log) => (
+        <div class="audit-item">
+          <div class="audit-item__left">
+            <span class="audit-dot"></span>
+            <div>
+              <strong>{log.action}</strong>
+              <p>{log.details}</p>
+            </div>
+          </div>
+          <div class="audit-item__right">
+            <span class="audit-user">{log.user}</span>
+            <span class="audit-time">{log.timestamp}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</AdminLayout>
+
+<style>
+  .admin-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: var(--space-5);
+    margin-bottom: var(--space-6);
+  }
+
+  @media (min-width: 640px) {
+    .admin-kpi-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .admin-kpi-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .kpi-card {
+    background: #0E1626;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-xl);
+    padding: var(--space-5) var(--space-6);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .kpi-card__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-2);
+  }
+
+  .kpi-card__lbl {
+    font-size: var(--text-xs);
+    font-weight: var(--font-bold);
+    color: #94A3B8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .kpi-card__icon {
+    font-size: 20px;
+  }
+
+  .kpi-card__val {
+    font-size: 2rem;
+    font-weight: var(--font-extrabold);
+    font-family: var(--font-heading);
+    line-height: 1.2;
+    margin-bottom: var(--space-1);
+  }
+
+  .kpi-card__sub {
+    font-size: 11px;
+    color: #64748B;
+  }
+
+  .admin-quick-actions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+  }
+
+  @media (min-width: 768px) {
+    .admin-quick-actions {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .qa-btn {
+    background: #131F37;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    color: #F1F5F9;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    font-size: var(--text-xs);
+    font-weight: var(--font-bold);
+    text-align: center;
+    transition: all var(--transition-fast);
+  }
+
+  .qa-btn:hover {
+    background: rgba(212, 175, 55, 0.2);
+    border-color: #D4AF37;
+    color: #F3D375;
+  }
+
+  .admin-two-col {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 1024px) {
+    .admin-two-col {
+      grid-template-columns: 1.4fr 1fr;
+    }
+  }
+
+  .admin-card {
+    background: #0E1626;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+  }
+
+  .admin-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .admin-card__title {
+    font-size: var(--text-base);
+    color: #FFFFFF;
+    margin: 0;
+  }
+
+  .admin-card__link {
+    font-size: var(--text-xs);
+    color: #D4AF37;
+    text-decoration: none;
+  }
+
+  .admin-table-wrap {
+    overflow-x: auto;
+  }
+
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-xs);
+  }
+
+  .admin-table th {
+    text-align: left;
+    color: #64748B;
+    padding: var(--space-2-5) var(--space-3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    text-transform: uppercase;
+  }
+
+  .admin-table td {
+    padding: var(--space-2-5) var(--space-3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    color: #CBD5E1;
+  }
+
+  .leads-compact-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .lead-compact-item {
+    background: #070D19;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .lead-compact-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2px;
+  }
+
+  .lead-compact-top strong {
+    font-size: var(--text-xs);
+    color: #FFFFFF;
+  }
+
+  .lead-status-pill {
+    font-size: 10px;
+    font-weight: var(--font-bold);
+    background: rgba(96, 165, 250, 0.15);
+    color: #60A5FA;
+    padding: 1px 6px;
+    border-radius: var(--radius-xs);
+  }
+
+  .lead-compact-prop {
+    font-size: 11px;
+    color: #94A3B8;
+    margin: 0 0 var(--space-2);
+  }
+
+  .lead-compact-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10px;
+  }
+
+  .lead-compact-time {
+    color: #64748B;
+  }
+
+  .lead-wa-link {
+    color: #10B981;
+    text-decoration: none;
+    font-weight: var(--font-bold);
+  }
+
+  /* Audit Trail */
+  .audit-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2-5);
+  }
+
+  .audit-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #070D19;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    font-size: var(--text-xs);
+  }
+
+  .audit-item__left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .audit-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: #D4AF37;
+  }
+
+  .audit-item__left strong {
+    color: #FFFFFF;
+    display: block;
+  }
+
+  .audit-item__left p {
+    color: #94A3B8;
+    margin: 0;
+    font-size: 11px;
+  }
+
+  .audit-item__right {
+    text-align: right;
+  }
+
+  .audit-user {
+    display: block;
+    color: #CBD5E1;
+  }
+
+  .audit-time {
+    color: #64748B;
+    font-size: 10px;
+  }
+</style>

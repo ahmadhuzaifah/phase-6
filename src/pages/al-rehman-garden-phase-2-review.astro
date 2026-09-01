@@ -1,0 +1,290 @@
+---
+/**
+ * Al Rehman Garden Phase 2 Honest Society Review — Authority SEO Hub
+ */
+
+import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
+
+const scoreCategories = [
+  { aspect: 'Location & Connectivity', score: '9.4 / 10', detail: 'Prime frontage on Main Sharaqpur Road and 2-min access to M2 Faizpur Interchange.' },
+  { aspect: 'On-Ground Infrastructure', score: '9.1 / 10', detail: 'Concealed underground power, functional gas, RO filtration, 150ft boulevards.' },
+  { aspect: 'Legal Approval & NOC', score: '9.0 / 10', detail: 'LDA sanctioned with clear registry and transfer protocols in society head office.' },
+  { aspect: 'Living Amenities', score: '8.8 / 10', detail: 'Hospital, multiple schools, commercial markets, theme parks, and gated security.' },
+  { aspect: 'Value for Money', score: '9.6 / 10', detail: 'Significantly more affordable per Marla than Ring Road/DHA developments with rapid appreciation.' },
+];
+
+const faqs = [
+  {
+    question: 'Is Al Rehman Garden Phase 2 a good place to live for families?',
+    answer: 'Yes. With thousands of families already residing, active school branches (Allied School, Dare Arqam), an on-site hospital, 24/7 security, and community parks, it provides a safe, peaceful, and family-oriented environment.',
+  },
+  {
+    question: 'What are the pros and cons of Al Rehman Garden Phase 2?',
+    answer: 'Pros: Prime road connectivity, underground electricity, LDA approval, and high rental demand. Cons: High traffic near Sagian bypass during peak rush hours, which has been alleviated by recent flyover expansions.',
+  },
+];
+
+const faqSchema = {
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: f.answer,
+    },
+  })),
+};
+---
+
+<PageLayout
+  title="Al Rehman Garden Phase 2 Review 2026 — Pros, Cons & Living Standards"
+  description="Honest and independent 2026 review of Al Rehman Garden Phase 2 Lahore. Ratings on location, underground utilities, legal approval, security, and resident feedback."
+>
+  <Schema type="FAQPage" data={faqSchema} />
+
+  <section class="auth-hero">
+    <div class="container">
+      <div class="eyebrow eyebrow--dark">Unbiased Society Audit</div>
+      <h1 class="auth-hero__title">
+        Al Rehman Garden Phase 2 <span class="text-gradient-gold">Society Review</span>
+      </h1>
+      <p class="auth-hero__lead lead">
+        An objective, data-driven evaluation of living standards, infrastructural reliability, legal security, and price appreciation in Al Rehman Garden Phase 2.
+      </p>
+      <div class="auth-meta-bar">
+        <span>📅 Last Audited: September 2026</span>
+        <span>⭐ Overall Rating: 9.2 / 10 (Highly Recommended)</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <!-- Ratings Matrix -->
+      <div class="review-score-card">
+        <h2 class="review-score-card__title">Scorecard Breakdown</h2>
+        <div class="score-list">
+          {scoreCategories.map((s) => (
+            <div class="score-item">
+              <div class="score-item__top">
+                <strong>{s.aspect}</strong>
+                <span class="score-val">{s.score}</span>
+              </div>
+              <p class="score-detail">{s.detail}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Pros vs Cons Comparison -->
+      <div class="pros-cons-grid">
+        <div class="pc-box pc-box--pros">
+          <h3 class="pc-title text-success">✓ Key Strengths & Advantages</h3>
+          <ul class="pc-list">
+            <li>Direct 2-minute connection to M-2 Faizpur Interchange.</li>
+            <li>100% underground electrical cabling in established blocks.</li>
+            <li>LDA-compliant masterplan with registry and direct transfer.</li>
+            <li>Operational hospital and renowned school campuses inside.</li>
+            <li>Active, bustling community with high security patrol.</li>
+          </ul>
+        </div>
+        <div class="pc-box pc-box--cons">
+          <h3 class="pc-title text-warning">⚠️ Important Considerations</h3>
+          <ul class="pc-list">
+            <li>Extended sectors (Mirabel, Beverly) still under progressive development.</li>
+            <li>Peak rush hour bottlenecks on Ravi Bridge (improved by Sagian flyover).</li>
+            <li>Commercial plots in Block C have high demand and limited availability.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- FAQ Card -->
+      <div class="auth-faq-card">
+        <h2 class="auth-faq-card__title">Society Review FAQs</h2>
+        <div class="faq-list">
+          {faqs.map((f) => (
+            <div class="faq-item">
+              <h3 class="faq-item__q">Q: {f.question}</h3>
+              <p class="faq-item__a">{f.answer}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .auth-hero {
+    background: radial-gradient(circle at 80% 20%, #16244F 0%, #0A1128 75%);
+    color: var(--text-inverse);
+    padding: var(--space-12) 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  }
+
+  .auth-hero__title {
+    color: #FFFFFF;
+    margin: var(--space-2) 0 var(--space-3);
+  }
+
+  .auth-hero__lead {
+    color: var(--color-neutral-300);
+    max-width: 65ch;
+    margin: 0 0 var(--space-4);
+  }
+
+  .auth-meta-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    font-size: var(--text-xs);
+    color: #F3D375;
+  }
+
+  .review-score-card {
+    background: var(--bg-primary);
+    border: 1.5px solid var(--border-gold);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-xl);
+    margin-bottom: var(--space-8);
+  }
+
+  .review-score-card__title {
+    font-size: var(--text-2xl);
+    margin: 0 0 var(--space-6);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .score-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .score-item {
+    background: var(--color-neutral-50);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4) var(--space-5);
+  }
+
+  .score-item__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+
+  .score-item__top strong {
+    font-size: var(--text-base);
+    color: var(--text-primary);
+  }
+
+  .score-val {
+    font-size: var(--text-sm);
+    font-weight: var(--font-extrabold);
+    color: #059669;
+    background: #ECFDF5;
+    padding: 2px 8px;
+    border-radius: var(--radius-xs);
+    border: 1px solid #A7F3D0;
+  }
+
+  .score-detail {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  .pros-cons-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+
+  @media (min-width: 768px) {
+    .pros-cons-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .pc-box {
+    background: var(--bg-primary);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6) var(--space-8);
+    box-shadow: var(--shadow-card);
+  }
+
+  .pc-box--pros {
+    border: 1.5px solid #A7F3D0;
+  }
+
+  .pc-box--cons {
+    border: 1.5px solid #FED7AA;
+  }
+
+  .pc-title {
+    font-size: var(--text-base);
+    margin: 0 0 var(--space-4);
+  }
+
+  .pc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2-5);
+  }
+
+  .pc-list li {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  .auth-faq-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-card);
+  }
+
+  .auth-faq-card__title {
+    font-size: var(--text-2xl);
+    margin: 0 0 var(--space-6);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .faq-item {
+    background: var(--color-neutral-50);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+  }
+
+  .faq-item__q {
+    font-size: var(--text-base);
+    color: var(--text-primary);
+    margin: 0 0 var(--space-2);
+  }
+
+  .faq-item__a {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: var(--leading-relaxed);
+  }
+</style>

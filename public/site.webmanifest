@@ -1,0 +1,16 @@
+{
+  "name": "Al Rehman Garden Phase 2",
+  "short_name": "ARG Phase 2",
+  "description": "Premium real estate community in Lahore",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#c8960c",
+  "icons": [
+    {
+      "src": "/images/favicon/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ]
+}

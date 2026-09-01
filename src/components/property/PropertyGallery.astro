@@ -1,0 +1,95 @@
+---
+/**
+ * PropertyGallery.astro — Image Gallery Shell
+ * Displays property images in a responsive grid with lightbox-ready markup.
+ */
+
+interface Props {
+  images: { url: string; alt: string; caption?: string }[];
+  propertyTitle: string;
+}
+
+const { images, propertyTitle } = Astro.props;
+---
+
+<div class="property-gallery" id="property-gallery">
+  {
+    images.length > 0 ? (
+      <div class="property-gallery__grid" role="group" aria-label={`Photos of ${propertyTitle}`}>
+        {images.map((image, index) => (
+          <button
+            class:list={[
+              'property-gallery__item',
+              { 'property-gallery__item--main': index === 0 },
+            ]}
+            data-index={index}
+            aria-label={`View photo ${index + 1}: ${image.alt}`}
+          >
+            <img
+              src={image.url}
+              alt={image.alt}
+              loading={index === 0 ? 'eager' : 'lazy'}
+              class="property-gallery__image"
+            />
+          </button>
+        ))}
+      </div>
+    ) : (
+      <div class="property-gallery__empty">
+        <p>No images available for this property.</p>
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .property-gallery__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .property-gallery__grid {
+      grid-template-columns: 2fr 1fr;
+      grid-template-rows: 1fr 1fr;
+    }
+  }
+
+  .property-gallery__item {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    background: none;
+  }
+
+  .property-gallery__item--main {
+    grid-row: 1 / -1;
+  }
+
+  .property-gallery__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+    aspect-ratio: 16 / 10;
+  }
+
+  .property-gallery__item:hover .property-gallery__image {
+    transform: scale(1.03);
+  }
+
+  .property-gallery__empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 16 / 9;
+    background-color: var(--color-neutral-100);
+    border-radius: var(--radius-lg);
+    color: var(--text-tertiary);
+  }
+</style>

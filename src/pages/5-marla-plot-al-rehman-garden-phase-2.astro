@@ -1,0 +1,112 @@
+---
+/**
+ * 5 Marla Plot in Al Rehman Garden Phase 2 — Local SEO Landing Page
+ */
+
+import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
+import PropertyCard from '@components/property/PropertyCard.astro';
+import { SITE } from '@data/site';
+import { CONTACTS } from '@data/contacts';
+import propertiesData from '@data/properties-import.json';
+
+const fiveMarlaPlots = propertiesData.filter(
+  (p) => p.size === '5' && p.propertyType.includes('plot')
+);
+
+const pageSchema = {
+  name: '5 Marla Plot in Al Rehman Garden Phase 2 Lahore',
+  description: 'Verified 5 Marla residential and commercial plots for sale in Al Rehman Garden Phase 2 Lahore across Block A, B, C, D, and E.',
+  url: `${SITE.url}/5-marla-plot-al-rehman-garden-phase-2`,
+};
+---
+
+<PageLayout
+  title="5 Marla Plot in Al Rehman Garden Phase 2 Lahore — Rates & Inventory 2026"
+  description="Buy 5 Marla residential & commercial plots in Al Rehman Garden Phase 2 Lahore. Ready possession in Block A, B, C, D & installment booking in new sectors."
+>
+  <Schema type="WebSite" data={pageSchema} />
+
+  <section class="local-hero">
+    <div class="container">
+      <div class="eyebrow eyebrow--dark">High Demand Plot Category</div>
+      <h1 class="local-hero__title">
+        5 Marla Plot in <span class="text-gradient-gold">Al Rehman Garden Phase 2</span>
+      </h1>
+      <p class="local-hero__lead lead">
+        The most popular plot size in Phase 2 with prices ranging between <strong>PKR 40 Lakh to 55 Lakh</strong> for ready possession cash plots, offering standard 25x45 dimensions.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-header-row">
+        <div>
+          <span class="eyebrow">Direct Inventory</span>
+          <h2 class="section-header__title">Available 5 Marla Plot Listings</h2>
+        </div>
+        <a href={CONTACTS.whatsapp.url} target="_blank" rel="noopener noreferrer" class="btn btn--accent btn--sm">
+          Get 5 Marla Rate Sheet on WhatsApp
+        </a>
+      </div>
+
+      <div class="local-grid">
+        {fiveMarlaPlots.map((prop) => (
+          <PropertyCard
+            title={prop.title}
+            slug={prop.slug}
+            propertyType={prop.propertyType}
+            purpose={prop.purpose}
+            price={prop.price}
+            priceUnit={prop.priceUnit}
+            size={prop.size}
+            sizeUnit={prop.unit}
+            block={prop.block}
+            location={prop.location.address}
+            verificationStatus={prop.verificationStatus}
+            isFeatured={prop.isFeatured}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .local-hero {
+    background: radial-gradient(circle at 80% 20%, #16244F 0%, #0A1128 75%);
+    color: var(--text-inverse);
+    padding: var(--space-12) 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  }
+
+  .local-hero__title {
+    color: #FFFFFF;
+    margin: var(--space-2) 0 var(--space-3);
+  }
+
+  .local-hero__lead {
+    color: var(--color-neutral-300);
+    max-width: 65ch;
+    margin: 0;
+  }
+
+  .local-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 640px) {
+    .local-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .local-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

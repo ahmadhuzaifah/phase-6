@@ -1,0 +1,248 @@
+---
+/**
+ * Admin Lead Management CRM — Al Rehman Garden Phase 2 Operations System
+ */
+
+import AdminLayout from '@layouts/AdminLayout.astro';
+
+interface LeadRecord {
+  id: string;
+  name: string;
+  phone: string;
+  whatsapp: string;
+  interestedProperty: string;
+  budget: string;
+  preferredBlock: string;
+  date: string;
+  status: 'New' | 'Contacted' | 'Follow-up' | 'Converted' | 'Closed';
+  notes?: string;
+}
+
+const leads: LeadRecord[] = [
+  { id: 'LD-101', name: 'Dr. Hamza Tariq', phone: '+923001234567', whatsapp: '+923001234567', interestedProperty: '5 Marla Spanish House', budget: 'PKR 1.45 Cr', preferredBlock: 'Block A (Executive)', date: '2026-09-01 22:15', status: 'New', notes: 'Overseas doctor looking for ready possession designer house.' },
+  { id: 'LD-102', name: 'Chaudhry Rizwan', phone: '+923219876543', whatsapp: '+923219876543', interestedProperty: '1 Kanal Luxury Plot', budget: 'PKR 1.80 Cr', preferredBlock: 'Mirabel Block', date: '2026-09-01 21:30', status: 'Contacted', notes: 'Site visit scheduled for Saturday 3:00 PM.' },
+  { id: 'LD-103', name: 'Syed Ali Raza', phone: '+923334567890', whatsapp: '+923334567890', interestedProperty: '4 Marla Broadway Comm', budget: 'PKR 1.65 Cr', preferredBlock: 'Block C Commercial', date: '2026-09-01 19:45', status: 'Follow-up', notes: 'Wants plaza building map approved copy.' },
+  { id: 'LD-104', name: 'Noman Siddiqui', phone: '+923027654321', whatsapp: '+923027654321', interestedProperty: '3.5 Marla On-Ground Plot', budget: 'PKR 28.5 Lakh', preferredBlock: 'Block E', date: '2026-08-31 16:00', status: 'Converted', notes: 'Booking token submitted at society head office.' },
+  { id: 'LD-105', name: 'Major (R) Khalid Javed', phone: '+923451122334', whatsapp: '+923451122334', interestedProperty: '10 Marla Corner Plot', budget: 'PKR 85 Lakh', preferredBlock: 'Block B', date: '2026-08-30 11:20', status: 'Follow-up', notes: 'Comparing against Rose Garden Block D options.' },
+  { id: 'LD-106', name: 'Bilal Farooq', phone: '+923129988776', whatsapp: '+923129988776', interestedProperty: '2 Marla Commercial Shop', budget: 'PKR 65 Lakh', preferredBlock: 'Block A Market', date: '2026-08-29 14:10', status: 'Contacted', notes: 'Wants expected monthly rental yield estimate.' },
+];
+
+const counts = {
+  total: leads.length,
+  new: leads.filter((l) => l.status === 'New').length,
+  contacted: leads.filter((l) => l.status === 'Contacted').length,
+  followUp: leads.filter((l) => l.status === 'Follow-up').length,
+  converted: leads.filter((l) => l.status === 'Converted').length,
+};
+---
+
+<AdminLayout title="Lead Management CRM" activeSection="leads">
+  <!-- Pipeline Status Bar -->
+  <div class="crm-pipeline-bar">
+    <div class="crm-stage crm-stage--all">
+      <span>Total Inquiries</span>
+      <strong>{counts.total}</strong>
+    </div>
+    <div class="crm-stage crm-stage--new">
+      <span>New Leads</span>
+      <strong>{counts.new}</strong>
+    </div>
+    <div class="crm-stage crm-stage--contacted">
+      <span>Contacted</span>
+      <strong>{counts.contacted}</strong>
+    </div>
+    <div class="crm-stage crm-stage--follow">
+      <span>In Follow-up</span>
+      <strong>{counts.followUp}</strong>
+    </div>
+    <div class="crm-stage crm-stage--converted">
+      <span>Converted</span>
+      <strong>{counts.converted}</strong>
+    </div>
+  </div>
+
+  <!-- Main CRM Table -->
+  <div class="admin-card crm-table-card">
+    <div class="admin-card__header" style="padding: 16px 24px;">
+      <h2 class="admin-card__title">Buyer Inquiries & Leads Pipeline</h2>
+      <a href="/find-my-property" target="_blank" class="btn btn--accent btn--xs">
+        + New Inbound Lead
+      </a>
+    </div>
+
+    <div class="admin-table-wrap">
+      <table class="admin-table crm-table">
+        <thead>
+          <tr>
+            <th>Lead ID</th>
+            <th>Client Name</th>
+            <th>Contact / WhatsApp</th>
+            <th>Interested Property</th>
+            <th>Budget</th>
+            <th>Block</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {leads.map((lead) => (
+            <tr>
+              <td><code>{lead.id}</code></td>
+              <td>
+                <div class="crm-client-cell">
+                  <strong>{lead.name}</strong>
+                  <small>{lead.date}</small>
+                </div>
+              </td>
+              <td>
+                <div class="crm-contact-cell">
+                  <span>{lead.phone}</span>
+                  <a
+                    href={`https://wa.me/${lead.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hello ${lead.name}! Following up regarding your inquiry for ${lead.interestedProperty} in Al Rehman Garden Phase 2.`)}`}
+                    target="_blank"
+                    class="crm-wa-btn"
+                  >
+                    💬 WhatsApp Client
+                  </a>
+                </div>
+              </td>
+              <td>{lead.interestedProperty}</td>
+              <td><strong class="text-gradient-gold">{lead.budget}</strong></td>
+              <td>{lead.preferredBlock}</td>
+              <td>
+                <span class:list={['crm-status-badge', `crm-status-badge--${lead.status.toLowerCase().replace('-', '')}`]}>
+                  {lead.status}
+                </span>
+              </td>
+              <td>
+                <button class="action-icon-btn" title="Update Status" onclick={`alert('Updating status for ${lead.name}')`}>
+                  ✏️
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</AdminLayout>
+
+<style>
+  .crm-pipeline-bar {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+
+  @media (min-width: 640px) {
+    .crm-pipeline-bar {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+  .crm-stage {
+    background: #0E1626;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-xl);
+    padding: var(--space-4) var(--space-5);
+    text-align: center;
+  }
+
+  .crm-stage span {
+    display: block;
+    font-size: 10.5px;
+    font-weight: var(--font-bold);
+    color: #94A3B8;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  .crm-stage strong {
+    font-size: var(--text-xl);
+    font-weight: var(--font-extrabold);
+    color: #FFFFFF;
+  }
+
+  .crm-stage--new strong { color: #60A5FA; }
+  .crm-stage--contacted strong { color: #F59E0B; }
+  .crm-stage--follow strong { color: #A78BFA; }
+  .crm-stage--converted strong { color: #10B981; }
+
+  .crm-table-card {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .crm-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-xs);
+  }
+
+  .crm-table th {
+    background: #090F1D;
+    color: #64748B;
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .crm-table td {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    color: #CBD5E1;
+  }
+
+  .crm-client-cell {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .crm-client-cell strong {
+    color: #FFFFFF;
+  }
+
+  .crm-client-cell small {
+    color: #64748B;
+    font-size: 10px;
+  }
+
+  .crm-contact-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .crm-wa-btn {
+    font-size: 10.5px;
+    color: #10B981;
+    text-decoration: none;
+    font-weight: var(--font-bold);
+  }
+
+  .crm-status-badge {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: var(--font-bold);
+    padding: 2px 8px;
+    border-radius: var(--radius-xs);
+  }
+
+  .crm-status-badge--new { background: rgba(96, 165, 250, 0.15); color: #60A5FA; }
+  .crm-status-badge--contacted { background: rgba(245, 158, 11, 0.15); color: #F59E0B; }
+  .crm-status-badge--followup { background: rgba(167, 139, 250, 0.15); color: #A78BFA; }
+  .crm-status-badge--converted { background: rgba(16, 185, 129, 0.15); color: #10B981; }
+  .crm-status-badge--closed { background: rgba(100, 116, 139, 0.15); color: #64748B; }
+
+  .action-icon-btn {
+    background: #1E293B;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #FFFFFF;
+    padding: 3px 6px;
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+    font-size: 12px;
+  }
+</style>

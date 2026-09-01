@@ -1,0 +1,256 @@
+---
+/**
+ * Authorized Dealers Directory — Al Rehman Garden Phase 2 Lahore
+ */
+
+import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
+import { SITE } from '@data/site';
+import { DEALERS } from '@data/dealers';
+
+const breadcrumbsSchema = {
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: SITE.url,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Authorized Dealers',
+      item: `${SITE.url}/dealers`,
+    },
+  ],
+};
+---
+
+<PageLayout
+  title={`Authorized Property Dealers & Brokers — ${SITE.name}`}
+  description="Connect with verified real estate dealers and property consultants in Al Rehman Garden Phase 2 Lahore. Verified credentials, experience ratings, and active listings."
+>
+  <Schema type="BreadcrumbList" data={breadcrumbsSchema} />
+
+  <section class="dealers-hero">
+    <div class="container">
+      <div class="eyebrow eyebrow--dark">Verified Real Estate Network</div>
+      <h1 class="dealers-hero__title">
+        Authorized <span class="text-gradient-gold">Property Dealers</span>
+      </h1>
+      <p class="dealers-hero__lead lead">
+        Consult with verified, on-site real estate agencies and consultants for direct plot allotments, file verifications, and property visits in Al Rehman Garden Phase 2.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="dealers-grid">
+        {DEALERS.map((dealer) => (
+          <div class="dealer-card">
+            <div class="dealer-card__header">
+              <div class="dealer-card__avatar">
+                <span>{dealer.name.charAt(0)}</span>
+              </div>
+              <div>
+                <h2 class="dealer-card__name">{dealer.name}</h2>
+                <span class="dealer-card__agency">{dealer.agencyName}</span>
+              </div>
+              {dealer.isVerified && (
+                <span class="dealer-card__badge">✓ Verified</span>
+              )}
+            </div>
+
+            <p class="dealer-card__desc">{dealer.description}</p>
+
+            <div class="dealer-card__stats">
+              <div class="dealer-stat">
+                <span class="dealer-stat-lbl">Experience</span>
+                <strong>{dealer.experienceYears}+ Years</strong>
+              </div>
+              <div class="dealer-stat">
+                <span class="dealer-stat-lbl">Rating</span>
+                <strong>★ {dealer.rating.toFixed(1)} / 5.0</strong>
+              </div>
+              <div class="dealer-stat">
+                <span class="dealer-stat-lbl">Deals Closed</span>
+                <strong>{dealer.totalDeals}+</strong>
+              </div>
+            </div>
+
+            <div class="dealer-card__blocks">
+              <span class="dealer-blocks-lbl">Specializations:</span>
+              <div class="dealer-chips">
+                {dealer.specializationBlocks.map((blk) => (
+                  <span class="dealer-chip">{blk}</span>
+                ))}
+              </div>
+            </div>
+
+            <div class="dealer-card__actions">
+              <a
+                href={`https://wa.me/${dealer.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hello ${dealer.name}! I am interested in property guidance in Al Rehman Garden Phase 2.`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn--accent btn--sm"
+              >
+                💬 WhatsApp
+              </a>
+              <a href={`/dealers/${dealer.slug}`} class="btn btn--secondary btn--sm">
+                View Profile →
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .dealers-hero {
+    background: radial-gradient(circle at 80% 20%, #16244F 0%, #0A1128 75%);
+    color: var(--text-inverse);
+    padding: var(--space-12) 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  }
+
+  .dealers-hero__title {
+    color: #FFFFFF;
+    margin: var(--space-2) 0 var(--space-3);
+  }
+
+  .dealers-hero__lead {
+    color: var(--color-neutral-300);
+    max-width: 65ch;
+    margin: 0;
+  }
+
+  .dealers-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 768px) {
+    .dealers-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .dealer-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dealer-card__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+
+  .dealer-card__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-full);
+    background: var(--gradient-gold);
+    color: var(--color-secondary-950);
+    font-weight: var(--font-extrabold);
+    font-size: var(--text-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .dealer-card__name {
+    font-size: var(--text-base);
+    margin: 0;
+  }
+
+  .dealer-card__agency {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+  }
+
+  .dealer-card__badge {
+    margin-left: auto;
+    font-size: 11px;
+    font-weight: var(--font-bold);
+    color: #059669;
+    background: #ECFDF5;
+    padding: 2px 8px;
+    border-radius: var(--radius-xs);
+  }
+
+  .dealer-card__desc {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-4);
+  }
+
+  .dealer-card__stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-2);
+    background: var(--color-neutral-50);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-subtle);
+    margin-bottom: var(--space-4);
+    text-align: center;
+  }
+
+  .dealer-stat-lbl {
+    display: block;
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .dealer-stat strong {
+    font-size: var(--text-xs);
+    color: var(--text-primary);
+  }
+
+  .dealer-card__blocks {
+    margin-bottom: var(--space-5);
+  }
+
+  .dealer-blocks-lbl {
+    font-size: 11px;
+    font-weight: var(--font-bold);
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: var(--space-1-5);
+  }
+
+  .dealer-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1-5);
+  }
+
+  .dealer-chip {
+    font-size: 10.5px;
+    background: var(--color-primary-50);
+    color: var(--color-primary-800);
+    padding: 2px 6px;
+    border-radius: var(--radius-xs);
+    border: 1px solid var(--border-gold);
+  }
+
+  .dealer-card__actions {
+    margin-top: auto;
+    display: flex;
+    gap: var(--space-3);
+  }
+</style>

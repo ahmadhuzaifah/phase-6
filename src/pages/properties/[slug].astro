@@ -1,0 +1,906 @@
+---
+/**
+ * Property Detail Page Template — Al Rehman Garden Phase 2
+ * Dynamic single property view with watermark gallery, price breakdown,
+ * specifications grid, map coordinates, inquiry CTA, and legal attribution.
+ */
+
+import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
+import PropertyWatermark from '@components/property/PropertyWatermark.astro';
+import PropertyCard from '@components/property/PropertyCard.astro';
+import { SITE } from '@data/site';
+import { CONTACTS } from '@data/contacts';
+import propertiesData from '@data/properties-import.json';
+
+export async function getStaticPaths() {
+  return propertiesData.map((property) => ({
+    params: { slug: property.slug },
+    props: { property },
+  }));
+}
+
+const { property } = Astro.props;
+
+// Price Formatting
+function formatPKR(val: number) {
+  if (val >= 10000000) {
+    return `${(val / 10000000).toFixed(2)} Crore`;
+  } else if (val >= 100000) {
+    return `${(val / 100000).toFixed(2)} Lakh`;
+  }
+  return new Intl.NumberFormat('en-PK').format(val);
+}
+
+const formattedPrice = formatPKR(property.price);
+const rawFormatted = new Intl.NumberFormat('en-PK').format(property.price);
+
+// Price per Marla calculation if marla unit
+const numericSize = parseFloat(property.size) || 1;
+const pricePerMarla =
+  property.unit === 'marla'
+    ? formatPKR(Math.round(property.price / numericSize))
+    : property.unit === 'kanal'
+      ? formatPKR(Math.round(property.price / (numericSize * 20)))
+      : null;
+
+// Related properties (same block or other featured)
+const relatedProperties = propertiesData
+  .filter((p) => p.slug !== property.slug)
+  .slice(0, 3);
+
+// Dynamic WhatsApp message
+const whatsappMessage = encodeURIComponent(
+  `Hello! I am interested in: ${property.title} (ID: ${property.id}, ${property.size} ${property.unit}, ${property.block}) listed for PKR ${rawFormatted}. Please confirm availability and schedule a visit.`
+);
+const whatsappUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${whatsappMessage}`;
+
+// Schema Structured Data
+const propertySchema = {
+  name: property.title,
+  description: property.description,
+  offers: {
+    '@type': 'Offer',
+    price: property.price,
+    priceCurrency: property.currency,
+    availability: 'https://schema.org/InStock',
+    url: `${SITE.url}/properties/${property.slug}`,
+  },
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: property.location.address,
+    addressLocality: property.location.city || 'Lahore',
+    addressRegion: property.location.province || 'Punjab',
+    addressCountry: 'PK',
+  },
+};
+
+const breadcrumbsSchema = {
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: SITE.url,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Properties',
+      item: `${SITE.url}/properties`,
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: property.title,
+      item: `${SITE.url}/properties/${property.slug}`,
+    },
+  ],
+};
+---
+
+<PageLayout
+  title={`${property.title} — ${SITE.name}`}
+  description={`${property.size} ${property.unit} ${property.propertyType} for ${property.purpose} in ${property.block}, Al Rehman Garden Phase 2 Lahore. Price: PKR ${formattedPrice}. Verified listing.`}
+  canonical={`${SITE.url}/properties/${property.slug}`}
+>
+  <Schema type="Product" data={propertySchema} />
+  <Schema type="BreadcrumbList" data={breadcrumbsSchema} />
+
+  <!-- Breadcrumbs Bar -->
+  <div class="prop-breadcrumbs">
+    <div class="container">
+      <nav aria-label="Breadcrumb" class="breadcrumbs__nav">
+        <a href="/" class="breadcrumbs__link">Home</a>
+        <span class="breadcrumbs__sep">/</span>
+        <a href="/properties" class="breadcrumbs__link">Properties</a>
+        <span class="breadcrumbs__sep">/</span>
+        <span class="breadcrumbs__current">{property.block}</span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Main Property Showcase -->
+  <article class="prop-detail" id="property-detail">
+    <div class="container">
+      <!-- Title & Price Header Banner -->
+      <header class="prop-header">
+        <div class="prop-header__main">
+          <div class="prop-header__badges">
+            <span class:list={['prop-header__purpose', `prop-header__purpose--${property.purpose}`]}>
+              {property.purpose === 'sale' ? 'For Sale' : 'For Rent'}
+            </span>
+            <span class="prop-header__tag">{property.block}</span>
+            {property.verificationStatus === 'verified' && (
+              <span class="prop-header__verified">
+                ✓ Title & Land Verified
+              </span>
+            )}
+          </div>
+          <h1 class="prop-header__title">{property.title}</h1>
+          <p class="prop-header__address">
+            <span class="prop-header__address-icon">📍</span>
+            <span>{property.location.address}</span>
+          </p>
+        </div>
+
+        <div class="prop-header__price-card">
+          <span class="prop-header__price-label">Demanded Price</span>
+          <div class="price price-lg text-gradient-gold">
+            <span class="price-currency">PKR</span> {formattedPrice}
+          </div>
+          {pricePerMarla && (
+            <span class="prop-header__price-unit">
+              Avg. ~PKR {pricePerMarla} / Marla
+            </span>
+          )}
+        </div>
+      </header>
+
+      <!-- Main Layout: Gallery/Specs & Contact Sidebar -->
+      <div class="prop-body-grid">
+        <!-- Left Column (Media, Facts, Features, Map) -->
+        <div class="prop-main-content">
+          <!-- Branded Watermarked Media Showcase -->
+          <div class="prop-gallery">
+            <div class="prop-gallery__main-img-wrap">
+              {property.images && property.images.length > 0 ? (
+                <img
+                  src={property.images[0].url}
+                  alt={property.images[0].alt}
+                  class="prop-gallery__img"
+                  loading="eager"
+                />
+              ) : (
+                <div class="prop-gallery__placeholder">
+                  <span>Al Rehman Garden Phase 2</span>
+                </div>
+              )}
+              <!-- Official Opacity Watermark -->
+              <PropertyWatermark position="bottom-right" opacity={0.85} />
+            </div>
+          </div>
+
+          <!-- Key Specifications Grid -->
+          <div class="prop-section prop-facts">
+            <h2 class="prop-section__title">Property Specifications</h2>
+            <div class="prop-facts__grid">
+              <div class="prop-fact-card">
+                <span class="prop-fact-icon">📐</span>
+                <div>
+                  <span class="prop-fact-lbl">Area Size</span>
+                  <strong class="prop-fact-val">{property.size} {property.unit}</strong>
+                </div>
+              </div>
+              <div class="prop-fact-card">
+                <span class="prop-fact-icon">🏷️</span>
+                <div>
+                  <span class="prop-fact-lbl">Type</span>
+                  <strong class="prop-fact-val" style="text-transform: capitalize;">{property.propertyType.replace('-', ' ')}</strong>
+                </div>
+              </div>
+              <div class="prop-fact-card">
+                <span class="prop-fact-icon">🏛️</span>
+                <div>
+                  <span class="prop-fact-lbl">Sector / Block</span>
+                  <strong class="prop-fact-val">{property.block}</strong>
+                </div>
+              </div>
+              <div class="prop-fact-card">
+                <span class="prop-fact-icon">🔑</span>
+                <div>
+                  <span class="prop-fact-lbl">Possession</span>
+                  <strong class="prop-fact-val" style="text-transform: capitalize;">{property.possessionStatus}</strong>
+                </div>
+              </div>
+              {property.bedrooms && (
+                <div class="prop-fact-card">
+                  <span class="prop-fact-icon">🛏️</span>
+                  <div>
+                    <span class="prop-fact-lbl">Bedrooms</span>
+                    <strong class="prop-fact-val">{property.bedrooms} Beds</strong>
+                  </div>
+                </div>
+              )}
+              {property.bathrooms && (
+                <div class="prop-fact-card">
+                  <span class="prop-fact-icon">🚿</span>
+                  <div>
+                    <span class="prop-fact-lbl">Bathrooms</span>
+                    <strong class="prop-fact-val">{property.bathrooms} Baths</strong>
+                  </div>
+                </div>
+              )}
+              <div class="prop-fact-card">
+                <span class="prop-fact-icon">🆔</span>
+                <div>
+                  <span class="prop-fact-lbl">Listing ID</span>
+                  <strong class="prop-fact-val">{property.id}</strong>
+                </div>
+              </div>
+              <div class="prop-fact-card">
+                <span class="prop-fact-icon">📅</span>
+                <div>
+                  <span class="prop-fact-lbl">Last Audited</span>
+                  <strong class="prop-fact-val">{new Date(property.lastCheckedDate).toLocaleDateString()}</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="prop-section">
+            <h2 class="prop-section__title">Property Overview & Description</h2>
+            <div class="prop-description">
+              <p>{property.description}</p>
+            </div>
+          </div>
+
+          <!-- Key Features & Infrastructure -->
+          {property.features && property.features.length > 0 && (
+            <div class="prop-section">
+              <h2 class="prop-section__title">Features & Society Amenities</h2>
+              <ul class="prop-features-list">
+                {property.features.map((feat: string) => (
+                  <li class="prop-feature-item">
+                    <span class="prop-feature-check">✓</span>
+                    <span>{feat}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <!-- Map & Location Coordinates -->
+          <div class="prop-section">
+            <h2 class="prop-section__title">Location & Sector Map</h2>
+            <div class="prop-map-box">
+              <div class="prop-map-box__info">
+                <strong>{property.block}</strong>
+                <span>Al Rehman Garden Phase 2, Main Sharaqpur Road, Lahore</span>
+                <span class="prop-map-box__coords">GPS: {property.location.coordinates?.lat}, {property.location.coordinates?.lng}</span>
+              </div>
+              <a
+                href={`https://maps.google.com/?q=${encodeURIComponent(`${property.title} Al Rehman Garden Phase 2 Lahore`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn--secondary btn--sm"
+              >
+                Open in Google Maps ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- Authority Resource & Interlinking Hub -->
+          <div class="prop-section prop-authority-links">
+            <h2 class="prop-section__title">Society Resources & Sector Guides</h2>
+            <div class="prop-auth-grid">
+              <a href="/al-rehman-garden-phase-2-prices" class="prop-auth-link">
+                <span>💰 Price Guide</span>
+                <small>View 2026 Plot Rates</small>
+              </a>
+              <a href="/al-rehman-garden-phase-2-payment-plan" class="prop-auth-link">
+                <span>📑 Installment Plans</span>
+                <small>3 to 5-Year Schedules</small>
+              </a>
+              <a href="/al-rehman-garden-phase-2-location" class="prop-auth-link">
+                <span>📍 Location Guide</span>
+                <small>Routes & M-2 Access</small>
+              </a>
+              <a href="/al-rehman-garden-phase-2-noc-status" class="prop-auth-link">
+                <span>⚖️ NOC & Legal Status</span>
+                <small>LDA Compliance Guide</small>
+              </a>
+              <a href="/al-rehman-garden-phase-2-blocks" class="prop-auth-link">
+                <span>🏛️ All Blocks</span>
+                <small>Sector Layouts & Maps</small>
+              </a>
+              <a href="/al-rehman-garden-phase-2-amenities" class="prop-auth-link">
+                <span>⚡ Amenities Guide</span>
+                <small>Hospital, Schools & Power</small>
+              </a>
+            </div>
+          </div>
+
+          <!-- Legal Verification Notice -->
+          <div class="prop-legal-notice">
+            <div class="prop-legal-notice__icon">🛡️</div>
+            <div class="prop-legal-notice__text">
+              <strong>Source Transparency & Legal Security:</strong>
+              <p>
+                Listing verified via <strong>{property.source}</strong>. All plot allotments, document verification, and ownership transfers must be carried out through the authorized Al Rehman Garden management office.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column (Inquiry Box & Contact Desk) -->
+        <aside class="prop-sidebar">
+          <div class="prop-contact-card">
+            <div class="prop-contact-card__badge">Official Property Desk</div>
+            <h3 class="prop-contact-card__title">Interested in this Property?</h3>
+            <p class="prop-contact-card__desc">
+              Contact our on-site representative for exact map location, title verification, and immediate physical visit.
+            </p>
+
+            <div class="prop-contact-card__actions">
+              <!-- Direct WhatsApp Button -->
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn--accent btn--lg btn--full"
+              >
+                <svg class="btn__icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/>
+                </svg>
+                <span>Inquire on WhatsApp</span>
+              </a>
+
+              <!-- Direct Call Button -->
+              <a
+                href={`tel:${CONTACTS.phone.primary}`}
+                class="btn btn--secondary btn--md btn--full"
+              >
+                📞 Call {CONTACTS.phone.display}
+              </a>
+            </div>
+
+            <hr class="prop-contact-card__hr" />
+
+            <!-- Society Office Hours -->
+            <div class="prop-contact-card__details">
+              <div class="prop-contact-row">
+                <span>Site Office:</span>
+                <strong>Main 150ft Boulevard Gate</strong>
+              </div>
+              <div class="prop-contact-row">
+                <span>Timings:</span>
+                <span>Mon - Sat: {CONTACTS.officeHours.weekdays}</span>
+              </div>
+              <div class="prop-contact-row">
+                <span>Response:</span>
+                <span class="prop-live-text">● Typical reply within 5 mins</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Related Properties Section -->
+      {relatedProperties.length > 0 && (
+        <section class="prop-related">
+          <h2 class="prop-related__title">Similar Properties in Al Rehman Garden Phase 2</h2>
+          <div class="prop-related__grid">
+            {relatedProperties.map((rel) => (
+              <PropertyCard
+                title={rel.title}
+                slug={rel.slug}
+                propertyType={rel.propertyType}
+                purpose={rel.purpose}
+                price={rel.price}
+                priceUnit={rel.priceUnit}
+                size={rel.size}
+                sizeUnit={rel.unit}
+                block={rel.block}
+                location={rel.location.address}
+                verificationStatus={rel.verificationStatus}
+                isFeatured={rel.isFeatured}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  </article>
+</PageLayout>
+
+<style>
+  /* ── Breadcrumbs ────────────────────────────────────────────────── */
+  .prop-breadcrumbs {
+    background-color: var(--color-neutral-100);
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .breadcrumbs__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+  }
+
+  .breadcrumbs__link {
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+
+  .breadcrumbs__link:hover {
+    color: var(--color-primary-600);
+  }
+
+  .breadcrumbs__sep {
+    color: var(--text-muted);
+  }
+
+  .breadcrumbs__current {
+    color: var(--color-secondary-900);
+    font-weight: var(--font-bold);
+  }
+
+  /* ── Header ─────────────────────────────────────────────────────── */
+  .prop-detail {
+    padding: var(--space-8) 0 var(--space-20);
+  }
+
+  .prop-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    margin-bottom: var(--space-8);
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  @media (min-width: 1024px) {
+    .prop-header {
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+  }
+
+  .prop-header__badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+  }
+
+  .prop-header__purpose {
+    font-size: 11px;
+    font-weight: var(--font-extrabold);
+    text-transform: uppercase;
+    color: white;
+    padding: 3px 10px;
+    border-radius: var(--radius-xs);
+  }
+
+  .prop-header__purpose--sale {
+    background-color: var(--color-accent-600);
+  }
+
+  .prop-header__purpose--rent {
+    background-color: var(--color-secondary-600);
+  }
+
+  .prop-header__tag {
+    font-size: 11px;
+    font-weight: var(--font-bold);
+    background-color: var(--color-primary-50);
+    color: var(--color-primary-800);
+    padding: 3px 10px;
+    border-radius: var(--radius-xs);
+    border: 1px solid var(--border-gold);
+  }
+
+  .prop-header__verified {
+    font-size: 11px;
+    font-weight: var(--font-bold);
+    color: #059669;
+    background-color: #ECFDF5;
+    padding: 3px 10px;
+    border-radius: var(--radius-xs);
+    border: 1px solid #A7F3D0;
+  }
+
+  .prop-header__title {
+    font-size: clamp(1.75rem, 2.5vw + 1rem, 2.5rem);
+    margin: 0 0 var(--space-2);
+  }
+
+  .prop-header__address {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  .prop-header__price-card {
+    background: var(--bg-secondary);
+    border: 1.5px solid var(--border-gold);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-shrink: 0;
+  }
+
+  .prop-header__price-label {
+    font-size: 11px;
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+  }
+
+  .prop-header__price-unit {
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+    margin-top: var(--space-1);
+  }
+
+  /* ── Layout Grid ────────────────────────────────────────────────── */
+  .prop-body-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+  }
+
+  @media (min-width: 1024px) {
+    .prop-body-grid {
+      grid-template-columns: 1fr 340px;
+    }
+  }
+
+  /* ── Gallery ────────────────────────────────────────────────────── */
+  .prop-gallery {
+    margin-bottom: var(--space-8);
+  }
+
+  .prop-gallery__main-img-wrap {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    background-color: var(--color-secondary-900);
+    box-shadow: var(--shadow-md);
+  }
+
+  .prop-gallery__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .prop-gallery__placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+  }
+
+  /* ── Sections ───────────────────────────────────────────────────── */
+  .prop-section {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6) var(--space-8);
+    margin-bottom: var(--space-6);
+    box-shadow: var(--shadow-card);
+  }
+
+  .prop-section__title {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    font-weight: var(--font-bold);
+    margin: 0 0 var(--space-5);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  /* Facts Grid */
+  .prop-facts__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 640px) {
+    .prop-facts__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .prop-fact-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    background: var(--color-neutral-50);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .prop-fact-icon {
+    font-size: 20px;
+  }
+
+  .prop-fact-lbl {
+    display: block;
+    font-size: 10px;
+    font-weight: var(--font-bold);
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .prop-fact-val {
+    display: block;
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+  }
+
+  .prop-description p {
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--text-secondary);
+  }
+
+  /* Features */
+  .prop-features-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  @media (min-width: 640px) {
+    .prop-features-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .prop-feature-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2-5);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+  }
+
+  .prop-feature-check {
+    color: #059669;
+    font-weight: var(--font-extrabold);
+  }
+
+  /* Map Box */
+  .prop-map-box {
+    background: var(--color-neutral-50);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5) var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    align-items: flex-start;
+  }
+
+  @media (min-width: 640px) {
+    .prop-map-box {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .prop-map-box__info strong {
+    display: block;
+    font-size: var(--text-base);
+    color: var(--text-primary);
+  }
+
+  .prop-map-box__info span {
+    display: block;
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+  }
+
+  .prop-map-box__coords {
+    font-family: var(--font-mono);
+    color: var(--text-muted) !important;
+    margin-top: var(--space-1);
+  }
+
+  /* Authority Links Grid */
+  .prop-auth-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+
+  @media (min-width: 640px) {
+    .prop-auth-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .prop-auth-link {
+    background: var(--color-neutral-50);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    transition: all var(--transition-fast);
+  }
+
+  .prop-auth-link:hover {
+    background: var(--color-primary-50);
+    border-color: var(--border-gold);
+    transform: translateY(-2px);
+  }
+
+  .prop-auth-link span {
+    font-size: var(--text-xs);
+    font-weight: var(--font-bold);
+    color: var(--color-secondary-900);
+    margin-bottom: 2px;
+  }
+
+  .prop-auth-link small {
+    font-size: 10px;
+    color: var(--text-muted);
+  }
+
+  /* Legal Notice */
+  .prop-legal-notice {
+    background: #FEFCE8;
+    border: 1px solid #FEF08A;
+    border-radius: var(--radius-lg);
+    padding: var(--space-4) var(--space-5);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+
+  .prop-legal-notice__icon {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .prop-legal-notice__text strong {
+    display: block;
+    font-size: var(--text-xs);
+    color: #854D0E;
+    margin-bottom: 2px;
+  }
+
+  .prop-legal-notice__text p {
+    font-size: 11px;
+    color: #713F12;
+    margin: 0;
+    line-height: var(--leading-normal);
+  }
+
+  /* ── Sidebar ────────────────────────────────────────────────────── */
+  .prop-contact-card {
+    background: var(--bg-primary);
+    border: 1.5px solid var(--border-gold);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-xl);
+    position: sticky;
+    top: 96px;
+  }
+
+  .prop-contact-card__badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: var(--font-extrabold);
+    text-transform: uppercase;
+    color: var(--color-secondary-950);
+    background: var(--gradient-gold);
+    padding: 2px 8px;
+    border-radius: var(--radius-xs);
+    margin-bottom: var(--space-3);
+  }
+
+  .prop-contact-card__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    margin: 0 0 var(--space-2);
+  }
+
+  .prop-contact-card__desc {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-5);
+  }
+
+  .prop-contact-card__actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .prop-contact-card__hr {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: var(--space-5) 0;
+  }
+
+  .prop-contact-card__details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+  }
+
+  .prop-contact-row {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-secondary);
+  }
+
+  .prop-contact-row strong {
+    color: var(--text-primary);
+  }
+
+  .prop-live-text {
+    color: #10B981;
+    font-weight: var(--font-bold);
+  }
+
+  /* ── Related ────────────────────────────────────────────────────── */
+  .prop-related {
+    margin-top: var(--space-16);
+    padding-top: var(--space-10);
+    border-top: 1px solid var(--border-light);
+  }
+
+  .prop-related__title {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-8);
+  }
+
+  .prop-related__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 640px) {
+    .prop-related__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .prop-related__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

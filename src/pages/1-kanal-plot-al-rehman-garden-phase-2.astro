@@ -1,0 +1,112 @@
+---
+/**
+ * 1 Kanal Plot in Al Rehman Garden Phase 2 — Local SEO Landing Page
+ */
+
+import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
+import PropertyCard from '@components/property/PropertyCard.astro';
+import { SITE } from '@data/site';
+import { CONTACTS } from '@data/contacts';
+import propertiesData from '@data/properties-import.json';
+
+const oneKanalPlots = propertiesData.filter(
+  (p) => p.size === '1' && p.unit === 'kanal' && p.propertyType.includes('plot')
+);
+
+const pageSchema = {
+  name: '1 Kanal Plot in Al Rehman Garden Phase 2 Lahore',
+  description: 'Verified 1 Kanal executive residential villa plots for sale in Al Rehman Garden Phase 2 Lahore in Block A and Mirabel Block.',
+  url: `${SITE.url}/1-kanal-plot-al-rehman-garden-phase-2`,
+};
+---
+
+<PageLayout
+  title="1 Kanal Plot in Al Rehman Garden Phase 2 Lahore — Luxury Villa Plots 2026"
+  description="Buy 1 Kanal residential plots in Al Rehman Garden Phase 2 Lahore. Ready possession in Executive Block A & luxury installment plots in Mirabel Block."
+>
+  <Schema type="WebSite" data={pageSchema} />
+
+  <section class="local-hero">
+    <div class="container">
+      <div class="eyebrow eyebrow--dark">Luxury Estate Plots</div>
+      <h1 class="local-hero__title">
+        1 Kanal Plot in <span class="text-gradient-gold">Al Rehman Garden Phase 2</span>
+      </h1>
+      <p class="local-hero__lead lead">
+        Grand 50x90 luxury estate plots situated on 80ft and 150ft boulevards in Executive Block A and gated Mirabel Block, offering elite privacy and prestige.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-header-row">
+        <div>
+          <span class="eyebrow">Executive Inventory</span>
+          <h2 class="section-header__title">Available 1 Kanal Plots</h2>
+        </div>
+        <a href={CONTACTS.whatsapp.url} target="_blank" rel="noopener noreferrer" class="btn btn--accent btn--sm">
+          Inquire 1 Kanal Allotments
+        </a>
+      </div>
+
+      <div class="local-grid">
+        {oneKanalPlots.map((prop) => (
+          <PropertyCard
+            title={prop.title}
+            slug={prop.slug}
+            propertyType={prop.propertyType}
+            purpose={prop.purpose}
+            price={prop.price}
+            priceUnit={prop.priceUnit}
+            size={prop.size}
+            sizeUnit={prop.unit}
+            block={prop.block}
+            location={prop.location.address}
+            verificationStatus={prop.verificationStatus}
+            isFeatured={prop.isFeatured}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .local-hero {
+    background: radial-gradient(circle at 80% 20%, #16244F 0%, #0A1128 75%);
+    color: var(--text-inverse);
+    padding: var(--space-12) 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  }
+
+  .local-hero__title {
+    color: #FFFFFF;
+    margin: var(--space-2) 0 var(--space-3);
+  }
+
+  .local-hero__lead {
+    color: var(--color-neutral-300);
+    max-width: 65ch;
+    margin: 0;
+  }
+
+  .local-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 640px) {
+    .local-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .local-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

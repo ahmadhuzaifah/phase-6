@@ -1,0 +1,107 @@
+---
+/**
+ * Blocks Directory — Al Rehman Garden Phase 2 Lahore
+ * Sector-by-sector overview with master development status, plot types, and maps.
+ */
+
+import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
+import BlockCard from '@components/blocks/BlockCard.astro';
+import { SITE } from '@data/site';
+import { BLOCKS } from '@data/blocks';
+
+const breadcrumbsSchema = {
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: SITE.url,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Blocks & Sectors',
+      item: `${SITE.url}/blocks`,
+    },
+  ],
+};
+---
+
+<PageLayout
+  title={`Sectors & Blocks Directory — ${SITE.name}`}
+  description={`Explore all master-planned blocks in Al Rehman Garden Phase 2 Lahore. View on-ground status, possession percentages, plot sizes, and maps for Block A, B, C, D, Mirabel, and Royal Block.`}
+>
+  <Schema type="BreadcrumbList" data={breadcrumbsSchema} />
+
+  <!-- Blocks Header -->
+  <section class="blocks-header">
+    <div class="container">
+      <div class="eyebrow eyebrow--dark">Master Planned Community</div>
+      <h1 class="blocks-header__title">Society Blocks & Sectors</h1>
+      <p class="blocks-header__lead lead">
+        Al Rehman Garden Phase 2 is divided into premium executive sectors, residential blocks, and exclusive luxury villa enclaves with 100% on-ground infrastructure.
+      </p>
+    </div>
+  </section>
+
+  <!-- Blocks Grid -->
+  <section class="section section--alt" id="blocks-directory">
+    <div class="container">
+      <div class="blocks-dir-grid">
+        {BLOCKS.map((block) => (
+          <BlockCard
+            name={block.name}
+            slug={block.slug}
+            category={block.category}
+            status={block.status}
+            possessionPercentage={block.possessionPercentage}
+            description={block.description}
+            plotSizes={block.plotSizes}
+            plotTypes={block.plotTypes}
+            features={block.features}
+            locationHighlight={block.locationHighlight}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .blocks-header {
+    background: radial-gradient(circle at 80% 20%, #16244F 0%, #0A1128 75%);
+    color: var(--text-inverse);
+    padding: var(--space-12) 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  }
+
+  .blocks-header__title {
+    color: #FFFFFF;
+    margin: var(--space-2) 0 var(--space-3);
+  }
+
+  .blocks-header__lead {
+    color: var(--color-neutral-300);
+    max-width: 65ch;
+    margin: 0;
+  }
+
+  .blocks-dir-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 768px) {
+    .blocks-dir-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .blocks-dir-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

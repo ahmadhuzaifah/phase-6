@@ -1,0 +1,21 @@
+---
+/**
+ * Schema.astro — JSON-LD Structured Data Component
+ * Renders Schema.org structured data for rich search results.
+ */
+
+interface Props {
+  type: 'WebSite' | 'RealEstateAgent' | 'Product' | 'Article' | 'BreadcrumbList' | 'FAQPage';
+  data: Record<string, unknown>;
+}
+
+const { type, data } = Astro.props;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': type,
+  ...data,
+};
+---
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(schema, null, 0)} />

@@ -1,0 +1,252 @@
+---
+/**
+ * Al Rehman Garden Phase 2 Location Comparison — Authority SEO Hub
+ */
+
+import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
+
+const comparisons = [
+  {
+    society: 'Al Rehman Garden Phase 2',
+    corridor: 'Main Sharaqpur Rd (Faizpur M-2)',
+    distanceToDowntown: '10 Mins (Mall Road)',
+    fiveMarlaRate: 'PKR 40 - 55 Lakh',
+    possession: '100% On-Ground Inhabited',
+    highlight: 'Best balance of prime accessibility and affordable rates.',
+  },
+  {
+    society: 'Al-Jalil Garden',
+    corridor: 'Main Sharaqpur Road',
+    distanceToDowntown: '12 Mins',
+    fiveMarlaRate: 'PKR 45 - 60 Lakh',
+    possession: 'Developed',
+    highlight: 'Neighboring society with similar corridor advantages.',
+  },
+  {
+    society: 'DHA Phase 9 / 10',
+    corridor: 'Bedian / Ring Road Southern Arc',
+    distanceToDowntown: '35 Mins',
+    fiveMarlaRate: 'PKR 85 Lakh - 1.40 Cr',
+    possession: 'Developing / Possession in Phase 9',
+    highlight: 'High brand premium; requires significantly higher capital.',
+  },
+  {
+    society: 'Lake City / Bahria Town',
+    corridor: 'Raiwind Road',
+    distanceToDowntown: '30 Mins (Via Ring Road)',
+    fiveMarlaRate: 'PKR 75 Lakh - 1.20 Cr',
+    possession: 'Developed',
+    highlight: 'Higher pricing; longer distance to northern and downtown Lahore.',
+  },
+];
+
+const faqs = [
+  {
+    question: 'Why choose Al Rehman Garden Phase 2 over southern Lahore societies?',
+    answer: 'Al Rehman Garden Phase 2 provides direct 10-minute access to Lahore city center (Mall Road, Civil Secretariat, Courts) and M-2 Motorway without paying the heavy 2x-3x price premium charged in southern Raiwind or Bedian corridor schemes.',
+  },
+];
+
+const faqSchema = {
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: f.answer,
+    },
+  })),
+};
+---
+
+<PageLayout
+  title="Al Rehman Garden Phase 2 vs Other Housing Societies Lahore — Comparison 2026"
+  description="Compare Al Rehman Garden Phase 2 with Al-Jalil Garden, DHA, Bahria Town, and Lake City. Analyze travel times, plot price differences, possession rates, and ROI."
+>
+  <Schema type="FAQPage" data={faqSchema} />
+
+  <section class="auth-hero">
+    <div class="container">
+      <div class="eyebrow eyebrow--dark">Location & Price Benchmark</div>
+      <h1 class="auth-hero__title">
+        Phase 2 vs Other <span class="text-gradient-gold">Lahore Societies</span>
+      </h1>
+      <p class="auth-hero__lead lead">
+        An objective side-by-side comparative analysis of travel times, per-Marla costs, on-ground development, and infrastructure quality across Lahore’s major housing schemes.
+      </p>
+      <div class="auth-meta-bar">
+        <span>📅 Benchmark Date: September 2026</span>
+        <span>📊 Analysis: Price-to-Value Index</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <!-- Comparison Table -->
+      <div class="comp-table-card">
+        <h2 class="comp-table-card__title">Housing Society Benchmark Comparison</h2>
+        <div class="table-responsive">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th>Housing Society</th>
+                <th>Corridor Location</th>
+                <th>Travel to Mall Rd</th>
+                <th>5 Marla Plot Rate</th>
+                <th>Possession Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {comparisons.map((c) => (
+                <tr class={c.society.includes('Al Rehman') ? 'row-highlight' : ''}>
+                  <td><strong>{c.society}</strong></td>
+                  <td>{c.corridor}</td>
+                  <td>{c.distanceToDowntown}</td>
+                  <td><span class="comp-price">{c.fiveMarlaRate}</span></td>
+                  <td>{c.possession}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- FAQ Card -->
+      <div class="auth-faq-card" style="margin-top: 32px;">
+        <h2 class="auth-faq-card__title">Location Comparison FAQs</h2>
+        <div class="faq-list">
+          {faqs.map((f) => (
+            <div class="faq-item">
+              <h3 class="faq-item__q">Q: {f.question}</h3>
+              <p class="faq-item__a">{f.answer}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .auth-hero {
+    background: radial-gradient(circle at 80% 20%, #16244F 0%, #0A1128 75%);
+    color: var(--text-inverse);
+    padding: var(--space-12) 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  }
+
+  .auth-hero__title {
+    color: #FFFFFF;
+    margin: var(--space-2) 0 var(--space-3);
+  }
+
+  .auth-hero__lead {
+    color: var(--color-neutral-300);
+    max-width: 65ch;
+    margin: 0 0 var(--space-4);
+  }
+
+  .auth-meta-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    font-size: var(--text-xs);
+    color: #F3D375;
+  }
+
+  .comp-table-card {
+    background: var(--bg-primary);
+    border: 1.5px solid var(--border-gold);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .comp-table-card__title {
+    font-size: var(--text-2xl);
+    margin: 0 0 var(--space-6);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+  }
+
+  .comp-table th {
+    background-color: var(--color-secondary-900);
+    color: white;
+    padding: var(--space-3-5) var(--space-4);
+    text-align: left;
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+  }
+
+  .comp-table td {
+    padding: var(--space-3-5) var(--space-4);
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-secondary);
+  }
+
+  .row-highlight {
+    background-color: #FEF9C3 !important;
+  }
+
+  .row-highlight strong {
+    color: var(--color-secondary-950);
+  }
+
+  .comp-price {
+    font-weight: var(--font-bold);
+    color: var(--color-secondary-900);
+  }
+
+  .auth-faq-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-card);
+  }
+
+  .auth-faq-card__title {
+    font-size: var(--text-2xl);
+    margin: 0 0 var(--space-6);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .faq-item {
+    background: var(--color-neutral-50);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+  }
+
+  .faq-item__q {
+    font-size: var(--text-base);
+    color: var(--text-primary);
+    margin: 0 0 var(--space-2);
+  }
+
+  .faq-item__a {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: var(--leading-relaxed);
+  }
+</style>

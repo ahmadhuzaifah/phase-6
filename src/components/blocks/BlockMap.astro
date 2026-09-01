@@ -1,0 +1,74 @@
+---
+/**
+ * BlockMap.astro — Block Map Display Component
+ * Displays the society block map image or embedded map.
+ */
+
+interface Props {
+  mapUrl?: string;
+  altText?: string;
+  blockName?: string;
+}
+
+const {
+  mapUrl,
+  altText = 'Al Rehman Garden Phase 2 Block Map',
+  blockName,
+} = Astro.props;
+---
+
+<div class="block-map" id="block-map">
+  <h3 class="block-map__title">
+    {blockName ? `${blockName} Map` : 'Society Map'}
+  </h3>
+
+  <div class="block-map__container">
+    {
+      mapUrl ? (
+        <img
+          src={mapUrl}
+          alt={altText}
+          loading="lazy"
+          class="block-map__image"
+        />
+      ) : (
+        <div class="block-map__placeholder">
+          <p>Map will be available soon.</p>
+        </div>
+      )
+    }
+  </div>
+</div>
+
+<style>
+  .block-map {
+    margin-bottom: var(--space-8);
+  }
+
+  .block-map__title {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    margin-bottom: var(--space-4);
+  }
+
+  .block-map__container {
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .block-map__image {
+    width: 100%;
+    height: auto;
+  }
+
+  .block-map__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 16 / 9;
+    background-color: var(--color-neutral-100);
+    color: var(--text-tertiary);
+  }
+</style>

@@ -1,0 +1,70 @@
+---
+/**
+ * BaseLayout.astro — Root HTML Shell
+ * The foundational layout for all pages. Handles document structure,
+ * fonts, global styles, favicons, and accessibility features.
+ */
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article' | 'product';
+  noindex?: boolean;
+}
+
+import Meta from '@components/seo/Meta.astro';
+import { SITE } from '@data/site';
+
+import '@styles/global.css';
+
+const { title, description, canonical, ogImage, ogType, noindex } = Astro.props;
+---
+
+<!doctype html>
+<html lang={SITE.language} dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Favicons -->
+    <link rel="icon" href="/images/favicon/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/images/favicon/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/images/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Preconnect to Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Google Fonts: Plus Jakarta Sans + Playfair Display -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- SEO Meta Tags -->
+    <Meta
+      title={title}
+      description={description}
+      canonical={canonical}
+      ogImage={ogImage}
+      ogType={ogType}
+      noindex={noindex}
+    />
+
+    <!-- Additional head content -->
+    <slot name="head" />
+  </head>
+
+  <body>
+    <!-- Skip to Content (Accessibility) -->
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+    <slot />
+
+    <!-- Additional scripts -->
+    <slot name="scripts" />
+  </body>
+</html>

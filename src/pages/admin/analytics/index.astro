@@ -1,0 +1,311 @@
+---
+/**
+ * Admin Conversion Analytics Dashboard — Al Rehman Garden Phase 2 Operations System
+ */
+
+import AdminLayout from '@layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="Conversion & Traffic Analytics" activeSection="analytics">
+  <!-- Analytics KPI Grid -->
+  <section class="admin-kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-card__top">
+        <span class="kpi-card__lbl">Total Property Views</span>
+        <span class="kpi-card__icon">👁️</span>
+      </div>
+      <div class="kpi-card__val text-gradient-gold">14,820</div>
+      <div class="kpi-card__sub">+18% vs last week</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-card__top">
+        <span class="kpi-card__lbl">WhatsApp Inquiries</span>
+        <span class="kpi-card__icon">💬</span>
+      </div>
+      <div class="kpi-card__val" style="color: #10B981;">342</div>
+      <div class="kpi-card__sub">8.4% Click-Through Rate</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-card__top">
+        <span class="kpi-card__lbl">Direct Phone Calls</span>
+        <span class="kpi-card__icon">📞</span>
+      </div>
+      <div class="kpi-card__val" style="color: #60A5FA;">118</div>
+      <div class="kpi-card__sub">High-intent investor calls</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-card__top">
+        <span class="kpi-card__lbl">CRM Inquiries</span>
+        <span class="kpi-card__icon">📋</span>
+      </div>
+      <div class="kpi-card__val" style="color: #F3D375;">18</div>
+      <div class="kpi-card__sub">16.6% Booking Token Rate</div>
+    </div>
+  </section>
+
+  <!-- Two Column Layout: Search Preferences & Conversion Funnel -->
+  <div class="admin-two-col">
+    <!-- Left: Most Searched Sizes & Most Viewed Sectors -->
+    <div class="admin-card">
+      <div class="admin-card__header">
+        <h2 class="admin-card__title">Top User Search & Block Demands</h2>
+      </div>
+
+      <div style="margin-bottom: 24px;">
+        <h3 style="font-size: var(--text-xs); color: #94A3B8; text-transform: uppercase; margin-bottom: 12px;">
+          Most Searched Property Sizes
+        </h3>
+        <div class="chart-bar-list">
+          <div class="chart-bar-item">
+            <div class="chart-bar-lbl"><span>5 Marla (Plot / House)</span> <strong>42%</strong></div>
+            <div class="chart-bar-track"><div class="chart-bar-fill" style="width: 42%; background: #D4AF37;"></div></div>
+          </div>
+          <div class="chart-bar-item">
+            <div class="chart-bar-lbl"><span>3 & 3.5 Marla On-Ground</span> <strong>28%</strong></div>
+            <div class="chart-bar-track"><div class="chart-bar-fill" style="width: 28%; background: #60A5FA;"></div></div>
+          </div>
+          <div class="chart-bar-item">
+            <div class="chart-bar-lbl"><span>10 Marla Luxury</span> <strong>18%</strong></div>
+            <div class="chart-bar-track"><div class="chart-bar-fill" style="width: 18%; background: #10B981;"></div></div>
+          </div>
+          <div class="chart-bar-item">
+            <div class="chart-bar-lbl"><span>1 Kanal Executive Estate</span> <strong>12%</strong></div>
+            <div class="chart-bar-track"><div class="chart-bar-fill" style="width: 12%; background: #A78BFA;"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 style="font-size: var(--text-xs); color: #94A3B8; text-transform: uppercase; margin-bottom: 12px;">
+          Most Viewed Master Sectors
+        </h3>
+        <div class="chart-bar-list">
+          <div class="chart-bar-item">
+            <div class="chart-bar-lbl"><span>Block A (Executive Frontage)</span> <strong>31%</strong></div>
+            <div class="chart-bar-track"><div class="chart-bar-fill" style="width: 31%; background: #D4AF37;"></div></div>
+          </div>
+          <div class="chart-bar-item">
+            <div class="chart-bar-lbl"><span>Mirabel Block (Luxury Lake)</span> <strong>24%</strong></div>
+            <div class="chart-bar-track"><div class="chart-bar-fill" style="width: 24%; background: #10B981;"></div></div>
+          </div>
+          <div class="chart-bar-item">
+            <div class="chart-bar-lbl"><span>Block B (Prime Residential)</span> <strong>19%</strong></div>
+            <div class="chart-bar-track"><div class="chart-bar-fill" style="width: 19%; background: #60A5FA;"></div></div>
+          </div>
+          <div class="chart-bar-item">
+            <div class="chart-bar-lbl"><span>Block C (Broadway Commercial)</span> <strong>14%</strong></div>
+            <div class="chart-bar-track"><div class="chart-bar-fill" style="width: 14%; background: #F59E0B;"></div></div>
+          </div>
+          <div class="chart-bar-item">
+            <div class="chart-bar-lbl"><span>Royal & Beverly Hills Blocks</span> <strong>12%</strong></div>
+            <div class="chart-bar-track"><div class="chart-bar-fill" style="width: 12%; background: #94A3B8;"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Lead Conversion Funnel -->
+    <div class="admin-card">
+      <div class="admin-card__header">
+        <h2 class="admin-card__title">Investor Conversion Funnel</h2>
+      </div>
+
+      <div class="funnel-stack">
+        <div class="funnel-step">
+          <div class="funnel-step__info">
+            <strong>1. Search / Directory Visit</strong>
+            <span>14,820 Sessions (100%)</span>
+          </div>
+          <div class="funnel-step__bar" style="width: 100%; background: #1E293B;"></div>
+        </div>
+
+        <div class="funnel-step">
+          <div class="funnel-step__info">
+            <strong>2. Property Listing Detail View</strong>
+            <span>8,450 Impressions (57.0%)</span>
+          </div>
+          <div class="funnel-step__bar" style="width: 57%; background: #3B82F6;"></div>
+        </div>
+
+        <div class="funnel-step">
+          <div class="funnel-step__info">
+            <strong>3. WhatsApp / Call Advisory Trigger</strong>
+            <span>460 Direct Inquiries (3.1%)</span>
+          </div>
+          <div class="funnel-step__bar" style="width: 25%; background: #D4AF37;"></div>
+        </div>
+
+        <div class="funnel-step">
+          <div class="funnel-step__info">
+            <strong>4. On-Ground Site Inspection Visit</strong>
+            <span>72 Guided Tours</span>
+          </div>
+          <div class="funnel-step__bar" style="width: 12%; background: #F59E0B;"></div>
+        </div>
+
+        <div class="funnel-step">
+          <div class="funnel-step__info">
+            <strong>5. Registry / Token Allotment</strong>
+            <span style="color: #10B981; font-weight: bold;">12 Transactions Closed</span>
+          </div>
+          <div class="funnel-step__bar" style="width: 6%; background: #10B981;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</AdminLayout>
+
+<style>
+  .admin-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: var(--space-5);
+    margin-bottom: var(--space-6);
+  }
+
+  @media (min-width: 640px) {
+    .admin-kpi-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .admin-kpi-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .kpi-card {
+    background: #0E1626;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-xl);
+    padding: var(--space-5) var(--space-6);
+  }
+
+  .kpi-card__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-2);
+  }
+
+  .kpi-card__lbl {
+    font-size: var(--text-xs);
+    font-weight: var(--font-bold);
+    color: #94A3B8;
+    text-transform: uppercase;
+  }
+
+  .kpi-card__icon {
+    font-size: 20px;
+  }
+
+  .kpi-card__val {
+    font-size: 2rem;
+    font-weight: var(--font-extrabold);
+    font-family: var(--font-heading);
+    margin-bottom: var(--space-1);
+  }
+
+  .kpi-card__sub {
+    font-size: 11px;
+    color: #64748B;
+  }
+
+  .admin-two-col {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 1024px) {
+    .admin-two-col {
+      grid-template-columns: 1.2fr 1fr;
+    }
+  }
+
+  .admin-card {
+    background: #0E1626;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+  }
+
+  .admin-card__header {
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .admin-card__title {
+    font-size: var(--text-base);
+    color: #FFFFFF;
+    margin: 0;
+  }
+
+  .chart-bar-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .chart-bar-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .chart-bar-lbl {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--text-xs);
+    color: #CBD5E1;
+  }
+
+  .chart-bar-track {
+    height: 8px;
+    background: #1E293B;
+    border-radius: var(--radius-full);
+    overflow: hidden;
+  }
+
+  .chart-bar-fill {
+    height: 100%;
+    border-radius: var(--radius-full);
+  }
+
+  .funnel-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .funnel-step {
+    background: #070D19;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+  }
+
+  .funnel-step__info {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--text-xs);
+    margin-bottom: 6px;
+  }
+
+  .funnel-step__info strong {
+    color: #FFFFFF;
+  }
+
+  .funnel-step__info span {
+    color: #94A3B8;
+  }
+
+  .funnel-step__bar {
+    height: 6px;
+    border-radius: var(--radius-full);
+  }
+</style>

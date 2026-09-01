@@ -1,0 +1,130 @@
+---
+/**
+ * PropertyLayout.astro — Property Detail Page Layout
+ * Extends PageLayout with breadcrumbs and property-specific schema markup.
+ */
+
+interface BreadcrumbItem {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+  breadcrumbs?: BreadcrumbItem[];
+}
+
+import BaseLayout from './BaseLayout.astro';
+import Header from '@components/global/Header.astro';
+import Footer from '@components/global/Footer.astro';
+import WhatsAppButton from '@components/global/WhatsAppButton.astro';
+import Schema from '@components/seo/Schema.astro';
+import { SITE } from '@data/site';
+
+const {
+  title,
+  description,
+  canonical,
+  ogImage,
+  breadcrumbs = [
+    { label: 'Home', href: '/' },
+    { label: 'Properties', href: '/properties' },
+  ],
+} = Astro.props;
+
+const breadcrumbSchema = {
+  itemListElement: breadcrumbs.map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: item.label,
+    item: `${SITE.url}${item.href}`,
+  })),
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  ogImage={ogImage}
+  ogType="product"
+>
+  <Schema type="BreadcrumbList" data={breadcrumbSchema} />
+
+  <Header />
+
+  <main id="main-content">
+    <!-- Breadcrumb Navigation -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <div class="container">
+        <ol class="breadcrumb__list">
+          {
+            breadcrumbs.map((item, index) => (
+              <li class="breadcrumb__item">
+                {index < breadcrumbs.length - 1 ? (
+                  <>
+                    <a href={item.href} class="breadcrumb__link">
+                      {item.label}
+                    </a>
+                    <span class="breadcrumb__separator" aria-hidden="true">
+                      /
+                    </span>
+                  </>
+                ) : (
+                  <span class="breadcrumb__current" aria-current="page">
+                    {item.label}
+                  </span>
+                )}
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </nav>
+
+    <slot />
+  </main>
+
+  <Footer />
+  <WhatsAppButton />
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    padding: var(--space-4) 0;
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--color-neutral-200);
+  }
+
+  .breadcrumb__list {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: var(--text-sm);
+  }
+
+  .breadcrumb__link {
+    color: var(--text-tertiary);
+    transition: color var(--transition-fast);
+  }
+
+  .breadcrumb__link:hover {
+    color: var(--color-primary-600);
+  }
+
+  .breadcrumb__separator {
+    color: var(--color-neutral-300);
+  }
+
+  .breadcrumb__current {
+    color: var(--text-primary);
+    font-weight: var(--font-medium);
+  }
+</style>

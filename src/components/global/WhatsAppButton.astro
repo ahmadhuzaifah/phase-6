@@ -1,0 +1,190 @@
+---
+/**
+ * WhatsAppButton.astro — Floating Real Estate Advisor CTA
+ * Fixed-position conversion widget with live pulsing radar and advisory tooltip.
+ */
+
+import { CONTACTS } from '@data/contacts';
+---
+
+<div class="whatsapp-widget" id="whatsapp-widget">
+  <!-- Interactive Tooltip Banner -->
+  <a
+    href={CONTACTS.whatsapp.url}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="whatsapp-widget__tooltip"
+    aria-label="Direct WhatsApp Property Advisory"
+  >
+    <div class="whatsapp-widget__avatar">
+      <span class="whatsapp-widget__avatar-dot"></span>
+      <span>ARG</span>
+    </div>
+    <div class="whatsapp-widget__message">
+      <span class="whatsapp-widget__title">Property Advisor Online</span>
+      <span class="whatsapp-widget__subtitle">Get instant rates & payment plans</span>
+    </div>
+  </a>
+
+  <!-- Floating Action Button -->
+  <a
+    href={CONTACTS.whatsapp.url}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="whatsapp-btn"
+    id="whatsapp-cta"
+    aria-label="Chat on WhatsApp with Property Advisor"
+    title="Chat on WhatsApp"
+  >
+    <span class="whatsapp-btn__pulse" aria-hidden="true"></span>
+    <svg class="whatsapp-btn__icon" viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16.004 0h-.008C7.174 0 0 7.176 0 16.004c0 3.498 1.14 6.74 3.072 9.362L1.062 30.916l5.775-1.854A15.929 15.929 0 0016.004 32C24.826 32 32 24.826 32 16.004 32 7.176 24.826 0 16.004 0zm9.532 22.604c-.396 1.118-2.326 2.138-3.21 2.226-.884.088-1.706.396-5.744-1.196-4.858-1.916-7.932-6.924-8.174-7.244-.242-.32-1.972-2.624-1.972-5.006s1.246-3.552 1.69-4.038c.444-.486.968-.608 1.29-.608.322 0 .646.004.928.016.298.014.698-.112 1.092.834.396.948 1.35 3.288 1.468 3.528.118.242.198.524.04.844-.158.322-.238.52-.476.802-.238.282-.5.63-.714.846-.238.238-.486.496-.208.972.276.476 1.23 2.028 2.642 3.286 1.814 1.618 3.344 2.122 3.82 2.36.476.238.754.2 1.032-.118.278-.32 1.19-1.384 1.508-1.86.316-.476.634-.396 1.07-.238.436.158 2.77 1.308 3.246 1.544.476.238.794.354.912.552.118.198.118 1.14-.278 2.258z" />
+    </svg>
+  </a>
+</div>
+
+<style>
+  .whatsapp-widget {
+    position: fixed;
+    bottom: var(--space-6);
+    right: var(--space-6);
+    z-index: var(--z-fixed);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  /* ── Interactive Advisor Tooltip ────────────────────────────────── */
+  .whatsapp-widget__tooltip {
+    display: none;
+    align-items: center;
+    gap: var(--space-2-5);
+    background: rgba(10, 17, 40, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    padding: var(--space-2) var(--space-3-5);
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-xl);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    animation: floatTooltip 4s ease-in-out infinite;
+  }
+
+  @keyframes floatTooltip {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+
+  @media (min-width: 768px) {
+    .whatsapp-widget__tooltip {
+      display: inline-flex;
+    }
+  }
+
+  .whatsapp-widget__tooltip:hover {
+    background: #0A1128;
+    border-color: #D4AF37;
+    transform: scale(1.02);
+  }
+
+  .whatsapp-widget__avatar {
+    position: relative;
+    width: 28px;
+    height: 28px;
+    background: var(--gradient-gold);
+    color: var(--color-secondary-950);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: var(--font-extrabold);
+  }
+
+  .whatsapp-widget__avatar-dot {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    width: 8px;
+    height: 8px;
+    background-color: #10B981;
+    border: 1.5px solid #0A1128;
+    border-radius: var(--radius-full);
+  }
+
+  .whatsapp-widget__message {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    line-height: 1.2;
+  }
+
+  .whatsapp-widget__title {
+    font-size: 11px;
+    font-weight: var(--font-bold);
+    color: #FFFFFF;
+  }
+
+  .whatsapp-widget__subtitle {
+    font-size: 9.5px;
+    color: #F3D375;
+  }
+
+  /* ── Main FAB ───────────────────────────────────────────────────── */
+  .whatsapp-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background-color: #25D366;
+    color: #FFFFFF;
+    border-radius: var(--radius-full);
+    box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .whatsapp-btn:hover {
+    transform: scale(1.08) translateY(-2px);
+    box-shadow: 0 12px 30px rgba(37, 211, 102, 0.6);
+    color: #FFFFFF;
+  }
+
+  .whatsapp-btn__icon {
+    width: 32px;
+    height: 32px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .whatsapp-btn__pulse {
+    position: absolute;
+    inset: -3px;
+    border-radius: var(--radius-full);
+    background-color: #25D366;
+    animation: whatsappRadar 2.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+    z-index: 1;
+  }
+
+  @keyframes whatsappRadar {
+    0% {
+      transform: scale(0.95);
+      opacity: 0.7;
+    }
+    100% {
+      transform: scale(1.6);
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .whatsapp-btn__pulse,
+    .whatsapp-widget__tooltip {
+      animation: none;
+    }
+  }
+</style>

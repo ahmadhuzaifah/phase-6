@@ -1,0 +1,253 @@
+---
+/**
+ * Map Page — Al Rehman Garden Phase 2 Lahore
+ */
+
+import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
+import Button from '@components/global/Button.astro';
+import { SITE } from '@data/site';
+import { BLOCKS } from '@data/blocks';
+import { CONTACTS } from '@data/contacts';
+
+const mapSchema = {
+  name: 'Al Rehman Garden Phase 2 Master Map & GPS Location',
+  description: 'Masterplan layout and GPS location for Al Rehman Garden Phase 2 on Main Sharaqpur Road Lahore.',
+  url: `${SITE.url}/map`,
+};
+---
+
+<PageLayout
+  title={`Master Map & Location — ${SITE.name} Lahore`}
+  description={`Official society masterplan and location map for Al Rehman Garden Phase 2 Lahore. View block boundaries, roads, parks, and GPS coordinates.`}
+>
+  <Schema type="WebSite" data={mapSchema} />
+
+  <section class="map-hero">
+    <div class="container">
+      <div class="eyebrow eyebrow--dark">Master Plan & Location Map</div>
+      <h1 class="map-hero__title">
+        Al Rehman Garden Phase 2 <span class="text-gradient-gold">Society Map</span>
+      </h1>
+      <p class="map-hero__lead lead">
+        Detailed sector layout, 150ft main boulevard, parks, grand mosques, commercial zones, and hospital complexes on Main Sharaqpur Road Lahore.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <!-- Master Map Card -->
+      <div class="map-box-card">
+        <div class="map-box-card__header">
+          <div>
+            <span class="map-box-card__tag">Master Layout</span>
+            <h2 class="map-box-card__title">Phase 2 Masterplan Overview</h2>
+          </div>
+          <a
+            href={CONTACTS.whatsapp.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn--accent btn--sm"
+          >
+            Get High-Res Map on WhatsApp
+          </a>
+        </div>
+
+        <div class="map-interactive-view">
+          <div class="map-interactive-inner">
+            <div class="map-pin-badge">
+              <span>📍 31.5768° N, 74.2254° E • Main Sharaqpur Road</span>
+            </div>
+            <p class="map-desc-text">
+              Master-planned housing society with dedicated sector parks, 150ft entrance boulevard, hospital complex, school branches, and commercial broadways.
+            </p>
+            <div class="map-btn-row">
+              <a
+                href="https://maps.google.com/?q=Al+Rehman+Garden+Phase+2+Lahore"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn--primary btn--md"
+              >
+                Open in Google Maps ↗
+              </a>
+              <Button href="/blocks" variant="outline" size="md">
+                Explore Block Layouts
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blocks Quick Links Grid -->
+      <div class="map-blocks-grid">
+        {BLOCKS.map((b) => (
+          <div class="map-block-card">
+            <h3 class="map-block-card__title">{b.name}</h3>
+            <p class="map-block-card__desc">{b.locationHighlight || 'Main Sharaqpur Road Corridor'}</p>
+            <div class="map-block-card__status">
+              <span>Status:</span> <strong>{b.status.replace('-', ' ')}</strong>
+            </div>
+            <a href={`/blocks/${b.slug}`} class="map-block-card__link">
+              View {b.name} Details →
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .map-hero {
+    background: radial-gradient(circle at 80% 20%, #16244F 0%, #0A1128 75%);
+    color: var(--text-inverse);
+    padding: var(--space-12) 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  }
+
+  .map-hero__title {
+    color: #FFFFFF;
+    margin: var(--space-2) 0 var(--space-3);
+  }
+
+  .map-hero__lead {
+    color: var(--color-neutral-300);
+    max-width: 65ch;
+    margin: 0;
+  }
+
+  .map-box-card {
+    background: var(--bg-primary);
+    border: 1.5px solid var(--border-gold);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-xl);
+    margin-bottom: var(--space-12);
+  }
+
+  .map-box-card__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  @media (min-width: 640px) {
+    .map-box-card__header {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .map-box-card__tag {
+    font-size: 11px;
+    font-weight: var(--font-bold);
+    color: var(--color-primary-700);
+    text-transform: uppercase;
+  }
+
+  .map-box-card__title {
+    font-size: var(--text-2xl);
+    margin: 0;
+  }
+
+  .map-interactive-view {
+    background: linear-gradient(135deg, #101F44 0%, #0A1128 100%);
+    border-radius: var(--radius-xl);
+    padding: var(--space-12) var(--space-6);
+    text-align: center;
+    color: white;
+  }
+
+  .map-pin-badge {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.2);
+    border: 1px solid #D4AF37;
+    color: #F3D375;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    font-weight: var(--font-bold);
+    margin-bottom: var(--space-4);
+  }
+
+  .map-desc-text {
+    max-width: 55ch;
+    margin: 0 auto var(--space-8);
+    font-size: var(--text-base);
+    color: var(--color-neutral-300);
+  }
+
+  .map-btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-4);
+  }
+
+  .map-blocks-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 768px) {
+    .map-blocks-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .map-blocks-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .map-block-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .map-block-card__title {
+    font-size: var(--text-base);
+    margin: 0 0 var(--space-1);
+  }
+
+  .map-block-card__desc {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-3);
+  }
+
+  .map-block-card__status {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: var(--space-4);
+  }
+
+  .map-block-card__status strong {
+    color: #059669;
+    text-transform: capitalize;
+  }
+
+  .map-block-card__link {
+    margin-top: auto;
+    font-size: var(--text-xs);
+    font-weight: var(--font-bold);
+    color: var(--color-primary-700);
+    text-decoration: none;
+  }
+
+  .map-block-card__link:hover {
+    text-decoration: underline;
+  }
+</style>

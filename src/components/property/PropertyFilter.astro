@@ -1,0 +1,116 @@
+---
+/**
+ * PropertyFilter.astro — Property Filter Toolbar
+ * Filter controls for property listings (type, purpose, block, size, price range).
+ */
+
+import { PLOT_TYPES, PLOT_SIZES } from '@data/blocks';
+---
+
+<aside class="property-filter" id="property-filter" aria-label="Filter properties">
+  <h2 class="property-filter__title">Filter Properties</h2>
+
+  <form class="property-filter__form" id="property-filter-form">
+    <!-- Property Type -->
+    <div class="property-filter__group">
+      <label for="filter-type" class="property-filter__label">Property Type</label>
+      <select id="filter-type" name="type" class="property-filter__select">
+        <option value="">All Types</option>
+        {PLOT_TYPES.map((type) => <option value={type.toLowerCase()}>{type}</option>)}
+      </select>
+    </div>
+
+    <!-- Purpose -->
+    <div class="property-filter__group">
+      <label for="filter-purpose" class="property-filter__label">Purpose</label>
+      <select id="filter-purpose" name="purpose" class="property-filter__select">
+        <option value="">Any Purpose</option>
+        <option value="sale">For Sale</option>
+        <option value="rent">For Rent</option>
+        <option value="lease">For Lease</option>
+      </select>
+    </div>
+
+    <!-- Size -->
+    <div class="property-filter__group">
+      <label for="filter-size" class="property-filter__label">Size</label>
+      <select id="filter-size" name="size" class="property-filter__select">
+        <option value="">Any Size</option>
+        {PLOT_SIZES.map((size) => <option value={size}>{size}</option>)}
+      </select>
+    </div>
+
+    <!-- Block -->
+    <div class="property-filter__group">
+      <label for="filter-block" class="property-filter__label">Block</label>
+      <select id="filter-block" name="block" class="property-filter__select">
+        <option value="">All Blocks</option>
+        <!-- Blocks will be populated dynamically -->
+      </select>
+    </div>
+
+    <!-- Actions -->
+    <div class="property-filter__actions">
+      <button type="submit" class="btn btn--primary btn--sm">Apply Filters</button>
+      <button type="reset" class="btn btn--ghost btn--sm">Clear</button>
+    </div>
+  </form>
+</aside>
+
+<style>
+  .property-filter {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+  }
+
+  .property-filter__title {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    margin-bottom: var(--space-6);
+  }
+
+  .property-filter__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .property-filter__group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .property-filter__label {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+  }
+
+  .property-filter__select {
+    width: 100%;
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-sm);
+    border: 1px solid var(--color-neutral-300);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: border-color var(--transition-fast);
+    cursor: pointer;
+  }
+
+  .property-filter__select:focus {
+    border-color: var(--color-primary-500);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(200, 150, 12, 0.15);
+  }
+
+  .property-filter__actions {
+    display: flex;
+    gap: var(--space-3);
+    padding-top: var(--space-2);
+  }
+</style>

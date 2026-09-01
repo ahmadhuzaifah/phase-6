@@ -1,0 +1,115 @@
+---
+/**
+ * Al Rehman Garden Phase 2 Houses For Sale — High-Intent SEO Landing Page
+ */
+
+import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
+import PropertyCard from '@components/property/PropertyCard.astro';
+import Button from '@components/global/Button.astro';
+import { SITE } from '@data/site';
+import propertiesData from '@data/properties-import.json';
+
+// Filter house and villa listings for sale
+const houseListings = propertiesData.filter((p) =>
+  (p.propertyType === 'house' || p.propertyType === 'villa') && p.purpose === 'sale'
+);
+
+const housesSchema = {
+  name: 'Houses & Luxury Villas for Sale in Al Rehman Garden Phase 2 Lahore',
+  description: 'Explore brand new 3, 5, 10 Marla houses and luxury villas for sale in Al Rehman Garden Phase 2 on Main Sharaqpur Road Lahore.',
+  url: `${SITE.url}/al-rehman-garden-phase-2-houses-for-sale`,
+};
+---
+
+<PageLayout
+  title="Al Rehman Garden Phase 2 Houses for Sale Lahore — Brand New 3, 5 & 10 Marla"
+  description="Discover brand new Spanish & contemporary houses for sale in Al Rehman Garden Phase 2 Lahore. Designer double-story 3, 5 & 10 Marla villas in Block A, B & D."
+>
+  <Schema type="WebSite" data={housesSchema} />
+
+  <!-- Hero Header -->
+  <section class="seo-hero">
+    <div class="container">
+      <div class="eyebrow eyebrow--dark">Brand New Construction</div>
+      <h1 class="seo-hero__title">
+        Houses for Sale in <span class="text-gradient-gold">Al Rehman Garden Phase 2</span>
+      </h1>
+      <p class="seo-hero__lead lead">
+        Explore move-in ready 3 Marla, 5 Marla, and 10 Marla designer houses and luxury villas. Built with solid architecture, A-grade imported sanitary and electrical fittings, modern kitchens, and car porches.
+      </p>
+    </div>
+  </section>
+
+  <!-- Houses Grid -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-header-row">
+        <div>
+          <span class="eyebrow">Move-in Ready Homes</span>
+          <h2 class="section-header__title">Featured Houses & Villas</h2>
+        </div>
+        <Button href="/properties?type=house" variant="outline" size="sm">
+          Browse All Houses →
+        </Button>
+      </div>
+
+      <div class="seo-houses-grid">
+        {houseListings.map((prop) => (
+          <PropertyCard
+            title={prop.title}
+            slug={prop.slug}
+            propertyType={prop.propertyType}
+            purpose={prop.purpose}
+            price={prop.price}
+            priceUnit={prop.priceUnit}
+            size={prop.size}
+            sizeUnit={prop.unit}
+            block={prop.block}
+            location={prop.location.address}
+            verificationStatus={prop.verificationStatus}
+            isFeatured={prop.isFeatured}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .seo-hero {
+    background: radial-gradient(circle at 80% 20%, #16244F 0%, #0A1128 75%);
+    color: var(--text-inverse);
+    padding: var(--space-12) 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  }
+
+  .seo-hero__title {
+    color: #FFFFFF;
+    margin: var(--space-2) 0 var(--space-3);
+  }
+
+  .seo-hero__lead {
+    color: var(--color-neutral-300);
+    max-width: 65ch;
+    margin: 0;
+  }
+
+  .seo-houses-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 640px) {
+    .seo-houses-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .seo-houses-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

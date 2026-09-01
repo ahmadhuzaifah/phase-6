@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="iconGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F3D375"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#AA7C11"/>
+    </linearGradient>
+    <linearGradient id="iconNavy" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#142147"/>
+      <stop offset="100%" stop-color="#0A1128"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Base Rounded Container -->
+  <rect width="80" height="80" rx="20" fill="url(#iconNavy)"/>
+  <rect x="2" y="2" width="76" height="76" rx="18" stroke="url(#iconGold)" stroke-width="1.5" stroke-opacity="0.6"/>
+
+  <!-- Logo Mark / Emblem Center -->
+  <g transform="translate(8, 8)">
+    <path d="M32 2 C48 2 60 12 60 28 C60 48 32 62 32 62 C32 62 4 48 4 28 C4 12 16 2 32 2 Z" fill="none" stroke="url(#iconGold)" stroke-width="2.5"/>
+    <path d="M22 46 L22 26 C22 18 42 18 42 26 L42 46" stroke="url(#iconGold)" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M32 10 L38 20 L32 24 L26 20 Z" fill="url(#iconGold)"/>
+    <path d="M16 34 C24 38 40 38 48 34" stroke="url(#iconGold)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <circle cx="32" cy="36" r="3" fill="url(#iconGold)"/>
+  </g>
+</svg>
