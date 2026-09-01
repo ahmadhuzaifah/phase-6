@@ -27,10 +27,11 @@ export const NAVIGATION = [
   { label: 'Home', href: '/' },
   { label: 'Properties', href: '/properties' },
   { label: 'Plots', href: '/plots' },
+  { label: 'Houses', href: '/houses-for-sale-in-al-rehman-garden-phase-2-lahore' },
   { label: 'Blocks', href: '/blocks' },
   { label: 'Prices', href: '/prices' },
-  { label: 'Map', href: '/map' },
-  { label: 'Blog', href: '/blog' },
+  { label: 'Location', href: '/al-rehman-garden-phase-2-location' },
+  { label: 'Payment Plan', href: '/al-rehman-garden-phase-2-payment-plan' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
 ] as const;

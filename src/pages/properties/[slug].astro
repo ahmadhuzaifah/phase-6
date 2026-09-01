@@ -427,12 +427,30 @@ const breadcrumbsSchema = {
                 block={rel.block}
                 location={rel.location.address}
                 verificationStatus={rel.verificationStatus}
+                availabilityStatus={rel.availabilityStatus}
+                lastVerifiedDate={rel.lastVerifiedDate}
                 isFeatured={rel.isFeatured}
               />
             ))}
           </div>
         </section>
       )}
+    </div>
+
+    <!-- Mobile Sticky Action Bar -->
+    <div class="prop-mobile-bar">
+      <div class="prop-mobile-bar__price">
+        <small>Demanded Price</small>
+        <strong>PKR {formattedPrice}</strong>
+      </div>
+      <div class="prop-mobile-bar__actions">
+        <a href={`tel:${CONTACTS.phone.primary}`} class="btn btn--secondary btn--sm">
+          📞 Call
+        </a>
+        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp btn--sm">
+          💬 WhatsApp
+        </a>
+      </div>
     </div>
   </article>
 </PageLayout>
@@ -924,5 +942,53 @@ const breadcrumbsSchema = {
     .prop-related__grid {
       grid-template-columns: repeat(3, 1fr);
     }
+  }
+
+  /* ── Mobile Sticky Bar ──────────────────────────────────────────── */
+  .prop-mobile-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-fixed);
+    background: rgba(10, 17, 40, 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1.5px solid rgba(212, 175, 55, 0.35);
+    padding: var(--space-3) var(--space-4);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  @media (min-width: 768px) {
+    .prop-mobile-bar {
+      display: none;
+    }
+  }
+
+  .prop-mobile-bar__price {
+    display: flex;
+    flex-direction: column;
+    color: white;
+  }
+
+  .prop-mobile-bar__price small {
+    font-size: 10px;
+    color: var(--color-neutral-400);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .prop-mobile-bar__price strong {
+    font-size: var(--text-sm);
+    color: #F3D375;
+  }
+
+  .prop-mobile-bar__actions {
+    display: flex;
+    gap: var(--space-2);
   }
 </style>

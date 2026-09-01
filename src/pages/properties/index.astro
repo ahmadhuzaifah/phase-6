@@ -132,6 +132,17 @@ const breadcrumbsSchema = {
                 </select>
               </div>
 
+              <!-- Availability Status -->
+              <div class="filter-group">
+                <label for="filter-availability" class="filter-label">Availability Status</label>
+                <select id="filter-availability" name="availability" class="filter-select">
+                  <option value="" selected>All Statuses (Available, Reserved, Sold)</option>
+                  <option value="available">Available Units Only</option>
+                  <option value="reserved">Reserved / Under Token</option>
+                  <option value="sold">Recently Sold Units</option>
+                </select>
+              </div>
+
               <!-- Price Range -->
               <div class="filter-group">
                 <label for="filter-price" class="filter-label">Price Range (PKR)</label>
@@ -175,25 +186,47 @@ const breadcrumbsSchema = {
             </div>
           </div>
 
+          <!-- Empty State -->
+          <div class="dir-empty" id="dir-empty" style="display: none; padding: 48px; background: white; border: 1px dashed var(--border-light); border-radius: var(--radius-xl); text-align: center; margin-bottom: 32px;">
+            <div style="font-size: 40px; margin-bottom: 12px;">🔍</div>
+            <h3 style="font-size: var(--text-lg); margin-bottom: 8px;">No properties match your current filters</h3>
+            <p style="font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: 20px;">Try adjusting your price range, block selection, or clearing keyword search.</p>
+            <button type="button" class="btn btn--primary btn--sm" id="btn-empty-reset">Reset All Filters</button>
+          </div>
+
           <!-- Properties Grid -->
           <div class="dir-grid" id="properties-grid">
             {propertiesData.map((prop) => (
-              <PropertyCard
-                title={prop.title}
-                slug={prop.slug}
-                propertyType={prop.propertyType}
-                purpose={prop.purpose}
-                price={prop.price}
-                priceUnit={prop.priceUnit}
-                size={prop.size}
-                sizeUnit={prop.unit}
-                block={prop.block}
-                location={prop.location.address}
-                verificationStatus={prop.verificationStatus}
-                availabilityStatus={prop.availabilityStatus}
-                lastVerifiedDate={prop.lastVerifiedDate}
-                isFeatured={prop.isFeatured}
-              />
+              <div
+                class="property-item"
+                data-title={prop.title.toLowerCase()}
+                data-purpose={prop.purpose}
+                data-type={prop.propertyType}
+                data-block={prop.block}
+                data-size={prop.size}
+                data-price={prop.price}
+                data-availability={prop.availabilityStatus || 'available'}
+                data-verified={prop.verificationStatus}
+                data-featured={prop.isFeatured ? 'true' : 'false'}
+                data-date={prop.publishedDate}
+              >
+                <PropertyCard
+                  title={prop.title}
+                  slug={prop.slug}
+                  propertyType={prop.propertyType}
+                  purpose={prop.purpose}
+                  price={prop.price}
+                  priceUnit={prop.priceUnit}
+                  size={prop.size}
+                  sizeUnit={prop.unit}
+                  block={prop.block}
+                  location={prop.location.address}
+                  verificationStatus={prop.verificationStatus}
+                  availabilityStatus={prop.availabilityStatus}
+                  lastVerifiedDate={prop.lastVerifiedDate}
+                  isFeatured={prop.isFeatured}
+                />
+              </div>
             ))}
           </div>
 
@@ -453,3 +486,134 @@ const breadcrumbsSchema = {
     margin: 0;
   }
 </style>
+
+<script>
+  function initPropertyFilters() {
+    const keywordInput = document.getElementById('filter-keyword') as HTMLInputElement | null;
+    const purposeSelect = document.getElementById('filter-purpose') as HTMLSelectElement | null;
+    const typeSelect = document.getElementById('filter-type') as HTMLSelectElement | null;
+    const blockSelect = document.getElementById('filter-block') as HTMLSelectElement | null;
+    const sizeSelect = document.getElementById('filter-size') as HTMLSelectElement | null;
+    const priceSelect = document.getElementById('filter-price') as HTMLSelectElement | null;
+    const availSelect = document.getElementById('filter-availability') as HTMLSelectElement | null;
+    const verifiedCheck = document.getElementById('filter-verified') as HTMLInputElement | null;
+    const sortSelect = document.getElementById('sort-select') as HTMLSelectElement | null;
+    const clearBtn = document.getElementById('btn-clear-filters');
+    const emptyResetBtn = document.getElementById('btn-empty-reset');
+    const resultsCount = document.getElementById('results-count');
+    const emptyState = document.getElementById('dir-empty');
+    const grid = document.getElementById('properties-grid');
+
+    if (!grid) return;
+
+    const items = Array.from(grid.querySelectorAll('.property-item')) as HTMLElement[];
+
+    function applyFilters() {
+      const keyword = (keywordInput?.value || '').toLowerCase().trim();
+      const purpose = purposeSelect?.value || '';
+      const type = typeSelect?.value || '';
+      const block = blockSelect?.value || '';
+      const size = sizeSelect?.value || '';
+      const priceRange = priceSelect?.value || '';
+      const availability = availSelect?.value || '';
+      const verifiedOnly = verifiedCheck?.checked ?? false;
+
+      let visibleCount = 0;
+
+      items.forEach((item) => {
+        const itemTitle = item.dataset.title || '';
+        const itemPurpose = item.dataset.purpose || '';
+        const itemType = item.dataset.type || '';
+        const itemBlock = item.dataset.block || '';
+        const itemSize = item.dataset.size || '';
+        const itemPrice = parseFloat(item.dataset.price || '0');
+        const itemAvail = item.dataset.availability || '';
+        const itemVerified = item.dataset.verified === 'verified';
+
+        let matches = true;
+
+        if (keyword && !itemTitle.includes(keyword) && !itemBlock.toLowerCase().includes(keyword)) {
+          matches = false;
+        }
+        if (purpose && itemPurpose !== purpose) {
+          matches = false;
+        }
+        if (type && itemType !== type) {
+          matches = false;
+        }
+        if (block && itemBlock !== block) {
+          matches = false;
+        }
+        if (size && itemSize !== size) {
+          matches = false;
+        }
+        if (availability && itemAvail !== availability) {
+          matches = false;
+        }
+        if (verifiedOnly && !itemVerified) {
+          matches = false;
+        }
+
+        if (priceRange) {
+          if (priceRange === '0-3000000' && itemPrice > 3000000) matches = false;
+          else if (priceRange === '3000000-6000000' && (itemPrice < 3000000 || itemPrice > 6000000)) matches = false;
+          else if (priceRange === '6000000-10000000' && (itemPrice < 6000000 || itemPrice > 10000000)) matches = false;
+          else if (priceRange === '10000000-20000000' && (itemPrice < 10000000 || itemPrice > 20000000)) matches = false;
+          else if (priceRange === '20000000+' && itemPrice < 20000000) matches = false;
+        }
+
+        if (matches) {
+          item.style.display = '';
+          visibleCount++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      if (resultsCount) resultsCount.textContent = String(visibleCount);
+      if (emptyState) emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+
+    function applySort() {
+      const sortVal = sortSelect?.value || 'featured';
+      const sorted = [...items].sort((a, b) => {
+        const priceA = parseFloat(a.dataset.price || '0');
+        const priceB = parseFloat(b.dataset.price || '0');
+        const featA = a.dataset.featured === 'true' ? 1 : 0;
+        const featB = b.dataset.featured === 'true' ? 1 : 0;
+
+        if (sortVal === 'price-asc') return priceA - priceB;
+        if (sortVal === 'price-desc') return priceB - priceA;
+        if (sortVal === 'featured') return featB - featA;
+        return 0;
+      });
+
+      if (grid) {
+        sorted.forEach((el) => grid.appendChild(el));
+      }
+    }
+
+    function resetFilters() {
+      if (keywordInput) keywordInput.value = '';
+      if (purposeSelect) purposeSelect.value = '';
+      if (typeSelect) typeSelect.value = '';
+      if (blockSelect) blockSelect.value = '';
+      if (sizeSelect) sizeSelect.value = '';
+      if (priceSelect) priceSelect.value = '';
+      if (availSelect) availSelect.value = '';
+      if (verifiedCheck) verifiedCheck.checked = false;
+      applyFilters();
+    }
+
+    [keywordInput, purposeSelect, typeSelect, blockSelect, sizeSelect, priceSelect, availSelect, verifiedCheck].forEach((el) => {
+      el?.addEventListener('input', applyFilters);
+      el?.addEventListener('change', applyFilters);
+    });
+
+    sortSelect?.addEventListener('change', applySort);
+    clearBtn?.addEventListener('click', resetFilters);
+    emptyResetBtn?.addEventListener('click', resetFilters);
+  }
+
+  document.addEventListener('DOMContentLoaded', initPropertyFilters);
+</script>
