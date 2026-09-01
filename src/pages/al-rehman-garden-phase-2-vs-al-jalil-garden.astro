@@ -1,0 +1,310 @@
+---
+/**
+ * Al Rehman Garden Phase 2 vs Al Jalil Garden Comparison Guide (2026)
+ */
+
+import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
+import { SITE } from '@data/site';
+import { CONTACTS } from '@data/contacts';
+import { COMPARISONS_DATA } from '@data/comparisons';
+
+const data = COMPARISONS_DATA.find((c) => c.id === 'al-jalil-garden')!;
+
+const pageSchema = {
+  name: data.heroTitle,
+  description: data.metaDescription,
+  url: `${SITE.url}/${data.slug}`,
+};
+
+const faqSchema = {
+  itemListElement: data.faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: f.answer,
+    },
+  })),
+};
+---
+
+<PageLayout
+  title={`${data.heroTitle} | Real Estate Investment Analysis`}
+  description={data.metaDescription}
+>
+  <Schema type="WebSite" data={pageSchema} />
+  <Schema type="FAQPage" data={faqSchema} />
+
+  <!-- Hero Section -->
+  <section class="comp-hero">
+    <div class="container">
+      <div class="eyebrow eyebrow--dark">Lahore West Comparison</div>
+      <h1 class="comp-hero__title">
+        Al Rehman Garden Phase 2 vs. <span class="text-gradient-gold">{data.competitorName}</span>
+      </h1>
+      <p class="comp-hero__lead lead">{data.overviewSummary}</p>
+    </div>
+  </section>
+
+  <!-- Comparison Matrix Table -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="comp-table-wrap">
+        <h2 class="comp-section__title">Direct Head-to-Head Comparison Matrix</h2>
+        <table class="comp-table">
+          <thead>
+            <tr>
+              <th>Evaluation Parameter</th>
+              <th class="comp-col-highlight">Al Rehman Garden Phase 2</th>
+              <th>{data.competitorName}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Commute to Central Lahore (Mall Rd)</strong></td>
+              <td class="comp-col-highlight"><strong>{data.distanceToDowntown.arg}</strong></td>
+              <td>{data.distanceToDowntown.comp}</td>
+            </tr>
+            <tr>
+              <td><strong>5 Marla Plot Average Rate</strong></td>
+              <td class="comp-col-highlight"><span class="price-pill">{data.avgPrice5Marla.arg}</span></td>
+              <td><span class="price-pill-alt">{data.avgPrice5Marla.comp}</span></td>
+            </tr>
+            <tr>
+              <td><strong>10 Marla Plot Average Rate</strong></td>
+              <td class="comp-col-highlight"><span class="price-pill">{data.avgPrice10Marla.arg}</span></td>
+              <td><span class="price-pill-alt">{data.avgPrice10Marla.comp}</span></td>
+            </tr>
+            <tr>
+              <td><strong>Possession &amp; Construction Ready</strong></td>
+              <td class="comp-col-highlight">{data.possessionTime.arg}</td>
+              <td>{data.possessionTime.comp}</td>
+            </tr>
+            <tr>
+              <td><strong>Regulatory Masterplan Approval</strong></td>
+              <td class="comp-col-highlight">{data.ldaApproved.arg}</td>
+              <td>{data.ldaApproved.comp}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Advantages Grid -->
+      <div class="comp-adv-grid" style="margin-top: 48px;">
+        <div class="comp-adv-card comp-adv-card--arg">
+          <h3 class="comp-adv__title">Why Choose Al Rehman Garden Phase 2?</h3>
+          <ul>
+            {data.keyAdvantagesArg.map((adv) => (
+              <li>✓ {adv}</li>
+            ))}
+          </ul>
+        </div>
+        <div class="comp-adv-card">
+          <h3 class="comp-adv__title">Why Consider {data.competitorName}?</h3>
+          <ul>
+            {data.keyAdvantagesComp.map((adv) => (
+              <li>• {adv}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Expert Investment Verdict -->
+      <div class="comp-verdict-card" style="margin-top: 48px;">
+        <div class="comp-verdict__icon">💡</div>
+        <div>
+          <h3 style="color: #FFFFFF; font-size: var(--text-2xl); margin: 0 0 8px;">Independent Investment Verdict</h3>
+          <p style="color: #CBD5E1; font-size: var(--text-sm); line-height: var(--leading-relaxed); margin: 0 0 16px;">
+            {data.verdict}
+          </p>
+          <a href={CONTACTS.whatsapp.url} target="_blank" rel="noopener noreferrer" class="btn btn--accent btn--md">
+            Consult Property Advisor on WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- FAQs -->
+      <div class="comp-faqs" style="margin-top: 48px;">
+        <h3 class="comp-section__title">Frequently Asked Questions</h3>
+        <div class="comp-faq-list">
+          {data.faqs.map((f) => (
+            <div class="comp-faq-item">
+              <h4 class="comp-faq__q">Q: {f.question}</h4>
+              <p class="comp-faq__a">{f.answer}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .comp-hero {
+    background: radial-gradient(circle at 80% 20%, #16244F 0%, #0A1128 75%);
+    color: var(--text-inverse);
+    padding: var(--space-12) 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  }
+
+  .comp-hero__title {
+    color: #FFFFFF;
+    margin: var(--space-2) 0 var(--space-3);
+  }
+
+  .comp-hero__lead {
+    color: var(--color-neutral-300);
+    max-width: 65ch;
+    margin: 0;
+  }
+
+  .comp-section__title {
+    font-size: var(--text-2xl);
+    color: var(--text-primary);
+    margin-bottom: var(--space-6);
+  }
+
+  .comp-table-wrap {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-card);
+    overflow-x: auto;
+  }
+
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+  }
+
+  .comp-table th,
+  .comp-table td {
+    padding: var(--space-4) var(--space-5);
+    text-align: left;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .comp-table th {
+    background: var(--color-neutral-50);
+    font-weight: var(--font-bold);
+    color: var(--text-primary);
+  }
+
+  .comp-col-highlight {
+    background: rgba(197, 155, 39, 0.05);
+    color: var(--color-primary-800);
+  }
+
+  .price-pill {
+    background: #D1FAE5;
+    color: #065F46;
+    font-weight: var(--font-extrabold);
+    padding: 3px 8px;
+    border-radius: var(--radius-xs);
+  }
+
+  .price-pill-alt {
+    background: #EFF6FF;
+    color: #1E40AF;
+    font-weight: var(--font-extrabold);
+    padding: 3px 8px;
+    border-radius: var(--radius-xs);
+  }
+
+  .comp-adv-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 768px) {
+    .comp-adv-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .comp-adv-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .comp-adv-card--arg {
+    border: 1.5px solid var(--border-gold);
+    background: linear-gradient(180deg, #FFFFFF 0%, #FCF9EE 100%);
+  }
+
+  .comp-adv__title {
+    font-size: var(--text-lg);
+    color: var(--text-primary);
+    margin: 0 0 var(--space-4);
+  }
+
+  .comp-adv-card ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .comp-adv-card li {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  .comp-verdict-card {
+    background: linear-gradient(135deg, #101F44 0%, #0A1128 100%);
+    border: 1.5px solid rgba(212, 175, 55, 0.4);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 768px) {
+    .comp-verdict-card {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  .comp-verdict__icon {
+    font-size: 54px;
+    flex-shrink: 0;
+  }
+
+  .comp-faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .comp-faq-item {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5) var(--space-6);
+  }
+
+  .comp-faq__q {
+    font-size: var(--text-base);
+    color: var(--text-primary);
+    margin: 0 0 var(--space-2);
+  }
+
+  .comp-faq__a {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+    margin: 0;
+  }
+</style>

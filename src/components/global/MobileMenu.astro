@@ -30,6 +30,11 @@ const currentPath = Astro.url.pathname;
 
     <!-- Mobile Nav Links -->
     <ul class="mobile-menu__list">
+      <li>
+        <a href="/search" class="mobile-menu__link" style="color: #F3D375; font-weight: 700;">
+          🔍 Search Portal
+        </a>
+      </li>
       {
         NAVIGATION.map((item) => (
           <li>
@@ -46,6 +51,26 @@ const currentPath = Astro.url.pathname;
           </li>
         ))
       }
+      <li>
+        <a href="/property-prices" class="mobile-menu__link">
+          📊 2026 Price Index
+        </a>
+      </li>
+      <li>
+        <a href="/places" class="mobile-menu__link">
+          📍 Nearby Places
+        </a>
+      </li>
+      <li>
+        <a href="/downloads" class="mobile-menu__link">
+          📥 Masterplan Downloads
+        </a>
+      </li>
+      <li>
+        <a href="/faq" class="mobile-menu__link">
+          ❓ FAQ Knowledgebase
+        </a>
+      </li>
     </ul>
 
     <!-- Mobile CTA -->

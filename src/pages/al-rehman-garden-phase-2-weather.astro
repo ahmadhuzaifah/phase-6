@@ -1,0 +1,340 @@
+---
+/**
+ * Weather & Climate Authority Guide — Al Rehman Garden Phase 2 Lahore
+ */
+
+import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
+import { SITE } from '@data/site';
+import { CONTACTS } from '@data/contacts';
+
+const pageSchema = {
+  name: `Weather & Climate Guide — ${SITE.name}`,
+  description: 'Detailed seasonal weather, temperature forecasts, monsoon patterns, and best property visiting months for Al Rehman Garden Phase 2 Lahore.',
+  url: `${SITE.url}/al-rehman-garden-phase-2-weather`,
+};
+
+const seasonalClimate = [
+  {
+    season: 'Winter (Pleasant & Crisp)',
+    months: 'November – February',
+    tempRange: '7°C – 22°C (45°F – 72°F)',
+    condition: 'Sunny, cool breezes, mild evening chill',
+    visitScore: '⭐⭐⭐⭐⭐ (Ideal for Plot Visits)',
+    highlight: 'Peak property transaction season with comfortable daytime temperatures for walking on-ground demarcations.',
+  },
+  {
+    season: 'Spring (Blossom & Festive)',
+    months: 'March – April',
+    tempRange: '18°C – 32°C (64°F – 90°F)',
+    condition: 'Pleasant, blooming green parks, clear skies',
+    visitScore: '⭐⭐⭐⭐⭐ (Excellent)',
+    highlight: 'Ideal weather to inspect landscaped theme parks in Block D (Rose Garden) and central boulevards.',
+  },
+  {
+    season: 'Summer (Warm & Sunny)',
+    months: 'May – June',
+    tempRange: '28°C – 42°C (82°F – 108°F)',
+    condition: 'Hot & sunny with evening breeze',
+    visitScore: '⭐⭐⭐ (Morning/Evening Visits Recommended)',
+    highlight: 'Site visits are best scheduled between 8:00 AM – 10:30 AM or after 5:00 PM in our air-conditioned advisory vehicles.',
+  },
+  {
+    season: 'Monsoon (Rainfall & Greenery)',
+    months: 'July – August',
+    tempRange: '26°C – 36°C (79°F – 97°F)',
+    condition: 'Intermittent heavy rain showers, high humidity',
+    visitScore: '⭐⭐⭐⭐ (Great to Test Drainage)',
+    highlight: 'Best time to verify the society’s elevated storm-water drainage infrastructure and zero water-logging performance.',
+  },
+  {
+    season: 'Autumn (Transition Season)',
+    months: 'September – October',
+    tempRange: '20°C – 34°C (68°F – 93°F)',
+    condition: 'Clear blue skies, moderate humidity, pleasant breezes',
+    visitScore: '⭐⭐⭐⭐⭐ (Prime Buying Season)',
+    highlight: 'High overseas Pakistani buyer activity and active property ground-breaking before winter.',
+  },
+];
+---
+
+<PageLayout
+  title={`Weather in Al Rehman Garden Phase 2 Lahore | Climate & Visiting Guide`}
+  description="Check current weather, seasonal temperatures, summer/winter climate, and best visiting months for property inspections in Al Rehman Garden Phase 2 Lahore."
+>
+  <Schema type="WebSite" data={pageSchema} />
+
+  <!-- Hero Section -->
+  <section class="weather-hero">
+    <div class="container">
+      <div class="eyebrow eyebrow--dark">Lahore West Climate & Visiting Guide</div>
+      <h1 class="weather-hero__title">
+        Weather & Climate in <span class="text-gradient-gold">Al Rehman Garden Phase 2</span>
+      </h1>
+      <p class="weather-hero__lead lead">
+        Planning an on-ground plot inspection or home construction? Explore seasonal temperatures, rainfall trends, and optimal visiting months for Al Rehman Garden Phase 2 on Main Sharaqpur Road, Lahore.
+      </p>
+    </div>
+  </section>
+
+  <!-- Live Weather Overview Widget -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="weather-widget">
+        <div class="weather-widget__current">
+          <div class="weather-widget__icon">⛅</div>
+          <div>
+            <span class="weather-widget__loc">Current Season: Autumn / Mild Warm</span>
+            <div class="weather-widget__temp">29°C <span>/ 84°F</span></div>
+            <p class="weather-widget__desc">Clear skies with gentle western breeze • Humidity: 48% • Air Quality: Moderate</p>
+          </div>
+        </div>
+        <div class="weather-widget__advisory">
+          <span class="weather-widget__badge">ON-GROUND VISITATION STATUS</span>
+          <strong style="color: #059669; font-size: var(--text-base); display: block; margin-top: 4px;">🟢 Highly Favorable for Site Tours</strong>
+          <p style="font-size: var(--text-xs); color: var(--text-secondary); margin: 6px 0 14px;">Site office staff is on-duty with complimentary golf-cart transport for block demarcations.</p>
+          <a href={CONTACTS.whatsapp.url} target="_blank" rel="noopener noreferrer" class="btn btn--accent btn--sm">
+            Schedule Guided Visit on WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- Seasonal Breakdown Grid -->
+      <div class="section-header" style="margin-top: 56px;">
+        <span class="eyebrow">Comprehensive Climate Index</span>
+        <h2 class="section-header__title">Annual Seasonal Weather Matrix</h2>
+        <p class="section-header__desc">Understanding local weather patterns helps home builders schedule excavation, concrete curing, and roofing phases effectively.</p>
+      </div>
+
+      <div class="season-grid">
+        {seasonalClimate.map((c) => (
+          <div class="season-card">
+            <div class="season-card__header">
+              <h3 class="season-card__title">{c.season}</h3>
+              <span class="season-card__months">{c.months}</span>
+            </div>
+            <div class="season-card__temp">{c.tempRange}</div>
+            <div class="season-card__rating">
+              <span>Site Tour Rating:</span> <strong>{c.visitScore}</strong>
+            </div>
+            <p class="season-card__cond"><strong>Atmosphere:</strong> {c.condition}</p>
+            <p class="season-card__highlight">{c.highlight}</p>
+          </div>
+        ))}
+      </div>
+
+      <!-- Infrastructure Weather Resilience -->
+      <div class="weather-resilience-card" style="margin-top: 48px;">
+        <div class="weather-resilience__icon">🛡️</div>
+        <div>
+          <h3 style="color: #FFFFFF; font-size: var(--text-xl); margin-bottom: 8px;">Heavy Rain &amp; Storm Water Drainage Guarantee</h3>
+          <p style="color: #CBD5E1; font-size: var(--text-sm); line-height: var(--leading-relaxed); margin: 0;">
+            Al Rehman Garden Phase 2 is engineered with an elevated master road network and deep underground RCC storm-water drainage channels connecting directly to provincial disposal lines. Unlike unplanned suburbs, Phase 2 maintains <strong>zero standing rainwater</strong> on main 150ft and 60ft avenues even during torrential July-August monsoon cloudbursts.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .weather-hero {
+    background: radial-gradient(circle at 80% 20%, #16244F 0%, #0A1128 75%);
+    color: var(--text-inverse);
+    padding: var(--space-12) 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  }
+
+  .weather-hero__title {
+    color: #FFFFFF;
+    margin: var(--space-2) 0 var(--space-3);
+  }
+
+  .weather-hero__lead {
+    color: var(--color-neutral-300);
+    max-width: 65ch;
+    margin: 0;
+  }
+
+  .weather-widget {
+    background: var(--bg-primary);
+    border: 1.5px solid var(--border-gold);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    box-shadow: var(--shadow-card);
+  }
+
+  @media (min-width: 768px) {
+    .weather-widget {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .weather-widget__current {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+  }
+
+  .weather-widget__icon {
+    font-size: 54px;
+    line-height: 1;
+  }
+
+  .weather-widget__loc {
+    font-size: var(--text-xs);
+    font-weight: var(--font-bold);
+    color: var(--color-primary-600);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  .weather-widget__temp {
+    font-size: 38px;
+    font-weight: var(--font-extrabold);
+    color: var(--text-primary);
+    line-height: 1.1;
+  }
+
+  .weather-widget__temp span {
+    font-size: var(--text-base);
+    color: var(--text-tertiary);
+    font-weight: normal;
+  }
+
+  .weather-widget__desc {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    margin: 4px 0 0;
+  }
+
+  .weather-widget__advisory {
+    background: var(--color-neutral-50);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    padding: var(--space-5) var(--space-6);
+    max-width: 360px;
+  }
+
+  .weather-widget__badge {
+    font-size: 10px;
+    font-weight: var(--font-extrabold);
+    background: #D1FAE5;
+    color: #065F46;
+    padding: 2px 8px;
+    border-radius: var(--radius-xs);
+    letter-spacing: 0.8px;
+  }
+
+  .season-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 640px) {
+    .season-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .season-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .season-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+  }
+
+  .season-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--border-gold);
+  }
+
+  .season-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .season-card__title {
+    font-size: var(--text-base);
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .season-card__months {
+    font-size: 11px;
+    color: var(--color-primary-600);
+    font-weight: var(--font-bold);
+  }
+
+  .season-card__temp {
+    font-size: var(--text-xl);
+    font-weight: var(--font-bold);
+    color: var(--color-secondary-900);
+    margin-bottom: var(--space-2);
+  }
+
+  .season-card__rating {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-2);
+  }
+
+  .season-card__cond {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-2);
+  }
+
+  .season-card__highlight {
+    font-size: var(--text-xs);
+    color: var(--text-primary);
+    background: var(--color-neutral-50);
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    margin-top: auto;
+    border-left: 3px solid var(--color-primary-500);
+  }
+
+  .weather-resilience-card {
+    background: linear-gradient(135deg, #101F44 0%, #0A1128 100%);
+    border: 1.5px solid rgba(212, 175, 55, 0.4);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 768px) {
+    .weather-resilience-card {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  .weather-resilience__icon {
+    font-size: 48px;
+    flex-shrink: 0;
+  }
+</style>

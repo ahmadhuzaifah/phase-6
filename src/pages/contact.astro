@@ -102,58 +102,60 @@ const contactSchema = {
 
         <!-- Contact Info Sidebar -->
         <aside class="contact-sidebar">
-          <div class="contact-info-box">
-            <h3 class="contact-info-box__title">Direct Helplines</h3>
-            
-            <div class="contact-point">
-              <span class="contact-icon">📞</span>
-              <div>
-                <span class="contact-lbl">Phone Helpline</span>
-                <a href={`tel:${CONTACTS.phone.primary}`} class="contact-val">{CONTACTS.phone.display}</a>
+          <div class="contact-cards-stack">
+            <!-- Card 1: Sales Inquiry -->
+            <div class="contact-spec-card">
+              <div class="contact-spec-card__badge">Plot Sales &amp; Bookings</div>
+              <h3 class="contact-spec-card__title">Sales &amp; Booking Advisory</h3>
+              <p class="contact-spec-card__desc">Confirm current on-ground plot availability, cash discount rates, and flexible 3-5 year installment plans.</p>
+              <a href={CONTACTS.whatsapp.url} target="_blank" rel="noopener noreferrer" class="btn btn--accent btn--sm btn--full">
+                💬 WhatsApp Sales Desk
+              </a>
+            </div>
+
+            <!-- Card 2: General Information -->
+            <div class="contact-spec-card">
+              <div class="contact-spec-card__badge">Society Information</div>
+              <h3 class="contact-spec-card__title">General Information &amp; Maps</h3>
+              <p class="contact-spec-card__desc">Inquire about sector masterplans, utility connection statuses, school admissions, and hospital timings.</p>
+              <a href={`tel:${CONTACTS.phone.primary}`} class="btn btn--secondary btn--sm btn--full">
+                📞 Call {CONTACTS.phone.display}
+              </a>
+            </div>
+
+            <!-- Card 3: Property Assistance -->
+            <div class="contact-spec-card">
+              <div class="contact-spec-card__badge">Legal &amp; Title Verification</div>
+              <h3 class="contact-spec-card__title">NDC &amp; Transfer Assistance</h3>
+              <p class="contact-spec-card__desc">Verify original allotment letters, NDC dues status, and schedule official management transfers.</p>
+              <a href={`mailto:${CONTACTS.email}`} class="btn btn--outline btn--sm btn--full">
+                ✉️ Email Verification Desk
+              </a>
+            </div>
+
+            <!-- Office Details -->
+            <div class="contact-info-box">
+              <div class="contact-point">
+                <span class="contact-icon">📍</span>
+                <div>
+                  <span class="contact-lbl">Site Office Address</span>
+                  <span class="contact-val">{CONTACTS.address.full}</span>
+                </div>
               </div>
-            </div>
-
-            <div class="contact-point">
-              <span class="contact-icon">💬</span>
-              <div>
-                <span class="contact-lbl">WhatsApp Live Advisory</span>
-                <a href={CONTACTS.whatsapp.url} target="_blank" rel="noopener noreferrer" class="contact-val" style="color: #10B981;">
-                  Chat with Property Desk
-                </a>
+              <div class="contact-hours-block" style="margin-top: 12px;">
+                <strong>Site Office Timings:</strong>
+                <p>Monday – Saturday: {CONTACTS.officeHours.weekdays}<br />Sunday: Site tours by advance appointment.</p>
               </div>
+              <a
+                href="https://maps.google.com/?q=Al+Rehman+Garden+Phase+2+Lahore"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn--outline btn--full"
+                style="margin-top: 12px;"
+              >
+                Get Google Maps Directions ↗
+              </a>
             </div>
-
-            <div class="contact-point">
-              <span class="contact-icon">✉️</span>
-              <div>
-                <span class="contact-lbl">Email Inquiries</span>
-                <a href={`mailto:${CONTACTS.email}`} class="contact-val">{CONTACTS.email}</a>
-              </div>
-            </div>
-
-            <div class="contact-point">
-              <span class="contact-icon">📍</span>
-              <div>
-                <span class="contact-lbl">Site Office Address</span>
-                <span class="contact-val">{CONTACTS.address.full}</span>
-              </div>
-            </div>
-
-            <hr class="contact-hr" />
-
-            <div class="contact-hours-block">
-              <strong>Site Office Working Hours:</strong>
-              <p>Monday – Saturday: {CONTACTS.officeHours.weekdays}<br />Sunday: Site tours by advance appointment.</p>
-            </div>
-
-            <a
-              href="https://maps.google.com/?q=Al+Rehman+Garden+Phase+2+Lahore"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn btn--secondary btn--full"
-            >
-              Get Google Maps Directions ↗
-            </a>
           </div>
         </aside>
       </div>
@@ -264,17 +266,63 @@ const contactSchema = {
     box-shadow: 0 0 0 3px rgba(197, 155, 39, 0.15);
   }
 
-  .contact-info-box {
-    background: var(--bg-primary);
-    border: 1.5px solid var(--border-gold);
-    border-radius: var(--radius-2xl);
-    padding: var(--space-6) var(--space-8);
-    box-shadow: var(--shadow-xl);
-    position: sticky;
-    top: 96px;
+  .contact-cards-stack {
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
+    position: sticky;
+    top: 96px;
+  }
+
+  .contact-spec-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    padding: var(--space-5) var(--space-6);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    transition: transform var(--transition-fast), border-color var(--transition-fast);
+  }
+
+  .contact-spec-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-gold);
+  }
+
+  .contact-spec-card__badge {
+    font-size: 10px;
+    font-weight: var(--font-extrabold);
+    background: var(--color-primary-50);
+    color: var(--color-primary-800);
+    padding: 2px 8px;
+    border-radius: var(--radius-xs);
+    align-self: flex-start;
+  }
+
+  .contact-spec-card__title {
+    font-size: var(--text-base);
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .contact-spec-card__desc {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+    margin: 0 0 var(--space-2);
+  }
+
+  .contact-info-box {
+    background: var(--bg-primary);
+    border: 1.5px solid var(--border-gold);
+    border-radius: var(--radius-xl);
+    padding: var(--space-5) var(--space-6);
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
   }
 
   .contact-info-box__title {

@@ -1,0 +1,310 @@
+---
+/**
+ * Utilities & Infrastructure Systems — Al Rehman Garden Phase 2 Lahore
+ */
+
+import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
+import Button from '@components/global/Button.astro';
+import { SITE } from '@data/site';
+
+const pageSchema = {
+  name: `Utilities, Grid & Infrastructure — ${SITE.name}`,
+  description: 'Detailed specifications of underground electricity, Sui gas connections, RO pure drinking water plants, fiber internet, and 24/7 security in Al Rehman Garden Phase 2 Lahore.',
+  url: `${SITE.url}/utilities`,
+};
+
+const utilitySystems = [
+  {
+    icon: '⚡',
+    title: '100% Underground Electrification',
+    badge: 'Active in Mature Sectors',
+    badgeColor: '#059669',
+    description: 'All residential and commercial blocks are powered via an underground distribution network. Dedicated step-down transformers eliminate overhead cable clutter and reduce short-circuit risks.',
+    specs: [
+      'Zero dangling wires or hazardous exposed lines',
+      'Dedicated society sub-stations connected to LESCO grid',
+      'Automated LED solar streetlights along all avenues',
+      'Seamless power backup capability for civic pumps',
+    ],
+  },
+  {
+    icon: '🔥',
+    title: 'Sui Gas (SNGPL) Active Network',
+    badge: 'Live Domestic Connections',
+    badgeColor: '#059669',
+    description: 'Sui Northern Gas Pipelines Limited (SNGPL) domestic gas mains are laid throughout mature sectors with direct meter installations for residing families.',
+    specs: [
+      'Approved pipeline network across Blocks A, B, C, D, E & F',
+      'Standard low-pressure regulated domestic supply',
+      'Rapid meter connection processing for new house builders',
+      'No reliance on LPG cylinders for everyday cooking and heating',
+    ],
+  },
+  {
+    icon: '💧',
+    title: 'RO Filtration & Deep-Well Water Grid',
+    badge: '3 Automated RO Plants Live',
+    badgeColor: '#059669',
+    description: 'Continuous sweet water extraction via 600ft deep-well turbines coupled with 3 automated multi-stage Reverse Osmosis (RO) filtration plants.',
+    specs: [
+      'Certified pure drinking water testing according to WHO standards',
+      'Overhead water reservoir tanks ensuring 24/7 steady tap pressure',
+      'Dedicated free filtration collection points for all block residents',
+      'Underground drainage separate from fresh water supply lines',
+    ],
+  },
+  {
+    icon: '🌐',
+    title: 'Fiber-To-The-Home (FTTH) Internet',
+    badge: 'Gigabit Ready (StormFiber, PTCL Flash)',
+    badgeColor: '#2563EB',
+    description: 'High-speed gigabit fiber internet infrastructure laid underground, supporting seamless remote work, streaming, and smart home automation.',
+    specs: [
+      'Optic fiber cabling directly to every street distribution box',
+      'Speeds up to 100 Mbps – 1 Gbps from leading national ISPs',
+      'Pre-installed conduit infrastructure preventing road excavation',
+      'Crystal clear HD digital TV cable television service',
+    ],
+  },
+  {
+    icon: '🛡️',
+    title: '3-Tier Gated Security & Surveillance',
+    badge: '24/7 Central Control Room',
+    badgeColor: '#D97706',
+    description: 'Comprehensive security perimeter consisting of manned entrance barriers, biometric access verification, rapid-response mobile patrols, and high-definition CCTV monitoring.',
+    specs: [
+      '200+ high-definition PTZ CCTV cameras with night vision',
+      'Automated RFID barrier boom gates for registered residents',
+      'Armed security guards patrolling all avenues on motorcycles',
+      'Direct emergency intercom helpline connected to site office',
+    ],
+  },
+  {
+    icon: '🚛',
+    title: 'Civic Sanitation & Waste Management',
+    badge: 'Daily Doorstep Collection',
+    badgeColor: '#059669',
+    description: 'Professional municipal services team conducting daily doorstep refuse pickup, mechanical road sweeping, and green park maintenance.',
+    specs: [
+      'Daily scheduled morning waste collection trucks',
+      'Designated eco-friendly waste transfer stations outside living zones',
+      'Weekly fumigation and pest control spraying across all sectors',
+      'Dedicated horticulture team caring for 15+ parks and green belts',
+    ],
+  },
+  {
+    icon: '🛣️',
+    title: 'Master Road Network & 150ft Boulevards',
+    badge: 'Signal-Free Asphalt Arteries',
+    badgeColor: '#059669',
+    description: 'Engineered multi-lane road hierarchy built with heavy-duty asphalt carpeting, wide pedestrian footpaths, and landscaped central medians.',
+    specs: [
+      '150ft wide main entrance boulevard connecting directly to M-2 bypass',
+      '80ft and 60ft wide inter-sector dividing avenues',
+      'Minimum 30ft wide internal residential access streets',
+      'Underground RCC storm-water drainage gutters on both road flanks',
+    ],
+  },
+];
+---
+
+<PageLayout
+  title={`Utilities & Infrastructure | Al Rehman Garden Phase 2 Lahore`}
+  description="Discover the complete civic infrastructure of Al Rehman Garden Phase 2 Lahore: 100% underground electricity, Sui gas, RO water filtration plants, fiber internet, and 24/7 security."
+>
+  <Schema type="WebSite" data={pageSchema} />
+
+  <!-- Hero Section -->
+  <section class="util-hero">
+    <div class="container">
+      <div class="eyebrow eyebrow--dark">World-Class Civic Infrastructure</div>
+      <h1 class="util-hero__title">
+        Utilities &amp; <span class="text-gradient-gold">Facilities Grid</span>
+      </h1>
+      <p class="util-hero__lead lead">
+        Experience uninterrupted modern living in Lahore. Al Rehman Garden Phase 2 features 100% underground power, active Sui gas, pure RO drinking water, gigabit fiber internet, and 3-tier gated security.
+      </p>
+    </div>
+  </section>
+
+  <!-- Systems Grid -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="util-grid">
+        {utilitySystems.map((u) => (
+          <div class="util-card">
+            <div class="util-card__top">
+              <span class="util-card__icon">{u.icon}</span>
+              <span class="util-card__badge" style={`color: ${u.badgeColor};`}>
+                ● {u.badge}
+              </span>
+            </div>
+
+            <h2 class="util-card__title">{u.title}</h2>
+            <p class="util-card__desc">{u.description}</p>
+
+            <div class="util-card__specs">
+              <strong>Key System Standards:</strong>
+              <ul>
+                {u.specs.map((s) => (
+                  <li>✓ {s}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Comparison Callout -->
+      <div class="util-callout" style="margin-top: 56px;">
+        <div class="util-callout__icon">🏛️</div>
+        <div>
+          <h3 style="color: #FFFFFF; font-size: var(--text-2xl); margin: 0 0 8px;">100% LDA Masterplan Standard Compliance</h3>
+          <p style="color: #CBD5E1; font-size: var(--text-sm); line-height: var(--leading-relaxed); margin: 0 0 16px;">
+            Every utility pipeline, electrical transformer station, and drainage channel in Al Rehman Garden Phase 2 is laid in full compliance with Lahore Development Authority (LDA) and WASA engineering standards.
+          </p>
+          <Button href="/contact" variant="primary" size="sm">
+            Book an Infrastructure Site Visit →
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .util-hero {
+    background: radial-gradient(circle at 80% 20%, #16244F 0%, #0A1128 75%);
+    color: var(--text-inverse);
+    padding: var(--space-12) 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  }
+
+  .util-hero__title {
+    color: #FFFFFF;
+    margin: var(--space-2) 0 var(--space-3);
+  }
+
+  .util-hero__lead {
+    color: var(--color-neutral-300);
+    max-width: 65ch;
+    margin: 0;
+  }
+
+  .util-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 768px) {
+    .util-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .util-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+  }
+
+  .util-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--border-gold);
+  }
+
+  .util-card__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-4);
+  }
+
+  .util-card__icon {
+    font-size: 38px;
+    line-height: 1;
+  }
+
+  .util-card__badge {
+    font-size: 11px;
+    font-weight: var(--font-extrabold);
+    background: var(--color-neutral-100);
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+  }
+
+  .util-card__title {
+    font-size: var(--text-xl);
+    color: var(--text-primary);
+    margin: 0 0 var(--space-3);
+  }
+
+  .util-card__desc {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-5);
+  }
+
+  .util-card__specs {
+    background: var(--color-neutral-50);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4) var(--space-5);
+    margin-top: auto;
+  }
+
+  .util-card__specs strong {
+    font-size: var(--text-xs);
+    color: var(--text-primary);
+    display: block;
+    margin-bottom: var(--space-2);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .util-card__specs ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .util-card__specs li {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  .util-callout {
+    background: linear-gradient(135deg, #101F44 0%, #0A1128 100%);
+    border: 1.5px solid rgba(212, 175, 55, 0.4);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 768px) {
+    .util-callout {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  .util-callout__icon {
+    font-size: 54px;
+    flex-shrink: 0;
+  }
+</style>

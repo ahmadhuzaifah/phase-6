@@ -1,20 +1,98 @@
 ---
 /**
- * Places & Local Community Directory — Al Rehman Garden Phase 2 Lahore
+ * Category Specific Places Directory — Al Rehman Garden Phase 2 Lahore
  */
 
 import PageLayout from '@layouts/PageLayout.astro';
 import Schema from '@components/seo/Schema.astro';
+import Button from '@components/global/Button.astro';
 import { SITE } from '@data/site';
 import { PLACES_DATA } from '@data/places';
 
+export async function getStaticPaths() {
+  const categoryMap: Record<string, { label: string; seoTitle: string; seoDesc: string }> = {
+    schools: {
+      label: 'Schools & Academies',
+      seoTitle: 'Best Schools in and near Al Rehman Garden Phase 2 Lahore',
+      seoDesc: 'Comprehensive guide to top primary, secondary, and Cambridge O/A Level schools located in and near Al Rehman Garden Phase 2 Lahore.',
+    },
+    colleges: {
+      label: 'Colleges & Higher Education',
+      seoTitle: 'Colleges near Al Rehman Garden Phase 2 Lahore',
+      seoDesc: 'Explore intermediate FSc, ICS, and degree colleges located near Al Rehman Garden Phase 2 on Main Sharaqpur Road Lahore.',
+    },
+    hospitals: {
+      label: 'Hospitals & Emergency Care',
+      seoTitle: 'Hospitals near Al Rehman Garden Phase 2 Lahore (24/7 Care)',
+      seoDesc: 'Find 24/7 trauma emergency hospitals, ICU facilities, and medical centers inside and near Al Rehman Garden Phase 2 Lahore.',
+    },
+    clinics: {
+      label: 'Medical & Dental Clinics',
+      seoTitle: 'Clinics & Diagnostic Labs in Al Rehman Garden Phase 2',
+      seoDesc: 'Discover pathology labs, dental clinics, and specialist doctor clinics located in Al Rehman Garden Phase 2 Lahore.',
+    },
+    restaurants: {
+      label: 'Restaurants & Family Dining',
+      seoTitle: 'Restaurants in Al Rehman Garden Phase 2 Lahore',
+      seoDesc: 'Top family restaurants, BBQ, Fast Food, and traditional Karahi dining spots in Al Rehman Garden Phase 2 Lahore.',
+    },
+    cafes: {
+      label: 'Cafes & Coffee Lounges',
+      seoTitle: 'Cafes & Coffee Shops in Al Rehman Garden Phase 2',
+      seoDesc: 'Relaxing coffee lounges, bakeries, and tea houses located in Al Rehman Garden Phase 2 Lahore.',
+    },
+    mosques: {
+      label: 'Grand Jamia Mosques',
+      seoTitle: 'Mosques in Al Rehman Garden Phase 2 Lahore',
+      seoDesc: 'Explore the Grand Jamia Mosque and sector prayer halls with Turkish architecture in Al Rehman Garden Phase 2 Lahore.',
+    },
+    markets: {
+      label: 'Shopping Malls & Supermarkets',
+      seoTitle: 'Supermarkets & Shopping in Al Rehman Garden Phase 2',
+      seoDesc: 'Departmental stores, grocery marts, and commercial shopping centers in Al Rehman Garden Phase 2 Lahore.',
+    },
+    banks: {
+      label: 'Banks & 24/7 ATMs',
+      seoTitle: 'Banks & ATMs in Al Rehman Garden Phase 2 Lahore',
+      seoDesc: 'Commercial and Islamic banks with 24/7 ATMs located in Al Rehman Garden Phase 2 Lahore commercial zones.',
+    },
+    'petrol-stations': {
+      label: 'Petrol & Fuel Stations',
+      seoTitle: 'Petrol Pumps & EV Charging near Al Rehman Garden Phase 2',
+      seoDesc: '24/7 fuel stations and car service centers near Al Rehman Garden Phase 2 on Main Sharaqpur Road Lahore.',
+    },
+    gyms: {
+      label: 'Gyms & Fitness Centers',
+      seoTitle: 'Gyms & Fitness Clubs in Al Rehman Garden Phase 2',
+      seoDesc: 'Modern fitness centers, CrossFit arenas, and ladies fitness gyms in Al Rehman Garden Phase 2 Lahore.',
+    },
+  };
+
+  return Object.keys(categoryMap).map((catKey) => {
+    const meta = categoryMap[catKey];
+    const items = PLACES_DATA.filter((p) => p.category === catKey);
+    return {
+      params: { category: catKey },
+      props: {
+        categoryKey: catKey,
+        label: meta.label,
+        seoTitle: meta.seoTitle,
+        seoDesc: meta.seoDesc,
+        places: items,
+      },
+    };
+  });
+}
+
+const { categoryKey, label, seoTitle, seoDesc, places } = Astro.props;
+
 const pageSchema = {
-  name: `Nearby Places & Community Directory — ${SITE.name}`,
-  description: 'Explore schools, hospitals, clinics, mosques, restaurants, shopping marts, and banks inside and near Al Rehman Garden Phase 2 Lahore.',
-  url: `${SITE.url}/places`,
+  name: `${label} — ${SITE.name}`,
+  description: seoDesc,
+  url: `${SITE.url}/places/${categoryKey}`,
 };
 
-const categories = [
+const allCategories = [
   { slug: 'all', label: 'All Places' },
   { slug: 'schools', label: '🏫 Schools' },
   { slug: 'colleges', label: '🎓 Colleges' },
@@ -31,42 +109,40 @@ const categories = [
 ---
 
 <PageLayout
-  title={`Nearby Places & Amenities Directory | Al Rehman Garden Phase 2 Lahore`}
-  description="Discover schools, top hospitals, Grand Jamia Mosques, restaurants, supermarkets, and banks situated inside and near Al Rehman Garden Phase 2 Lahore."
+  title={`${seoTitle} | ${SITE.name}`}
+  description={seoDesc}
 >
   <Schema type="WebSite" data={pageSchema} />
 
   <!-- Hero Section -->
   <section class="places-hero">
     <div class="container">
-      <div class="eyebrow eyebrow--dark">Community Lifestyle & Amenities Directory</div>
+      <div class="eyebrow eyebrow--dark">Community Directory</div>
       <h1 class="places-hero__title">
-        Places, Schools &amp; <span class="text-gradient-gold">Nearby Amenities</span>
+        {label} in <span class="text-gradient-gold">Phase 2 Lahore</span>
       </h1>
-      <p class="places-hero__lead lead">
-        Explore premier educational institutions, 24/7 hospitals, family dining, Grand Jamia Mosques, supermarkets, and banking centers situated inside and adjacent to Al Rehman Garden Phase 2 Lahore.
-      </p>
+      <p class="places-hero__lead lead">{seoDesc}</p>
     </div>
   </section>
 
-  <!-- Places Main Section -->
+  <!-- Content Section -->
   <section class="section section--alt">
     <div class="container">
-      <!-- Category Shortcut Pills -->
+      <!-- Category Tabs -->
       <div class="places-pills-row">
-        {categories.map((c) => (
+        {allCategories.map((c) => (
           <a
             href={c.slug === 'all' ? '/places' : `/places/${c.slug}`}
-            class:list={['places-pill', { 'places-pill--active': c.slug === 'all' }]}
+            class:list={['places-pill', { 'places-pill--active': c.slug === categoryKey }]}
           >
             {c.label}
           </a>
         ))}
       </div>
 
-      <!-- Places Grid -->
+      <!-- Places List -->
       <div class="places-grid">
-        {PLACES_DATA.map((p) => (
+        {places.map((p) => (
           <div class="place-card">
             <div class="place-card__header">
               <div class="place-card__badge-row">
@@ -88,7 +164,7 @@ const categories = [
             <div class="place-card__footer">
               <div class="place-rating">
                 <span style="color: #F59E0B;">★ {p.rating?.toFixed(1) || '4.8'}</span>
-                <small>({p.reviewCount || 45} Verified Reviews)</small>
+                <small>({p.reviewCount || 50} Reviews)</small>
               </div>
               <a
                 href={`https://maps.google.com/?q=${encodeURIComponent(`${p.name} Al Rehman Garden Phase 2 Lahore`)}`}
@@ -103,15 +179,11 @@ const categories = [
         ))}
       </div>
 
-      <!-- Bottom Society Transport & Proximity Note -->
-      <div class="places-transport-card" style="margin-top: 48px;">
-        <div class="places-transport__icon">🚌</div>
-        <div>
-          <h3 style="color: #FFFFFF; font-size: var(--text-xl); margin-bottom: 6px;">Dedicated Society Shuttle Service</h3>
-          <p style="color: #CBD5E1; font-size: var(--text-sm); line-height: var(--leading-relaxed); margin: 0;">
-            Al Rehman Garden Phase 2 operates air-conditioned shuttle transport vans connecting all residential sectors to Sagian Metro Bus station, Thokar Niaz Baig, and nearby university / hospital campuses for daily commuting residents.
-          </p>
-        </div>
+      <!-- Back to all places -->
+      <div style="margin-top: 48px; text-align: center;">
+        <Button href="/places" variant="outline" size="md">
+          ← View All Society Amenities &amp; Places
+        </Button>
       </div>
     </div>
   </section>
@@ -194,7 +266,7 @@ const categories = [
     box-shadow: var(--shadow-sm);
     display: flex;
     flex-direction: column;
-    transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
   }
 
   .place-card:hover {
@@ -279,27 +351,5 @@ const categories = [
     font-weight: normal;
     display: block;
     font-size: 10px;
-  }
-
-  .places-transport-card {
-    background: linear-gradient(135deg, #101F44 0%, #0A1128 100%);
-    border: 1.5px solid rgba(212, 175, 55, 0.4);
-    border-radius: var(--radius-2xl);
-    padding: var(--space-8);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-6);
-  }
-
-  @media (min-width: 768px) {
-    .places-transport-card {
-      flex-direction: row;
-      align-items: center;
-    }
-  }
-
-  .places-transport__icon {
-    font-size: 48px;
-    flex-shrink: 0;
   }
 </style>

@@ -1,0 +1,330 @@
+---
+/**
+ * FAQ Knowledgebase Authority Hub — Al Rehman Garden Phase 2 Lahore
+ */
+
+import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
+import { SITE } from '@data/site';
+import { CONTACTS } from '@data/contacts';
+import { FAQS_DATA } from '@data/faqs';
+
+const allFaqItems = FAQS_DATA.flatMap((cat) => cat.questions);
+
+const faqSchema = {
+  itemListElement: allFaqItems.map((f) => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: f.answer,
+    },
+  })),
+};
+
+const pageSchema = {
+  name: `Frequently Asked Questions Knowledgebase — ${SITE.name}`,
+  description: 'Complete question-and-answer guide covering LDA approvals, plot transfer procedures, 2026 prices, possession timelines, and utilities in Al Rehman Garden Phase 2 Lahore.',
+  url: `${SITE.url}/faq`,
+};
+---
+
+<PageLayout
+  title={`Frequently Asked Questions (FAQ) | Al Rehman Garden Phase 2 Lahore`}
+  description="Comprehensive FAQ guide for Al Rehman Garden Phase 2 Lahore. Instant answers on plot prices, LDA NOC status, registry process, possession timelines, and underground utilities."
+>
+  <Schema type="WebSite" data={pageSchema} />
+  <Schema type="FAQPage" data={faqSchema} />
+
+  <!-- Hero Section -->
+  <section class="faq-hero">
+    <div class="container">
+      <div class="eyebrow eyebrow--dark">Investor & Resident Knowledgebase</div>
+      <h1 class="faq-hero__title">
+        Frequently Asked <span class="text-gradient-gold">Questions</span>
+      </h1>
+      <p class="faq-hero__lead lead">
+        Find clear, verified answers regarding LDA masterplan approvals, on-ground plot registries, current price benchmarks, construction bylaws, and utilities in Al Rehman Garden Phase 2 Lahore.
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ Main Content -->
+  <section class="section section--alt">
+    <div class="container">
+      <!-- Search Box -->
+      <div class="faq-search-box">
+        <span class="faq-search-icon">🔍</span>
+        <input
+          type="text"
+          id="faq-search-input"
+          placeholder="Search questions (e.g., LDA approval, 5 Marla price, Sui gas, registry...)"
+          class="faq-search-input"
+        />
+      </div>
+
+      <!-- Categories Container -->
+      <div class="faq-categories" id="faq-categories">
+        {FAQS_DATA.map((cat) => (
+          <div class="faq-category-group" data-category-id={cat.id}>
+            <div class="faq-category-header">
+              <span class="faq-cat-icon">{cat.icon}</span>
+              <div>
+                <h2 class="faq-cat-title">{cat.name}</h2>
+                <p class="faq-cat-desc">{cat.description}</p>
+              </div>
+            </div>
+
+            <div class="faq-accordion-list">
+              {cat.questions.map((q) => (
+                <details class="faq-accordion-item">
+                  <summary class="faq-summary">
+                    <span class="faq-q-text">{q.question}</span>
+                    <span class="faq-toggle-icon">+</span>
+                  </summary>
+                  <div class="faq-answer">
+                    <p>{q.answer}</p>
+                  </div>
+                </details>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Live Empty State -->
+      <div id="faq-empty-state" style="display: none; padding: 48px; background: white; border: 1px dashed var(--border-light); border-radius: var(--radius-xl); text-align: center; margin-top: 24px;">
+        <div style="font-size: 36px; margin-bottom: 8px;">❓</div>
+        <h3 style="font-size: var(--text-lg); margin-bottom: 6px;">No questions matched your search</h3>
+        <p style="font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: 16px;">Have a specific question not listed here? Ask our official property desk on WhatsApp directly.</p>
+        <a href={CONTACTS.whatsapp.url} target="_blank" rel="noopener noreferrer" class="btn btn--accent btn--sm">
+          Ask Advisor on WhatsApp
+        </a>
+      </div>
+
+      <!-- Bottom Still Have Questions Card -->
+      <div class="faq-support-card" style="margin-top: 56px;">
+        <div class="faq-support__body">
+          <h3 style="color: #FFFFFF; font-size: var(--text-2xl); margin: 0 0 8px;">Still Have Unanswered Questions?</h3>
+          <p style="color: #CBD5E1; font-size: var(--text-sm); margin: 0;">
+            Our site office team is available 6 days a week to answer your legal, technical, and investment questions.
+          </p>
+        </div>
+        <div class="faq-support__actions">
+          <a href={CONTACTS.whatsapp.url} target="_blank" rel="noopener noreferrer" class="btn btn--accent btn--lg">
+            💬 WhatsApp Live Chat
+          </a>
+          <a href={`tel:${CONTACTS.phone.primary}`} class="btn btn--secondary btn--lg">
+            📞 Call {CONTACTS.phone.display}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .faq-hero {
+    background: radial-gradient(circle at 80% 20%, #16244F 0%, #0A1128 75%);
+    color: var(--text-inverse);
+    padding: var(--space-12) 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  }
+
+  .faq-hero__title {
+    color: #FFFFFF;
+    margin: var(--space-2) 0 var(--space-3);
+  }
+
+  .faq-hero__lead {
+    color: var(--color-neutral-300);
+    max-width: 65ch;
+    margin: 0;
+  }
+
+  .faq-search-box {
+    position: relative;
+    max-width: 720px;
+    margin: 0 auto var(--space-10);
+  }
+
+  .faq-search-icon {
+    position: absolute;
+    left: var(--space-5);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+  }
+
+  .faq-search-input {
+    width: 100%;
+    padding: var(--space-4) var(--space-5) var(--space-4) 52px;
+    font-size: var(--text-base);
+    border-radius: var(--radius-full);
+    border: 1.5px solid var(--border-light);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-fast);
+  }
+
+  .faq-search-input:focus {
+    outline: none;
+    border-color: var(--color-primary-500);
+    box-shadow: 0 0 0 4px rgba(197, 155, 39, 0.15);
+  }
+
+  .faq-categories {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .faq-category-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+
+  .faq-cat-icon {
+    font-size: 32px;
+  }
+
+  .faq-cat-title {
+    font-size: var(--text-xl);
+    color: var(--text-primary);
+    margin: 0 0 2px;
+  }
+
+  .faq-cat-desc {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  .faq-accordion-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .faq-accordion-item {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-fast);
+  }
+
+  .faq-accordion-item[open] {
+    border-color: var(--border-gold);
+  }
+
+  .faq-summary {
+    padding: var(--space-4) var(--space-6);
+    font-size: var(--text-base);
+    font-weight: var(--font-bold);
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    user-select: none;
+  }
+
+  .faq-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-toggle-icon {
+    font-size: 20px;
+    font-weight: var(--font-bold);
+    color: var(--color-primary-600);
+    transition: transform var(--transition-fast);
+  }
+
+  .faq-accordion-item[open] .faq-toggle-icon {
+    transform: rotate(45deg);
+  }
+
+  .faq-answer {
+    padding: 0 var(--space-6) var(--space-5);
+    border-top: 1px solid var(--border-light);
+    padding-top: var(--space-4);
+  }
+
+  .faq-answer p {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+    margin: 0;
+  }
+
+  .faq-support-card {
+    background: linear-gradient(135deg, #101F44 0%, #0A1128 100%);
+    border: 1.5px solid rgba(212, 175, 55, 0.4);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media (min-width: 768px) {
+    .faq-support-card {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .faq-support__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+</style>
+
+<script>
+  function initFaqSearch() {
+    const input = document.getElementById('faq-search-input') as HTMLInputElement | null;
+    const items = document.querySelectorAll('.faq-accordion-item');
+    const groups = document.querySelectorAll('.faq-category-group');
+    const emptyState = document.getElementById('faq-empty-state');
+
+    input?.addEventListener('input', () => {
+      const q = input.value.toLowerCase().trim();
+      let totalVisible = 0;
+
+      items.forEach((item) => {
+        const itemEl = item as HTMLElement;
+        const text = itemEl.textContent?.toLowerCase() || '';
+        if (!q || text.includes(q)) {
+          itemEl.style.display = '';
+          if (q) (item as HTMLDetailsElement).open = true;
+          totalVisible++;
+        } else {
+          itemEl.style.display = 'none';
+        }
+      });
+
+      groups.forEach((group) => {
+        const groupEl = group as HTMLElement;
+        const hasVisible = groupEl.querySelectorAll('.faq-accordion-item:not([style*="display: none"])').length > 0;
+        groupEl.style.display = hasVisible ? '' : 'none';
+      });
+
+      if (emptyState) emptyState.style.display = totalVisible === 0 ? 'block' : 'none';
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initFaqSearch);
+</script>

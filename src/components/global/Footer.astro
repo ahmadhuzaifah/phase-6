@@ -5,9 +5,8 @@
  * location coordinates, legal verification notice, and direct contacts.
  */
 
-import { NAVIGATION, SITE } from '@data/site';
+import { SITE } from '@data/site';
 import { CONTACTS } from '@data/contacts';
-import { BLOCKS } from '@data/blocks';
 ---
 
 <footer class="footer" id="site-footer">
@@ -73,36 +72,27 @@ import { BLOCKS } from '@data/blocks';
       <div class="footer__col">
         <h4 class="footer__heading">Explore Portal</h4>
         <ul class="footer__links">
-          {
-            NAVIGATION.slice(0, 6).map((item) => (
-              <li>
-                <a href={item.href} class="footer__link">
-                  <span class="footer__link-bullet">›</span> {item.label}
-                </a>
-              </li>
-            ))
-          }
+          <li><a href="/properties" class="footer__link"><span class="footer__link-bullet">›</span> All Properties</a></li>
+          <li><a href="/plots" class="footer__link"><span class="footer__link-bullet">›</span> Plots for Sale</a></li>
+          <li><a href="/houses-for-sale-in-al-rehman-garden-phase-2-lahore" class="footer__link"><span class="footer__link-bullet">›</span> Ready Houses</a></li>
+          <li><a href="/blocks" class="footer__link"><span class="footer__link-bullet">›</span> Blocks Directory</a></li>
+          <li><a href="/al-rehman-garden-phase-2-payment-plan" class="footer__link"><span class="footer__link-bullet">›</span> Payment Plans</a></li>
+          <li><a href="/al-rehman-garden-phase-2-location" class="footer__link"><span class="footer__link-bullet">›</span> Society Location</a></li>
         </ul>
       </div>
 
-      <!-- Master Blocks Directory -->
+      <!-- DHA Style Authority Hub Column -->
       <div class="footer__col">
-        <h4 class="footer__heading">Sectors & Blocks</h4>
+        <h4 class="footer__heading">Authority Hub</h4>
         <ul class="footer__links">
-          {
-            BLOCKS.slice(0, 6).map((block) => (
-              <li>
-                <a href={`/blocks/${block.slug}`} class="footer__link">
-                  <span class="footer__link-bullet">›</span> {block.name}
-                </a>
-              </li>
-            ))
-          }
-          <li>
-            <a href="/blocks" class="footer__link footer__link--accent">
-              View All Society Blocks →
-            </a>
-          </li>
+          <li><a href="/property-prices" class="footer__link"><span class="footer__link-bullet">›</span> 2026 Price Index</a></li>
+          <li><a href="/al-rehman-garden-phase-2-weather" class="footer__link"><span class="footer__link-bullet">›</span> Society Weather</a></li>
+          <li><a href="/utilities" class="footer__link"><span class="footer__link-bullet">›</span> Utilities &amp; Grid</a></li>
+          <li><a href="/places" class="footer__link"><span class="footer__link-bullet">›</span> Nearby Places</a></li>
+          <li><a href="/development-updates" class="footer__link"><span class="footer__link-bullet">›</span> Development Timeline</a></li>
+          <li><a href="/gallery" class="footer__link"><span class="footer__link-bullet">›</span> Photo Gallery</a></li>
+          <li><a href="/downloads" class="footer__link"><span class="footer__link-bullet">›</span> Download Center</a></li>
+          <li><a href="/faq" class="footer__link"><span class="footer__link-bullet">›</span> FAQ Knowledgebase</a></li>
         </ul>
       </div>
 
