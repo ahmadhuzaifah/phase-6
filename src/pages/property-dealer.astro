@@ -1,0 +1,1283 @@
+---
+/**
+ * Property Dealer Profile Page — Muhammad Rashid Nawaz
+ * Al Rehman Garden Phase 2 Lahore Authority Portal
+ */
+
+import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
+import PropertyWatermark from '@components/property/PropertyWatermark.astro';
+import { SITE } from '@data/site';
+import propertiesData from '@data/properties-import.json';
+
+const consultant = {
+  name: 'Muhammad Rashid Nawaz',
+  title: 'PROPERTY CONSULTANT',
+  location: 'Al Rehman Garden Phase 2 Lahore',
+  phone: '03257800001',
+  phoneTel: '+923257800001',
+  whatsappNumber: '03257800001',
+  whatsappUrl: 'https://wa.me/923257800001',
+  image: '/images/dealers/muhammad-rashid-nawaz.png',
+  bio: 'Helping buyers find residential plots, houses, and investment opportunities in Al Rehman Garden Phase 2 Lahore with transparent guidance and verified property information.',
+  serviceArea: 'Al Rehman Garden Phase 2 Lahore',
+  services: 'Property Consultation & Plot / House Assistance',
+};
+
+const pageSchema = {
+  name: `Muhammad Rashid Nawaz — Property Consultant in Al Rehman Garden Phase 2 Lahore`,
+  description: `Contact Muhammad Rashid Nawaz for verified residential plots, houses, market prices, and property viewing in Al Rehman Garden Phase 2 Lahore.`,
+  url: `${SITE.url}/property-dealer`,
+};
+
+const realEstateAgentSchema = {
+  name: consultant.name,
+  jobTitle: consultant.title,
+  telephone: consultant.phoneTel,
+  url: `${SITE.url}/property-dealer`,
+  image: `${SITE.url}${consultant.image}`,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Lahore',
+    addressRegion: 'Punjab',
+    addressCountry: 'PK',
+  },
+};
+
+const breadcrumbsSchema = {
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: SITE.url,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Property Dealer',
+      item: `${SITE.url}/property-dealer`,
+    },
+  ],
+};
+
+const buyerGuideSteps = [
+  {
+    icon: '📋',
+    title: 'Verify Documents',
+    desc: 'Check ownership, transfer status, NDC clearance, and official society records.',
+  },
+  {
+    icon: '📍',
+    title: 'Check Property Location',
+    desc: 'Visit the property on-ground before making a financial commitment.',
+  },
+  {
+    icon: '📊',
+    title: 'Compare Market Prices',
+    desc: 'Understand current market benchmarks and sector rates before investing.',
+  },
+  {
+    icon: '🏗️',
+    title: 'Review Development Status',
+    desc: 'Inspect block infrastructure progress, underground utilities, and road carpeting.',
+  },
+  {
+    icon: '🏛️',
+    title: 'Use Official Transfer Process',
+    desc: 'Execute all purchase transactions through the authorized management office.',
+  },
+  {
+    icon: '📝',
+    title: 'Keep Written Agreements',
+    desc: 'Document all token payments, receipts, and commission terms in writing.',
+  },
+];
+
+const assistanceServices = [
+  {
+    icon: '🏡',
+    title: 'Residential Plots',
+    desc: '3 Marla, 5 Marla, 10 Marla & 1 Kanal plots in mature and upcoming sectors.',
+  },
+  {
+    icon: '🏰',
+    title: 'Ready & Built Houses',
+    desc: 'Newly constructed double-story luxury designer villas with immediate possession.',
+  },
+  {
+    icon: '📈',
+    title: 'Investment Guidance',
+    desc: 'Independent market analysis, capital appreciation trends, and high-ROI location advice.',
+  },
+  {
+    icon: '🚗',
+    title: 'Property Viewing',
+    desc: 'Complimentary guided physical site tours, plot demarcation, and sector visits.',
+  },
+];
+
+// Featured 3 curated listings for quick preview
+const featuredListings = propertiesData.slice(0, 3);
+---
+
+<PageLayout
+  title="Al Rehman Garden Phase 2 Lahore Property Dealer | Verified Property Assistance"
+  description="Contact Al Rehman Garden Phase 2 Lahore property consultant Muhammad Rashid Nawaz (03257800001) for verified plots, houses, investment guidance, and property viewing assistance."
+>
+  <Schema type="WebSite" data={pageSchema} />
+  <Schema type="RealEstateAgent" data={realEstateAgentSchema} />
+  <Schema type="BreadcrumbList" data={breadcrumbsSchema} />
+
+  <main class="dealer-page">
+    <!-- Top Sub-Navigation Bar matching reference -->
+    <header class="dealer-topbar">
+      <div class="container dealer-topbar__inner">
+        <a href="/" class="dealer-topbar__logo">
+          <img src="/images/logo/logo-white.svg" alt={SITE.name} width="190" height="48" />
+        </a>
+
+        <nav class="dealer-topbar__nav">
+          <a href="/" class="dealer-nav-link">Home</a>
+          <a href="/blocks" class="dealer-nav-link">Blocks</a>
+          <a href="/properties" class="dealer-nav-link">Properties</a>
+          <a href="/plots" class="dealer-nav-link">Plots</a>
+          <a href="/houses-for-sale-in-al-rehman-garden-phase-2-lahore" class="dealer-nav-link">Houses</a>
+          <a href="/places" class="dealer-nav-link">Places</a>
+          <a href="/map" class="dealer-nav-link">Map</a>
+          <a href="/property-prices" class="dealer-nav-link">Prices</a>
+          <a href="/contact" class="dealer-nav-link">Contact</a>
+        </nav>
+
+        <a
+          href={consultant.whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="dealer-btn-gold"
+        >
+          WhatsApp
+        </a>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="dealer-hero">
+      <div class="container text-center">
+        <!-- Breadcrumbs -->
+        <nav class="dealer-breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <span>&gt;</span>
+          <span class="active">Property Dealer</span>
+        </nav>
+
+        <!-- Main Heading -->
+        <h1 class="dealer-hero__title">
+          Al Rehman Garden Phase 2 Lahore <br />
+          <span class="text-gold">Property Dealer</span>
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="dealer-hero__subtitle">
+          Contact us for property inquiries, buying assistance, and viewing arrangements in Al Rehman Garden Phase 2 Lahore.
+        </p>
+
+        <!-- Main Dealer Profile Card -->
+        <div class="profile-card">
+          <div class="profile-card__top">
+            <div class="profile-card__avatar-wrap">
+              <img
+                src={consultant.image}
+                alt={consultant.name}
+                class="profile-card__avatar"
+                width="110"
+                height="110"
+                loading="eager"
+              />
+            </div>
+            <div class="profile-card__identity">
+              <div class="profile-card__badge-row">
+                <span class="profile-badge">{consultant.title}</span>
+              </div>
+              <h2 class="profile-card__name">{consultant.name}</h2>
+              <span class="profile-card__loc">📍 {consultant.location}</span>
+            </div>
+          </div>
+
+          <p class="profile-card__bio">{consultant.bio}</p>
+
+          <!-- 4 Information Cards (2x2 Grid) -->
+          <div class="info-matrix-grid">
+            <div class="info-mini-card">
+              <span class="info-mini-card__label">SERVICE AREA</span>
+              <strong class="info-mini-card__val">{consultant.serviceArea}</strong>
+            </div>
+
+            <div class="info-mini-card">
+              <span class="info-mini-card__label">SERVICES</span>
+              <strong class="info-mini-card__val">{consultant.services}</strong>
+            </div>
+
+            <div class="info-mini-card">
+              <span class="info-mini-card__label">WHATSAPP</span>
+              <strong class="info-mini-card__val">{consultant.whatsappNumber}</strong>
+            </div>
+
+            <div class="info-mini-card">
+              <span class="info-mini-card__label">CALL</span>
+              <strong class="info-mini-card__val">{consultant.phone}</strong>
+            </div>
+          </div>
+
+          <!-- Direct CTA Buttons -->
+          <div class="profile-card__actions">
+            <a
+              href={consultant.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-action btn-action--whatsapp"
+            >
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/>
+              </svg>
+              <span>WhatsApp {consultant.whatsappNumber}</span>
+            </a>
+
+            <a
+              href={`tel:${consultant.phoneTel}`}
+              class="btn-action btn-action--call"
+            >
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+              <span>Call {consultant.phone}</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Warning Trust Box -->
+        <div class="warning-trust-box">
+          <span class="warning-trust-box__icon">⚠️</span>
+          <p class="warning-trust-box__text">
+            Always verify property ownership, documents, prices, and transfer status before making any payment.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Buyer's Guide Section -->
+    <section class="dealer-section">
+      <div class="container">
+        <div class="section-center-head">
+          <div class="guide-eyebrow">
+            <span class="guide-eyebrow__line"></span>
+            <span>BEFORE YOU BUY</span>
+            <span class="guide-eyebrow__line"></span>
+          </div>
+          <h2 class="section-main-title">Buyer's Guide</h2>
+          <p class="section-sub-title">Use these checks before buying, selling, or renting a property in Al Rehman Garden Phase 2 Lahore.</p>
+        </div>
+
+        <div class="guide-card-grid">
+          {buyerGuideSteps.map((step) => (
+            <div class="guide-card">
+              <div class="guide-card__icon-wrap">
+                <span class="guide-card__icon">{step.icon}</span>
+              </div>
+              <h3 class="guide-card__title">{step.title}</h3>
+              <p class="guide-card__desc">{step.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- How We Help Section -->
+    <section class="dealer-section dealer-section--alt">
+      <div class="container">
+        <div class="section-center-head">
+          <div class="guide-eyebrow">
+            <span class="guide-eyebrow__line"></span>
+            <span>PROPERTY ASSISTANCE</span>
+            <span class="guide-eyebrow__line"></span>
+          </div>
+          <h2 class="section-main-title">How We Help</h2>
+          <p class="section-sub-title">Comprehensive real estate solutions for home buyers and real estate investors.</p>
+        </div>
+
+        <div class="services-grid-4">
+          {assistanceServices.map((svc) => (
+            <div class="service-card">
+              <span class="service-card__icon">{svc.icon}</span>
+              <h3 class="service-card__title">{svc.title}</h3>
+              <p class="service-card__desc">{svc.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Property Section -->
+    <section class="dealer-section">
+      <div class="container">
+        <div class="section-center-head">
+          <div class="guide-eyebrow">
+            <span class="guide-eyebrow__line"></span>
+            <span>VERIFIED INVENTORY</span>
+            <span class="guide-eyebrow__line"></span>
+          </div>
+          <h2 class="section-main-title">Latest Available Properties</h2>
+          <p class="section-sub-title">Handpicked verified properties ready for site viewing in Al Rehman Garden Phase 2.</p>
+        </div>
+
+        <div class="properties-preview-grid">
+          {featuredListings.map((prop) => (
+            <div class="prop-mini-card">
+              <div class="prop-mini-card__img-wrap">
+                <img
+                  src={prop.images[0]?.url || '/images/placeholders/property-placeholder.webp'}
+                  alt={prop.title}
+                  class="prop-mini-card__img"
+                  loading="lazy"
+                />
+                <PropertyWatermark position="bottom-right" opacity={0.8} />
+                <span class="prop-mini-card__status-badge">🟢 Available</span>
+              </div>
+
+              <div class="prop-mini-card__content">
+                <div class="prop-mini-card__meta">
+                  <span class="prop-mini-tag">{prop.size} {prop.unit}</span>
+                  <span class="prop-mini-tag prop-mini-tag--block">{prop.block}</span>
+                </div>
+                <h3 class="prop-mini-card__title">{prop.title}</h3>
+                <div class="prop-mini-card__price">
+                  PKR {new Intl.NumberFormat('en-PK').format(prop.price)}
+                </div>
+
+                <div class="prop-mini-card__footer">
+                  <a
+                    href={`/properties/${prop.slug}`}
+                    class="btn-prop-view"
+                  >
+                    View Details
+                  </a>
+                  <a
+                    href={`https://wa.me/923257800001?text=${encodeURIComponent(`Salam Muhammad Rashid Nawaz, I am interested in property "${prop.title}" (${prop.id}) in Al Rehman Garden Phase 2.`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-prop-whatsapp"
+                    title="Inquire on WhatsApp"
+                  >
+                    💬 WhatsApp
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+          <a href="/properties" class="btn-explore-all">
+            Explore All 100+ Verified Properties →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Large Contact CTA Section -->
+    <section class="dealer-cta-section">
+      <div class="container">
+        <div class="dealer-cta-box">
+          <div class="dealer-cta-box__body">
+            <h2 class="dealer-cta-box__title">
+              Looking for property in <br />
+              <span class="text-gold">Al Rehman Garden Phase 2 Lahore?</span>
+            </h2>
+            <p class="dealer-cta-box__desc">
+              Get in touch with <strong>Muhammad Rashid Nawaz</strong> today for verified plot prices, map coordinates, and guided physical site inspections.
+            </p>
+          </div>
+
+          <div class="dealer-cta-box__actions">
+            <a
+              href={consultant.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-action btn-action--whatsapp btn-action--lg"
+            >
+              💬 WhatsApp Consultation
+            </a>
+            <a
+              href={`tel:${consultant.phoneTel}`}
+              class="btn-action btn-action--call btn-action--lg"
+            >
+              📞 Call 03257800001
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Premium Dark Footer matching reference structure -->
+    <footer class="dealer-footer">
+      <div class="container">
+        <div class="dealer-footer__grid">
+          <!-- Left Column -->
+          <div class="dealer-footer__brand-col">
+            <img src="/images/logo/logo-white.svg" alt={SITE.name} width="220" height="55" class="dealer-footer__logo" />
+            <p class="dealer-footer__desc">
+              An independent real estate information portal providing property guidance, market information, and investment resources for Al Rehman Garden Phase 2 Lahore.
+            </p>
+            <div class="dealer-footer__contact-direct">
+              <span>👤 <strong>Muhammad Rashid Nawaz</strong></span>
+              <span>📞 <a href={`tel:${consultant.phoneTel}`}>{consultant.phone}</a></span>
+              <span>💬 <a href={consultant.whatsappUrl} target="_blank" rel="noopener noreferrer">WhatsApp {consultant.whatsappNumber}</a></span>
+            </div>
+          </div>
+
+          <!-- Column 2: Pages -->
+          <div class="dealer-footer__col">
+            <h4 class="dealer-footer__heading">Pages</h4>
+            <ul class="dealer-footer__list">
+              <li><a href="/">Home</a></li>
+              <li><a href="/properties">Properties</a></li>
+              <li><a href="/blocks">Blocks</a></li>
+              <li><a href="/property-prices">Prices</a></li>
+              <li><a href="/places">Places</a></li>
+              <li><a href="/contact">Contact</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 3: Resources -->
+          <div class="dealer-footer__col">
+            <h4 class="dealer-footer__heading">Resources</h4>
+            <ul class="dealer-footer__list">
+              <li><a href="/al-rehman-garden-phase-2-location">Location Guide</a></li>
+              <li><a href="/al-rehman-garden-phase-2-investment-guide">Investment Guide</a></li>
+              <li><a href="/al-rehman-garden-phase-2-payment-plan">Payment Plan</a></li>
+              <li><a href="/faq">FAQs</a></li>
+              <li><a href="/downloads">Masterplan Downloads</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 4: Legal -->
+          <div class="dealer-footer__col">
+            <h4 class="dealer-footer__heading">Legal</h4>
+            <ul class="dealer-footer__list">
+              <li><a href="/privacy-policy">Privacy Policy</a></li>
+              <li><a href="/terms-and-conditions">Terms &amp; Conditions</a></li>
+              <li><a href="/disclaimer">Disclaimer</a></li>
+              <li><a href="/copyright-policy">Copyright Policy</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dealer-footer__bottom">
+          <p>&copy; {new Date().getFullYear()} Al Rehman Garden Phase 2 Lahore Authority Portal. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </main>
+</PageLayout>
+
+<style>
+  /* ══════════════════════════════════════════════════════════════════════════
+     THEME & GLOBAL CANVAS — DARK NAVY #0B0B20
+     ══════════════════════════════════════════════════════════════════════════ */
+  .dealer-page {
+    background-color: #0B0B20;
+    color: #F8FAFC;
+    min-height: 100vh;
+    font-family: var(--font-sans);
+  }
+
+  .text-gold {
+    color: #F3D375;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     TOP NAVIGATION BAR
+     ══════════════════════════════════════════════════════════════════════════ */
+  .dealer-topbar {
+    background: rgba(11, 11, 32, 0.95);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    padding: 14px 0;
+  }
+
+  .dealer-topbar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .dealer-topbar__nav {
+    display: none;
+    align-items: center;
+    gap: 22px;
+  }
+
+  @media (min-width: 992px) {
+    .dealer-topbar__nav {
+      display: flex;
+    }
+  }
+
+  .dealer-nav-link {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #CBD5E1;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .dealer-nav-link:hover {
+    color: #F3D375;
+  }
+
+  .dealer-btn-gold {
+    background: #E5C058;
+    color: #0B0B20;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 8px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .dealer-btn-gold:hover {
+    background: #F3D375;
+    transform: translateY(-1px);
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     HERO & PROFILE CARD
+     ══════════════════════════════════════════════════════════════════════════ */
+  .dealer-hero {
+    padding: 48px 0 64px;
+    background: radial-gradient(circle at 50% 15%, #181945 0%, #0B0B20 80%);
+  }
+
+  .dealer-breadcrumb {
+    font-size: 12.5px;
+    color: #94A3B8;
+    margin-bottom: 18px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .dealer-breadcrumb a {
+    color: #94A3B8;
+    text-decoration: none;
+  }
+
+  .dealer-breadcrumb a:hover {
+    color: #F3D375;
+  }
+
+  .dealer-breadcrumb .active {
+    color: #CBD5E1;
+  }
+
+  .dealer-hero__title {
+    font-size: clamp(26px, 4.5vw, 42px);
+    font-weight: 800;
+    color: #FFFFFF;
+    line-height: 1.2;
+    margin: 0 0 12px;
+  }
+
+  .dealer-hero__subtitle {
+    font-size: 14.5px;
+    color: #94A3B8;
+    max-width: 600px;
+    margin: 0 auto 36px;
+    line-height: 1.6;
+  }
+
+  /* Profile Card */
+  .profile-card {
+    background: #141432;
+    border: 1px solid rgba(243, 211, 117, 0.25);
+    border-radius: 18px;
+    padding: 36px;
+    max-width: 740px;
+    margin: 0 auto;
+    text-align: left;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  @media (max-width: 640px) {
+    .profile-card {
+      padding: 24px;
+    }
+  }
+
+  .profile-card__top {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 540px) {
+    .profile-card__top {
+      flex-direction: column;
+      text-align: center;
+      gap: 16px;
+    }
+  }
+
+  .profile-card__avatar-wrap {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid #E5C058;
+    padding: 3px;
+    flex-shrink: 0;
+    background: #0B0B20;
+  }
+
+  .profile-card__avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .profile-card__identity {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .profile-badge {
+    background: rgba(229, 192, 88, 0.15);
+    color: #E5C058;
+    border: 1px solid rgba(229, 192, 88, 0.4);
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.8px;
+    display: inline-block;
+    align-self: flex-start;
+  }
+
+  @media (max-width: 540px) {
+    .profile-badge {
+      align-self: center;
+    }
+  }
+
+  .profile-card__name {
+    font-size: 24px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 4px 0 2px;
+  }
+
+  .profile-card__loc {
+    font-size: 13px;
+    color: #94A3B8;
+  }
+
+  .profile-card__bio {
+    font-size: 13.5px;
+    color: #CBD5E1;
+    line-height: 1.6;
+    margin: 0 0 24px;
+  }
+
+  /* Information Matrix (2x2 Grid) */
+  .info-matrix-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  @media (min-width: 540px) {
+    .info-matrix-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .info-mini-card {
+    background: #1B1B3E;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .info-mini-card__label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #94A3B8;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+
+  .info-mini-card__val {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #F8FAFC;
+  }
+
+  /* Action CTA Buttons */
+  .profile-card__actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  @media (min-width: 540px) {
+    .profile-card__actions {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .btn-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .btn-action--whatsapp {
+    background-color: #25D366;
+    color: #0B0B20;
+  }
+
+  .btn-action--whatsapp:hover {
+    background-color: #20BA5A;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
+  }
+
+  .btn-action--call {
+    background-color: #E5C058;
+    color: #0B0B20;
+  }
+
+  .btn-action--call:hover {
+    background-color: #F3D375;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(229, 192, 88, 0.35);
+  }
+
+  .btn-action--lg {
+    padding: 14px 24px;
+    font-size: 15px;
+  }
+
+  /* Warning Trust Box */
+  .warning-trust-box {
+    background: rgba(220, 38, 38, 0.1);
+    border: 1px solid rgba(220, 38, 38, 0.3);
+    border-radius: 10px;
+    padding: 12px 18px;
+    max-width: 740px;
+    margin: 20px auto 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+  }
+
+  .warning-trust-box__icon {
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .warning-trust-box__text {
+    font-size: 12.5px;
+    color: #FCA5A5;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     SECTIONS & BUYER'S GUIDE
+     ══════════════════════════════════════════════════════════════════════════ */
+  .dealer-section {
+    padding: 72px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .dealer-section--alt {
+    background: #0D0D26;
+  }
+
+  .section-center-head {
+    text-align: center;
+    margin-bottom: 44px;
+  }
+
+  .guide-eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 11px;
+    font-weight: 800;
+    color: #E5C058;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 8px;
+  }
+
+  .guide-eyebrow__line {
+    width: 32px;
+    height: 1px;
+    background: rgba(229, 192, 88, 0.5);
+  }
+
+  .section-main-title {
+    font-size: clamp(24px, 3.5vw, 34px);
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 0 0 8px;
+  }
+
+  .section-sub-title {
+    font-size: 14px;
+    color: #94A3B8;
+    max-width: 550px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  /* Guide Grid (6 Cards) */
+  .guide-card-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    max-width: 1060px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 640px) {
+    .guide-card-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 992px) {
+    .guide-card-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .guide-card {
+    background: #141432;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 24px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .guide-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(243, 211, 117, 0.4);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+  }
+
+  .guide-card__icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: rgba(229, 192, 88, 0.1);
+    border: 1px solid rgba(229, 192, 88, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+
+  .guide-card__icon {
+    font-size: 22px;
+  }
+
+  .guide-card__title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 0 0 8px;
+  }
+
+  .guide-card__desc {
+    font-size: 13px;
+    color: #94A3B8;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     HOW WE HELP (4 SERVICES GRID)
+     ══════════════════════════════════════════════════════════════════════════ */
+  .services-grid-4 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    max-width: 1060px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 640px) {
+    .services-grid-4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 992px) {
+    .services-grid-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .service-card {
+    background: #141432;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(243, 211, 117, 0.35);
+  }
+
+  .service-card__icon {
+    font-size: 32px;
+  }
+
+  .service-card__title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 0;
+  }
+
+  .service-card__desc {
+    font-size: 13px;
+    color: #94A3B8;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     FEATURED PROPERTIES PREVIEW
+     ══════════════════════════════════════════════════════════════════════════ */
+  .properties-preview-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-width: 1060px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .properties-preview-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .prop-mini-card {
+    background: #141432;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .prop-mini-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(243, 211, 117, 0.35);
+  }
+
+  .prop-mini-card__img-wrap {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    background: #000;
+  }
+
+  .prop-mini-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .prop-mini-card__status-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(6, 78, 59, 0.85);
+    color: #6EE7B7;
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    backdrop-filter: blur(4px);
+  }
+
+  .prop-mini-card__content {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .prop-mini-card__meta {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .prop-mini-tag {
+    font-size: 11px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #CBD5E1;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .prop-mini-tag--block {
+    background: rgba(229, 192, 88, 0.15);
+    color: #F3D375;
+  }
+
+  .prop-mini-card__title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 0 0 8px;
+    line-height: 1.4;
+  }
+
+  .prop-mini-card__price {
+    font-size: 17px;
+    font-weight: 800;
+    color: #F3D375;
+    margin-bottom: 16px;
+  }
+
+  .prop-mini-card__footer {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+  }
+
+  .btn-prop-view {
+    flex: 1;
+    background: #1B1B3E;
+    color: #CBD5E1;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-align: center;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background 0.2s ease;
+  }
+
+  .btn-prop-view:hover {
+    background: #232350;
+    color: #FFFFFF;
+  }
+
+  .btn-prop-whatsapp {
+    background: #25D366;
+    color: #0B0B20;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.2s ease;
+  }
+
+  .btn-prop-whatsapp:hover {
+    background: #20BA5A;
+  }
+
+  .btn-explore-all {
+    display: inline-block;
+    background: transparent;
+    border: 1.5px solid #E5C058;
+    color: #F3D375;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .btn-explore-all:hover {
+    background: #E5C058;
+    color: #0B0B20;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     CONTACT CTA SECTION
+     ══════════════════════════════════════════════════════════════════════════ */
+  .dealer-cta-section {
+    padding: 60px 0 80px;
+  }
+
+  .dealer-cta-box {
+    background: linear-gradient(135deg, #181945 0%, #0F1030 100%);
+    border: 1.5px solid rgba(243, 211, 117, 0.35);
+    border-radius: 20px;
+    padding: 44px;
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+  }
+
+  @media (min-width: 768px) {
+    .dealer-cta-box {
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: left;
+    }
+  }
+
+  .dealer-cta-box__title {
+    font-size: clamp(22px, 3.5vw, 30px);
+    font-weight: 800;
+    color: #FFFFFF;
+    margin: 0 0 10px;
+    line-height: 1.25;
+  }
+
+  .dealer-cta-box__desc {
+    font-size: 14px;
+    color: #CBD5E1;
+    margin: 0;
+    max-width: 480px;
+    line-height: 1.5;
+  }
+
+  .dealer-cta-box__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 280px;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     FOOTER
+     ══════════════════════════════════════════════════════════════════════════ */
+  .dealer-footer {
+    background: #070716;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 60px 0 32px;
+  }
+
+  .dealer-footer__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 36px;
+    margin-bottom: 44px;
+  }
+
+  @media (min-width: 768px) {
+    .dealer-footer__grid {
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+    }
+  }
+
+  .dealer-footer__logo {
+    margin-bottom: 14px;
+  }
+
+  .dealer-footer__desc {
+    font-size: 13px;
+    color: #94A3B8;
+    line-height: 1.6;
+    margin: 0 0 16px;
+  }
+
+  .dealer-footer__contact-direct {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 12.5px;
+    color: #CBD5E1;
+  }
+
+  .dealer-footer__contact-direct a {
+    color: #F3D375;
+    text-decoration: none;
+  }
+
+  .dealer-footer__heading {
+    font-size: 14px;
+    font-weight: 700;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin: 0 0 16px;
+  }
+
+  .dealer-footer__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .dealer-footer__list a {
+    font-size: 13px;
+    color: #94A3B8;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .dealer-footer__list a:hover {
+    color: #F3D375;
+  }
+
+  .dealer-footer__bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 24px;
+    text-align: center;
+    font-size: 12px;
+    color: #64748B;
+  }
+</style>

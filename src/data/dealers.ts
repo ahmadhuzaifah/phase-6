@@ -21,6 +21,21 @@ export interface DealerProfile {
 
 export const DEALERS: DealerProfile[] = [
   {
+    name: 'Muhammad Rashid Nawaz',
+    slug: 'muhammad-rashid-nawaz',
+    agencyName: 'Al Rehman Property Consultant',
+    isVerified: true,
+    phone: '+923257800001',
+    whatsapp: '+923257800001',
+    email: 'rashid.nawaz@alrehmangarden.pk',
+    officeAddress: 'Main 150ft Broadway Boulevard, Al Rehman Garden Phase 2, Lahore',
+    experienceYears: 10,
+    rating: 5.0,
+    totalDeals: 680,
+    specializationBlocks: ['Block A (Executive)', 'Block B', 'Block C', 'Block D', 'Mirabel Block', 'Royal Block', 'Beverly Hills'],
+    description: 'Helping buyers find residential plots, houses, and investment opportunities in Al Rehman Garden Phase 2 Lahore with transparent guidance and verified property information.',
+  },
+  {
     name: 'Al Rehman Garden Official Advisory Desk',
     slug: 'al-rehman-official-advisory',
     agencyName: 'Direct Society Management Office',
