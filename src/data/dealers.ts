@@ -21,13 +21,13 @@ export interface DealerProfile {
 
 export const DEALERS: DealerProfile[] = [
   {
-    name: 'Muhammad Rashid Nawaz',
-    slug: 'muhammad-rashid-nawaz',
+    name: 'Ahmad Huzaifah',
+    slug: 'ahmad-huzaifah',
     agencyName: 'Al Rehman Property Consultant',
     isVerified: true,
     phone: '+923257800001',
     whatsapp: '+923257800001',
-    email: 'rashid.nawaz@alrehmangarden.pk',
+    email: 'ahmadhuzaifah@alrehmangarden.pk',
     officeAddress: 'Main 150ft Broadway Boulevard, Al Rehman Garden Phase 2, Lahore',
     experienceYears: 10,
     rating: 5.0,
