@@ -1,355 +1,1145 @@
 ---
 /**
- * Category Specific Places Directory — Al Rehman Garden Phase 2 Lahore
+ * Category Specific Places Authority Landing Page
+ * Route: /places/[category]
+ * Al Rehman Garden Phase 2 Lahore Authority Portal
  */
 
 import PageLayout from '@layouts/PageLayout.astro';
 import Schema from '@components/seo/Schema.astro';
-import Button from '@components/global/Button.astro';
+import PropertyWatermark from '@components/property/PropertyWatermark.astro';
 import { SITE } from '@data/site';
-import { PLACES_DATA } from '@data/places';
+import { PLACES_DATA, PLACE_CATEGORIES, type PlaceCategoryMeta } from '@data/places';
+import propertiesData from '@data/properties-import.json';
 
 export async function getStaticPaths() {
-  const categoryMap: Record<string, { label: string; seoTitle: string; seoDesc: string }> = {
-    schools: {
-      label: 'Schools & Academies',
-      seoTitle: 'Best Schools in and near Al Rehman Garden Phase 2 Lahore',
-      seoDesc: 'Comprehensive guide to top primary, secondary, and Cambridge O/A Level schools located in and near Al Rehman Garden Phase 2 Lahore.',
-    },
-    colleges: {
-      label: 'Colleges & Higher Education',
-      seoTitle: 'Colleges near Al Rehman Garden Phase 2 Lahore',
-      seoDesc: 'Explore intermediate FSc, ICS, and degree colleges located near Al Rehman Garden Phase 2 on Main Sharaqpur Road Lahore.',
-    },
-    hospitals: {
-      label: 'Hospitals & Emergency Care',
-      seoTitle: 'Hospitals near Al Rehman Garden Phase 2 Lahore (24/7 Care)',
-      seoDesc: 'Find 24/7 trauma emergency hospitals, ICU facilities, and medical centers inside and near Al Rehman Garden Phase 2 Lahore.',
-    },
-    clinics: {
-      label: 'Medical & Dental Clinics',
-      seoTitle: 'Clinics & Diagnostic Labs in Al Rehman Garden Phase 2',
-      seoDesc: 'Discover pathology labs, dental clinics, and specialist doctor clinics located in Al Rehman Garden Phase 2 Lahore.',
-    },
-    restaurants: {
-      label: 'Restaurants & Family Dining',
-      seoTitle: 'Restaurants in Al Rehman Garden Phase 2 Lahore',
-      seoDesc: 'Top family restaurants, BBQ, Fast Food, and traditional Karahi dining spots in Al Rehman Garden Phase 2 Lahore.',
-    },
-    cafes: {
-      label: 'Cafes & Coffee Lounges',
-      seoTitle: 'Cafes & Coffee Shops in Al Rehman Garden Phase 2',
-      seoDesc: 'Relaxing coffee lounges, bakeries, and tea houses located in Al Rehman Garden Phase 2 Lahore.',
-    },
-    mosques: {
-      label: 'Grand Jamia Mosques',
-      seoTitle: 'Mosques in Al Rehman Garden Phase 2 Lahore',
-      seoDesc: 'Explore the Grand Jamia Mosque and sector prayer halls with Turkish architecture in Al Rehman Garden Phase 2 Lahore.',
-    },
-    markets: {
-      label: 'Shopping Malls & Supermarkets',
-      seoTitle: 'Supermarkets & Shopping in Al Rehman Garden Phase 2',
-      seoDesc: 'Departmental stores, grocery marts, and commercial shopping centers in Al Rehman Garden Phase 2 Lahore.',
-    },
-    banks: {
-      label: 'Banks & 24/7 ATMs',
-      seoTitle: 'Banks & ATMs in Al Rehman Garden Phase 2 Lahore',
-      seoDesc: 'Commercial and Islamic banks with 24/7 ATMs located in Al Rehman Garden Phase 2 Lahore commercial zones.',
-    },
-    'petrol-stations': {
-      label: 'Petrol & Fuel Stations',
-      seoTitle: 'Petrol Pumps & EV Charging near Al Rehman Garden Phase 2',
-      seoDesc: '24/7 fuel stations and car service centers near Al Rehman Garden Phase 2 on Main Sharaqpur Road Lahore.',
-    },
-    gyms: {
-      label: 'Gyms & Fitness Centers',
-      seoTitle: 'Gyms & Fitness Clubs in Al Rehman Garden Phase 2',
-      seoDesc: 'Modern fitness centers, CrossFit arenas, and ladies fitness gyms in Al Rehman Garden Phase 2 Lahore.',
-    },
-  };
-
-  return Object.keys(categoryMap).map((catKey) => {
-    const meta = categoryMap[catKey];
-    const items = PLACES_DATA.filter((p) => p.category === catKey);
+  return PLACE_CATEGORIES.map((catMeta) => {
+    const places = PLACES_DATA.filter((p) => p.category === catMeta.key);
     return {
-      params: { category: catKey },
+      params: { category: catMeta.key },
       props: {
-        categoryKey: catKey,
-        label: meta.label,
-        seoTitle: meta.seoTitle,
-        seoDesc: meta.seoDesc,
-        places: items,
+        categoryMeta: catMeta,
+        places,
       },
     };
   });
 }
 
-const { categoryKey, label, seoTitle, seoDesc, places } = Astro.props;
+interface Props {
+  categoryMeta: PlaceCategoryMeta;
+  places: typeof PLACES_DATA;
+}
 
-const pageSchema = {
-  name: `${label} — ${SITE.name}`,
-  description: seoDesc,
-  url: `${SITE.url}/places/${categoryKey}`,
+const { categoryMeta, places } = Astro.props;
+
+// Category specific FAQ dataset
+const categoryFaqs: Record<string, { question: string; answer: string }[]> = {
+  schools: [
+    {
+      question: 'Which top schools are located inside Al Rehman Garden Phase 2?',
+      answer: 'The City School operates a dedicated primary and secondary campus in Block B, while Beaconhouse School System and Dar-e-Arqam are situated within 1 to 3 minutes drive from the society entrance.',
+    },
+    {
+      question: 'Are school bus services available inside the society?',
+      answer: 'Yes, both school-operated and private air-conditioned van transport routes cover all sectors from Block A to Beverly Hills.',
+    },
+  ],
+  hospitals: [
+    {
+      question: 'Is there a 24/7 hospital inside Al Rehman Garden Phase 2?',
+      answer: 'Yes, the Al Rehman Garden Trust Hospital in Block C operates 24 hours a day with trauma emergency, ICU, pharmacy, and diagnostic lab services.',
+    },
+    {
+      question: 'What tertiary care hospitals are nearby?',
+      answer: 'Farooq Hospital West Lahore and Sharaqpur District Hospital are located within a 7 to 10 minute drive via Sagian Bypass.',
+    },
+  ],
+  mosques: [
+    {
+      question: 'How many Jamia mosques are built in Phase 2?',
+      answer: 'Phase 2 features dedicated air-conditioned Jamia mosques in every sector, headlined by the iconic Grand Turkish Architecture Mosque in Block A accommodating over 3,500 worshippers.',
+    },
+  ],
+  restaurants: [
+    {
+      question: 'What dining and fast food options are available in Phase 2?',
+      answer: 'The 150ft Commercial Broadway features family dining at Broadway Grill, Gloria Jean\'s Coffees, and 24/7 drive-thrus for McDonald\'s and KFC at the Faizpur Interchange.',
+    },
+  ],
+  shopping: [
+    {
+      question: 'Where can residents do everyday grocery shopping?',
+      answer: 'Al Rehman Super Mart in Block B and multiple sector mini-marts provide fresh organic produce, butcher services, and pantry goods. Metro Cash & Carry is 10 minutes away via Sagian.',
+    },
+  ],
+  banks: [
+    {
+      question: 'Which banks have branches and ATMs in Phase 2?',
+      answer: 'Meezan Bank and HBL operate full commercial branches with 24/7 Cash Deposit Machines (CDM) and biometric ATMs on Block C Broadway.',
+    },
+  ],
+  'petrol-stations': [
+    {
+      question: 'Is there a petrol station near the society gate?',
+      answer: 'Yes, Total Parco and Shell service stations with Hi-Octane, CNG, EV charging, and automated car wash are located 800 meters from the entrance gate.',
+    },
+  ],
+  parks: [
+    {
+      question: 'Are there family parks in Al Rehman Garden Phase 2?',
+      answer: 'Yes, Phase 2 features the Central Family Theme Park with musical fountains in Mirabel, the Rose Garden in Sector D, and neighborhood parks in every residential block.',
+    },
+  ],
+  gyms: [
+    {
+      question: 'Are there separate gym timings for women in Phase 2?',
+      answer: 'Yes, Titanium Fitness Club in Mirabel Sports Complex offers dedicated ladies-only workout shifts from 11:00 AM to 03:00 PM with certified female fitness coaches.',
+    },
+  ],
+  hotels: [
+    {
+      question: 'Can overseas visitors book guest suites in Phase 2?',
+      answer: 'Yes, Executive Residence Suites on Block C Broadway provides fully furnished executive suites with 24/7 concierge and security for visitors and investors.',
+    },
+  ],
 };
 
-const allCategories = [
-  { slug: 'all', label: 'All Places' },
-  { slug: 'schools', label: '🏫 Schools' },
-  { slug: 'colleges', label: '🎓 Colleges' },
-  { slug: 'hospitals', label: '🏥 Hospitals' },
-  { slug: 'clinics', label: '🩺 Clinics' },
-  { slug: 'restaurants', label: '🍽️ Restaurants' },
-  { slug: 'cafes', label: '☕ Cafes' },
-  { slug: 'mosques', label: '🕌 Mosques' },
-  { slug: 'markets', label: '🛒 Shopping' },
-  { slug: 'banks', label: '💳 Banks' },
-  { slug: 'petrol-stations', label: '⛽ Fuel Stations' },
-  { slug: 'gyms', label: '🏋️ Gyms' },
+const currentFaqs = categoryFaqs[categoryMeta.key] || [
+  {
+    question: `How accessible are ${categoryMeta.label.toLowerCase()} from Al Rehman Garden Phase 2?`,
+    answer: `All ${categoryMeta.label.toLowerCase()} are conveniently located either directly within society sectors or within a 2 to 5 minute drive on Main Sharaqpur Road.`,
+  },
 ];
+
+const pageSchema = {
+  name: `${categoryMeta.seoTitle} — ${SITE.name}`,
+  description: categoryMeta.seoDesc,
+  url: `${SITE.url}/places/${categoryMeta.key}`,
+};
+
+const breadcrumbsSchema = {
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: SITE.url,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Places Directory',
+      item: `${SITE.url}/places`,
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: categoryMeta.label,
+      item: `${SITE.url}/places/${categoryMeta.key}`,
+    },
+  ],
+};
+
+const faqSchema = {
+  itemListElement: currentFaqs.map((f) => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: f.answer,
+    },
+  })),
+};
+
+const featuredProps = propertiesData.slice(0, 3);
 ---
 
 <PageLayout
-  title={`${seoTitle} | ${SITE.name}`}
-  description={seoDesc}
+  title={categoryMeta.seoTitle}
+  description={categoryMeta.seoDesc}
 >
   <Schema type="WebSite" data={pageSchema} />
+  <Schema type="BreadcrumbList" data={breadcrumbsSchema} />
+  <Schema type="FAQPage" data={faqSchema} />
 
-  <!-- Hero Section -->
-  <section class="places-hero">
-    <div class="container">
-      <div class="eyebrow eyebrow--dark">Community Directory</div>
-      <h1 class="places-hero__title">
-        {label} in <span class="text-gradient-gold">Phase 2 Lahore</span>
-      </h1>
-      <p class="places-hero__lead lead">{seoDesc}</p>
-    </div>
-  </section>
+  <main class="cat-page">
+    <!-- Top Header Navigation -->
+    <header class="cat-topbar">
+      <div class="container cat-topbar__inner">
+        <a href="/" class="cat-topbar__logo">
+          <img src="/images/logo/logo-white.svg" alt={SITE.name} width="190" height="48" />
+        </a>
 
-  <!-- Content Section -->
-  <section class="section section--alt">
-    <div class="container">
-      <!-- Category Tabs -->
-      <div class="places-pills-row">
-        {allCategories.map((c) => (
-          <a
-            href={c.slug === 'all' ? '/places' : `/places/${c.slug}`}
-            class:list={['places-pill', { 'places-pill--active': c.slug === categoryKey }]}
-          >
-            {c.label}
-          </a>
-        ))}
+        <nav class="cat-topbar__nav">
+          <a href="/" class="cat-nav-link">Home</a>
+          <a href="/blocks" class="cat-nav-link">Blocks</a>
+          <a href="/properties" class="cat-nav-link">Properties</a>
+          <a href="/plots" class="cat-nav-link">Plots</a>
+          <a href="/houses-for-sale-in-al-rehman-garden-phase-2-lahore" class="cat-nav-link">Houses</a>
+          <a href="/places" class="cat-nav-link cat-nav-link--active">Places</a>
+          <a href="/al-rehman-garden-phase-2-map" class="cat-nav-link">Map</a>
+          <a href="/property-prices" class="cat-nav-link">Prices</a>
+          <a href="/contact" class="cat-nav-link">Contact</a>
+        </nav>
+
+        <a
+          href="https://wa.me/923257800001"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="cat-btn-gold"
+        >
+          WhatsApp
+        </a>
       </div>
+    </header>
 
-      <!-- Places List -->
-      <div class="places-grid">
-        {places.map((p) => (
-          <div class="place-card">
-            <div class="place-card__header">
-              <div class="place-card__badge-row">
-                <span class="place-badge">{p.categoryLabel}</span>
+    <!-- Hero Section -->
+    <section class="cat-hero">
+      <div class="container text-center">
+        <!-- Breadcrumbs -->
+        <nav class="cat-breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <span>&gt;</span>
+          <a href="/places">Places</a>
+          <span>&gt;</span>
+          <span class="active">{categoryMeta.label}</span>
+        </nav>
+
+        <h1 class="cat-hero__title">
+          {categoryMeta.label} in <br />
+          <span class="text-gold">Al Rehman Garden Phase 2 Lahore</span>
+        </h1>
+
+        <p class="cat-hero__subtitle">{categoryMeta.introText}</p>
+
+        <!-- Category Switching Shortcut Bar -->
+        <div class="cat-pill-switcher">
+          {PLACE_CATEGORIES.map((c) => (
+            <a
+              href={`/places/${c.key}`}
+              class:list={['cat-pill-link', { 'cat-pill-link--active': c.key === categoryMeta.key }]}
+            >
+              <span>{c.icon}</span>
+              <span>{c.label}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Places Listing Grid -->
+    <section class="cat-section">
+      <div class="container">
+        <div class="section-center-head">
+          <div class="cat-eyebrow">
+            <span class="cat-eyebrow__line"></span>
+            <span>DIRECTORY LISTINGS</span>
+            <span class="cat-eyebrow__line"></span>
+          </div>
+          <h2 class="section-main-title">Verified {categoryMeta.label}</h2>
+          <p class="section-sub-title">Explore complete facilities, on-ground locations, and operational timings.</p>
+        </div>
+
+        <div class="cat-places-grid">
+          {places.map((p) => (
+            <div class="place-main-card">
+              <div class="place-main-card__img-wrap">
+                <img
+                  src={p.images[0] || '/images/og/homepage-og.jpg'}
+                  alt={p.name}
+                  class="place-main-card__img"
+                  loading="lazy"
+                />
+                <PropertyWatermark position="bottom-right" opacity={0.8} />
                 <span class="place-dist-badge">📍 {p.distance} ({p.travelTime})</span>
               </div>
-              <h3 class="place-card__title">{p.name}</h3>
-              <p class="place-card__address">{p.address}</p>
-            </div>
 
-            <p class="place-card__desc">{p.description}</p>
+              <div class="place-main-card__content">
+                <div class="place-main-card__top">
+                  <span class="place-sub-badge">{p.categoryLabel}</span>
+                  <div class="place-rating-badge">★ {p.rating.toFixed(1)}</div>
+                </div>
 
-            <div class="place-card__features">
-              {p.features.map((f) => (
-                <span class="place-feat-tag">✓ {f}</span>
-              ))}
-            </div>
+                <h3 class="place-main-card__title">
+                  <a href={`/places/${p.category}/${p.slug}`}>{p.name}</a>
+                </h3>
+                <p class="place-main-card__address">📍 {p.address}</p>
+                <p class="place-main-card__desc">{p.description}</p>
 
-            <div class="place-card__footer">
-              <div class="place-rating">
-                <span style="color: #F59E0B;">★ {p.rating?.toFixed(1) || '4.8'}</span>
-                <small>({p.reviewCount || 50} Reviews)</small>
+                <div class="place-main-card__features">
+                  {p.features.slice(0, 3).map((f) => (
+                    <span class="place-feat-tag">✓ {f}</span>
+                  ))}
+                </div>
+
+                <div class="place-main-card__actions">
+                  <a
+                    href={`/places/${p.category}/${p.slug}`}
+                    class="btn-view-place"
+                  >
+                    View Full Profile →
+                  </a>
+                  <a
+                    href={`https://maps.google.com/?q=${encodeURIComponent(`${p.name} Al Rehman Garden Phase 2 Lahore`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-direct-map"
+                    title="Open in Google Maps"
+                  >
+                    📍 Directions
+                  </a>
+                </div>
               </div>
-              <a
-                href={`https://maps.google.com/?q=${encodeURIComponent(`${p.name} Al Rehman Garden Phase 2 Lahore`)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="btn btn--outline btn--sm"
-              >
-                Directions ↗
-              </a>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
+    </section>
 
-      <!-- Back to all places -->
-      <div style="margin-top: 48px; text-align: center;">
-        <Button href="/places" variant="outline" size="md">
-          ← View All Society Amenities &amp; Places
-        </Button>
+    <!-- Interactive Map Section -->
+    <section class="cat-section cat-section--alt">
+      <div class="container">
+        <div class="section-center-head">
+          <div class="cat-eyebrow">
+            <span class="cat-eyebrow__line"></span>
+            <span>MAP LOCATIONS</span>
+            <span class="cat-eyebrow__line"></span>
+          </div>
+          <h2 class="section-main-title">{categoryMeta.label} Location Map</h2>
+          <p class="section-sub-title">Interactive GPS coordinates and access routes inside and around Al Rehman Garden Phase 2.</p>
+        </div>
+
+        <div class="cat-map-card">
+          <iframe
+            title={`${categoryMeta.label} in Al Rehman Garden Phase 2 Lahore Google Map`}
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13594.756281096538!2d74.2154!3d31.5768!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391901a1c9df253b%3A0xb35a80579e0f63e6!2sAl-Rehman%20Garden%20Phase%202%2C%20Lahore!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s"
+            width="100%"
+            height="420"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            class="cat-map-iframe"
+          ></iframe>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- Related Verified Properties in Society -->
+    <section class="cat-section">
+      <div class="container">
+        <div class="section-center-head">
+          <div class="cat-eyebrow">
+            <span class="cat-eyebrow__line"></span>
+            <span>FEATURED PROPERTIES</span>
+            <span class="cat-eyebrow__line"></span>
+          </div>
+          <h2 class="section-main-title">Properties Near These Facilities</h2>
+          <p class="section-sub-title">Verified plots and ready houses situated in walking distance of top society amenities.</p>
+        </div>
+
+        <div class="cat-props-grid">
+          {featuredProps.map((prop) => (
+            <div class="cat-prop-card">
+              <div class="cat-prop-card__img-wrap">
+                <img
+                  src={prop.images[0]?.url || '/images/placeholders/property-placeholder.webp'}
+                  alt={prop.title}
+                  class="cat-prop-card__img"
+                  loading="lazy"
+                />
+                <PropertyWatermark position="bottom-right" opacity={0.8} />
+                <span class="cat-prop-card__badge">🟢 Available</span>
+              </div>
+              <div class="cat-prop-card__content">
+                <div class="cat-prop-card__meta">
+                  <span class="tag-meta">{prop.size} {prop.unit}</span>
+                  <span class="tag-meta tag-meta--block">{prop.block}</span>
+                </div>
+                <h3 class="cat-prop-card__title">{prop.title}</h3>
+                <div class="cat-prop-card__price">
+                  PKR {new Intl.NumberFormat('en-PK').format(prop.price)}
+                </div>
+                <a href={`/properties/${prop.slug}`} class="btn-prop-link">
+                  View Property Details →
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Category FAQs -->
+    <section class="cat-section cat-section--alt">
+      <div class="container">
+        <div class="section-center-head">
+          <div class="cat-eyebrow">
+            <span class="cat-eyebrow__line"></span>
+            <span>COMMUNITY FAQS</span>
+            <span class="cat-eyebrow__line"></span>
+          </div>
+          <h2 class="section-main-title">Frequently Asked Questions</h2>
+          <p class="section-sub-title">Everything you need to know about {categoryMeta.label.toLowerCase()} in Phase 2.</p>
+        </div>
+
+        <div class="cat-faqs-grid">
+          {currentFaqs.map((faq) => (
+            <div class="cat-faq-card">
+              <h3 class="cat-faq-card__q">{faq.question}</h3>
+              <p class="cat-faq-card__a">{faq.answer}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cat-cta-section">
+      <div class="container">
+        <div class="cat-cta-box">
+          <div class="cat-cta-box__body">
+            <h2 class="cat-cta-box__title">
+              Looking for Property in <br />
+              <span class="text-gold">Al Rehman Garden Phase 2 Lahore?</span>
+            </h2>
+            <p class="cat-cta-box__desc">
+              Contact <strong>Ahmad Huzaifah</strong> for verified plot prices, map demarcations, and guided site tours near top society facilities.
+            </p>
+          </div>
+
+          <div class="cat-cta-box__actions">
+            <a
+              href={`https://wa.me/923257800001?text=${encodeURIComponent(`Salam Ahmad Huzaifah, I am interested in purchasing property near ${categoryMeta.label} in Al Rehman Garden Phase 2.`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-cta-gold"
+            >
+              💬 WhatsApp Consultation
+            </a>
+            <a href="/properties" class="btn-cta-outline">
+              Explore All Properties
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="cat-footer">
+      <div class="container">
+        <div class="cat-footer__grid">
+          <div class="cat-footer__brand-col">
+            <img src="/images/logo/logo-white.svg" alt={SITE.name} width="220" height="55" class="cat-footer__logo" />
+            <p class="cat-footer__desc">
+              Independent verified society directory and local facilities guide for Al Rehman Garden Phase 2 Lahore.
+            </p>
+          </div>
+
+          <div class="cat-footer__col">
+            <h4 class="cat-footer__heading">Categories</h4>
+            <ul class="cat-footer__list">
+              <li><a href="/places/schools">Schools</a></li>
+              <li><a href="/places/hospitals">Hospitals</a></li>
+              <li><a href="/places/mosques">Mosques</a></li>
+              <li><a href="/places/restaurants">Restaurants</a></li>
+              <li><a href="/places/shopping">Shopping</a></li>
+              <li><a href="/places/banks">Banks</a></li>
+            </ul>
+          </div>
+
+          <div class="cat-footer__col">
+            <h4 class="cat-footer__heading">Explore</h4>
+            <ul class="cat-footer__list">
+              <li><a href="/blocks">Blocks Directory</a></li>
+              <li><a href="/al-rehman-garden-phase-2-map">Master Map</a></li>
+              <li><a href="/property-prices">Property Prices</a></li>
+              <li><a href="/property-dealer">Property Consultant</a></li>
+              <li><a href="/contact">Contact</a></li>
+            </ul>
+          </div>
+
+          <div class="cat-footer__col">
+            <h4 class="cat-footer__heading">Legal</h4>
+            <ul class="cat-footer__list">
+              <li><a href="/privacy-policy">Privacy Policy</a></li>
+              <li><a href="/terms-and-conditions">Terms &amp; Conditions</a></li>
+              <li><a href="/disclaimer">Disclaimer</a></li>
+              <li><a href="/copyright-policy">Copyright</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cat-footer__bottom">
+          <p>&copy; {new Date().getFullYear()} Al Rehman Garden Phase 2 Lahore Authority Portal. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </main>
 </PageLayout>
 
 <style>
-  .places-hero {
-    background: radial-gradient(circle at 80% 20%, #16244F 0%, #0A1128 75%);
-    color: var(--text-inverse);
-    padding: var(--space-12) 0;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  /* ══════════════════════════════════════════════════════════════════════════
+     THEME & GLOBAL CANVAS — DARK NAVY #090B20 & GOLD #D4AF37
+     ══════════════════════════════════════════════════════════════════════════ */
+  .cat-page {
+    background-color: #090B20;
+    color: #F8FAFC;
+    min-height: 100vh;
+    font-family: var(--font-sans);
   }
 
-  .places-hero__title {
+  .text-gold {
+    color: #D4AF37;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     TOP NAVIGATION BAR
+     ══════════════════════════════════════════════════════════════════════════ */
+  .cat-topbar {
+    background: rgba(9, 11, 32, 0.95);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    padding: 14px 0;
+  }
+
+  .cat-topbar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .cat-topbar__nav {
+    display: none;
+    align-items: center;
+    gap: 20px;
+  }
+
+  @media (min-width: 992px) {
+    .cat-topbar__nav {
+      display: flex;
+    }
+  }
+
+  .cat-nav-link {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #CBD5E1;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .cat-nav-link:hover,
+  .cat-nav-link--active {
+    color: #D4AF37;
+  }
+
+  .cat-btn-gold {
+    background: #D4AF37;
+    color: #090B20;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 8px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .cat-btn-gold:hover {
+    background: #F3D375;
+    transform: translateY(-1px);
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     HERO SECTION & CATEGORY SWITCHER
+     ══════════════════════════════════════════════════════════════════════════ */
+  .cat-hero {
+    padding: 44px 0 36px;
+    background: radial-gradient(circle at 50% 15%, #181A45 0%, #090B20 80%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .cat-breadcrumb {
+    font-size: 12.5px;
+    color: #94A3B8;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .cat-breadcrumb a {
+    color: #94A3B8;
+    text-decoration: none;
+  }
+
+  .cat-breadcrumb a:hover {
+    color: #D4AF37;
+  }
+
+  .cat-breadcrumb .active {
+    color: #CBD5E1;
+  }
+
+  .cat-hero__title {
+    font-size: clamp(24px, 4vw, 38px);
+    font-weight: 800;
     color: #FFFFFF;
-    margin: var(--space-2) 0 var(--space-3);
+    line-height: 1.25;
+    margin: 0 0 12px;
   }
 
-  .places-hero__lead {
-    color: var(--color-neutral-300);
-    max-width: 65ch;
-    margin: 0;
+  .cat-hero__subtitle {
+    font-size: 14.5px;
+    color: #94A3B8;
+    max-width: 650px;
+    margin: 0 auto 28px;
+    line-height: 1.6;
   }
 
-  .places-pills-row {
+  .cat-pill-switcher {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-2);
-    margin-bottom: var(--space-8);
+    justify-content: center;
+    gap: 8px;
+    max-width: 1000px;
+    margin: 0 auto;
   }
 
-  .places-pill {
-    padding: var(--space-2) var(--space-4);
-    background: var(--bg-primary);
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-full);
-    font-size: var(--text-xs);
-    font-weight: var(--font-bold);
-    color: var(--text-secondary);
+  .cat-pill-link {
+    background: #15172D;
+    color: #CBD5E1;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 20px;
     text-decoration: none;
-    transition: all var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
   }
 
-  .places-pill:hover {
-    border-color: var(--border-gold);
-    color: var(--color-secondary-900);
-    transform: translateY(-2px);
+  .cat-pill-link:hover {
+    background: #1D203C;
+    border-color: rgba(212, 175, 55, 0.35);
+    color: #FFFFFF;
   }
 
-  .places-pill--active {
-    background: var(--gradient-gold);
-    color: var(--color-secondary-950);
-    border-color: var(--color-primary-500);
-    box-shadow: 0 2px 8px rgba(197, 155, 39, 0.3);
+  .cat-pill-link--active {
+    background: rgba(212, 175, 55, 0.15);
+    border-color: #D4AF37;
+    color: #F3D375;
+    font-weight: 700;
   }
 
-  .places-grid {
+  /* ══════════════════════════════════════════════════════════════════════════
+     SECTION HEADINGS & GRIDS (#15172D CARDS)
+     ══════════════════════════════════════════════════════════════════════════ */
+  .cat-section {
+    padding: 64px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .cat-section--alt {
+    background: #0D0F2A;
+  }
+
+  .section-center-head {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .cat-eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 11px;
+    font-weight: 800;
+    color: #D4AF37;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 8px;
+  }
+
+  .cat-eyebrow__line {
+    width: 32px;
+    height: 1px;
+    background: rgba(212, 175, 55, 0.5);
+  }
+
+  .section-main-title {
+    font-size: clamp(22px, 3.5vw, 32px);
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 0 0 8px;
+  }
+
+  .section-sub-title {
+    font-size: 14px;
+    color: #94A3B8;
+    max-width: 550px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  /* Places Grid */
+  .cat-places-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--space-6);
+    gap: 24px;
   }
 
-  @media (min-width: 640px) {
-    .places-grid {
+  @media (min-width: 768px) {
+    .cat-places-grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
 
   @media (min-width: 1024px) {
-    .places-grid {
+    .cat-places-grid {
       grid-template-columns: repeat(3, 1fr);
     }
   }
 
-  .place-card {
-    background: var(--bg-primary);
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-xl);
-    padding: var(--space-6);
-    box-shadow: var(--shadow-sm);
+  .place-main-card {
+    background: #15172D;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: transform var(--transition-base), box-shadow var(--transition-base);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   }
 
-  .place-card:hover {
+  .place-main-card:hover {
     transform: translateY(-4px);
-    box-shadow: var(--shadow-card-hover);
-    border-color: var(--border-gold);
+    border-color: rgba(212, 175, 55, 0.4);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
   }
 
-  .place-card__badge-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--space-2);
-    margin-bottom: var(--space-2);
+  .place-main-card__img-wrap {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    background: #000;
   }
 
-  .place-badge {
-    font-size: 10.5px;
-    font-weight: var(--font-bold);
-    background: var(--color-primary-50);
-    color: var(--color-primary-800);
-    padding: 2px 8px;
-    border-radius: var(--radius-xs);
+  .place-main-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .place-dist-badge {
-    font-size: 11px;
-    color: #059669;
-    font-weight: var(--font-extrabold);
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    background: rgba(9, 11, 32, 0.88);
+    color: #CBD5E1;
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    backdrop-filter: blur(4px);
   }
 
-  .place-card__title {
-    font-size: var(--text-base);
-    color: var(--text-primary);
-    margin: 0 0 4px;
-  }
-
-  .place-card__address {
-    font-size: var(--text-xs);
-    color: var(--text-tertiary);
-    margin: 0 0 var(--space-3);
-  }
-
-  .place-card__desc {
-    font-size: var(--text-xs);
-    color: var(--text-secondary);
-    line-height: var(--leading-relaxed);
-    margin-bottom: var(--space-4);
-  }
-
-  .place-card__features {
+  .place-main-card__content {
+    padding: 20px;
     display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: var(--space-5);
+    flex-direction: column;
+    flex-grow: 1;
   }
 
-  .place-feat-tag {
-    font-size: 10px;
-    background: var(--color-neutral-100);
-    color: var(--text-secondary);
-    padding: 2px 6px;
-    border-radius: var(--radius-xs);
-  }
-
-  .place-card__footer {
-    margin-top: auto;
-    padding-top: var(--space-3);
-    border-top: 1px solid var(--border-light);
+  .place-main-card__top {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
   }
 
-  .place-rating {
-    font-size: var(--text-xs);
-    font-weight: var(--font-bold);
+  .place-sub-badge {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #D4AF37;
+    background: rgba(212, 175, 55, 0.12);
+    padding: 2px 8px;
+    border-radius: 4px;
   }
 
-  .place-rating small {
-    color: var(--text-tertiary);
-    font-weight: normal;
+  .place-rating-badge {
+    font-size: 11px;
+    font-weight: 700;
+    color: #FBBF24;
+  }
+
+  .place-main-card__title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 0 0 6px;
+    line-height: 1.35;
+  }
+
+  .place-main-card__title a {
+    color: #FFFFFF;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .place-main-card__title a:hover {
+    color: #D4AF37;
+  }
+
+  .place-main-card__address {
+    font-size: 12.5px;
+    color: #94A3B8;
+    margin: 0 0 10px;
+  }
+
+  .place-main-card__desc {
+    font-size: 13px;
+    color: #CBD5E1;
+    line-height: 1.5;
+    margin: 0 0 16px;
+  }
+
+  .place-main-card__features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  .place-feat-tag {
+    font-size: 10.5px;
+    background: #1D203C;
+    color: #94A3B8;
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+
+  .place-main-card__actions {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+  }
+
+  .btn-view-place {
+    flex: 1.4;
+    background: #D4AF37;
+    color: #090B20;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.2s ease;
+  }
+
+  .btn-view-place:hover {
+    background: #F3D375;
+  }
+
+  .btn-direct-map {
+    flex: 1;
+    background: #1D203C;
+    color: #CBD5E1;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-align: center;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .btn-direct-map:hover {
+    background: #272B50;
+    color: #FFFFFF;
+  }
+
+  /* Map Container */
+  .cat-map-card {
+    background: #15172D;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+  }
+
+  .cat-map-iframe {
     display: block;
-    font-size: 10px;
+    width: 100%;
+  }
+
+  /* Related Properties Grid */
+  .cat-props-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .cat-props-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .cat-prop-card {
+    background: #15172D;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cat-prop-card__img-wrap {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    background: #000;
+  }
+
+  .cat-prop-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .cat-prop-card__badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: rgba(6, 78, 59, 0.85);
+    color: #6EE7B7;
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+
+  .cat-prop-card__content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .cat-prop-card__meta {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+  .tag-meta {
+    font-size: 10.5px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #CBD5E1;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .tag-meta--block {
+    background: rgba(212, 175, 55, 0.15);
+    color: #F3D375;
+  }
+
+  .cat-prop-card__title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 0 0 6px;
+  }
+
+  .cat-prop-card__price {
+    font-size: 15px;
+    font-weight: 800;
+    color: #D4AF37;
+    margin-bottom: 12px;
+  }
+
+  .btn-prop-link {
+    margin-top: auto;
+    font-size: 12px;
+    font-weight: 700;
+    color: #D4AF37;
+    text-decoration: none;
+  }
+
+  /* FAQs */
+  .cat-faqs-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .cat-faq-card {
+    background: #15172D;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 20px 24px;
+  }
+
+  .cat-faq-card__q {
+    font-size: 16px;
+    font-weight: 700;
+    color: #F3D375;
+    margin: 0 0 8px;
+  }
+
+  .cat-faq-card__a {
+    font-size: 13.5px;
+    color: #CBD5E1;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* CTA Section */
+  .cat-cta-section {
+    padding: 56px 0 72px;
+  }
+
+  .cat-cta-box {
+    background: linear-gradient(135deg, #181A45 0%, #0D0F2A 100%);
+    border: 1.5px solid rgba(212, 175, 55, 0.35);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .cat-cta-box {
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: left;
+    }
+  }
+
+  .cat-cta-box__title {
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 800;
+    color: #FFFFFF;
+    margin: 0 0 8px;
+    line-height: 1.25;
+  }
+
+  .cat-cta-box__desc {
+    font-size: 13.5px;
+    color: #CBD5E1;
+    margin: 0;
+    max-width: 480px;
+  }
+
+  .cat-cta-box__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .btn-cta-gold {
+    background: #D4AF37;
+    color: #090B20;
+    font-size: 13.5px;
+    font-weight: 700;
+    padding: 12px 18px;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .btn-cta-outline {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #CBD5E1;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  /* Footer */
+  .cat-footer {
+    background: #060714;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 56px 0 28px;
+  }
+
+  .cat-footer__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    margin-bottom: 40px;
+  }
+
+  @media (min-width: 768px) {
+    .cat-footer__grid {
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+    }
+  }
+
+  .cat-footer__logo {
+    margin-bottom: 12px;
+  }
+
+  .cat-footer__desc {
+    font-size: 13px;
+    color: #94A3B8;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .cat-footer__heading {
+    font-size: 14px;
+    font-weight: 700;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin: 0 0 14px;
+  }
+
+  .cat-footer__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .cat-footer__list a {
+    font-size: 13px;
+    color: #94A3B8;
+    text-decoration: none;
+  }
+
+  .cat-footer__list a:hover {
+    color: #D4AF37;
+  }
+
+  .cat-footer__bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 20px;
+    text-align: center;
+    font-size: 12px;
+    color: #64748B;
   }
 </style>
