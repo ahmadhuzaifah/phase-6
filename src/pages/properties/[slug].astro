@@ -123,6 +123,26 @@ const breadcrumbsSchema = {
   <!-- Main Property Showcase -->
   <article class="prop-detail" id="property-detail">
     <div class="container">
+      {property.availabilityStatus === 'sold' && (
+        <div class="alert alert--sold" style="margin-bottom: 24px; padding: 16px 20px; background: #FEF2F2; border: 1.5px solid #F87171; border-radius: var(--radius-lg); display: flex; gap: 12px; align-items: center;">
+          <span style="font-size: 24px;">🔴</span>
+          <div>
+            <strong style="color: #991B1B; font-size: var(--text-sm); display: block;">This Property Has Been Marked SOLD</strong>
+            <span style="color: #7F1D1D; font-size: var(--text-xs);">This specific unit in {property.block} has been transacted. Explore available similar plots and houses in {property.block} below or inquire on WhatsApp for upcoming allocations.</span>
+          </div>
+        </div>
+      )}
+
+      {property.availabilityStatus === 'reserved' && (
+        <div class="alert alert--reserved" style="margin-bottom: 24px; padding: 16px 20px; background: #FFFBEB; border: 1.5px solid #FBBF24; border-radius: var(--radius-lg); display: flex; gap: 12px; align-items: center;">
+          <span style="font-size: 24px;">🟠</span>
+          <div>
+            <strong style="color: #92400E; font-size: var(--text-sm); display: block;">Token Reserved / Under Negotiation</strong>
+            <span style="color: #78350F; font-size: var(--text-xs);">A token advance has been placed on this unit. You may register for priority backup allotment if the transaction is not finalized.</span>
+          </div>
+        </div>
+      )}
+
       <!-- Title & Price Header Banner -->
       <header class="prop-header">
         <div class="prop-header__main">
@@ -131,9 +151,17 @@ const breadcrumbsSchema = {
               {property.purpose === 'sale' ? 'For Sale' : 'For Rent'}
             </span>
             <span class="prop-header__tag">{property.block}</span>
-            {property.verificationStatus === 'verified' && (
+            {property.availabilityStatus === 'sold' ? (
+              <span class="badge badge--danger" style="background: #DC2626; color: white; padding: 4px 10px; font-weight: bold; border-radius: var(--radius-xs); font-size: 11px;">
+                🔴 SOLD
+              </span>
+            ) : property.availabilityStatus === 'reserved' ? (
+              <span class="badge badge--warning" style="background: #D97706; color: white; padding: 4px 10px; font-weight: bold; border-radius: var(--radius-xs); font-size: 11px;">
+                🟠 RESERVED
+              </span>
+            ) : (
               <span class="prop-header__verified">
-                ✓ Title & Land Verified
+                ✓ Available &amp; Title Verified
               </span>
             )}
           </div>
@@ -164,18 +192,12 @@ const breadcrumbsSchema = {
           <!-- Branded Watermarked Media Showcase -->
           <div class="prop-gallery">
             <div class="prop-gallery__main-img-wrap">
-              {property.images && property.images.length > 0 ? (
-                <img
-                  src={property.images[0].url}
-                  alt={property.images[0].alt}
-                  class="prop-gallery__img"
-                  loading="eager"
-                />
-              ) : (
-                <div class="prop-gallery__placeholder">
-                  <span>Al Rehman Garden Phase 2</span>
-                </div>
-              )}
+              <img
+                src={property.images && property.images.length > 0 ? property.images[0].url : '/images/placeholders/property-placeholder.webp'}
+                alt={property.images && property.images.length > 0 ? property.images[0].alt : property.title}
+                class="prop-gallery__img"
+                loading="eager"
+              />
               <!-- Official Opacity Watermark -->
               <PropertyWatermark position="bottom-right" opacity={0.85} />
             </div>

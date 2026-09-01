@@ -1,5 +1,5 @@
 /**
- * 100-Property Scale Test Generator (Node ESM)
+ * 100-Property Scale Test Generator (Node ESM) with Availability Lifecycle & Freshness Metadata
  */
 
 import { writeFileSync } from 'fs';
@@ -70,6 +70,18 @@ for (let bIdx = 0; bIdx < blocksConfig.length; bIdx++) {
       features.push('Modular Fitted Kitchen', 'Imported Sanitary', 'Car Porch');
     }
 
+    // Availability distribution: 88 available, 8 reserved, 4 sold
+    let availabilityStatus = 'available';
+    if (counter === 14 || counter === 38 || counter === 62 || counter === 86) {
+      availabilityStatus = 'sold';
+    } else if (counter % 12 === 0) {
+      availabilityStatus = 'reserved';
+    }
+
+    const daysAgoVerified = (counter % 10) + 1; // 1 to 10 days ago (Fresh)
+    const verifiedDate = new Date(Date.now() - (daysAgoVerified * 86400000)).toISOString();
+    const expiryDate = new Date(Date.now() + (90 * 86400000)).toISOString();
+
     properties.push({
       id,
       title,
@@ -96,9 +108,16 @@ for (let bIdx = 0; bIdx < blocksConfig.length; bIdx++) {
       bedrooms: tpl.beds,
       bathrooms: tpl.baths,
       possessionStatus: block.mature ? 'possession' : 'under-construction',
+      availabilityStatus,
+      lastVerifiedDate: verifiedDate,
+      verifiedBy: 'Society Field Audit Desk',
+      expiryDate,
+      views: 140 + (counter * 12),
+      imageCount: 3,
+      updatedAt: new Date().toISOString(),
       images: [
         {
-          url: '/images/og/property-og.jpg',
+          url: '/images/placeholders/property-placeholder.webp',
           alt: `${title} Al Rehman Garden Phase 2 Lahore`,
           caption: `${title} — Verified On-Ground Listing`,
           isFeatured: true,
@@ -110,7 +129,7 @@ for (let bIdx = 0; bIdx < blocksConfig.length; bIdx++) {
       sourceType: counter % 2 === 0 ? 'official-developer' : 'portal-extraction',
       verificationStatus: 'verified',
       publishedDate: new Date(Date.now() - (counter * 86400000)).toISOString(),
-      lastCheckedDate: new Date().toISOString(),
+      lastCheckedDate: verifiedDate,
       contactInformation: {
         agentName: 'Al Rehman Garden Official Advisory',
         agencyName: 'Society Property Helpdesk',
@@ -133,6 +152,8 @@ while (properties.length < 100) {
   const price = tpl.basePrice + (c * 25000);
   const title = `${tpl.titleTpl} in ${block.name}`;
   const slug = `${tpl.size}-${tpl.unit}-${tpl.type}-${block.slugKey}-${id.toLowerCase()}`;
+  const verifiedDate = new Date(Date.now() - (3 * 86400000)).toISOString();
+  const expiryDate = new Date(Date.now() + (90 * 86400000)).toISOString();
 
   properties.push({
     id,
@@ -160,9 +181,16 @@ while (properties.length < 100) {
     bedrooms: tpl.beds,
     bathrooms: tpl.baths,
     possessionStatus: block.mature ? 'possession' : 'under-construction',
+    availabilityStatus: 'available',
+    lastVerifiedDate: verifiedDate,
+    verifiedBy: 'Society Field Audit Desk',
+    expiryDate,
+    views: 180 + (c * 5),
+    imageCount: 2,
+    updatedAt: new Date().toISOString(),
     images: [
       {
-        url: '/images/og/property-og.jpg',
+        url: '/images/placeholders/property-placeholder.webp',
         alt: `${title} Al Rehman Garden Phase 2 Lahore`,
         caption: `${title} — Verified On-Ground Listing`,
         isFeatured: true,
@@ -174,7 +202,7 @@ while (properties.length < 100) {
     sourceType: 'official-developer',
     verificationStatus: 'verified',
     publishedDate: new Date(Date.now() - (c * 86400000)).toISOString(),
-    lastCheckedDate: new Date().toISOString(),
+    lastCheckedDate: verifiedDate,
     contactInformation: {
       agentName: 'Al Rehman Garden Official Advisory',
       agencyName: 'Society Property Helpdesk',
@@ -192,4 +220,4 @@ const stagingPath = resolve('staging/published-data/properties-100-batch.json');
 writeFileSync(outputPath, JSON.stringify(properties, null, 2), 'utf-8');
 writeFileSync(stagingPath, JSON.stringify(properties, null, 2), 'utf-8');
 
-console.log(`Successfully generated and exported ${properties.length} verified properties!`);
+console.log(`Successfully generated and exported ${properties.length} verified properties with availability lifecycle!`);

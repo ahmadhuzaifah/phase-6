@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="50%" stop-color="#1E293B"/>
+      <stop offset="100%" stop-color="#0A1128"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F3D375"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#AA7C11"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#bgGrad)"/>
+  
+  <!-- Architectural Silhouette Pattern -->
+  <path d="M0 400 L120 320 L240 400 L360 280 L480 380 L600 290 L720 370 L800 310 L800 500 L0 500 Z" fill="#090E1A" opacity="0.6"/>
+
+  <!-- Center Emblem Shield -->
+  <g transform="translate(368, 170)">
+    <path d="M32 2 C48 2 60 12 60 28 C60 48 32 62 32 62 C32 62 4 48 4 28 C4 12 16 2 32 2 Z" fill="#0A1128" stroke="url(#gold)" stroke-width="2.5"/>
+    <path d="M22 46 L22 26 C22 18 42 18 42 26 L42 46" stroke="url(#gold)" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M32 10 L38 20 L32 24 L26 20 Z" fill="url(#gold)"/>
+    <circle cx="32" cy="36" r="3" fill="url(#gold)"/>
+  </g>
+
+  <!-- Text -->
+  <text x="400" y="270" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-size="22" font-weight="700" fill="#FFFFFF" letter-spacing="1">AL REHMAN GARDEN PHASE 2</text>
+  <text x="400" y="295" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" fill="url(#gold)" letter-spacing="3">VERIFIED ON-GROUND PROPERTY</text>
+  <text x="400" y="325" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="500" fill="#94A3B8">High-Resolution Listing Photography &amp; Masterplan</text>
+</svg>

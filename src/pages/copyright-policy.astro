@@ -1,0 +1,165 @@
+---
+/**
+ * Copyright & DMCA Takedown Policy — Al Rehman Garden Phase 2 Lahore Authority Portal
+ */
+
+import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
+import { SITE } from '@data/site';
+import { CONTACTS } from '@data/contacts';
+
+const pageSchema = {
+  name: `Copyright & Content Removal Policy — ${SITE.name}`,
+  description: 'Copyright policies, watermarked media protection, and formal content removal/takedown process.',
+  url: `${SITE.url}/copyright-policy`,
+};
+---
+
+<PageLayout
+  title={`Copyright & Content Takedown Policy | ${SITE.name}`}
+  description="Copyright and media protection policy for Al Rehman Garden Phase 2 Lahore Authority Portal. Detailed guidelines on image watermarking, content ownership, and removal request protocols."
+>
+  <Schema type="WebSite" data={pageSchema} />
+
+  <section class="legal-hero">
+    <div class="container">
+      <div class="eyebrow eyebrow--dark">Media & Intellectual Property</div>
+      <h1 class="legal-hero__title">Copyright & <span class="text-gradient-gold">Takedown Policy</span></h1>
+      <p class="legal-hero__lead lead">
+        Protecting intellectual property, media attribution, watermarked assets, and transparent takedown procedures.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="legal-card">
+        <div class="legal-prose">
+          <h2>1. Intellectual Property & Media Protection</h2>
+          <p>
+            All original photography, architectural render assets, society maps, vectorized layout diagrams, editorial review content, and data analytics on this platform are protected under Pakistani and international copyright legislation.
+          </p>
+          <p>
+            Images published on our portal feature a digital watermark emblem (35% opacity) to protect verified listings from unauthorized syndication on scrapers and unverified real estate classified portals.
+          </p>
+
+          <h2>2. Source Attribution & Partner Media</h2>
+          <p>
+            Certain project masterplans, architectural elevation renders, and development announcement banners are published with explicit source attribution to <strong>Al Rehman Developers</strong> or authorized marketing broker networks for public investor information.
+          </p>
+
+          <h2>3. Image Reuse Policy</h2>
+          <p>
+            Individual property buyers and researchers may download watermarked images for personal non-commercial reference. However:
+          </p>
+          <ul>
+            <li>You may not crop, strip, or digitally remove our protective watermark emblem.</li>
+            <li>You may not republish our listing photography onto competing commercial real estate listing platforms without written authorization.</li>
+            <li>Commercial news outlets and real estate blogs must cite <strong>{SITE.name}</strong> with a direct clickable do-follow attribution link to the canonical source page.</li>
+          </ul>
+
+          <h2>4. Content Removal & DMCA Takedown Process</h2>
+          <p>
+            If you are a property owner, developer representative, or copyright holder and believe that any listing, photograph, or document published on this website infringes upon your copyright or contains outdated ownership data, you may submit a formal removal request.
+          </p>
+
+          <h3>Required Information for Takedown Requests:</h3>
+          <ol>
+            <li>Exact URL of the listing or image on our portal (e.g., <code>https://alrehmangarden.pk/properties/example-slug</code>).</li>
+            <li>Proof of copyright ownership or legal authorization to represent the property owner/developer.</li>
+            <li>Specific reason for removal (e.g., copyright infringement, property sold, privacy request, or erroneous rate specification).</li>
+            <li>Your direct contact name, agency affiliation, phone number, and official corporate email.</li>
+          </ol>
+
+          <p>
+            Our compliance desk processes and acts upon verified takedown requests within <strong>24 to 48 business hours</strong>.
+          </p>
+
+          <div class="legal-contact-box">
+            <strong>Formal Takedown & Copyright Notice Desk:</strong><br />
+            Attn: Copyright Compliance & Legal Review<br />
+            Email: <a href={`mailto:${CONTACTS.email}`}>{CONTACTS.email}</a> (Subject: "Content Removal Request — [Property ID]")<br />
+            Physical Address: {CONTACTS.address.full}<br />
+            Helpline: {CONTACTS.phone.display}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .legal-hero {
+    background: radial-gradient(circle at 80% 20%, #16244F 0%, #0A1128 75%);
+    color: var(--text-inverse);
+    padding: var(--space-12) 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  }
+
+  .legal-hero__title {
+    color: #FFFFFF;
+    margin: var(--space-2) 0 var(--space-3);
+  }
+
+  .legal-hero__lead {
+    color: var(--color-neutral-300);
+    max-width: 65ch;
+    margin: 0;
+  }
+
+  .legal-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8) var(--space-10);
+    box-shadow: var(--shadow-card);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .legal-prose h2 {
+    font-size: var(--text-xl);
+    color: var(--text-primary);
+    margin: var(--space-8) 0 var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .legal-prose h3 {
+    font-size: var(--text-base);
+    color: var(--text-primary);
+    margin: var(--space-4) 0 var(--space-2);
+  }
+
+  .legal-prose h2:first-of-type {
+    margin-top: 0;
+  }
+
+  .legal-prose p {
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-4);
+  }
+
+  .legal-prose ul,
+  .legal-prose ol {
+    margin: 0 0 var(--space-4) var(--space-6);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  .legal-prose li {
+    margin-bottom: var(--space-2);
+  }
+
+  .legal-contact-box {
+    background: var(--color-neutral-50);
+    border: 1px solid var(--border-gold);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4) var(--space-5);
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+    margin-top: var(--space-4);
+  }
+</style>

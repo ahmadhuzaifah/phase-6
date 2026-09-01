@@ -14,6 +14,8 @@ import { CONTACTS } from '@data/contacts';
 import { BLOCKS } from '@data/blocks';
 import { AMENITIES } from '@data/amenities';
 
+import propertiesData from '@data/properties-import.json';
+
 const websiteSchema = {
   name: SITE.name,
   url: SITE.url,
@@ -25,81 +27,8 @@ const websiteSchema = {
   },
 };
 
-// Structured Preview Properties (Representative placeholders ready for Phase 3 database)
-const featuredProperties = [
-  {
-    title: '5 Marla Prime Residential Plot in Block A',
-    slug: '5-marla-residential-plot-block-a',
-    propertyType: 'Residential Plot',
-    purpose: 'sale',
-    price: 4500000,
-    size: '5',
-    sizeUnit: 'Marla',
-    block: 'Block A (Executive)',
-    verificationStatus: 'verified',
-    isFeatured: true,
-  },
-  {
-    title: '10 Marla Corner Plot on 60ft Wide Boulevard',
-    slug: '10-marla-corner-plot-block-b',
-    propertyType: 'Residential Plot',
-    purpose: 'sale',
-    price: 8500000,
-    size: '10',
-    sizeUnit: 'Marla',
-    block: 'Block B',
-    verificationStatus: 'verified',
-    isFeatured: true,
-  },
-  {
-    title: '4 Marla Main Commercial Plot in Sector C',
-    slug: '4-marla-commercial-plot-block-c',
-    propertyType: 'Commercial Plot',
-    purpose: 'sale',
-    price: 16500000,
-    size: '4',
-    sizeUnit: 'Marla',
-    block: 'Block C (Commercial)',
-    verificationStatus: 'verified',
-    isFeatured: true,
-  },
-  {
-    title: '3.5 Marla Affordable Residential Plot in Block E',
-    slug: '3-5-marla-residential-plot-block-e',
-    propertyType: 'Residential Plot',
-    purpose: 'sale',
-    price: 2850000,
-    size: '3.5',
-    sizeUnit: 'Marla',
-    block: 'Block E',
-    verificationStatus: 'verified',
-    isFeatured: false,
-  },
-  {
-    title: '1 Kanal Luxury Villa Plot in Mirabel Enclave',
-    slug: '1-kanal-luxury-plot-mirabel-block',
-    propertyType: 'Residential Plot',
-    purpose: 'sale',
-    price: 18000000,
-    size: '1',
-    sizeUnit: 'Kanal',
-    block: 'Mirabel Block',
-    verificationStatus: 'verified',
-    isFeatured: true,
-  },
-  {
-    title: '2 Marla Commercial Plaza Shop Front in Royal Block',
-    slug: '2-marla-commercial-shop-royal-block',
-    propertyType: 'Commercial Plot',
-    purpose: 'sale',
-    price: 7800000,
-    size: '2',
-    sizeUnit: 'Marla',
-    block: 'Royal Block',
-    verificationStatus: 'verified',
-    isFeatured: false,
-  },
-];
+// Pull live verified featured listings from imported database
+const featuredProperties = propertiesData.slice(0, 6);
 
 // Connectivity Locations Matrix
 const travelConnectivity = [
@@ -484,9 +413,11 @@ const faqs = [
             purpose={prop.purpose}
             price={prop.price}
             size={prop.size}
-            sizeUnit={prop.sizeUnit}
+            sizeUnit={prop.unit}
             block={prop.block}
             verificationStatus={prop.verificationStatus}
+            availabilityStatus={prop.availabilityStatus}
+            lastVerifiedDate={prop.lastVerifiedDate}
             isFeatured={prop.isFeatured}
           />
         ))}

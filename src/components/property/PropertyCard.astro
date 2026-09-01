@@ -21,6 +21,8 @@ interface Props {
   location?: string;
   image?: { url: string; alt: string };
   verificationStatus?: string;
+  availabilityStatus?: string;
+  lastVerifiedDate?: string;
   isFeatured?: boolean;
 }
 
@@ -37,8 +39,18 @@ const {
   location = 'Main Sharaqpur Road, Lahore',
   image,
   verificationStatus = 'verified',
+  availabilityStatus = 'available',
+  lastVerifiedDate,
   isFeatured = false,
 } = Astro.props;
+
+// Compute freshness text
+let verifiedBadgeText = 'Verified Listing';
+if (lastVerifiedDate) {
+  const d = new Date(lastVerifiedDate);
+  const diffDays = Math.max(0, Math.floor((Date.now() - d.getTime()) / (1000 * 3600 * 24)));
+  verifiedBadgeText = diffDays === 0 ? 'Verified Today' : diffDays === 1 ? 'Verified Yesterday' : `Verified ${diffDays}d ago`;
+}
 
 // Format Price cleanly in Lakhs or Crores if applicable
 function formatPKR(val: number) {
@@ -58,34 +70,25 @@ const rawFormatted = new Intl.NumberFormat('en-PK').format(price);
 const purposeLabel =
   purpose === 'sale' ? 'For Sale' : purpose === 'rent' ? 'For Rent' : 'For Lease';
 
-const whatsappInquiryUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hello! I am interested in: ${title} (${size} ${sizeUnit}, ${block}) listed at PKR ${rawFormatted}. Please share details.`)}`;
+const imageUrl = image?.url || '/images/placeholders/property-placeholder.webp';
+const imageAlt = image?.alt || `${title} Al Rehman Garden Phase 2`;
+
+const whatsappInquiryUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hello! I am interested in: ${title} (${size} ${sizeUnit}, ${block}) listed at PKR ${rawFormatted}. Please confirm availability.`)}`;
 ---
 
 <article
-  class:list={['property-card', { 'property-card--featured': isFeatured }]}
+  class:list={['property-card', { 'property-card--featured': isFeatured, 'property-card--sold': availabilityStatus === 'sold' }]}
   id={`property-${slug}`}
 >
   <!-- Media Container -->
   <div class="property-card__media">
     <a href={`/properties/${slug}`} class="property-card__media-link" tabindex="-1">
-      {
-        image ? (
-          <img
-            src={image.url}
-            alt={image.alt}
-            loading="lazy"
-            class="property-card__img"
-          />
-        ) : (
-          <div class="property-card__placeholder">
-            <svg class="property-card__placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-              <polyline points="9 22 9 12 15 12 15 22"/>
-            </svg>
-            <span>{size} {sizeUnit} • {block}</span>
-          </div>
-        )
-      }
+      <img
+        src={imageUrl}
+        alt={imageAlt}
+        loading="lazy"
+        class="property-card__img"
+      />
     </a>
 
     <!-- Top Badges -->
@@ -93,6 +96,19 @@ const whatsappInquiryUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^
       <span class:list={['property-card__purpose-badge', `property-card__purpose-badge--${purpose}`]}>
         {purposeLabel}
       </span>
+      {availabilityStatus === 'sold' ? (
+        <span class="property-card__status-badge property-card__status-badge--sold">
+          🔴 SOLD
+        </span>
+      ) : availabilityStatus === 'reserved' ? (
+        <span class="property-card__status-badge property-card__status-badge--reserved">
+          🟠 RESERVED
+        </span>
+      ) : (
+        <span class="property-card__status-badge property-card__status-badge--avail">
+          🟢 AVAILABLE
+        </span>
+      )}
       {isFeatured && (
         <span class="property-card__featured-badge">
           ★ Featured
@@ -101,7 +117,7 @@ const whatsappInquiryUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^
     </div>
 
     <!-- Official Watermark Overlay -->
-    <PropertyWatermark position="bottom-right" opacity={0.9} />
+    <PropertyWatermark position="bottom-right" opacity={0.85} />
   </div>
 
   <!-- Content Body -->
@@ -110,11 +126,11 @@ const whatsappInquiryUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^
     <div class="property-card__header-meta">
       <span class="property-card__block-tag">{block}</span>
       {verificationStatus === 'verified' && (
-        <span class="property-card__verified-badge" title="Title and on-ground status verified">
+        <span class="property-card__verified-badge" title="Verified by society audit desk">
           <svg viewBox="0 0 20 20" fill="currentColor" class="property-card__verified-icon">
             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
           </svg>
-          Verified
+          {verifiedBadgeText}
         </span>
       )}
     </div>
@@ -286,6 +302,34 @@ const whatsappInquiryUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^
     background: var(--gradient-gold);
     color: var(--color-secondary-950);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  }
+
+  .property-card__status-badge {
+    padding: var(--space-1) var(--space-2-5);
+    font-size: 10.5px;
+    font-weight: var(--font-extrabold);
+    border-radius: var(--radius-xs);
+    text-transform: uppercase;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  }
+
+  .property-card__status-badge--avail {
+    background: #059669;
+    color: #FFFFFF;
+  }
+
+  .property-card__status-badge--reserved {
+    background: #D97706;
+    color: #FFFFFF;
+  }
+
+  .property-card__status-badge--sold {
+    background: #DC2626;
+    color: #FFFFFF;
+  }
+
+  .property-card--sold .property-card__img {
+    filter: grayscale(60%);
   }
 
   /* ── Body ───────────────────────────────────────────────────────── */

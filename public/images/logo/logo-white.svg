@@ -1,16 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" fill="none">
-  <!-- Logo Mark / Emblem (Pure White & Gold) -->
-  <g transform="translate(10, 8)">
-    <path d="M32 2 C48 2 60 12 60 28 C60 48 32 62 32 62 C32 62 4 48 4 28 C4 12 16 2 32 2 Z" fill="#0A1128" stroke="#FFFFFF" stroke-width="2.5"/>
-    <path d="M22 46 L22 26 C22 18 42 18 42 26 L42 46" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" fill="none"/>
-    <path d="M32 10 L38 20 L32 24 L26 20 Z" fill="#D4AF37"/>
-    <path d="M16 34 C24 38 40 38 48 34" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    <circle cx="32" cy="36" r="3" fill="#D4AF37"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 375 76" fill="none">
+  <defs>
+    <linearGradient id="goldGradWhite" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F3D375"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#AA820A"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Logo Mark / Emblem (Shield & Gold Crest) -->
+  <g transform="translate(6, 6)">
+    <path d="M32 2 C48 2 60 12 60 28 C60 48 32 62 32 62 C32 62 4 48 4 28 C4 12 16 2 32 2 Z" fill="#0A1128" stroke="#FFFFFF" stroke-width="2.2"/>
+    <path d="M22 46 L22 26 C22 18 42 18 42 26 L42 46" stroke="url(#goldGradWhite)" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M32 10 L38 20 L32 24 L26 20 Z" fill="url(#goldGradWhite)"/>
+    <path d="M16 34 C24 38 40 38 48 34" stroke="url(#goldGradWhite)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <circle cx="32" cy="36" r="3" fill="url(#goldGradWhite)"/>
   </g>
 
   <!-- Typography -->
-  <text x="84" y="24" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-size="9" font-weight="700" fill="#CBD5E1" letter-spacing="3.5">AUTHORITY REAL ESTATE</text>
-  <text x="82" y="47" font-family="'Playfair Display', Georgia, serif" font-size="22" font-weight="800" fill="#FFFFFF" letter-spacing="0.5">AL REHMAN GARDEN</text>
-  <text x="84" y="65" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#D4AF37" letter-spacing="3.2">PHASE 2 • LAHORE</text>
-  <line x1="84" y1="52" x2="295" y2="52" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+  <text x="78" y="21" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-size="8.5" font-weight="700" fill="#CBD5E1" letter-spacing="2.8">AUTHORITY REAL ESTATE</text>
+  <text x="77" y="44" font-family="'Playfair Display', Georgia, serif" font-size="21.5" font-weight="800" fill="#FFFFFF" letter-spacing="0.5">AL REHMAN GARDEN</text>
+  <text x="78" y="62" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="700" fill="url(#goldGradWhite)" letter-spacing="3.2">PHASE 2 • LAHORE</text>
+  <line x1="78" y1="49" x2="355" y2="49" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
 </svg>

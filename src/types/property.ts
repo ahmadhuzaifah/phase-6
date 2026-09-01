@@ -106,6 +106,13 @@ export interface PropertyModel {
   sourceUrl?: string;   // Canonical original listing URL
   sourceType: SourceType;
   verificationStatus: VerificationStatus;
+  availabilityStatus?: 'available' | 'reserved' | 'sold' | 'expired' | 'removed';
+  lastVerifiedDate?: Date | string;
+  verifiedBy?: string;
+  expiryDate?: Date | string;
+  views?: number;
+  imageCount?: number;
+  updatedAt?: Date | string;
   publishedDate: Date | string;
   lastCheckedDate: Date | string;
   contactInformation: PropertyContactInfo;
