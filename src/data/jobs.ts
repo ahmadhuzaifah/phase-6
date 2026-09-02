@@ -1,0 +1,147 @@
+export interface JobRecord {
+  title: string;
+  slug: string;
+  company: string;
+  location: string;
+  type: string[];
+  category: string;
+  compensation?: string;
+  summary: string;
+  details: string[];
+  qualifications?: string[];
+  sourceUrl: string;
+  sourceLabel: string;
+  sourceChecked: string;
+  publishedLabel: string;
+  officialDha: boolean;
+}
+
+export const JOBS: JobRecord[] = [
+  {
+    title: 'Business Development Representative (HubSpot)',
+    slug: 'business-development-representative-hubspot-khired-networks',
+    company: 'Khired Networks',
+    location: 'DHA Phase 6, Lahore',
+    type: ['Full-time', 'On-site'],
+    category: 'Business development',
+    summary: 'Source-listed business development role focused on lead generation, qualification and client communication for website-design services.',
+    details: ['Generate and qualify prospective client leads.', 'Build a sales pipeline and communicate service value.', 'Coordinate qualified opportunities with the sales team.'],
+    qualifications: ['Professional English communication', 'Business development or lead-generation capability', 'Ability to work on site'],
+    sourceUrl: 'https://pk.linkedin.com/jobs/view/business-development-representative-hubspot-at-khired-networks-4455857189',
+    sourceLabel: 'LinkedIn Jobs',
+    sourceChecked: '2026-09-02',
+    publishedLabel: 'Source checked 2 Sep 2026',
+    officialDha: false,
+  },
+  {
+    title: 'Business Developer Executive',
+    slug: 'business-developer-executive-algorithms-tech',
+    company: 'Algorithms Tech Ltd',
+    location: 'DHA Phase 6, Lahore',
+    type: ['Full-time', 'On-site', 'Entry level'],
+    category: 'Business development',
+    compensation: 'PKR 50,000 during and after probation, as advertised',
+    summary: 'Source-listed role for fresh graduates or candidates with up to six months of experience, focused on client engagement and business growth.',
+    details: ['Engage prospective clients through social platforms.', 'Build and maintain client relationships.', 'Support business growth and development activities.'],
+    qualifications: ['Fresh graduate or up to six months of experience', 'Strong communication and interpersonal skills', 'Self-motivated approach to client engagement'],
+    sourceUrl: 'https://pk.linkedin.com/jobs/view/business-developer-executive-at-algorithms-tech-ltd-4459925759',
+    sourceLabel: 'LinkedIn Jobs',
+    sourceChecked: '2026-09-02',
+    publishedLabel: 'Source checked 2 Sep 2026',
+    officialDha: false,
+  },
+  {
+    title: 'Electrical Site Supervisor',
+    slug: 'electrical-site-supervisor-global-business-bridge',
+    company: 'Global Business Bridge Pvt Ltd',
+    location: 'DHA Phase 6 Raya, Lahore',
+    type: ['Full-time', 'On-site'],
+    category: 'Engineering',
+    summary: 'Source-listed site role supervising electrical installation, technicians, safety, documentation and coordination with project teams.',
+    details: ['Supervise daily electrical activities and installations.', 'Coordinate electricians, technicians and contractors.', 'Maintain progress, quality and safety records.'],
+    qualifications: ['DAE, diploma or bachelor’s degree in electrical engineering', 'Two to four years of relevant site experience preferred', 'Ability to read electrical drawings'],
+    sourceUrl: 'https://pk.linkedin.com/jobs/view/electrical-site-supervisor-at-global-business-bridge-pvt-ltd-4458882625',
+    sourceLabel: 'LinkedIn Jobs',
+    sourceChecked: '2026-09-02',
+    publishedLabel: 'Source checked 2 Sep 2026',
+    officialDha: false,
+  },
+  {
+    title: 'Project Engineer - Roads & Infrastructure',
+    slug: 'project-engineer-roads-infrastructure-grand-city',
+    company: 'Grand City',
+    location: 'DHA Phase 6, Lahore',
+    type: ['Full-time', 'On-site'],
+    category: 'Engineering',
+    summary: 'Source-listed engineering role covering planning, execution, monitoring and coordination for roads and infrastructure projects.',
+    details: ['Plan and monitor infrastructure work.', 'Coordinate consultants, contractors and internal teams.', 'Track quality, programme and compliance requirements.'],
+    qualifications: ['Relevant engineering background', 'Infrastructure planning and execution experience', 'Strong project coordination skills'],
+    sourceUrl: 'https://pk.linkedin.com/jobs/view/project-engineer-roads-infrastructure-at-grand-city-4452575419',
+    sourceLabel: 'LinkedIn Jobs',
+    sourceChecked: '2026-09-02',
+    publishedLabel: 'Source checked 2 Sep 2026',
+    officialDha: false,
+  },
+  {
+    title: 'Career Opportunities - Medical Professionals',
+    slug: 'medical-professionals-dha-lahore',
+    company: 'DHA Lahore',
+    location: 'Sector A, Phase VI, Lahore',
+    type: ['Full-time', 'Official DHA source'],
+    category: 'Healthcare',
+    summary: 'Career category currently displayed on the DHA Lahore careers page. Open the official source for disciplines, eligibility, deadline and application status.',
+    details: ['Review the current vacancy document on the official careers page.', 'Confirm the required specialty and experience.', 'Apply only through the method stated by DHA Lahore.'],
+    sourceUrl: 'https://dhalahore.org/careers/',
+    sourceLabel: 'DHA Lahore Careers',
+    sourceChecked: '2026-09-02',
+    publishedLabel: 'Official page checked 2 Sep 2026',
+    officialDha: true,
+  },
+  {
+    title: 'Assistant Director IT - Office Automation',
+    slug: 'assistant-director-it-office-automation-dha-lahore',
+    company: 'DHA Lahore',
+    location: 'Sector A, Phase VI, Lahore',
+    type: ['Full-time', 'Official DHA source'],
+    category: 'Information technology',
+    summary: 'Official careers-page role concerning enterprise workflow automation, IBM ECM and related technology operations.',
+    details: ['Design and maintain enterprise workflow automation.', 'Integrate business applications.', 'Support enterprise content-management technologies.'],
+    qualifications: ['Check the official vacancy document for current criteria', 'Enterprise automation experience', 'Relevant IBM ECM or Cloud Pak knowledge'],
+    sourceUrl: 'https://dhalahore.org/careers/',
+    sourceLabel: 'DHA Lahore Careers',
+    sourceChecked: '2026-09-02',
+    publishedLabel: 'Official page checked 2 Sep 2026',
+    officialDha: true,
+  },
+  {
+    title: 'Assistant Manager - Health Insurance',
+    slug: 'assistant-manager-health-insurance-dha-lahore',
+    company: 'DHA Lahore',
+    location: 'Sector A, Phase VI, Lahore',
+    type: ['Full-time', 'Official DHA source'],
+    category: 'Administration',
+    summary: 'Career category displayed on the official DHA Lahore careers page. Requirements and application status must be confirmed on the source.',
+    details: ['Open the current opportunity document.', 'Check qualification and experience requirements.', 'Submit documents only through the official application route.'],
+    sourceUrl: 'https://dhalahore.org/careers/',
+    sourceLabel: 'DHA Lahore Careers',
+    sourceChecked: '2026-09-02',
+    publishedLabel: 'Official page checked 2 Sep 2026',
+    officialDha: true,
+  },
+  {
+    title: 'Civil Officer Opportunities',
+    slug: 'civil-officer-opportunities-dha-lahore',
+    company: 'DHA Lahore',
+    location: 'Sector A, Phase VI, Lahore',
+    type: ['Full-time', 'Official DHA source'],
+    category: 'Engineering',
+    summary: 'Civil-officer opportunity category displayed on DHA Lahore’s official careers page for development-project work.',
+    details: ['Review the linked official vacancy requirements.', 'Confirm that applications remain open.', 'Use the official employment form and submission address.'],
+    qualifications: ['Check the official source for role-specific education and experience'],
+    sourceUrl: 'https://dhalahore.org/careers/',
+    sourceLabel: 'DHA Lahore Careers',
+    sourceChecked: '2026-09-02',
+    publishedLabel: 'Official page checked 2 Sep 2026',
+    officialDha: true,
+  },
+];

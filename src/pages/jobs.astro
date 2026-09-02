@@ -1,24 +1,165 @@
 ---
-import GuidePage from '@components/content/GuidePage.astro';
+import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
+import { JOBS } from '@data/jobs';
+import { SITE } from '@data/site';
+
+const employerCount = new Set(JOBS.map((job) => job.company)).size;
+const types = [...new Set(JOBS.flatMap((job) => job.type))].sort();
+const breadcrumbs = {
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url },
+    { '@type': 'ListItem', position: 2, name: 'Jobs', item: `${SITE.url}/jobs` },
+  ],
+};
 ---
-<GuidePage
-  title="Jobs in DHA Phase 6 Lahore"
-  description="Find current DHA Lahore career opportunities and use a safe application checklist for jobs connected with DHA Phase 6 Lahore."
-  eyebrow="Employment links"
-  facts={[
-    { label: 'Official source', value: 'DHA Lahore Careers' },
-    { label: 'HR email shown', value: 'careers@dhalahore.org' },
-    { label: 'Office context', value: 'Sector A, Phase VI' },
-    { label: 'Listing status', value: 'Check live source' },
-  ]}
-  sections={[
-    { heading: 'Use the official careers page', paragraphs: ['DHA Lahore publishes career opportunities and application guidance on its official careers page. Vacancies and deadlines change, so this independent portal does not copy a job into a permanent local listing. Open the live source before applying.'] },
-    { heading: 'Application safety', paragraphs: ['Confirm that an advertisement links to an official DHA Lahore domain, verify the deadline and role requirements, and use the application method stated by DHA Lahore. Be cautious of unsolicited messages or payment requests.'], bullets: ['Check the publisher domain', 'Read the current eligibility criteria', 'Confirm the deadline', 'Keep copies of submitted documents', 'Do not pay an unofficial recruitment fee'] },
-    { heading: 'Local private-sector work', paragraphs: ['Shops, offices, schools, healthcare providers and property businesses around Phase 6 may recruit independently. Those employers are separate from DHA Lahore and should be checked directly.'] },
-  ]}
-  faqs={[
-    { question: 'Does this portal accept job applications?', answer: 'No. Use the application route stated on the official employer page.' },
-    { question: 'Are jobs shown here guaranteed to remain open?', answer: 'No. Always check the live official careers page and deadline.' },
-  ]}
-  sources={[{ label: 'DHA Lahore official careers page', href: 'https://dhalahore.org/careers/' }]}
-/>
+
+<PageLayout
+  title="Jobs in DHA Phase 6 Lahore | Current Source-Checked Openings"
+  description={`Browse ${JOBS.length} source-checked job opportunities connected with DHA Phase 6 Lahore. Search by role, employer, location and job type, then confirm status at the original source.`}
+  canonical={`${SITE.url}/jobs`}
+  ogImage="/images/og/blog-og.svg"
+>
+  <Schema type="BreadcrumbList" data={breadcrumbs} />
+
+  <header class="jobs-hero">
+    <div class="container">
+      <nav aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span>Jobs</span></nav>
+      <p class="eyebrow">Local opportunity directory</p>
+      <h1><span>DHA Phase 6 Lahore</span> jobs</h1>
+      <p class="jobs-hero__lead">Browse {JOBS.length} source-checked opportunities from {employerCount} employers in DHA Phase 6 Lahore. Confirm that a role remains open before applying.</p>
+    </div>
+  </header>
+
+  <section class="job-directory">
+    <div class="container">
+      <div class="job-stats">
+        <div><strong>{JOBS.length}</strong><span>Source-checked opportunities</span></div>
+        <div><strong>{employerCount}</strong><span>Employers</span></div>
+        <div><strong>{types.length}</strong><span>Job types</span></div>
+      </div>
+
+      <div class="job-tools" aria-label="Filter jobs">
+        <label>
+          <span>Search jobs</span>
+          <input id="job-search" type="search" placeholder="Job title, employer, category or location" autocomplete="off" />
+        </label>
+        <label>
+          <span>Job type</span>
+          <select id="job-type">
+            <option value="">All job types</option>
+            {types.map((type) => <option value={type.toLowerCase()}>{type}</option>)}
+          </select>
+        </label>
+      </div>
+
+      <div class="results-row">
+        <p id="job-result-count" aria-live="polite">Showing {JOBS.length} opportunities</p>
+        <span>Sources checked 2 September 2026</span>
+      </div>
+
+      <div class="job-grid" id="job-grid">
+        {JOBS.map((job) => (
+          <article
+            class="job-card"
+            data-search={`${job.title} ${job.company} ${job.location} ${job.category}`.toLowerCase()}
+            data-types={job.type.map((type) => type.toLowerCase()).join('|')}
+          >
+            <div class="job-card__topline">
+              <span>{job.location}</span>
+              <span class:list={['job-badge', { 'job-badge--official': job.officialDha }]}>{job.officialDha ? 'Official DHA source' : 'External source'}</span>
+            </div>
+            <h2><a href={`/jobs/${job.slug}`}>{job.title}</a></h2>
+            <p class="job-company">{job.company}</p>
+            <p class="job-date">{job.publishedLabel}</p>
+            <div class="job-tags">
+              <span>{job.category}</span>
+              {job.type.map((type) => <span>{type}</span>)}
+              {job.compensation && <span>{job.compensation}</span>}
+            </div>
+            <p class="job-summary">{job.summary}</p>
+            <a class="job-details-link" href={`/jobs/${job.slug}`}>View job details <span aria-hidden="true">-&gt;</span></a>
+          </article>
+        ))}
+      </div>
+
+      <div class="job-empty" id="job-empty" hidden>
+        <strong>No matching jobs</strong>
+        <p>Try a broader title, employer, category or job type.</p>
+      </div>
+
+      <aside class="job-notice">
+        <div><span>Before you apply</span><h2>Check the live source and never pay an application fee.</h2></div>
+        <p>Job status, compensation and requirements can change after our source check. Confirm the role directly with the employer, verify the application domain and do not send money or sensitive original documents to an unverified contact.</p>
+      </aside>
+
+      <div class="official-careers">
+        <div>
+          <p class="eyebrow">Primary employer source</p>
+          <h2>Looking specifically for DHA Lahore careers?</h2>
+          <p>The official careers page publishes DHA Lahore opportunities, eligibility documents and application instructions. Its current information takes precedence over every summary here.</p>
+        </div>
+        <a href="https://dhalahore.org/careers/" target="_blank" rel="noopener noreferrer">Open DHA Lahore Careers</a>
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<script>
+  function setupJobFilters() {
+    const search = document.querySelector<HTMLInputElement>('#job-search');
+    const type = document.querySelector<HTMLSelectElement>('#job-type');
+    const cards = [...document.querySelectorAll<HTMLElement>('.job-card')];
+    const resultCount = document.querySelector<HTMLElement>('#job-result-count');
+    const empty = document.querySelector<HTMLElement>('#job-empty');
+    if (!search || !type || !resultCount || !empty) return;
+
+    const filter = () => {
+      const query = search.value.trim().toLowerCase();
+      const selectedType = type.value;
+      let visible = 0;
+      cards.forEach((card) => {
+        const matchesSearch = !query || card.dataset.search?.includes(query);
+        const matchesType = !selectedType || card.dataset.types?.split('|').includes(selectedType);
+        const show = Boolean(matchesSearch && matchesType);
+        card.hidden = !show;
+        if (show) visible += 1;
+      });
+      resultCount.textContent = `Showing ${visible} ${visible === 1 ? 'opportunity' : 'opportunities'}`;
+      empty.hidden = visible !== 0;
+    };
+
+    search.addEventListener('input', filter);
+    type.addEventListener('change', filter);
+  }
+
+  setupJobFilters();
+  document.addEventListener('astro:after-swap', setupJobFilters);
+</script>
+
+<style>
+  .jobs-hero{padding:clamp(4.5rem,9vw,7rem) 0 4rem;background:radial-gradient(circle at 78% 0,#315f55 0,#102e2d 34%,#071a24 74%);color:#fff}
+  .jobs-hero nav{display:flex;gap:.6rem;margin-bottom:2.4rem;color:#aebfba;font-size:.8rem}.jobs-hero nav a{color:#e5c773}
+  .eyebrow{margin:0 0 .75rem;color:#d7af57;font-size:.72rem;font-weight:900;letter-spacing:.16em;text-transform:uppercase}
+  .jobs-hero h1{max-width:920px;margin:0;color:#fff;font-family:var(--font-display);font-size:clamp(2.8rem,7vw,6rem);line-height:.96;letter-spacing:-.04em}.jobs-hero h1 span{color:#e4bd62}
+  .jobs-hero__lead{max-width:760px;margin:1.25rem 0 0;color:#c6d5d1;font-size:clamp(1rem,2vw,1.18rem);line-height:1.7}
+  .job-directory{padding:clamp(3rem,7vw,6rem) 0;background:#081821;color:#fff;min-height:70vh}
+  .job-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-bottom:1.7rem}
+  .job-stats>div,.job-tools,.job-card,.job-empty,.job-notice{background:linear-gradient(145deg,rgba(21,50,51,.86),rgba(8,27,35,.94));border:1px solid rgba(215,175,87,.18);box-shadow:0 18px 40px -30px #000}
+  .job-stats>div{display:grid;gap:.3rem;padding:1.5rem}.job-stats strong{color:#e4bd62;font-family:var(--font-display);font-size:2rem}.job-stats span{color:#aabcb7;font-size:.82rem}
+  .job-tools{display:grid;grid-template-columns:2fr 1fr;gap:1.1rem;padding:1.35rem;margin-bottom:1.2rem}
+  .job-tools label{display:grid;gap:.5rem;color:#c8d4d1;font-size:.78rem;font-weight:800}.job-tools input,.job-tools select{width:100%;min-height:48px;padding:0 .9rem;border:1px solid rgba(255,255,255,.14);border-radius:.45rem;background:#06141d;color:#fff;font:inherit}.job-tools input:focus,.job-tools select:focus{outline:2px solid #d7af57;outline-offset:1px}
+  .results-row{display:flex;justify-content:space-between;gap:1rem;margin-bottom:1rem;color:#8fa39e;font-size:.78rem}.results-row p{margin:0}
+  .job-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.1rem}.job-card{display:flex;min-height:390px;flex-direction:column;align-items:flex-start;padding:1.35rem}.job-card[hidden]{display:none}
+  .job-card__topline{display:flex;width:100%;justify-content:space-between;gap:.8rem;align-items:flex-start;color:#91a7a1;font-size:.7rem}.job-card__topline>span:first-child{max-width:48%}
+  .job-badge{padding:.3rem .5rem;border:1px solid rgba(215,175,87,.32);border-radius:999px;color:#e4bd62;text-align:right}.job-badge--official{background:rgba(215,175,87,.12)}
+  .job-card h2{margin:1.2rem 0 .4rem;font-family:var(--font-display);font-size:1.35rem;line-height:1.25}.job-card h2 a{color:#fff;text-decoration:none}.job-card h2 a:hover{color:#e4bd62}
+  .job-company{margin:0;color:#e4bd62;font-size:.84rem;font-weight:800}.job-date{margin:.45rem 0;color:#718984;font-size:.7rem}
+  .job-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0}.job-tags span{padding:.3rem .48rem;border:1px solid rgba(215,175,87,.25);border-radius:999px;color:#d8be79;font-size:.66rem;line-height:1.35}
+  .job-summary{margin:0;color:#a9bbb6;font-size:.8rem;line-height:1.65}.job-details-link{margin-top:auto;padding-top:1.2rem;color:#e4bd62;text-decoration:none;font-size:.8rem;font-weight:900}
+  .job-empty{padding:2rem;text-align:center}.job-empty p{margin:.45rem 0 0;color:#9cb0aa}
+  .job-notice{display:grid;grid-template-columns:.8fr 1.2fr;gap:2rem;margin-top:1.5rem;padding:1.5rem}.job-notice>div>span{color:#d7af57;font-size:.68rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase}.job-notice h2{margin:.5rem 0 0;color:#fff;font-family:var(--font-display);font-size:1.45rem}.job-notice>p{margin:0;color:#a9bbb6;font-size:.82rem;line-height:1.7}
+  .official-careers{display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:end;margin-top:4rem;padding:2.2rem;border-left:4px solid #d7af57;background:#f3eee3;color:#17332e}.official-careers h2{margin:0;font-family:var(--font-display);font-size:clamp(1.8rem,4vw,3rem)}.official-careers>div>p:last-child{max-width:750px;color:#586964;line-height:1.7}.official-careers>a{padding:.9rem 1.1rem;background:#133e37;color:#fff;text-decoration:none;font-size:.75rem;font-weight:900;text-align:center}
+  @media(max-width:980px){.job-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.job-notice,.official-careers{grid-template-columns:1fr}.official-careers>a{width:max-content}}
+  @media(max-width:650px){.job-stats,.job-tools,.job-grid{grid-template-columns:1fr}.results-row{align-items:flex-start;flex-direction:column}.job-card{min-height:0}.job-notice{gap:1rem}.official-careers{padding:1.4rem}.official-careers>a{width:100%}}
+</style>
