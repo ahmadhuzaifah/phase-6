@@ -5,7 +5,6 @@
  */
 
 import { NAVIGATION, SITE } from '@data/site';
-import Button from './Button.astro';
 
 const currentPath = Astro.url.pathname;
 ---
@@ -28,11 +27,6 @@ const currentPath = Astro.url.pathname;
     </button>
 
     <ul class="mobile-menu__list">
-      <li>
-        <a href="/search" class="mobile-menu__link mobile-menu__link--accent">
-          Search Portal
-        </a>
-      </li>
       {
         NAVIGATION.map((item) => (
           <li>
@@ -41,6 +35,7 @@ const currentPath = Astro.url.pathname;
               class:list={[
                 'mobile-menu__link',
                 { 'mobile-menu__link--active': currentPath === item.href },
+                { 'mobile-menu__link--accent': item.label === 'Map PDFs' }
               ]}
               aria-current={currentPath === item.href ? 'page' : undefined}
             >
@@ -49,34 +44,7 @@ const currentPath = Astro.url.pathname;
           </li>
         ))
       }
-      <li>
-        <a href="/dha-phase-6-lahore-prices" class="mobile-menu__link">
-          Price Index
-        </a>
-      </li>
-      <li>
-        <a href="/places" class="mobile-menu__link">
-          Nearby Places
-        </a>
-      </li>
-      <li>
-        <a href="/downloads" class="mobile-menu__link">
-          Masterplan Downloads
-        </a>
-      </li>
-      <li>
-        <a href="/faq" class="mobile-menu__link">
-          FAQ Knowledgebase
-        </a>
-      </li>
     </ul>
-
-    <div class="mobile-menu__footer">
-      <p class="mobile-menu__note">Need instant pricing, block guidance, or a site visit?</p>
-      <Button href="/contact" variant="primary" size="md" fullWidth>
-        Get in Touch
-      </Button>
-    </div>
   </nav>
 </div>
 
@@ -117,7 +85,7 @@ const currentPath = Astro.url.pathname;
   .mobile-menu {
     position: fixed;
     inset: 0;
-    z-index: var(--z-modal);
+    z-index: 9999;
     pointer-events: none;
     visibility: hidden;
   }
@@ -132,7 +100,7 @@ const currentPath = Astro.url.pathname;
     inset: 0;
     background-color: rgba(0, 0, 0, 0.58);
     opacity: 0;
-    transition: opacity var(--transition-base);
+    transition: opacity 0.3s ease;
   }
 
   .mobile-menu--open .mobile-menu__overlay {
@@ -147,9 +115,9 @@ const currentPath = Astro.url.pathname;
     height: 100%;
     background: linear-gradient(180deg, rgba(10, 17, 40, 0.98), rgba(5, 8, 22, 0.98));
     color: #FFFFFF;
-    padding: var(--space-6);
+    padding: 24px;
     transform: translateX(100%);
-    transition: transform var(--transition-base);
+    transition: transform 0.3s ease;
     overflow-y: auto;
     box-shadow: -20px 0 40px rgba(0, 0, 0, 0.35);
     border-left: 1px solid rgba(243, 211, 117, 0.12);
@@ -164,15 +132,15 @@ const currentPath = Astro.url.pathname;
     align-items: center;
     width: fit-content;
     font-size: 10px;
-    font-weight: var(--font-extrabold);
+    font-weight: 800;
     letter-spacing: 1px;
     text-transform: uppercase;
     color: #F3D375;
     background: rgba(197, 155, 39, 0.12);
     border: 1px solid rgba(243, 211, 117, 0.16);
     padding: 5px 10px;
-    border-radius: var(--radius-full);
-    margin-bottom: var(--space-4);
+    border-radius: 50px;
+    margin-bottom: 16px;
   }
 
   .mobile-menu__close {
@@ -182,13 +150,12 @@ const currentPath = Astro.url.pathname;
     width: 40px;
     height: 40px;
     margin-left: auto;
-    margin-bottom: var(--space-6);
+    margin-bottom: 24px;
     background: none;
     border: none;
     cursor: pointer;
     color: #FFFFFF;
-    border-radius: var(--radius-md);
-    transition: background-color var(--transition-fast);
+    border-radius: 8px;
   }
 
   .mobile-menu__close:hover {
@@ -198,20 +165,20 @@ const currentPath = Astro.url.pathname;
   .mobile-menu__list {
     display: flex;
     flex-direction: column;
-    gap: var(--space-1);
+    gap: 4px;
     list-style: none;
     padding: 0;
-    margin: 0 0 var(--space-8);
+    margin: 0;
   }
 
   .mobile-menu__link {
     display: block;
-    padding: var(--space-3) var(--space-4);
-    font-size: var(--text-base);
-    font-weight: var(--font-medium);
+    padding: 12px 16px;
+    font-size: 1rem;
+    font-weight: 500;
     color: rgba(255, 255, 255, 0.82);
-    border-radius: var(--radius-md);
-    transition: color var(--transition-fast), background-color var(--transition-fast);
+    border-radius: 8px;
+    transition: color 0.2s, background-color 0.2s;
     text-decoration: none;
   }
 
@@ -223,27 +190,12 @@ const currentPath = Astro.url.pathname;
   .mobile-menu__link--active {
     color: #FFFFFF;
     background: rgba(197, 155, 39, 0.18);
-    font-weight: var(--font-semibold);
+    font-weight: 600;
   }
 
   .mobile-menu__link--accent {
     color: #F3D375;
-    font-weight: var(--font-bold);
-  }
-
-  .mobile-menu__footer {
-    padding-top: var(--space-4);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-  }
-
-  .mobile-menu__note {
-    font-size: var(--text-sm);
-    line-height: var(--leading-relaxed);
-    color: rgba(255, 255, 255, 0.7);
-    margin: 0;
+    font-weight: 700;
   }
 
   @media (min-width: 1200px) {
