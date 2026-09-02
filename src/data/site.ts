@@ -1,17 +1,17 @@
 /**
- * Al Rehman Garden Phase 2 — Site Configuration
+ * DHA Phase 6 Lahore — Site Configuration
  * Global constants used across the entire site.
  */
 
 export const SITE = {
-  name: 'Al Rehman Garden Phase 2',
-  shortName: 'ARG Phase 2',
+  name: 'DHA Phase 6 Lahore',
+  shortName: 'DHA Phase 6',
   description:
-    'Al Rehman Garden Phase 2 Lahore — Premium real estate community offering residential and commercial plots with modern amenities, parks, and excellent infrastructure.',
-  url: import.meta.env.PUBLIC_SITE_URL || 'https://alrehmangarden.pk',
+    'DHA Phase 6 Lahore — Premier luxury real estate community featuring residential & commercial plots, Defence Raya Golf Resort, modern amenities, and world-class infrastructure.',
+  url: import.meta.env.PUBLIC_SITE_URL || 'https://dhaphase6lahore.pk',
   locale: 'en_PK',
   language: 'en',
-  author: 'Al Rehman Garden',
+  author: 'DHA Phase 6 Specialist & Information Portal',
   themeColor: '#c8960c',
 } as const;
 
@@ -25,14 +25,13 @@ export const SOCIAL = {
 
 export const NAVIGATION = [
   { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+  { label: 'Sectors', href: '/blocks' },
   { label: 'Properties', href: '/properties' },
-  { label: 'Plots', href: '/plots' },
-  { label: 'Houses', href: '/houses-for-sale-in-al-rehman-garden-phase-2-lahore' },
-  { label: 'Blocks', href: '/blocks' },
   { label: 'Places', href: '/places' },
-  { label: 'Map', href: '/al-rehman-garden-phase-2-map' },
+  { label: 'Map', href: '/dha-phase-6-lahore-map' },
   { label: 'Prices', href: '/property-prices' },
-  { label: 'Property Dealer', href: '/property-dealer' },
+  { label: 'Guides', href: '/dha-phase-6-investment-guide' },
   { label: 'Contact', href: '/contact' },
 ] as const;
 

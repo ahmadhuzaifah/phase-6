@@ -30,6 +30,12 @@ export interface RawListingInput {
   images?: Array<string | { url: string; alt?: string }>;
   source?: string;
   sourceUrl?: string;
+  sourceName?: string;
+  sourceURL?: string;
+  sourceType?: SourceType;
+  availabilityStatus?: 'available' | 'reserved' | 'sold' | 'expired' | 'removed';
+  lastCheckedDate?: string;
+  updatedAt?: string;
   agentName?: string;
   phone?: string;
   whatsapp?: string;
@@ -243,12 +249,15 @@ export function ingestListing(raw: RawListingInput, index: number = 1): Property
     })),
     source: raw.source || 'Zameen.com Extraction',
     sourceUrl: raw.sourceUrl,
+    sourceName: raw.sourceName || raw.source || 'Manual Entry',
+    sourceURL: raw.sourceURL || raw.sourceUrl,
     sourceType: (raw.source?.toLowerCase().includes('developer')
       ? 'official-developer'
       : 'portal-extraction') as SourceType,
-    verificationStatus: (raw.verificationStatus as VerificationStatus) || 'verified',
+    verificationStatus: (raw.verificationStatus as VerificationStatus) || 'under-review',
+    availabilityStatus: raw.availabilityStatus || 'available',
     publishedDate: raw.publishedDate ? new Date(raw.publishedDate) : new Date(),
-    lastCheckedDate: new Date(),
+    lastCheckedDate: raw.lastCheckedDate ? new Date(raw.lastCheckedDate) : new Date(),
     contactInformation: {
       agentName: raw.agentName || 'Ahmad Huzaifah',
       agencyName: 'Al Rehman Property Consultant',

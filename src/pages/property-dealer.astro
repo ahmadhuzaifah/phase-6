@@ -1,7 +1,7 @@
 ---
 /**
  * Property Dealer Profile Page — Ahmad Huzaifah
- * Al Rehman Garden Phase 2 Lahore Authority Portal
+ * DHA Phase 6 Lahore property information platform
  */
 
 import PageLayout from '@layouts/PageLayout.astro';
@@ -12,21 +12,21 @@ import propertiesData from '@data/properties-import.json';
 
 const consultant = {
   name: 'Ahmad Huzaifah',
-  title: 'PROPERTY CONSULTANT',
-  location: 'Al Rehman Garden Phase 2 Lahore',
+  title: 'PROPERTY SPECIALIST',
+  location: 'DHA Phase 6 Lahore',
   phone: '03257800001',
   phoneTel: '+923257800001',
   whatsappNumber: '03257800001',
   whatsappUrl: 'https://wa.me/923257800001',
   image: '/images/dealers/ahmad-huzaifah.png',
-  bio: 'Helping buyers find residential plots, houses, and investment opportunities in Al Rehman Garden Phase 2 Lahore with transparent guidance and verified property information.',
-  serviceArea: 'Al Rehman Garden Phase 2 Lahore',
-  services: 'Property Consultation & Plot / House Assistance',
+  bio: 'Helping buyers find residential plots, luxury designer bungalows, and commercial broadway opportunities in DHA Phase 6 Lahore with transparent guidance and verified property information.',
+  serviceArea: 'DHA Phase 6 Lahore',
+  services: 'Property Consultation, DHA Transfer Guidance & Plot / Bungalow Assistance',
 };
 
 const pageSchema = {
-  name: `Ahmad Huzaifah — Property Consultant in Al Rehman Garden Phase 2 Lahore`,
-  description: `Contact Ahmad Huzaifah for verified residential plots, houses, market prices, and property viewing in Al Rehman Garden Phase 2 Lahore.`,
+  name: `Ahmad Huzaifah — Property Specialist in DHA Phase 6 Lahore`,
+  description: `Contact Ahmad Huzaifah for verified residential plots, luxury bungalows, market rates, and property viewing in DHA Phase 6 Lahore.`,
   url: `${SITE.url}/property-dealer`,
 };
 
@@ -38,6 +38,7 @@ const realEstateAgentSchema = {
   image: `${SITE.url}${consultant.image}`,
   address: {
     '@type': 'PostalAddress',
+    streetAddress: 'Main Boulevard, Phase 6, DHA Lahore',
     addressLocality: 'Lahore',
     addressRegion: 'Punjab',
     addressCountry: 'PK',
@@ -55,65 +56,57 @@ const breadcrumbsSchema = {
     {
       '@type': 'ListItem',
       position: 2,
-      name: 'Property Dealer',
+      name: 'Property Specialist',
       item: `${SITE.url}/property-dealer`,
     },
   ],
 };
 
+// Buyer guide steps
 const buyerGuideSteps = [
   {
-    icon: '📋',
-    title: 'Verify Documents',
-    desc: 'Check ownership, transfer status, NDC clearance, and official society records.',
+    icon: '1️⃣',
+    title: 'Plot & Sector Selection',
+    desc: 'Choose the ideal sector (A through N or Defence Raya) based on budget, lifestyle, and proximity to Ring Road or CCAs.',
   },
   {
-    icon: '📍',
-    title: 'Check Property Location',
-    desc: 'Visit the property on-ground before making a financial commitment.',
+    icon: '2️⃣',
+    title: 'DHA NDC & Title Verification',
+    desc: 'Verify the allotment letter, NDC status, and ownership records at the DHA Lahore Main Office.',
   },
   {
-    icon: '📊',
-    title: 'Compare Market Prices',
-    desc: 'Understand current market benchmarks and sector rates before investing.',
+    icon: '3️⃣',
+    title: 'Physical Site Demarcation',
+    desc: 'Confirm plot dimensions, corner/park-facing status, road width, and underground utility connections.',
   },
   {
-    icon: '🏗️',
-    title: 'Review Development Status',
-    desc: 'Inspect block infrastructure progress, underground utilities, and road carpeting.',
-  },
-  {
-    icon: '🏛️',
-    title: 'Use Official Transfer Process',
-    desc: 'Execute all purchase transactions through the authorized management office.',
-  },
-  {
-    icon: '📝',
-    title: 'Keep Written Agreements',
-    desc: 'Document all token payments, receipts, and commission terms in writing.',
+    icon: '4️⃣',
+    title: 'Safe Official Transfer',
+    desc: 'Complete all seller payments and biometric transfer procedures safely inside the DHA Lahore transfer branch.',
   },
 ];
 
+// How we help services
 const assistanceServices = [
   {
     icon: '🏡',
-    title: 'Residential Plots',
-    desc: '3 Marla, 5 Marla, 10 Marla & 1 Kanal plots in mature and upcoming sectors.',
+    title: 'Plot & Bungalow Search',
+    desc: 'Find verified 10 Marla, 1 Kanal, and 2 Kanal plots and designer bungalows matching your exact specifications.',
   },
   {
-    icon: '🏰',
-    title: 'Ready & Built Houses',
-    desc: 'Newly constructed double-story luxury designer villas with immediate possession.',
+    icon: '📊',
+    title: 'Rate Auditing & Valuation',
+    desc: 'Get authentic 2026 market valuations so you never overpay for residential or commercial real estate.',
   },
   {
-    icon: '📈',
-    title: 'Investment Guidance',
-    desc: 'Independent market analysis, capital appreciation trends, and high-ROI location advice.',
+    icon: '🏢',
+    title: 'CCA Commercial Broadways',
+    desc: 'High-yield commercial plaza acquisitions in CCA-1, CCA-2, and Main Boulevard commercial strips.',
   },
   {
-    icon: '🚗',
-    title: 'Property Viewing',
-    desc: 'Complimentary guided physical site tours, plot demarcation, and sector visits.',
+    icon: '⛳',
+    title: 'Defence Raya Advisory',
+    desc: 'Exclusive access to fairway golf villas, condominiums, and country club residences in Defence Raya.',
   },
 ];
 
@@ -122,8 +115,8 @@ const featuredListings = propertiesData.slice(0, 3);
 ---
 
 <PageLayout
-  title="Al Rehman Garden Phase 2 Lahore Property Dealer | Verified Property Assistance"
-  description="Contact Al Rehman Garden Phase 2 Lahore property consultant Ahmad Huzaifah (03257800001) for verified plots, houses, investment guidance, and property viewing assistance."
+  title="DHA Phase 6 Lahore Property Specialist | Ahmad Huzaifah (03257800001)"
+  description="Contact DHA Phase 6 Lahore property specialist Ahmad Huzaifah (03257800001) for verified plots, designer houses, Defence Raya villas, and transfer assistance."
 >
   <Schema type="WebSite" data={pageSchema} />
   <Schema type="RealEstateAgent" data={realEstateAgentSchema} />
@@ -139,10 +132,10 @@ const featuredListings = propertiesData.slice(0, 3);
 
         <nav class="dealer-topbar__nav">
           <a href="/" class="dealer-nav-link">Home</a>
-          <a href="/blocks" class="dealer-nav-link">Blocks</a>
+          <a href="/blocks" class="dealer-nav-link">Sectors</a>
           <a href="/properties" class="dealer-nav-link">Properties</a>
           <a href="/plots" class="dealer-nav-link">Plots</a>
-          <a href="/houses-for-sale-in-al-rehman-garden-phase-2-lahore" class="dealer-nav-link">Houses</a>
+          <a href="/properties" class="dealer-nav-link">Houses</a>
           <a href="/places" class="dealer-nav-link">Places</a>
           <a href="/map" class="dealer-nav-link">Map</a>
           <a href="/property-prices" class="dealer-nav-link">Prices</a>
@@ -167,18 +160,18 @@ const featuredListings = propertiesData.slice(0, 3);
         <nav class="dealer-breadcrumb" aria-label="Breadcrumb">
           <a href="/">Home</a>
           <span>&gt;</span>
-          <span class="active">Property Dealer</span>
+          <span class="active">Property Specialist</span>
         </nav>
 
         <!-- Main Heading -->
         <h1 class="dealer-hero__title">
-          Al Rehman Garden Phase 2 Lahore <br />
-          <span class="text-gold">Property Dealer</span>
+          DHA Phase 6 Lahore <br />
+          <span class="text-gold">Property Specialist</span>
         </h1>
 
         <!-- Subtitle -->
         <p class="dealer-hero__subtitle">
-          Contact us for property inquiries, buying assistance, and viewing arrangements in Al Rehman Garden Phase 2 Lahore.
+          Contact us for property inquiries, buying assistance, and on-ground viewing arrangements in DHA Phase 6 Lahore.
         </p>
 
         <!-- Main Dealer Profile Card -->
@@ -274,7 +267,7 @@ const featuredListings = propertiesData.slice(0, 3);
             <span class="guide-eyebrow__line"></span>
           </div>
           <h2 class="section-main-title">Buyer's Guide</h2>
-          <p class="section-sub-title">Use these checks before buying, selling, or renting a property in Al Rehman Garden Phase 2 Lahore.</p>
+          <p class="section-sub-title">Use these checks before buying, selling, or renting a property in DHA Phase 6 Lahore.</p>
         </div>
 
         <div class="guide-card-grid">
@@ -326,7 +319,7 @@ const featuredListings = propertiesData.slice(0, 3);
             <span class="guide-eyebrow__line"></span>
           </div>
           <h2 class="section-main-title">Latest Available Properties</h2>
-          <p class="section-sub-title">Handpicked verified properties ready for site viewing in Al Rehman Garden Phase 2.</p>
+          <p class="section-sub-title">Handpicked verified properties ready for site viewing in DHA Phase 6 Lahore.</p>
         </div>
 
         <div class="properties-preview-grid">
@@ -339,7 +332,7 @@ const featuredListings = propertiesData.slice(0, 3);
                   class="prop-mini-card__img"
                   loading="lazy"
                 />
-                <PropertyWatermark position="bottom-right" opacity={0.8} />
+                <PropertyWatermark position="bottom-right" opacity={0.35} />
                 <span class="prop-mini-card__status-badge">🟢 Available</span>
               </div>
 
@@ -361,7 +354,7 @@ const featuredListings = propertiesData.slice(0, 3);
                     View Details
                   </a>
                   <a
-                    href={`https://wa.me/923257800001?text=${encodeURIComponent(`Salam Ahmad Huzaifah, I am interested in property "${prop.title}" (${prop.id}) in Al Rehman Garden Phase 2.`)}`}
+                    href={`https://wa.me/923257800001?text=${encodeURIComponent(`Salam Ahmad Huzaifah, I am interested in property "${prop.title}" (${prop.id}) in DHA Phase 6 Lahore.`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     class="btn-prop-whatsapp"
@@ -377,7 +370,7 @@ const featuredListings = propertiesData.slice(0, 3);
 
         <div style="text-align: center; margin-top: 40px;">
           <a href="/properties" class="btn-explore-all">
-            Explore All 100+ Verified Properties →
+            Explore All Verified Properties →
           </a>
         </div>
       </div>
@@ -390,7 +383,7 @@ const featuredListings = propertiesData.slice(0, 3);
           <div class="dealer-cta-box__body">
             <h2 class="dealer-cta-box__title">
               Looking for property in <br />
-              <span class="text-gold">Al Rehman Garden Phase 2 Lahore?</span>
+              <span class="text-gold">DHA Phase 6 Lahore?</span>
             </h2>
             <p class="dealer-cta-box__desc">
               Get in touch with <strong>Ahmad Huzaifah</strong> today for verified plot prices, map coordinates, and guided physical site inspections.
@@ -425,7 +418,7 @@ const featuredListings = propertiesData.slice(0, 3);
           <div class="dealer-footer__brand-col">
             <img src="/images/logo/logo-white.svg" alt={SITE.name} width="220" height="55" class="dealer-footer__logo" />
             <p class="dealer-footer__desc">
-              An independent real estate information portal providing property guidance, market information, and investment resources for Al Rehman Garden Phase 2 Lahore.
+              An independent real estate information portal providing property guidance, market information, and investment resources for DHA Phase 6 Lahore.
             </p>
             <div class="dealer-footer__contact-direct">
               <span>👤 <strong>Ahmad Huzaifah</strong></span>
@@ -440,7 +433,7 @@ const featuredListings = propertiesData.slice(0, 3);
             <ul class="dealer-footer__list">
               <li><a href="/">Home</a></li>
               <li><a href="/properties">Properties</a></li>
-              <li><a href="/blocks">Blocks</a></li>
+              <li><a href="/blocks">Sectors</a></li>
               <li><a href="/property-prices">Prices</a></li>
               <li><a href="/places">Places</a></li>
               <li><a href="/contact">Contact</a></li>
@@ -451,9 +444,9 @@ const featuredListings = propertiesData.slice(0, 3);
           <div class="dealer-footer__col">
             <h4 class="dealer-footer__heading">Resources</h4>
             <ul class="dealer-footer__list">
-              <li><a href="/al-rehman-garden-phase-2-location">Location Guide</a></li>
-              <li><a href="/al-rehman-garden-phase-2-investment-guide">Investment Guide</a></li>
-              <li><a href="/al-rehman-garden-phase-2-payment-plan">Payment Plan</a></li>
+              <li><a href="/dha-phase-6-lahore-map">Master Plan Map</a></li>
+              <li><a href="/property-prices">Price Index</a></li>
+              <li><a href="/places">Nearby Places</a></li>
               <li><a href="/faq">FAQs</a></li>
               <li><a href="/downloads">Masterplan Downloads</a></li>
             </ul>
@@ -472,7 +465,7 @@ const featuredListings = propertiesData.slice(0, 3);
         </div>
 
         <div class="dealer-footer__bottom">
-          <p>&copy; {new Date().getFullYear()} Al Rehman Garden Phase 2 Lahore Authority Portal. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} DHA Phase 6 Lahore Authority Portal. All rights reserved.</p>
         </div>
       </div>
     </footer>

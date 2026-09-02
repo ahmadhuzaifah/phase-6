@@ -13,6 +13,7 @@ import { SITE } from '@data/site';
 import { CONTACTS } from '@data/contacts';
 import { BLOCKS } from '@data/blocks';
 import { AMENITIES } from '@data/amenities';
+import { DEVELOPMENT_UPDATES } from '@data/developmentUpdates';
 
 import propertiesData from '@data/properties-import.json';
 
@@ -32,42 +33,42 @@ const featuredProperties = propertiesData.slice(0, 6);
 
 // Connectivity Locations Matrix
 const travelConnectivity = [
-  { name: 'M-2 Motorway (Faizpur Interchange)', time: '2 Minutes', icon: '🛣️', note: 'Direct signal-free exit' },
-  { name: 'Mall Road & Lower Mall Lahore', time: '10 Minutes', icon: '🏛️', note: 'Via Sagian Bridge / Ring Road' },
-  { name: 'Thokar Niaz Baig Interchange', time: '12 Minutes', icon: '🚗', note: 'Via M-2 Motorway link' },
-  { name: 'District Courts & Civil Lines', time: '12 Minutes', icon: '⚖️', note: 'Fast central artery commute' },
-  { name: 'Lahore Ring Road Access', time: '5 Minutes', icon: '🔄', note: 'Connecting all Lahore sectors' },
-  { name: 'Allama Iqbal International Airport', time: '25 Minutes', icon: '✈️', note: 'Direct via Ring Road expressway' },
+  { name: 'Lahore Ring Road (Phase 6 Interchange)', time: '2 Minutes', icon: '🛣️', note: 'Direct signal-free exit' },
+  { name: 'Allama Iqbal International Airport', time: '10 Minutes', icon: '✈️', note: 'Fast expressway link' },
+  { name: 'Defence Raya Golf & Country Club', time: '2 Minutes', icon: '⛳', note: 'Integrated in Phase 6' },
+  { name: 'PKLI Medical Complex', time: '2 Minutes', icon: '🏥', note: 'Adjacent via Bedian Link' },
+  { name: 'Gulberg Main Boulevard & MM Alam', time: '15 Minutes', icon: '🚗', note: 'Via Ring Road corridor' },
+  { name: 'Lahore Cantt & Mall Road', time: '12 Minutes', icon: '🏛️', note: 'Direct arterial connection' },
 ];
 
 // FAQs
 const faqs = [
   {
-    q: 'Is Al Rehman Garden Phase 2 approved by LDA?',
-    a: 'Yes, Al Rehman Garden Phase 2 is an authorized and legally compliant master-planned housing society with sanctioned NOC status from Lahore Development Authority (LDA) and relevant regulatory bodies, ensuring clear ownership titles.',
+    q: 'Is DHA Phase 6 Lahore fully developed and possession-ready?',
+    a: 'Yes, DHA Phase 6 Lahore is 100% on-ground and fully developed across Sectors A to N, featuring high residential occupancy, designer luxury bungalows, underground electrification, Sui gas, and 24/7 DHA vigilance.',
   },
   {
-    q: 'Where is Al Rehman Garden Phase 2 located in Lahore?',
-    a: 'Al Rehman Garden Phase 2 is strategically located on Main Sharaqpur Road, just 2 minutes drive from the M-2 Motorway (Faizpur Interchange) and 10 minutes from Mall Road and Lower Mall Lahore.',
+    q: 'Where is DHA Phase 6 located in Lahore?',
+    a: 'DHA Phase 6 is strategically located along Main Boulevard Phase 6, bounded by Bedian Road, Barki Road, and the Lahore Ring Road with direct interchange access, just 10 minutes from Allama Iqbal International Airport.',
   },
   {
-    q: 'Are plots available on cash and installment plans?',
-    a: 'Yes! Developed sectors (Block A, B, C, D, E, F) offer instant possession on full cash payments, while upcoming sectors (Mirabel Block, Royal Block, Beverly Hills) offer convenient 3-to-5 year flexible monthly installment plans.',
+    q: 'What plot categories are available in DHA Phase 6?',
+    a: 'DHA Phase 6 features residential plots in 5 Marla, 10 Marla, 1 Kanal, and 2 Kanal, as well as 4 Marla and 8 Marla commercial plots in CCA-1, CCA-2, and Main Boulevard commercial broadways.',
   },
   {
-    q: 'What amenities and underground utilities are operational?',
-    a: 'The society features 100% operational underground electricity, dedicated Sui gas connections, RO water filtration plants, 24/7 security with CCTV monitoring, 150ft main boulevards, Al-Rehman Hospital, schools, grand mosques, and lush family parks.',
+    q: 'What makes Defence Raya in Phase 6 unique?',
+    a: 'Defence Raya is an international 18-hole championship golf resort and gated luxury residential community with 1 & 2 Kanal fairway villas, golf-facing condominiums, and exclusive country club amenities.',
   },
   {
-    q: 'How can I verify plot title and schedule a site visit?',
-    a: 'You can directly contact our official property advisory helpline or click the WhatsApp Inquiry button to verify plot numbers, check map locations, and book a guided on-ground site visit.',
+    q: 'How are property transfers and NDC handled in DHA Phase 6?',
+    a: 'All property transfers, No Demand Certificates (NDC), and title verifications are officially executed directly through the DHA Lahore Main Office for absolute legal security.',
   },
 ];
 ---
 
 <PageLayout
-  title="Al Rehman Garden Phase 2 Lahore — Premium Real Estate & Property Authority"
-  description="Discover Al Rehman Garden Phase 2 Lahore on Main Sharaqpur Road near M2 Motorway. Explore LDA approved residential and commercial plots, block maps, current market prices, and flexible installment plans."
+  title="DHA Phase 6 Lahore — Luxury Real Estate & Property Authority Portal"
+  description="Explore DHA Phase 6 Lahore plots for sale, designer luxury houses, commercial broadways in CCA-1 & CCA-2, Defence Raya Golf Resort, and audited 2026 rates."
 >
   <Schema type="WebSite" data={websiteSchema} />
 
@@ -80,18 +81,18 @@ const faqs = [
         <!-- Eyebrow Tag -->
         <div class="eyebrow eyebrow--dark">
           <span class="hero__pulse-dot"></span>
-          <span>Official Information & Property Portal</span>
+          <span>DHA Phase 6 Specialist & Information Portal</span>
         </div>
 
         <!-- Main Headline -->
         <h1 class="hero__title">
-          Al Rehman Garden <br />
-          <span class="text-gradient-gold">Phase 2 Lahore</span>
+          Explore DHA Phase 6 <br />
+          <span class="text-gradient-gold">Lahore Luxury Properties</span>
         </h1>
 
         <!-- Value Proposition -->
         <p class="hero__lead lead">
-          The premier master-planned housing community on <strong>Main Sharaqpur Road</strong>, just 2 minutes from <strong>M-2 Motorway Faizpur Interchange</strong>. Secure your dream home with 100% on-ground infrastructure, instant possession, and high-ROI investment potential.
+          Explore verified properties, sectors (A to N), price index, master maps, and investment intelligence for Lahore's premier luxury community on <strong>Main Boulevard</strong>, featuring <strong>Defence Raya Golf Resort</strong> and direct Ring Road access.
         </p>
 
         <!-- CTA Buttons -->
@@ -99,17 +100,8 @@ const faqs = [
           <Button href="#properties-preview" variant="primary" size="lg">
             Explore Plots & Properties
           </Button>
-          <a
-            href={CONTACTS.whatsapp.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn btn--accent btn--lg"
-          >
-            <svg class="hero__btn-icon" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/>
-            </svg>
-            <span>WhatsApp Advisory</span>
-          </a>
+          <Button href="/map" variant="outline" size="lg">View Master Plan</Button>
+          <a href={CONTACTS.whatsapp.url} target="_blank" rel="noopener noreferrer" class="btn btn--accent btn--lg">WhatsApp Advisory</a>
         </div>
 
         <!-- Quick Society Highlights Badges -->
@@ -186,9 +178,20 @@ const faqs = [
             </select>
           </div>
 
+          <div class="finder-card__group">
+            <label class="finder-card__label" for="hero-price">Price Range</label>
+            <select id="hero-price" name="price" class="finder-card__select">
+              <option value="">Any Budget</option>
+              <option value="under-30-lakh">Under PKR 30 Lakh</option>
+              <option value="30-60-lakh">PKR 30 - 60 Lakh</option>
+              <option value="60-lakh-1-crore">PKR 60 Lakh - 1 Crore</option>
+              <option value="over-1-crore">Over PKR 1 Crore</option>
+            </select>
+          </div>
+
           <!-- Submit Action -->
           <button type="submit" class="btn btn--primary btn--full finder-card__submit">
-            Search Available Plots →
+            Search Property →
           </button>
         </form>
 
@@ -203,7 +206,17 @@ const faqs = [
   <!-- ══════════════════════════════════════════════════════════════════════════
        DHA-STYLE SOCIETY QUICK FACTS & AUTHORITY DIRECTORY STRIP
        ══════════════════════════════════════════════════════════════════════════ -->
-  <section class="section section--quick-facts" style="background: #0B132B; border-top: 1px solid rgba(212,175,55,0.25); border-bottom: 1px solid rgba(212,175,55,0.25); padding: var(--space-8) 0;">
+  <section class="trust-strip" aria-label="Portal trust indicators">
+    <div class="container trust-strip__intro"><span class="eyebrow eyebrow--dark">Independent buyer guidance</span><strong>Why Use This Platform</strong></div>
+    <div class="container trust-strip__grid">
+      <div class="trust-strip__item"><span class="trust-strip__icon">✓</span><div><strong>Verified listings</strong><span>Reviewed property information</span></div></div>
+      <div class="trust-strip__item"><span class="trust-strip__icon">↻</span><div><strong>Updated information</strong><span>Current prices and availability</span></div></div>
+      <div class="trust-strip__item"><span class="trust-strip__icon">⌂</span><div><strong>Complete society guide</strong><span>Maps, blocks, places, and plans</span></div></div>
+      <div class="trust-strip__item"><span class="trust-strip__icon">↗</span><div><strong>Property assistance</strong><span>Direct guidance for your visit</span></div></div>
+    </div>
+  </section>
+
+  <section class="section section--quick-facts" hidden>
     <div class="container">
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-8);">
         <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(212,175,55,0.3); border-radius: var(--radius-lg); padding: var(--space-4) var(--space-5); text-align: center;">
@@ -256,33 +269,33 @@ const faqs = [
       <!-- Section Header -->
       <div class="section-header text-center">
         <span class="eyebrow">Master Development Vision</span>
-        <h2 class="section-header__title">Why Al Rehman Garden Phase 2?</h2>
+        <h2 class="section-header__title">Why DHA Phase 6 Lahore?</h2>
         <p class="section-header__desc lead">
-          Setting the benchmark for secure, modern, and affordable luxury real estate in Lahore with complete civic amenities and unmatched connectivity.
+          The ultimate benchmark for luxury real estate in Pakistan with 18-hole championship golf living, commercial broadways, and unmatched Ring Road connectivity.
         </p>
       </div>
 
       <!-- Key Metrics Counters -->
       <div class="metrics-grid">
         <div class="metric-card">
-          <span class="stat-number">15+</span>
-          <span class="stat-label">Master-Planned Blocks</span>
-          <p class="metric-card__desc">From executive sectors to luxury villa enclaves</p>
+          <span class="stat-number">13+</span>
+          <span class="stat-label">Master-Planned Sectors</span>
+          <p class="metric-card__desc">Sectors A through N plus Defence Raya Golf Resort</p>
         </div>
         <div class="metric-card">
-          <span class="stat-number">5,000+</span>
-          <span class="stat-label">Residing Families</span>
-          <p class="metric-card__desc">Vibrant on-ground community with thriving lifestyle</p>
+          <span class="stat-number">18-Hole</span>
+          <span class="stat-label">Championship Golf Course</span>
+          <p class="metric-card__desc">Defence Raya international golf & country club</p>
         </div>
         <div class="metric-card">
           <span class="stat-number">150ft</span>
-          <span class="stat-label">Main Entrance Boulevard</span>
-          <p class="metric-card__desc">Signal-free wide network of carpeted roads</p>
+          <span class="stat-label">Main Boulevard Broadway</span>
+          <p class="metric-card__desc">Signal-free wide network of landscaped avenues</p>
         </div>
         <div class="metric-card">
           <span class="stat-number">100%</span>
-          <span class="stat-label">Live Utilities</span>
-          <p class="metric-card__desc">Underground electricity, Sui gas & pure RO water</p>
+          <span class="stat-label">Underground Utilities</span>
+          <p class="metric-card__desc">Concealed power grid, Sui gas & optical fiber</p>
         </div>
       </div>
 
@@ -290,23 +303,23 @@ const faqs = [
       <div class="overview-features">
         <div class="overview-feature">
           <div class="overview-feature__icon">🏛️</div>
-          <h3 class="overview-feature__title">Approved & Clear Legal Title</h3>
+          <h3 class="overview-feature__title">Guaranteed Title & DHA Security</h3>
           <p class="overview-feature__text">
-            Peace of mind with LDA approval, prompt on-ground registries, and transparent society transfer procedures.
+            Complete investment safety with transparent DHA Lahore transfer procedures, prompt NDC issuance, and verified ownership.
           </p>
         </div>
         <div class="overview-feature">
           <div class="overview-feature__icon">📍</div>
           <h3 class="overview-feature__title">Unrivaled Strategic Location</h3>
           <p class="overview-feature__text">
-            Directly connected to Main Sharaqpur Road and M2 Motorway, offering instant connectivity to all Lahore centers.
+            Directly linked to Lahore Ring Road (Phase 6 Interchange), Bedian Road, and Barki Road — 10 minutes from the airport.
           </p>
         </div>
         <div class="overview-feature">
           <div class="overview-feature__icon">📈</div>
-          <h3 class="overview-feature__title">Exponential Capital Growth</h3>
+          <h3 class="overview-feature__title">Blue-Chip Capital Value</h3>
           <p class="overview-feature__text">
-            Consistently delivering high capital appreciation and strong rental yields due to rapid western Lahore expansion.
+            Consistently leading Lahore’s elite luxury property market with top capital appreciation and lucrative commercial rental yields.
           </p>
         </div>
       </div>
@@ -325,7 +338,7 @@ const faqs = [
           <span class="eyebrow">Prime Lahore Location</span>
           <h2 class="location-info__title">Connected to Everything That Matters</h2>
           <p class="location-info__text lead">
-            Situated on <strong>Main Sharaqpur Road</strong>, Al Rehman Garden Phase 2 provides frictionless travel to downtown Lahore, Thokar Niaz Baig, civil courts, and the international airport via the M-2 Motorway and Lahore Ring Road.
+            Situated on <strong>Main Boulevard</strong>, DHA Phase 6 provides frictionless travel to downtown Lahore, Allama Iqbal Airport, PKLI, and Gulberg via the Lahore Ring Road.
           </p>
 
           <div class="location-matrix">
@@ -345,10 +358,10 @@ const faqs = [
 
           <div class="location-actions">
             <Button href="/map" variant="primary" size="md">
-              Explore Interactive Society Map
+              Explore Interactive Sector Map
             </Button>
             <a
-              href="https://maps.google.com/?q=Al+Rehman+Garden+Phase+2+Lahore"
+              href="https://maps.google.com/?q=DHA+Phase+6+Lahore"
               target="_blank"
               rel="noopener noreferrer"
               class="btn btn--outline btn--md"
@@ -365,26 +378,26 @@ const faqs = [
               <div class="location-card__pin-badge">
                 <span class="location-card__pin-icon">📍</span>
                 <div>
-                  <strong>Al Rehman Garden Phase 2</strong>
-                  <span>Main Sharaqpur Road, Lahore</span>
+                  <strong>DHA Phase 6 Lahore</strong>
+                  <span>Main Boulevard, Phase 6, DHA Lahore</span>
                 </div>
               </div>
               <div class="location-card__coordinates">
-                31.5768° N, 74.2254° E • Near M2 Faizpur Interchange
+                31.4682° N, 74.4354° E • Near Ring Road Interchange
               </div>
             </div>
             <div class="location-card__info-strip">
               <div class="location-card__stat">
                 <span class="location-card__stat-val">2 Min</span>
-                <span class="location-card__stat-lbl">M2 Motorway</span>
+                <span class="location-card__stat-lbl">Ring Road</span>
               </div>
               <div class="location-card__stat">
                 <span class="location-card__stat-val">10 Min</span>
-                <span class="location-card__stat-lbl">Mall Road</span>
+                <span class="location-card__stat-lbl">Airport</span>
               </div>
               <div class="location-card__stat">
-                <span class="location-card__stat-val">5 Min</span>
-                <span class="location-card__stat-lbl">Ring Road</span>
+                <span class="location-card__stat-val">2 Min</span>
+                <span class="location-card__stat-lbl">Defence Raya</span>
               </div>
             </div>
           </div>
@@ -452,7 +465,7 @@ const faqs = [
 
       <!-- Property Cards Grid -->
       <div class="properties-grid">
-        {featuredProperties.map((prop) => (
+        {featuredProperties.map((prop, index) => (
           <PropertyCard
             title={prop.title}
             slug={prop.slug}
@@ -466,7 +479,7 @@ const faqs = [
             verificationStatus={prop.verificationStatus}
             availabilityStatus={prop.availabilityStatus}
             lastVerifiedDate={prop.lastVerifiedDate}
-            isFeatured={prop.isFeatured}
+            isFeatured={index === 0 || prop.isFeatured}
           />
         ))}
       </div>
@@ -494,10 +507,10 @@ const faqs = [
     <div class="container">
       <div class="investment-grid">
         <div class="investment-content">
-          <span class="eyebrow eyebrow--dark">High-ROI Real Estate</span>
-          <h2 class="investment-title">Why Smart Investors Choose Al Rehman Garden Phase 2</h2>
+          <span class="eyebrow eyebrow--dark">High-Yield Real Estate</span>
+          <h2 class="investment-title">Why Smart Investors Choose DHA Phase 6 Lahore</h2>
           <p class="investment-lead lead">
-            Lahore's urban growth is expanding aggressively toward the Western M2 corridor. Al Rehman Garden Phase 2 stands out as the highest-yielding asset class with guaranteed infrastructure, LDA compliance, and rapid population density.
+            DHA Phase 6 represents the gold standard of Lahore's premium real estate. With the 18-hole championship Defence Raya Golf Resort, bustling CCA broadways, and complete Ring Road connectivity, it commands Pakistan's highest capital security and rental yields.
           </p>
 
           <div class="investment-points">
@@ -505,21 +518,21 @@ const faqs = [
               <span class="investment-point__badge">01</span>
               <div>
                 <h3 class="investment-point__title">High Capital Appreciation</h3>
-                <p class="investment-point__desc">Historical values have appreciated over 35-45% across developed sectors over the last 36 months.</p>
+                <p class="investment-point__desc">Consistently outperforming broader markets with sustained demand for 1 Kanal, 2 Kanal, and commercial plots.</p>
               </div>
             </div>
             <div class="investment-point">
               <span class="investment-point__badge">02</span>
               <div>
-                <h3 class="investment-point__title">Instant Rental Returns</h3>
-                <p class="investment-point__desc">Ready-to-build possession lets you construct rental homes or commercial retail plazas immediately.</p>
+                <h3 class="investment-point__title">Lucrative Rental Returns</h3>
+                <p class="investment-point__desc">Designer houses rent for PKR 350,000 to PKR 1,200,000/month, while commercial Broadway plazas deliver top corporate rental yields.</p>
               </div>
             </div>
             <div class="investment-point">
               <span class="investment-point__badge">03</span>
               <div>
-                <h3 class="investment-point__title">Safe & Clear Registration</h3>
-                <p class="investment-point__desc">Clear title allotment without litigation risks or delayed infrastructure promises.</p>
+                <h3 class="investment-point__title">DHA Lahore Legal Guarantee</h3>
+                <p class="investment-point__desc">Clear title allotment, transparent NDC verification, and hassle-free transfer procedures at the DHA Lahore Main Office.</p>
               </div>
             </div>
           </div>
@@ -541,15 +554,15 @@ const faqs = [
 
         <div class="investment-stat-box">
           <div class="stat-highlight-card">
-            <div class="stat-highlight-card__badge">ARG Phase 2 ROI Index</div>
-            <div class="stat-highlight-card__big-stat">+40%</div>
+            <div class="stat-highlight-card__badge">DHA Phase 6 ROI Index</div>
+            <div class="stat-highlight-card__big-stat">+38%</div>
             <div class="stat-highlight-card__sub">Average 3-Year Capital Gain</div>
             <hr class="stat-highlight-card__hr" />
             <ul class="stat-highlight-card__list">
-              <li><span>Plot Possession:</span> <strong>Immediate on Cash</strong></li>
-              <li><span>Installment Duration:</span> <strong>3 to 5 Years</strong></li>
-              <li><span>Commercial Returns:</span> <strong>8 - 12% Annual Yield</strong></li>
-              <li><span>Transfer Office:</span> <strong>On-Site Verified</strong></li>
+              <li><span>Plot Possession:</span> <strong>100% On-Ground</strong></li>
+              <li><span>Prime Sectors:</span> <strong>A, B, C, D, E, F, H, J</strong></li>
+              <li><span>Commercial Yields:</span> <strong>7 - 10% Annual Yield</strong></li>
+              <li><span>Transfer Office:</span> <strong>DHA Lahore Verified</strong></li>
             </ul>
           </div>
         </div>
@@ -561,37 +574,37 @@ const faqs = [
   <!-- ══════════════════════════════════════════════════════════════════════════
        SECTION: FEATURED PROPERTY CONSULTANT & ADVISORY
        ══════════════════════════════════════════════════════════════════════════ -->
-  <section class="section" style="background: #090B20; border-top: 1px solid rgba(212,175,55,0.25); border-bottom: 1px solid rgba(212,175,55,0.25); padding: 60px 0;">
+  <section class="section advisor-duplicate" hidden>
     <div class="container">
       <div style="max-width: 1000px; margin: 0 auto; background: #15172D; border: 1px solid rgba(212,175,55,0.3); border-radius: var(--radius-2xl); padding: 40px; display: grid; grid-template-columns: 280px 1fr; gap: 40px; align-items: center; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
         <!-- Consultant Portrait -->
         <div style="text-align: center;">
           <div style="position: relative; display: inline-block; width: 200px; height: 200px; border-radius: 50%; overflow: hidden; border: 3px solid #D4AF37; box-shadow: 0 0 25px rgba(212,175,55,0.3); margin-bottom: 16px;">
-            <img src="/images/dealers/ahmad-huzaifah.png" alt="Ahmad Huzaifah - Al Rehman Garden Phase 2 Property Consultant" style="width: 100%; height: 100%; object-fit: cover;" />
+            <img src="/images/dealers/ahmad-huzaifah.png" alt="Ahmad Huzaifah - DHA Phase 6 Property Specialist" style="width: 100%; height: 100%; object-fit: cover;" />
           </div>
           <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(212,175,55,0.15); border: 1px solid #D4AF37; color: #F3D375; padding: 4px 14px; border-radius: 999px; font-size: 12px; font-weight: 700;">
-            <span>★</span> Verified Consultant
+            <span>★</span> Verified Specialist
           </div>
         </div>
 
         <!-- Consultant Info & Direct Actions -->
         <div>
-          <span style="color: #D4AF37; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; display: block; margin-bottom: 8px;">Direct Society Advisory</span>
+          <span style="color: #D4AF37; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; display: block; margin-bottom: 8px;">Direct Advisory Desk</span>
           <h3 style="font-size: 28px; color: #FFFFFF; margin: 0 0 6px 0; font-weight: 800;">Ahmad Huzaifah</h3>
-          <p style="color: #F3D375; font-size: 15px; font-weight: 600; margin: 0 0 16px 0;">Senior Property Specialist &amp; Society Consultant</p>
+          <p style="color: #F3D375; font-size: 15px; font-weight: 600; margin: 0 0 16px 0;">Senior Property Specialist &amp; DHA Consultant</p>
           <p style="color: #94A3B8; font-size: 14px; line-height: 1.6; margin-bottom: 24px;">
-            Providing certified on-ground plot verification, direct registry title transfers, live installment booking assistance, and bespoke investment portfolio management for Al Rehman Garden Phase 2 Lahore.
+            Providing certified on-ground plot verification, direct NDC transfers, Defence Raya golf property advisory, and bespoke investment portfolio management for DHA Phase 6 Lahore.
           </p>
 
           <div style="display: flex; flex-wrap: wrap; gap: 14px; align-items: center;">
-            <a href="https://wa.me/923257800001?text=Hello%20Ahmad%20Huzaifah!%20I%20need%20property%20consultation%20for%20Al%20Rehman%20Garden%20Phase%202." target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp" style="padding: 12px 24px; font-weight: 700;">
+            <a href="https://wa.me/923257800001?text=Hello%20Ahmad%20Huzaifah!%20I%20need%20property%20consultation%20for%20DHA%20Phase%206%20Lahore." target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp" style="padding: 12px 24px; font-weight: 700;">
               <span>💬 WhatsApp: 0325 7800001</span>
             </a>
             <a href="tel:+923257800001" class="btn btn--secondary" style="padding: 12px 20px; font-weight: 700;">
               <span>📞 Direct Call</span>
             </a>
             <a href="/property-dealer" class="btn btn--outline" style="border-color: #D4AF37; color: #F3D375; padding: 12px 20px; font-weight: 700;">
-              <span>View Full Dealer Profile →</span>
+              <span>View Full Profile →</span>
             </a>
           </div>
         </div>
@@ -722,13 +735,34 @@ const faqs = [
   <!-- ══════════════════════════════════════════════════════════════════════════
        SECTION 9: FREQUENTLY ASKED QUESTIONS (FAQ)
        ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="section section--alt homepage-updates" id="development-updates">
+    <div class="container">
+      <div class="section-header-row">
+        <div>
+          <span class="eyebrow">On-Ground Progress</span>
+          <h2 class="section-header__title">Development Updates</h2>
+          <p class="section-header__desc">Follow the latest infrastructure milestones and review dates before planning your visit or investment.</p>
+        </div>
+        <Button href="/development-updates" variant="outline" size="sm">View Full Timeline</Button>
+      </div>
+      <div class="updates-grid">
+        {DEVELOPMENT_UPDATES.slice(0, 3).map((item) => (
+          <article class="update-card">
+            <div class="update-card__visual" aria-hidden="true"><span>{item.year}</span><strong>{item.status}</strong></div>
+            <div class="update-card__body"><span class="badge">{item.category}</span><span class="update-card__date">{item.year} / {item.quarter}</span><h3>{item.title}</h3><p>{item.summary}</p></div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="faqs">
     <div class="container container--narrow">
       <div class="section-header text-center">
         <span class="eyebrow">Buyer Knowledge Base</span>
         <h2 class="section-header__title">Frequently Asked Questions</h2>
         <p class="section-header__desc">
-          Key answers regarding legality, plot possession, utilities, and transfer procedures in Al Rehman Garden Phase 2.
+          Key answers regarding DHA bylaws, plot possession, utilities, and transfer procedures in DHA Phase 6 Lahore.
         </p>
       </div>
 
@@ -756,7 +790,7 @@ const faqs = [
     <div class="container">
       <div class="section-header text-center">
         <span class="eyebrow">Your Trusted Advisor</span>
-        <h2 class="section-header__title">Al Rehman Garden Phase 2 Property Consultant</h2>
+        <h2 class="section-header__title">DHA Phase 6 Lahore Property Specialist</h2>
         <p class="section-header__desc">
           Get verified guidance on plot availability, current market prices, and on-ground property visits.
         </p>
@@ -769,18 +803,18 @@ const faqs = [
             <div class="consultant-avatar-wrap">
               <img
                 src="/images/dealers/ahmad-huzaifah.png"
-                alt="Ahmad Huzaifah — Property Consultant Al Rehman Garden Phase 2 Lahore"
+                alt="Ahmad Huzaifah — Property Specialist DHA Phase 6 Lahore"
                 class="consultant-avatar"
                 loading="lazy"
               />
               <span class="consultant-online-dot" title="Available for inquiry"></span>
             </div>
             <div class="consultant-identity">
-              <span class="consultant-badge">PROPERTY CONSULTANT</span>
+              <span class="consultant-badge">PROPERTY SPECIALIST</span>
               <h3 class="consultant-name">Ahmad Huzaifah</h3>
-              <p class="consultant-location">📍 Al Rehman Garden Phase 2, Lahore</p>
+              <p class="consultant-location">📍 Main Boulevard, DHA Phase 6, Lahore</p>
               <p class="consultant-bio">
-                Helping buyers discover verified residential plots, houses, and investment opportunities in Al Rehman Garden Phase 2 Lahore with transparent and honest property guidance.
+                Helping buyers discover verified residential plots, luxury designer bungalows, and commercial broadway opportunities in DHA Phase 6 Lahore with transparent guidance.
               </p>
               <div class="consultant-contact-row">
                 <a href="tel:+923257800001" class="consultant-contact-chip">
@@ -818,22 +852,22 @@ const faqs = [
           <div class="c-service-item">
             <span class="c-service-icon">🏡</span>
             <h4>Residential Plots</h4>
-            <p>3, 5, 10 Marla & 1 Kanal in all society blocks</p>
+            <p>10 Marla, 1 & 2 Kanal in Sectors A through N</p>
           </div>
           <div class="c-service-item">
             <span class="c-service-icon">🏰</span>
-            <h4>Ready Houses</h4>
-            <p>Double-story luxury designer villas with possession</p>
+            <h4>Ready Bungalows</h4>
+            <p>Architect-designed luxury villas with ready possession</p>
           </div>
           <div class="c-service-item">
             <span class="c-service-icon">📈</span>
-            <h4>Investment Advice</h4>
-            <p>Market analysis, capital trends, high-ROI sectors</p>
+            <h4>Commercial Broadways</h4>
+            <p>4 & 8 Marla high-yield commercial plazas in CCA 1 & 2</p>
           </div>
           <div class="c-service-item">
-            <span class="c-service-icon">🚗</span>
-            <h4>Site Visits</h4>
-            <p>Guided on-ground tours & plot demarcation</p>
+            <span class="c-service-icon">⛳</span>
+            <h4>Defence Raya</h4>
+            <p>Golf-view residences, fairways villas & country club</p>
           </div>
         </div>
       </div>
@@ -847,9 +881,9 @@ const faqs = [
     <div class="container">
       <div class="cta-banner">
         <div class="cta-banner__content">
-          <span class="eyebrow eyebrow--dark">Official Real Estate Helpdesk</span>
+          <span class="eyebrow eyebrow--dark">DHA Phase 6 Property Desk</span>
           <h2 class="cta-banner__title">
-            Ready to Secure Your Plot in Al Rehman Garden Phase 2?
+            Ready to Secure Your Property in DHA Phase 6 Lahore?
           </h2>
           <p class="cta-banner__text lead">
             Connect with authorized property specialists for verified plot availability, rate comparisons, map coordinates, and on-site visits.
@@ -930,6 +964,12 @@ const faqs = [
     align-items: center;
     position: relative;
     z-index: 2;
+  }
+
+  .hero__content,
+  .hero__finder-card,
+  .finder-card__group {
+    min-width: 0;
   }
 
   @media (min-width: 1024px) {
@@ -1057,6 +1097,7 @@ const faqs = [
     color: #FFFFFF;
     border: 1px solid rgba(255, 255, 255, 0.2);
     transition: all var(--transition-fast);
+    min-width: 0;
   }
 
   .finder-card__select:focus {
@@ -2163,5 +2204,207 @@ const faqs = [
     color: #94A3B8;
     margin: 0;
     line-height: 1.5;
+  }
+  .hero__finder-card {
+    background: rgba(255, 255, 255, 0.98);
+    border-color: rgba(212, 175, 55, 0.55);
+    box-shadow: 0 26px 60px -20px rgba(0, 0, 0, 0.58), 0 0 0 1px rgba(255, 255, 255, 0.4);
+  }
+
+  .finder-card__title { color: #0A1128; }
+  .finder-card__subtitle { color: #80620f; }
+  .finder-card__label { color: #334155; }
+  .finder-card__select {
+    background: #FFFFFF;
+    color: #0A1128;
+    border-color: #CBD5E1;
+  }
+  .finder-card__select:hover { border-color: #D4AF37; }
+  .finder-card__footer {
+    border-top-color: #E2E8F0;
+    color: #64748B;
+  }
+
+  @media (min-width: 720px) {
+    .finder-card__form { grid-template-columns: repeat(2, minmax(0, 1fr)); display: grid; }
+    .finder-card__submit { grid-column: 1 / -1; }
+  }
+
+  @media (max-width: 479px) {
+    .finder-card__footer { align-items: flex-start; flex-direction: column; gap: 6px; }
+  }
+
+  /* Shared homepage rhythm: one surface language across every discovery step. */
+  .hero {
+    background:
+      radial-gradient(circle at 78% 18%, rgba(42, 73, 129, 0.54), transparent 35%),
+      radial-gradient(circle at 12% 82%, rgba(212, 175, 55, 0.12), transparent 31%),
+      linear-gradient(120deg, #070d1e 0%, #0b1732 54%, #10254b 100%);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 520px;
+    height: 520px;
+    right: -180px;
+    bottom: -310px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 50%;
+    box-shadow: 0 0 0 72px rgba(212, 175, 55, 0.025), 0 0 0 144px rgba(212, 175, 55, 0.018);
+    pointer-events: none;
+  }
+
+  .trust-strip {
+    background: #0A1128;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.28);
+  }
+
+  .trust-strip__intro {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0;
+    padding-top: var(--space-5);
+  }
+
+  .trust-strip__intro strong {
+    color: #FFFFFF;
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+  }
+
+  .section-header__title,
+  .location-info__title,
+  .investment-title {
+    letter-spacing: -0.025em;
+  }
+
+  #overview,
+  #blocks,
+  #amenities,
+  #faqs {
+    background: #fbfaf7;
+  }
+
+  #location,
+  #properties-preview,
+  #payment-plans,
+  #development-updates,
+  #property-consultant {
+    background: linear-gradient(180deg, #eef3f8 0%, #f5f7fa 100%);
+    border-block: 1px solid #dfe5ec;
+  }
+
+  .section-header__desc,
+  .location-info__text,
+  .investment-lead {
+    max-width: 62ch;
+  }
+
+  .metric-card,
+  .overview-feature,
+  .amenity-card,
+  .plan-card,
+  .update-card {
+    border-radius: var(--radius-xl);
+    transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .metric-card:hover,
+  .overview-feature:hover,
+  .amenity-card:hover,
+  .plan-card:hover,
+  .update-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-gold);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .homepage-updates {
+    border-top: 1px solid var(--border-light);
+  }
+
+  .updates-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+
+  .update-card {
+    overflow: hidden;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-card);
+  }
+
+  .update-card img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1.6;
+    object-fit: cover;
+  }
+
+  .update-card__visual {
+    min-height: 160px;
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: var(--space-1);
+    color: #fff;
+    background:
+      linear-gradient(150deg, rgba(212, 175, 55, 0.16), transparent 42%),
+      repeating-linear-gradient(135deg, transparent 0 18px, rgba(255, 255, 255, 0.025) 18px 19px),
+      #0b1732;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.28);
+  }
+
+  .update-card__visual span {
+    color: #f3d375;
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1;
+  }
+
+  .update-card__visual strong {
+    color: #cbd5e1;
+    font-size: var(--text-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 1024px) {
+    .properties-grid > :global(.property-card:first-child) {
+      grid-column: span 2;
+    }
+  }
+
+  .update-card__body { padding: var(--space-5); }
+  .update-card__date { display: block; margin-top: var(--space-2); color: var(--text-muted); font-size: var(--text-xs); }
+  .update-card h3 { margin: var(--space-2) 0; font-size: var(--text-lg); }
+  .update-card p { margin: 0; color: var(--text-secondary); font-size: var(--text-sm); line-height: var(--leading-relaxed); }
+
+  @media (max-width: 767px) {
+    .hero { padding: var(--space-10) 0 var(--space-16); }
+    .hero__container { width: 100%; gap: var(--space-8); }
+    .hero__title { font-size: clamp(2.25rem, 11vw, 3rem); line-height: 1.03; }
+    .hero__title br { display: none; }
+    .hero__title .text-gradient-gold { display: block; }
+    .hero__lead { font-size: 1rem; line-height: 1.65; }
+    .hero .eyebrow { max-width: 100%; font-size: 10px; letter-spacing: 0.1em; }
+    .hero__actions { gap: var(--space-2-5); }
+    .hero__actions > :global(.btn) { width: 100%; justify-content: center; }
+    .hero__finder-card { padding: var(--space-5); }
+    .finder-card__form { display: grid; grid-template-columns: minmax(0, 1fr); }
+    .finder-card__select { width: 100%; max-width: 100%; }
+    .section { padding: var(--space-12) 0; }
+    .section-header { margin-bottom: var(--space-8); }
+    .updates-grid { grid-template-columns: 1fr; gap: var(--space-4); }
+    .trust-strip__intro { padding-top: var(--space-6); }
+    .hero__highlights { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .hero__highlight-pill { justify-content: center; text-align: center; }
+    .metrics-grid { gap: var(--space-3); }
+    .metric-card { padding: var(--space-4); }
   }
 </style>

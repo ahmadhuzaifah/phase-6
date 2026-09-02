@@ -5,11 +5,11 @@
  */
 
 import { defineCollection } from 'astro:content';
-import { z } from 'astro:schema';
+import { z } from 'astro/zod';
 
 /* ── Properties Collection ──────────────────────────────────────────────────── */
 const properties = defineCollection({
-  type: 'content',
+  loader: { name: 'properties', async load() {} },
   schema: z.object({
     id: z.string().min(1, 'Property ID is required for verification tracking'),
     title: z.string().min(5, 'Title must be descriptive (min 5 chars)'),
@@ -73,7 +73,9 @@ const properties = defineCollection({
       )
       .optional(),
     source: z.string().min(1, 'Source name is required for legal transparency'),
-    sourceUrl: z.string().url('Source URL must be a valid link').optional(),
+    sourceUrl: z.url().optional(),
+    sourceName: z.string().optional(),
+    sourceURL: z.url().optional(),
     sourceType: z
       .enum(['portal-extraction', 'official-developer', 'authorized-dealer', 'direct-allotment'])
       .default('portal-extraction'),
@@ -87,7 +89,7 @@ const properties = defineCollection({
       agencyName: z.string().optional(),
       phone: z.string().min(7, 'Valid contact phone is required'),
       whatsapp: z.string().min(7, 'Valid WhatsApp number is required'),
-      email: z.string().email().optional(),
+      email: z.email().optional(),
       officeAddress: z.string().optional(),
       verifiedDealer: z.boolean().default(false),
     }),
@@ -98,7 +100,7 @@ const properties = defineCollection({
 
 /* ── Blocks Collection ──────────────────────────────────────────────────────── */
 const blocks = defineCollection({
-  type: 'content',
+  loader: { name: 'blocks', async load() {} },
   schema: z.object({
     name: z.string().min(1),
     slug: z.string().min(1),
@@ -118,7 +120,7 @@ const blocks = defineCollection({
 
 /* ── Places & Nearby Amenities Collection ───────────────────────────────────── */
 const places = defineCollection({
-  type: 'content',
+  loader: { name: 'places', async load() {} },
   schema: z.object({
     name: z.string().min(1),
     slug: z.string().min(1),
@@ -154,7 +156,7 @@ const places = defineCollection({
 
 /* ── Property Dealers & Agencies Collection ─────────────────────────────────── */
 const dealers = defineCollection({
-  type: 'content',
+  loader: { name: 'dealers', async load() {} },
   schema: z.object({
     name: z.string().min(2, 'Dealer name is required'),
     agencyName: z.string().min(2, 'Agency name is required'),
@@ -163,7 +165,7 @@ const dealers = defineCollection({
     isVerified: z.boolean().default(true),
     phone: z.string().min(7),
     whatsapp: z.string().min(7),
-    email: z.string().email().optional(),
+    email: z.email().optional(),
     officeAddress: z.string().min(5),
     experienceYears: z.number().nonnegative().default(5),
     specializationBlocks: z.array(z.string()).default([]),
@@ -177,7 +179,7 @@ const dealers = defineCollection({
 
 /* ── News & Market Updates Collection ───────────────────────────────────────── */
 const news = defineCollection({
-  type: 'content',
+  loader: { name: 'news', async load() {} },
   schema: z.object({
     title: z.string().min(5),
     slug: z.string().min(2),

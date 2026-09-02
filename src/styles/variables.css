@@ -208,4 +208,30 @@
   --z-popover: 600;
   --z-tooltip: 700;
   --z-toast: 800;
+
+  /* ── Surface / Card System ──────────────────────────────────────────────── */
+  --surface-card: #FFFFFF;
+  --surface-card-hover: #FAFBFD;
+  --surface-elevated: #FFFFFF;
+  --surface-dark-card: #142147;
+  --surface-dark-card-hover: #1A2A56;
+
+  /* ── Premium Card Shadows ──────────────────────────────────────────────── */
+  --shadow-card-premium: 0 1px 3px rgba(15,23,42,0.06), 0 6px 16px -2px rgba(15,23,42,0.08);
+  --shadow-card-premium-hover: 0 12px 28px -6px rgba(15,23,42,0.14), 0 0 0 1px rgba(197,155,39,0.22);
+  --shadow-header: 0 1px 3px rgba(15,23,42,0.04), 0 4px 12px rgba(15,23,42,0.06);
+  --shadow-header-scrolled: 0 4px 20px -2px rgba(15,23,42,0.10), 0 0 0 1px rgba(212,175,55,0.08);
+
+  /* ── Image Aspect Ratios ───────────────────────────────────────────────── */
+  --image-ratio-landscape: 16 / 10;
+  --image-ratio-card: 4 / 3;
+  --image-ratio-hero: 21 / 9;
+
+  /* ── Gold Glow Effects ─────────────────────────────────────────────────── */
+  --gold-glow-ring: 0 0 0 3px rgba(212,175,55,0.18);
+  --gold-glow-ring-strong: 0 0 0 4px rgba(212,175,55,0.30);
+
+  /* ── Hover Transition (Unified) ────────────────────────────────────────── */
+  --transition-hover: 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  --transition-lift: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 280ms cubic-bezier(0.22, 1, 0.36, 1);
 }

@@ -1,0 +1,31 @@
+---
+const measurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
+---
+
+{measurementId && (
+  <>
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}></script>
+    <script is:inline define:vars={{ measurementId }}>
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { window.dataLayer.push(arguments); };
+      window.gtag('js', new Date());
+      window.gtag('config', measurementId, { anonymize_ip: true });
+
+      const track = (name, params) => window.gtag('event', name, params || {});
+      document.addEventListener('click', (event) => {
+        const link = event.target.closest('a');
+        if (!link) return;
+        const href = link.getAttribute('href') || '';
+        if (href.startsWith('tel:')) track('phone_click', { link_url: href });
+        if (href.includes('wa.me') || href.includes('whatsapp')) track('whatsapp_click', { link_url: href });
+        if (href.includes('google.com/maps')) track('map_opened', { link_url: href });
+      });
+      document.addEventListener('submit', (event) => {
+        const form = event.target;
+        if (form.matches('form')) track('inquiry_submitted', { form_id: form.id || 'form' });
+      });
+      if (location.pathname.startsWith('/properties/')) track('property_view', { page_path: location.pathname });
+      if (location.pathname === '/search') track('search_usage', { page_path: location.pathname });
+    </script>
+  </>
+)}

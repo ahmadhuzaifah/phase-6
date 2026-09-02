@@ -203,7 +203,7 @@ const breadcrumbsSchema = {
               </div>
             ) : (
               <div class="block-empty-card">
-                <p>New verified listings for {block.name} are being added. Contact our official desk for off-market inventory.</p>
+                <p>New verified listings for {block.name} are being added. Contact our property information desk for off-market inventory.</p>
                 <a
                   href={`https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hello! Please share current plot rates and available inventory for ${block.name}.`)}`}
                   target="_blank"
@@ -257,10 +257,10 @@ const breadcrumbsSchema = {
 
 <style>
   .block-detail-header {
-    background: radial-gradient(circle at 80% 20%, #16244F 0%, #0A1128 75%);
+    background: radial-gradient(circle at 80% 20%, #1A2D5C 0%, #0A1128 72%);
     color: var(--text-inverse);
     padding: var(--space-12) 0;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    border-bottom: 1px solid rgba(243, 211, 117, 0.18);
   }
 
   .block-detail-header__title {
@@ -283,11 +283,11 @@ const breadcrumbsSchema = {
   .block-stat-pill {
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(212, 175, 55, 0.35);
+    border: 1px solid rgba(243, 211, 117, 0.28);
     padding: var(--space-2) var(--space-4);
     border-radius: var(--radius-full);
     font-size: var(--text-xs);
-    color: var(--color-neutral-200);
+    color: rgba(255, 255, 255, 0.80);
     display: inline-flex;
     align-items: center;
     gap: var(--space-2);
@@ -310,19 +310,21 @@ const breadcrumbsSchema = {
   }
 
   .block-info-card {
-    background: var(--bg-primary);
-    border: 1px solid var(--border-light);
+    background: linear-gradient(180deg, rgba(10, 17, 40, 0.96) 0%, rgba(8, 14, 30, 0.98) 100%);
+    border: 1px solid rgba(243, 211, 117, 0.14);
     border-radius: var(--radius-xl);
     padding: var(--space-6) var(--space-8);
-    box-shadow: var(--shadow-card);
+    box-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.55);
     margin-bottom: var(--space-8);
+    color: #FFFFFF;
   }
 
   .block-info-card__title {
     font-size: var(--text-lg);
     margin: 0 0 var(--space-5);
     padding-bottom: var(--space-2);
-    border-bottom: 1px solid var(--border-light);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    color: #FFFFFF;
   }
 
   .block-specs-grid {
@@ -342,10 +344,10 @@ const breadcrumbsSchema = {
     display: flex;
     align-items: center;
     gap: var(--space-3);
-    background: var(--color-neutral-50);
+    background: rgba(255, 255, 255, 0.04);
     padding: var(--space-3) var(--space-4);
     border-radius: var(--radius-md);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .block-spec-icon {
@@ -356,26 +358,26 @@ const breadcrumbsSchema = {
     display: block;
     font-size: 10px;
     font-weight: var(--font-bold);
-    color: var(--text-muted);
+    color: rgba(255, 255, 255, 0.56);
     text-transform: uppercase;
   }
 
   .block-spec-item strong {
     display: block;
     font-size: var(--text-sm);
-    color: var(--text-primary);
+    color: #FFFFFF;
   }
 
   .block-features-wrap {
     padding-top: var(--space-4);
-    border-top: 1px solid var(--border-light);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .block-features-title {
     font-size: var(--text-sm);
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.68);
     margin-bottom: var(--space-3);
   }
 
@@ -399,7 +401,7 @@ const breadcrumbsSchema = {
     align-items: center;
     gap: var(--space-2);
     font-size: var(--text-xs);
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.76);
   }
 
   .block-feature-check {
@@ -420,31 +422,34 @@ const breadcrumbsSchema = {
   }
 
   .block-empty-card {
-    background: var(--bg-primary);
-    border: 1px solid var(--border-light);
+    background: linear-gradient(180deg, rgba(10, 17, 40, 0.96) 0%, rgba(8, 14, 30, 0.98) 100%);
+    border: 1px solid rgba(243, 211, 117, 0.14);
     border-radius: var(--radius-xl);
     padding: var(--space-8);
     text-align: center;
-    box-shadow: var(--shadow-card);
+    box-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.55);
+    color: #FFFFFF;
   }
 
   .block-empty-card p {
     font-size: var(--text-sm);
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.76);
     margin-bottom: var(--space-4);
   }
 
   .block-faq-card {
-    background: var(--bg-primary);
-    border: 1px solid var(--border-light);
+    background: linear-gradient(180deg, rgba(10, 17, 40, 0.96) 0%, rgba(8, 14, 30, 0.98) 100%);
+    border: 1px solid rgba(243, 211, 117, 0.14);
     border-radius: var(--radius-xl);
     padding: var(--space-6) var(--space-8);
-    box-shadow: var(--shadow-card);
+    box-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.55);
+    color: #FFFFFF;
   }
 
   .block-faq-card__title {
     font-size: var(--text-lg);
     margin: 0 0 var(--space-4);
+    color: #FFFFFF;
   }
 
   .faq-list {
@@ -454,44 +459,46 @@ const breadcrumbsSchema = {
   }
 
   .faq-item {
-    background: var(--color-neutral-50);
-    border: 1px solid var(--border-subtle);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: var(--radius-md);
     padding: var(--space-4);
   }
 
   .faq-item__q {
     font-size: var(--text-sm);
-    color: var(--text-primary);
+    color: #FFFFFF;
     margin: 0 0 var(--space-1);
   }
 
   .faq-item__a {
     font-size: var(--text-xs);
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.76);
     margin: 0;
     line-height: var(--leading-relaxed);
   }
 
   /* Sidebar */
   .block-cta-card {
-    background: var(--bg-primary);
-    border: 1.5px solid var(--border-gold);
+    background: linear-gradient(180deg, rgba(10, 17, 40, 0.98) 0%, rgba(8, 14, 30, 1) 100%);
+    border: 1.5px solid rgba(243, 211, 117, 0.22);
     border-radius: var(--radius-2xl);
     padding: var(--space-6);
-    box-shadow: var(--shadow-xl);
+    box-shadow: 0 22px 44px -28px rgba(0, 0, 0, 0.65);
     position: sticky;
     top: 96px;
+    color: #FFFFFF;
   }
 
   .block-cta-card__title {
     font-size: var(--text-lg);
     margin: 0 0 var(--space-2);
+    color: #FFFFFF;
   }
 
   .block-cta-card__text {
     font-size: var(--text-xs);
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.74);
     margin-bottom: var(--space-5);
   }
 </style>

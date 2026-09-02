@@ -12,6 +12,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
+    "seo:audit": "node scripts/seo-audit.mjs",
     "lint": "eslint .",
     "format": "prettier --write ."
   },

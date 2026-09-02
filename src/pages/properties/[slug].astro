@@ -12,6 +12,7 @@ import PropertyCard from '@components/property/PropertyCard.astro';
 import { SITE } from '@data/site';
 import { CONTACTS } from '@data/contacts';
 import propertiesData from '@data/properties-import.json';
+import { findSimilarProperties, isPublishableProperty } from '@utils/propertyAudit';
 
 export async function getStaticPaths() {
   return propertiesData.map((property) => ({
@@ -45,9 +46,7 @@ const pricePerMarla =
       : null;
 
 // Related properties (same block or other featured)
-const relatedProperties = propertiesData
-  .filter((p) => p.slug !== property.slug)
-  .slice(0, 3);
+const relatedProperties = findSimilarProperties(property, propertiesData.filter(isPublishableProperty), 3);
 
 // Dynamic WhatsApp message
 const whatsappMessage = encodeURIComponent(
@@ -200,7 +199,7 @@ const breadcrumbsSchema = {
                 loading="eager"
               />
               <!-- Official Opacity Watermark -->
-              <PropertyWatermark position="bottom-right" opacity={0.85} />
+              <PropertyWatermark position="bottom-right" opacity={0.35} />
             </div>
 
             <!-- Thumbnail Selector Strip -->
@@ -471,6 +470,8 @@ const breadcrumbsSchema = {
                 verificationStatus={rel.verificationStatus}
                 availabilityStatus={rel.availabilityStatus}
                 lastVerifiedDate={rel.lastVerifiedDate}
+                sourceName={rel.source}
+                sourceURL={rel.sourceUrl}
                 isFeatured={rel.isFeatured}
               />
             ))}
@@ -500,9 +501,9 @@ const breadcrumbsSchema = {
 <style>
   /* ── Breadcrumbs ────────────────────────────────────────────────── */
   .prop-breadcrumbs {
-    background-color: var(--color-neutral-100);
+    background: linear-gradient(180deg, #0A1128 0%, #0C142A 100%);
     padding: var(--space-3) 0;
-    border-bottom: 1px solid var(--border-light);
+    border-bottom: 1px solid rgba(243, 211, 117, 0.14);
   }
 
   .breadcrumbs__nav {
@@ -513,20 +514,20 @@ const breadcrumbsSchema = {
   }
 
   .breadcrumbs__link {
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.68);
     text-decoration: none;
   }
 
   .breadcrumbs__link:hover {
-    color: var(--color-primary-600);
+    color: #F3D375;
   }
 
   .breadcrumbs__sep {
-    color: var(--text-muted);
+    color: rgba(255, 255, 255, 0.28);
   }
 
   .breadcrumbs__current {
-    color: var(--color-secondary-900);
+    color: #FFFFFF;
     font-weight: var(--font-bold);
   }
 
@@ -541,7 +542,7 @@ const breadcrumbsSchema = {
     gap: var(--space-6);
     margin-bottom: var(--space-8);
     padding-bottom: var(--space-8);
-    border-bottom: 1px solid var(--border-light);
+    border-bottom: 1px solid rgba(243, 211, 117, 0.14);
   }
 
   @media (min-width: 1024px) {
@@ -580,21 +581,21 @@ const breadcrumbsSchema = {
   .prop-header__tag {
     font-size: 11px;
     font-weight: var(--font-bold);
-    background-color: var(--color-primary-50);
-    color: var(--color-primary-800);
+    background-color: rgba(197, 155, 39, 0.12);
+    color: #F3D375;
     padding: 3px 10px;
     border-radius: var(--radius-xs);
-    border: 1px solid var(--border-gold);
+    border: 1px solid rgba(243, 211, 117, 0.18);
   }
 
   .prop-header__verified {
     font-size: 11px;
     font-weight: var(--font-bold);
-    color: #059669;
-    background-color: #ECFDF5;
+    color: #9CF3C8;
+    background-color: rgba(16, 185, 129, 0.12);
     padding: 3px 10px;
     border-radius: var(--radius-xs);
-    border: 1px solid #A7F3D0;
+    border: 1px solid rgba(167, 243, 208, 0.22);
   }
 
   .prop-header__title {
@@ -612,14 +613,16 @@ const breadcrumbsSchema = {
   }
 
   .prop-header__price-card {
-    background: var(--bg-secondary);
-    border: 1.5px solid var(--border-gold);
+    background: linear-gradient(180deg, rgba(10, 17, 40, 0.96) 0%, rgba(8, 14, 30, 0.98) 100%);
+    border: 1.5px solid rgba(243, 211, 117, 0.18);
     border-radius: var(--radius-xl);
     padding: var(--space-6);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     flex-shrink: 0;
+    color: #FFFFFF;
+    box-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.55);
   }
 
   .prop-header__price-label {
@@ -627,12 +630,12 @@ const breadcrumbsSchema = {
     font-weight: var(--font-bold);
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: var(--text-muted);
+    color: rgba(255, 255, 255, 0.58);
   }
 
   .prop-header__price-unit {
     font-size: var(--text-xs);
-    color: var(--text-tertiary);
+    color: rgba(255, 255, 255, 0.68);
     margin-top: var(--space-1);
   }
 
@@ -682,12 +685,13 @@ const breadcrumbsSchema = {
 
   /* ── Sections ───────────────────────────────────────────────────── */
   .prop-section {
-    background: var(--bg-primary);
-    border: 1px solid var(--border-light);
+    background: linear-gradient(180deg, rgba(10, 17, 40, 0.96) 0%, rgba(8, 14, 30, 0.98) 100%);
+    border: 1px solid rgba(243, 211, 117, 0.14);
     border-radius: var(--radius-xl);
     padding: var(--space-6) var(--space-8);
     margin-bottom: var(--space-6);
-    box-shadow: var(--shadow-card);
+    box-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.55);
+    color: #FFFFFF;
   }
 
   .prop-section__title {
@@ -696,7 +700,8 @@ const breadcrumbsSchema = {
     font-weight: var(--font-bold);
     margin: 0 0 var(--space-5);
     padding-bottom: var(--space-2);
-    border-bottom: 1px solid var(--border-light);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    color: #FFFFFF;
   }
 
   /* Facts Grid */
@@ -716,10 +721,10 @@ const breadcrumbsSchema = {
     display: flex;
     align-items: center;
     gap: var(--space-3);
-    background: var(--color-neutral-50);
+    background: rgba(255, 255, 255, 0.04);
     padding: var(--space-3) var(--space-4);
     border-radius: var(--radius-md);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .prop-fact-icon {
@@ -730,20 +735,20 @@ const breadcrumbsSchema = {
     display: block;
     font-size: 10px;
     font-weight: var(--font-bold);
-    color: var(--text-muted);
+    color: rgba(255, 255, 255, 0.56);
     text-transform: uppercase;
   }
 
   .prop-fact-val {
     display: block;
     font-size: var(--text-sm);
-    color: var(--text-primary);
+    color: #FFFFFF;
   }
 
   .prop-description p {
     font-size: var(--text-base);
     line-height: var(--leading-relaxed);
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.78);
   }
 
   /* Features */
@@ -767,7 +772,7 @@ const breadcrumbsSchema = {
     align-items: center;
     gap: var(--space-2-5);
     font-size: var(--text-sm);
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.78);
   }
 
   .prop-feature-check {
@@ -777,8 +782,8 @@ const breadcrumbsSchema = {
 
   /* Map Box */
   .prop-map-box {
-    background: var(--color-neutral-50);
-    border: 1px solid var(--border-light);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: var(--radius-lg);
     padding: var(--space-5) var(--space-6);
     display: flex;
@@ -798,18 +803,18 @@ const breadcrumbsSchema = {
   .prop-map-box__info strong {
     display: block;
     font-size: var(--text-base);
-    color: var(--text-primary);
+    color: #FFFFFF;
   }
 
   .prop-map-box__info span {
     display: block;
     font-size: var(--text-xs);
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.72);
   }
 
   .prop-map-box__coords {
     font-family: var(--font-mono);
-    color: var(--text-muted) !important;
+    color: rgba(255, 255, 255, 0.52) !important;
     margin-top: var(--space-1);
   }
 
@@ -827,8 +832,8 @@ const breadcrumbsSchema = {
   }
 
   .prop-auth-link {
-    background: var(--color-neutral-50);
-    border: 1px solid var(--border-subtle);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: var(--radius-md);
     padding: var(--space-3);
     text-decoration: none;
@@ -838,27 +843,27 @@ const breadcrumbsSchema = {
   }
 
   .prop-auth-link:hover {
-    background: var(--color-primary-50);
-    border-color: var(--border-gold);
+    background: rgba(243, 211, 117, 0.10);
+    border-color: rgba(243, 211, 117, 0.18);
     transform: translateY(-2px);
   }
 
   .prop-auth-link span {
     font-size: var(--text-xs);
     font-weight: var(--font-bold);
-    color: var(--color-secondary-900);
+    color: #FFFFFF;
     margin-bottom: 2px;
   }
 
   .prop-auth-link small {
     font-size: 10px;
-    color: var(--text-muted);
+    color: rgba(255, 255, 255, 0.58);
   }
 
   /* Legal Notice */
   .prop-legal-notice {
-    background: #FEFCE8;
-    border: 1px solid #FEF08A;
+    background: rgba(197, 155, 39, 0.10);
+    border: 1px solid rgba(243, 211, 117, 0.22);
     border-radius: var(--radius-lg);
     padding: var(--space-4) var(--space-5);
     display: flex;
@@ -875,26 +880,27 @@ const breadcrumbsSchema = {
   .prop-legal-notice__text strong {
     display: block;
     font-size: var(--text-xs);
-    color: #854D0E;
+    color: #F3D375;
     margin-bottom: 2px;
   }
 
   .prop-legal-notice__text p {
     font-size: 11px;
-    color: #713F12;
+    color: rgba(255, 255, 255, 0.74);
     margin: 0;
     line-height: var(--leading-normal);
   }
 
   /* ── Sidebar ────────────────────────────────────────────────────── */
   .prop-contact-card {
-    background: var(--bg-primary);
-    border: 1.5px solid var(--border-gold);
+    background: linear-gradient(180deg, rgba(10, 17, 40, 0.98) 0%, rgba(8, 14, 30, 1) 100%);
+    border: 1.5px solid rgba(243, 211, 117, 0.18);
     border-radius: var(--radius-2xl);
     padding: var(--space-6);
-    box-shadow: var(--shadow-xl);
+    box-shadow: 0 22px 44px -28px rgba(0, 0, 0, 0.65);
     position: sticky;
     top: 96px;
+    color: #FFFFFF;
   }
 
   .prop-contact-card__badge {
@@ -913,11 +919,12 @@ const breadcrumbsSchema = {
     font-family: var(--font-heading);
     font-size: var(--text-xl);
     margin: 0 0 var(--space-2);
+    color: #FFFFFF;
   }
 
   .prop-contact-card__desc {
     font-size: var(--text-xs);
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.72);
     line-height: var(--leading-relaxed);
     margin-bottom: var(--space-5);
   }
@@ -930,7 +937,7 @@ const breadcrumbsSchema = {
 
   .prop-contact-card__hr {
     border: none;
-    border-top: 1px solid var(--border-light);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
     margin: var(--space-5) 0;
   }
 
@@ -944,11 +951,11 @@ const breadcrumbsSchema = {
   .prop-contact-row {
     display: flex;
     justify-content: space-between;
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.72);
   }
 
   .prop-contact-row strong {
-    color: var(--text-primary);
+    color: #FFFFFF;
   }
 
   .prop-live-text {
@@ -960,7 +967,7 @@ const breadcrumbsSchema = {
   .prop-related {
     margin-top: var(--space-16);
     padding-top: var(--space-10);
-    border-top: 1px solid var(--border-light);
+    border-top: 1px solid rgba(243, 211, 117, 0.14);
   }
 
   .prop-related__title {

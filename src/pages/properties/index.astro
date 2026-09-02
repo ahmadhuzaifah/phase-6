@@ -11,6 +11,7 @@ import PropertyCard from '@components/property/PropertyCard.astro';
 import { SITE } from '@data/site';
 import { BLOCKS } from '@data/blocks';
 import propertiesData from '@data/properties-import.json';
+import { isPublishableProperty } from '@utils/propertyAudit';
 
 const collectionSchema = {
   name: `Properties for Sale & Rent in ${SITE.name}`,
@@ -34,6 +35,8 @@ const breadcrumbsSchema = {
     },
   ],
 };
+
+const publishedProperties = propertiesData.filter(isPublishableProperty);
 ---
 
 <PageLayout
@@ -71,11 +74,11 @@ const breadcrumbsSchema = {
             <form class="filter-form" id="directory-filter-form">
               <!-- Search Keyword -->
               <div class="filter-group">
-                <label for="filter-search" class="filter-label">Search Keyword</label>
+                <label for="filter-keyword" class="filter-label">Search Keyword</label>
                 <div class="filter-search-wrap">
                   <input
                     type="text"
-                    id="filter-search"
+                    id="filter-keyword"
                     name="q"
                     placeholder="e.g. 5 Marla, Block A, Corner..."
                     class="filter-input"
@@ -172,7 +175,7 @@ const breadcrumbsSchema = {
           <!-- Active Filter Bar & Results Count -->
           <div class="dir-toolbar">
             <div class="dir-toolbar__count">
-              Showing <strong id="results-count">{propertiesData.length}</strong> Available Properties in Phase 2
+              Showing <strong id="results-count">{publishedProperties.length}</strong> Available Properties in Phase 2
             </div>
 
             <div class="dir-toolbar__sort">
@@ -196,7 +199,7 @@ const breadcrumbsSchema = {
 
           <!-- Properties Grid -->
           <div class="dir-grid" id="properties-grid">
-            {propertiesData.map((prop) => (
+            {publishedProperties.map((prop) => (
               <div
                 class="property-item"
                 data-title={prop.title.toLowerCase()}
@@ -225,6 +228,8 @@ const breadcrumbsSchema = {
                   verificationStatus={prop.verificationStatus}
                   availabilityStatus={prop.availabilityStatus}
                   lastVerifiedDate={prop.lastVerifiedDate}
+                  sourceName={prop.source}
+                  sourceURL={prop.sourceUrl}
                   isFeatured={prop.isFeatured}
                 />
               </div>
@@ -261,7 +266,7 @@ const breadcrumbsSchema = {
     background: radial-gradient(circle at 80% 20%, #16244F 0%, #0A1128 75%);
     color: var(--text-inverse);
     padding: var(--space-12) 0;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    border-bottom: 1px solid rgba(243, 211, 117, 0.18);
   }
 
   .dir-header__title {
@@ -290,13 +295,14 @@ const breadcrumbsSchema = {
 
   /* ── Sidebar Filters ────────────────────────────────────────────── */
   .filter-box {
-    background: var(--bg-primary);
-    border: 1px solid var(--border-light);
+    background: linear-gradient(180deg, rgba(10, 17, 40, 0.96) 0%, rgba(8, 14, 30, 0.98) 100%);
+    border: 1px solid rgba(243, 211, 117, 0.14);
     border-radius: var(--radius-xl);
     padding: var(--space-6);
-    box-shadow: var(--shadow-card);
+    box-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.55);
     position: sticky;
     top: 96px;
+    color: #FFFFFF;
   }
 
   .filter-box__header {
@@ -313,6 +319,7 @@ const breadcrumbsSchema = {
     font-size: var(--text-base);
     font-weight: var(--font-bold);
     margin: 0;
+    color: #FFFFFF;
   }
 
   .filter-box__clear {
@@ -320,7 +327,7 @@ const breadcrumbsSchema = {
     border: none;
     font-size: var(--text-xs);
     font-weight: var(--font-bold);
-    color: var(--color-primary-600);
+    color: #F3D375;
     cursor: pointer;
   }
 
@@ -343,7 +350,7 @@ const breadcrumbsSchema = {
   .filter-label {
     font-size: 11.5px;
     font-weight: var(--font-bold);
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.68);
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
@@ -354,18 +361,18 @@ const breadcrumbsSchema = {
     padding: var(--space-2-5) var(--space-3);
     font-size: var(--text-sm);
     border-radius: var(--radius-md);
-    border: 1px solid var(--border-light);
-    background-color: var(--color-neutral-50);
-    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background-color: rgba(255, 255, 255, 0.04);
+    color: #FFFFFF;
     transition: all var(--transition-fast);
   }
 
   .filter-input:focus,
   .filter-select:focus {
-    border-color: var(--color-primary-500);
+    border-color: rgba(243, 211, 117, 0.35);
     outline: none;
-    background-color: #FFFFFF;
-    box-shadow: 0 0 0 3px rgba(197, 155, 39, 0.15);
+    background-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 3px rgba(197, 155, 39, 0.18);
   }
 
   .filter-group--checkbox {
@@ -378,7 +385,7 @@ const breadcrumbsSchema = {
     gap: var(--space-2);
     font-size: var(--text-xs);
     font-weight: var(--font-bold);
-    color: var(--text-primary);
+    color: #FFFFFF;
     cursor: pointer;
   }
 
@@ -387,11 +394,12 @@ const breadcrumbsSchema = {
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
-    background: var(--bg-primary);
+    background: linear-gradient(180deg, rgba(10, 17, 40, 0.96) 0%, rgba(8, 14, 30, 0.98) 100%);
     padding: var(--space-4) var(--space-6);
     border-radius: var(--radius-lg);
-    border: 1px solid var(--border-light);
+    border: 1px solid rgba(243, 211, 117, 0.14);
     margin-bottom: var(--space-6);
+    color: #FFFFFF;
   }
 
   @media (min-width: 640px) {
@@ -404,11 +412,11 @@ const breadcrumbsSchema = {
 
   .dir-toolbar__count {
     font-size: var(--text-sm);
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.72);
   }
 
   .dir-toolbar__count strong {
-    color: var(--color-primary-700);
+    color: #F3D375;
   }
 
   .dir-toolbar__sort {
@@ -419,7 +427,7 @@ const breadcrumbsSchema = {
 
   .dir-toolbar__sort-label {
     font-size: var(--text-xs);
-    color: var(--text-tertiary);
+    color: rgba(255, 255, 255, 0.56);
   }
 
   .dir-toolbar__sort-select {
@@ -427,9 +435,9 @@ const breadcrumbsSchema = {
     font-size: var(--text-xs);
     font-weight: var(--font-bold);
     border-radius: var(--radius-sm);
-    border: 1px solid var(--border-light);
-    background: var(--bg-primary);
-    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: rgba(255, 255, 255, 0.05);
+    color: #FFFFFF;
   }
 
   .dir-grid {
@@ -448,7 +456,7 @@ const breadcrumbsSchema = {
   /* Help Notice */
   .dir-help-card {
     background: linear-gradient(135deg, #142147 0%, #0A1128 100%);
-    border: 1.5px solid rgba(212, 175, 55, 0.35);
+    border: 1.5px solid rgba(243, 211, 117, 0.28);
     border-radius: var(--radius-xl);
     padding: var(--space-6) var(--space-8);
     display: flex;

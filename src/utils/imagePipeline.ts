@@ -21,6 +21,12 @@ export const DEFAULT_WATERMARK_OPTIONS: Required<WatermarkOptions> = {
   logoUrl: '/images/logo/logo-icon.svg',
 };
 
+export const IMAGE_STAGES = ['raw-images', 'verified-images', 'processed-images', 'watermarked-images', 'published-images'] as const;
+
+export function getImageStagePath(stage: (typeof IMAGE_STAGES)[number], filename: string): string {
+  return `staging/${stage}/${filename}`;
+}
+
 /**
  * Generates an SVG watermark overlay markup suitable for canvas/sharp compositing
  */

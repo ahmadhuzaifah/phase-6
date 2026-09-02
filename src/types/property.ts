@@ -28,6 +28,8 @@ export type SourceType =
   | 'authorized-dealer'   // From verified local dealers
   | 'direct-allotment';   // Original society file/allotment
 
+export type InventorySourceType = 'zameen' | 'dealer-submission' | 'manual-entry' | 'developer-reference' | 'on-ground-audit';
+
 export type VerificationStatus =
   | 'verified'      // Legal & on-ground verified
   | 'unverified'    // Raw extracted / unconfirmed
@@ -104,6 +106,8 @@ export interface PropertyModel {
   watermarkedImages?: WatermarkedImage[];
   source: string;       // e.g. "Zameen.com", "Al Rehman Developers"
   sourceUrl?: string;   // Canonical original listing URL
+  sourceName?: string;
+  sourceURL?: string;
   sourceType: SourceType;
   verificationStatus: VerificationStatus;
   availabilityStatus?: 'available' | 'reserved' | 'sold' | 'expired' | 'removed';

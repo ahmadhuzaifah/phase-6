@@ -1,7 +1,7 @@
 ---
 /**
- * Prices Page — Al Rehman Garden Phase 2 Lahore
- * Plot Price Index & Payment Plans
+ * Prices Page — DHA Phase 6 Lahore
+ * Plot Price Index & Market Rates
  */
 
 import PageLayout from '@layouts/PageLayout.astro';
@@ -10,43 +10,41 @@ import { SITE } from '@data/site';
 import { CONTACTS } from '@data/contacts';
 
 const pricesSchema = {
-  name: 'Al Rehman Garden Phase 2 Plot Rates & Price Index',
-  description: 'Complete 2026 plot price list and installment schedules for Al Rehman Garden Phase 2 Lahore.',
+  name: 'DHA Phase 6 Lahore Plot Rates & Price Index',
+  description: 'Complete 2026 plot price list and market benchmarks for DHA Phase 6 Lahore.',
   url: `${SITE.url}/prices`,
 };
 
 const residentialPrices = [
-  { size: '3 Marla', cash: 'PKR 24 - 30 Lakh', installment: '3 - 5 Year Plans Available', status: 'Ready in Block B, E' },
-  { size: '3.5 Marla', cash: 'PKR 27 - 33 Lakh', installment: 'Flexible Booking', status: 'Ready Possession' },
-  { size: '5 Marla (Standard)', cash: 'PKR 40 - 55 Lakh', installment: 'Available in Royal / Mirabel', status: 'Ready in Block A, B, C, D' },
-  { size: '7 Marla', cash: 'PKR 58 - 68 Lakh', installment: 'Selective Installment', status: 'Ready in Block B' },
-  { size: '8 Marla', cash: 'PKR 68 - 80 Lakh', installment: 'Cash Only', status: 'Ready in Block C' },
-  { size: '10 Marla', cash: 'PKR 80 Lakh - 1.10 Cr', installment: 'Available in Mirabel', status: 'Ready in Block A, B' },
-  { size: '1 Kanal (Luxury)', cash: 'PKR 1.65 - 2.20 Cr', installment: 'Executive Sector Enclave', status: 'Ready in Block A, Mirabel' },
+  { size: '5 Marla (Standard)', cash: 'PKR 1.10 - 1.65 Cr', installment: 'Cash Transfer Ready', status: 'Ready in Sector J' },
+  { size: '10 Marla (Prime)', cash: 'PKR 2.20 - 3.80 Cr', installment: 'Immediate Possession', status: 'Ready in Sector H, J, G' },
+  { size: '1 Kanal (Standard)', cash: 'PKR 4.20 - 6.50 Cr', installment: 'High Demand', status: 'Ready in Sectors C, D, E, F' },
+  { size: '1 Kanal (Executive & Golf)', cash: 'PKR 6.50 - 8.50 Cr', installment: 'Direct Transfer', status: 'Ready in Sector A, B, Raya' },
+  { size: '2 Kanal (Luxury Enclave)', cash: 'PKR 9.50 - 18.5 Cr', installment: 'Exclusive Inventory', status: 'Ready in Sector A, B, K, M' },
 ];
 
 const commercialPrices = [
-  { size: '2 Marla (Shop / Front)', cash: 'PKR 60 - 85 Lakh', installment: 'Commercial Plan', status: 'Ready in Block A, Royal' },
-  { size: '4 Marla (Broadway)', cash: 'PKR 1.50 - 2.00 Cr', installment: 'High-Yield Commercial', status: 'Ready in Block C Broadway' },
-  { size: '8 Marla (150ft Boulevard)', cash: 'PKR 3.00 - 4.20 Cr', installment: 'Corporate Flagship', status: 'Ready in Block A Boulevard' },
+  { size: '4 Marla Commercial (CCA-1 & 2)', cash: 'PKR 13.5 - 22.0 Cr', installment: 'Prime Broadway Commercial', status: 'Possession Ready in CCA-1 & CCA-2' },
+  { size: '8 Marla Commercial (Main Boulevard)', cash: 'PKR 28.0 - 48.0 Cr', installment: 'High-Yield Corporate Plaza', status: 'Possession Ready on Main Boulevard' },
+  { size: 'Commercial Floor / Office Suite', cash: 'PKR 2.20 - 4.50 Cr', installment: 'Rental Yielding', status: 'Operational Plazas' },
 ];
 ---
 
 <PageLayout
-  title={`Plot Prices 2026 & Payment Plans — ${SITE.name}`}
-  description={`Official 2026 price list for Al Rehman Garden Phase 2 Lahore. View updated market rates for 3, 5, 8, 10 Marla and 1 Kanal residential & commercial plots.`}
+  title={`Plot Prices 2026 & Market Rates — ${SITE.name}`}
+  description={`Official 2026 price list for DHA Phase 6 Lahore. View updated market rates for 5, 10 Marla, 1 & 2 Kanal residential & commercial Broadway plots.`}
 >
   <Schema type="WebSite" data={pricesSchema} />
 
   <!-- Header -->
   <section class="price-hero">
     <div class="container">
-      <div class="eyebrow eyebrow--dark">Official Rate List 2026</div>
+      <div class="eyebrow eyebrow--dark">Property Rate List 2026</div>
       <h1 class="price-hero__title">
-        Al Rehman Garden Phase 2 <span class="text-gradient-gold">Plot Prices</span>
+        DHA Phase 6 Lahore <span class="text-gradient-gold">Plot Prices</span>
       </h1>
       <p class="price-hero__lead lead">
-        Compare cash possession rates and flexible installment schedules for residential and commercial plots across all blocks on Main Sharaqpur Road.
+        Compare authentic on-ground cash rates for residential and commercial broadway plots across Sectors A to N and Defence Raya in DHA Phase 6 Lahore.
       </p>
     </div>
   </section>

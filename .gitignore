@@ -17,9 +17,9 @@ build/
 *.pem
 
 # Staging raw & scratch files
-staging/raw-data/
-staging/cleaned-data/
+staging/
 scratch/
+homepage-*.png
 
 # Logs and system generated
 *.log

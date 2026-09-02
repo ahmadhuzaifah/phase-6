@@ -123,21 +123,22 @@ const currentStatus = statusConfig[status] || statusConfig['possession-ready'];
 
 <style>
   .block-card {
-    background-color: var(--bg-primary);
-    border: 1px solid var(--border-light);
+    background: linear-gradient(180deg, rgba(10, 17, 40, 0.96) 0%, rgba(8, 14, 30, 0.98) 100%);
+    border: 1px solid rgba(243, 211, 117, 0.14);
     border-radius: var(--radius-xl);
     padding: var(--space-6);
-    box-shadow: var(--shadow-card);
+    box-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.65);
     transition: all var(--transition-base);
     display: flex;
     flex-direction: column;
     position: relative;
+    color: #FFFFFF;
   }
 
   .block-card:hover {
-    box-shadow: var(--shadow-card-hover);
-    border-color: var(--color-primary-400);
-    transform: translateY(-4px);
+    box-shadow: 0 28px 54px -26px rgba(0, 0, 0, 0.72);
+    border-color: rgba(243, 211, 117, 0.30);
+    transform: translateY(-6px);
   }
 
   /* ── Header ─────────────────────────────────────────────────────── */
@@ -162,7 +163,7 @@ const currentStatus = statusConfig[status] || statusConfig['possession-ready'];
     font-weight: var(--font-bold);
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: var(--color-primary-600);
+    color: #F3D375;
     margin-bottom: 2px;
   }
 
@@ -175,13 +176,13 @@ const currentStatus = statusConfig[status] || statusConfig['possession-ready'];
   }
 
   .block-card__name a {
-    color: var(--text-primary);
+    color: #FFFFFF;
     text-decoration: none;
     transition: color var(--transition-fast);
   }
 
   .block-card__name a:hover {
-    color: var(--color-primary-600);
+    color: #F3D375;
   }
 
   .block-card__status-pill {
@@ -204,33 +205,33 @@ const currentStatus = statusConfig[status] || statusConfig['possession-ready'];
   }
 
   .block-card__status--ready {
-    background-color: #ECFDF5;
-    color: #065F46;
-    border-color: #A7F3D0;
+    background-color: rgba(16, 185, 129, 0.12);
+    color: #9CF3C8;
+    border-color: rgba(167, 243, 208, 0.18);
   }
 
   .block-card__status--developed {
-    background-color: #F0FDF4;
-    color: #166534;
-    border-color: #BBF7D0;
+    background-color: rgba(5, 150, 105, 0.12);
+    color: #A7F3D0;
+    border-color: rgba(167, 243, 208, 0.16);
   }
 
   .block-card__status--developing {
-    background-color: #FEFCE8;
-    color: #854D0E;
-    border-color: #FEF08A;
+    background-color: rgba(243, 211, 117, 0.12);
+    color: #F3D375;
+    border-color: rgba(243, 211, 117, 0.18);
   }
 
   .block-card__status--planned {
-    background-color: #F8FAFC;
-    color: #475569;
-    border-color: #E2E8F0;
+    background-color: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.76);
+    border-color: rgba(255, 255, 255, 0.08);
   }
 
   /* ── Content ────────────────────────────────────────────────────── */
   .block-card__description {
     font-size: var(--text-sm);
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.76);
     line-height: var(--leading-relaxed);
     margin-bottom: var(--space-4);
   }
@@ -241,11 +242,12 @@ const currentStatus = statusConfig[status] || statusConfig['possession-ready'];
     gap: var(--space-2);
     font-size: var(--text-xs);
     font-weight: var(--font-semibold);
-    color: var(--color-secondary-900);
-    background-color: var(--color-neutral-100);
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.05);
     padding: var(--space-2) var(--space-3);
     border-radius: var(--radius-sm);
     margin-bottom: var(--space-4);
+    border: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .block-card__location-icon {
@@ -263,7 +265,7 @@ const currentStatus = statusConfig[status] || statusConfig['possession-ready'];
     font-weight: var(--font-bold);
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: var(--text-muted);
+    color: rgba(255, 255, 255, 0.56);
     margin-bottom: var(--space-1-5);
   }
 
@@ -277,9 +279,9 @@ const currentStatus = statusConfig[status] || statusConfig['possession-ready'];
     padding: 3px 8px;
     font-size: var(--text-xs);
     font-weight: var(--font-bold);
-    background-color: var(--color-primary-50);
-    color: var(--color-primary-800);
-    border: 1px solid var(--border-gold);
+    background-color: rgba(197, 155, 39, 0.12);
+    color: #F3D375;
+    border: 1px solid rgba(243, 211, 117, 0.18);
     border-radius: var(--radius-sm);
   }
 
@@ -298,7 +300,7 @@ const currentStatus = statusConfig[status] || statusConfig['possession-ready'];
     align-items: center;
     gap: var(--space-2);
     font-size: var(--text-xs);
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.74);
   }
 
   .block-card__feature-check {
@@ -310,7 +312,7 @@ const currentStatus = statusConfig[status] || statusConfig['possession-ready'];
   .block-card__footer {
     margin-top: auto;
     padding-top: var(--space-4);
-    border-top: 1px solid var(--border-light);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .block-card__btn-explore {
@@ -320,13 +322,13 @@ const currentStatus = statusConfig[status] || statusConfig['possession-ready'];
     width: 100%;
     font-size: var(--text-sm);
     font-weight: var(--font-bold);
-    color: var(--color-secondary-900);
+    color: #FFFFFF;
     text-decoration: none;
     transition: all var(--transition-fast);
   }
 
   .block-card__btn-explore:hover {
-    color: var(--color-primary-600);
+    color: #F3D375;
     padding-left: var(--space-1);
   }
 

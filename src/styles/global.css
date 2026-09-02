@@ -2,7 +2,6 @@
  * Al Rehman Garden Phase 2 — Global Styles
  * ═══════════════════════════════════════════════════════════════════════════════ */
 
-@import 'tailwindcss';
 @import './variables.css';
 @import './typography.css';
 
@@ -29,7 +28,10 @@ body {
   font-size: var(--text-base);
   line-height: var(--leading-normal);
   color: var(--text-primary);
-  background-color: var(--bg-primary);
+  background-color: #F5F7FB;
+  background-image:
+    radial-gradient(circle at top, rgba(197, 155, 39, 0.06), transparent 32%),
+    linear-gradient(180deg, #F8FAFC 0%, #EEF2F7 100%);
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -127,6 +129,129 @@ ol {
   }
 }
 
+.container--narrow {
+  max-width: 900px;
+}
+
+.container--wide {
+  max-width: var(--container-2xl);
+}
+
+/* ── Section Utilities ──────────────────────────────────────────────────────── */
+.section {
+  padding: var(--space-16) 0;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: var(--space-20) 0;
+  }
+}
+
+.section--compact {
+  padding: var(--space-10) 0;
+}
+
+.section--dark {
+  background: radial-gradient(circle at top, rgba(18, 29, 63, 0.96), rgba(5, 8, 22, 1));
+  color: var(--text-inverse);
+}
+
+.section--alt {
+  background: linear-gradient(180deg, #F7F9FC 0%, #EEF2F7 100%);
+}
+
+/* ── Scroll Margin for Anchors ──────────────────────────────────────────────── */
+[id] {
+  scroll-margin-top: 100px;
+}
+
+/* ── Text Center Utility ────────────────────────────────────────────────────── */
+.text-center {
+  text-align: center;
+}
+
+/* ── Section Header Compound ────────────────────────────────────────────────── */
+.section-header {
+  max-width: 720px;
+  margin-bottom: var(--space-10);
+}
+
+.section-header.text-center {
+  margin-inline: auto;
+}
+
+.section-header__title {
+  margin-bottom: var(--space-3);
+}
+
+.section-header__desc {
+  color: var(--text-secondary);
+  max-width: 600px;
+}
+
+.section-header.text-center .section-header__desc {
+  margin-inline: auto;
+}
+
+/* ── Card Hover Transition Utility ──────────────────────────────────────────── */
+.card-lift {
+  transition: var(--transition-lift), border-color var(--transition-hover);
+}
+
+.card-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-card-premium-hover);
+}
+
+/* ── Lazy Image Fade-In ─────────────────────────────────────────────────────── */
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+img[loading="lazy"].loaded,
+img[loading="lazy"][complete] {
+  opacity: 1;
+}
+
+/* Force loaded state for already-cached images via JS fallback */
+img[loading="lazy"] {
+  opacity: 1; /* Fallback: always show if CSS-only (no IntersectionObserver) */
+}
+
+/* ── Micro-Animation Keyframes ──────────────────────────────────────────────── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(212, 175, 55, 0); }
+}
+
+@keyframes subtleBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
 /* ── Reduced Motion ─────────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -136,6 +261,69 @@ ol {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* Shared premium interaction language */
+.trust-strip {
+  background: #0B132B;
+  border-block: 1px solid rgba(212, 175, 55, 0.24);
+  padding: var(--space-5) 0;
+}
+
+.trust-strip__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+}
+
+.trust-strip__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 48px;
+  color: #fff;
+}
+
+.trust-strip__icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  color: #0B132B;
+  background: var(--gradient-gold);
+  border-radius: var(--radius-full);
+  font-weight: var(--font-black);
+}
+
+.trust-strip__item strong,
+.trust-strip__item span:not(.trust-strip__icon) {
+  display: block;
+}
+
+.trust-strip__item strong {
+  font-size: var(--text-sm);
+}
+
+.trust-strip__item span:not(.trust-strip__icon) {
+  margin-top: 2px;
+  color: var(--color-neutral-400);
+  font-size: var(--text-xs);
+}
+
+@media (min-width: 640px) {
+  .trust-strip__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .trust-strip__grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .section > .container,
+  .trust-strip__item {
+    animation: fadeInUp 650ms both;
   }
 }
 

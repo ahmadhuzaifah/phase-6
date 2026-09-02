@@ -1,6 +1,6 @@
 ---
 /**
- * Contact & Site Office Advisory — Al Rehman Garden Phase 2 Lahore
+ * Contact & Advisory Desk — DHA Phase 6 Lahore
  */
 
 import PageLayout from '@layouts/PageLayout.astro';
@@ -9,10 +9,14 @@ import { SITE } from '@data/site';
 import { CONTACTS } from '@data/contacts';
 
 const contactSchema = {
-  name: 'Al Rehman Garden Phase 2 Contact & Advisory Desk',
-  description: 'Official real estate contact desk for Al Rehman Garden Phase 2 on Main Sharaqpur Road Lahore.',
+  '@id': `${SITE.url}/contact#local-business`,
+  name: 'DHA Phase 6 Lahore Property Advisory Desk',
+  description: 'Specialist real estate information and advisory desk for DHA Phase 6 on Main Boulevard Lahore.',
   url: `${SITE.url}/contact`,
   telephone: CONTACTS.phone.primary,
+  priceRange: '$$$$',
+  areaServed: 'DHA Phase 6 Lahore',
+  sameAs: [SITE.url],
   address: {
     '@type': 'PostalAddress',
     streetAddress: CONTACTS.address.full,
@@ -24,16 +28,17 @@ const contactSchema = {
 ---
 
 <PageLayout
-  title={`Contact Advisory & Site Office — ${SITE.name}`}
-  description={`Contact Al Rehman Garden Phase 2 Lahore for verified plot availability, rate comparisons, site visit appointments, and official transfer procedures.`}
+  title={`Contact Advisory & Property Desk — ${SITE.name}`}
+  description={`Contact DHA Phase 6 Lahore property desk for verified plot availability, rate comparisons, Defence Raya viewings, and transfer guidance.`}
 >
-  <Schema type="WebSite" data={contactSchema} />
+  <Schema type="LocalBusiness" data={contactSchema} />
+  <Schema type="Place" data={{ name: SITE.name, description: SITE.description, url: `${SITE.url}/dha-phase-6-lahore-map`, address: contactSchema.address }} />
 
   <section class="contact-hero">
     <div class="container">
-      <div class="eyebrow eyebrow--dark">Official Property Advisory</div>
+      <div class="eyebrow eyebrow--dark">Property Information Advisory</div>
       <h1 class="contact-hero__title">
-        Get in Touch with <span class="text-gradient-gold">Phase 2 Desk</span>
+        Get in Touch with <span class="text-gradient-gold">DHA Phase 6 Desk</span>
       </h1>
       <p class="contact-hero__lead lead">
         Connect with our on-site property advisors for plot availability, rate lists, map coordinates, and guided physical site tours.
