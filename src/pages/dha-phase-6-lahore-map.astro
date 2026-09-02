@@ -1,45 +1,1753 @@
 ---
-import GuidePage from '@components/content/GuidePage.astro';
+/**
+ * DHA Phase 6 Lahore — Interactive Map & Map PDFs Page
+ * Matching the exact structure, layout, aesthetic, and components requested.
+ */
 ---
-<GuidePage
-  title="DHA Phase 6 Lahore map"
-  metaTitle="DHA Phase 6 Lahore Map | Sectors, Roads & Official PDF"
-  description="Read the DHA Phase 6 Lahore map, identify sectors A-H and J-N, understand the main road context and open the current official Phase VI PDF from DHA Lahore."
-  eyebrow="Official map research guide"
-  facts={[
-    { label: 'Residential sectors', value: 'A-H and J-N' },
-    { label: 'Commercial context', value: 'CCA areas' },
-    { label: 'Regional roads', value: 'Bedian and Barki' },
-    { label: 'Primary source', value: 'DHA Lahore PDF' },
-  ]}
-  sections={[
-    {
-      heading: 'What the Phase VI map shows',
-      paragraphs: ['The official DHA Lahore Phase VI map is the primary visual source for sector boundaries, road hierarchy and major land-use references. It shows sectors A, B, C, D, E, F, G, H, J, K, L, M and N.'],
-      bullets: ['Sector labels and broad boundaries', 'Major internal boulevards and connecting roads', 'Commercial and community-use context', 'Links toward Bedian Road and Barki Road'],
-    },
-    {
-      heading: 'How to use the map for a property search',
-      paragraphs: ['A phase map is a starting point, not proof of a listing location. Ask for the exact property number, locate it on the current official plan and compare the surrounding road width and land use with what the seller advertised.'],
-      bullets: ['Confirm the sector and exact property number', 'Check whether the plot faces or backs a major road', 'Identify nearby commercial, park, mosque or utility land', 'Visit the street and confirm physical access', 'Repeat document and transfer checks through DHA Lahore'],
-    },
-    {
-      heading: 'Directions and travel planning',
-      paragraphs: ['Use a live navigation service for your exact gate and destination because route conditions and travel times change. Search for DHA Phase 6 Lahore or a specific sector, then compare the route with the official phase layout.'],
-    },
-    {
-      heading: 'Map limitations',
-      paragraphs: ['Do not infer current ownership, possession, construction approval, utility connection or market price from the map. Those questions require separate checks for the exact property.'],
-    },
-  ]}
-  faqs={[
-    { question: 'Which sectors are shown in DHA Phase 6 Lahore?', answer: 'The official Phase VI map shows sectors A-H and J-N.' },
-    { question: 'Can I verify ownership from the map?', answer: 'No. The map helps with location context only. Ownership and transfer eligibility require separate verification.' },
-    { question: 'Where can I download the official map?', answer: 'Use the DHA Lahore Phase VI PDF link in the sources section below.' },
-  ]}
-  sources={[
-    { label: 'DHA Lahore official Phase VI map PDF', href: 'https://dhalahore.org/wp-content/uploads/2025/09/PHASE-VI.pdf' },
-    { label: 'DHA Lahore maps directory', href: 'https://dhalahore.org/dha-phases-maps/' },
-    { label: 'Google Maps search for DHA Phase 6 Lahore', href: 'https://www.google.com/maps/search/?api=1&query=DHA+Phase+6+Lahore' },
-  ]}
-/>
+
+<!DOCTYPE html>
+<html lang="en-PK">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a1a">
+
+  <!-- SEO -->
+  <title>DHA Phase 6 Lahore Map | Interactive Map & Sector PDFs</title>
+  <meta name="description" content="Interactive Google Maps view of DHA Phase 6 Lahore with all sectors, entry gates, and nearby landmarks. Download sector map PDFs.">
+  <meta name="keywords" content="DHA Phase 6 map, DHA Phase VI Lahore map, DHA Lahore sectors map, Defence Raya map, Phase 6 master plan PDF">
+  <meta name="author" content="DHA Phase 6 Lahore Guide">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="https://dhaphase6lahore.pk/dha-phase-6-lahore-map/">
+  <link rel="alternate" hreflang="en-PK" href="https://dhaphase6lahore.pk/dha-phase-6-lahore-map/">
+  <link rel="alternate" hreflang="x-default" href="https://dhaphase6lahore.pk/dha-phase-6-lahore-map/">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="DHA Phase 6 Lahore Map">
+  <meta property="og:description" content="Interactive Google Maps view of DHA Phase 6 Lahore with all sectors, entry gates, and nearby landmarks.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dhaphase6lahore.pk/dha-phase-6-lahore-map/">
+  <meta property="og:site_name" content="DHA Phase 6 Lahore">
+  <meta property="og:locale" content="en_PK">
+  <meta property="og:image" content="/images/hero-bg.png">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="1080">
+  <meta property="og:image:alt" content="DHA Phase 6 Lahore">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DHA Phase 6 Lahore Map">
+  <meta name="twitter:description" content="Interactive Google Maps view of DHA Phase 6 Lahore with all sectors, entry gates, and nearby landmarks.">
+  <meta name="twitter:image" content="/images/hero-bg.png">
+  <meta name="twitter:image:alt" content="DHA Phase 6 Lahore">
+
+  <!-- Structured data -->
+  <script type="application/ld+json" is:inline set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://dhaphase6lahore.pk/#organization",
+        "name": "DHA Phase 6 Lahore",
+        "url": "https://dhaphase6lahore.pk/",
+        "description": "An independent informational guide to DHA Phase 6 Lahore.",
+        "telephone": "+92-325-7800001",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Main Boulevard Phase 6",
+          "addressLocality": "Lahore",
+          "addressRegion": "Punjab",
+          "postalCode": "54792",
+          "addressCountry": "PK"
+        },
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dhaphase6lahore.pk/images/hero-bg.png",
+          "width": "1920",
+          "height": "1080"
+        },
+        "areaServed": {
+          "@id": "https://dhaphase6lahore.pk/#dha-phase-6-lahore"
+        }
+      },
+      {
+        "@type": "Place",
+        "@id": "https://dhaphase6lahore.pk/#dha-phase-6-lahore",
+        "name": "DHA Phase 6 Lahore",
+        "alternateName": "DHA Phase VI Lahore",
+        "url": "https://dhaphase6lahore.pk/",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Lahore",
+          "addressRegion": "Punjab",
+          "postalCode": "54792",
+          "addressCountry": "PK"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 31.4725,
+          "longitude": 74.4530
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://dhaphase6lahore.pk/#website",
+        "url": "https://dhaphase6lahore.pk/",
+        "name": "DHA Phase 6 Lahore",
+        "alternateName": ["DHA Phase 6 Lahore", "DHA Phase VI Lahore Guide"],
+        "publisher": {
+          "@id": "https://dhaphase6lahore.pk/#organization"
+        },
+        "inLanguage": "en-PK",
+        "about": {
+          "@id": "https://dhaphase6lahore.pk/#dha-phase-6-lahore"
+        }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-1",
+        "name": "Home",
+        "url": "https://dhaphase6lahore.pk/",
+        "position": 1,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-2",
+        "name": "Sectors",
+        "url": "https://dhaphase6lahore.pk/sectors/",
+        "position": 2,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-3",
+        "name": "Properties",
+        "url": "https://dhaphase6lahore.pk/properties/",
+        "position": 3,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-4",
+        "name": "Places",
+        "url": "https://dhaphase6lahore.pk/places/",
+        "position": 4,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-5",
+        "name": "Plots",
+        "url": "https://dhaphase6lahore.pk/plots/",
+        "position": 5,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-6",
+        "name": "Jobs",
+        "url": "https://dhaphase6lahore.pk/jobs/",
+        "position": 6,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-7",
+        "name": "Dealers",
+        "url": "https://dhaphase6lahore.pk/dealers/",
+        "position": 7,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-8",
+        "name": "Map",
+        "url": "https://dhaphase6lahore.pk/dha-phase-6-lahore-map/",
+        "position": 8,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-9",
+        "name": "Map PDFs",
+        "url": "https://dhaphase6lahore.pk/dha-phase-6-lahore-map/#map-pdf-downloads",
+        "position": 9,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://dhaphase6lahore.pk/dha-phase-6-lahore-map/#webpage",
+        "url": "https://dhaphase6lahore.pk/dha-phase-6-lahore-map/",
+        "name": "DHA Phase 6 Lahore Map",
+        "description": "Interactive Google Maps view of DHA Phase 6 Lahore with all sectors, entry gates, and nearby landmarks.",
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" },
+        "inLanguage": "en-PK",
+        "isAccessibleForFree": true,
+        "about": { "@id": "https://dhaphase6lahore.pk/#dha-phase-6-lahore" },
+        "primaryImageOfPage": {
+          "@type": "ImageObject",
+          "url": "https://dhaphase6lahore.pk/images/hero-bg.png"
+        },
+        "datePublished": "2026-09-02T18:14:54+05:00",
+        "dateModified": "2026-09-02T18:14:54+05:00",
+        "breadcrumb": { "@id": "https://dhaphase6lahore.pk/dha-phase-6-lahore-map/#breadcrumb" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://dhaphase6lahore.pk/dha-phase-6-lahore-map/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://dhaphase6lahore.pk/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Map",
+            "item": "https://dhaphase6lahore.pk/dha-phase-6-lahore-map/"
+          }
+        ]
+      }
+    ]
+  })}></script>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;rect width='100' height='100' rx='16' fill='%23d4a844'/&gt;&lt;text x='50' y='66' font-size='48' text-anchor='middle' font-family='serif' font-weight='bold' fill='%230a0a1a'&gt;D6&lt;/text&gt;&lt;/svg&gt;">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- Header / Navigation -->
+  <header class="site-header">
+    <nav class="navbar" id="navbar" aria-label="Primary navigation">
+      <div class="container">
+        <a href="/" class="nav-logo" aria-label="DHA Phase 6 Lahore home">
+          <div class="nav-logo-icon">D6</div>
+          DHA Phase <span>6</span> Lahore
+        </a>
+        <div class="nav-links" id="navLinks">
+          <a href="/">Home</a>
+          <a href="/sectors/">Sectors</a>
+          <a href="/properties/">Properties</a>
+          <a href="/places/">Places</a>
+          <a href="/plots/">Plots</a>
+          <a href="/jobs/">Jobs</a>
+          <a href="/dealers/">Dealers</a>
+          <a href="/dha-phase-6-lahore-map/" class="active" aria-current="page">Map</a>
+          <a href="/dha-phase-6-lahore-map/#map-pdf-downloads" class="nav-cta">Map PDFs</a>
+        </div>
+        <button class="nav-toggle" id="navToggle" type="button" aria-label="Toggle navigation menu" aria-controls="navLinks" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <!-- Page Hero -->
+    <header class="page-hero">
+      <div class="container">
+        <nav class="page-hero-breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-sep">›</span>
+          <span aria-current="page">Map</span>
+        </nav>
+        <h1><span class="gold">DHA Phase 6 Lahore</span> Map</h1>
+        <p class="page-hero-description">Explore DHA Phase 6 Lahore on Google Maps. Find all 13 sectors, entry gates, and get directions.</p>
+      </div>
+    </header>
+
+    <!-- Interactive Google Map Section -->
+    <section class="content-section bg-primary">
+      <div class="container">
+        <div class="content-section-header reveal">
+          <span class="section-label">Map</span>
+          <h2 class="section-title">DHA Phase 6 Lahore Map</h2>
+          <p class="section-subtitle">Pan, zoom, and explore the entire DHA Phase 6 community on the interactive map below.</p>
+        </div>
+
+        <div class="full-map-wrapper reveal">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27228.77!2d74.4530!3d31.4725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39190890bf25501b%3A0x892a0614ddf4664a!2sDHA%20Phase%206%2C%20Lahore!5e0!3m2!1sen!2spk!4v1"
+            width="1200"
+            height="675"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="DHA Phase 6 Lahore Map"
+          ></iframe>
+        </div>
+
+        <div class="map-download-actions reveal">
+          <a href="/dha-phase-6-lahore-map/#map-pdf-downloads" class="btn btn-primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Download Master Plan
+          </a>
+          <a href="#map-pdf-downloads" class="btn btn-secondary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            All Sector Map PDFs
+          </a>
+        </div>
+
+        <!-- Sector Legend -->
+        <div class="sector-legend reveal">
+          <a class="sector-legend-item glass-card" href="/sectors/sector-a/"><div class="sector-legend-dot">A</div><span class="sector-legend-label">Sector A</span></a>
+          <a class="sector-legend-item glass-card" href="/sectors/sector-b/"><div class="sector-legend-dot">B</div><span class="sector-legend-label">Sector B</span></a>
+          <a class="sector-legend-item glass-card" href="/sectors/sector-c/"><div class="sector-legend-dot">C</div><span class="sector-legend-label">Sector C</span></a>
+          <a class="sector-legend-item glass-card" href="/sectors/sector-d/"><div class="sector-legend-dot">D</div><span class="sector-legend-label">Sector D</span></a>
+          <a class="sector-legend-item glass-card" href="/sectors/sector-e/"><div class="sector-legend-dot">E</div><span class="sector-legend-label">Sector E</span></a>
+          <a class="sector-legend-item glass-card" href="/sectors/sector-f/"><div class="sector-legend-dot">F</div><span class="sector-legend-label">Sector F</span></a>
+          <a class="sector-legend-item glass-card" href="/sectors/sector-g/"><div class="sector-legend-dot">G</div><span class="sector-legend-label">Sector G</span></a>
+          <a class="sector-legend-item glass-card" href="/sectors/sector-h/"><div class="sector-legend-dot">H</div><span class="sector-legend-label">Sector H</span></a>
+          <a class="sector-legend-item glass-card" href="/sectors/sector-j/"><div class="sector-legend-dot">J</div><span class="sector-legend-label">Sector J</span></a>
+          <a class="sector-legend-item glass-card" href="/sectors/sector-k/"><div class="sector-legend-dot">K</div><span class="sector-legend-label">Sector K</span></a>
+          <a class="sector-legend-item glass-card" href="/sectors/sector-l/"><div class="sector-legend-dot">L</div><span class="sector-legend-label">Sector L</span></a>
+          <a class="sector-legend-item glass-card" href="/sectors/sector-m/"><div class="sector-legend-dot">M</div><span class="sector-legend-label">Sector M</span></a>
+          <a class="sector-legend-item glass-card" href="/sectors/sector-n/"><div class="sector-legend-dot">N</div><span class="sector-legend-label">Sector N</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Master Plan Preview Section -->
+    <section class="content-section bg-secondary" id="map-pdf-downloads">
+      <div class="container">
+        <div class="content-section-header reveal">
+          <span class="section-label">Map Preview</span>
+          <h2 class="section-title">DHA Phase 6 Master Plan</h2>
+          <p class="section-subtitle">Preview the master plan layout showing all 13 sectors, main boulevards, entry gates, and key landmarks.</p>
+        </div>
+
+        <div class="map-preview reveal">
+          <a href="/images/maps/dha-phase-6-master-plan-map-preview.jpg" target="_blank" rel="noopener" aria-label="Open the DHA Phase 6 master plan preview">
+            <img src="/images/maps/dha-phase-6-master-plan-map-preview.jpg" alt="DHA Phase 6 Lahore master plan preview" width="1200" height="848" loading="lazy">
+          </a>
+          <div class="map-preview-overlay">
+            <a href="/images/maps/dha-phase-6-master-plan-map-preview.jpg" target="_blank" rel="noopener" class="map-preview-cta">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              View Full Resolution Map
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Download Map PDFs Section -->
+    <section class="content-section bg-primary">
+      <div class="container">
+        <div class="content-section-header reveal">
+          <span class="section-label">Downloads</span>
+          <h2 class="section-title">Download Map PDFs</h2>
+          <p class="section-subtitle">Download the complete master plan or an individual sector map for offline viewing and reference.</p>
+        </div>
+
+        <div class="download-grid">
+          <!-- Master Plan -->
+          <div class="download-card glass-card reveal">
+            <a class="download-card-preview" href="/images/maps/dha-phase-6-master-plan-map-preview.jpg" target="_blank" rel="noopener" aria-label="Open Master Plan Map">
+              <img src="/images/maps/dha-phase-6-master-plan-map-preview.jpg" alt="Master Plan preview" width="1200" height="900" loading="lazy">
+            </a>
+            <div class="download-card-title">Master Plan PDF</div>
+            <div class="download-card-desc">Complete DHA Phase 6 layout with all sectors, main boulevards, entry gates, and community landmarks.</div>
+            <div class="download-card-size">PDF · 3.87 MB</div>
+            <div class="download-card-actions">
+              <a href="/images/maps/dha-phase-6-master-plan-map-preview.jpg" download="dha-phase-6-master-plan.jpg" class="download-card-btn" aria-label="Download Master Plan Map">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download PDF
+              </a>
+            </div>
+          </div>
+
+          <!-- Sector A -->
+          <div class="download-card glass-card reveal">
+            <a class="download-card-preview" href="/images/maps/dha-phase-6-sector-a-map-preview.jpg" target="_blank" rel="noopener" aria-label="Open Sector A Map">
+              <img src="/images/maps/dha-phase-6-sector-a-map-preview.jpg" alt="Sector A Map preview" width="1200" height="900" loading="lazy">
+            </a>
+            <div class="download-card-title"><a href="/sectors/sector-a/">Sector A Map</a></div>
+            <div class="download-card-desc">Detailed Sector A plot and street layout.</div>
+            <div class="download-card-size">PDF · 0.57 MB</div>
+            <div class="download-card-actions">
+              <a href="/sectors/sector-a/" class="download-card-btn" aria-label="View Sector A Map page">View Map</a>
+              <a href="/images/maps/dha-phase-6-sector-a-map-preview.jpg" download="dha-phase-6-sector-a-map.jpg" class="download-card-btn" aria-label="Download Sector A Map PDF">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download PDF
+              </a>
+            </div>
+          </div>
+
+          <!-- Sector B -->
+          <div class="download-card glass-card reveal">
+            <a class="download-card-preview" href="/images/maps/dha-phase-6-sector-b-map-preview.jpg" target="_blank" rel="noopener" aria-label="Open Sector B Map">
+              <img src="/images/maps/dha-phase-6-sector-b-map-preview.jpg" alt="Sector B Map preview" width="1200" height="900" loading="lazy">
+            </a>
+            <div class="download-card-title"><a href="/sectors/sector-b/">Sector B Map</a></div>
+            <div class="download-card-desc">Detailed Sector B plot and street layout.</div>
+            <div class="download-card-size">PDF · 0.56 MB</div>
+            <div class="download-card-actions">
+              <a href="/sectors/sector-b/" class="download-card-btn" aria-label="View Sector B Map page">View Map</a>
+              <a href="/images/maps/dha-phase-6-sector-b-map-preview.jpg" download="dha-phase-6-sector-b-map.jpg" class="download-card-btn" aria-label="Download Sector B Map PDF">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download PDF
+              </a>
+            </div>
+          </div>
+
+          <!-- Sector C -->
+          <div class="download-card glass-card reveal">
+            <a class="download-card-preview" href="/images/maps/dha-phase-6-sector-c-map-preview.jpg" target="_blank" rel="noopener" aria-label="Open Sector C Map">
+              <img src="/images/maps/dha-phase-6-sector-c-map-preview.jpg" alt="Sector C Map preview" width="1200" height="900" loading="lazy">
+            </a>
+            <div class="download-card-title"><a href="/sectors/sector-c/">Sector C Map</a></div>
+            <div class="download-card-desc">Detailed Sector C plot and street layout.</div>
+            <div class="download-card-size">PDF · 0.61 MB</div>
+            <div class="download-card-actions">
+              <a href="/sectors/sector-c/" class="download-card-btn" aria-label="View Sector C Map page">View Map</a>
+              <a href="/images/maps/dha-phase-6-sector-c-map-preview.jpg" download="dha-phase-6-sector-c-map.jpg" class="download-card-btn" aria-label="Download Sector C Map PDF">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download PDF
+              </a>
+            </div>
+          </div>
+
+          <!-- Sector D -->
+          <div class="download-card glass-card reveal">
+            <a class="download-card-preview" href="/images/maps/dha-phase-6-sector-d-map-preview.jpg" target="_blank" rel="noopener" aria-label="Open Sector D Map">
+              <img src="/images/maps/dha-phase-6-sector-d-map-preview.jpg" alt="Sector D Map preview" width="1200" height="900" loading="lazy">
+            </a>
+            <div class="download-card-title"><a href="/sectors/sector-d/">Sector D Map</a></div>
+            <div class="download-card-desc">Detailed Sector D plot and street layout.</div>
+            <div class="download-card-size">PDF · 0.50 MB</div>
+            <div class="download-card-actions">
+              <a href="/sectors/sector-d/" class="download-card-btn" aria-label="View Sector D Map page">View Map</a>
+              <a href="/images/maps/dha-phase-6-sector-d-map-preview.jpg" download="dha-phase-6-sector-d-map.jpg" class="download-card-btn" aria-label="Download Sector D Map PDF">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download PDF
+              </a>
+            </div>
+          </div>
+
+          <!-- Sector E -->
+          <div class="download-card glass-card reveal">
+            <a class="download-card-preview" href="/images/maps/dha-phase-6-sector-e-map-preview.jpg" target="_blank" rel="noopener" aria-label="Open Sector E Map">
+              <img src="/images/maps/dha-phase-6-sector-e-map-preview.jpg" alt="Sector E Map preview" width="1200" height="900" loading="lazy">
+            </a>
+            <div class="download-card-title"><a href="/sectors/sector-e/">Sector E Map</a></div>
+            <div class="download-card-desc">Detailed Sector E plot and street layout.</div>
+            <div class="download-card-size">PDF · 0.68 MB</div>
+            <div class="download-card-actions">
+              <a href="/sectors/sector-e/" class="download-card-btn" aria-label="View Sector E Map page">View Map</a>
+              <a href="/images/maps/dha-phase-6-sector-e-map-preview.jpg" download="dha-phase-6-sector-e-map.jpg" class="download-card-btn" aria-label="Download Sector E Map PDF">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download PDF
+              </a>
+            </div>
+          </div>
+
+          <!-- Sector F -->
+          <div class="download-card glass-card reveal">
+            <a class="download-card-preview" href="/images/maps/dha-phase-6-sector-f-map-preview.jpg" target="_blank" rel="noopener" aria-label="Open Sector F Map">
+              <img src="/images/maps/dha-phase-6-sector-f-map-preview.jpg" alt="Sector F Map preview" width="1200" height="900" loading="lazy">
+            </a>
+            <div class="download-card-title"><a href="/sectors/sector-f/">Sector F Map</a></div>
+            <div class="download-card-desc">Detailed Sector F plot and street layout.</div>
+            <div class="download-card-size">PDF · 0.54 MB</div>
+            <div class="download-card-actions">
+              <a href="/sectors/sector-f/" class="download-card-btn" aria-label="View Sector F Map page">View Map</a>
+              <a href="/images/maps/dha-phase-6-sector-f-map-preview.jpg" download="dha-phase-6-sector-f-map.jpg" class="download-card-btn" aria-label="Download Sector F Map PDF">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download PDF
+              </a>
+            </div>
+          </div>
+
+          <!-- Sector G -->
+          <div class="download-card glass-card reveal">
+            <a class="download-card-preview" href="/images/maps/dha-phase-6-sector-g-map-preview.jpg" target="_blank" rel="noopener" aria-label="Open Sector G Map">
+              <img src="/images/maps/dha-phase-6-sector-g-map-preview.jpg" alt="Sector G Map preview" width="1200" height="900" loading="lazy">
+            </a>
+            <div class="download-card-title"><a href="/sectors/sector-g/">Sector G Map</a></div>
+            <div class="download-card-desc">Detailed Sector G plot and street layout.</div>
+            <div class="download-card-size">PDF · 0.71 MB</div>
+            <div class="download-card-actions">
+              <a href="/sectors/sector-g/" class="download-card-btn" aria-label="View Sector G Map page">View Map</a>
+              <a href="/images/maps/dha-phase-6-sector-g-map-preview.jpg" download="dha-phase-6-sector-g-map.jpg" class="download-card-btn" aria-label="Download Sector G Map PDF">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download PDF
+              </a>
+            </div>
+          </div>
+
+          <!-- Sector H -->
+          <div class="download-card glass-card reveal">
+            <a class="download-card-preview" href="/images/maps/dha-phase-6-sector-h-map-preview.jpg" target="_blank" rel="noopener" aria-label="Open Sector H Map">
+              <img src="/images/maps/dha-phase-6-sector-h-map-preview.jpg" alt="Sector H Map preview" width="1200" height="900" loading="lazy">
+            </a>
+            <div class="download-card-title"><a href="/sectors/sector-h/">Sector H Map</a></div>
+            <div class="download-card-desc">Detailed Sector H plot and street layout.</div>
+            <div class="download-card-size">PDF · 0.78 MB</div>
+            <div class="download-card-actions">
+              <a href="/sectors/sector-h/" class="download-card-btn" aria-label="View Sector H Map page">View Map</a>
+              <a href="/images/maps/dha-phase-6-sector-h-map-preview.jpg" download="dha-phase-6-sector-h-map.jpg" class="download-card-btn" aria-label="Download Sector H Map PDF">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download PDF
+              </a>
+            </div>
+          </div>
+
+          <!-- Sector J -->
+          <div class="download-card glass-card reveal">
+            <a class="download-card-preview" href="/images/maps/dha-phase-6-sector-j-map-preview.jpg" target="_blank" rel="noopener" aria-label="Open Sector J Map">
+              <img src="/images/maps/dha-phase-6-sector-j-map-preview.jpg" alt="Sector J Map preview" width="1200" height="900" loading="lazy">
+            </a>
+            <div class="download-card-title"><a href="/sectors/sector-j/">Sector J Map</a></div>
+            <div class="download-card-desc">Detailed Sector J plot and street layout.</div>
+            <div class="download-card-size">PDF · 0.55 MB</div>
+            <div class="download-card-actions">
+              <a href="/sectors/sector-j/" class="download-card-btn" aria-label="View Sector J Map page">View Map</a>
+              <a href="/images/maps/dha-phase-6-sector-j-map-preview.jpg" download="dha-phase-6-sector-j-map.jpg" class="download-card-btn" aria-label="Download Sector J Map PDF">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download PDF
+              </a>
+            </div>
+          </div>
+
+          <!-- Sector K -->
+          <div class="download-card glass-card reveal">
+            <a class="download-card-preview" href="/images/maps/dha-phase-6-sector-k-map-preview.jpg" target="_blank" rel="noopener" aria-label="Open Sector K Map">
+              <img src="/images/maps/dha-phase-6-sector-k-map-preview.jpg" alt="Sector K Map preview" width="1200" height="900" loading="lazy">
+            </a>
+            <div class="download-card-title"><a href="/sectors/sector-k/">Sector K Map</a></div>
+            <div class="download-card-desc">Detailed Sector K plot and street layout.</div>
+            <div class="download-card-size">PDF · 0.62 MB</div>
+            <div class="download-card-actions">
+              <a href="/sectors/sector-k/" class="download-card-btn" aria-label="View Sector K Map page">View Map</a>
+              <a href="/images/maps/dha-phase-6-sector-k-map-preview.jpg" download="dha-phase-6-sector-k-map.jpg" class="download-card-btn" aria-label="Download Sector K Map PDF">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download PDF
+              </a>
+            </div>
+          </div>
+
+          <!-- Sector L -->
+          <div class="download-card glass-card reveal">
+            <a class="download-card-preview" href="/images/maps/dha-phase-6-sector-l-map-preview.jpg" target="_blank" rel="noopener" aria-label="Open Sector L Map">
+              <img src="/images/maps/dha-phase-6-sector-l-map-preview.jpg" alt="Sector L Map preview" width="1200" height="900" loading="lazy">
+            </a>
+            <div class="download-card-title"><a href="/sectors/sector-l/">Sector L Map</a></div>
+            <div class="download-card-desc">Detailed Sector L plot and street layout.</div>
+            <div class="download-card-size">PDF · 0.58 MB</div>
+            <div class="download-card-actions">
+              <a href="/sectors/sector-l/" class="download-card-btn" aria-label="View Sector L Map page">View Map</a>
+              <a href="/images/maps/dha-phase-6-sector-l-map-preview.jpg" download="dha-phase-6-sector-l-map.jpg" class="download-card-btn" aria-label="Download Sector L Map PDF">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download PDF
+              </a>
+            </div>
+          </div>
+
+          <!-- Sector M -->
+          <div class="download-card glass-card reveal">
+            <a class="download-card-preview" href="/images/maps/dha-phase-6-sector-m-map-preview.jpg" target="_blank" rel="noopener" aria-label="Open Sector M Map">
+              <img src="/images/maps/dha-phase-6-sector-m-map-preview.jpg" alt="Sector M Map preview" width="1200" height="900" loading="lazy">
+            </a>
+            <div class="download-card-title"><a href="/sectors/sector-m/">Sector M Map</a></div>
+            <div class="download-card-desc">Detailed Sector M plot and street layout.</div>
+            <div class="download-card-size">PDF · 0.64 MB</div>
+            <div class="download-card-actions">
+              <a href="/sectors/sector-m/" class="download-card-btn" aria-label="View Sector M Map page">View Map</a>
+              <a href="/images/maps/dha-phase-6-sector-m-map-preview.jpg" download="dha-phase-6-sector-m-map.jpg" class="download-card-btn" aria-label="Download Sector M Map PDF">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download PDF
+              </a>
+            </div>
+          </div>
+
+          <!-- Sector N -->
+          <div class="download-card glass-card reveal">
+            <a class="download-card-preview" href="/images/maps/dha-phase-6-sector-n-map-preview.jpg" target="_blank" rel="noopener" aria-label="Open Sector N Map">
+              <img src="/images/maps/dha-phase-6-sector-n-map-preview.jpg" alt="Sector N Map preview" width="1200" height="900" loading="lazy">
+            </a>
+            <div class="download-card-title"><a href="/sectors/sector-n/">Sector N Map</a></div>
+            <div class="download-card-desc">Detailed Sector N plot and street layout.</div>
+            <div class="download-card-size">PDF · 0.75 MB</div>
+            <div class="download-card-actions">
+              <a href="/sectors/sector-n/" class="download-card-btn" aria-label="View Sector N Map page">View Map</a>
+              <a href="/images/maps/dha-phase-6-sector-n-map-preview.jpg" download="dha-phase-6-sector-n-map.jpg" class="download-card-btn" aria-label="Download Sector N Map PDF">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download PDF
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Map Guide Section -->
+    <section class="content-section bg-secondary">
+      <div class="container">
+        <div class="content-section-header reveal">
+          <span class="section-label">Map Guide</span>
+          <h2 class="section-title">How to Read the DHA Map</h2>
+          <p class="section-subtitle">Understand the key elements and symbols used in DHA Phase 6 maps.</p>
+        </div>
+
+        <div class="map-legend-grid">
+          <div class="map-legend-item glass-card reveal">
+            <div class="map-legend-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M3 9h18"></path><path d="M9 21V9"></path></svg>
+            </div>
+            <div>
+              <div class="map-legend-title">Plot Numbers</div>
+              <div class="map-legend-desc">Each plot is identified by a unique number within its sector. Numbers are shown inside the plot boundary.</div>
+            </div>
+          </div>
+
+          <div class="map-legend-item glass-card reveal">
+            <div class="map-legend-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14v-5l-2-5H7L5 12v5z"></path><circle cx="7.5" cy="17" r="1.5"></circle><circle cx="16.5" cy="17" r="1.5"></circle></svg>
+            </div>
+            <div>
+              <div class="map-legend-title">Roads &amp; Streets</div>
+              <div class="map-legend-desc">Main boulevards are shown as wider lines. Sector roads appear as medium lines, and internal streets as thinner lines.</div>
+            </div>
+          </div>
+
+          <div class="map-legend-item glass-card reveal">
+            <div class="map-legend-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-6"></path><path d="M7 16l5-5 5 5"></path><path d="M5.5 12L12 5.5 18.5 12"></path></svg>
+            </div>
+            <div>
+              <div class="map-legend-title">Parks &amp; Green Areas</div>
+              <div class="map-legend-desc">Green shaded areas indicate parks, playgrounds, and landscaped open spaces within each sector.</div>
+            </div>
+          </div>
+
+          <div class="map-legend-item glass-card reveal">
+            <div class="map-legend-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"></path><path d="M3 10h18"></path><path d="M12 3l9 7H3l9-7z"></path></svg>
+            </div>
+            <div>
+              <div class="map-legend-title">Community Buildings</div>
+              <div class="map-legend-desc">Mosques, schools, community centers, and commercial buildings are marked with distinct symbols and labels.</div>
+            </div>
+          </div>
+
+          <div class="map-legend-item glass-card reveal">
+            <div class="map-legend-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+            <div>
+              <div class="map-legend-title">Entry/Exit Gates</div>
+              <div class="map-legend-desc">Gate symbols along the boundary indicate the major entry/exit points of DHA Phase 6 with their gate numbers.</div>
+            </div>
+          </div>
+
+          <div class="map-legend-item glass-card reveal">
+            <div class="map-legend-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            </div>
+            <div>
+              <div class="map-legend-title">Sector Boundaries</div>
+              <div class="map-legend-desc">Dashed lines indicate sector boundaries. Each sector is labeled with its letter designation (A through N).</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- External Links Section -->
+    <section class="content-section bg-primary">
+      <div class="container">
+        <div class="content-section-header reveal">
+          <span class="section-label">External Links</span>
+          <h2 class="section-title">Related Resources</h2>
+          <p class="section-subtitle">Official and third-party resources for DHA Phase 6 Lahore maps and information.</p>
+        </div>
+
+        <div class="resources-grid reveal">
+          <a href="https://dhalahore.org" target="_blank" rel="noopener" class="resource-card glass-card">
+            <div class="resource-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"></path></svg>
+            </div>
+            <div>
+              <div class="resource-card-title">DHA Official Website</div>
+              <div class="resource-card-url">dhalahore.org</div>
+            </div>
+          </a>
+
+          <a href="https://dhalahore.org/dha-phases-maps/" target="_blank" rel="noopener" class="resource-card glass-card">
+            <div class="resource-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+            </div>
+            <div>
+              <div class="resource-card-title">DHA Maps Portal</div>
+              <div class="resource-card-url">dhalahore.org/dha-phases-maps/</div>
+            </div>
+          </a>
+
+          <a href="https://www.google.com/maps/place/DHA+Phase+6,+Lahore" target="_blank" rel="noopener" class="resource-card glass-card">
+            <div class="resource-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            </div>
+            <div>
+              <div class="resource-card-title">Google Maps</div>
+              <div class="resource-card-url">google.com/maps</div>
+            </div>
+          </a>
+
+          <a href="https://www.zameen.com" target="_blank" rel="noopener" class="resource-card glass-card">
+            <div class="resource-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            </div>
+            <div>
+              <div class="resource-card-title">Zameen.com</div>
+              <div class="resource-card-url">zameen.com</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Publication Meta -->
+    <aside class="page-publication-meta" aria-label="Page publication information">
+      <div class="container">
+        <span>Published <time datetime="2026-09-02T18:14:54+05:00">2 September 2026</time></span>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <div class="footer-logo-icon">D6</div>
+            DHA Phase 6 Lahore
+          </div>
+          <p class="footer-brand-description">
+            An independent local guide to sectors, properties, maps, places, services, and everyday life across DHA Phase 6 Lahore.
+          </p>
+          <div class="footer-socials" aria-label="Social media">
+            <a href="#" aria-label="Facebook" title="Facebook">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3c-3.3 0-5 2-5 5v2H6v4h3v7h4v-7h3.3l.7-4h-4V9c0-.7.3-1 1-1Z"></path></svg>
+            </a>
+            <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="DHA Phase 6 Lahore on LinkedIn" title="LinkedIn">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 8.2A2.2 2.2 0 1 0 6.5 3.8a2.2 2.2 0 0 0 0 4.4ZM4.6 21h3.8V10H4.6v11ZM10.6 10h3.6v1.5h.1c.5-.9 1.7-2 3.6-2 3.8 0 4.5 2.5 4.5 5.8V21h-3.8v-5c0-1.2 0-2.8-1.7-2.8s-2 1.3-2 2.7V21h-3.8V10Z"></path></svg>
+            </a>
+          </div>
+        </div>
+
+        <nav aria-label="Footer pages">
+          <h3 class="footer-heading">Pages</h3>
+          <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/sectors/">Sectors</a>
+            <a href="/properties/">Property Listings</a>
+            <a href="/plots/">Plots</a>
+            <a href="/houses/">Houses</a>
+            <a href="/dealers/">Property Dealers</a>
+            <a href="/dha-phase-6-lahore-map/">Map</a>
+            <a href="/places/">Places &amp; Services</a>
+            <a href="/helplines/">Helpline</a>
+            <a href="/postal-code/">Postal Code</a>
+            <a href="/weather/">Weather</a>
+            <a href="/jobs/">Jobs</a>
+            <a href="/development-updates/">Latest News</a>
+            <a href="/location/">Directions</a>
+            <a href="/utilities/">Utility Bill</a>
+            <a href="/faq/">FAQ</a>
+            <a href="/prayer-times/">Prayer Times</a>
+            <a href="/dha-phase-6-lahore-prices/">Prices</a>
+            <a href="/construction/">Construction Rate</a>
+            <a href="/sitemap.xml">Sitemap</a>
+            <a href="/sitemap/">HTML Sitemap</a>
+          </div>
+        </nav>
+
+        <nav aria-label="Sector guides">
+          <h3 class="footer-heading">Sectors</h3>
+          <div class="footer-links">
+            <a href="/sectors/sector-a/">Sector A</a>
+            <a href="/sectors/sector-b/">Sector B</a>
+            <a href="/sectors/sector-c/">Sector C</a>
+            <a href="/sectors/sector-d/">Sector D</a>
+            <a href="/sectors/sector-e/">Sector E</a>
+            <a href="/sectors/sector-f/">Sector F</a>
+            <a href="/sectors/sector-g/">Sector G</a>
+            <a href="/sectors/sector-h/">Sector H</a>
+            <a href="/sectors/sector-j/">Sector J</a>
+            <a href="/sectors/sector-k/">Sector K</a>
+            <a href="/sectors/sector-l/">Sector L</a>
+            <a href="/sectors/sector-m/">Sector M</a>
+            <a href="/sectors/sector-n/">Sector N</a>
+          </div>
+        </nav>
+
+        <section class="footer-contact" aria-labelledby="footer-contact-heading">
+          <h3 class="footer-heading" id="footer-contact-heading">Official DHA Contact</h3>
+          <div class="footer-nap">
+            <div class="footer-nap-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V9l7-6 7 6v12M9 21v-6h6v6M9 11h.01M12 11h.01M15 11h.01"></path></svg>
+              <div>
+                <span>Name</span>
+                <strong>DHA Phase 6 Lahore</strong>
+              </div>
+            </div>
+            <div class="footer-nap-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>
+              <div>
+                <span>Official address</span>
+                <address>Main Boulevard Phase 6 / Sector A, DHA Lahore, Punjab 54792, Pakistan</address>
+              </div>
+            </div>
+            <div class="footer-nap-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2.1Z"></path></svg>
+              <div>
+                <span>Official helpline</span>
+                <a href="tel:+9242111342547">+92-42-111-342-547</a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-copyright">&copy; 2026 DHA Phase 6 Lahore Guide. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to top button -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <!-- Client-side Interactive Script -->
+  <script is:inline>
+    // 1. Navbar Scrolled State & Back to Top
+    const navbar = document.querySelector('#navbar');
+    const backToTop = document.querySelector('#backToTop');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      if (navbar) {
+        if (scrollY > 50) navbar.classList.add('scrolled');
+        else navbar.classList.remove('scrolled');
+      }
+      if (backToTop) {
+        if (scrollY > 400) backToTop.classList.add('visible');
+        else backToTop.classList.remove('visible');
+      }
+    }, { passive: true });
+
+    backToTop?.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // 2. Mobile Menu Toggle
+    const navToggle = document.querySelector('#navToggle');
+    const navLinks = document.querySelector('#navLinks');
+    navToggle?.addEventListener('click', () => {
+      const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+      navToggle.setAttribute('aria-expanded', String(!isExpanded));
+      navToggle.classList.toggle('active');
+      navLinks?.classList.toggle('active');
+    });
+
+    navLinks?.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle?.setAttribute('aria-expanded', 'false');
+        navToggle?.classList.remove('active');
+        navLinks?.classList.remove('active');
+      });
+    });
+
+    // 3. Scroll Reveal Animation
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+  </script>
+</body>
+</html>
+
+<style is:global>
+  /* ══════════════════════════════════════════════════════════════════════════
+   * STYLES FOR MAP PAGE & GLOBAL THEME
+   * ══════════════════════════════════════════════════════════════════════════ */
+  :root {
+    --clr-bg-primary: #0a0a1a;
+    --clr-bg-secondary: #111128;
+    --clr-bg-card: #161635;
+    --clr-accent-gold: #d4a844;
+    --clr-accent-gold-light: #f0c95c;
+    --clr-accent-emerald: #2ecc71;
+    --clr-text-primary: #f0f0f5;
+    --clr-text-secondary: #9a9ab5;
+    --clr-text-muted: #6a6a85;
+    --clr-glass: rgba(255, 255, 255, 0.04);
+    --clr-glass-border: rgba(255, 255, 255, 0.08);
+    --clr-glass-hover: rgba(255, 255, 255, 0.07);
+    --grad-gold: linear-gradient(135deg, #d4a844, #f0c95c);
+    --ff-heading: 'Inter', ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --ff-body: 'Inter', ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --section-pad: 80px 0;
+    --container-max: 1200px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
+    background-color: var(--clr-bg-primary);
+  }
+
+  body {
+    font-family: var(--ff-body);
+    background-color: var(--clr-bg-primary);
+    color: var(--clr-text-primary);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  a {
+    color: inherit;
+    transition: color 0.3s var(--ease-out);
+    text-decoration: none;
+  }
+
+  .skip-link {
+    position: absolute;
+    top: -100px;
+    left: 20px;
+    background: var(--clr-accent-gold);
+    color: var(--clr-bg-primary);
+    padding: 10px 16px;
+    z-index: 9999;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+  }
+  .skip-link:focus {
+    top: 20px;
+  }
+
+  .container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .glass-card {
+    background: var(--clr-glass);
+    border: 1px solid var(--clr-glass-border);
+    border-radius: var(--radius-md);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    transition: all 0.4s var(--ease-out);
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* HEADER & NAVBAR */
+  .site-header {
+    position: relative;
+    z-index: 1000;
+  }
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 18px 0;
+    transition: all 0.4s var(--ease-out);
+  }
+  .navbar.scrolled {
+    background: rgba(10, 10, 26, 0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--clr-glass-border);
+    padding: 12px 0;
+  }
+  .navbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--ff-heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--clr-text-primary);
+  }
+  .nav-logo-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    background: var(--grad-gold);
+    color: var(--clr-bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    font-weight: 800;
+  }
+  .nav-logo span {
+    color: var(--clr-accent-gold);
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+  .nav-links a {
+    color: var(--clr-text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 4px 0;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--grad-gold);
+    border-radius: 2px;
+    transition: width 0.3s var(--ease-out);
+  }
+  .nav-links a:hover,
+  .nav-links a.active {
+    color: var(--clr-text-primary);
+  }
+  .nav-links a:hover::after,
+  .nav-links a.active::after {
+    width: 100%;
+  }
+  .nav-cta {
+    background: var(--grad-gold) !important;
+    color: var(--clr-bg-primary) !important;
+    padding: 10px 22px !important;
+    border-radius: var(--radius-sm);
+    font-weight: 700 !important;
+  }
+  .nav-cta::after {
+    display: none !important;
+  }
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 1001;
+  }
+  .nav-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--clr-text-primary);
+    border-radius: 2px;
+    transition: all 0.3s var(--ease-out);
+  }
+
+  /* PAGE HERO */
+  .page-hero {
+    padding: 150px 0 60px;
+    background: var(--clr-bg-secondary);
+    text-align: center;
+    border-bottom: 1px solid var(--clr-glass-border);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero::before {
+    content: "";
+    position: absolute;
+    top: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(212, 168, 68, 0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .page-hero-breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--clr-text-muted);
+    margin-bottom: 20px;
+  }
+  .page-hero-breadcrumb a {
+    color: var(--clr-text-secondary);
+  }
+  .page-hero-breadcrumb a:hover {
+    color: var(--clr-accent-gold);
+  }
+  .breadcrumb-sep {
+    font-size: 0.75rem;
+    color: var(--clr-text-muted);
+  }
+  .page-hero h1 {
+    font-family: var(--ff-heading);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 14px;
+    color: #fff;
+  }
+  .page-hero h1 .gold {
+    background: var(--grad-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .page-hero-description {
+    color: var(--clr-text-secondary);
+    font-size: 1.05rem;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* CONTENT SECTIONS */
+  .content-section {
+    padding: var(--section-pad);
+  }
+  .content-section.bg-primary {
+    background: var(--clr-bg-primary);
+  }
+  .content-section.bg-secondary {
+    background: var(--clr-bg-secondary);
+    border-top: 1px solid var(--clr-glass-border);
+    border-bottom: 1px solid var(--clr-glass-border);
+  }
+  .content-section-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .section-label {
+    display: inline-block;
+    color: var(--clr-accent-gold);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: var(--ff-heading);
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--clr-text-primary);
+    margin-bottom: 12px;
+  }
+  .section-subtitle {
+    color: var(--clr-text-secondary);
+    font-size: 1.02rem;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  /* MAP CONTAINER */
+  .full-map-wrapper {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--clr-glass-border);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    margin-bottom: 32px;
+  }
+  .full-map-wrapper iframe {
+    width: 100%;
+    height: 580px;
+    border: none;
+    display: block;
+
+  }
+
+  .map-download-actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    border-radius: var(--radius-sm);
+    font-family: var(--ff-body);
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s var(--ease-out);
+    border: none;
+  }
+  .btn-primary {
+    background: var(--grad-gold);
+    color: var(--clr-bg-primary);
+    box-shadow: 0 4px 18px rgba(212, 168, 68, 0.3);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(212, 168, 68, 0.45);
+  }
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--clr-text-primary);
+    border: 1px solid var(--clr-glass-border);
+  }
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(212, 168, 68, 0.4);
+    color: var(--clr-accent-gold);
+    transform: translateY(-2px);
+  }
+
+  /* SECTOR LEGEND */
+  .sector-legend {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 16px;
+  }
+  .sector-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+  }
+  .sector-legend-item:hover {
+    background: var(--clr-glass-hover);
+    border-color: rgba(212, 168, 68, 0.35);
+    transform: translateY(-2px);
+  }
+  .sector-legend-dot {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--grad-gold);
+    color: var(--clr-bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    font-weight: 800;
+    flex: none;
+  }
+  .sector-legend-label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--clr-text-primary);
+  }
+
+  /* MAP PREVIEW BOX */
+  .map-preview {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--clr-glass-border);
+    max-width: 1000px;
+    margin: 0 auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  }
+  .map-preview img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+  .map-preview-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 10, 26, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s var(--ease-out);
+  }
+  .map-preview:hover .map-preview-overlay {
+    opacity: 1;
+  }
+  .map-preview-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 32px;
+    border-radius: var(--radius-sm);
+    background: var(--grad-gold);
+    color: var(--clr-bg-primary);
+    font-size: 1rem;
+    font-weight: 800;
+    box-shadow: 0 8px 24px rgba(212, 168, 68, 0.4);
+  }
+
+  /* DOWNLOAD GRID */
+  .download-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .download-card {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+  }
+  .download-card:hover {
+    background: var(--clr-glass-hover);
+    border-color: rgba(212, 168, 68, 0.35);
+    transform: translateY(-4px);
+  }
+  .download-card-preview {
+    display: block;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    margin-bottom: 18px;
+    border: 1px solid var(--clr-glass-border);
+    height: 180px;
+  }
+  .download-card-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s var(--ease-out);
+  }
+  .download-card-preview:hover img {
+    transform: scale(1.05);
+  }
+  .download-card-title {
+    font-family: var(--ff-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--clr-text-primary);
+    margin-bottom: 8px;
+  }
+  .download-card-title a {
+    color: var(--clr-accent-gold);
+  }
+  .download-card-title a:hover {
+    text-decoration: underline;
+  }
+  .download-card-desc {
+    font-size: 0.88rem;
+    color: var(--clr-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 16px;
+    flex-grow: 1;
+  }
+  .download-card-size {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--clr-text-muted);
+    margin-bottom: 16px;
+  }
+  .download-card-actions {
+    display: flex;
+    gap: 10px;
+  }
+  .download-card-btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--clr-glass-border);
+    color: var(--clr-text-primary);
+    font-size: 0.82rem;
+    font-weight: 700;
+    transition: all 0.25s var(--ease-out);
+  }
+  .download-card-btn:hover {
+    background: rgba(212, 168, 68, 0.14);
+    border-color: rgba(212, 168, 68, 0.4);
+    color: var(--clr-accent-gold);
+  }
+  .download-card-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* MAP LEGEND GRID */
+  .map-legend-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .map-legend-item {
+    padding: 24px;
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+  }
+  .map-legend-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: var(--radius-sm);
+    background: rgba(212, 168, 68, 0.12);
+    border: 1px solid rgba(212, 168, 68, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+  }
+  .map-legend-icon svg {
+    width: 22px;
+    height: 22px;
+    stroke: var(--clr-accent-gold);
+  }
+  .map-legend-title {
+    font-family: var(--ff-heading);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--clr-text-primary);
+    margin-bottom: 6px;
+  }
+  .map-legend-desc {
+    font-size: 0.88rem;
+    color: var(--clr-text-secondary);
+    line-height: 1.6;
+  }
+
+  /* RESOURCES GRID */
+  .resources-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .resource-card {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .resource-card:hover {
+    background: var(--clr-glass-hover);
+    border-color: rgba(212, 168, 68, 0.35);
+    transform: translateY(-2px);
+  }
+  .resource-card-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(212, 168, 68, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+  }
+  .resource-card-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--clr-accent-gold);
+  }
+  .resource-card-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--clr-text-primary);
+  }
+  .resource-card-url {
+    font-size: 0.78rem;
+    color: var(--clr-accent-gold);
+  }
+
+  /* PUBLICATION META */
+  .page-publication-meta {
+    padding: 20px 0;
+    background: var(--clr-bg-primary);
+    border-top: 1px solid var(--clr-glass-border);
+    border-bottom: 1px solid var(--clr-glass-border);
+    color: var(--clr-text-muted);
+    font-size: 0.85rem;
+    text-align: center;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--clr-bg-secondary);
+    border-top: 1px solid var(--clr-glass-border);
+    padding: 64px 0 32px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1.2fr 1fr 1.4fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+  .footer-brand {
+    max-width: 320px;
+  }
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--ff-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+  .footer-logo-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    background: var(--grad-gold);
+    color: var(--clr-bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 800;
+  }
+  .footer-brand-description {
+    color: var(--clr-text-secondary);
+    font-size: 0.88rem;
+    line-height: 1.7;
+    margin: 0;
+  }
+  .footer-socials {
+    display: flex;
+    gap: 10px;
+    margin-top: 22px;
+  }
+  .footer-socials a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--clr-glass-border);
+    color: var(--clr-text-secondary);
+    transition: all 0.3s var(--ease-out);
+  }
+  .footer-socials a:hover {
+    color: var(--clr-accent-gold);
+    background: rgba(212, 168, 68, 0.12);
+    border-color: rgba(212, 168, 68, 0.45);
+    transform: translateY(-2px);
+  }
+  .footer-socials svg {
+    width: 19px;
+    height: 19px;
+    fill: currentColor;
+  }
+  .footer-heading {
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--clr-text-primary);
+    margin-bottom: 20px;
+  }
+  .footer-links a {
+    display: block;
+    color: var(--clr-text-secondary);
+    font-size: 0.88rem;
+    padding: 5px 0;
+    transition: all 0.3s var(--ease-out);
+  }
+  .footer-links a:hover {
+    color: var(--clr-accent-gold);
+    transform: translateX(4px);
+  }
+  .footer-contact {
+    min-width: 0;
+  }
+  .footer-nap {
+    display: grid;
+    gap: 18px;
+  }
+  .footer-nap-item {
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    gap: 11px;
+    align-items: start;
+  }
+  .footer-nap-item > svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--clr-accent-gold);
+    fill: none;
+    stroke-width: 1.8px;
+    margin-top: 2px;
+  }
+  .footer-nap-item div {
+    display: grid;
+    gap: 4px;
+  }
+  .footer-nap-item span {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--clr-text-muted);
+  }
+  .footer-nap-item strong,
+  .footer-nap-item address,
+  .footer-nap-item a {
+    color: var(--clr-text-secondary);
+    font-size: 0.84rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.55;
+    margin: 0;
+  }
+  .footer-nap-item a {
+    color: var(--clr-accent-gold);
+  }
+  .footer-nap-item a:hover {
+    text-decoration: underline;
+  }
+  .footer-bottom {
+    border-top: 1px solid var(--clr-glass-border);
+    padding-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-copyright {
+    color: var(--clr-text-muted);
+    font-size: 0.82rem;
+  }
+
+  /* BACK TO TOP */
+  .back-to-top {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    z-index: 999;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--grad-gold);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(212, 168, 68, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(16px);
+    transition: all 0.3s var(--ease-out);
+  }
+  .back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .back-to-top svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--clr-bg-primary);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .sector-legend {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .download-grid, .map-legend-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .resources-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 768px) {
+    .nav-toggle {
+      display: flex;
+    }
+    .nav-links {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(290px, 100%);
+      height: 100vh;
+      background: rgba(10, 10, 26, 0.97);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-left: 1px solid var(--clr-glass-border);
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 90px 32px 40px;
+      transform: translateX(100%);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out);
+    }
+    .nav-links.active {
+      transform: translateX(0);
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+    .sector-legend {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .download-grid, .map-legend-grid, .resources-grid {
+      grid-template-columns: 1fr;
+    }
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+    .footer-bottom {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>
