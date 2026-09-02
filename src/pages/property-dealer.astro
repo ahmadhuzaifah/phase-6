@@ -1,274 +1,532 @@
 ---
 /**
- * DHA Phase 6 Lahore Property Dealers Page
+ * DHA Phase 6 Lahore — Property Dealers Page
  * Exact structural implementation matching the reference source code.
  */
-
-import PageLayout from '@layouts/PageLayout.astro';
-import Schema from '@components/seo/Schema.astro';
-import { SITE } from '@data/site';
-
-const consultant = {
-  name: 'Ahmad Huzaifah',
-  title: 'Property Dealer',
-  location: 'DHA Phase 6 Lahore',
-  phone: '0325 7800001',
-  phoneTel: '+923257800001',
-  whatsappNumber: '0325 7800001',
-  whatsappUrl: 'https://wa.me/923257800001?text=Hi%20Ahmad%20Huzaifah%2C%20I%20am%20interested%20in%20property%20in%20DHA%20Phase%206%20Lahore.%20Please%20share%20the%20available%20options.',
-  image: '/images/dealers/ahmad-huzaifah.png',
-  serviceArea: 'DHA Phase 6 Lahore',
-  services: 'Property inquiries and viewing arrangements',
-};
-
-const pageSchema = {
-  name: 'DHA Phase 6 Lahore Property Dealers',
-  description: 'Contact Ahmad Huzaifah for property inquiries and viewing arrangements in DHA Phase 6 Lahore. Call 0325 7800001 or WhatsApp 0325 7800001.',
-  url: `${SITE.url}/dealers/`,
-};
-
-const realEstateAgentSchema = {
-  name: consultant.name,
-  jobTitle: consultant.title,
-  telephone: consultant.phoneTel,
-  url: `${SITE.url}/dealers/`,
-  image: `${SITE.url}${consultant.image}`,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'Main Boulevard, Phase 6, DHA Lahore',
-    addressLocality: 'Lahore',
-    addressRegion: 'Punjab',
-    postalCode: '54792',
-    addressCountry: 'PK',
-  },
-};
-
-const breadcrumbsSchema = {
-  itemListElement: [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: 'Home',
-      item: SITE.url,
-    },
-    {
-      '@type': 'ListItem',
-      position: 2,
-      name: 'Property Dealer',
-      item: `${SITE.url}/dealers/`,
-    },
-  ],
-};
 ---
 
-<PageLayout
-  title="Legacy Property Contact Page | DHA Phase 6 Lahore"
-  description="Legacy contact route for the independent DHA Phase 6 Lahore property desk."
-  noindex
->
-  <Schema type="WebSite" data={pageSchema} />
-  <Schema type="RealEstateAgent" data={realEstateAgentSchema} />
-  <Schema type="BreadcrumbList" data={breadcrumbsSchema} />
+<!DOCTYPE html>
+<html lang="en-PK">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a1a">
 
-  <!-- Page Hero -->
-  <header class="page-hero">
-    <div class="container">
-      <nav class="page-hero-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a>
-        <span class="breadcrumb-sep">›</span>
-        <span aria-current="page">Property Dealer</span>
-      </nav>
-      <h1><span class="gold">DHA Phase 6 Lahore</span> Property Dealers</h1>
-      <p class="page-hero-description">
-        Contact Ahmad Huzaifah about properties and viewing arrangements in DHA Phase 6 Lahore.
-      </p>
-    </div>
+  <!-- SEO -->
+  <title>DHA Phase 6 Lahore Property Dealers | Ahmad Huzaifah</title>
+  <meta name="description" content="Contact Ahmad Huzaifah for property inquiries and viewing arrangements in DHA Phase 6 Lahore. Call 0325 7800001 or WhatsApp 0325 7800001.">
+  <meta name="keywords" content="DHA Phase 6 Lahore property dealers, Ahmad Huzaifah property dealer, property dealer DHA Phase 6 Lahore, DHA Phase 6 real estate agent, DHA Phase 6 Lahore real estate">
+  <meta name="author" content="DHA Phase 6 Lahore Guide">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="https://dhaphase6lahore.pk/dealers/">
+  <link rel="alternate" hreflang="en-PK" href="https://dhaphase6lahore.pk/dealers/">
+  <link rel="alternate" hreflang="x-default" href="https://dhaphase6lahore.pk/dealers/">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="DHA Phase 6 Lahore Property Dealers">
+  <meta property="og:description" content="Contact Ahmad Huzaifah for property inquiries and viewing arrangements in DHA Phase 6 Lahore. Call 0325 7800001 or WhatsApp 0325 7800001.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dhaphase6lahore.pk/dealers/">
+  <meta property="og:site_name" content="DHA Phase 6 Lahore">
+  <meta property="og:locale" content="en_PK">
+  <meta property="og:image" content="/images/hero-bg.png">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="1080">
+  <meta property="og:image:alt" content="DHA Phase 6 Lahore">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DHA Phase 6 Lahore Property Dealers">
+  <meta name="twitter:description" content="Contact Ahmad Huzaifah for property inquiries and viewing arrangements in DHA Phase 6 Lahore. Call 0325 7800001 or WhatsApp 0325 7800001.">
+  <meta name="twitter:image" content="/images/hero-bg.png">
+  <meta name="twitter:image:alt" content="DHA Phase 6 Lahore">
+
+  <!-- Structured data -->
+  <script type="application/ld+json" is:inline set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://dhaphase6lahore.pk/#organization",
+        "name": "DHA Phase 6 Lahore",
+        "url": "https://dhaphase6lahore.pk/",
+        "description": "An independent informational guide to DHA Phase 6 Lahore.",
+        "telephone": "+92-325-7800001",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Main Boulevard Phase 6",
+          "addressLocality": "Lahore",
+          "addressRegion": "Punjab",
+          "postalCode": "54792",
+          "addressCountry": "PK"
+        },
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dhaphase6lahore.pk/images/hero-bg.png",
+          "width": "1920",
+          "height": "1080"
+        },
+        "areaServed": {
+          "@id": "https://dhaphase6lahore.pk/#dha-phase-6-lahore"
+        }
+      },
+      {
+        "@type": "Place",
+        "@id": "https://dhaphase6lahore.pk/#dha-phase-6-lahore",
+        "name": "DHA Phase 6 Lahore",
+        "alternateName": "DHA Phase VI Lahore",
+        "url": "https://dhaphase6lahore.pk/",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Lahore",
+          "addressRegion": "Punjab",
+          "postalCode": "54792",
+          "addressCountry": "PK"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 31.4725,
+          "longitude": 74.4530
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://dhaphase6lahore.pk/#website",
+        "url": "https://dhaphase6lahore.pk/",
+        "name": "DHA Phase 6 Lahore",
+        "alternateName": ["DHA Phase 6 Lahore", "DHA Phase VI Lahore Guide"],
+        "publisher": {
+          "@id": "https://dhaphase6lahore.pk/#organization"
+        },
+        "inLanguage": "en-PK",
+        "about": {
+          "@id": "https://dhaphase6lahore.pk/#dha-phase-6-lahore"
+        }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-1",
+        "name": "Home",
+        "url": "https://dhaphase6lahore.pk/",
+        "position": 1,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-2",
+        "name": "Sectors",
+        "url": "https://dhaphase6lahore.pk/sectors/",
+        "position": 2,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-3",
+        "name": "Properties",
+        "url": "https://dhaphase6lahore.pk/properties/",
+        "position": 3,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-4",
+        "name": "Places",
+        "url": "https://dhaphase6lahore.pk/places/",
+        "position": 4,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-5",
+        "name": "Plots",
+        "url": "https://dhaphase6lahore.pk/plots/",
+        "position": 5,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-6",
+        "name": "Jobs",
+        "url": "https://dhaphase6lahore.pk/jobs/",
+        "position": 6,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-7",
+        "name": "Dealers",
+        "url": "https://dhaphase6lahore.pk/dealers/",
+        "position": 7,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-8",
+        "name": "Map",
+        "url": "https://dhaphase6lahore.pk/dha-phase-6-lahore-map/",
+        "position": 8,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-9",
+        "name": "Map PDFs",
+        "url": "https://dhaphase6lahore.pk/dha-phase-6-lahore-map/#map-pdf-downloads",
+        "position": 9,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://dhaphase6lahore.pk/dealers/#webpage",
+        "url": "https://dhaphase6lahore.pk/dealers/",
+        "name": "DHA Phase 6 Lahore Property Dealers",
+        "description": "Contact Ahmad Huzaifah for property inquiries and viewing arrangements in DHA Phase 6 Lahore. Call 0325 7800001 or WhatsApp 0325 7800001.",
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" },
+        "inLanguage": "en-PK",
+        "isAccessibleForFree": true,
+        "about": { "@id": "https://dhaphase6lahore.pk/#dha-phase-6-lahore" },
+        "primaryImageOfPage": {
+          "@type": "ImageObject",
+          "url": "https://dhaphase6lahore.pk/images/hero-bg.png"
+        },
+        "datePublished": "2026-09-02T18:14:54+05:00",
+        "dateModified": "2026-09-02T18:14:54+05:00",
+        "breadcrumb": { "@id": "https://dhaphase6lahore.pk/dealers/#breadcrumb" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://dhaphase6lahore.pk/dealers/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://dhaphase6lahore.pk/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Property Dealer",
+            "item": "https://dhaphase6lahore.pk/dealers/"
+          }
+        ]
+      }
+    ]
+  })}></script>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;rect width='100' height='100' rx='16' fill='%23d4a844'/&gt;&lt;text x='50' y='66' font-size='48' text-anchor='middle' font-family='serif' font-weight='bold' fill='%230a0a1a'&gt;D6&lt;/text&gt;&lt;/svg&gt;">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- Header / Navigation -->
+  <header class="site-header">
+    <nav class="navbar" id="navbar" aria-label="Primary navigation">
+      <div class="container">
+        <a href="/" class="nav-logo" aria-label="DHA Phase 6 Lahore home">
+          <div class="nav-logo-icon">D6</div>
+          DHA Phase <span>6</span> Lahore
+        </a>
+        <div class="nav-links" id="navLinks">
+          <a href="/">Home</a>
+          <a href="/sectors/">Sectors</a>
+          <a href="/properties/">Properties</a>
+          <a href="/places/">Places</a>
+          <a href="/plots/">Plots</a>
+          <a href="/jobs/">Jobs</a>
+          <a href="/dealers/" class="active" aria-current="page">Dealers</a>
+          <a href="/dha-phase-6-lahore-map/">Map</a>
+          <a href="/dha-phase-6-lahore-map/#map-pdf-downloads" class="nav-cta">Map PDFs</a>
+        </div>
+        <button class="nav-toggle" id="navToggle" type="button" aria-label="Toggle navigation menu" aria-controls="navLinks" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
   </header>
 
-  <!-- Dealer Profile Section -->
-  <section class="dealer-section">
-    <div class="container">
-      <article class="qurban-profile glass-card reveal">
-        <header class="qurban-profile-header">
-          <img
-            src={consultant.image}
-            alt="Ahmad Huzaifah, property dealer in DHA Phase 6 Lahore"
-            width="128"
-            height="128"
-            loading="eager"
-          />
-          <div>
-            <span class="dealer-card-badge">Property Dealer</span>
-            <h3>{consultant.name}</h3>
-            <p>{consultant.location}</p>
-          </div>
-        </header>
+  <main id="main-content">
+    <!-- Page Hero -->
+    <header class="page-hero">
+      <div class="container">
+        <nav class="page-hero-breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-sep">›</span>
+          <span aria-current="page">Property Dealer</span>
+        </nav>
+        <h1><span class="gold">DHA Phase 6 Lahore</span> Property Dealers</h1>
+        <p class="page-hero-description">Contact Ahmad Huzaifah about properties and viewing arrangements in DHA Phase 6 Lahore.</p>
+      </div>
+    </header>
 
-        <div class="qurban-profile-body">
-          <p class="profile-intro">
-            Contact Ahmad Huzaifah for property inquiries and viewing arrangements in DHA Phase 6 Lahore. Share the property title or your requirements when you call or send a WhatsApp message.
+    <!-- Dealer Profile Section -->
+    <section class="dealer-section">
+      <div class="container">
+        <article class="qurban-profile glass-card reveal">
+          <header class="qurban-profile-header">
+            <img
+              src="/images/property/ahmad-huzaifah.png"
+              alt="Ahmad Huzaifah, property dealer in DHA Phase 6 Lahore"
+              width="128"
+              height="128"
+              loading="eager"
+            >
+            <div>
+              <span class="dealer-card-badge">Property Dealer</span>
+              <h3>Ahmad Huzaifah</h3>
+              <p>DHA Phase 6 Lahore</p>
+            </div>
+          </header>
+          <div class="qurban-profile-body">
+            <p class="profile-intro">
+              Contact Ahmad Huzaifah for property inquiries and viewing arrangements in DHA Phase 6 Lahore. Share the property title or your requirements when you call or send a WhatsApp message.
+            </p>
+            <dl class="profile-details">
+              <div>
+                <dt>Service area</dt>
+                <dd>DHA Phase 6 Lahore</dd>
+              </div>
+              <div>
+                <dt>Services</dt>
+                <dd>Property inquiries and viewing arrangements</dd>
+              </div>
+              <div>
+                <dt>WhatsApp</dt>
+                <dd>
+                  <a
+                    href="https://wa.me/923257800001?text=Hi%20Ahmad%20Huzaifah%2C%20I%20am%20interested%20in%20property%20in%20DHA%20Phase%206%20Lahore.%20Please%20share%20the%20available%20options."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >0325 7800001</a>
+                </dd>
+              </div>
+              <div>
+                <dt>Call</dt>
+                <dd>
+                  <a href="tel:+923257800001">0325 7800001</a>
+                </dd>
+              </div>
+            </dl>
+            <div class="profile-actions">
+              <a
+                class="btn btn-whatsapp"
+                href="https://wa.me/923257800001?text=Hi%20Ahmad%20Huzaifah%2C%20I%20am%20interested%20in%20property%20in%20DHA%20Phase%206%20Lahore.%20Please%20share%20the%20available%20options."
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.009-.372-.011-.57-.011-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.876 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.693.625.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.981.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884a9.82 9.82 0 0 1 7.021 2.91 9.83 9.83 0 0 1 2.9 7.026c-.003 5.45-4.437 9.884-9.885 9.884"></path>
+                </svg>
+                WhatsApp 0325 7800001
+              </a>
+              <a class="btn btn-call" href="tel:+923257800001">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="currentColor" d="M6.62 10.79a15.46 15.46 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.36 11.36 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.36 11.36 0 0 0 .57 3.57 1 1 0 0 1-.25 1.02l-2.2 2.2Z"></path>
+                </svg>
+                Call 0325 7800001
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Disclaimer alert -->
+        <div class="dealer-disclaimer">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          <p>Check property ownership, dues, price, and transfer status before making a payment.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Buyer's Guide Section -->
+    <section class="dealer-section dealer-guide-section">
+      <div class="container">
+        <div class="section-header center">
+          <div class="eyebrow"><span></span>Before You Deal</div>
+          <h2>Buyer's Guide</h2>
+          <p>Use these checks before buying, selling, or renting a property.</p>
+        </div>
+        <div class="tips-grid">
+          <article class="tip-card glass-card reveal">
+            <div class="tip-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <h3>Verify Registration</h3>
+            <p>Confirm the dealer and agency details before sharing documents or making a payment.</p>
+          </article>
+          <article class="tip-card glass-card reveal">
+            <div class="tip-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <h3>Check Track Record</h3>
+            <p>Ask for recent DHA Phase 6 deals and references from past clients.</p>
+          </article>
+          <article class="tip-card glass-card reveal">
+            <div class="tip-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3>Meet in Person</h3>
+            <p>Meet at the property or an agreed office before moving ahead with a deal.</p>
+          </article>
+          <article class="tip-card glass-card reveal">
+            <div class="tip-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </div>
+            <h3>Verify Documents</h3>
+            <p>Check ownership, dues, allotment, and transfer documents through the relevant DHA office.</p>
+          </article>
+          <article class="tip-card glass-card reveal">
+            <div class="tip-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <h3>Agree on Commission</h3>
+            <p>Confirm the commission and payment terms in writing before the transaction.</p>
+          </article>
+          <article class="tip-card glass-card reveal">
+            <div class="tip-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            </div>
+            <h3>Use DHA Transfer</h3>
+            <p>Complete the transfer through the official DHA process and keep payment records.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Publication Meta -->
+    <aside class="page-publication-meta" aria-label="Page publication information">
+      <div class="container">
+        <span>Published <time datetime="2026-09-02T18:14:54+05:00">2 September 2026</time></span>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <div class="footer-logo-icon">D6</div>
+            DHA Phase 6 Lahore
+          </div>
+          <p class="footer-brand-description">
+            An independent local guide to sectors, properties, maps, places, services, and everyday life across DHA Phase 6 Lahore.
           </p>
-
-          <dl class="profile-details">
-            <div>
-              <dt>Service area</dt>
-              <dd>{consultant.serviceArea}</dd>
-            </div>
-            <div>
-              <dt>Services</dt>
-              <dd>{consultant.services}</dd>
-            </div>
-            <div>
-              <dt>WhatsApp</dt>
-              <dd>
-                <a href={consultant.whatsappUrl} target="_blank" rel="noopener noreferrer">
-                  {consultant.whatsappNumber}
-                </a>
-              </dd>
-            </div>
-            <div>
-              <dt>Call</dt>
-              <dd>
-                <a href={`tel:${consultant.phoneTel}`}>
-                  {consultant.phone}
-                </a>
-              </dd>
-            </div>
-          </dl>
-
-          <div class="profile-actions">
-            <a class="btn btn-whatsapp" href={consultant.whatsappUrl} target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20">
-                <path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.009-.372-.011-.57-.011-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.876 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.693.625.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.981.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884a9.82 9.82 0 0 1 7.021 2.91 9.83 9.83 0 0 1 2.9 7.026c-.003 5.45-4.437 9.884-9.885 9.884"></path>
-              </svg>
-              <span>WhatsApp {consultant.whatsappNumber}</span>
+          <div class="footer-socials" aria-label="Social media">
+            <a href="#" aria-label="Facebook" title="Facebook">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3c-3.3 0-5 2-5 5v2H6v4h3v7h4v-7h3.3l.7-4h-4V9c0-.7.3-1 1-1Z"></path></svg>
             </a>
-
-            <a class="btn btn-call" href={`tel:${consultant.phoneTel}`}>
-              <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18">
-                <path fill="currentColor" d="M6.62 10.79a15.46 15.46 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.36 11.36 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.36 11.36 0 0 0 .57 3.57 1 1 0 0 1-.25 1.02l-2.2 2.2Z"></path>
-              </svg>
-              <span>Call {consultant.phone}</span>
+            <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="DHA Phase 6 Lahore on LinkedIn" title="LinkedIn">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 8.2A2.2 2.2 0 1 0 6.5 3.8a2.2 2.2 0 0 0 0 4.4ZM4.6 21h3.8V10H4.6v11ZM10.6 10h3.6v1.5h.1c.5-.9 1.7-2 3.6-2 3.8 0 4.5 2.5 4.5 5.8V21h-3.8v-5c0-1.2 0-2.8-1.7-2.8s-2 1.3-2 2.7V21h-3.8V10Z"></path></svg>
             </a>
           </div>
         </div>
-      </article>
 
-      <div class="dealer-disclaimer">
-        <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18">
-          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-          <line x1="12" y1="9" x2="12" y2="13"></line>
-          <line x1="12" y1="17" x2="12.01" y2="17"></line>
-        </svg>
-        <p>Check property ownership, dues, price, and transfer status before making a payment.</p>
+        <nav aria-label="Footer pages">
+          <h3 class="footer-heading">Pages</h3>
+          <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/sectors/">Sectors</a>
+            <a href="/properties/">Property Listings</a>
+            <a href="/plots/">Plots</a>
+            <a href="/houses/">Houses</a>
+            <a href="/dealers/">Property Dealers</a>
+            <a href="/dha-phase-6-lahore-map/">Map</a>
+            <a href="/places/">Places &amp; Services</a>
+            <a href="/helplines/">Helpline</a>
+            <a href="/postal-code/">Postal Code</a>
+            <a href="/weather/">Weather</a>
+            <a href="/jobs/">Jobs</a>
+            <a href="/development-updates/">Latest News</a>
+            <a href="/location/">Directions</a>
+            <a href="/utilities/">Utility Bill</a>
+            <a href="/faq/">FAQ</a>
+            <a href="/prayer-times/">Prayer Times</a>
+            <a href="/dha-phase-6-lahore-prices/">Prices</a>
+            <a href="/construction/">Construction Rate</a>
+            <a href="/sitemap.xml">Sitemap</a>
+            <a href="/sitemap/">HTML Sitemap</a>
+          </div>
+        </nav>
+
+        <nav aria-label="Sector guides">
+          <h3 class="footer-heading">Sectors</h3>
+          <div class="footer-links">
+            <a href="/sectors/sector-a/">Sector A</a>
+            <a href="/sectors/sector-b/">Sector B</a>
+            <a href="/sectors/sector-c/">Sector C</a>
+            <a href="/sectors/sector-d/">Sector D</a>
+            <a href="/sectors/sector-e/">Sector E</a>
+            <a href="/sectors/sector-f/">Sector F</a>
+            <a href="/sectors/sector-g/">Sector G</a>
+            <a href="/sectors/sector-h/">Sector H</a>
+            <a href="/sectors/sector-j/">Sector J</a>
+            <a href="/sectors/sector-k/">Sector K</a>
+            <a href="/sectors/sector-l/">Sector L</a>
+            <a href="/sectors/sector-m/">Sector M</a>
+            <a href="/sectors/sector-n/">Sector N</a>
+          </div>
+        </nav>
+
+        <section class="footer-contact" aria-labelledby="footer-contact-heading">
+          <h3 class="footer-heading" id="footer-contact-heading">Official DHA Contact</h3>
+          <div class="footer-nap">
+            <div class="footer-nap-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V9l7-6 7 6v12M9 21v-6h6v6M9 11h.01M12 11h.01M15 11h.01"></path></svg>
+              <div>
+                <span>Name</span>
+                <strong>DHA Phase 6 Lahore</strong>
+              </div>
+            </div>
+            <div class="footer-nap-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>
+              <div>
+                <span>Official address</span>
+                <address>Main Boulevard Phase 6 / Sector A, DHA Lahore, Punjab 54792, Pakistan</address>
+              </div>
+            </div>
+            <div class="footer-nap-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2.1Z"></path></svg>
+              <div>
+                <span>Official helpline</span>
+                <a href="tel:+9242111342547">+92-42-111-342-547</a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-copyright">&copy; 2026 DHA Phase 6 Lahore Guide. All rights reserved.</div>
       </div>
     </div>
-  </section>
+  </footer>
 
-  <!-- Buyer's Guide Section -->
-  <section class="dealer-section dealer-guide-section">
-    <div class="container">
-      <div class="section-header center">
-        <div class="eyebrow">
-          <span></span>
-          Before You Deal
-        </div>
-        <h2>Buyer's Guide</h2>
-        <p>Use these checks before buying, selling, or renting a property.</p>
-      </div>
-
-      <div class="tips-grid">
-        <article class="tip-card glass-card reveal">
-          <div class="tip-icon-wrap">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-              <polyline points="22 4 12 14.01 9 11.01"></polyline>
-            </svg>
-          </div>
-          <h3>Verify Registration</h3>
-          <p>Confirm the dealer and agency details before sharing documents or making a payment.</p>
-        </article>
-
-        <article class="tip-card glass-card reveal">
-          <div class="tip-icon-wrap">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-            </svg>
-          </div>
-          <h3>Check Track Record</h3>
-          <p>Ask for recent DHA Phase 6 deals and references from past clients.</p>
-        </article>
-
-        <article class="tip-card glass-card reveal">
-          <div class="tip-icon-wrap">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-              <circle cx="9" cy="7" r="4"></circle>
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-            </svg>
-          </div>
-          <h3>Meet in Person</h3>
-          <p>Meet at the property or an agreed office before moving ahead with a deal.</p>
-        </article>
-
-        <article class="tip-card glass-card reveal">
-          <div class="tip-icon-wrap">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-              <polyline points="14 2 14 8 20 8"></polyline>
-              <line x1="16" y1="13" x2="8" y2="13"></line>
-              <line x1="16" y1="17" x2="8" y2="17"></line>
-              <polyline points="10 9 9 9 8 9"></polyline>
-            </svg>
-          </div>
-          <h3>Verify Documents</h3>
-          <p>Check ownership, dues, allotment, and transfer documents through the relevant DHA office.</p>
-        </article>
-
-        <article class="tip-card glass-card reveal">
-          <div class="tip-icon-wrap">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="12" y1="1" x2="12" y2="23"></line>
-              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-            </svg>
-          </div>
-          <h3>Agree on Commission</h3>
-          <p>Confirm the commission and payment terms in writing before the transaction.</p>
-        </article>
-
-        <article class="tip-card glass-card reveal">
-          <div class="tip-icon-wrap">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-            </svg>
-          </div>
-          <h3>Use DHA Transfer</h3>
-          <p>Complete the transfer through the official DHA process and keep payment records.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Publication Meta -->
-  <aside class="page-publication-meta" aria-label="Page publication information">
-    <div class="container">
-      <span>Published <time datetime="2026-08-18T05:27:34+05:00">18 August 2026</time></span>
-    </div>
-  </aside>
-
-  <!-- Agent WhatsApp Popup (matching reference) -->
-  <aside class="agent-contact-popup" id="agentContactPopup" aria-label="Contact property consultant">
-    <button class="agent-popup-close" id="agentPopupClose" type="button" aria-label="Close message">×</button>
+  <!-- Agent Contact Popup Widget -->
+  <aside class="agent-contact-popup" id="agentContactPopup" aria-label="Contact property consultant" hidden>
+    <button class="agent-popup-close" id="agentPopupClose" type="button" aria-label="Close property consultant message">&times;</button>
     <div class="agent-popup-profile">
       <div class="agent-popup-photo">
-        <img src={consultant.image} alt="Ahmad Huzaifah, property consultant" width="72" height="72" />
-        <span class="online-indicator"></span>
+        <img src="/images/property/ahmad-huzaifah.png" alt="Ahmad Huzaifah, property consultant" width="72" height="72">
+        <span aria-hidden="true"></span>
       </div>
       <div>
-        <small>Property Consultant</small>
-        <strong>{consultant.name}</strong>
+        <small>Property consultant</small>
+        <strong>Ahmad Huzaifah</strong>
         <span>Usually replies quickly</span>
       </div>
     </div>
@@ -277,564 +535,973 @@ const breadcrumbsSchema = {
     </p>
     <a
       class="agent-popup-whatsapp"
-      href={consultant.whatsappUrl}
+      href="https://wa.me/923257800001?text=Hi%20Ahmad%20Huzaifah%2C%20I%20am%20looking%20for%20a%20property%20in%20DHA%20Phase%206%20Lahore.%20Please%20guide%20me%20about%20the%20available%20options."
       target="_blank"
       rel="noopener noreferrer"
+      data-agent-whatsapp
+      data-whatsapp-phone="923257800001"
+      data-whatsapp-message="Hi Ahmad Huzaifah, I am looking for a property in DHA Phase 6 Lahore. Please guide me about the available options."
     >
-      <svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20">
-        <path fill="currentColor" d="M21 11.5a8.4 8.4 0 0 1-9 8.5 9.6 9.6 0 0 1-4-1l-5 1 1-5a9.6 9.6 0 0 1-1-4 8.5 8.5 0 1 1 17 0z"></path>
-        <path fill="currentColor" d="M8.5 8.5c.5 3 2 4.5 5 5"></path>
-      </svg>
-      <span>Chat on WhatsApp</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 9.6 9.6 0 0 1-4-1l-5 1 1-5a9.6 9.6 0 0 1-1-4 8.5 8.5 0 1 1 17 0z"></path><path d="M8.5 8.5c.5 3 2 4.5 5 5"></path></svg>
+      Chat on WhatsApp
     </a>
   </aside>
 
   <!-- Back to top button -->
   <button class="back-to-top" id="backToTop" aria-label="Back to top">
-    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="18 15 12 9 6 15"></polyline>
-    </svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
   </button>
-</PageLayout>
 
-<style>
-  /* ── Page Hero ──────────────────────────────────────────────────── */
-  .page-hero {
-    background: #0a0a1a;
-    padding: 36px 0 28px;
-    text-align: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  <!-- Client-side Interactive Script -->
+  <script is:inline>
+    // 1. WhatsApp Dynamic Message
+    const agentWhatsapp = document.querySelector('[data-agent-whatsapp]');
+    const updateWhatsappLink = () => {
+      if (!agentWhatsapp) return;
+      const phone = agentWhatsapp.dataset.whatsappPhone;
+      const message = agentWhatsapp.dataset.whatsappMessage;
+      if (!phone || !message) return;
+      const fullMessage = `${message}\n\nSource: ${window.location.href}`;
+      agentWhatsapp.href = `https://wa.me/${phone}?text=${encodeURIComponent(fullMessage)}`;
+    };
+    updateWhatsappLink();
+    agentWhatsapp?.addEventListener('click', updateWhatsappLink);
+
+    // 2. Agent Popup Display & Dismissal
+    const popup = document.querySelector('#agentContactPopup');
+    const popupClose = document.querySelector('#agentPopupClose');
+    const dismissedKey = 'dha-agent-popup-dismissed';
+    let isDismissed = false;
+    try {
+      isDismissed = sessionStorage.getItem(dismissedKey) === 'true';
+    } catch {
+      isDismissed = false;
+    }
+
+    if (popup && !isDismissed) {
+      window.setTimeout(() => {
+        popup.hidden = false;
+        window.requestAnimationFrame(() => popup.classList.add('visible'));
+      }, 2200);
+    }
+
+    popupClose?.addEventListener('click', () => {
+      if (popup) {
+        popup.classList.remove('visible');
+        window.setTimeout(() => { popup.hidden = true; }, 250);
+        try { sessionStorage.setItem(dismissedKey, 'true'); } catch {}
+      }
+    });
+
+    // 3. Navbar Scrolled State & Back to Top
+    const navbar = document.querySelector('#navbar');
+    const backToTop = document.querySelector('#backToTop');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      if (navbar) {
+        if (scrollY > 50) navbar.classList.add('scrolled');
+        else navbar.classList.remove('scrolled');
+      }
+      if (backToTop) {
+        if (scrollY > 400) backToTop.classList.add('visible');
+        else backToTop.classList.remove('visible');
+      }
+    }, { passive: true });
+
+    backToTop?.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // 4. Mobile Menu Toggle
+    const navToggle = document.querySelector('#navToggle');
+    const navLinks = document.querySelector('#navLinks');
+    navToggle?.addEventListener('click', () => {
+      const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+      navToggle.setAttribute('aria-expanded', String(!isExpanded));
+      navToggle.classList.toggle('active');
+      navLinks?.classList.toggle('active');
+    });
+
+    navLinks?.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle?.setAttribute('aria-expanded', 'false');
+        navToggle?.classList.remove('active');
+        navLinks?.classList.remove('active');
+      });
+    });
+
+    // 5. Scroll Reveal Animation
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+  </script>
+</body>
+</html>
+
+<style is:global>
+  /* ══════════════════════════════════════════════════════════════════════════
+   * STYLES FOR DEALER PAGE & GLOBAL THEME
+   * ══════════════════════════════════════════════════════════════════════════ */
+  :root {
+    --clr-bg-primary: #0a0a1a;
+    --clr-bg-secondary: #111128;
+    --clr-bg-card: #161635;
+    --clr-accent-gold: #d4a844;
+    --clr-accent-gold-light: #f0c95c;
+    --clr-accent-emerald: #2ecc71;
+    --clr-accent-emerald-dark: #27ae60;
+    --clr-text-primary: #f0f0f5;
+    --clr-text-secondary: #9a9ab5;
+    --clr-text-muted: #6a6a85;
+    --clr-glass: rgba(255, 255, 255, 0.04);
+    --clr-glass-border: rgba(255, 255, 255, 0.08);
+    --clr-glass-hover: rgba(255, 255, 255, 0.07);
+    --grad-gold: linear-gradient(135deg, #d4a844, #f0c95c);
+    --grad-emerald: linear-gradient(135deg, #27ae60, #2ecc71);
+    --grad-hero: linear-gradient(180deg, rgba(10, 10, 26, 0.35) 0%, rgba(10, 10, 26, 0.92) 100%);
+    --ff-heading: 'Inter', ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --ff-body: 'Inter', ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --section-pad: 80px 0;
+    --container-max: 1200px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
-  .page-hero-breadcrumb {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
+    background-color: var(--clr-bg-primary);
+  }
+
+  body {
+    font-family: var(--ff-body);
+    background-color: var(--clr-bg-primary);
+    color: var(--clr-text-primary);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
+  }
+
+  a {
+    color: inherit;
+    transition: color 0.3s var(--ease-out);
+    text-decoration: none;
+  }
+
+  .skip-link {
+    position: absolute;
+    top: -100px;
+    left: 20px;
+    background: var(--clr-accent-gold);
+    color: var(--clr-bg-primary);
+    padding: 10px 16px;
+    z-index: 9999;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+  }
+  .skip-link:focus {
+    top: 20px;
+  }
+
+  .container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .glass-card {
+    background: var(--clr-glass);
+    border: 1px solid var(--clr-glass-border);
+    border-radius: var(--radius-md);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    transition: all 0.4s var(--ease-out);
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* HEADER & NAVBAR */
+  .site-header {
+    position: relative;
+    z-index: 1000;
+  }
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 18px 0;
+    transition: all 0.4s var(--ease-out);
+  }
+  .navbar.scrolled {
+    background: rgba(10, 10, 26, 0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--clr-glass-border);
+    padding: 12px 0;
+  }
+  .navbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--ff-heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--clr-text-primary);
+  }
+  .nav-logo-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    background: var(--grad-gold);
+    color: var(--clr-bg-primary);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    font-size: 13.5px;
-    color: #64748b;
-    margin-bottom: 14px;
-  }
-
-  .page-hero-breadcrumb a {
-    color: #64748b;
-    text-decoration: none;
-    transition: color 0.15s ease;
-  }
-
-  .page-hero-breadcrumb a:hover {
-    color: #d4a844;
-  }
-
-  .breadcrumb-sep {
-    color: #475569;
-  }
-
-  .page-hero h1 {
-    font-size: clamp(28px, 4vw, 42px);
+    font-size: 0.95rem;
     font-weight: 800;
-    color: #ffffff;
-    margin: 0 0 10px;
-    letter-spacing: -0.5px;
+  }
+  .nav-logo span {
+    color: var(--clr-accent-gold);
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+  .nav-links a {
+    color: var(--clr-text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 4px 0;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--grad-gold);
+    border-radius: 2px;
+    transition: width 0.3s var(--ease-out);
+  }
+  .nav-links a:hover,
+  .nav-links a.active {
+    color: var(--clr-text-primary);
+  }
+  .nav-links a:hover::after,
+  .nav-links a.active::after {
+    width: 100%;
+  }
+  .nav-cta {
+    background: var(--grad-gold) !important;
+    color: var(--clr-bg-primary) !important;
+    padding: 10px 22px !important;
+    border-radius: var(--radius-sm);
+    font-weight: 700 !important;
+  }
+  .nav-cta::after {
+    display: none !important;
+  }
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 1001;
+  }
+  .nav-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--clr-text-primary);
+    border-radius: 2px;
+    transition: all 0.3s var(--ease-out);
   }
 
-  .gold {
-    color: #d4a844;
+  /* PAGE HERO */
+  .page-hero {
+    padding: 150px 0 60px;
+    background: var(--clr-bg-secondary);
+    text-align: center;
+    border-bottom: 1px solid var(--clr-glass-border);
+    position: relative;
+    overflow: hidden;
   }
-
+  .page-hero::before {
+    content: "";
+    position: absolute;
+    top: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(212, 168, 68, 0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .page-hero-breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--clr-text-muted);
+    margin-bottom: 20px;
+  }
+  .page-hero-breadcrumb a {
+    color: var(--clr-text-secondary);
+  }
+  .page-hero-breadcrumb a:hover {
+    color: var(--clr-accent-gold);
+  }
+  .breadcrumb-sep {
+    font-size: 0.75rem;
+    color: var(--clr-text-muted);
+  }
+  .page-hero h1 {
+    font-family: var(--ff-heading);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 14px;
+    color: #fff;
+  }
+  .page-hero h1 .gold {
+    background: var(--grad-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
   .page-hero-description {
-    font-size: 15.5px;
-    color: #94a3b8;
-    max-width: 650px;
+    color: var(--clr-text-secondary);
+    font-size: 1.05rem;
+    max-width: 620px;
     margin: 0 auto;
-    line-height: 1.5;
   }
 
-  /* ── Dealer Section ─────────────────────────────────────────────── */
+  /* DEALER PROFILE */
   .dealer-section {
-    background: #0a0a1a;
-    padding: 50px 0 30px;
+    padding: var(--section-pad);
+    background: var(--clr-bg-primary);
   }
-
-  /* ── Qurban / Dealer Profile Card ───────────────────────────────── */
   .qurban-profile {
-    max-width: 780px;
-    margin: 0 auto;
-    background: #141a33;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    padding: 32px 36px;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    padding: 36px;
+    max-width: 900px;
+    margin: 0 auto 32px;
   }
-
   .qurban-profile-header {
     display: flex;
     align-items: center;
     gap: 24px;
-    margin-bottom: 22px;
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--clr-glass-border);
   }
-
   .qurban-profile-header img {
-    width: 100px;
-    height: 100px;
+    width: 128px;
+    height: 128px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #d4a844;
-    background: #0a0a1a;
-    flex-shrink: 0;
+    border: 3px solid var(--clr-accent-gold);
+    box-shadow: 0 8px 24px rgba(212, 168, 68, 0.25);
   }
-
   .dealer-card-badge {
     display: inline-block;
-    border: 1px solid rgba(212, 168, 68, 0.5);
-    background: rgba(212, 168, 68, 0.1);
-    color: #d4a844;
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 1px;
-    padding: 3px 10px;
-    border-radius: 6px;
+    padding: 4px 14px;
+    border-radius: 50px;
+    font-size: 0.74rem;
+    font-weight: 700;
     text-transform: uppercase;
-    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+    color: var(--clr-accent-gold);
+    background: rgba(212, 168, 68, 0.12);
+    border: 1px solid rgba(212, 168, 68, 0.28);
+    margin-bottom: 8px;
   }
-
   .qurban-profile-header h3 {
-    font-size: 26px;
+    font-family: var(--ff-heading);
+    font-size: 1.8rem;
     font-weight: 800;
-    color: #ffffff;
-    margin: 0 0 4px;
+    color: var(--clr-text-primary);
+    margin-bottom: 4px;
   }
-
   .qurban-profile-header p {
-    font-size: 14.5px;
-    color: #94a3b8;
-    margin: 0;
+    font-size: 0.95rem;
+    color: var(--clr-accent-emerald);
+    font-weight: 600;
   }
-
-  .profile-intro {
-    font-size: 14.5px;
-    color: #cbd5e1;
-    line-height: 1.65;
-    margin-bottom: 22px;
+  .qurban-profile-body .profile-intro {
+    font-size: 1.05rem;
+    color: var(--clr-text-secondary);
+    line-height: 1.8;
+    margin-bottom: 28px;
   }
-
-  /* ── Profile Details Matrix (dl) ────────────────────────────────── */
   .profile-details {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin: 0 0 24px;
+    gap: 20px;
+    margin-bottom: 32px;
   }
-
-  .profile-details > div {
-    background: #0a0a1a;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 10px;
-    padding: 14px 18px;
+  .profile-details div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--clr-accent-gold);
   }
-
   .profile-details dt {
-    font-size: 11px;
+    font-size: 0.76rem;
     font-weight: 700;
-    color: #64748b;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
-    margin-bottom: 4px;
+    letter-spacing: 1px;
+    color: var(--clr-text-muted);
   }
-
-  .profile-details dd {
-    font-size: 14.5px;
-    font-weight: 600;
-    color: #ffffff;
-    margin: 0;
+  .profile-details dd, .profile-details dd a {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--clr-text-primary);
   }
-
   .profile-details dd a {
-    color: #ffffff;
-    text-decoration: none;
-    transition: color 0.15s ease;
+    color: var(--clr-accent-gold);
   }
-
   .profile-details dd a:hover {
-    color: #d4a844;
+    text-decoration: underline;
   }
-
-  /* ── Profile Action Buttons ─────────────────────────────────────── */
   .profile-actions {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
   }
-
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding: 13px 20px;
-    border-radius: 10px;
-    font-size: 14.5px;
+    gap: 10px;
+    padding: 14px 28px;
+    border-radius: var(--radius-sm);
+    font-family: var(--ff-body);
+    font-size: 0.95rem;
     font-weight: 700;
+    cursor: pointer;
     text-decoration: none;
-    transition: all 0.15s ease;
+    transition: all 0.3s var(--ease-out);
+    border: none;
   }
-
   .btn-whatsapp {
-    background: #25d366;
-    color: #0a0a1a;
-    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+    background: #20bd5a;
+    color: #fff;
+    box-shadow: 0 4px 18px rgba(32, 189, 90, 0.3);
   }
-
   .btn-whatsapp:hover {
-    background: #20ba5a;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(37, 211, 102, 0.45);
+    background: #16a34a;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(32, 189, 90, 0.45);
+    color: #fff;
   }
-
+  .btn-whatsapp svg {
+    width: 20px;
+    height: 20px;
+  }
   .btn-call {
-    background: #d4a844;
-    color: #0a0a1a;
-    box-shadow: 0 4px 14px rgba(212, 168, 68, 0.3);
+    background: var(--grad-gold);
+    color: var(--clr-bg-primary);
+    box-shadow: 0 4px 18px rgba(212, 168, 68, 0.3);
   }
-
   .btn-call:hover {
-    background: #e2b755;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(212, 168, 68, 0.45);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(212, 168, 68, 0.45);
+  }
+  .btn-call svg {
+    width: 20px;
+    height: 20px;
   }
 
-  /* ── Dealer Disclaimer Pill ─────────────────────────────────────── */
   .dealer-disclaimer {
+    max-width: 900px;
+    margin: 0 auto;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
-    max-width: 780px;
-    margin: 18px auto 0;
-    background: rgba(245, 158, 11, 0.08);
-    border: 1px solid rgba(245, 158, 11, 0.2);
-    border-radius: 10px;
-    padding: 12px 20px;
-    color: #cbd5e1;
-    font-size: 13px;
-    text-align: center;
+    gap: 14px;
+    padding: 16px 20px;
+    border-radius: var(--radius-sm);
+    background: rgba(212, 168, 68, 0.08);
+    border: 1px solid rgba(212, 168, 68, 0.22);
+    color: var(--clr-text-secondary);
+    font-size: 0.9rem;
   }
-
   .dealer-disclaimer svg {
-    color: #f59e0b;
-    stroke: #f59e0b;
+    width: 24px;
+    min-width: 24px;
+    height: 24px;
+    stroke: var(--clr-accent-gold);
     fill: none;
     stroke-width: 2;
-    flex-shrink: 0;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
-  .dealer-disclaimer p {
-    margin: 0;
-  }
-
-  /* ── Buyer's Guide Section ──────────────────────────────────────── */
+  /* BUYER'S GUIDE SECTION */
   .dealer-guide-section {
-    padding: 40px 0 60px;
+    background: var(--clr-bg-secondary);
+    border-top: 1px solid var(--clr-glass-border);
   }
-
   .section-header.center {
     text-align: center;
-    margin-bottom: 36px;
+    margin-bottom: 50px;
   }
-
-  .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: #d4a844;
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 1.5px;
+  .section-header.center .eyebrow {
+    color: var(--clr-accent-gold);
+    font-size: 0.8rem;
+    font-weight: 700;
     text-transform: uppercase;
-    margin-bottom: 8px;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
   }
-
-  .eyebrow span {
-    display: inline-block;
-    width: 14px;
-    height: 2px;
-    background: #d4a844;
-  }
-
-  .section-header h2 {
-    font-size: clamp(26px, 3.2vw, 34px);
+  .section-header.center h2 {
+    font-family: var(--ff-heading);
+    font-size: 2.2rem;
     font-weight: 800;
-    color: #ffffff;
-    margin: 0 0 8px;
+    color: var(--clr-text-primary);
+    margin-bottom: 12px;
   }
-
-  .section-header p {
-    font-size: 15px;
-    color: #94a3b8;
-    margin: 0;
+  .section-header.center p {
+    color: var(--clr-text-secondary);
+    font-size: 1rem;
   }
-
   .tips-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    max-width: 960px;
-    margin: 0 auto;
+    gap: 24px;
   }
-
   .tip-card {
-    background: #141a33;
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: 14px;
-    padding: 26px 22px;
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    padding: 30px 24px;
   }
-
-  .tip-card:hover {
-    transform: translateY(-3px);
-    border-color: rgba(212, 168, 68, 0.35);
-  }
-
   .tip-icon-wrap {
-    display: inline-flex;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-sm);
+    background: rgba(212, 168, 68, 0.12);
+    display: flex;
     align-items: center;
     justify-content: center;
-    width: 42px;
-    height: 42px;
-    background: rgba(212, 168, 68, 0.1);
-    color: #d4a844;
-    border-radius: 10px;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
   }
-
   .tip-icon-wrap svg {
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
+    stroke: var(--clr-accent-gold);
   }
-
   .tip-card h3 {
-    font-size: 16.5px;
+    font-family: var(--ff-heading);
+    font-size: 1.15rem;
     font-weight: 700;
-    color: #ffffff;
-    margin: 0 0 8px;
+    color: var(--clr-text-primary);
+    margin-bottom: 10px;
   }
-
   .tip-card p {
-    font-size: 13.5px;
-    color: #94a3b8;
-    line-height: 1.55;
-    margin: 0;
+    font-size: 0.9rem;
+    color: var(--clr-text-secondary);
+    line-height: 1.65;
   }
 
-  /* ── Publication Meta ───────────────────────────────────────────── */
+  /* PUBLICATION META */
   .page-publication-meta {
-    padding: 20px 0 40px;
-    background: #0a0a1a;
-    font-size: 13px;
-    color: #475569;
+    padding: 20px 0;
+    background: var(--clr-bg-primary);
+    border-top: 1px solid var(--clr-glass-border);
+    border-bottom: 1px solid var(--clr-glass-border);
+    color: var(--clr-text-muted);
+    font-size: 0.85rem;
     text-align: center;
   }
 
-  /* ── Floating Agent WhatsApp Popup ──────────────────────────────── */
-  .agent-contact-popup {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    z-index: 99;
+  /* FOOTER */
+  .footer {
+    background: var(--clr-bg-secondary);
+    border-top: 1px solid var(--clr-glass-border);
+    padding: 64px 0 32px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1.2fr 1fr 1.4fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+  .footer-brand {
     max-width: 320px;
-    background: #141a33;
-    border: 1px solid rgba(212, 168, 68, 0.35);
-    border-radius: 16px;
-    padding: 18px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-    color: #ffffff;
-    animation: popupSlideUp 0.4s ease;
   }
-
-  @keyframes popupSlideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .agent-popup-close {
-    position: absolute;
-    top: 8px;
-    right: 12px;
-    background: none;
-    border: none;
-    color: #94a3b8;
-    font-size: 20px;
-    cursor: pointer;
-  }
-
-  .agent-popup-profile {
+  .footer-logo {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 12px;
+    font-family: var(--ff-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 18px;
   }
-
-  .agent-popup-photo {
-    position: relative;
-    width: 48px;
-    height: 48px;
+  .footer-logo-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    background: var(--grad-gold);
+    color: var(--clr-bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 800;
+  }
+  .footer-brand-description {
+    color: var(--clr-text-secondary);
+    font-size: 0.88rem;
+    line-height: 1.7;
+    margin: 0;
+  }
+  .footer-socials {
+    display: flex;
+    gap: 10px;
+    margin-top: 22px;
+  }
+  .footer-socials a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    overflow: hidden;
-    border: 2px solid #d4a844;
-    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--clr-glass-border);
+    color: var(--clr-text-secondary);
+    transition: all 0.3s var(--ease-out);
   }
-
-  .agent-popup-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  .footer-socials a:hover {
+    color: var(--clr-accent-gold);
+    background: rgba(212, 168, 68, 0.12);
+    border-color: rgba(212, 168, 68, 0.45);
+    transform: translateY(-2px);
   }
-
-  .online-indicator {
-    position: absolute;
-    bottom: 1px;
-    right: 1px;
-    width: 10px;
-    height: 10px;
-    background: #10b981;
-    border: 2px solid #141a33;
-    border-radius: 50%;
+  .footer-socials svg {
+    width: 19px;
+    height: 19px;
+    fill: currentColor;
   }
-
-  .agent-popup-profile small {
-    display: block;
-    font-size: 11px;
-    color: #d4a844;
+  .footer-heading {
+    font-size: 0.82rem;
     font-weight: 700;
     text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--clr-text-primary);
+    margin-bottom: 20px;
+  }
+  .footer-links a {
+    display: block;
+    color: var(--clr-text-secondary);
+    font-size: 0.88rem;
+    padding: 5px 0;
+    transition: all 0.3s var(--ease-out);
+  }
+  .footer-links a:hover {
+    color: var(--clr-accent-gold);
+    transform: translateX(4px);
+  }
+  .footer-contact {
+    min-width: 0;
+  }
+  .footer-nap {
+    display: grid;
+    gap: 18px;
+  }
+  .footer-nap-item {
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    gap: 11px;
+    align-items: start;
+  }
+  .footer-nap-item > svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--clr-accent-gold);
+    fill: none;
+    stroke-width: 1.8px;
+    margin-top: 2px;
+  }
+  .footer-nap-item div {
+    display: grid;
+    gap: 4px;
+  }
+  .footer-nap-item span {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--clr-text-muted);
+  }
+  .footer-nap-item strong,
+  .footer-nap-item address,
+  .footer-nap-item a {
+    color: var(--clr-text-secondary);
+    font-size: 0.84rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.55;
+    margin: 0;
+  }
+  .footer-nap-item a {
+    color: var(--clr-accent-gold);
+  }
+  .footer-nap-item a:hover {
+    text-decoration: underline;
+  }
+  .footer-bottom {
+    border-top: 1px solid var(--clr-glass-border);
+    padding-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-copyright {
+    color: var(--clr-text-muted);
+    font-size: 0.82rem;
   }
 
+  /* POPUP & BACK TO TOP */
+  .agent-contact-popup {
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 96px;
+    right: 24px;
+    z-index: 1000;
+    width: min(360px, calc(100vw - 32px));
+    padding: 20px;
+    border-radius: 18px;
+    background: rgba(17, 17, 37, 0.96);
+    border: 1px solid rgba(212, 168, 68, 0.3);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    color: var(--clr-text-primary);
+    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.42), 0 0 30px rgba(212, 168, 68, 0.1);
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
+    transition: opacity 0.25s var(--ease-out), transform 0.25s var(--ease-out);
+  }
+  .agent-contact-popup[hidden] {
+    display: none;
+  }
+  .agent-contact-popup.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  .agent-popup-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    color: var(--clr-text-muted);
+    font-size: 1.45rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .agent-popup-profile {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-right: 28px;
+  }
+  .agent-popup-photo {
+    position: relative;
+    flex: none;
+  }
+  .agent-popup-photo img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 2px solid var(--clr-accent-gold);
+    object-fit: cover;
+  }
+  .agent-popup-photo span {
+    position: absolute;
+    bottom: 3px;
+    right: 1px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #25d366;
+    border: 2px solid #111125;
+  }
+  .agent-popup-profile small {
+    display: block;
+    color: var(--clr-accent-gold);
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+  }
   .agent-popup-profile strong {
     display: block;
-    font-size: 14.5px;
-    color: #ffffff;
+    font-family: var(--ff-heading);
+    font-size: 1.05rem;
+    margin: 2px 0;
   }
-
   .agent-popup-profile span {
-    font-size: 11px;
-    color: #64748b;
+    display: block;
+    color: var(--clr-text-muted);
+    font-size: 0.72rem;
   }
-
-  .agent-contact-popup p {
-    font-size: 12.5px;
-    color: #94a3b8;
-    line-height: 1.45;
-    margin: 0 0 14px;
+  .agent-contact-popup > p {
+    font-size: 0.88rem;
+    color: var(--clr-text-secondary);
+    line-height: 1.6;
+    margin: 16px 0;
   }
-
-  .agent-contact-popup p strong {
-    color: #ffffff;
-  }
-
   .agent-popup-whatsapp {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    background: #25d366;
-    color: #0a0a1a;
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 700;
-    text-decoration: none;
-    transition: background 0.15s ease;
+    gap: 9px;
+    padding: 12px 18px;
+    border-radius: 10px;
+    background: #20bd5a;
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 800;
   }
-
-  .agent-popup-whatsapp:hover {
-    background: #20ba5a;
-  }
-
-  /* ── Back to Top Floating Button ────────────────────────────────── */
   .back-to-top {
     position: fixed;
-    bottom: 24px;
-    left: 24px;
-    z-index: 98;
-    width: 42px;
-    height: 42px;
+    bottom: 32px;
+    right: 32px;
+    z-index: 999;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    background: #d4a844;
-    color: #0a0a1a;
+    background: var(--grad-gold);
     border: none;
-    cursor: pointer;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 14px rgba(212, 168, 68, 0.4);
-    transition: transform 0.15s ease, background 0.15s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(212, 168, 68, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(16px);
+    transition: all 0.3s var(--ease-out);
+  }
+  .back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .back-to-top svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--clr-bg-primary);
   }
 
-  .back-to-top:hover {
-    background: #e2b755;
-    transform: translateY(-2px);
-  }
-
-  /* ── Responsive Queries ─────────────────────────────────────────── */
-  @media (max-width: 860px) {
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
     .tips-grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
-
-  @media (max-width: 640px) {
-    .qurban-profile {
-      padding: 24px 18px;
+  @media (max-width: 768px) {
+    .nav-toggle {
+      display: flex;
     }
-
+    .nav-links {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(290px, 100%);
+      height: 100vh;
+      background: rgba(10, 10, 26, 0.97);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-left: 1px solid var(--clr-glass-border);
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 90px 32px 40px;
+      transform: translateX(100%);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out);
+    }
+    .nav-links.active {
+      transform: translateX(0);
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
     .qurban-profile-header {
       flex-direction: column;
       text-align: center;
     }
-
     .profile-details {
       grid-template-columns: 1fr;
     }
-
     .profile-actions {
-      grid-template-columns: 1fr;
+      flex-direction: column;
     }
-
+    .profile-actions .btn {
+      width: 100%;
+    }
     .tips-grid {
       grid-template-columns: 1fr;
     }
-
-    .agent-contact-popup {
-      right: 12px;
-      left: 12px;
-      max-width: none;
-      bottom: 16px;
+    .footer-grid {
+      grid-template-columns: 1fr;
     }
-
-    .back-to-top {
-      display: none;
+    .footer-bottom {
+      flex-direction: column;
+      text-align: center;
     }
   }
 </style>
-
-<script>
-  function setupDealerInteractions() {
-    const closeBtn = document.getElementById('agentPopupClose');
-    const popup = document.getElementById('agentContactPopup');
-    if (closeBtn && popup) {
-      closeBtn.addEventListener('click', () => {
-        popup.style.display = 'none';
-      });
-    }
-
-    const backToTop = document.getElementById('backToTop');
-    if (backToTop) {
-      backToTop.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    }
-  }
-
-  setupDealerInteractions();
-  document.addEventListener('astro:after-swap', setupDealerInteractions);
-</script>
