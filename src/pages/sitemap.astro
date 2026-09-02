@@ -1,0 +1,17 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
+import { SITE } from '@data/site';
+const groups = [
+  { title: 'Property research', links: [['All properties','/properties'],['Plots','/plots'],['Houses','/houses'],['Commercial','/commercial'],['Prices','/dha-phase-6-lahore-prices'],['Property desk','/dealers']] },
+  { title: 'Area information', links: [['Sector directory','/sectors'],['Map guide','/dha-phase-6-lahore-map'],['Location','/location'],['Amenities','/dha-phase-6-lahore-amenities'],['Places','/places'],['Utilities','/utilities']] },
+  { title: 'Practical resources', links: [['Construction','/construction'],['Guides','/guides'],['FAQs','/faq'],['Downloads','/downloads'],['Jobs','/jobs'],['Helplines','/helplines'],['Postal code','/postal-code'],['Prayer times','/prayer-times']] },
+  { title: 'Website', links: [['About','/about'],['Contact','/contact'],['Privacy','/privacy-policy'],['Terms','/terms-and-conditions'],['Disclaimer','/disclaimer'],['Copyright','/copyright-policy']] },
+];
+---
+<PageLayout title="DHA Phase 6 Lahore Sitemap" description="Browse the complete DHA Phase 6 Lahore independent property portal by topic.">
+  <Schema type="BreadcrumbList" data={{ itemListElement: [{ '@type':'ListItem', position:1, name:'Home', item:SITE.url },{ '@type':'ListItem', position:2, name:'Sitemap', item:`${SITE.url}/sitemap` }] }} />
+  <header class="hero"><div class="container"><p>All portal sections</p><h1>HTML sitemap</h1><span>Find property, sector, map, daily-life and legal resources.</span></div></header>
+  <section><div class="container grid">{groups.map(group=><article><h2>{group.title}</h2>{group.links.map(link=><a href={link[1]}>{link[0]}</a>)}</article>)}</div></section>
+</PageLayout>
+<style>.hero{padding:5rem 0;background:#08232a;color:#fff}.hero p{color:#d7af57;text-transform:uppercase;font-size:.72rem;font-weight:900;letter-spacing:.15em}.hero h1{margin:.4rem 0;color:#fff;font-family:var(--font-display);font-size:clamp(3rem,8vw,6rem)}.hero span{color:#c5d4d0}section{padding:5rem 0;background:#f4efe4}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:#d8d0c2;border:1px solid #d8d0c2}.grid article{display:flex;flex-direction:column;gap:.7rem;padding:2rem;background:#fff}.grid h2{color:#102d2a;font-family:var(--font-display);font-size:1.8rem}.grid a{color:#146151}@media(max-width:650px){.grid{grid-template-columns:1fr}}</style>

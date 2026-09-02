@@ -1,117 +1,109 @@
-/**
- * Comprehensive FAQ Authority Hub Dataset
- * Al Rehman Garden Phase 2 Lahore Authority Portal
- */
-
 export interface FAQCategory {
   id: string;
   name: string;
   icon: string;
   description: string;
-  questions: {
-    question: string;
-    answer: string;
-  }[];
+  questions: { question: string; answer: string }[];
 }
 
 export const FAQS_DATA: FAQCategory[] = [
   {
-    id: 'general',
-    name: 'General & Society Overview',
-    icon: '🏛️',
-    description: 'Foundational information about Al Rehman Garden Phase 2, developer background, and location.',
+    id: 'overview',
+    name: 'Area overview',
+    icon: '01',
+    description: 'Location, sectors and the role of this independent guide.',
     questions: [
       {
-        question: 'Where is Al Rehman Garden Phase 2 located in Lahore?',
-        answer: 'Al Rehman Garden Phase 2 is situated directly on Main Sharaqpur Road, just 2 minutes from the M-2 Motorway (Faizpur Interchange) and 10 minutes from Mall Road / Sagian Bridge in Lahore.',
+        question: 'Where is DHA Phase 6 Lahore?',
+        answer: 'DHA Phase 6 is in western Lahore and connects with Shabbir Sharif Boulevard, Bedian Road, Barki Road and the wider DHA road network. Use the exact gate and sector for directions.',
       },
       {
-        question: 'Who is the developer of Al Rehman Garden Phase 2?',
-        answer: 'The project is developed by Al Rehman Developers, one of Punjab’s established real estate development groups with over two decades of track record in delivering master-planned communities.',
+        question: 'Which sectors are in DHA Phase 6 Lahore?',
+        answer: 'The official Phase VI map shows sectors A, B, C, D, E, F, G, H, J, K, L, M and N.',
       },
       {
-        question: 'How many families currently live in Al Rehman Garden Phase 2?',
-        answer: 'Over 5,000 families currently reside in the mature sectors (Blocks A, B, C, D, E, and F), creating a fully functional community with operational schools, banks, hospitals, and commercial markets.',
+        question: 'Is this an official DHA website?',
+        answer: 'No. This is an independent information platform. Always verify official notices, documents, rates, fees and procedures through DHA Lahore.',
       },
     ],
   },
   {
-    id: 'legal-noc',
-    name: 'Legal Title & NOC Status',
-    icon: '⚖️',
-    description: 'Regulatory compliance, LDA approvals, and title deed verification.',
+    id: 'property-market',
+    name: 'Property and prices',
+    icon: '02',
+    description: 'How listings and asking-price snapshots should be interpreted.',
     questions: [
       {
-        question: 'Is Al Rehman Garden Phase 2 LDA approved?',
-        answer: 'Yes, Al Rehman Garden Phase 2 holds official approval for its master development layout plan from the Lahore Development Authority (LDA) and relevant district civic authorities.',
+        question: 'Are the property cards verified listings?',
+        answer: 'Cards sourced from public portals are market snapshots only. A source check does not verify ownership, availability, condition, dues or transfer eligibility.',
       },
       {
-        question: 'Can I get an individual registry (Inteqal) for my plot?',
-        answer: 'Yes, plots in possession-ready mature blocks (such as Block A, B, C, D, and E) are eligible for direct registry and Inteqal through standard Lahore revenue authority procedures.',
+        question: 'Are the published prices official DHA rates?',
+        answer: 'No. Property prices shown on this portal are observed third-party asking prices. They are not official rates, valuations or completed transaction evidence.',
       },
       {
-        question: 'How do I verify the authenticity of a property file before buying?',
-        answer: 'Buyers should request a verification certificate directly from the Al Rehman Garden Head Office and confirm the No Demand Certificate (NDC) and biometric transfer clearance.',
+        question: 'Why do same-size properties have different prices?',
+        answer: 'Sector, street, road width, corner or park position, orientation, commercial exposure, house condition and seller expectations can all change the demand.',
       },
     ],
   },
   {
-    id: 'prices-investment',
-    name: 'Prices & Investment Returns',
-    icon: '💰',
-    description: 'Current market rates, historical appreciation, and investment potential.',
+    id: 'verification',
+    name: 'Verification and transfer',
+    icon: '03',
+    description: 'Ownership, dues, NDC and transaction checks.',
     questions: [
       {
-        question: 'What is the starting price for a 5 Marla residential plot in 2026?',
-        answer: 'In 2026, 5 Marla residential plots range from approximately PKR 42 Lakh to PKR 58 Lakh depending on sector maturity, road width (e.g. 150ft Boulevard vs. 30ft street), and corner/park-facing premiums.',
+        question: 'How should I verify a DHA Phase 6 property?',
+        answer: 'Confirm the seller, exact property number, document trail, dues, NDC requirements and transfer eligibility through the current DHA Lahore process and qualified advisers.',
       },
       {
-        question: 'What is the expected annual ROI for plots in Al Rehman Garden Phase 2?',
-        answer: 'Developing sectors like Mirabel Block, Royal Block, and Beverly Hills have experienced historical capital appreciation of 14% to 18% annually due to expanding road infrastructure and high demand.',
+        question: 'Should I pay a token before verification?',
+        answer: 'Avoid committing funds until the parties, property and payment terms have been checked and documented. Obtain legal advice for the transaction.',
       },
       {
-        question: 'Are there installment payment plans available?',
-        answer: 'Yes, newly launched luxury enclaves (Mirabel and Beverly Hills) offer 3 to 5-year flexible installment payment plans with easy monthly and quarterly payment schedules.',
+        question: 'Does a dealer statement replace official verification?',
+        answer: 'No. Dealer input can help with discovery, but official records and professional due diligence remain necessary.',
       },
     ],
   },
   {
-    id: 'utilities',
-    name: 'Utilities & Civic Facilities',
-    icon: '⚡',
-    description: 'Electricity grid, Sui gas, water supply, internet, and security.',
+    id: 'construction',
+    name: 'Construction',
+    icon: '04',
+    description: 'Planning rates, approvals and inspections.',
     questions: [
       {
-        question: 'Is electricity underground in Al Rehman Garden Phase 2?',
-        answer: 'Yes, mature and executive sectors feature 100% underground electric cabling with dedicated backup transformers, providing a clean, wire-free skyline and reliable power supply.',
+        question: 'What is a rough 2026 grey-structure planning rate in Lahore?',
+        answer: 'Published market guides reviewed in 2026 commonly discuss roughly PKR 2,800 to 3,800 per square foot of covered area. Obtain project-specific quotations and a bill of quantities.',
       },
       {
-        question: 'Is Sui Gas connected and operational for residents?',
-        answer: 'Yes, Sui Northern Gas Pipelines Limited (SNGPL) pipeline infrastructure is fully active in mature residential sectors with domestic household meter connections.',
+        question: 'What should I verify before construction?',
+        answer: 'Confirm possession, plot demarcation, dues, current DHA Lahore regulations, drawing approval, inspection stages, utility requirements and professional registrations.',
       },
       {
-        question: 'What is the water supply source in the society?',
-        answer: 'The society operates heavy-duty deep-well turbine water supply systems along with automated Reverse Osmosis (RO) commercial filtration plants in multiple sectors for pure drinking water.',
-      },
-      {
-        question: 'What security measures are implemented in Phase 2?',
-        answer: 'The society features 24/7 gated entry barriers, armed mobile security patrols, biometric resident registration, and over 200 high-definition PTZ CCTV cameras monitored in a central control room.',
+        question: 'Are construction rates based on plot area?',
+        answer: 'They are generally discussed against total covered area across all floors, not the plot area. Confirm the measurement method in each quotation.',
       },
     ],
   },
   {
-    id: 'possession-construction',
-    name: 'Possession & Home Construction',
-    icon: '🔑',
-    description: 'Handover timelines, construction bylaws, and building your home.',
+    id: 'images-and-sources',
+    name: 'Images and sources',
+    icon: '05',
+    description: 'How external portal material is handled.',
     questions: [
       {
-        question: 'Which blocks are ready for immediate house construction?',
-        answer: 'Block A (Executive), Block B, Block C, Block D, and Blocks E & F have 100% ready on-ground possession where you can start house construction immediately after transfer.',
+        question: 'Why do some property cards use a placeholder?',
+        answer: 'Third-party listing photographs are not copied, stripped of watermarks or rebranded. A placeholder is used until the owner or dealer supplies clean images with publication rights.',
       },
       {
-        question: 'What is the procedure to start house construction?',
-        answer: 'Submit your architectural floor plans and elevation drawings to the society town planning desk for by-law approval, obtain utility connection NOCs, and commence ground-breaking.',
+        question: 'Can I submit my own listing photos?',
+        answer: 'Yes, if you own the images or have clear permission to publish them and they contain no third-party branding, phone numbers or protected watermarks.',
+      },
+      {
+        question: 'How often should external listings be checked?',
+        answer: 'Before every decision. Portal inventory can change quickly, so open the source link and reconfirm availability directly.',
       },
     ],
   },

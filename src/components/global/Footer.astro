@@ -1,445 +1,59 @@
 ---
-/**
- * Footer.astro — Authority Real Estate Footer
- * Multi-column luxury layout with project credentials, block directory,
- * location coordinates, legal verification notice, and direct contacts.
- */
-
-import { SITE } from '@data/site';
 import { CONTACTS } from '@data/contacts';
+import { SITE } from '@data/site';
+const year = new Date().getFullYear();
 ---
 
-<footer class="footer" id="site-footer">
-  <!-- Top Highlight Band -->
-  <div class="footer__highlight-band">
-    <div class="container footer__highlight-inner">
-      <div class="footer__highlight-item">
-        <span class="footer__highlight-icon">🏛️</span>
-        <div>
-          <strong class="footer__highlight-title">LDA Approved Masterplan</strong>
-          <span class="footer__highlight-desc">Legal title & secure registry</span>
-        </div>
-      </div>
-      <div class="footer__highlight-item">
-        <span class="footer__highlight-icon">📍</span>
-        <div>
-          <strong class="footer__highlight-title">Main Sharaqpur Road, Lahore</strong>
-          <span class="footer__highlight-desc">2 mins from M2 Motorway Interchange</span>
-        </div>
-      </div>
-      <div class="footer__highlight-item">
-        <span class="footer__highlight-icon">⚡</span>
-        <div>
-          <strong class="footer__highlight-title">100% On-Ground Development</strong>
-          <span class="footer__highlight-desc">Underground electricity & Sui gas live</span>
-        </div>
-      </div>
-      <div class="footer__highlight-item">
-        <span class="footer__highlight-icon">📞</span>
-        <div>
-          <strong class="footer__highlight-title">Direct Investor Helpline</strong>
-          <span class="footer__highlight-desc">{CONTACTS.phone.display}</span>
-        </div>
-      </div>
+<footer class="site-footer">
+  <div class="footer-callout">
+    <div class="container">
+      <div><small>Independent buyer support</small><strong>Compare the market, then verify the property.</strong></div>
+      <a href={CONTACTS.whatsapp.url} target="_blank" rel="noopener noreferrer">WhatsApp {CONTACTS.phone.display}</a>
     </div>
   </div>
-
-  <!-- Main Multi-Column Content -->
-  <div class="container footer__main">
-    <div class="footer__grid">
-      <!-- Brand & Project Summary Column -->
-      <div class="footer__brand-col">
-        <a href="/" class="footer__logo-link" aria-label={`${SITE.name} — Home`}>
-          <img
-            src="/images/logo/logo-white.svg"
-            alt={SITE.name}
-            width="220"
-            height="55"
-            loading="lazy"
-            class="footer__logo"
-          />
-        </a>
-        <p class="footer__brand-text">
-          DHA Phase 6 is Lahore's premier luxury housing community, located along Main Boulevard with direct Ring Road and Bedian Road access. Featuring world-class residential and commercial broadways, Defence Raya Golf Resort, and international amenities.
-        </p>
-        <div class="footer__badges">
-          <span class="footer__seal-badge">✓ Verified Portal</span>
-          <span class="footer__seal-badge">🔒 24/7 DHA Security</span>
-        </div>
-      </div>
-
-      <!-- Quick Navigation -->
-      <div class="footer__col">
-        <h4 class="footer__heading">Explore Portal</h4>
-        <ul class="footer__links">
-          <li><a href="/properties" class="footer__link"><span class="footer__link-bullet">›</span> All Properties</a></li>
-          <li><a href="/property-dealer" class="footer__link" style="color: #F3D375; font-weight: 700;"><span class="footer__link-bullet" style="color: #F3D375;">›</span> Property Specialist (Ahmad Huzaifah)</a></li>
-          <li><a href="/plots" class="footer__link"><span class="footer__link-bullet">›</span> Plots for Sale</a></li>
-          <li><a href="/properties" class="footer__link"><span class="footer__link-bullet">›</span> Ready Designer Houses</a></li>
-          <li><a href="/blocks" class="footer__link"><span class="footer__link-bullet">›</span> Sectors Directory (A–N)</a></li>
-          <li><a href="/dha-phase-6-lahore-map" class="footer__link"><span class="footer__link-bullet">›</span> Master Plan Map</a></li>
-          <li><a href="/places" class="footer__link"><span class="footer__link-bullet">›</span> Local Places &amp; Amenities</a></li>
-          <li><a href="/property-prices" class="footer__link"><span class="footer__link-bullet">›</span> Market Price Index</a></li>
-        </ul>
-      </div>
-
-      <!-- DHA Style Authority Hub Column -->
-      <div class="footer__col">
-        <h4 class="footer__heading">Authority Hub</h4>
-        <ul class="footer__links">
-          <li><a href="/property-prices" class="footer__link"><span class="footer__link-bullet">›</span> 2026 Price Index</a></li>
-          <li><a href="/utilities" class="footer__link"><span class="footer__link-bullet">›</span> Utilities &amp; Grid</a></li>
-          <li><a href="/places" class="footer__link"><span class="footer__link-bullet">›</span> Nearby Places</a></li>
-          <li><a href="/gallery" class="footer__link"><span class="footer__link-bullet">›</span> Photo Gallery</a></li>
-          <li><a href="/downloads" class="footer__link"><span class="footer__link-bullet">›</span> Download Center</a></li>
-          <li><a href="/faq" class="footer__link"><span class="footer__link-bullet">›</span> FAQ Knowledgebase</a></li>
-          <li><a href="/contact" class="footer__link"><span class="footer__link-bullet">›</span> Direct Contact Desk</a></li>
-        </ul>
-      </div>
-
-      <!-- Direct Contact & Site Office -->
-      <div class="footer__col">
-        <h4 class="footer__heading">Site Office & Advisory</h4>
-        <div class="footer__contact-info">
-          <p class="footer__contact-line">
-            <span class="footer__contact-icon">📍</span>
-            <span>{CONTACTS.address.full}</span>
-          </p>
-          <p class="footer__contact-line">
-            <span class="footer__contact-icon">📞</span>
-            <a href={`tel:${CONTACTS.phone.primary}`} class="footer__link footer__link--phone">
-              {CONTACTS.phone.display}
-            </a>
-          </p>
-          <p class="footer__contact-line">
-            <span class="footer__contact-icon">💬</span>
-            <a href={CONTACTS.whatsapp.url} target="_blank" rel="noopener noreferrer" class="footer__link footer__link--whatsapp">
-              WhatsApp Direct Chat
-            </a>
-          </p>
-          <p class="footer__contact-line">
-            <span class="footer__contact-icon">✉️</span>
-            <a href={`mailto:${CONTACTS.email}`} class="footer__link">
-              {CONTACTS.email}
-            </a>
-          </p>
-          <p class="footer__contact-line">
-            <span class="footer__contact-icon">⏰</span>
-            <span>Mon – Sat: {CONTACTS.officeHours.weekdays}</span>
-          </p>
-        </div>
-      </div>
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a href="/"><span>D6</span><strong>DHA Phase VI Lahore</strong></a>
+      <p>{SITE.description}</p>
+      <p class="notice">This is an independent information platform and is not an official DHA Lahore website.</p>
     </div>
-
-    <!-- Divider -->
-    <hr class="footer__divider" />
-
-    <!-- Legal Notice & Disclaimer -->
-    <div class="footer__legal">
-      <div class="footer__disclaimer">
-        <strong>Important Legal Disclaimer:</strong> The property data, plot rates, and architectural information published on this authority portal are for buyer guidance and verified public information purposes. Official plot transfers, NDC verification, and allotment procedures must be executed directly through the authorized DHA Lahore management office.
-      </div>
-      <div class="footer__bottom-row">
-        <p class="footer__copyright">
-          &copy; {new Date().getFullYear()} {SITE.name}. All rights reserved.
-        </p>
-        <div class="footer__legal-links">
-          <a href="/privacy-policy" class="footer__legal-link">Privacy Policy</a>
-          <span>•</span>
-          <a href="/terms-and-conditions" class="footer__legal-link">Terms & Conditions</a>
-          <span>•</span>
-          <a href="/disclaimer" class="footer__legal-link">Legal Disclaimer</a>
-          <span>•</span>
-          <a href="/copyright-policy" class="footer__legal-link">Copyright & DMCA</a>
-          <span>•</span>
-          <a href="/contact" class="footer__legal-link">Contact Advisory</a>
-        </div>
-      </div>
+    <div>
+      <h2>Property</h2>
+      <a href="/properties">Market snapshots</a>
+      <a href="/plots">Plots</a>
+      <a href="/houses">Houses</a>
+      <a href="/commercial">Commercial</a>
+      <a href="/dha-phase-6-lahore-prices">Price guide</a>
     </div>
+    <div>
+      <h2>Research</h2>
+      <a href="/sectors">Sector directory</a>
+      <a href="/dha-phase-6-lahore-map">Map guide</a>
+      <a href="/places">Places</a>
+      <a href="/construction">Construction</a>
+      <a href="/guides">Buyer guides</a>
+      <a href="/jobs">Jobs</a>
+      <a href="/helplines">Helplines</a>
+    </div>
+    <div>
+      <h2>Contact</h2>
+      <a href={`tel:${CONTACTS.phone.primary}`}>{CONTACTS.phone.display}</a>
+      <a href={`mailto:${CONTACTS.email}`}>{CONTACTS.email}</a>
+      <span>{CONTACTS.address.short}</span>
+      <a href="/contact">Property desk</a>
+      <a href="/downloads">Official resource links</a>
+    </div>
+  </div>
+  <div class="container legal">
+    <p>Property records and rates are unverified asking-price research, not transaction evidence. Verify title, seller authority, dues, condition and transfer requirements independently through DHA Lahore and appropriate advisers.</p>
+    <div><span>&copy; {year} {SITE.name}</span><a href="/sitemap">Sitemap</a><a href="/privacy-policy">Privacy</a><a href="/terms-and-conditions">Terms</a><a href="/disclaimer">Disclaimer</a><a href="/copyright-policy">Copyright</a></div>
   </div>
 </footer>
 
 <style>
-  .footer {
-    background-color: var(--color-secondary-950);
-    color: var(--color-neutral-300);
-    position: relative;
-    border-top: 1px solid rgba(212, 175, 55, 0.25);
-  }
-
-  /* ── Highlight Band ─────────────────────────────────────────────── */
-  .footer__highlight-band {
-    background: linear-gradient(90deg, #0A1128 0%, #101F44 50%, #0A1128 100%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding: var(--space-6) 0;
-  }
-
-  .footer__highlight-inner {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-4);
-  }
-
-  @media (min-width: 640px) {
-    .footer__highlight-inner {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .footer__highlight-inner {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-
-  .footer__highlight-item {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-  }
-
-  .footer__highlight-icon {
-    font-size: var(--text-2xl);
-    flex-shrink: 0;
-  }
-
-  .footer__highlight-title {
-    display: block;
-    font-size: var(--text-sm);
-    color: #FFFFFF;
-    font-weight: var(--font-bold);
-  }
-
-  .footer__highlight-desc {
-    display: block;
-    font-size: var(--text-xs);
-    color: var(--color-primary-300);
-  }
-
-  /* ── Main Footer ────────────────────────────────────────────────── */
-  .footer__main {
-    padding: var(--space-16) var(--space-4) var(--space-8);
-  }
-
-  .footer__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-10);
-  }
-
-  @media (min-width: 768px) {
-    .footer__grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .footer__grid {
-      grid-template-columns: 2.2fr 1fr 1.2fr 1.6fr;
-    }
-  }
-
-  .footer__brand-col {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-  }
-
-  .footer__logo-link {
-    display: inline-block;
-  }
-
-  .footer__logo {
-    height: 46px;
-    width: auto;
-    object-fit: contain;
-  }
-
-  .footer__brand-text {
-    font-size: var(--text-sm);
-    line-height: var(--leading-relaxed);
-    color: var(--color-neutral-400);
-    max-width: 40ch;
-    margin: 0;
-  }
-
-  .footer__badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-  }
-
-  .footer__seal-badge {
-    display: inline-flex;
-    align-items: center;
-    font-size: 11px;
-    font-weight: var(--font-bold);
-    color: #F3D375;
-    background: rgba(197, 155, 39, 0.12);
-    border: 1px solid rgba(197, 155, 39, 0.35);
-    padding: 3px 8px;
-    border-radius: var(--radius-xs);
-    letter-spacing: 0.5px;
-  }
-
-  /* Footer Columns */
-  .footer__heading {
-    font-family: var(--font-body);
-    font-size: var(--text-xs);
-    font-weight: var(--font-bold);
-    color: #FFFFFF;
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-widest);
-    margin-bottom: var(--space-5);
-    position: relative;
-    padding-bottom: var(--space-2);
-  }
-
-  .footer__heading::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 24px;
-    height: 2px;
-    background: var(--gradient-gold);
-    border-radius: var(--radius-full);
-  }
-
-  .footer__links {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-  }
-
-  .footer__link {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-1);
-    font-size: var(--text-sm);
-    color: var(--color-neutral-400);
-    text-decoration: none;
-    transition: all var(--transition-fast);
-  }
-
-  .footer__link:hover {
-    color: #F3D375;
-    transform: translateX(3px);
-  }
-
-  .footer__link-bullet {
-    color: var(--color-primary-400);
-    font-weight: bold;
-  }
-
-  .footer__link--accent {
-    color: #F3D375;
-    font-weight: var(--font-semibold);
-    margin-top: var(--space-2);
-  }
-
-  .footer__link--phone {
-    font-weight: var(--font-bold);
-    color: #FFFFFF;
-  }
-
-  .footer__link--whatsapp {
-    color: #34D399;
-    font-weight: var(--font-bold);
-  }
-
-  /* Contact Details */
-  .footer__contact-info {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    font-size: var(--text-sm);
-  }
-
-  .footer__contact-line {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-2-5);
-    margin: 0;
-    color: var(--color-neutral-400);
-    line-height: var(--leading-normal);
-  }
-
-  .footer__contact-icon {
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-
-  .footer__contact-hours {
-    font-size: var(--text-xs);
-    color: var(--color-neutral-400);
-    background: rgba(255, 255, 255, 0.04);
-    padding: var(--space-2-5);
-    border-radius: var(--radius-sm);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    margin: var(--space-2) 0 0;
-  }
-
-  .footer__contact-hours strong {
-    color: #FFFFFF;
-  }
-
-  /* ── Divider & Legal ────────────────────────────────────────────── */
-  .footer__divider {
-    border: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.09);
-    margin: var(--space-12) 0 var(--space-6);
-  }
-
-  .footer__disclaimer {
-    font-size: var(--text-xs);
-    color: var(--color-neutral-500);
-    line-height: var(--leading-relaxed);
-    background: rgba(0, 0, 0, 0.25);
-    padding: var(--space-4);
-    border-radius: var(--radius-sm);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    margin-bottom: var(--space-6);
-  }
-
-  .footer__bottom-row {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-4);
-    text-align: center;
-    font-size: var(--text-xs);
-    color: var(--color-neutral-400);
-  }
-
-  @media (min-width: 768px) {
-    .footer__bottom-row {
-      flex-direction: row;
-      text-align: left;
-    }
-  }
-
-  .footer__copyright {
-    margin: 0;
-  }
-
-  .footer__legal-links {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-  }
-
-  .footer__legal-link {
-    color: var(--color-neutral-400);
-    text-decoration: none;
-    transition: color var(--transition-fast);
-  }
-
-  .footer__legal-link:hover {
-    color: #F3D375;
-  }
+  .site-footer{background:#061720;color:#b4c3bf}.footer-callout{background:#d7af57;color:#102421}.footer-callout .container{display:flex;align-items:center;justify-content:space-between;gap:2rem;padding-top:1.25rem;padding-bottom:1.25rem}.footer-callout small,.footer-callout strong{display:block}.footer-callout small{font-size:.65rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase}.footer-callout strong{font-family:var(--font-display);font-size:1.2rem}.footer-callout a{padding:.7rem .9rem;background:#102421;color:#fff;text-decoration:none;font-size:.75rem;font-weight:900}
+  .footer-grid{display:grid;grid-template-columns:2fr repeat(3,1fr);gap:clamp(2rem,6vw,6rem);padding-top:4.5rem;padding-bottom:3.5rem}.footer-brand>a{display:flex;align-items:center;gap:.7rem;color:#fff;text-decoration:none}.footer-brand>a span{display:grid;width:40px;height:40px;place-items:center;background:#d7af57;color:#102421;font-weight:950}.footer-brand p{max-width:440px;line-height:1.7}.notice{color:#e4c878;font-size:.78rem}.footer-grid h2{margin:0 0 1rem;color:#fff;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase}.footer-grid>div:not(:first-child){display:flex;flex-direction:column;gap:.7rem}.footer-grid a{color:#b4c3bf;text-decoration:none;font-size:.84rem}.footer-grid a:hover{color:#eccd7d}.footer-grid span{font-size:.84rem}
+  .legal{padding-top:1.5rem;padding-bottom:2rem;border-top:1px solid rgba(255,255,255,.1)}.legal>p{max-width:950px;margin:0 0 1.2rem;font-size:.72rem;line-height:1.65;color:#849993}.legal>div{display:flex;flex-wrap:wrap;gap:1rem}.legal a,.legal span{color:#9eb0ab;font-size:.7rem;text-decoration:none}.legal span{margin-right:auto}
+  @media(max-width:860px){.footer-grid{grid-template-columns:1fr 1fr}.footer-brand{grid-column:1/-1}.footer-callout .container{align-items:flex-start;flex-direction:column;gap:.8rem}}
+  @media(max-width:520px){.footer-grid{grid-template-columns:1fr}.footer-brand{grid-column:auto}.footer-callout a{width:100%;text-align:center}.legal span{width:100%}}
 </style>

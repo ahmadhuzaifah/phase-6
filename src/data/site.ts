@@ -7,11 +7,11 @@ export const SITE = {
   name: 'DHA Phase 6 Lahore',
   shortName: 'DHA Phase 6',
   description:
-    'DHA Phase 6 Lahore — Premier luxury real estate community featuring residential & commercial plots, Defence Raya Golf Resort, modern amenities, and world-class infrastructure.',
+    'Independent DHA Phase 6 Lahore guide to sectors, properties, maps, prices, places, construction and buyer due diligence.',
   url: import.meta.env.PUBLIC_SITE_URL || 'https://dhaphase6lahore.pk',
   locale: 'en_PK',
   language: 'en',
-  author: 'DHA Phase 6 Specialist & Information Portal',
+  author: 'DHA Phase 6 Lahore Information Portal',
   themeColor: '#c8960c',
 } as const;
 
@@ -25,13 +25,18 @@ export const SOCIAL = {
 
 export const NAVIGATION = [
   { label: 'Home', href: '/' },
-  { label: 'Sectors', href: '/blocks' },
+  { label: 'About', href: '/about' },
+  { label: 'Sectors', href: '/sectors' },
   { label: 'Properties', href: '/properties' },
-  { label: 'Places', href: '/places' },
-  { label: 'Plots', href: '/properties?type=residential-plot' },
-  { label: 'Prices', href: '/property-prices' },
-  { label: 'Dealers', href: '/property-dealer' },
+  { label: 'Plots', href: '/plots' },
+  { label: 'Houses', href: '/houses' },
+  { label: 'Commercial', href: '/commercial' },
   { label: 'Map', href: '/dha-phase-6-lahore-map' },
+  { label: 'Places', href: '/places' },
+  { label: 'Prices', href: '/dha-phase-6-lahore-prices' },
+  { label: 'Construction', href: '/construction' },
+  { label: 'Guides', href: '/guides' },
+  { label: 'Contact', href: '/contact' },
 ] as const;
 
 export type NavItem = (typeof NAVIGATION)[number];

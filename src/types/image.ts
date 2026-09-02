@@ -8,7 +8,7 @@ export interface PropertyImageRecord {
   propertyId: string;
   source: 'zameen' | 'developer' | 'dealer' | 'on-ground-photographer';
   sourceUrl?: string;
-  copyrightStatus: 'public-domain' | 'licensed' | 'authorized-dealer' | 'fair-use-informational';
+  copyrightStatus: 'site-owned' | 'public-domain' | 'licensed' | 'written-permission';
   watermarkApplied: boolean;
   watermarkOpacity: number; // e.g. 0.35 (35%)
   watermarkPosition: 'bottom-right' | 'center' | 'top-right';

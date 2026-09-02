@@ -1,270 +1,46 @@
 ---
-/**
- * About Society & Trust Methodology — Al Rehman Garden Phase 2 Lahore
- */
-
-import PageLayout from '@layouts/PageLayout.astro';
-import Schema from '@components/seo/Schema.astro';
-import { SITE } from '@data/site';
-import { CONTACTS } from '@data/contacts';
-
-const aboutSchema = {
-  name: 'About Al Rehman Garden Phase 2 Authority Directory',
-  description: 'Learn about Al Rehman Garden Phase 2 Lahore and our verified data methodology, verification standards, and real estate transparency commitment.',
-  url: `${SITE.url}/about`,
-};
+import GuidePage from '@components/content/GuidePage.astro';
 ---
 
-<PageLayout
-  title={`About Society & Data Trust Policy — ${SITE.name} Lahore`}
-  description={`Learn about Al Rehman Garden Phase 2 Lahore on Main Sharaqpur Road. Discover our 4-tier listing verification methodology, data accuracy standards, and legal trust policy.`}
->
-  <Schema type="WebSite" data={aboutSchema} />
-
-  <section class="about-hero">
-    <div class="container">
-      <div class="eyebrow eyebrow--dark">Independent Real Estate Authority</div>
-      <h1 class="about-hero__title">
-        About & <span class="text-gradient-gold">Trust Methodology</span>
-      </h1>
-      <p class="about-hero__lead lead">
-        The definitive independent information authority for Al Rehman Garden Phase 2 Lahore, dedicated to verified property data, transparent pricing, and consumer security.
-      </p>
-    </div>
-  </section>
-
-  <section class="section section--alt">
-    <div class="container">
-      <div class="about-grid">
-        <div class="about-main-text">
-          <!-- The Society Profile -->
-          <div class="about-card">
-            <h2 class="about-card__title">Al Rehman Garden Phase 2 — Society Overview</h2>
-            <p>
-              Al Rehman Garden Phase 2 is one of Lahore's most successful and rapidly growing master-planned communities. Situated directly on <strong>Main Sharaqpur Road</strong>, just <strong>2 minutes from the M-2 Motorway Faizpur Interchange</strong> and 10 minutes from central Mall Road, Phase 2 bridges the gap between serene suburban living and immediate downtown urban access.
-            </p>
-            <p>
-              With over 15 master-planned blocks, thousands of resident families, 100% underground utilities, and an operational hospital and school network, Phase 2 stands as a benchmark of modern real estate development in Western Lahore.
-            </p>
-          </div>
-
-          <!-- 4-Tier Verification Methodology -->
-          <div class="about-card">
-            <h2 class="about-card__title">Our 4-Tier Listing Verification Methodology</h2>
-            <p>To protect buyers and investors from fake listings and inflated prices, every property on this portal undergoes strict validation:</p>
-            <div class="methodology-steps">
-              <div class="method-step">
-                <span class="step-num">Step 1</span>
-                <div>
-                  <strong>Direct Allotment & Field Audit:</strong>
-                  <p>Cross-referencing plot numbers and possession readiness against official master structural maps and on-ground street layouts.</p>
-                </div>
-              </div>
-              <div class="method-step">
-                <span class="step-num">Step 2</span>
-                <div>
-                  <strong>Price Sanity & Market Benchmark:</strong>
-                  <p>Comparing demanded rates against real-time closing registry values to eliminate speculative pricing.</p>
-                </div>
-              </div>
-              <div class="method-step">
-                <span class="step-num">Step 3</span>
-                <div>
-                  <strong>Dealer Credential Check:</strong>
-                  <p>Verifying agent reputation, active office presence in Phase 2, and registration with authorized developer desks.</p>
-                </div>
-              </div>
-              <div class="method-step">
-                <span class="step-num">Step 4</span>
-                <div>
-                  <strong>Branded Watermarking & Anti-Plagiarism:</strong>
-                  <p>High-resolution media optimization with transparency watermarking to guarantee authentic asset attribution.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Policies & Disclaimers -->
-          <div class="about-card">
-            <h2 class="about-card__title">Legal Transparency & Disclaimer</h2>
-            <div class="policy-block">
-              <strong>1. Property Update & Delisting Policy:</strong>
-              <p>Listings are audited weekly. Sold or expired inventory is delisted within 24 hours of confirmation.</p>
-            </div>
-            <div class="policy-block">
-              <strong>2. Image Copyright & Watermarking:</strong>
-              <p>All property photographs and schematics are protected by copyright and processed with official watermark overlays.</p>
-            </div>
-            <div class="policy-block">
-              <strong>3. Independent Authority Disclaimer:</strong>
-              <p>This portal is an independent real estate information and marketing platform. All plot allotments, file transfers, and financial transactions must be executed through the authorized Al Rehman Garden management office.</p>
-            </div>
-          </div>
-        </div>
-
-        <aside class="about-sidebar">
-          <div class="about-contact-box">
-            <h3 class="about-contact-box__title">Site Advisory Desk</h3>
-            <p class="about-contact-box__text">
-              {CONTACTS.address.full}
-            </p>
-            <p class="about-contact-box__hours">
-              <strong>Working Hours:</strong> {CONTACTS.officeHours.weekdays}
-            </p>
-            <a
-              href={CONTACTS.whatsapp.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn btn--accent btn--full"
-            >
-              Contact Advisory Desk
-            </a>
-          </div>
-        </aside>
-      </div>
-    </div>
-  </section>
-</PageLayout>
-
-<style>
-  .about-hero {
-    background: radial-gradient(circle at 80% 20%, #16244F 0%, #0A1128 75%);
-    color: var(--text-inverse);
-    padding: var(--space-12) 0;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-  }
-
-  .about-hero__title {
-    color: #FFFFFF;
-    margin: var(--space-2) 0 var(--space-3);
-  }
-
-  .about-hero__lead {
-    color: var(--color-neutral-300);
-    max-width: 65ch;
-    margin: 0;
-  }
-
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-8);
-  }
-
-  @media (min-width: 1024px) {
-    .about-grid {
-      grid-template-columns: 1fr 340px;
-    }
-  }
-
-  .about-card {
-    background: var(--bg-primary);
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-xl);
-    padding: var(--space-8);
-    box-shadow: var(--shadow-card);
-    margin-bottom: var(--space-6);
-  }
-
-  .about-card__title {
-    font-size: var(--text-xl);
-    margin: 0 0 var(--space-4);
-    padding-bottom: var(--space-2);
-    border-bottom: 1px solid var(--border-light);
-  }
-
-  .about-card p {
-    font-size: var(--text-base);
-    line-height: var(--leading-relaxed);
-    color: var(--text-secondary);
-  }
-
-  .methodology-steps {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-    margin-top: var(--space-5);
-  }
-
-  .method-step {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-4);
-    background: var(--color-neutral-50);
-    padding: var(--space-4) var(--space-5);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--border-subtle);
-  }
-
-  .step-num {
-    font-size: 11px;
-    font-weight: var(--font-extrabold);
-    color: var(--color-primary-800);
-    background: var(--color-primary-100);
-    padding: 3px 8px;
-    border-radius: var(--radius-xs);
-    flex-shrink: 0;
-    text-transform: uppercase;
-  }
-
-  .method-step strong {
-    display: block;
-    font-size: var(--text-sm);
-    color: var(--text-primary);
-    margin-bottom: 2px;
-  }
-
-  .method-step p {
-    font-size: var(--text-xs);
-    color: var(--text-secondary);
-    margin: 0;
-  }
-
-  .policy-block {
-    margin-bottom: var(--space-4);
-    background: var(--color-neutral-50);
-    padding: var(--space-4);
-    border-radius: var(--radius-md);
-  }
-
-  .policy-block strong {
-    display: block;
-    font-size: var(--text-sm);
-    color: var(--text-primary);
-    margin-bottom: 2px;
-  }
-
-  .policy-block p {
-    font-size: var(--text-xs);
-    color: var(--text-secondary);
-    margin: 0;
-  }
-
-  .about-contact-box {
-    background: var(--bg-primary);
-    border: 1.5px solid var(--border-gold);
-    border-radius: var(--radius-2xl);
-    padding: var(--space-6);
-    box-shadow: var(--shadow-xl);
-    position: sticky;
-    top: 96px;
-  }
-
-  .about-contact-box__title {
-    font-size: var(--text-lg);
-    margin: 0 0 var(--space-2);
-  }
-
-  .about-contact-box__text {
-    font-size: var(--text-xs);
-    color: var(--text-secondary);
-    line-height: var(--leading-relaxed);
-    margin-bottom: var(--space-3);
-  }
-
-  .about-contact-box__hours {
-    font-size: var(--text-xs);
-    color: var(--text-muted);
-    margin-bottom: var(--space-5);
-  }
-</style>
+<GuidePage
+  title="About DHA Phase 6 Lahore"
+  metaTitle="About DHA Phase 6 Lahore | Independent Area Guide"
+  description="A practical, independent overview of DHA Phase 6 Lahore, its sector plan, access roads, established property market and the verification standards used by this portal."
+  facts={[
+    { label: 'Mapped sectors', value: 'A-H and J-N' },
+    { label: 'Main corridor', value: 'Shabbir Sharif Boulevard' },
+    { label: 'Property mix', value: 'Plots, houses and commercial' },
+    { label: 'Portal status', value: 'Independent, not official' },
+  ]}
+  sections={[
+    {
+      heading: 'An established part of DHA Lahore',
+      paragraphs: [
+        'DHA Phase 6 is a developed residential and commercial area on the western side of Lahore. Its plan includes sectors A, B, C, D, E, F, G, H, J, K, L, M and N, together with commercial areas and links toward adjoining DHA phases.',
+        'The phase is commonly approached through Bedian Road, Barki Road, Shabbir Sharif Boulevard and the wider DHA road network. Exact travel times depend on the entry gate, traffic and destination.',
+      ],
+    },
+    {
+      heading: 'What this portal covers',
+      paragraphs: [
+        'The site brings sector notes, source-referenced asking-price snapshots, property research checklists, nearby places, construction planning and map links into one searchable guide.',
+        'A source check is not the same as title verification. Property ownership, dues, NDC requirements, building permissions and transfer steps must be confirmed through DHA Lahore and qualified advisers.',
+      ],
+    },
+    {
+      heading: 'Our publishing standard',
+      paragraphs: [
+        'Market records identify their source and check date. Third-party photos are not copied or stripped of watermarks. Listing claims remain unverified until documents and the physical site have been checked.',
+        'We avoid describing this website as an official DHA channel. Links to DHA Lahore are clearly identified as external official references.',
+      ],
+    },
+  ]}
+  faqs={[
+    { question: 'Is this the official DHA Lahore website?', answer: 'No. This is an independent information platform. Official notices, records and procedures should be checked directly with DHA Lahore.' },
+    { question: 'Can this portal verify ownership?', answer: 'No. It can organize research, but ownership, dues, NDC status and transfer eligibility require official checks and professional due diligence.' },
+  ]}
+  sources={[
+    { label: 'DHA Lahore phase maps', href: 'https://dhalahore.org/dha-phases-maps/' },
+    { label: 'DHA Lahore official website', href: 'https://dhalahore.org/' },
+  ]}
+/>

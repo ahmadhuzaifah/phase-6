@@ -1,0 +1,59 @@
+---
+import GuidePage from '@components/content/GuidePage.astro';
+import { BLOCKS, type Block } from '@data/blocks';
+
+export function getStaticPaths() {
+  return BLOCKS.map((block) => ({ params: { slug: block.slug }, props: { block } }));
+}
+
+interface Props { block: Block }
+const { block } = Astro.props;
+const statusLabel = block.status === 'possession-ready' ? 'Established / possession context' : block.status.replace('-', ' ');
+---
+
+<GuidePage
+  title={`${block.name}, DHA Phase 6 Lahore`}
+  metaTitle={`${block.name} DHA Phase 6 Lahore | Map, Plots and Guide`}
+  description={block.description}
+  eyebrow="DHA Phase 6 Lahore sector guide"
+  facts={[
+    { label: 'Area type', value: block.category.replace('-', ' ') },
+    { label: 'General status', value: statusLabel },
+    { label: 'Common sizes', value: block.plotSizes.join(', ') },
+    { label: 'Map note', value: block.locationHighlight },
+  ]}
+  sections={[
+    {
+      heading: `Overview of ${block.name}`,
+      paragraphs: [
+        block.description,
+        'Sector-level notes are general context. An exact street can differ in access, road width, construction activity, noise and proximity to facilities.',
+      ],
+    },
+    {
+      heading: 'Location and nearby context',
+      paragraphs: [block.locationHighlight, 'Use the official Phase VI map first, then confirm the exact property number and physical street during a daylight visit.'],
+      bullets: block.features,
+    },
+    {
+      heading: 'Property and investment checks',
+      paragraphs: [
+        `Common categories associated with this guide include ${block.plotTypes.join(', ')}. Published plot-size context includes ${block.plotSizes.join(', ')}.`,
+        'Compare multiple current asking prices and distinguish seller demand from completed transaction evidence. Verify ownership, dues, NDC requirements and transfer eligibility before making a payment.',
+      ],
+    },
+    {
+      heading: 'Site visit checklist',
+      paragraphs: ['Record the visit date and evaluate the exact location consistently.'],
+      bullets: ['Road width and surface', 'Plot dimensions and orientation', 'Drainage and street level', 'Occupied houses and active construction', 'Nearby parks, mosques and commercial activity', 'Utility and transfer status'],
+    },
+  ]}
+  faqs={[
+    { question: `Is ${block.name} fully verified by this portal?`, answer: 'No. This page provides general area context. Verify the exact property and current official requirements independently.' },
+    { question: `Where can I find properties linked to ${block.name}?`, answer: 'Use the property directory and sector filter. Public-portal records remain source-referenced market snapshots, not verified inventory.' },
+  ]}
+  sources={[
+    { label: 'Official DHA Lahore Phase VI map PDF', href: 'https://dhalahore.org/wp-content/uploads/2025/09/PHASE-VI.pdf' },
+    { label: 'Browse property market snapshots', href: '/properties' },
+  ]}
+/>

@@ -4,13 +4,13 @@
 
 Create a page only when it answers a distinct search intent and has real supporting data. Priority clusters are:
 
-- `5 Marla plots in Al Rehman Garden Phase 2`
-- `10 Marla houses in Al Rehman Garden Phase 2`
-- `Best blocks in Al Rehman Garden Phase 2`
-- `Affordable plots in Al Rehman Garden Phase 2`
-- `Investment opportunities in Al Rehman Garden Phase 2`
+- `5 Marla plots in DHA Phase 6 Lahore`
+- `10 Marla houses in DHA Phase 6 Lahore`
+- `Best blocks in DHA Phase 6 Lahore`
+- `Affordable plots in DHA Phase 6 Lahore`
+- `Investment opportunities in DHA Phase 6 Lahore`
 
-Each page must include unique copy, a current data snapshot, links to relevant inventory, a map or block context, a verification disclaimer, and a canonical URL. Do not create size/block combinations with no verified inventory or repeat the same paragraph with keywords swapped.
+Each page must include unique copy, a dated data snapshot, links to relevant sources, map or sector context, a verification disclaimer, and a canonical URL. Do not create size and sector combinations without source-referenced records or repeat the same paragraph with keywords swapped.
 
 ## Editorial cadence
 

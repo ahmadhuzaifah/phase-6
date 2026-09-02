@@ -1,0 +1,44 @@
+---
+import GuidePage from '@components/content/GuidePage.astro';
+---
+
+<GuidePage
+  title="DHA Phase 6 Lahore Investment Guide"
+  metaTitle="DHA Phase 6 Lahore Investment Guide | Risks and Due Diligence"
+  description="A buyer-first framework for comparing sectors, asking prices, rental potential, liquidity and transaction risks in DHA Phase 6 Lahore."
+  facts={[
+    { label: 'Market type', value: 'Established resale market' },
+    { label: 'Core inventory', value: 'Plots, houses and commercial' },
+    { label: 'Price basis', value: 'Asking-price snapshots' },
+    { label: 'Return promise', value: 'None - verify independently' },
+  ]}
+  sections={[
+    {
+      heading: 'Start with the property, not the phase name',
+      paragraphs: [
+        'Two properties of the same size can command very different demands because of sector, street, road width, orientation, corner or park position, construction quality and commercial exposure. Compare like with like and distinguish asking prices from completed transactions.',
+        'No website can promise capital appreciation or rental yield. Build a downside case that includes holding costs, transfer expenses, maintenance, vacancy and the time required to resell.',
+      ],
+    },
+    {
+      heading: 'A disciplined shortlisting method',
+      paragraphs: ['Use the same written checklist for every candidate so attractive marketing does not change the standard.'],
+      bullets: ['Confirm the exact plot or house location', 'Collect at least three comparable demands', 'Inspect the street and surrounding construction', 'Check title, dues, NDC and transfer eligibility', 'Estimate all acquisition and holding costs', 'Document why the property could be difficult to resell'],
+    },
+    {
+      heading: 'Residential versus commercial',
+      paragraphs: [
+        'Residential plots are usually compared through sector and location attributes. Houses add build quality, age, layout and maintenance risk. Commercial property adds permitted use, frontage, parking, tenant demand and building-control considerations.',
+      ],
+    },
+  ]}
+  faqs={[
+    { question: 'Which sector is best for investment?', answer: 'There is no universal best sector. The answer depends on budget, holding period, property type and the exact location premium. Compare specific properties using the same criteria.' },
+    { question: 'Are advertised returns guaranteed?', answer: 'No. Historical or advertised growth does not guarantee future performance. Treat all return claims as marketing until independently supported.' },
+  ]}
+  sources={[
+    { label: 'DHA Phase 6 map and sector guide', href: '/dha-phase-6-lahore-map' },
+    { label: 'Source-referenced market snapshots', href: '/properties' },
+    { label: 'DHA Lahore official website', href: 'https://dhalahore.org/' },
+  ]}
+/>

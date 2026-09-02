@@ -1,0 +1,103 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
+import PropertyCard from './PropertyCard.astro';
+import { SITE } from '@data/site';
+import properties from '@data/properties-import.json';
+
+interface Props {
+  title: string;
+  description: string;
+  heading: string;
+  eyebrow: string;
+  types: string[];
+  canonicalPath: string;
+}
+
+const { title, description, heading, eyebrow, types, canonicalPath } = Astro.props;
+const listings = properties.filter((property) => types.includes(property.propertyType));
+
+const breadcrumbSchema = {
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url },
+    { '@type': 'ListItem', position: 2, name: heading, item: `${SITE.url}${canonicalPath}` },
+  ],
+};
+---
+
+<PageLayout title={title} description={description} canonical={`${SITE.url}${canonicalPath}`}>
+  <Schema type="BreadcrumbList" data={breadcrumbSchema} />
+  <header class="collection-hero">
+    <div class="container">
+      <p>{eyebrow}</p>
+      <h1>{heading}</h1>
+      <div class="collection-hero__intro">
+        <p>{description}</p>
+        <span>Source checked 2 September 2026</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="source-notice">
+    <div class="container">
+      <strong>Market snapshot, not verified inventory.</strong>
+      <p>Cards summarize public third-party asking prices and link to the source. Confirm live availability, ownership, condition, dues and transfer requirements independently. Third-party listing photos are not copied or altered.</p>
+    </div>
+  </section>
+
+  <section class="collection-section">
+    <div class="container">
+      <div class="collection-heading">
+        <div><p>Source-referenced records</p><h2>{listings.length} market snapshots</h2></div>
+        <a href="/verification-and-transfer">Open verification checklist</a>
+      </div>
+      {listings.length > 0 ? (
+        <div class="collection-grid">
+          {listings.map((property) => (
+            <PropertyCard
+              title={property.title}
+              slug={property.slug}
+              propertyType={property.propertyType}
+              purpose={property.purpose}
+              price={property.price}
+              priceUnit={property.priceUnit}
+              size={property.size}
+              sizeUnit={property.unit}
+              block={property.block}
+              location={property.location.address}
+              image={property.images[0]}
+              verificationStatus={property.verificationStatus}
+              availabilityStatus={property.availabilityStatus}
+              lastVerifiedDate={property.lastVerifiedDate}
+              sourceName={property.source}
+              sourceURL={property.sourceURL}
+              isFeatured={property.isFeatured}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="empty-state"><h2>No source-referenced records yet</h2><p>Use the contact page to submit owner-authorized inventory with clean, licensed images.</p></div>
+      )}
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .collection-hero { padding: clamp(5rem,10vw,8rem) 0 4.5rem; background: radial-gradient(circle at 80% 10%,#315c50,#102d2a 38%,#071a24 76%); color:#fff; }
+  .collection-hero>div>p,.collection-heading p { margin:0 0 .65rem;color:#e0bb62;font-size:.72rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase; }
+  .collection-hero h1 { max-width:900px;margin:0;color:#fff;font-family:var(--font-display);font-size:clamp(2.7rem,7vw,5.7rem);line-height:1;letter-spacing:-.035em; }
+  .collection-hero__intro { display:grid;grid-template-columns:minmax(0,680px) auto;gap:2rem;align-items:end;margin-top:1.6rem; }
+  .collection-hero__intro p { margin:0;color:#d6e1dd;font-size:1.12rem;line-height:1.7; }
+  .collection-hero__intro span { color:#aebfba;font-size:.78rem; }
+  .source-notice { padding:1.4rem 0;background:#d5ad55;color:#102421; }
+  .source-notice .container { display:grid;grid-template-columns:280px 1fr;gap:2rem; }
+  .source-notice p { margin:0;line-height:1.55; }
+  .collection-section { padding:clamp(3.5rem,8vw,7rem) 0;background:#f6f2e9; }
+  .collection-heading { display:flex;justify-content:space-between;gap:2rem;align-items:end;margin-bottom:2rem; }
+  .collection-heading h2 { margin:0;color:#102d2a;font-family:var(--font-display);font-size:clamp(2rem,4vw,3.2rem); }
+  .collection-heading a { color:#125e50;font-weight:800; }
+  .collection-grid { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem; }
+  .empty-state { padding:3rem;background:#fff;border:1px solid #ded6c5; }
+  @media(max-width:950px){.collection-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+  @media(max-width:680px){.collection-grid,.collection-hero__intro,.source-notice .container{grid-template-columns:1fr}.collection-heading{align-items:start;flex-direction:column}.source-notice{padding:1.25rem 0}}
+</style>

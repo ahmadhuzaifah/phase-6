@@ -1,5 +1,5 @@
 /**
- * Al Rehman Garden Phase 2 Lahore — Content Collections Configuration
+ * DHA Phase 6 Lahore — Content Collections Configuration
  * Strict Zod validation schemas for Properties, Blocks, Places, Dealers, and News.
  * Rejects publishing if essential legal, pricing, or location fields are missing.
  */
@@ -172,7 +172,7 @@ const dealers = defineCollection({
     activeListingsCount: z.number().nonnegative().default(0),
     logo: z.string().optional(),
     photo: z.string().optional(),
-    description: z.string().default('Authorized Property Dealer in Al Rehman Garden Phase 2 Lahore.'),
+    description: z.string().default('Authorized Property Dealer in DHA Phase 6 Lahore.'),
     licenseNumber: z.string().optional(),
   }),
 });
@@ -185,7 +185,7 @@ const news = defineCollection({
     slug: z.string().min(2),
     date: z.coerce.date(),
     excerpt: z.string().min(10),
-    author: z.string().default('Al Rehman Garden Editorial'),
+    author: z.string().default('DHA Phase 6 Lahore Editorial'),
     category: z.enum(['update', 'development', 'market', 'announcement', 'rates']).default('update'),
     image: z
       .object({

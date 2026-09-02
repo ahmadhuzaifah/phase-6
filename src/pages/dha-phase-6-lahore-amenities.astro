@@ -1,0 +1,45 @@
+---
+import GuidePage from '@components/content/GuidePage.astro';
+---
+
+<GuidePage
+  title="DHA Phase 6 Lahore Amenities"
+  metaTitle="DHA Phase 6 Lahore Amenities, Schools, Healthcare and Parks"
+  description="An independent guide to the everyday facilities within and around DHA Phase 6 Lahore, including healthcare, education, commercial areas, parks, worship and road access."
+  facts={[
+    { label: 'Healthcare', value: 'Phase 6 Medical Centre' },
+    { label: 'Commercial areas', value: 'CCA and boulevard markets' },
+    { label: 'Recreation', value: 'Sector parks and Defence Raya' },
+    { label: 'Directory', value: 'Places grouped by category' },
+  ]}
+  sections={[
+    {
+      heading: 'Daily-life infrastructure',
+      paragraphs: [
+        'DHA Phase 6 combines residential sectors with commercial pockets, mosques, parks and service corridors. The exact mix is not identical in every sector, so a buyer should map the facilities used most often from the specific property.',
+        'DHA Lahore lists a medical centre in Phase 6 Sector E. Additional hospitals and specialist care are available in the surrounding western Lahore corridor, including PKLI.',
+      ],
+    },
+    {
+      heading: 'Shopping, dining and services',
+      paragraphs: [
+        'Commercial activity is concentrated around designated CCA areas, the main boulevard and nearby Defence Raya. Businesses and opening hours change frequently; use the places directory as a starting point and confirm directly before travelling.',
+      ],
+      bullets: ['Banks and ATMs', 'Groceries and pharmacies', 'Restaurants and cafes', 'Fitness and sports facilities', 'Mosques and sector parks'],
+    },
+    {
+      heading: 'How to compare sectors by amenities',
+      paragraphs: [
+        'Measure routes at the times you expect to travel. A short map distance can feel different at school opening hours or evening commercial peaks. Also inspect pedestrian access, parking and service-road entry.',
+      ],
+    },
+  ]}
+  faqs={[
+    { question: 'Is there a DHA medical facility in Phase 6?', answer: 'DHA Lahore lists a medical centre in Phase 6 Sector E. Confirm services, hours and emergency capability directly before relying on it.' },
+    { question: 'Are amenities the same in every sector?', answer: 'No. Access varies by sector and street. Compare the exact property location with the facilities your household uses.' },
+  ]}
+  sources={[
+    { label: 'DHA Lahore healthcare facilities', href: 'https://dhalahore.org/health-care/' },
+    { label: 'DHA Phase 6 Lahore places directory', href: '/places' },
+  ]}
+/>

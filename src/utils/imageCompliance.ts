@@ -4,7 +4,7 @@
  * while this utility keeps the accept/reject decision consistent.
  */
 
-export type ImageReviewDecision = 'approved' | 'rejected' | 'needs-watermark-processing';
+export type ImageReviewDecision = 'approved' | 'rejected';
 
 export interface ImageReviewInput {
   filename: string;
@@ -19,7 +19,7 @@ export interface ImageReviewInput {
 
 export interface ImageReviewResult {
   decision: ImageReviewDecision;
-  destination: 'staging/verified-images' | 'staging/rejected-images' | 'public/images/properties/watermarked';
+  destination: 'staging/rejected-images' | 'public/images/properties/watermarked';
   reasons: string[];
 }
 
@@ -31,7 +31,7 @@ export function validatePropertyImage(input: ImageReviewInput): ImageReviewResul
   const detectedBrands = input.detectedBrandNames ?? [];
   const detectedText = input.detectedText ?? [];
   const hasPhoneNumber = detectedText.some((text) => /(?:\+?92|0)3\d{2}[-\s]?\d{7}/.test(text));
-  const hasThirdPartyBranding = input.hasDealerBranding || input.hasThirdPartyWatermark || detectedBrands.length > 0 || hasPhoneNumber;
+  const hasThirdPartyBranding = input.hasZameenWatermark || input.hasDealerBranding || input.hasThirdPartyWatermark || detectedBrands.length > 0 || hasPhoneNumber;
 
   if (input.width < MIN_WIDTH || input.height < MIN_HEIGHT) {
     reasons.push(`Resolution is below ${MIN_WIDTH}x${MIN_HEIGHT}.`);
@@ -49,17 +49,9 @@ export function validatePropertyImage(input: ImageReviewInput): ImageReviewResul
     };
   }
 
-  if (input.hasZameenWatermark) {
-    return {
-      decision: 'needs-watermark-processing',
-      destination: 'staging/verified-images',
-      reasons: ['Remove the source watermark, then apply the portal watermark before publishing.'],
-    };
-  }
-
   return {
     decision: 'approved',
     destination: 'public/images/properties/watermarked',
-    reasons: ['Image passed quality and branding review; apply the portal watermark before publishing.'],
+    reasons: ['Image passed branding review. Publish only when ownership or written reuse rights are documented.'],
   };
 }

@@ -1,6 +1,6 @@
 /**
  * Real Estate Analytics & Event Tracking Engine
- * Al Rehman Garden Phase 2 Lahore Authority Website
+ * DHA Phase 6 Lahore Authority Website
  * Dispatches custom events and interacts with Google Analytics / Meta Pixel when configured.
  */
 
@@ -49,11 +49,6 @@ export function trackEvent(event: PropertyAnalyticsEvent): void {
       });
     } else if (Array.isArray(w.dataLayer)) {
       w.dataLayer.push({ event: payload.eventName, ...payload });
-    }
-
-    // Dev logging in development
-    if (import.meta.env.DEV) {
-      console.log(`[Analytics Event] ${payload.eventName}`, payload);
     }
   }
 }

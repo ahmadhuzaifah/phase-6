@@ -1,5 +1,5 @@
 /**
- * Al Rehman Garden Phase 2 — Data Sources
+ * DHA Phase 6 Lahore — Data Sources
  * Tracking data origins for transparency and attribution.
  */
 

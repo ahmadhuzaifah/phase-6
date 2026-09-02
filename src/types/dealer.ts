@@ -1,6 +1,6 @@
 /**
  * Property Dealer & Agency Data Models
- * Al Rehman Garden Phase 2 Lahore
+ * DHA Phase 6 Lahore
  */
 
 export interface PropertyDealerModel {

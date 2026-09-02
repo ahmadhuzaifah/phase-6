@@ -1,0 +1,38 @@
+---
+import GuidePage from '@components/content/GuidePage.astro';
+---
+
+<GuidePage
+  title="DHA Phase 6 Lahore Sectors"
+  metaTitle="DHA Phase 6 Lahore Sectors A-N | Map and Area Guide"
+  description="Explore sectors A, B, C, D, E, F, G, H, J, K, L, M and N in DHA Phase 6 Lahore and learn how to compare locations."
+  facts={[
+    { label: 'Residential sectors', value: 'A-H and J-N' },
+    { label: 'Central road', value: 'Shabbir Sharif Boulevard' },
+    { label: 'Detail pages', value: 'Sector-by-sector guides' },
+    { label: 'Official reference', value: 'Phase VI map' },
+  ]}
+  sections={[
+    {
+      heading: 'Sector directory',
+      paragraphs: ['The official Phase VI plan labels sectors A, B, C, D, E, F, G, H, J, K, L, M and N. Use the complete directory to review each sector and open source-referenced market snapshots.'],
+      bullets: ['Sector A', 'Sector B', 'Sector C', 'Sector D', 'Sector E', 'Sector F', 'Sector G', 'Sector H', 'Sector J', 'Sector K', 'Sector L and M', 'Sector N'],
+    },
+    {
+      heading: 'How to compare sectors',
+      paragraphs: [
+        'A sector name alone does not determine value. Compare the exact street, road width, orientation, nearby commercial use, parks, mosques, access gates, occupied houses and active construction.',
+        'Open the interactive directory for sector pages, then verify the exact plot against the official map and current DHA Lahore records.',
+      ],
+      bullets: ['Browse the full sector directory at /sectors', 'Open the map guide at /dha-phase-6-lahore-map', 'Compare source-referenced records at /properties'],
+    },
+  ]}
+  faqs={[
+    { question: 'How many named sectors are shown on the Phase VI map?', answer: 'The official map shows sectors A-H and J-N, with no Sector I.' },
+    { question: 'Which sector is best?', answer: 'There is no universal answer. The best fit depends on budget, property type, commute and the exact street-level attributes.' },
+  ]}
+  sources={[
+    { label: 'Official DHA Lahore Phase VI map PDF', href: 'https://dhalahore.org/wp-content/uploads/2025/09/PHASE-VI.pdf' },
+    { label: 'Open the sector directory', href: '/sectors' },
+  ]}
+/>

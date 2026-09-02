@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">DHA Phase 6 Lahore buyer guides</title>
+  <desc id="desc">Editorial social image for independent property and neighbourhood guides.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07162d"/><stop offset="1" stop-color="#244d43"/></linearGradient></defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <path d="M790 130h285v370H790z" fill="#f7f0df" opacity=".96"/><path d="M838 204h190M838 253h190M838 302h145M838 383h190M838 432h152" stroke="#836a35" stroke-width="9" opacity=".48"/>
+  <text x="74" y="240" font-family="Georgia,serif" font-size="74" font-weight="700" fill="#fff">DHA Phase 6</text>
+  <text x="74" y="322" font-family="Georgia,serif" font-size="74" font-weight="700" fill="#e0bb62">Buyer guides</text>
+  <text x="76" y="392" font-family="sans-serif" font-size="25" fill="#d5e0dc">Original research, practical checklists and local context</text>
+</svg>

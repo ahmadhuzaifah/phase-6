@@ -5,6 +5,38 @@
   "outputDirectory": "dist",
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/prices",
+      "destination": "/dha-phase-6-lahore-prices",
+      "permanent": true
+    },
+    {
+      "source": "/property-prices",
+      "destination": "/dha-phase-6-lahore-prices",
+      "permanent": true
+    },
+    {
+      "source": "/map",
+      "destination": "/dha-phase-6-lahore-map",
+      "permanent": true
+    },
+    {
+      "source": "/dha-phase-6-lahore-houses-for-sale",
+      "destination": "/houses",
+      "permanent": true
+    },
+    {
+      "source": "/dha-phase-6-lahore-plots-for-sale",
+      "destination": "/plots",
+      "permanent": true
+    },
+    {
+      "source": "/property-dealer",
+      "destination": "/dealers",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

@@ -1,13 +1,5 @@
 ---
-/**
- * PropertyCard.astro — Luxury Property Listing Card
- * Featuring Watermark integration, formatted PKR currency, key specs pill row,
- * verified seal, and direct WhatsApp inquiry connect.
- */
-
-import PropertyWatermark from './PropertyWatermark.astro';
 import { CONTACTS } from '@data/contacts';
-import { getVerificationLabel, getVerificationLifecycle } from '@utils/propertyAudit';
 
 interface Props {
   title: string;
@@ -30,522 +22,91 @@ interface Props {
 }
 
 const {
-  title,
-  slug,
-  propertyType,
-  purpose,
-  price,
-  priceUnit = 'PKR',
-  size,
+  title, slug, propertyType, purpose, price, size, block,
   sizeUnit = 'marla',
-  block,
-  location = 'Main Sharaqpur Road, Lahore',
+  location = 'DHA Phase 6, Lahore',
   image,
-  verificationStatus = 'verified',
-  availabilityStatus = 'available',
+  verificationStatus = 'unverified',
+  availabilityStatus = 'source-check-required',
   lastVerifiedDate,
-  sourceName,
+  sourceName = 'Public listing source',
   sourceURL,
   isFeatured = false,
 } = Astro.props;
 
-// Compute freshness text
-const verificationDate = lastVerifiedDate || new Date().toISOString();
-const verificationLifecycle = getVerificationLifecycle(verificationDate);
-const verifiedBadgeText = getVerificationLabel(verificationDate);
-const displaySource = sourceName || 'Property information submission';
-
-// Format Price cleanly in Lakhs or Crores if applicable
-function formatPKR(val: number) {
-  if (val >= 10000000) {
-    const cr = (val / 10000000).toFixed(2);
-    return `${cr} Crore`;
-  } else if (val >= 100000) {
-    const lk = (val / 100000).toFixed(2);
-    return `${lk} Lakh`;
-  }
-  return new Intl.NumberFormat('en-PK').format(val);
-}
-
-const formattedPriceDisplay = formatPKR(price);
-const rawFormatted = new Intl.NumberFormat('en-PK').format(price);
-
-const purposeLabel =
-  purpose === 'sale' ? 'For Sale' : purpose === 'rent' ? 'For Rent' : 'For Lease';
-
-const imageUrl = image?.url || '/images/placeholders/property-placeholder.webp';
-const imageAlt = image?.alt || `${title} DHA Phase 6 Lahore`;
-
-const whatsappInquiryUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hello! I am interested in: ${title} (${size} ${sizeUnit}, ${block}) listed at PKR ${rawFormatted}. Please confirm availability.`)}`;
+const formatPKR = (value: number) => {
+  if (value >= 10_000_000) return `${(value / 10_000_000).toFixed(2)} Crore`;
+  if (value >= 100_000) return `${(value / 100_000).toFixed(2)} Lakh`;
+  return new Intl.NumberFormat('en-PK').format(value);
+};
+const imageUrl = image?.url || '/images/placeholders/property-placeholder.svg';
+const imageAlt = image?.alt || `${title}, DHA Phase 6 Lahore`;
+const typeLabel = propertyType.replaceAll('-', ' ');
+const dateLabel = lastVerifiedDate
+  ? new Intl.DateTimeFormat('en-PK', { dateStyle: 'medium' }).format(new Date(lastVerifiedDate))
+  : 'Not recorded';
+const statusLabel = availabilityStatus === 'source-check-required'
+  ? 'Check source'
+  : availabilityStatus === 'sold'
+    ? 'Sold'
+    : availabilityStatus === 'reserved'
+      ? 'Reserved'
+      : 'Availability unconfirmed';
+const whatsappUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Please help me verify this DHA Phase 6 market record: ${title}.`)}`;
 ---
 
-<article
-  class:list={['property-card', { 'property-card--featured': isFeatured, 'property-card--sold': availabilityStatus === 'sold' }]}
-  id={`property-${slug}`}
->
-  <!-- Media Container -->
-  <div class="property-card__media">
-    <a href={`/properties/${slug}`} class="property-card__media-link" tabindex="-1">
-      <img
-        src={imageUrl}
-        alt={imageAlt}
-        width="800"
-        height="560"
-        loading="lazy"
-        class="property-card__img"
-      />
-    </a>
-
-    <!-- Top Badges -->
-    <div class="property-card__badges-top">
-      <span class:list={['property-card__purpose-badge', `property-card__purpose-badge--${purpose}`]}>
-        {purposeLabel}
-      </span>
-      {availabilityStatus === 'sold' ? (
-        <span class="property-card__status-badge property-card__status-badge--sold">
-          🔴 SOLD
-        </span>
-      ) : availabilityStatus === 'reserved' ? (
-        <span class="property-card__status-badge property-card__status-badge--reserved">
-          🟠 RESERVED
-        </span>
-      ) : (
-        <span class="property-card__status-badge property-card__status-badge--avail">
-          🟢 AVAILABLE
-        </span>
-      )}
-      {isFeatured && (
-        <span class="property-card__featured-badge">
-          ★ Featured
-        </span>
-      )}
+<article class:list={['market-card', { 'market-card--featured': isFeatured }]}>
+  <a class="market-card__visual" href={`/properties/${slug}`} aria-label={`Read ${title}`}>
+    <img src={imageUrl} alt={imageAlt} width="800" height="560" loading="lazy" />
+    <span>{statusLabel}</span>
+  </a>
+  <div class="market-card__body">
+    <div class="market-card__meta">
+      <span>{block}</span>
+      <span>{purpose === 'rent' ? 'For rent' : 'For sale'}</span>
     </div>
-
-    <!-- Portal watermark overlay -->
-    <PropertyWatermark position="bottom-right" opacity={0.35} />
-  </div>
-
-  <!-- Content Body -->
-  <div class="property-card__body">
-    <!-- Location & Block Subtitle -->
-    <div class="property-card__header-meta">
-      <span class="property-card__block-tag">{block}</span>
-      {verificationStatus === 'verified' && verificationLifecycle !== 'expired' && (
-        <span class:list={['property-card__verified-badge', { 'property-card__verified-badge--stale': verificationLifecycle === 'needs-verification' }]} title="Verification freshness is based on the last checked date">
-          <svg viewBox="0 0 20 20" fill="currentColor" class="property-card__verified-icon">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-          </svg>
-          {verifiedBadgeText}
-        </span>
-      )}
+    <h3><a href={`/properties/${slug}`}>{title}</a></h3>
+    <div class="market-card__facts">
+      <span><strong>{size}</strong> {sizeUnit}</span>
+      <span>{typeLabel}</span>
+      <span>{location}</span>
     </div>
-
-    <!-- Property Title -->
-    <h3 class="property-card__title">
-      <a href={`/properties/${slug}`}>{title}</a>
-    </h3>
-
-    <!-- Key Specifications Row -->
-    <div class="property-card__specs">
-      <div class="property-card__spec-item">
-        <span class="property-card__spec-icon">📐</span>
-        <span class="property-card__spec-text"><strong>{size}</strong> {sizeUnit}</span>
-      </div>
-      <div class="property-card__spec-item">
-        <span class="property-card__spec-icon">🏷️</span>
-        <span class="property-card__spec-text">{propertyType}</span>
-      </div>
-      <div class="property-card__spec-item">
-        <span class="property-card__spec-icon">📍</span>
-        <span class="property-card__spec-text">{location}</span>
-      </div>
+    <div class="market-card__source">
+      <span>Source checked {dateLabel}</span>
+      {sourceURL ? <a href={sourceURL} target="_blank" rel="noopener noreferrer">{sourceName}</a> : <span>{sourceName}</span>}
     </div>
-
-    <div class="property-card__source">
-      Source checked:
-      {sourceURL ? <a href={sourceURL} target="_blank" rel="noopener noreferrer">{displaySource}</a> : displaySource}
-    </div>
-
-    <!-- Divider -->
-    <div class="property-card__divider"></div>
-
-    <!-- Pricing & Action Bar -->
-    <div class="property-card__footer">
-      <div class="property-card__price-wrap">
-        <span class="property-card__price-label">Price Demand</span>
-        <div class="price price-sm">
-          <span class="price-currency">{priceUnit}</span>
-          <span class="price-value">{formattedPriceDisplay}</span>
-        </div>
+    <footer>
+      <div><small>Advertised demand</small><strong>PKR {formatPKR(price)}</strong></div>
+      <div class="market-card__actions">
+        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">Verify</a>
+        <a href={`/properties/${slug}`}>Details</a>
       </div>
-
-      <!-- Action Buttons -->
-      <div class="property-card__actions">
-        <a
-          href={whatsappInquiryUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="property-card__whatsapp-btn"
-          aria-label={`WhatsApp Inquiry for ${title}`}
-          title="Direct WhatsApp Inquiry"
-        >
-          <svg viewBox="0 0 24 24" fill="currentColor" class="property-card__action-icon">
-            <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/>
-          </svg>
-        </a>
-        <a href={`/properties/${slug}`} class="property-card__details-btn">
-          View Details →
-        </a>
-      </div>
-    </div>
+    </footer>
+    {verificationStatus !== 'verified' && <p class="market-card__caveat">Unverified third-party market snapshot. It is not confirmed inventory.</p>}
   </div>
 </article>
 
 <style>
-  .property-card {
-    background: linear-gradient(180deg, rgba(10, 17, 40, 0.96) 0%, rgba(8, 14, 30, 0.98) 100%);
-    border: 1px solid rgba(243, 211, 117, 0.14);
-    border-radius: var(--radius-xl);
-    overflow: hidden;
-    box-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.65);
-    transition: all var(--transition-base);
-    display: flex;
-    flex-direction: column;
-    color: #FFFFFF;
-  }
-
-  .property-card:hover {
-    box-shadow: 0 28px 54px -26px rgba(0, 0, 0, 0.72);
-    border-color: rgba(243, 211, 117, 0.30);
-    transform: translateY(-6px);
-  }
-
-  .property-card--featured {
-    border: 1.5px solid rgba(243, 211, 117, 0.45);
-    background: linear-gradient(180deg, rgba(16, 27, 53, 0.98) 0%, rgba(8, 14, 30, 0.98) 100%);
-  }
-
-  /* ── Media Container ────────────────────────────────────────────── */
-  .property-card__media {
-    position: relative;
-    aspect-ratio: 4 / 3;
-    overflow: hidden;
-    background: linear-gradient(135deg, #09111f 0%, #131f3f 100%);
-  }
-
-  .property-card__media::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(5, 8, 22, 0.08) 0%, rgba(5, 8, 22, 0.58) 100%);
-    pointer-events: none;
-  }
-
-  .property-card__media-link {
-    display: block;
-    width: 100%;
-    height: 100%;
-    position: relative;
-    z-index: 1;
-  }
-
-  .property-card__img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 420ms ease, filter 420ms ease;
-  }
-
-  .property-card:hover .property-card__img {
-    transform: scale(1.08);
-    filter: saturate(1.02);
-  }
-
-  .property-card__placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-2);
-    background: linear-gradient(135deg, #101F44 0%, #0A1128 100%);
-    color: var(--color-primary-300);
-    font-size: var(--text-xs);
-    font-weight: var(--font-bold);
-    letter-spacing: 0.5px;
-  }
-
-  .property-card__placeholder-icon {
-    width: 36px;
-    height: 36px;
-    color: var(--color-primary-400);
-    opacity: 0.7;
-  }
-
-  .property-card__badges-top {
-    position: absolute;
-    top: var(--space-3);
-    left: var(--space-3);
-    display: flex;
-    gap: var(--space-2);
-    z-index: 2;
-    flex-wrap: wrap;
-  }
-
-  .property-card__purpose-badge {
-    padding: var(--space-1) var(--space-2-5);
-    font-size: 11px;
-    font-weight: var(--font-extrabold);
-    border-radius: var(--radius-full);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: white;
-    box-shadow: 0 8px 20px -12px rgba(0, 0, 0, 0.7);
-  }
-
-  .property-card__purpose-badge--sale {
-    background-color: var(--color-accent-600);
-  }
-
-  .property-card__purpose-badge--rent {
-    background-color: var(--color-secondary-600);
-  }
-
-  .property-card__purpose-badge--lease {
-    background-color: var(--color-warning);
-  }
-
-  .property-card__featured-badge {
-    padding: var(--space-1) var(--space-2-5);
-    font-size: 11px;
-    font-weight: var(--font-extrabold);
-    border-radius: var(--radius-full);
-    text-transform: uppercase;
-    background: var(--gradient-gold);
-    color: var(--color-secondary-950);
-    box-shadow: 0 10px 24px -12px rgba(0, 0, 0, 0.6);
-  }
-
-  .property-card__status-badge {
-    padding: var(--space-1) var(--space-2-5);
-    font-size: 10.5px;
-    font-weight: var(--font-extrabold);
-    border-radius: var(--radius-full);
-    text-transform: uppercase;
-    box-shadow: 0 8px 20px -12px rgba(0, 0, 0, 0.7);
-  }
-
-  .property-card__status-badge--avail {
-    background: #059669;
-    color: #FFFFFF;
-  }
-
-  .property-card__status-badge--reserved {
-    background: #D97706;
-    color: #FFFFFF;
-  }
-
-  .property-card__status-badge--sold {
-    background: #DC2626;
-    color: #FFFFFF;
-  }
-
-  .property-card--sold .property-card__img {
-    filter: grayscale(60%);
-  }
-
-  /* ── Body ───────────────────────────────────────────────────────── */
-  .property-card__body {
-    padding: var(--space-5);
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    gap: var(--space-3);
-  }
-
-  .property-card__header-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-2);
-    flex-wrap: wrap;
-  }
-
-  .property-card__block-tag {
-    font-size: var(--text-xs);
-    font-weight: var(--font-bold);
-    color: #F3D375;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    background: rgba(197, 155, 39, 0.12);
-    padding: 4px 8px;
-    border-radius: var(--radius-full);
-    border: 1px solid rgba(243, 211, 117, 0.14);
-  }
-
-  .property-card__verified-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    font-size: 11px;
-    font-weight: var(--font-bold);
-    color: #9CF3C8;
-    background-color: rgba(16, 185, 129, 0.12);
-    padding: 2px 6px;
-    border-radius: var(--radius-full);
-    border: 1px solid rgba(167, 243, 208, 0.25);
-  }
-
-  .property-card__verified-icon {
-    width: 12px;
-    height: 12px;
-  }
-
-  .property-card__title {
-    font-family: var(--font-body);
-    font-size: var(--text-base);
-    font-weight: var(--font-bold);
-    margin: 0 0 var(--space-3);
-    line-height: var(--leading-snug);
-  }
-
-  .property-card__title a {
-    color: #FFFFFF;
-    text-decoration: none;
-    transition: color var(--transition-fast);
-  }
-
-  .property-card__title a:hover {
-    color: #F3D375;
-  }
-
-  /* Specs Row */
-  .property-card__specs {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-2);
-    background: rgba(255, 255, 255, 0.03);
-    padding: var(--space-3);
-    border-radius: var(--radius-lg);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-  }
-
-  .property-card__spec-item {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    font-size: var(--text-xs);
-    color: rgba(255, 255, 255, 0.76);
-    min-width: 0;
-  }
-
-  .property-card__spec-icon {
-    font-size: 13px;
-    flex-shrink: 0;
-  }
-
-  .property-card__spec-text {
-    min-width: 0;
-    line-height: var(--leading-normal);
-  }
-
-  .property-card__divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(243, 211, 117, 0.18), transparent);
-    margin-top: auto;
-    margin-bottom: var(--space-2);
-  }
-
-  /* Footer & Pricing */
-  .property-card__footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-3);
-  }
-
-  .property-card__price-wrap {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .property-card__price-label {
-    font-size: 10px;
-    font-weight: var(--font-bold);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: rgba(255, 255, 255, 0.56);
-  }
-
-  .property-card__actions {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-  }
-
-  .property-card__whatsapp-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    background: linear-gradient(135deg, #25D366 0%, #1EA85A 100%);
-    color: white;
-    border-radius: var(--radius-md);
-    text-decoration: none;
-    transition: all var(--transition-fast);
-    box-shadow: 0 10px 24px -14px rgba(37, 211, 102, 0.75);
-  }
-
-  .property-card__whatsapp-btn:hover {
-    transform: translateY(-1px) scale(1.06);
-  }
-
-  .property-card__action-icon {
-    width: 20px;
-    height: 20px;
-  }
-
-  .property-card__details-btn {
-    display: inline-flex;
-    align-items: center;
-    padding: var(--space-2) var(--space-3-5);
-    background: rgba(255, 255, 255, 0.08);
-    color: #FFFFFF;
-    font-size: var(--text-xs);
-    font-weight: var(--font-bold);
-    border-radius: var(--radius-md);
-    text-decoration: none;
-    transition: all var(--transition-fast);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .property-card__details-btn:hover {
-    background: rgba(243, 211, 117, 0.15);
-    color: #FFFFFF;
-    transform: translateY(-1px);
-  }
-
-  @media (min-width: 480px) {
-    .property-card__specs {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-  .property-card__source {
-    margin-top: var(--space-3);
-    color: rgba(203, 213, 225, 0.78);
-    font-size: 11px;
-    line-height: 1.4;
-  }
-
-  .property-card__source a {
-    color: #F3D375;
-    font-weight: var(--font-semibold);
-  }
-
-  .property-card__verified-badge--stale {
-    color: #FDE68A;
-    border-color: rgba(251, 191, 36, 0.45);
-  }
+  .market-card{display:flex;flex-direction:column;overflow:hidden;background:#fff;border:1px solid #d9d1c2;border-radius:1rem;box-shadow:0 16px 40px -34px #071a24;color:#152d2a}
+  .market-card--featured{border-color:#b48a32}
+  .market-card__visual{position:relative;display:block;aspect-ratio:4/3;overflow:hidden;background:#0b2028}
+  .market-card__visual img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
+  .market-card:hover .market-card__visual img{transform:scale(1.025)}
+  .market-card__visual>span{position:absolute;top:1rem;left:1rem;padding:.42rem .7rem;border-radius:999px;background:#d7af57;color:#102421;font-size:.68rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+  .market-card__body{display:flex;flex:1;flex-direction:column;padding:1.15rem}
+  .market-card__meta{display:flex;justify-content:space-between;gap:1rem;color:#25705f;font-size:.72rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+  h3{margin:.7rem 0;font-family:var(--font-display);font-size:1.45rem;line-height:1.15}
+  h3 a{color:#102d2a;text-decoration:none}
+  .market-card__facts{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1rem;color:#52635f;font-size:.78rem}
+  .market-card__facts span{padding:.35rem .55rem;background:#f4f0e7;border-radius:.4rem;text-transform:capitalize}
+  .market-card__source{display:flex;justify-content:space-between;gap:1rem;margin-top:auto;padding-top:.85rem;border-top:1px solid #eee7da;color:#6d7774;font-size:.72rem}
+  .market-card__source a{color:#14614f;font-weight:800}
+  footer{display:flex;justify-content:space-between;gap:1rem;align-items:end;margin-top:1rem}
+  footer small{display:block;color:#6a7471;font-size:.68rem;text-transform:uppercase}
+  footer strong{display:block;margin-top:.18rem;font-size:1.15rem;color:#102d2a}
+  .market-card__actions{display:flex;gap:.45rem}
+  .market-card__actions a{padding:.55rem .7rem;border:1px solid #1e6657;border-radius:.4rem;color:#155647;font-size:.74rem;font-weight:900;text-decoration:none}
+  .market-card__actions a:first-child{background:#155647;color:#fff}
+  .market-card__caveat{margin:.8rem 0 0;color:#7d5e20;font-size:.7rem;line-height:1.4}
+  @media(max-width:400px){footer,.market-card__source{align-items:flex-start;flex-direction:column}}
 </style>

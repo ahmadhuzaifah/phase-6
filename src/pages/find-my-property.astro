@@ -11,14 +11,14 @@ import { CONTACTS } from '@data/contacts';
 
 const pageSchema = {
   name: 'Find My Property — Custom Real Estate Matching Service',
-  description: 'Submit your specific property requirements for Al Rehman Garden Phase 2 Lahore. Our property information team will match verified plots and houses within your budget.',
+  description: 'Submit your property requirements for DHA Phase 6 Lahore and request a source comparison, shortlist or viewing conversation.',
   url: `${SITE.url}/find-my-property`,
 };
 ---
 
 <PageLayout
   title={`Find My Property — Custom Plot & House Matcher | ${SITE.name}`}
-  description="Looking for a specific plot, house, or commercial property in Al Rehman Garden Phase 2 Lahore? Tell us your budget and preferred block, and our verified team will match you with on-ground options."
+  description="Looking for a plot, house or commercial property in DHA Phase 6 Lahore? Share your budget and preferred sector for a source comparison and shortlist."
 >
   <Schema type="WebSite" data={pageSchema} />
 
@@ -26,10 +26,10 @@ const pageSchema = {
     <div class="container">
       <div class="eyebrow eyebrow--dark">VIP Property Matcher</div>
       <h1 class="finder-hero__title">
-        Find My Property in <span class="text-gradient-gold">Al Rehman Garden Phase 2</span>
+        Find My Property in <span class="text-gradient-gold">DHA Phase 6 Lahore</span>
       </h1>
       <p class="finder-hero__lead lead">
-        Cannot find your exact desired plot or house? Tell us your exact specifications, and our verified on-ground advisory desk will locate direct allotment and off-market options for you.
+        Share your preferred size, sector and budget. The property desk can compare public sources and discuss a shortlist, but every option still requires independent verification.
       </p>
     </div>
   </section>
@@ -41,7 +41,7 @@ const pageSchema = {
         <div class="finder-form-card">
           <div class="finder-form-card__header">
             <h2 class="finder-form-card__title">Submit Your Property Request</h2>
-            <p class="finder-form-card__subtitle">We will scan our verified inventory and contact you within 15 minutes.</p>
+            <p class="finder-form-card__subtitle">We will review your brief and respond using the contact details you provide.</p>
           </div>
 
           <form class="finder-form" id="property-finder-form" action="/contact" method="post">

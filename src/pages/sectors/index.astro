@@ -1,0 +1,26 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
+import BlockCard from '@components/blocks/BlockCard.astro';
+import { BLOCKS } from '@data/blocks';
+import { SITE } from '@data/site';
+
+const residential = BLOCKS.filter((item) => item.slug.startsWith('sector-'));
+const destinations = BLOCKS.filter((item) => !item.slug.startsWith('sector-'));
+const schema = { itemListElement: BLOCKS.map((item,index)=>({ '@type':'ListItem', position:index+1, name:item.name, url:`${SITE.url}/sectors/${item.slug}` })) };
+---
+
+<PageLayout title="DHA Phase 6 Lahore Sectors A-N" description="Explore independent guides to sectors A-H and J-N in DHA Phase 6 Lahore, plus major commercial and recreation areas.">
+  <Schema type="ItemList" data={schema} />
+  <header class="sector-hero"><div class="container"><p>Official map aligned directory</p><h1>DHA Phase 6 Lahore sectors</h1><span>Compare access, plot sizes, nearby facilities and source-referenced property snapshots.</span></div></header>
+  <section class="sector-section"><div class="container">
+    <div class="sector-intro"><strong>{residential.length} sector guides</strong><p>The Phase VI map shows sectors A-H and J-N. Verify exact boundaries and plot details with the official map and DHA Lahore.</p></div>
+    <div class="sector-grid">{residential.map((sector)=><BlockCard name={sector.name} slug={sector.slug} category={sector.category} status={sector.status} possessionPercentage={sector.possessionPercentage} plotSizes={sector.plotSizes} features={sector.features} description={sector.description} />)}</div>
+    <div class="subhead"><p>Commercial and recreation context</p><h2>Other Phase 6 destinations</h2></div>
+    <div class="sector-grid">{destinations.map((sector)=><BlockCard name={sector.name} slug={sector.slug} category={sector.category} status={sector.status} possessionPercentage={sector.possessionPercentage} plotSizes={sector.plotSizes} features={sector.features} description={sector.description} />)}</div>
+  </div></section>
+</PageLayout>
+
+<style>
+  .sector-hero{padding:clamp(5rem,10vw,8rem) 0;background:radial-gradient(circle at 80% 0,#315c50,#102d2a 40%,#071a24 78%);color:#fff}.sector-hero p,.subhead p{margin:0 0 .7rem;color:#e0bb62;font-size:.74rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.sector-hero h1{margin:0 0 1.2rem;color:#fff;font-family:var(--font-display);font-size:clamp(3rem,8vw,6rem);line-height:.95}.sector-hero span{color:#c7d5d0;font-size:1.08rem}.sector-section{padding:clamp(3.5rem,8vw,7rem) 0;background:#f6f2e9}.sector-intro{display:grid;grid-template-columns:240px 1fr;gap:2rem;margin-bottom:2rem;padding:1.4rem;background:#d5ad55;color:#102421}.sector-intro p{margin:0}.sector-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.2rem}.subhead{margin:5rem 0 1.7rem}.subhead h2{margin:0;color:#123a34;font-family:var(--font-display);font-size:2.4rem}@media(max-width:960px){.sector-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:640px){.sector-grid,.sector-intro{grid-template-columns:1fr;gap:.7rem}}
+</style>

@@ -23,7 +23,6 @@ const {
   slug,
   category = 'residential',
   status,
-  possessionPercentage = 100,
   description,
   plotTypes = [],
   plotSizes = [],
@@ -33,22 +32,22 @@ const {
 
 const statusConfig: Record<string, { label: string; class: string; dotColor: string }> = {
   'possession-ready': {
-    label: 'Ready Possession (100% Inhabited)',
+    label: 'Established area - verify exact plot',
     class: 'block-card__status--ready',
     dotColor: '#10B981',
   },
   'developed': {
-    label: 'Fully Developed',
+    label: 'Developed area - verify exact street',
     class: 'block-card__status--developed',
     dotColor: '#059669',
   },
   'under-development': {
-    label: 'Fast-Track Development',
+    label: 'Current status requires checking',
     class: 'block-card__status--developing',
     dotColor: '#C59B27',
   },
   'planned': {
-    label: 'Upcoming Master Sector',
+    label: 'Plan reference only',
     class: 'block-card__status--planned',
     dotColor: '#64748B',
   },
@@ -61,14 +60,14 @@ const currentStatus = statusConfig[status] || statusConfig['possession-ready'];
   <!-- Card Header & Status -->
   <div class="block-card__header">
     <div class="block-card__title-group">
-      <span class="block-card__eyebrow">ARG Phase 2 • {category.replace('-', ' ')}</span>
+      <span class="block-card__eyebrow">DHA 6 • {category.replace('-', ' ')}</span>
       <h3 class="block-card__name">
-        <a href={`/blocks/${slug}`}>{name}</a>
+        <a href={`/sectors/${slug}`}>{name}</a>
       </h3>
     </div>
     <div class:list={['block-card__status-pill', currentStatus.class]}>
       <span class="block-card__status-dot" style={`background-color: ${currentStatus.dotColor};`}></span>
-      <span>{currentStatus.label} ({possessionPercentage}%)</span>
+      <span>{currentStatus.label}</span>
     </div>
   </div>
 
@@ -86,7 +85,7 @@ const currentStatus = statusConfig[status] || statusConfig['possession-ready'];
   <!-- Available Plot Sizes Chips & Plot Types -->
   <div class="block-card__plot-sizes">
     <div class="block-card__plot-header">
-      <span class="block-card__plot-sizes-label">Available Plots:</span>
+      <span class="block-card__plot-sizes-label">Common property context:</span>
       {plotTypes.length > 0 && (
         <span class="block-card__types-text">{plotTypes.join(' • ')}</span>
       )}
@@ -114,8 +113,8 @@ const currentStatus = statusConfig[status] || statusConfig['possession-ready'];
 
   <!-- Card Action Footer -->
   <div class="block-card__footer">
-    <a href={`/blocks/${slug}`} class="block-card__btn-explore">
-      <span>View Block Details & Map</span>
+    <a href={`/sectors/${slug}`} class="block-card__btn-explore">
+      <span>View sector guide</span>
       <span class="block-card__btn-arrow">→</span>
     </a>
   </div>

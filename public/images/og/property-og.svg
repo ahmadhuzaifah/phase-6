@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">DHA Phase 6 Lahore property market snapshots</title>
+  <desc id="desc">Editorial social image for source-referenced property market snapshots.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#08152b"/><stop offset="1" stop-color="#1d443d"/></linearGradient></defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <g fill="none" stroke="#d5ad54" opacity=".45"><path d="M690 485V218l172-106 172 106v267" stroke-width="8"/><path d="M745 485V278h235v207M820 278v207M905 278v207" stroke-width="5"/></g>
+  <text x="74" y="214" font-family="Georgia,serif" font-size="68" font-weight="700" fill="#fff">Property market</text>
+  <text x="74" y="292" font-family="Georgia,serif" font-size="68" font-weight="700" fill="#e0bb62">snapshots</text>
+  <text x="76" y="350" font-family="sans-serif" font-size="27" fill="#d5e0dc">DHA Phase 6 Lahore</text>
+  <text x="76" y="418" font-family="sans-serif" font-size="19" letter-spacing="2" fill="#b9c9c4">SOURCE LINKS • CHECK DATES • DUE DILIGENCE</text>
+</svg>

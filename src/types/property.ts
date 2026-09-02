@@ -23,10 +23,10 @@ export type Currency = 'PKR' | 'USD';
 export type PriceUnit = 'PKR' | 'Lakh' | 'Crore';
 
 export type SourceType =
-  | 'portal-extraction'   // Extracted from verified portals
-  | 'official-developer'  // Direct DHA Lahore allotment / developer
-  | 'authorized-dealer'   // From verified DHA registered consultants
-  | 'direct-allotment';   // Original DHA file/allotment
+  | 'portal-extraction'   // Limited metadata from a linked public source
+  | 'official-developer'  // Information published by the relevant developer
+  | 'authorized-dealer'   // Submission with documented publishing permission
+  | 'direct-allotment';   // Owner-supplied record requiring verification
 
 export type InventorySourceType = 'zameen' | 'dealer-submission' | 'manual-entry' | 'developer-reference' | 'on-ground-audit';
 
@@ -98,19 +98,19 @@ export interface PropertyModel {
   bedrooms?: number;    // Applicable for houses / villas / apartments
   bathrooms?: number;
   location: PropertyLocation;
-  block: string;        // e.g. "Block A (Executive)", "Mirabel Block"
+  block: string;        // e.g. "Sector A", "CCA 2"
   description: string;
   features: string[];   // e.g. ["Corner", "Park Facing", "150ft Boulevard", "Near Mosque"]
   possessionStatus?: PossessionStatus;
   images: PropertyImage[];
   watermarkedImages?: WatermarkedImage[];
-  source: string;       // e.g. "Zameen.com", "Al Rehman Developers"
+  source: string;       // e.g. "Zameen.com" or an owner/dealer submission
   sourceUrl?: string;   // Canonical original listing URL
   sourceName?: string;
   sourceURL?: string;
   sourceType: SourceType;
   verificationStatus: VerificationStatus;
-  availabilityStatus?: 'available' | 'reserved' | 'sold' | 'expired' | 'removed';
+  availabilityStatus?: 'available' | 'reserved' | 'sold' | 'expired' | 'removed' | 'source-check-required';
   lastVerifiedDate?: Date | string;
   verifiedBy?: string;
   expiryDate?: Date | string;

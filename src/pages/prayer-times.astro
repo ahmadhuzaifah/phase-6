@@ -1,0 +1,21 @@
+---
+import GuidePage from '@components/content/GuidePage.astro';
+---
+<GuidePage
+  title="Prayer times in DHA Phase 6 Lahore"
+  description="How to check current prayer times and mosque information for DHA Phase 6 Lahore without relying on a stale timetable."
+  eyebrow="Daily community guide"
+  sections={[
+    { heading: 'Use a current Lahore timetable', paragraphs: ['Prayer times change each day and can vary slightly by calculation method. This static page therefore does not publish a timetable that could become stale. Use a trusted current Lahore prayer-time service and confirm jamaat times with the relevant Phase 6 mosque.'] },
+    { heading: 'Mosque information', paragraphs: ['The DHA Lahore Religious Affairs page publishes information about religious services. For a visit, search for the specific sector mosque and confirm the current congregation schedule locally.'] },
+    { heading: 'Friday and Ramadan planning', paragraphs: ['Jummah, Ramadan and Eid arrangements can differ by mosque and date. Allow extra travel time and verify announcements through the relevant mosque or DHA Lahore’s official channels.'] },
+  ]}
+  faqs={[
+    { question: 'Why are exact prayer times not shown here?', answer: 'They change daily. A live trusted timetable is safer than a static value.' },
+    { question: 'Are jamaat times the same at every Phase 6 mosque?', answer: 'Not necessarily. Confirm with the specific mosque.' },
+  ]}
+  sources={[
+    { label: 'DHA Lahore Religious Affairs', href: 'https://dhalahore.org/dha-facilities/religious-affairs/' },
+    { label: 'Google search for current Lahore prayer times', href: 'https://www.google.com/search?q=current+prayer+times+Lahore' },
+  ]}
+/>

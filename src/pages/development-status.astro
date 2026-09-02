@@ -1,0 +1,43 @@
+---
+import GuidePage from '@components/content/GuidePage.astro';
+---
+
+<GuidePage
+  title="DHA Phase 6 Lahore Development Status"
+  metaTitle="DHA Phase 6 Lahore Development Status and Sector Checks"
+  description="A sector-level checklist for assessing roads, utilities, occupancy, construction activity and possession in DHA Phase 6 Lahore."
+  facts={[
+    { label: 'Overall character', value: 'Established and developed' },
+    { label: 'Sector range', value: 'A-H and J-N' },
+    { label: 'Verification level', value: 'Plot-specific checks required' },
+    { label: 'Reviewed', value: 'September 2026' },
+  ]}
+  sections={[
+    {
+      heading: 'Development is not a single yes-or-no label',
+      paragraphs: [
+        'DHA Phase 6 is generally regarded as an established phase, but the condition around an individual plot can still vary by street. Existing houses, vacant plots, active construction, commercial traffic and nearby utility work all affect day-to-day use.',
+        'Do not treat a phase-wide development percentage as proof that a particular plot is ready for construction. Confirm possession, demarcation, dues and building approval requirements for the exact property.',
+      ],
+    },
+    {
+      heading: 'On-ground inspection checklist',
+      paragraphs: ['Record the visit date and inspect the location in daylight. Compare the physical street with the map and documents.'],
+      bullets: ['Road surface, width and access', 'Drainage and street levels', 'Electricity, gas and water connection status', 'Adjacent construction and occupied homes', 'Distance to parks, mosques and commercial areas', 'Any easement, nullah, high-tension line or unusual boundary condition'],
+    },
+    {
+      heading: 'Before construction',
+      paragraphs: [
+        'Ask DHA Lahore about the latest building controls, drawing approval, inspections, temporary connections and completion requirements. Regulations and fees can change, so use current official documents rather than an old seller summary.',
+      ],
+    },
+  ]}
+  faqs={[
+    { question: 'Is DHA Phase 6 Lahore developed?', answer: 'It is an established DHA Lahore phase, but buyers should still verify possession and current on-ground conditions for the exact plot.' },
+    { question: 'Can construction start immediately after purchase?', answer: 'Not automatically. Confirm transfer, possession, dues, approved drawings and current DHA Lahore construction requirements first.' },
+  ]}
+  sources={[
+    { label: 'Official DHA Lahore Phase VI map', href: 'https://dhalahore.org/wp-content/uploads/2025/09/PHASE-VI.pdf' },
+    { label: 'DHA Lahore construction regulations', href: 'https://dhalahore.org/wp-content/uploads/2026/04/DHA-Construction-Regulaiton-2014-Updated-1.pdf' },
+  ]}
+/>

@@ -1,0 +1,45 @@
+---
+import GuidePage from '@components/content/GuidePage.astro';
+---
+
+<GuidePage
+  title="DHA Phase 6 Lahore Prices"
+  metaTitle="DHA Phase 6 Lahore Prices 2026 | Plots, Houses and Commercial"
+  description="A September 2026 snapshot of advertised asking prices for DHA Phase 6 Lahore plots, houses and commercial property, with sources and verification warnings."
+  facts={[
+    { label: '1 Kanal plots observed', value: 'PKR 4.07-10.5 Cr' },
+    { label: '10 Marla houses observed', value: 'PKR 4.8-8.85 Cr' },
+    { label: '1 Kanal houses observed', value: 'PKR 7.25-23.5 Cr' },
+    { label: '8 Marla commercial observed', value: 'PKR 13.45-38.8 Cr' },
+  ]}
+  sections={[
+    {
+      heading: 'Advertised market snapshot',
+      paragraphs: [
+        'The ranges above were observed in public portal results reviewed on 2 September 2026. They are asking prices, not completed transaction evidence, valuations or guarantees. The wide ranges reflect different sectors, streets, plot attributes, house specifications and commercial frontages.',
+        'A Graana Phase 6 plot page showed multiple 1 Kanal demands from about PKR 4.07 crore to PKR 10.5 crore. Zameen and Graana house result pages showed 10 Marla and 1 Kanal demands spanning a similarly broad range. Zameen commercial result pages showed substantial variation for 8 Marla offerings.',
+      ],
+    },
+    {
+      heading: 'Why one average can mislead',
+      paragraphs: ['Compare only genuinely similar properties. Separate seller demand from a negotiated or registered transaction.'],
+      bullets: ['Sector and exact street', 'Corner, park-facing or boulevard position', 'Road width and orientation', 'House age, covered area and build quality', 'Commercial frontage, parking and permitted use', 'Dues, possession and transfer readiness'],
+    },
+    {
+      heading: 'How this page stays honest',
+      paragraphs: [
+        'Every property card links to its source and shows the source-check date. Third-party listing photos are not copied. A source reference does not verify ownership or availability; repeat the source check and complete official due diligence before acting.',
+      ],
+    },
+  ]}
+  faqs={[
+    { question: 'Are these official DHA Lahore rates?', answer: 'No. They are observed third-party asking-price ranges. DHA Lahore should be consulted for official fees and procedures.' },
+    { question: 'Why are the ranges so wide?', answer: 'Exact sector, street, orientation, property condition, frontage and seller expectations can materially change the asking price.' },
+  ]}
+  sources={[
+    { label: 'Graana DHA Phase 6 plot results', href: 'https://www.graana.com/sale/plot-sale-dha-phase-6-lahore-2-829/' },
+    { label: 'Graana DHA Phase 6 residential results', href: 'https://www.graana.com/sale/residential-properties-sale-dha-phase-6-lahore-2-829/' },
+    { label: 'Zameen DHA Phase 6 houses', href: 'https://www.zameen.com/Houses_Property/Lahore_Defence__DHA__Phase_6-1448-1.html' },
+    { label: 'Zameen DHA Phase 6 commercial plots', href: 'https://www.zameen.com/Commercial_Plots/Lahore_Defence__DHA__Phase_6-1448-1.html' },
+  ]}
+/>

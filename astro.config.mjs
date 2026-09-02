@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://alrehmangarden.pk',
+  site: process.env.PUBLIC_SITE_URL || 'https://dhaphase6lahore.pk',
 
   integrations: [
     sitemap({

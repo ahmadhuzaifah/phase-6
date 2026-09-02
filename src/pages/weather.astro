@@ -1,0 +1,42 @@
+---
+import GuidePage from '@components/content/GuidePage.astro';
+---
+
+<GuidePage
+  title="DHA Phase 6 Lahore Weather and Site Visits"
+  metaTitle="DHA Phase 6 Lahore Weather and Property Visit Guide"
+  description="Plan DHA Phase 6 Lahore property inspections around Lahore heat, monsoon rain, winter fog and changing air quality."
+  facts={[
+    { label: 'Hot period', value: 'Late spring and summer' },
+    { label: 'Monsoon', value: 'Typically July to September' },
+    { label: 'Winter issue', value: 'Fog and air quality' },
+    { label: 'Live forecast', value: 'Check before travelling' },
+  ]}
+  sections={[
+    {
+      heading: 'Use weather as part of due diligence',
+      paragraphs: [
+        'Lahore has hot summers, a monsoon period and cool winters that can include fog and poor air quality. Conditions vary by day, so consult a current forecast rather than treating seasonal averages as live weather.',
+        'Morning or late-afternoon visits are usually more practical during extreme heat. After rainfall, a site visit can reveal street levels, drainage paths, roof leakage or dampness that may not be obvious in dry weather.',
+      ],
+    },
+    {
+      heading: 'What to inspect in each season',
+      paragraphs: ['Seasonal conditions expose different property risks.'],
+      bullets: ['Summer: cooling load, shade and west-facing exposure', 'Monsoon: drainage, roof falls, seepage and plot level', 'Winter: sunlight, dampness, fog-related commute and air quality', 'All year: road access, utility reliability and nearby construction'],
+    },
+    {
+      heading: 'Safety and scheduling',
+      paragraphs: [
+        'Confirm the forecast on the day, carry water in hot weather and avoid entering active construction sites without the owner and appropriate safety arrangements.',
+      ],
+    },
+  ]}
+  faqs={[
+    { question: 'Does this page show live weather?', answer: 'No. It is a planning guide. Use the Pakistan Meteorological Department or a current forecast service for live conditions.' },
+    { question: 'Why visit after rain?', answer: 'Rain can reveal drainage, street-level, seepage and roof-water issues that may be hidden during dry weather.' },
+  ]}
+  sources={[
+    { label: 'Pakistan Meteorological Department', href: 'https://www.pmd.gov.pk/' },
+  ]}
+/>

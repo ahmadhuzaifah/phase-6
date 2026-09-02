@@ -9,7 +9,6 @@ import { SITE } from '@data/site';
 import { BLOCKS } from '@data/blocks';
 import { PLACES_DATA } from '@data/places';
 import { FAQS_DATA } from '@data/faqs';
-import { COMPARISONS_DATA } from '@data/comparisons';
 import propertiesData from '@data/properties-import.json';
 
 const pageSchema = {
@@ -33,7 +32,7 @@ const searchableItems = [
     typeBadge: '🏛️ Sector',
     title: `${b.name} Sector Guide`,
     subtitle: `Possession: ${b.possessionPercentage}% • Plot Sizes: ${b.plotSizes.join(', ')}`,
-    url: `/blocks/${b.slug}`,
+    url: `/sectors/${b.slug}`,
     keywords: `${b.name} ${b.slug} ${b.category} block sector`,
   })),
   ...PLACES_DATA.map((pl) => ({
@@ -43,14 +42,6 @@ const searchableItems = [
     subtitle: `${pl.categoryLabel} • Distance: ${pl.distance}`,
     url: `/places/${pl.category}`,
     keywords: `${pl.name} ${pl.category} ${pl.categoryLabel} ${pl.address}`,
-  })),
-  ...COMPARISONS_DATA.map((c) => ({
-    type: 'Comparison',
-    typeBadge: '⚖️ Comparison',
-    title: c.heroTitle,
-    subtitle: `Compare rates, location, and ROI vs ${c.competitorName}`,
-    url: `/${c.slug}`,
-    keywords: `${c.heroTitle} ${c.competitorName} vs comparison`,
   })),
   ...FAQS_DATA.flatMap((cat) =>
     cat.questions.map((q) => ({
@@ -76,10 +67,10 @@ const searchableItems = [
     <div class="container">
       <div class="eyebrow eyebrow--dark">Universal Information Search</div>
       <h1 class="search-hero__title">
-        Search the <span class="text-gradient-gold">Phase 2 Portal</span>
+        Search the <span class="text-gradient-gold">Phase 6 Portal</span>
       </h1>
       <p class="search-hero__lead lead">
-        Instantly search across 100+ verified properties, 15+ society sectors, nearby schools and hospitals, market price indexes, and investor FAQs.
+        Search source-referenced properties, sector guides, nearby places, market price snapshots, and buyer FAQs.
       </p>
 
       <!-- Search Input Form -->

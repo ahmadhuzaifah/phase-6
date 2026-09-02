@@ -4,13 +4,13 @@ import Schema from '@components/seo/Schema.astro';
 import { SITE } from '@data/site';
 import { SEO_ARTICLES } from '@data/articles';
 
-const description = 'Independent market updates, buying guides, map explainers, and property verification resources for Al Rehman Garden Phase 2 Lahore.';
+const description = 'Independent market updates, buying guides, map explainers, and property verification resources for DHA Phase 6 Lahore.';
 const pageSchema = { name: `${SITE.name} Market & Buying Guides`, description, url: `${SITE.url}/blog` };
 ---
 
 <PageLayout title={`Market & Buying Guides | ${SITE.name}`} description={description} canonical={`${SITE.url}/blog`}>
   <Schema type="WebSite" data={pageSchema} />
-  <section class="blog-hero"><div class="container"><p class="eyebrow eyebrow--dark">Independent Research Desk</p><h1>Market notes for <span class="text-gradient-gold">better property decisions</span></h1><p class="lead">Practical guides covering prices, blocks, maps, due diligence, and investment research in Al Rehman Garden Phase 2 Lahore.</p></div></section>
+  <section class="blog-hero"><div class="container"><p class="eyebrow eyebrow--dark">Independent Research Desk</p><h1>Market notes for <span class="text-gradient-gold">better property decisions</span></h1><p class="lead">Practical guides covering prices, blocks, maps, due diligence, and investment research in DHA Phase 6 Lahore.</p></div></section>
   <section class="section"><div class="container"><div class="article-grid">
     {SEO_ARTICLES.map((article) => <article class="article-card"><img src={article.image} alt={article.imageAlt} width="1200" height="630" loading="lazy" /><div class="article-card__body"><span class="badge">{article.category}</span><p class="article-card__date">Updated {article.updatedDate}</p><h2><a href={`/blog/${article.slug}`}>{article.title}</a></h2><p>{article.description}</p><a class="btn btn--outline btn--sm" href={`/blog/${article.slug}`}>Read the guide</a></div></article>)}
   </div></div></section>
