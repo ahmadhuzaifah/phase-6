@@ -1,6 +1,6 @@
 /**
  * Property Data Models & TypeScript Interfaces
- * Al Rehman Garden Phase 2 Lahore Real Estate Authority Website
+ * DHA Phase 6 Lahore Real Estate Authority Website
  */
 
 export type PropertyType =
@@ -23,10 +23,10 @@ export type Currency = 'PKR' | 'USD';
 export type PriceUnit = 'PKR' | 'Lakh' | 'Crore';
 
 export type SourceType =
-  | 'portal-extraction'   // Extracted from Zameen, etc.
-  | 'official-developer'  // Direct from Al Rehman Developers
-  | 'authorized-dealer'   // From verified local dealers
-  | 'direct-allotment';   // Original society file/allotment
+  | 'portal-extraction'   // Extracted from verified portals
+  | 'official-developer'  // Direct DHA Lahore allotment / developer
+  | 'authorized-dealer'   // From verified DHA registered consultants
+  | 'direct-allotment';   // Original DHA file/allotment
 
 export type InventorySourceType = 'zameen' | 'dealer-submission' | 'manual-entry' | 'developer-reference' | 'on-ground-audit';
 

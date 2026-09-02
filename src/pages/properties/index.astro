@@ -15,7 +15,7 @@ import { isPublishableProperty } from '@utils/propertyAudit';
 
 const collectionSchema = {
   name: `Properties for Sale & Rent in ${SITE.name}`,
-  description: `Browse verified residential and commercial plots, houses, and shops in Al Rehman Garden Phase 2 Lahore.`,
+  description: `Browse verified residential and commercial plots, designer houses, and Defence Raya villas in DHA Phase 6 Lahore.`,
   url: `${SITE.url}/properties`,
 };
 
@@ -41,7 +41,7 @@ const publishedProperties = propertiesData.filter(isPublishableProperty);
 
 <PageLayout
   title={`Properties for Sale & Rent — ${SITE.name} Lahore`}
-  description={`Browse verified residential plots, commercial plots, and houses for sale in Al Rehman Garden Phase 2 Lahore. Filter by block, size, and price.`}
+  description={`Browse verified residential plots, CCA commercial plots, designer houses, and Defence Raya golf villas in DHA Phase 6 Lahore.`}
 >
   <Schema type="WebSite" data={collectionSchema} />
   <Schema type="BreadcrumbList" data={breadcrumbsSchema} />
@@ -50,10 +50,10 @@ const publishedProperties = propertiesData.filter(isPublishableProperty);
   <section class="dir-header">
     <div class="container">
       <div class="dir-header__inner">
-        <div class="eyebrow eyebrow--dark">ARG Phase 2 Property Directory</div>
-        <h1 class="dir-header__title">Properties for Sale in Lahore</h1>
+        <div class="eyebrow eyebrow--dark">DHA Phase 6 Property Directory</div>
+        <h1 class="dir-header__title">Properties for Sale in DHA Phase 6 Lahore</h1>
         <p class="dir-header__lead lead">
-          Browse verified residential plots, commercial plots, luxury villas, and houses across all sectors of Al Rehman Garden Phase 2 on Main Sharaqpur Road.
+          Browse verified residential plots, commercial broadways, luxury designer villas, and Defence Raya golf residences across all sectors of DHA Phase 6 Lahore.
         </p>
       </div>
     </div>
@@ -112,9 +112,9 @@ const publishedProperties = propertiesData.filter(isPublishableProperty);
 
               <!-- Block / Sector -->
               <div class="filter-group">
-                <label for="filter-block" class="filter-label">Block / Sector</label>
+                <label for="filter-block" class="filter-label">Sector</label>
                 <select id="filter-block" name="block" class="filter-select">
-                  <option value="">All Society Blocks</option>
+                  <option value="">All Sectors</option>
                   {BLOCKS.map((b) => (
                     <option value={b.name}>{b.name}</option>
                   ))}
@@ -126,12 +126,12 @@ const publishedProperties = propertiesData.filter(isPublishableProperty);
                 <label for="filter-size" class="filter-label">Plot / Property Size</label>
                 <select id="filter-size" name="size" class="filter-select">
                   <option value="">Any Size</option>
-                  <option value="3">3 Marla</option>
-                  <option value="3.5">3.5 Marla</option>
                   <option value="5">5 Marla</option>
-                  <option value="8">8 Marla</option>
                   <option value="10">10 Marla</option>
                   <option value="1">1 Kanal</option>
+                  <option value="2">2 Kanal</option>
+                  <option value="4">4 Marla Commercial</option>
+                  <option value="8">8 Marla Commercial</option>
                 </select>
               </div>
 

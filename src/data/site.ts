@@ -25,14 +25,13 @@ export const SOCIAL = {
 
 export const NAVIGATION = [
   { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
   { label: 'Sectors', href: '/blocks' },
   { label: 'Properties', href: '/properties' },
   { label: 'Places', href: '/places' },
-  { label: 'Map', href: '/dha-phase-6-lahore-map' },
+  { label: 'Plots', href: '/properties?type=residential-plot' },
   { label: 'Prices', href: '/property-prices' },
-  { label: 'Guides', href: '/dha-phase-6-investment-guide' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'Dealers', href: '/property-dealer' },
+  { label: 'Map', href: '/dha-phase-6-lahore-map' },
 ] as const;
 
 export type NavItem = (typeof NAVIGATION)[number];

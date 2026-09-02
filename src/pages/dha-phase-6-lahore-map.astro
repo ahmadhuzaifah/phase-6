@@ -1,22 +1,18 @@
 ---
 /**
- * Master Map & Sector Authority Hub — DHA Phase 6 Lahore
- * Designed in luxury dark aesthetic (#090B20, #15172D, #C59B27)
+ * DHA Phase 6 Lahore Map Page
+ * Exact implementation matching the reference specification.
  */
 
 import PageLayout from '@layouts/PageLayout.astro';
 import Schema from '@components/seo/Schema.astro';
-import PropertyWatermark from '@components/property/PropertyWatermark.astro';
 import { SITE } from '@data/site';
-import { BLOCKS } from '@data/blocks';
 import { CONTACTS } from '@data/contacts';
 
-const isShortAlias = Astro.url.pathname === '/map' || Astro.url.pathname === '/map/';
-
 const pageSchema = {
-  name: `DHA Phase 6 Lahore Map | Master Plan & Sector Location Guide`,
-  description: `Explore DHA Phase 6 Lahore master plan map, Sectors A to N, CCA-1, CCA-2, Defence Raya Golf Resort, and downloadable sector maps.`,
-  url: `${SITE.url}/dha-phase-6-lahore-map`,
+  name: 'DHA Phase 6 Lahore Map',
+  description: 'Interactive Google Maps view of DHA Phase 6 Lahore with all sectors, Defence Raya, CCA broadways, and nearby landmarks.',
+  url: `${SITE.url}/map`,
 };
 
 const placeSchema = {
@@ -35,7 +31,7 @@ const placeSchema = {
     latitude: 31.4682,
     longitude: 74.4354,
   },
-  url: `${SITE.url}/dha-phase-6-lahore-map`,
+  url: `${SITE.url}/map`,
   telephone: CONTACTS.phone.primary,
 };
 
@@ -50,813 +46,1127 @@ const breadcrumbsSchema = {
     {
       '@type': 'ListItem',
       position: 2,
-      name: 'DHA Phase 6 Map',
-      item: `${SITE.url}/dha-phase-6-lahore-map`,
+      name: 'Map',
+      item: `${SITE.url}/map`,
     },
   ],
 };
 
-const faqSchema = {
-  itemListElement: [
-    {
-      '@type': 'Question',
-      name: 'Where is DHA Phase 6 located on Lahore map?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'DHA Phase 6 Lahore is located along Main Boulevard Phase 6, accessible via Bedian Road, Barki Road, and the Lahore Ring Road (Phase 6 Interchange), just 10 minutes from Allama Iqbal International Airport.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Which sectors are in DHA Phase 6 Lahore?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'DHA Phase 6 comprises Sectors A, B, C, D, E, F, G, H, J, K, L, M, and N, along with CCA-1, CCA-2, and the Defence Raya Golf Resort.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Where is Defence Raya located in Phase 6?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Defence Raya Golf & Country Club is seamlessly integrated across Sector A and Sector B in DHA Phase 6 Lahore.',
-      },
-    },
-  ],
-};
+const sectors = [
+  { letter: 'A', name: 'Sector A', slug: 'sector-a' },
+  { letter: 'B', name: 'Sector B', slug: 'sector-b' },
+  { letter: 'C', name: 'Sector C', slug: 'sector-c' },
+  { letter: 'D', name: 'Sector D', slug: 'sector-d' },
+  { letter: 'E', name: 'Sector E', slug: 'sector-e' },
+  { letter: 'F', name: 'Sector F', slug: 'sector-f' },
+  { letter: 'G', name: 'Sector G', slug: 'sector-g' },
+  { letter: 'H', name: 'Sector H', slug: 'sector-h' },
+  { letter: 'J', name: 'Sector J', slug: 'sector-j' },
+  { letter: 'K', name: 'Sector K', slug: 'sector-k' },
+  { letter: 'L', name: 'Sector L', slug: 'sector-l' },
+  { letter: 'M', name: 'Sector M', slug: 'sector-m' },
+  { letter: 'N', name: 'Sector N', slug: 'sector-n' },
+  { letter: 'R', name: 'Defence Raya', slug: 'defence-raya-golf-resort' },
+];
 
-// Map PDF Downloads Dataset
 const mapDownloads = [
   {
-    id: 'masterplan',
-    title: 'DHA Phase 6 Master Plan',
-    desc: 'High-resolution official vectorized master layout covering Sectors A–N, CCAs, and Ring Road link.',
-    size: '18.2 MB',
-    format: 'PDF',
-    image: '/images/og/homepage-og.jpg',
+    title: 'Master Plan PDF',
+    desc: 'Complete DHA Phase 6 layout with all sectors, 150ft boulevards, CCA-1 & CCA-2, and Defence Raya.',
+    size: 'PDF · 4.12 MB',
+    href: '/downloads',
+    img: '/images/og/homepage-og.jpg',
   },
   {
-    id: 'sector-a-b',
-    title: 'Sectors A & B (Defence Raya)',
-    desc: 'Golf-facing villas, 1 & 2 Kanal executive plots, and Raya Fairways commercial strip.',
-    size: '5.4 MB',
-    format: 'PDF',
-    image: '/images/og/property-og.jpg',
+    title: 'Sector A Map',
+    desc: 'Detailed Sector A plot and street layout near Defence Raya.',
+    size: 'PDF · 0.62 MB',
+    href: '/blocks/sector-a',
+    img: '/images/og/property-og.jpg',
   },
   {
-    id: 'sector-c-d',
-    title: 'Sectors C & D (CCA-1 Hub)',
-    desc: 'Central 1 Kanal residential layout with walking access to CCA-1 banking & dining district.',
-    size: '4.8 MB',
-    format: 'PDF',
-    image: '/images/placeholders/property-placeholder.webp',
+    title: 'Sector B Map',
+    desc: 'Detailed Sector B golf-facing plot and street layout.',
+    size: 'PDF · 0.58 MB',
+    href: '/blocks/sector-b',
+    img: '/images/og/property-og.jpg',
   },
   {
-    id: 'sector-e-f',
-    title: 'Sectors E & F Map',
-    desc: 'Lush inner sectors featuring grand mosques, thematic parks, and 1 Kanal designer home plots.',
-    size: '4.6 MB',
-    format: 'PDF',
-    image: '/images/og/homepage-og.jpg',
+    title: 'Sector C Map',
+    desc: 'Detailed Sector C plot layout adjacent to CCA-1 Broadway.',
+    size: 'PDF · 0.65 MB',
+    href: '/blocks/sector-c',
+    img: '/images/og/property-og.jpg',
   },
   {
-    id: 'sector-g-h',
-    title: 'Sectors G & H Map',
-    desc: '10 Marla and 1 Kanal residential zones adjacent to CCA-2 and Bedian Road connectivity.',
-    size: '4.9 MB',
-    format: 'PDF',
-    image: '/images/placeholders/property-placeholder.webp',
+    title: 'Sector D Map',
+    desc: 'Detailed Sector D plot layout near Grand Jamia Mosque.',
+    size: 'PDF · 0.55 MB',
+    href: '/blocks/sector-d',
+    img: '/images/og/property-og.jpg',
   },
   {
-    id: 'sector-j',
-    title: 'Sector J (10 Marla Center)',
-    desc: 'High-density residential sector popular for 10 Marla plots, schools, and family parks.',
-    size: '4.1 MB',
-    format: 'PDF',
-    image: '/images/og/property-og.jpg',
+    title: 'Sector E Map',
+    desc: 'Detailed Sector E tranquil avenues and central park plots.',
+    size: 'PDF · 0.70 MB',
+    href: '/blocks/sector-e',
+    img: '/images/og/property-og.jpg',
   },
   {
-    id: 'cca-1-cca-2',
-    title: 'CCA-1 & CCA-2 Broadway Commercials',
-    desc: 'Detailed commercial layout for 4 Marla & 8 Marla commercial plazas and bank squares.',
-    size: '6.5 MB',
-    format: 'PDF',
-    image: '/images/og/homepage-og.jpg',
-  },
-];
-
-// Educational How to Read Cards
-const howToReadCards = [
-  {
-    num: '01',
-    icon: '🏛️',
-    title: 'Sector Alphabetical Index',
-    desc: 'Learn how Phase 6 is organized systematically from executive Sectors A–F to vibrant residential hubs J, K, L, M, and N.',
+    title: 'Sector F Map',
+    desc: 'Detailed Sector F 1 & 2 Kanal avenues layout.',
+    size: 'PDF · 0.60 MB',
+    href: '/blocks/sector-f',
+    img: '/images/og/property-og.jpg',
   },
   {
-    num: '02',
-    icon: '⛳',
-    title: 'Defence Raya Golf Perimeter',
-    desc: 'Locate 18-hole championship golf course fairways, Raya luxury villas, condominiums, and the country club.',
+    title: 'Sector G Map',
+    desc: 'Detailed Sector G 5, 10 Marla and 1 Kanal layout.',
+    size: 'PDF · 0.75 MB',
+    href: '/blocks/sector-g',
+    img: '/images/og/property-og.jpg',
   },
   {
-    num: '03',
-    icon: '🛣️',
-    title: 'Arterial Road Hierarchy',
-    desc: 'Understand the 150ft Main Boulevard, 100ft sector connectors, Ring Road Interchange, and Bedian/Barki road access points.',
+    title: 'Sector H Map',
+    desc: 'Detailed Sector H residential and CCA-2 Broadway layout.',
+    size: 'PDF · 0.82 MB',
+    href: '/blocks/sector-h',
+    img: '/images/og/property-og.jpg',
   },
   {
-    num: '04',
-    icon: '🏪',
-    title: 'Commercial Broadways (CCA-1 & CCA-2)',
-    desc: 'Pinpoint financial squares, supermarkets like Jalal Sons, corporate offices, and restaurant rows.',
+    title: 'Sector J Map',
+    desc: 'Detailed Sector J 5 & 10 Marla high-demand street layout.',
+    size: 'PDF · 0.59 MB',
+    href: '/blocks/sector-j',
+    img: '/images/og/property-og.jpg',
   },
   {
-    num: '05',
-    icon: '🏥',
-    title: 'Health & Civic Enclaves',
-    desc: 'Identify proximity to PKLI tertiary hospital, DHA Phase 6 Medical Center, top schools, and Grand Jamia Mosques.',
+    title: 'Defence Raya Map',
+    desc: '18-hole championship golf course, fairways villas & country club.',
+    size: 'PDF · 0.88 MB',
+    href: '/blocks/defence-raya-golf-resort',
+    img: '/images/og/homepage-og.jpg',
   },
-  {
-    num: '06',
-    icon: '📈',
-    title: 'High-Appreciation Corridors',
-    desc: 'Identify prime commercial and corner-facing residential plots delivering maximum long-term rental and capital yield.',
-  },
-];
-
-// Location Advantages Cards
-const locationAdvantages = [
-  {
-    icon: '⭐',
-    title: 'Premier Lahore Address',
-    desc: 'The gold standard of luxury suburban living in Lahore with pristine landscaping and underground infrastructure.',
-  },
-  {
-    icon: '✈️',
-    title: '10 Mins to Airport & Ring Road',
-    desc: 'Direct signal-free interchange on Lahore Ring Road connects directly to Allama Iqbal Airport and Gulberg.',
-  },
-  {
-    icon: '⛳',
-    title: 'World-Class Golf Lifestyle',
-    desc: 'Home to the international 18-hole championship Defence Raya Golf Resort, country club, and spa.',
-  },
-  {
-    icon: '🏥',
-    title: 'Neighboring PKLI Healthcare',
-    desc: 'South Asia’s foremost kidney and liver transplant institute and DHA medical centers located right next door.',
-  },
-  {
-    icon: '💰',
-    title: 'Unrivaled Capital Security',
-    desc: 'DHA Lahore guarantees high liquidity, verified titles, transparent NDC transfer processes, and stable growth.',
-  },
-];
-
-// Related Authority Guides
-const relatedGuides = [
-  { title: 'Sector Directory', href: '/blocks', icon: '🏛️', desc: 'Comprehensive sector-by-sector overview from A to N.' },
-  { title: 'Property Prices', href: '/property-prices', icon: '📊', desc: 'Audited 2026 market plot and bungalow rate index.' },
-  { title: 'Properties for Sale', href: '/properties', icon: '🏡', desc: 'Browse verified 10 Marla, 1 & 2 Kanal listings.' },
-  { title: 'Places & Amenities', href: '/places', icon: '📍', desc: 'Schools, hospitals, cafes, and banks directory.' },
-  { title: 'Property Consultant', href: '/property-dealer', icon: '👔', desc: 'Consult Ahmad Huzaifah (0325 7800001) for Phase 6 deals.' },
-  { title: 'Contact Desk', href: '/contact', icon: '📞', desc: 'Direct inquiry and appointment scheduling desk.' },
 ];
 ---
 
 <PageLayout
-  title="DHA Phase 6 Lahore Map | Master Plan & Sector Location Guide"
-  description="Explore DHA Phase 6 Lahore master plan map, Sectors A to N, CCA-1, CCA-2, Defence Raya Golf Resort, and downloadable sector maps."
-  canonical={`${SITE.url}/dha-phase-6-lahore-map`}
-  noindex={isShortAlias}
+  title="DHA Phase 6 Lahore Map"
+  description="Interactive Google Maps view of DHA Phase 6 Lahore with all sectors, entry gates, and nearby landmarks."
 >
   <Schema type="WebSite" data={pageSchema} />
   <Schema type="Place" data={placeSchema} />
   <Schema type="BreadcrumbList" data={breadcrumbsSchema} />
-  <Schema type="FAQPage" data={faqSchema} />
 
-  <main class="map-page">
-    <!-- Hero Section -->
-    <section class="map-hero">
-      <div class="container">
-        <div class="map-hero__badge">
-          <span class="pulse-dot"></span>
-          OFFICIAL DHA PHASE 6 MASTER PLAN & SECTOR ATLAS (2026)
-        </div>
-        <h1 class="map-hero__title">
-          DHA Phase 6 Lahore <span class="text-gold">Master Plan & Sector Map</span>
-        </h1>
-        <p class="map-hero__lead">
-          Explore high-resolution sector maps for Sectors A through N, CCA-1, CCA-2, and Defence Raya Golf Resort. Complete with plot demarcation guides, Ring Road connectivity, and verified amenities.
+  <!-- Page Hero -->
+  <header class="page-hero">
+    <div class="container">
+      <nav class="page-hero-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="breadcrumb-sep">›</span>
+        <span aria-current="page">Map</span>
+      </nav>
+      <h1>DHA Phase 6 Lahore Map</h1>
+      <p class="page-hero-description">
+        Explore DHA Phase 6 Lahore on Google Maps. Find all sectors, Defence Raya, CCA broadways, and get directions.
+      </p>
+    </div>
+  </header>
+
+  <!-- Interactive Map Section -->
+  <section class="content-section bg-primary">
+    <div class="container">
+      <div class="content-section-header">
+        <span class="section-label">Map</span>
+        <h2 class="section-title">DHA Phase VI Lahore Map</h2>
+        <p class="section-subtitle">
+          Pan, zoom, and explore the entire DHA Phase 6 community on the interactive map below.
         </p>
-
-        <!-- Quick Stats Strip -->
-        <div class="map-stats-strip">
-          <div class="stat-pill">
-            <span class="stat-pill__val">13+</span>
-            <span class="stat-pill__label">Sectors (A to N)</span>
-          </div>
-          <div class="stat-pill">
-            <span class="stat-pill__val">18-Hole</span>
-            <span class="stat-pill__label">Championship Golf Course</span>
-          </div>
-          <div class="stat-pill">
-            <span class="stat-pill__val">2</span>
-            <span class="stat-pill__label">CCA Broadways (CCA-1 & 2)</span>
-          </div>
-          <div class="stat-pill">
-            <span class="stat-pill__val">100%</span>
-            <span class="stat-pill__label">Underground Utilities</span>
-          </div>
-        </div>
       </div>
-    </section>
 
-    <!-- Master Map Display Section -->
-    <section class="container map-display-section" id="master-map">
-      <div class="map-viewer-card">
-        <div class="map-viewer-card__header">
-          <div class="viewer-title-group">
-            <span class="viewer-tag">VECTOR HD MAP</span>
-            <h2 class="viewer-title">DHA Phase 6 Lahore Master Plan Overview</h2>
-          </div>
-          <div class="viewer-actions">
-            <a href={`https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hi Ahmad Huzaifah, please send me the latest DHA Phase 6 Lahore HD Master Plan PDF.')}`} target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp-compact">
-              <span>Get Full Map on WhatsApp</span>
+      <div class="full-map-wrapper">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27228.618037303036!2d74.4354!3d31.4682!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391908906e0e0921%3A0x6739d2f2b380d393!2sDHA%20Phase%206%2C%20Lahore!5e0!3m2!1sen!2spk!4v1700000000000!5m2!1sen!2spk"
+          width="1200"
+          height="675"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="DHA Phase VI Lahore Map"
+        ></iframe>
+      </div>
+
+      <div class="map-download-actions">
+        <a href="/downloads" class="btn btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>Download Master Plan</span>
+        </a>
+        <a href="#map-pdf-downloads" class="btn btn-secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          <span>All Sector Map PDFs</span>
+        </a>
+      </div>
+
+      <!-- Sector Legend -->
+      <div class="sector-legend">
+        {
+          sectors.map((sec) => (
+            <a class="sector-legend-item glass-card" href={`/blocks/${sec.slug}`}>
+              <div class="sector-legend-dot">{sec.letter}</div>
+              <span class="sector-legend-label">{sec.name}</span>
             </a>
-          </div>
-        </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
 
-        <div class="map-image-wrapper">
-          <PropertyWatermark position="bottom-right" opacity={0.4} />
+  <!-- Master Plan Preview Section -->
+  <section class="content-section bg-secondary" id="map-pdf-downloads">
+    <div class="container">
+      <div class="content-section-header">
+        <span class="section-label">Map Preview</span>
+        <h2 class="section-title">DHA Phase 6 Master Plan</h2>
+        <p class="section-subtitle">
+          Preview the master plan layout showing all sectors, main boulevards, CCA broadways, and key landmarks.
+        </p>
+      </div>
+
+      <div class="map-preview">
+        <a href="/downloads" aria-label="Open the DHA Phase 6 master plan PDF">
           <img
             src="/images/og/homepage-og.jpg"
-            alt="DHA Phase 6 Lahore Master Plan Map Layout"
-            class="map-main-img"
-            loading="eager"
+            alt="DHA Phase 6 Lahore master plan preview"
             width="1200"
-            height="630"
+            height="848"
+            loading="lazy"
           />
-        </div>
-
-        <div class="map-sectors-grid">
-          {BLOCKS.map((block) => (
-            <div class="sector-quick-box">
-              <span class="sector-badge">{block.category.toUpperCase()}</span>
-              <h3 class="sector-name">{block.name}</h3>
-              <p class="sector-sizes">{block.plotSizes.join(' • ')}</p>
-              <p class="sector-highlight">{block.locationHighlight}</p>
-              <a href={`/blocks/${block.slug}`} class="sector-link">Explore Sector Details →</a>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- Download Sector Maps -->
-    <section class="container map-downloads-section">
-      <div class="section-heading">
-        <span class="badge-gold">PDF REPOSITORY</span>
-        <h2 class="heading-gold">Download DHA Phase 6 Sector Maps</h2>
-        <p class="subheading-muted">Vectorized blueprints with street numbers, plot series, and green belts.</p>
-      </div>
-
-      <div class="downloads-grid">
-        {mapDownloads.map((dl) => (
-          <div class="download-card">
-            <div class="download-card__thumb">
-              <img src={dl.image} alt={dl.title} loading="lazy" />
-              <span class="file-type-badge">{dl.format}</span>
-            </div>
-            <div class="download-card__body">
-              <h3 class="download-title">{dl.title}</h3>
-              <p class="download-desc">{dl.desc}</p>
-              <div class="download-meta">
-                <span>File Size: {dl.size}</span>
-              </div>
-              <a
-                href={`https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hi Ahmad Huzaifah, please share the HD PDF map for ${dl.title}.`)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="btn btn--gold-outline btn--full"
-              >
-                Request Download File
-              </a>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- How to Read Sector Map -->
-    <section class="container how-to-read-section">
-      <div class="section-heading">
-        <span class="badge-gold">EXPERT GUIDELINES</span>
-        <h2 class="heading-gold">How to Navigate the DHA Phase 6 Map</h2>
-        <p class="subheading-muted">Essential guide for home buyers and real estate investors evaluating plot locations.</p>
-      </div>
-
-      <div class="how-to-read-grid">
-        {howToReadCards.map((card) => (
-          <div class="read-card">
-            <div class="read-card__top">
-              <span class="read-card__num">{card.num}</span>
-              <span class="read-card__icon">{card.icon}</span>
-            </div>
-            <h3 class="read-card__title">{card.title}</h3>
-            <p class="read-card__desc">{card.desc}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- Location Advantages -->
-    <section class="container location-advantages-section">
-      <div class="section-heading">
-        <span class="badge-gold">CONNECTIVITY & PRESTIGE</span>
-        <h2 class="heading-gold">Why DHA Phase 6 Leads Lahore's Real Estate</h2>
-      </div>
-
-      <div class="advantages-grid">
-        {locationAdvantages.map((item) => (
-          <div class="advantage-card">
-            <span class="advantage-icon">{item.icon}</span>
-            <h3 class="advantage-title">{item.title}</h3>
-            <p class="advantage-desc">{item.desc}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- Related Authority Links -->
-    <section class="container related-guides-section">
-      <div class="section-heading">
-        <span class="badge-gold">AUTHORITY RESOURCES</span>
-        <h2 class="heading-gold">Explore DHA Phase 6 Portals</h2>
-      </div>
-
-      <div class="related-guides-grid">
-        {relatedGuides.map((guide) => (
-          <a href={guide.href} class="guide-link-card">
-            <span class="guide-icon">{guide.icon}</span>
-            <div class="guide-content">
-              <h3 class="guide-title">{guide.title}</h3>
-              <p class="guide-desc">{guide.desc}</p>
-            </div>
-            <span class="guide-arrow">→</span>
+        </a>
+        <div class="map-preview-overlay">
+          <a href="/downloads" class="map-preview-cta">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span>View Full Resolution Map</span>
           </a>
-        ))}
+        </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
+
+  <!-- Download Map PDFs Section -->
+  <section class="content-section bg-primary">
+    <div class="container">
+      <div class="content-section-header">
+        <span class="section-label">Downloads</span>
+        <h2 class="section-title">Download Map PDFs</h2>
+        <p class="section-subtitle">
+          Download the complete master plan or an individual sector map for offline viewing and reference.
+        </p>
+      </div>
+
+      <div class="download-grid">
+        {
+          mapDownloads.map((item) => (
+            <div class="download-card glass-card">
+              <a class="download-card-preview" href={item.href} aria-label={`Open ${item.title}`}>
+                <img src={item.img} alt={item.title} width="1200" height="900" loading="lazy" />
+              </a>
+              <div class="download-card-title">{item.title}</div>
+              <div class="download-card-desc">{item.desc}</div>
+              <div class="download-card-size">{item.size}</div>
+              <div class="download-card-actions">
+                <a href={item.href} class="download-card-btn" aria-label={`Download ${item.title}`}>
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
+                  <span>Download PDF</span>
+                </a>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Map Guide: How to Read the DHA Map -->
+  <section class="content-section bg-secondary">
+    <div class="container">
+      <div class="content-section-header">
+        <span class="section-label">Map Guide</span>
+        <h2 class="section-title">How to Read the DHA Map</h2>
+        <p class="section-subtitle">
+          Understand the key elements and symbols used in DHA Phase 6 maps.
+        </p>
+      </div>
+
+      <div class="map-legend-grid">
+        <div class="map-legend-item glass-card">
+          <div class="map-legend-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+              <path d="M3 9h18"></path>
+              <path d="M9 21V9"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="map-legend-title">Plot Numbers</div>
+            <div class="map-legend-desc">Each plot is identified by a unique number within its sector. Numbers are shown inside the plot boundary.</div>
+          </div>
+        </div>
+
+        <div class="map-legend-item glass-card">
+          <div class="map-legend-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 17h14v-5l-2-5H7L5 12v5z"></path>
+              <circle cx="7.5" cy="17" r="1.5"></circle>
+              <circle cx="16.5" cy="17" r="1.5"></circle>
+            </svg>
+          </div>
+          <div>
+            <div class="map-legend-title">Roads &amp; Boulevards</div>
+            <div class="map-legend-desc">150ft and 120ft Main Boulevards are shown as wider lines. Sector avenues appear as medium lines, and internal streets as thinner lines.</div>
+          </div>
+        </div>
+
+        <div class="map-legend-item glass-card">
+          <div class="map-legend-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22v-6"></path>
+              <path d="M7 16l5-5 5 5"></path>
+              <path d="M5.5 12L12 5.5 18.5 12"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="map-legend-title">Parks &amp; Green Areas</div>
+            <div class="map-legend-desc">Green shaded areas indicate parks, playgrounds, golf courses, and landscaped open spaces within each sector.</div>
+          </div>
+        </div>
+
+        <div class="map-legend-item glass-card">
+          <div class="map-legend-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 21h18"></path>
+              <path d="M3 10h18"></path>
+              <path d="M12 3l9 7H3l9-7z"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="map-legend-title">Community Buildings</div>
+            <div class="map-legend-desc">Mosques, schools, commercial plazas, and community clubs are marked with distinct symbols and labels.</div>
+          </div>
+        </div>
+
+        <div class="map-legend-item glass-card">
+          <div class="map-legend-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <div>
+            <div class="map-legend-title">Defence Raya &amp; CCAs</div>
+            <div class="map-legend-desc">The 18-hole championship golf course and CCA-1 &amp; CCA-2 commercial broadways are highlighted with prominent demarcations.</div>
+          </div>
+        </div>
+
+        <div class="map-legend-item glass-card">
+          <div class="map-legend-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="map-legend-title">Sector Boundaries</div>
+            <div class="map-legend-desc">Clear boundary markings indicate sector boundaries. Each sector is labeled with its letter designation (A through N).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Resources Section -->
+  <section class="content-section bg-primary">
+    <div class="container">
+      <div class="content-section-header">
+        <span class="section-label">External Links</span>
+        <h2 class="section-title">Related Resources</h2>
+        <p class="section-subtitle">
+          Official and authoritative resources for DHA Phase 6 Lahore maps and information.
+        </p>
+      </div>
+
+      <div class="resources-grid">
+        <a href="https://www.dhalahore.org" target="_blank" rel="noopener" class="resource-card glass-card">
+          <div class="resource-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="resource-card-title">DHA Official Website</div>
+            <div class="resource-card-url">dhalahore.org</div>
+          </div>
+        </a>
+
+        <a href="https://dhamaps.com" target="_blank" rel="noopener" class="resource-card glass-card">
+          <div class="resource-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+              <line x1="8" y1="2" x2="8" y2="18"></line>
+              <line x1="16" y1="6" x2="16" y2="22"></line>
+            </svg>
+          </div>
+          <div>
+            <div class="resource-card-title">DHA Maps Portal</div>
+            <div class="resource-card-url">dhamaps.com</div>
+          </div>
+        </a>
+
+        <a href="https://www.google.com/maps/place/DHA+Phase+6,+Lahore" target="_blank" rel="noopener" class="resource-card glass-card">
+          <div class="resource-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+          </div>
+          <div>
+            <div class="resource-card-title">Google Maps</div>
+            <div class="resource-card-url">google.com/maps</div>
+          </div>
+        </a>
+
+        <a href="https://www.zameen.com" target="_blank" rel="noopener" class="resource-card glass-card">
+          <div class="resource-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+          </div>
+          <div>
+            <div class="resource-card-title">Zameen.com</div>
+            <div class="resource-card-url">zameen.com</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Publication Meta -->
+  <aside class="page-publication-meta" aria-label="Page publication information">
+    <div class="container">
+      <span>Published <time datetime="2026-08-18T05:27:34+05:00">18 August 2026</time></span>
+    </div>
+  </aside>
+
+  <!-- Agent WhatsApp Popup (matching reference) -->
+  <aside class="agent-contact-popup" id="agentContactPopup" aria-label="Contact property consultant">
+    <button class="agent-popup-close" id="agentPopupClose" type="button" aria-label="Close message">×</button>
+    <div class="agent-popup-profile">
+      <div class="agent-popup-photo">
+        <img src="/images/dealers/ahmad-huzaifah.png" alt="Ahmad Huzaifah, property specialist" width="72" height="72" />
+        <span class="online-indicator"></span>
+      </div>
+      <div>
+        <small>Property Specialist</small>
+        <strong>Ahmad Huzaifah</strong>
+        <span>Usually replies quickly</span>
+      </div>
+    </div>
+    <p>
+      <strong>Looking for the right property?</strong> Get expert help finding verified plots and luxury houses in DHA Phase 6 Lahore matching your requirements.
+    </p>
+    <a
+      class="agent-popup-whatsapp"
+      href="https://wa.me/923257800001?text=Hi%20Ahmad%20Huzaifah%2C%20I%20am%20looking%20for%20a%20property%20in%20DHA%20Phase%206%20Lahore.%20Please%20guide%20me%20about%20the%20available%20options."
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+        <path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 9.6 9.6 0 0 1-4-1l-5 1 1-5a9.6 9.6 0 0 1-1-4 8.5 8.5 0 1 1 17 0z"></path>
+        <path d="M8.5 8.5c.5 3 2 4.5 5 5"></path>
+      </svg>
+      <span>Chat on WhatsApp</span>
+    </a>
+  </aside>
+
+  <!-- Back to top button -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
 </PageLayout>
 
 <style>
-  .map-page {
-    background: #090B20;
-    color: #F8FAFC;
-    padding-bottom: 5rem;
+  /* ── Colors & Backgrounds ───────────────────────────────────────── */
+  .bg-primary {
+    background-color: #0a0a1a;
   }
 
-  .map-hero {
-    padding: 4.5rem 0 3rem;
+  .bg-secondary {
+    background-color: #0f132a;
+  }
+
+  /* ── Page Hero ──────────────────────────────────────────────────── */
+  .page-hero {
+    background: #0a0a1a;
+    padding: 36px 0 28px;
     text-align: center;
-    background: radial-gradient(circle at 50% 20%, rgba(197, 155, 39, 0.15) 0%, rgba(9, 11, 32, 0.95) 75%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   }
 
-  .map-hero__badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.35rem 1rem;
-    background: rgba(197, 155, 39, 0.12);
-    border: 1px solid rgba(243, 211, 117, 0.3);
-    border-radius: 9999px;
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: #F3D375;
-    letter-spacing: 0.05em;
-    margin-bottom: 1.5rem;
-  }
-
-  .pulse-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #10B981;
-    box-shadow: 0 0 8px #10B981;
-  }
-
-  .map-hero__title {
-    font-size: clamp(2rem, 4vw, 3.25rem);
-    font-weight: 800;
-    line-height: 1.2;
-    margin-bottom: 1.25rem;
-  }
-
-  .text-gold {
-    background: linear-gradient(135deg, #F3D375 0%, #C59B27 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .map-hero__lead {
-    max-width: 780px;
-    margin: 0 auto 2.5rem;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: #94A3B8;
-  }
-
-  .map-stats-strip {
+  .page-hero-breadcrumb {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     justify-content: center;
-    gap: 1.25rem;
+    gap: 8px;
+    font-size: 13.5px;
+    color: #64748b;
+    margin-bottom: 14px;
   }
 
-  .stat-pill {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 0.75rem 1.5rem;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .page-hero-breadcrumb a {
+    color: #64748b;
+    text-decoration: none;
+    transition: color 0.15s ease;
   }
 
-  .stat-pill__val {
-    font-size: 1.35rem;
+  .page-hero-breadcrumb a:hover {
+    color: #e5b842;
+  }
+
+  .breadcrumb-sep {
+    color: #475569;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(28px, 4vw, 42px);
     font-weight: 800;
-    color: #F3D375;
+    color: #ffffff;
+    margin: 0 0 10px;
+    letter-spacing: -0.5px;
   }
 
-  .stat-pill__label {
-    font-size: 0.78rem;
-    color: #94A3B8;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+  .page-hero-description {
+    font-size: 15.5px;
+    color: #94a3b8;
+    max-width: 650px;
+    margin: 0 auto;
+    line-height: 1.5;
   }
 
-  /* Map Display Card */
-  .map-display-section {
-    margin-top: 3rem;
+  /* ── Content Sections ───────────────────────────────────────────── */
+  .content-section {
+    padding: 60px 0;
   }
 
-  .map-viewer-card {
-    background: #111430;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
-    padding: 2rem;
-    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
-  }
-
-  .map-viewer-card__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1.25rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .viewer-tag {
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: #F3D375;
-    background: rgba(197, 155, 39, 0.15);
-    padding: 0.2rem 0.6rem;
-    border-radius: 4px;
-    display: inline-block;
-    margin-bottom: 0.35rem;
-  }
-
-  .viewer-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin: 0;
-  }
-
-  .btn--whatsapp-compact {
-    background: linear-gradient(135deg, #14946B 0%, #0C7C59 100%);
-    color: white;
-    padding: 0.65rem 1.25rem;
-    border-radius: 10px;
-    font-weight: 700;
-    font-size: 0.9rem;
-    text-decoration: none;
-  }
-
-  .map-image-wrapper {
-    position: relative;
-    border-radius: 14px;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    margin-bottom: 2.5rem;
-  }
-
-  .map-main-img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  .map-sectors-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.25rem;
-  }
-
-  .sector-quick-box {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 12px;
-    padding: 1.25rem;
-    transition: transform 0.2s ease, border-color 0.2s ease;
-  }
-
-  .sector-quick-box:hover {
-    transform: translateY(-3px);
-    border-color: rgba(243, 211, 117, 0.3);
-  }
-
-  .sector-badge {
-    font-size: 0.68rem;
-    font-weight: 700;
-    color: #F3D375;
-    background: rgba(197, 155, 39, 0.15);
-    padding: 0.15rem 0.5rem;
-    border-radius: 4px;
-  }
-
-  .sector-name {
-    font-size: 1.15rem;
-    font-weight: 700;
-    margin: 0.5rem 0 0.25rem;
-  }
-
-  .sector-sizes {
-    font-size: 0.82rem;
-    color: #CBD5E1;
-    margin-bottom: 0.4rem;
-  }
-
-  .sector-highlight {
-    font-size: 0.8rem;
-    color: #94A3B8;
-    line-height: 1.4;
-    margin-bottom: 0.75rem;
-  }
-
-  .sector-link {
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: #F3D375;
-    text-decoration: none;
-  }
-
-  /* Section Headings */
-  .section-heading {
+  .content-section-header {
     text-align: center;
-    margin: 4.5rem 0 2.5rem;
+    margin-bottom: 36px;
   }
 
-  .badge-gold {
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: #F3D375;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-
-  .heading-gold {
-    font-size: 2rem;
+  .section-label {
+    display: inline-block;
+    color: #e5b842;
+    font-size: 12px;
     font-weight: 800;
-    margin: 0.5rem 0 0.5rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
   }
 
-  .subheading-muted {
-    color: #94A3B8;
-    font-size: 1rem;
+  .section-title {
+    font-size: clamp(26px, 3.2vw, 34px);
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0 0 10px;
+  }
+
+  .section-subtitle {
+    font-size: 15px;
+    color: #94a3b8;
     max-width: 600px;
     margin: 0 auto;
   }
 
-  /* Downloads Grid */
-  .downloads-grid {
+  /* ── Map Wrapper ────────────────────────────────────────────────── */
+  .full-map-wrapper {
+    max-width: 1100px;
+    margin: 0 auto 28px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    aspect-ratio: 16 / 9;
+  }
+
+  .full-map-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  /* ── Map Actions ────────────────────────────────────────────────── */
+  .map-download-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 36px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    font-size: 14.5px;
+    font-weight: 700;
+    border-radius: 9px;
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+
+  .btn-primary {
+    background: #e5b842;
+    color: #0a0a1a;
+    box-shadow: 0 4px 14px rgba(229, 184, 66, 0.3);
+  }
+
+  .btn-primary:hover {
+    background: #f0c559;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(229, 184, 66, 0.45);
+  }
+
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(229, 184, 66, 0.4);
+    transform: translateY(-1px);
+  }
+
+  /* ── Sector Legend ──────────────────────────────────────────────── */
+  .sector-legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .sector-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: #141a33;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 600;
+    transition: all 0.15s ease;
+  }
+
+  .sector-legend-item:hover {
+    border-color: #e5b842;
+    background: #192244;
+    transform: translateY(-2px);
+  }
+
+  .sector-legend-dot {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: #e5b842;
+    color: #0a0a1a;
+    font-size: 12px;
+    font-weight: 800;
+    border-radius: 6px;
+  }
+
+  /* ── Map Preview Card ───────────────────────────────────────────── */
+  .map-preview {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  }
+
+  .map-preview img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .map-preview:hover img {
+    transform: scale(1.02);
+  }
+
+  .map-preview-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(10, 10, 26, 0.45);
+    opacity: 0.9;
+    transition: opacity 0.2s ease;
+  }
+
+  .map-preview:hover .map-preview-overlay {
+    opacity: 1;
+    background: rgba(10, 10, 26, 0.55);
+  }
+
+  .map-preview-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #e5b842;
+    color: #0a0a1a;
+    padding: 14px 28px;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 10px;
+    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(229, 184, 66, 0.4);
+    transition: all 0.15s ease;
+  }
+
+  .map-preview-cta:hover {
+    background: #f0c559;
+    transform: scale(1.04);
+  }
+
+  /* ── Download Grid ──────────────────────────────────────────────── */
+  .download-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
   }
 
   .download-card {
-    background: #111430;
+    background: #141a33;
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 14px;
-    overflow: hidden;
+    padding: 16px;
     display: flex;
     flex-direction: column;
+    transition: transform 0.2s ease, border-color 0.2s ease;
   }
 
-  .download-card__thumb {
-    position: relative;
-    height: 160px;
+  .download-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(229, 184, 66, 0.35);
   }
 
-  .download-card__thumb img {
+  .download-card-preview {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 14px;
+    background: #0a0a1a;
+  }
+
+  .download-card-preview img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
-  .file-type-badge {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: #DC2626;
-    color: white;
-    font-size: 0.75rem;
-    font-weight: 800;
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-  }
-
-  .download-card__body {
-    padding: 1.25rem;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .download-title {
-    font-size: 1.15rem;
+  .download-card-title {
+    font-size: 17px;
     font-weight: 700;
-    margin-bottom: 0.5rem;
+    color: #ffffff;
+    margin-bottom: 6px;
   }
 
-  .download-desc {
-    font-size: 0.85rem;
-    color: #94A3B8;
+  .download-card-desc {
+    font-size: 13px;
+    color: #94a3b8;
     line-height: 1.5;
-    margin-bottom: 1rem;
+    margin-bottom: 12px;
     flex: 1;
   }
 
-  .download-meta {
-    font-size: 0.78rem;
-    color: #CBD5E1;
-    margin-bottom: 1rem;
+  .download-card-size {
+    font-size: 12px;
+    color: #e5b842;
+    font-weight: 600;
+    margin-bottom: 14px;
   }
 
-  .btn--gold-outline {
-    border: 1px solid #C59B27;
-    color: #F3D375;
-    padding: 0.65rem;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 0.85rem;
-    text-align: center;
-    text-decoration: none;
-    transition: all 0.2s ease;
+  .download-card-actions {
+    display: flex;
+    gap: 8px;
   }
 
-  .btn--gold-outline:hover {
-    background: #C59B27;
-    color: #090B20;
-  }
-
-  .btn--full {
-    display: block;
+  .download-card-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
     width: 100%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 9px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.15s ease;
   }
 
-  /* How to Read Grid */
-  .how-to-read-grid {
+  .download-card-btn:hover {
+    background: #e5b842;
+    color: #0a0a1a;
+    border-color: #e5b842;
+  }
+
+  /* ── Map Legend Grid ────────────────────────────────────────────── */
+  .map-legend-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
   }
 
-  .read-card {
-    background: #111430;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
-    padding: 1.75rem;
-  }
-
-  .read-card__top {
+  .map-legend-item {
     display: flex;
-    justify-content: space-between;
+    gap: 16px;
+    background: #141a33;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+    padding: 22px;
+  }
+
+  .map-legend-icon {
+    display: inline-flex;
     align-items: center;
-    margin-bottom: 1rem;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: rgba(229, 184, 66, 0.1);
+    color: #e5b842;
+    border-radius: 10px;
+    flex-shrink: 0;
   }
 
-  .read-card__num {
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: rgba(243, 211, 117, 0.4);
+  .map-legend-icon svg {
+    width: 22px;
+    height: 22px;
   }
 
-  .read-card__icon {
-    font-size: 1.75rem;
-  }
-
-  .read-card__title {
-    font-size: 1.15rem;
+  .map-legend-title {
+    font-size: 16px;
     font-weight: 700;
-    margin-bottom: 0.5rem;
+    color: #ffffff;
+    margin-bottom: 6px;
   }
 
-  .read-card__desc {
-    font-size: 0.88rem;
-    color: #94A3B8;
-    line-height: 1.5;
-    margin: 0;
+  .map-legend-desc {
+    font-size: 13px;
+    color: #94a3b8;
+    line-height: 1.55;
   }
 
-  /* Advantages Grid */
-  .advantages-grid {
+  /* ── Resources Grid ─────────────────────────────────────────────── */
+  .resources-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1.25rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    max-width: 1100px;
+    margin: 0 auto;
   }
 
-  .advantage-card {
-    background: #111430;
+  .resource-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #141a33;
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
-    padding: 1.5rem;
+    padding: 18px;
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+
+  .resource-card:hover {
+    border-color: #e5b842;
+    transform: translateY(-2px);
+  }
+
+  .resource-card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(229, 184, 66, 0.1);
+    color: #e5b842;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  .resource-card-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .resource-card-title {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .resource-card-url {
+    font-size: 12px;
+    color: #64748b;
+  }
+
+  /* ── Publication Meta ───────────────────────────────────────────── */
+  .page-publication-meta {
+    padding: 24px 0 40px;
+    background: #0a0a1a;
+    font-size: 13px;
+    color: #475569;
     text-align: center;
   }
 
-  .advantage-icon {
-    font-size: 2rem;
-    display: block;
-    margin-bottom: 0.75rem;
+  /* ── Floating Agent WhatsApp Popup ──────────────────────────────── */
+  .agent-contact-popup {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 99;
+    max-width: 320px;
+    background: #141a33;
+    border: 1px solid rgba(229, 184, 66, 0.35);
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    color: #ffffff;
+    animation: popupSlideUp 0.4s ease;
   }
 
-  .advantage-title {
-    font-size: 1.05rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
+  @keyframes popupSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
-  .advantage-desc {
-    font-size: 0.82rem;
-    color: #94A3B8;
-    line-height: 1.5;
-    margin: 0;
+  .agent-popup-close {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 20px;
+    cursor: pointer;
   }
 
-  /* Related Guides */
-  .related-guides-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.25rem;
-  }
-
-  .guide-link-card {
-    background: #111430;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    padding: 1.25rem 1.5rem;
+  .agent-popup-profile {
     display: flex;
     align-items: center;
-    gap: 1.25rem;
-    text-decoration: none;
-    color: #F8FAFC;
-    transition: all 0.2s ease;
+    gap: 12px;
+    margin-bottom: 12px;
   }
 
-  .guide-link-card:hover {
-    border-color: rgba(243, 211, 117, 0.3);
-    transform: translateX(4px);
+  .agent-popup-photo {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #e5b842;
+    flex-shrink: 0;
   }
 
-  .guide-icon {
-    font-size: 1.75rem;
+  .agent-popup-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
-  .guide-content {
-    flex: 1;
+  .online-indicator {
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+    width: 10px;
+    height: 10px;
+    background: #10b981;
+    border: 2px solid #141a33;
+    border-radius: 50%;
   }
 
-  .guide-title {
-    font-size: 1.05rem;
+  .agent-popup-profile small {
+    display: block;
+    font-size: 11px;
+    color: #e5b842;
     font-weight: 700;
-    margin-bottom: 0.2rem;
+    text-transform: uppercase;
   }
 
-  .guide-desc {
-    font-size: 0.8rem;
-    color: #94A3B8;
-    margin: 0;
+  .agent-popup-profile strong {
+    display: block;
+    font-size: 14.5px;
+    color: #ffffff;
   }
 
-  .guide-arrow {
-    font-size: 1.25rem;
-    color: #F3D375;
+  .agent-popup-profile span {
+    font-size: 11px;
+    color: #64748b;
+  }
+
+  .agent-contact-popup p {
+    font-size: 12.5px;
+    color: #94a3b8;
+    line-height: 1.45;
+    margin: 0 0 14px;
+  }
+
+  .agent-contact-popup p strong {
+    color: #ffffff;
+  }
+
+  .agent-popup-whatsapp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #10b981;
+    color: #ffffff;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 0.15s ease;
+  }
+
+  .agent-popup-whatsapp:hover {
+    background: #059669;
+  }
+
+  /* ── Back to Top Floating Button ────────────────────────────────── */
+  .back-to-top {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    z-index: 98;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #e5b842;
+    color: #0a0a1a;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(229, 184, 66, 0.4);
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+
+  .back-to-top:hover {
+    background: #f0c559;
+    transform: translateY(-2px);
+  }
+
+  /* ── Responsive Queries ─────────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .download-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .map-legend-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .resources-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .download-grid {
+      grid-template-columns: 1fr;
+    }
+    .map-legend-grid {
+      grid-template-columns: 1fr;
+    }
+    .resources-grid {
+      grid-template-columns: 1fr;
+    }
+    .agent-contact-popup {
+      right: 12px;
+      left: 12px;
+      max-width: none;
+      bottom: 16px;
+    }
+    .back-to-top {
+      display: none;
+    }
   }
 </style>
+
+<script>
+  function setupMapInteractions() {
+    const closeBtn = document.getElementById('agentPopupClose');
+    const popup = document.getElementById('agentContactPopup');
+    if (closeBtn && popup) {
+      closeBtn.addEventListener('click', () => {
+        popup.style.display = 'none';
+      });
+    }
+
+    const backToTop = document.getElementById('backToTop');
+    if (backToTop) {
+      backToTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+  }
+
+  setupMapInteractions();
+  document.addEventListener('astro:after-swap', setupMapInteractions);
+</script>

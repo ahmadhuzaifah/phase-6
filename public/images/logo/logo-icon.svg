@@ -1,26 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
   <defs>
     <linearGradient id="iconGold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F3D375"/>
+      <stop offset="0%" stop-color="#FCEAA7"/>
       <stop offset="50%" stop-color="#D4AF37"/>
-      <stop offset="100%" stop-color="#AA7C11"/>
+      <stop offset="100%" stop-color="#996E06"/>
     </linearGradient>
     <linearGradient id="iconNavy" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#142147"/>
-      <stop offset="100%" stop-color="#0A1128"/>
+      <stop offset="0%" stop-color="#142247"/>
+      <stop offset="100%" stop-color="#080E21"/>
     </linearGradient>
   </defs>
 
   <!-- Base Rounded Container -->
   <rect width="80" height="80" rx="20" fill="url(#iconNavy)"/>
-  <rect x="2" y="2" width="76" height="76" rx="18" stroke="url(#iconGold)" stroke-width="1.5" stroke-opacity="0.6"/>
+  <rect x="2" y="2" width="76" height="76" rx="18" stroke="url(#iconGold)" stroke-width="1.5" stroke-opacity="0.75"/>
 
-  <!-- Logo Mark / Emblem Center -->
-  <g transform="translate(8, 8)">
-    <path d="M32 2 C48 2 60 12 60 28 C60 48 32 62 32 62 C32 62 4 48 4 28 C4 12 16 2 32 2 Z" fill="none" stroke="url(#iconGold)" stroke-width="2.5"/>
-    <path d="M22 46 L22 26 C22 18 42 18 42 26 L42 46" stroke="url(#iconGold)" stroke-width="2" stroke-linecap="round" fill="none"/>
-    <path d="M32 10 L38 20 L32 24 L26 20 Z" fill="url(#iconGold)"/>
-    <path d="M16 34 C24 38 40 38 48 34" stroke="url(#iconGold)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    <circle cx="32" cy="36" r="3" fill="url(#iconGold)"/>
+  <!-- DHA 6 Crest -->
+  <g transform="translate(10, 8)">
+    <path d="M30 2 C46 2 58 12 58 28 C58 48 30 62 30 62 C30 62 2 48 2 28 C2 12 14 2 30 2 Z" fill="none" stroke="url(#iconGold)" stroke-width="2.2"/>
+    <path d="M18 46 L18 25 C18 17 42 17 42 25 L42 46" stroke="url(#iconGold)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+    <path d="M25 25 L30 36 L35 25" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <line x1="39" y1="25" x2="39" y2="36" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+    <path d="M30 9 L34 17 L30 20 L26 17 Z" fill="url(#iconGold)"/>
   </g>
 </svg>
