@@ -28,10 +28,10 @@ body {
   font-size: var(--text-base);
   line-height: var(--leading-normal);
   color: var(--text-primary);
-  background-color: #F5F7FB;
+  background-color: #0A0A1A;
   background-image:
-    radial-gradient(circle at top, rgba(197, 155, 39, 0.06), transparent 32%),
-    linear-gradient(180deg, #F8FAFC 0%, #EEF2F7 100%);
+    radial-gradient(circle at top, rgba(212, 168, 68, 0.055), transparent 34%),
+    linear-gradient(180deg, #0A0A1A 0%, #111128 100%);
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -153,12 +153,12 @@ ol {
 }
 
 .section--dark {
-  background: radial-gradient(circle at top, rgba(18, 29, 63, 0.96), rgba(5, 8, 22, 1));
+  background: radial-gradient(circle at top, rgba(22, 22, 53, 0.96), rgba(10, 10, 26, 1));
   color: var(--text-inverse);
 }
 
 .section--alt {
-  background: linear-gradient(180deg, #F7F9FC 0%, #EEF2F7 100%);
+  background: linear-gradient(180deg, #111128 0%, #0A0A1A 100%);
 }
 
 /* ── Scroll Margin for Anchors ──────────────────────────────────────────────── */
@@ -266,7 +266,7 @@ img[loading="lazy"] {
 
 /* Shared premium interaction language */
 .trust-strip {
-  background: #0B132B;
+  background: #111128;
   border-block: 1px solid rgba(212, 175, 55, 0.24);
   padding: var(--space-5) 0;
 }
@@ -291,7 +291,7 @@ img[loading="lazy"] {
   width: 34px;
   height: 34px;
   flex: 0 0 34px;
-  color: #0B132B;
+  color: #0A0A1A;
   background: var(--gradient-gold);
   border-radius: var(--radius-full);
   font-weight: var(--font-black);

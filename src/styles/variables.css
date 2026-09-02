@@ -5,17 +5,17 @@
 
 :root {
   /* ── Primary Colors — Regal Real Estate Gold / Champagne ───────────────── */
-  --color-primary-50: #FCF9EE;
-  --color-primary-100: #F7EFCB;
-  --color-primary-200: #EFE099;
-  --color-primary-300: #E3CD63;
-  --color-primary-400: #D8B936;
-  --color-primary-500: #C59B27;   /* Core Brand Gold */
-  --color-primary-600: #A8811C;
-  --color-primary-700: #886514;
-  --color-primary-800: #684B10;
-  --color-primary-900: #49330B;
-  --color-primary-950: #2C1E05;
+  --color-primary-50: #FFF9E8;
+  --color-primary-100: #FBECC0;
+  --color-primary-200: #F6DE91;
+  --color-primary-300: #F0C95C;
+  --color-primary-400: #E2B74B;
+  --color-primary-500: #D4A844;   /* Homepage brand gold */
+  --color-primary-600: #BA8C2D;
+  --color-primary-700: #98701E;
+  --color-primary-800: #765515;
+  --color-primary-900: #533B0E;
+  --color-primary-950: #302006;
 
   /* ── Secondary Colors — Royal Navy & Slate (Prestige, Authority & Trust) ── */
   --color-secondary-50: #F0F4FA;
@@ -26,9 +26,9 @@
   --color-secondary-500: #2D54A3;
   --color-secondary-600: #214083;
   --color-secondary-700: #182F63;
-  --color-secondary-800: #101F44;
-  --color-secondary-900: #0A1128;   /* Deep Royal Midnight Navy */
-  --color-secondary-950: #050816;
+  --color-secondary-800: #161635;
+  --color-secondary-900: #111128;
+  --color-secondary-950: #0A0A1A;
 
   /* ── Accent Colors — Emerald Green (High-Conversion CTAs & Verified Badges) */
   --color-accent-50: #ECFDF5;
@@ -45,12 +45,12 @@
 
   /* ── Neutral Colors — Architectural Slate & Warm Stone ─────────────────── */
   --color-neutral-0: #FFFFFF;
-  --color-neutral-50: #F8FAFC;
-  --color-neutral-100: #F1F5F9;
-  --color-neutral-200: #E2E8F0;
-  --color-neutral-300: #CBD5E1;
-  --color-neutral-400: #94A3B8;
-  --color-neutral-500: #64748B;
+  --color-neutral-50: #111128;
+  --color-neutral-100: #161635;
+  --color-neutral-200: #29294A;
+  --color-neutral-300: #9A9AB5;
+  --color-neutral-400: #85859F;
+  --color-neutral-500: #6A6A85;
   --color-neutral-600: #475569;
   --color-neutral-700: #334155;
   --color-neutral-800: #1E293B;
@@ -64,41 +64,41 @@
   --color-info: #0284C7;
 
   /* ── Luxury Gradients ──────────────────────────────────────────────────── */
-  --gradient-gold: linear-gradient(135deg, #F3D375 0%, #C59B27 50%, #8F6B0E 100%);
-  --gradient-gold-soft: linear-gradient(135deg, #FCF9EE 0%, #F7EFCB 100%);
-  --gradient-navy: linear-gradient(135deg, #182F63 0%, #0A1128 100%);
-  --gradient-dark-hero: linear-gradient(180deg, #0A1128 0%, #101F44 60%, #0A1128 100%);
-  --gradient-card-overlay: linear-gradient(180deg, rgba(10, 17, 40, 0) 0%, rgba(10, 17, 40, 0.85) 100%);
+  --gradient-gold: linear-gradient(135deg, #D4A844 0%, #F0C95C 100%);
+  --gradient-gold-soft: linear-gradient(135deg, rgba(212, 168, 68, 0.18) 0%, rgba(240, 201, 92, 0.08) 100%);
+  --gradient-navy: linear-gradient(135deg, #161635 0%, #0A0A1A 100%);
+  --gradient-dark-hero: linear-gradient(180deg, #0A0A1A 0%, #111128 60%, #0A0A1A 100%);
+  --gradient-card-overlay: linear-gradient(180deg, rgba(10, 10, 26, 0) 0%, rgba(10, 10, 26, 0.9) 100%);
   --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.65) 100%);
-  --gradient-glass-dark: linear-gradient(135deg, rgba(20, 33, 71, 0.85) 0%, rgba(10, 17, 40, 0.95) 100%);
+  --gradient-glass-dark: linear-gradient(135deg, rgba(22, 22, 53, 0.88) 0%, rgba(10, 10, 26, 0.96) 100%);
 
   /* ── Background Colors ─────────────────────────────────────────────────── */
-  --bg-primary: #FFFFFF;
-  --bg-secondary: #F8FAFC;
-  --bg-tertiary: #F1F5F9;
-  --bg-dark: #0A1128;
-  --bg-dark-secondary: #101F44;
-  --bg-dark-card: #142147;
-  --bg-gold-subtle: #FAF6E8;
+  --bg-primary: #161635;
+  --bg-secondary: #111128;
+  --bg-tertiary: #0D0D22;
+  --bg-dark: #0A0A1A;
+  --bg-dark-secondary: #111128;
+  --bg-dark-card: #161635;
+  --bg-gold-subtle: rgba(212, 168, 68, 0.08);
 
   /* ── Text Colors ───────────────────────────────────────────────────────── */
-  --text-primary: #0F172A;
-  --text-secondary: #475569;
-  --text-tertiary: #64748B;
-  --text-muted: #94A3B8;
+  --text-primary: #F0F0F5;
+  --text-secondary: #9A9AB5;
+  --text-tertiary: #85859F;
+  --text-muted: #6A6A85;
   --text-inverse: #FFFFFF;
-  --text-inverse-muted: #CBD5E1;
-  --text-accent: #C59B27;
-  --text-accent-dark: #886514;
-  --text-link: #182F63;
-  --text-link-hover: #C59B27;
+  --text-inverse-muted: #9A9AB5;
+  --text-accent: #D4A844;
+  --text-accent-dark: #F0C95C;
+  --text-link: #D4A844;
+  --text-link-hover: #F0C95C;
 
   /* ── Border Colors ─────────────────────────────────────────────────────── */
-  --border-light: #E2E8F0;
-  --border-subtle: #F1F5F9;
-  --border-medium: #CBD5E1;
-  --border-gold: rgba(197, 155, 39, 0.35);
-  --border-gold-strong: #C59B27;
+  --border-light: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-medium: rgba(255, 255, 255, 0.14);
+  --border-gold: rgba(212, 168, 68, 0.35);
+  --border-gold-strong: #D4A844;
   --border-dark: rgba(255, 255, 255, 0.12);
 
   /* ── Spacing Scale (4px base) ──────────────────────────────────────────── */
@@ -120,8 +120,9 @@
   --space-32: 8rem;      /* 128px */
 
   /* ── Typography Families ───────────────────────────────────────────────── */
-  --font-heading: 'Playfair Display', 'Cinzel', Georgia, serif;
-  --font-body: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
   /* ── Typography Scale ──────────────────────────────────────────────────── */
@@ -210,11 +211,11 @@
   --z-toast: 800;
 
   /* ── Surface / Card System ──────────────────────────────────────────────── */
-  --surface-card: #FFFFFF;
-  --surface-card-hover: #FAFBFD;
-  --surface-elevated: #FFFFFF;
-  --surface-dark-card: #142147;
-  --surface-dark-card-hover: #1A2A56;
+  --surface-card: #161635;
+  --surface-card-hover: #1C1C42;
+  --surface-elevated: #161635;
+  --surface-dark-card: #161635;
+  --surface-dark-card-hover: #1C1C42;
 
   /* ── Premium Card Shadows ──────────────────────────────────────────────── */
   --shadow-card-premium: 0 1px 3px rgba(15,23,42,0.06), 0 6px 16px -2px rgba(15,23,42,0.08);

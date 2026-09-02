@@ -1,165 +1,1245 @@
 ---
-import PageLayout from '@layouts/PageLayout.astro';
-import Schema from '@components/seo/Schema.astro';
+/**
+ * DHA Phase 6 Lahore — Jobs Directory Page
+ * Matching the exact structure, layout, aesthetic, and components requested.
+ */
 import { JOBS } from '@data/jobs';
-import { SITE } from '@data/site';
 
 const employerCount = new Set(JOBS.map((job) => job.company)).size;
-const types = [...new Set(JOBS.flatMap((job) => job.type))].sort();
-const breadcrumbs = {
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url },
-    { '@type': 'ListItem', position: 2, name: 'Jobs', item: `${SITE.url}/jobs` },
-  ],
-};
+const allTypes = [...new Set(JOBS.flatMap((job) => job.type))].sort();
 ---
 
-<PageLayout
-  title="Jobs in DHA Phase 6 Lahore | Current Source-Checked Openings"
-  description={`Browse ${JOBS.length} source-checked job opportunities connected with DHA Phase 6 Lahore. Search by role, employer, location and job type, then confirm status at the original source.`}
-  canonical={`${SITE.url}/jobs`}
-  ogImage="/images/og/blog-og.svg"
->
-  <Schema type="BreadcrumbList" data={breadcrumbs} />
+<!DOCTYPE html>
+<html lang="en-PK">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a1a">
 
-  <header class="jobs-hero">
-    <div class="container">
-      <nav aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span>Jobs</span></nav>
-      <p class="eyebrow">Local opportunity directory</p>
-      <h1><span>DHA Phase 6 Lahore</span> jobs</h1>
-      <p class="jobs-hero__lead">Browse {JOBS.length} source-checked opportunities from {employerCount} employers in DHA Phase 6 Lahore. Confirm that a role remains open before applying.</p>
-    </div>
+  <!-- SEO -->
+  <title>Jobs in DHA Phase 6 Lahore | Current Openings</title>
+  <meta name="description" content={`Browse ${JOBS.length} job openings near DHA Phase 6 Lahore. Search by role, company, location, and job type.`}>
+  <meta name="keywords" content="jobs in DHA Phase 6 Lahore, Lahore jobs, full-time jobs, part-time jobs, Defence Raya jobs">
+  <meta name="author" content="DHA Phase 6 Lahore Guide">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="https://dhaphase6lahore.pk/jobs/">
+  <link rel="alternate" hreflang="en-PK" href="https://dhaphase6lahore.pk/jobs/">
+  <link rel="alternate" hreflang="x-default" href="https://dhaphase6lahore.pk/jobs/">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Jobs in DHA Phase 6 Lahore | Current Openings">
+  <meta property="og:description" content={`Browse ${JOBS.length} job openings near DHA Phase 6 Lahore. Search by role, company, location, and job type.`}>
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dhaphase6lahore.pk/jobs/">
+  <meta property="og:site_name" content="DHA Phase 6 Lahore">
+  <meta property="og:locale" content="en_PK">
+  <meta property="og:image" content="/images/hero-bg.png">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="1080">
+  <meta property="og:image:alt" content="Jobs in DHA Phase 6 Lahore">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jobs in DHA Phase 6 Lahore | Current Openings">
+  <meta name="twitter:description" content={`Browse ${JOBS.length} job openings near DHA Phase 6 Lahore. Search by role, company, location, and job type.`}>
+  <meta name="twitter:image" content="/images/hero-bg.png">
+  <meta name="twitter:image:alt" content="Jobs in DHA Phase 6 Lahore">
+
+  <!-- Structured data -->
+  <script type="application/ld+json" is:inline set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://dhaphase6lahore.pk/#organization",
+        "name": "DHA Phase 6 Lahore",
+        "url": "https://dhaphase6lahore.pk/",
+        "description": "An independent informational guide to DHA Phase 6 Lahore.",
+        "telephone": "+92-325-7800001",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Main Boulevard Phase 6",
+          "addressLocality": "Lahore",
+          "addressRegion": "Punjab",
+          "postalCode": "54792",
+          "addressCountry": "PK"
+        },
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dhaphase6lahore.pk/images/hero-bg.png",
+          "width": "1920",
+          "height": "1080"
+        },
+        "areaServed": {
+          "@id": "https://dhaphase6lahore.pk/#dha-phase-6-lahore"
+        }
+      },
+      {
+        "@type": "Place",
+        "@id": "https://dhaphase6lahore.pk/#dha-phase-6-lahore",
+        "name": "DHA Phase 6 Lahore",
+        "alternateName": "DHA Phase VI Lahore",
+        "url": "https://dhaphase6lahore.pk/",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Lahore",
+          "addressRegion": "Punjab",
+          "postalCode": "54792",
+          "addressCountry": "PK"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 31.4725,
+          "longitude": 74.4530
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://dhaphase6lahore.pk/#website",
+        "url": "https://dhaphase6lahore.pk/",
+        "name": "DHA Phase 6 Lahore",
+        "alternateName": ["DHA Phase 6 Lahore", "DHA Phase VI Lahore Guide"],
+        "publisher": {
+          "@id": "https://dhaphase6lahore.pk/#organization"
+        },
+        "inLanguage": "en-PK",
+        "about": {
+          "@id": "https://dhaphase6lahore.pk/#dha-phase-6-lahore"
+        }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-1",
+        "name": "Home",
+        "url": "https://dhaphase6lahore.pk/",
+        "position": 1,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-2",
+        "name": "Sectors",
+        "url": "https://dhaphase6lahore.pk/sectors/",
+        "position": 2,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-3",
+        "name": "Properties",
+        "url": "https://dhaphase6lahore.pk/properties/",
+        "position": 3,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-4",
+        "name": "Places",
+        "url": "https://dhaphase6lahore.pk/places/",
+        "position": 4,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-5",
+        "name": "Plots",
+        "url": "https://dhaphase6lahore.pk/plots/",
+        "position": 5,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-6",
+        "name": "Jobs",
+        "url": "https://dhaphase6lahore.pk/jobs/",
+        "position": 6,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-7",
+        "name": "Dealers",
+        "url": "https://dhaphase6lahore.pk/dealers/",
+        "position": 7,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-8",
+        "name": "Map",
+        "url": "https://dhaphase6lahore.pk/dha-phase-6-lahore-map/",
+        "position": 8,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://dhaphase6lahore.pk/#primary-navigation-9",
+        "name": "Map PDFs",
+        "url": "https://dhaphase6lahore.pk/dha-phase-6-lahore-map/#map-pdf-downloads",
+        "position": 9,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://dhaphase6lahore.pk/jobs/#webpage",
+        "url": "https://dhaphase6lahore.pk/jobs/",
+        "name": "Jobs in DHA Phase 6 Lahore | Current Openings",
+        "description": `Browse ${JOBS.length} job openings near DHA Phase 6 Lahore. Search by role, company, location, and job type.`,
+        "isPartOf": { "@id": "https://dhaphase6lahore.pk/#website" },
+        "inLanguage": "en-PK",
+        "isAccessibleForFree": true,
+        "about": { "@id": "https://dhaphase6lahore.pk/#dha-phase-6-lahore" },
+        "primaryImageOfPage": {
+          "@type": "ImageObject",
+          "url": "https://dhaphase6lahore.pk/images/hero-bg.png"
+        },
+        "datePublished": "2026-09-02T18:14:54+05:00",
+        "dateModified": "2026-09-02T18:14:54+05:00",
+        "breadcrumb": { "@id": "https://dhaphase6lahore.pk/jobs/#breadcrumb" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://dhaphase6lahore.pk/jobs/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://dhaphase6lahore.pk/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Jobs",
+            "item": "https://dhaphase6lahore.pk/jobs/"
+          }
+        ]
+      }
+    ]
+  })}></script>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;rect width='100' height='100' rx='16' fill='%23d4a844'/&gt;&lt;text x='50' y='66' font-size='48' text-anchor='middle' font-family='serif' font-weight='bold' fill='%230a0a1a'&gt;D6&lt;/text&gt;&lt;/svg&gt;">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- Header / Navigation -->
+  <header class="site-header">
+    <nav class="navbar" id="navbar" aria-label="Primary navigation">
+      <div class="container">
+        <a href="/" class="nav-logo" aria-label="DHA Phase 6 Lahore home">
+          <div class="nav-logo-icon">D6</div>
+          DHA Phase <span>6</span> Lahore
+        </a>
+        <div class="nav-links" id="navLinks">
+          <a href="/">Home</a>
+          <a href="/sectors/">Sectors</a>
+          <a href="/properties/">Properties</a>
+          <a href="/places/">Places</a>
+          <a href="/plots/">Plots</a>
+          <a href="/jobs/" class="active" aria-current="page">Jobs</a>
+          <a href="/dealers/">Dealers</a>
+          <a href="/dha-phase-6-lahore-map/">Map</a>
+          <a href="/dha-phase-6-lahore-map/#map-pdf-downloads" class="nav-cta">Map PDFs</a>
+        </div>
+        <button class="nav-toggle" id="navToggle" type="button" aria-label="Toggle navigation menu" aria-controls="navLinks" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
   </header>
 
-  <section class="job-directory">
-    <div class="container">
-      <div class="job-stats">
-        <div><strong>{JOBS.length}</strong><span>Source-checked opportunities</span></div>
-        <div><strong>{employerCount}</strong><span>Employers</span></div>
-        <div><strong>{types.length}</strong><span>Job types</span></div>
+  <main id="main-content">
+    <!-- Page Hero -->
+    <header class="page-hero">
+      <div class="container">
+        <nav class="page-hero-breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-sep">›</span>
+          <span aria-current="page">Jobs</span>
+        </nav>
+        <h1><span class="gold">DHA Phase 6 Lahore</span> Jobs</h1>
+        <p class="page-hero-description">Browse {JOBS.length} openings from {employerCount} employers in Lahore and nearby areas.</p>
       </div>
+    </header>
 
-      <div class="job-tools" aria-label="Filter jobs">
-        <label>
-          <span>Search jobs</span>
-          <input id="job-search" type="search" placeholder="Job title, employer, category or location" autocomplete="off" />
-        </label>
-        <label>
-          <span>Job type</span>
-          <select id="job-type">
-            <option value="">All job types</option>
-            {types.map((type) => <option value={type.toLowerCase()}>{type}</option>)}
-          </select>
-        </label>
-      </div>
-
-      <div class="results-row">
-        <p id="job-result-count" aria-live="polite">Showing {JOBS.length} opportunities</p>
-        <span>Sources checked 2 September 2026</span>
-      </div>
-
-      <div class="job-grid" id="job-grid">
-        {JOBS.map((job) => (
-          <article
-            class="job-card"
-            data-search={`${job.title} ${job.company} ${job.location} ${job.category}`.toLowerCase()}
-            data-types={job.type.map((type) => type.toLowerCase()).join('|')}
-          >
-            <div class="job-card__topline">
-              <span>{job.location}</span>
-              <span class:list={['job-badge', { 'job-badge--official': job.officialDha }]}>{job.officialDha ? 'Official DHA source' : 'External source'}</span>
-            </div>
-            <h2><a href={`/jobs/${job.slug}`}>{job.title}</a></h2>
-            <p class="job-company">{job.company}</p>
-            <p class="job-date">{job.publishedLabel}</p>
-            <div class="job-tags">
-              <span>{job.category}</span>
-              {job.type.map((type) => <span>{type}</span>)}
-              {job.compensation && <span>{job.compensation}</span>}
-            </div>
-            <p class="job-summary">{job.summary}</p>
-            <a class="job-details-link" href={`/jobs/${job.slug}`}>View job details <span aria-hidden="true">-&gt;</span></a>
-          </article>
-        ))}
-      </div>
-
-      <div class="job-empty" id="job-empty" hidden>
-        <strong>No matching jobs</strong>
-        <p>Try a broader title, employer, category or job type.</p>
-      </div>
-
-      <aside class="job-notice">
-        <div><span>Before you apply</span><h2>Check the live source and never pay an application fee.</h2></div>
-        <p>Job status, compensation and requirements can change after our source check. Confirm the role directly with the employer, verify the application domain and do not send money or sensitive original documents to an unverified contact.</p>
-      </aside>
-
-      <div class="official-careers">
-        <div>
-          <p class="eyebrow">Primary employer source</p>
-          <h2>Looking specifically for DHA Lahore careers?</h2>
-          <p>The official careers page publishes DHA Lahore opportunities, eligibility documents and application instructions. Its current information takes precedence over every summary here.</p>
+    <!-- Job Directory Section -->
+    <section class="content-section bg-primary job-directory">
+      <div class="container">
+        <!-- Job Stats -->
+        <div class="job-stats">
+          <div class="glass-card">
+            <strong>{JOBS.length}</strong>
+            <span>Job openings</span>
+          </div>
+          <div class="glass-card">
+            <strong>{employerCount}</strong>
+            <span>Employers</span>
+          </div>
+          <div class="glass-card">
+            <strong>{allTypes.length}</strong>
+            <span>Job types</span>
+          </div>
         </div>
-        <a href="https://dhalahore.org/careers/" target="_blank" rel="noopener noreferrer">Open DHA Lahore Careers</a>
+
+        <!-- Job Search & Filter Toolbar -->
+        <div class="job-tools glass-card" aria-label="Filter jobs">
+          <label>
+            <span>Search jobs</span>
+            <input id="job-search" type="search" placeholder="Job title, company, or location" autocomplete="off">
+          </label>
+          <label>
+            <span>Job type</span>
+            <select id="job-type">
+              <option value="">All job types</option>
+              {allTypes.map((t) => (
+                <option value={t.toLowerCase()}>{t}</option>
+              ))}
+            </select>
+          </label>
+        </div>
+
+        <p class="job-result-count" id="job-result-count" aria-live="polite">Showing {JOBS.length} jobs</p>
+
+        <!-- Job Cards Grid -->
+        <div class="job-grid" id="job-grid">
+          {JOBS.map((job) => (
+            <article
+              class="job-card glass-card"
+              data-search={`${job.title} ${job.company} ${job.location} ${job.category}`.toLowerCase()}
+              data-types={job.type.map((t) => t.toLowerCase()).join('|')}
+            >
+              <div class="job-card-topline">
+                <span>{job.location}</span>
+                <span class="job-badge">{job.officialDha ? 'Official DHA Source' : 'Easily apply'}</span>
+              </div>
+              <h2>
+                <a href={`/jobs/${job.slug}/`}>{job.title}</a>
+              </h2>
+              <p class="job-company">
+                {job.companyUrl ? (
+                  <a class="job-company-search" href={job.companyUrl} target="_blank" rel="nofollow noopener noreferrer external" aria-label={`Search Google for ${job.company}`}>
+                    {job.company}
+                  </a>
+                ) : (
+                  <span>{job.company}</span>
+                )}
+              </p>
+              <p class="job-date">Added <time datetime="2026-08-22">{job.publishedLabel}</time></p>
+              <div class="job-tags">
+                {job.type.map((t) => (
+                  <span>{t}</span>
+                ))}
+                {job.compensation && <span>{job.compensation}</span>}
+              </div>
+              <p>{job.summary}</p>
+              <a class="job-details-link" href={`/jobs/${job.slug}/`}>
+                View job details <span aria-hidden="true">→</span>
+              </a>
+            </article>
+          ))}
+        </div>
+
+        <div class="job-empty glass-card" id="job-empty" hidden>
+          No jobs match these filters.
+        </div>
+
+        <!-- Safety Notice Card -->
+        <aside class="job-notice glass-card">
+          <h2>Before you apply</h2>
+          <p>Confirm the role, pay, and work location with the employer. Do not pay a fee to apply for a job.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Publication Meta -->
+    <aside class="page-publication-meta" aria-label="Page publication information">
+      <div class="container">
+        <span>Published <time datetime="2026-09-02T18:14:54+05:00">2 September 2026</time></span>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <div class="footer-logo-icon">D6</div>
+            DHA Phase 6 Lahore
+          </div>
+          <p class="footer-brand-description">
+            An independent local guide to sectors, properties, maps, places, services, and everyday life across DHA Phase 6 Lahore.
+          </p>
+          <div class="footer-socials" aria-label="Social media">
+            <a href="#" aria-label="Facebook" title="Facebook">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3c-3.3 0-5 2-5 5v2H6v4h3v7h4v-7h3.3l.7-4h-4V9c0-.7.3-1 1-1Z"></path></svg>
+            </a>
+            <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="DHA Phase 6 Lahore on LinkedIn" title="LinkedIn">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 8.2A2.2 2.2 0 1 0 6.5 3.8a2.2 2.2 0 0 0 0 4.4ZM4.6 21h3.8V10H4.6v11ZM10.6 10h3.6v1.5h.1c.5-.9 1.7-2 3.6-2 3.8 0 4.5 2.5 4.5 5.8V21h-3.8v-5c0-1.2 0-2.8-1.7-2.8s-2 1.3-2 2.7V21h-3.8V10Z"></path></svg>
+            </a>
+          </div>
+        </div>
+
+        <nav aria-label="Footer pages">
+          <h3 class="footer-heading">Pages</h3>
+          <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/sectors/">Sectors</a>
+            <a href="/properties/">Property Listings</a>
+            <a href="/plots/">Plots</a>
+            <a href="/houses/">Houses</a>
+            <a href="/dealers/">Property Dealers</a>
+            <a href="/dha-phase-6-lahore-map/">Map</a>
+            <a href="/places/">Places &amp; Services</a>
+            <a href="/helplines/">Helpline</a>
+            <a href="/postal-code/">Postal Code</a>
+            <a href="/weather/">Weather</a>
+            <a href="/jobs/">Jobs</a>
+            <a href="/development-updates/">Latest News</a>
+            <a href="/location/">Directions</a>
+            <a href="/utilities/">Utility Bill</a>
+            <a href="/faq/">FAQ</a>
+            <a href="/prayer-times/">Prayer Times</a>
+            <a href="/dha-phase-6-lahore-prices/">Prices</a>
+            <a href="/construction/">Construction Rate</a>
+            <a href="/sitemap.xml">Sitemap</a>
+            <a href="/sitemap/">HTML Sitemap</a>
+          </div>
+        </nav>
+
+        <nav aria-label="Sector guides">
+          <h3 class="footer-heading">Sectors</h3>
+          <div class="footer-links">
+            <a href="/sectors/sector-a/">Sector A</a>
+            <a href="/sectors/sector-b/">Sector B</a>
+            <a href="/sectors/sector-c/">Sector C</a>
+            <a href="/sectors/sector-d/">Sector D</a>
+            <a href="/sectors/sector-e/">Sector E</a>
+            <a href="/sectors/sector-f/">Sector F</a>
+            <a href="/sectors/sector-g/">Sector G</a>
+            <a href="/sectors/sector-h/">Sector H</a>
+            <a href="/sectors/sector-j/">Sector J</a>
+            <a href="/sectors/sector-k/">Sector K</a>
+            <a href="/sectors/sector-l/">Sector L</a>
+            <a href="/sectors/sector-m/">Sector M</a>
+            <a href="/sectors/sector-n/">Sector N</a>
+          </div>
+        </nav>
+
+        <section class="footer-contact" aria-labelledby="footer-contact-heading">
+          <h3 class="footer-heading" id="footer-contact-heading">Official DHA Contact</h3>
+          <div class="footer-nap">
+            <div class="footer-nap-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V9l7-6 7 6v12M9 21v-6h6v6M9 11h.01M12 11h.01M15 11h.01"></path></svg>
+              <div>
+                <span>Name</span>
+                <strong>DHA Phase 6 Lahore</strong>
+              </div>
+            </div>
+            <div class="footer-nap-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>
+              <div>
+                <span>Official address</span>
+                <address>Main Boulevard Phase 6 / Sector A, DHA Lahore, Punjab 54792, Pakistan</address>
+              </div>
+            </div>
+            <div class="footer-nap-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2.1Z"></path></svg>
+              <div>
+                <span>Official helpline</span>
+                <a href="tel:+9242111342547">+92-42-111-342-547</a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-copyright">&copy; 2026 DHA Phase 6 Lahore Guide. All rights reserved.</div>
       </div>
     </div>
-  </section>
-</PageLayout>
+  </footer>
 
-<script>
-  function setupJobFilters() {
-    const search = document.querySelector<HTMLInputElement>('#job-search');
-    const type = document.querySelector<HTMLSelectElement>('#job-type');
-    const cards = [...document.querySelectorAll<HTMLElement>('.job-card')];
-    const resultCount = document.querySelector<HTMLElement>('#job-result-count');
-    const empty = document.querySelector<HTMLElement>('#job-empty');
-    if (!search || !type || !resultCount || !empty) return;
+  <!-- Back to top button -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
 
-    const filter = () => {
-      const query = search.value.trim().toLowerCase();
-      const selectedType = type.value;
-      let visible = 0;
-      cards.forEach((card) => {
+  <!-- Interactive Search & Filtering Script -->
+  <script is:inline>
+    const searchInput = document.querySelector('#job-search');
+    const typeSelect = document.querySelector('#job-type');
+    const jobCards = [...document.querySelectorAll('.job-card')];
+    const resultCount = document.querySelector('#job-result-count');
+    const emptyNotice = document.querySelector('#job-empty');
+
+    const filterJobs = () => {
+      const query = searchInput?.value.trim().toLowerCase() ?? '';
+      const selectedType = typeSelect?.value ?? '';
+      let visibleCount = 0;
+
+      jobCards.forEach(card => {
         const matchesSearch = !query || card.dataset.search?.includes(query);
         const matchesType = !selectedType || card.dataset.types?.split('|').includes(selectedType);
-        const show = Boolean(matchesSearch && matchesType);
-        card.hidden = !show;
-        if (show) visible += 1;
+        const isMatch = Boolean(matchesSearch && matchesType);
+
+        card.hidden = !isMatch;
+        if (isMatch) visibleCount++;
       });
-      resultCount.textContent = `Showing ${visible} ${visible === 1 ? 'opportunity' : 'opportunities'}`;
-      empty.hidden = visible !== 0;
+
+      if (resultCount) {
+        resultCount.textContent = `Showing ${visibleCount} ${visibleCount === 1 ? 'job' : 'jobs'}`;
+      }
+      if (emptyNotice) {
+        emptyNotice.hidden = visibleCount !== 0;
+      }
     };
 
-    search.addEventListener('input', filter);
-    type.addEventListener('change', filter);
+    searchInput?.addEventListener('input', filterJobs);
+    typeSelect?.addEventListener('change', filterJobs);
+
+    // Navbar Scrolled & Back to Top
+    const navbar = document.querySelector('#navbar');
+    const backToTop = document.querySelector('#backToTop');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      if (navbar) {
+        if (scrollY > 50) navbar.classList.add('scrolled');
+        else navbar.classList.remove('scrolled');
+      }
+      if (backToTop) {
+        if (scrollY > 400) backToTop.classList.add('visible');
+        else backToTop.classList.remove('visible');
+      }
+    }, { passive: true });
+
+    backToTop?.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Mobile Menu Toggle
+    const navToggle = document.querySelector('#navToggle');
+    const navLinks = document.querySelector('#navLinks');
+    navToggle?.addEventListener('click', () => {
+      const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+      navToggle.setAttribute('aria-expanded', String(!isExpanded));
+      navToggle.classList.toggle('active');
+      navLinks?.classList.toggle('active');
+    });
+
+    navLinks?.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle?.setAttribute('aria-expanded', 'false');
+        navToggle?.classList.remove('active');
+        navLinks?.classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>
+
+<style is:global>
+  /* ══════════════════════════════════════════════════════════════════════════
+   * STYLES FOR JOBS DIRECTORY PAGE & GLOBAL THEME
+   * ══════════════════════════════════════════════════════════════════════════ */
+  :root {
+    --clr-bg-primary: #0a0a1a;
+    --clr-bg-secondary: #111128;
+    --clr-bg-card: #161635;
+    --clr-accent-gold: #d4a844;
+    --clr-accent-gold-light: #f0c95c;
+    --clr-accent-emerald: #2ecc71;
+    --clr-text-primary: #f0f0f5;
+    --clr-text-secondary: #9a9ab5;
+    --clr-text-muted: #6a6a85;
+    --clr-glass: rgba(255, 255, 255, 0.04);
+    --clr-glass-border: rgba(255, 255, 255, 0.08);
+    --clr-glass-hover: rgba(255, 255, 255, 0.07);
+    --grad-gold: linear-gradient(135deg, #d4a844, #f0c95c);
+    --ff-heading: 'Inter', ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --ff-body: 'Inter', ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --section-pad: 80px 0;
+    --container-max: 1200px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  setupJobFilters();
-  document.addEventListener('astro:after-swap', setupJobFilters);
-</script>
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-<style>
-  .jobs-hero{padding:clamp(4.5rem,9vw,7rem) 0 4rem;background:radial-gradient(circle at 78% 0,#315f55 0,#102e2d 34%,#071a24 74%);color:#fff}
-  .jobs-hero nav{display:flex;gap:.6rem;margin-bottom:2.4rem;color:#aebfba;font-size:.8rem}.jobs-hero nav a{color:#e5c773}
-  .eyebrow{margin:0 0 .75rem;color:#d7af57;font-size:.72rem;font-weight:900;letter-spacing:.16em;text-transform:uppercase}
-  .jobs-hero h1{max-width:920px;margin:0;color:#fff;font-family:var(--font-display);font-size:clamp(2.8rem,7vw,6rem);line-height:.96;letter-spacing:-.04em}.jobs-hero h1 span{color:#e4bd62}
-  .jobs-hero__lead{max-width:760px;margin:1.25rem 0 0;color:#c6d5d1;font-size:clamp(1rem,2vw,1.18rem);line-height:1.7}
-  .job-directory{padding:clamp(3rem,7vw,6rem) 0;background:#081821;color:#fff;min-height:70vh}
-  .job-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-bottom:1.7rem}
-  .job-stats>div,.job-tools,.job-card,.job-empty,.job-notice{background:linear-gradient(145deg,rgba(21,50,51,.86),rgba(8,27,35,.94));border:1px solid rgba(215,175,87,.18);box-shadow:0 18px 40px -30px #000}
-  .job-stats>div{display:grid;gap:.3rem;padding:1.5rem}.job-stats strong{color:#e4bd62;font-family:var(--font-display);font-size:2rem}.job-stats span{color:#aabcb7;font-size:.82rem}
-  .job-tools{display:grid;grid-template-columns:2fr 1fr;gap:1.1rem;padding:1.35rem;margin-bottom:1.2rem}
-  .job-tools label{display:grid;gap:.5rem;color:#c8d4d1;font-size:.78rem;font-weight:800}.job-tools input,.job-tools select{width:100%;min-height:48px;padding:0 .9rem;border:1px solid rgba(255,255,255,.14);border-radius:.45rem;background:#06141d;color:#fff;font:inherit}.job-tools input:focus,.job-tools select:focus{outline:2px solid #d7af57;outline-offset:1px}
-  .results-row{display:flex;justify-content:space-between;gap:1rem;margin-bottom:1rem;color:#8fa39e;font-size:.78rem}.results-row p{margin:0}
-  .job-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.1rem}.job-card{display:flex;min-height:390px;flex-direction:column;align-items:flex-start;padding:1.35rem}.job-card[hidden]{display:none}
-  .job-card__topline{display:flex;width:100%;justify-content:space-between;gap:.8rem;align-items:flex-start;color:#91a7a1;font-size:.7rem}.job-card__topline>span:first-child{max-width:48%}
-  .job-badge{padding:.3rem .5rem;border:1px solid rgba(215,175,87,.32);border-radius:999px;color:#e4bd62;text-align:right}.job-badge--official{background:rgba(215,175,87,.12)}
-  .job-card h2{margin:1.2rem 0 .4rem;font-family:var(--font-display);font-size:1.35rem;line-height:1.25}.job-card h2 a{color:#fff;text-decoration:none}.job-card h2 a:hover{color:#e4bd62}
-  .job-company{margin:0;color:#e4bd62;font-size:.84rem;font-weight:800}.job-date{margin:.45rem 0;color:#718984;font-size:.7rem}
-  .job-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0}.job-tags span{padding:.3rem .48rem;border:1px solid rgba(215,175,87,.25);border-radius:999px;color:#d8be79;font-size:.66rem;line-height:1.35}
-  .job-summary{margin:0;color:#a9bbb6;font-size:.8rem;line-height:1.65}.job-details-link{margin-top:auto;padding-top:1.2rem;color:#e4bd62;text-decoration:none;font-size:.8rem;font-weight:900}
-  .job-empty{padding:2rem;text-align:center}.job-empty p{margin:.45rem 0 0;color:#9cb0aa}
-  .job-notice{display:grid;grid-template-columns:.8fr 1.2fr;gap:2rem;margin-top:1.5rem;padding:1.5rem}.job-notice>div>span{color:#d7af57;font-size:.68rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase}.job-notice h2{margin:.5rem 0 0;color:#fff;font-family:var(--font-display);font-size:1.45rem}.job-notice>p{margin:0;color:#a9bbb6;font-size:.82rem;line-height:1.7}
-  .official-careers{display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:end;margin-top:4rem;padding:2.2rem;border-left:4px solid #d7af57;background:#f3eee3;color:#17332e}.official-careers h2{margin:0;font-family:var(--font-display);font-size:clamp(1.8rem,4vw,3rem)}.official-careers>div>p:last-child{max-width:750px;color:#586964;line-height:1.7}.official-careers>a{padding:.9rem 1.1rem;background:#133e37;color:#fff;text-decoration:none;font-size:.75rem;font-weight:900;text-align:center}
-  @media(max-width:980px){.job-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.job-notice,.official-careers{grid-template-columns:1fr}.official-careers>a{width:max-content}}
-  @media(max-width:650px){.job-stats,.job-tools,.job-grid{grid-template-columns:1fr}.results-row{align-items:flex-start;flex-direction:column}.job-card{min-height:0}.job-notice{gap:1rem}.official-careers{padding:1.4rem}.official-careers>a{width:100%}}
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
+    background-color: var(--clr-bg-primary);
+  }
+
+  body {
+    font-family: var(--ff-body);
+    background-color: var(--clr-bg-primary);
+    color: var(--clr-text-primary);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  a {
+    color: inherit;
+    transition: color 0.3s var(--ease-out);
+    text-decoration: none;
+  }
+
+  .skip-link {
+    position: absolute;
+    top: -100px;
+    left: 20px;
+    background: var(--clr-accent-gold);
+    color: var(--clr-bg-primary);
+    padding: 10px 16px;
+    z-index: 9999;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+  }
+  .skip-link:focus {
+    top: 20px;
+  }
+
+  .container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .glass-card {
+    background: var(--clr-glass);
+    border: 1px solid var(--clr-glass-border);
+    border-radius: var(--radius-md);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    transition: all 0.4s var(--ease-out);
+  }
+
+  /* HEADER & NAVBAR */
+  .site-header {
+    position: relative;
+    z-index: 1000;
+  }
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 18px 0;
+    transition: all 0.4s var(--ease-out);
+  }
+  .navbar.scrolled {
+    background: rgba(10, 10, 26, 0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--clr-glass-border);
+    padding: 12px 0;
+  }
+  .navbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--ff-heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--clr-text-primary);
+  }
+  .nav-logo-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    background: var(--grad-gold);
+    color: var(--clr-bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    font-weight: 800;
+  }
+  .nav-logo span {
+    color: var(--clr-accent-gold);
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+  .nav-links a {
+    color: var(--clr-text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 4px 0;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--grad-gold);
+    border-radius: 2px;
+    transition: width 0.3s var(--ease-out);
+  }
+  .nav-links a:hover,
+  .nav-links a.active {
+    color: var(--clr-text-primary);
+  }
+  .nav-links a:hover::after,
+  .nav-links a.active::after {
+    width: 100%;
+  }
+  .nav-cta {
+    background: var(--grad-gold) !important;
+    color: var(--clr-bg-primary) !important;
+    padding: 10px 22px !important;
+    border-radius: var(--radius-sm);
+    font-weight: 700 !important;
+  }
+  .nav-cta::after {
+    display: none !important;
+  }
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 1001;
+  }
+  .nav-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--clr-text-primary);
+    border-radius: 2px;
+    transition: all 0.3s var(--ease-out);
+  }
+
+  /* PAGE HERO */
+  .page-hero {
+    padding: 150px 0 60px;
+    background: var(--clr-bg-secondary);
+    text-align: center;
+    border-bottom: 1px solid var(--clr-glass-border);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero::before {
+    content: "";
+    position: absolute;
+    top: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(212, 168, 68, 0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .page-hero-breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--clr-text-muted);
+    margin-bottom: 20px;
+  }
+  .page-hero-breadcrumb a {
+    color: var(--clr-text-secondary);
+  }
+  .page-hero-breadcrumb a:hover {
+    color: var(--clr-accent-gold);
+  }
+  .breadcrumb-sep {
+    font-size: 0.75rem;
+    color: var(--clr-text-muted);
+  }
+  .page-hero h1 {
+    font-family: var(--ff-heading);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 14px;
+    color: #fff;
+  }
+  .page-hero h1 .gold {
+    background: var(--grad-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .page-hero-description {
+    color: var(--clr-text-secondary);
+    font-size: 1.05rem;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* JOB DIRECTORY SPECIFIC STYLES */
+  .job-directory {
+    padding-top: 56px;
+    padding-bottom: 80px;
+    background: var(--clr-bg-primary);
+  }
+  .job-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .job-stats > div {
+    display: grid;
+    gap: 5px;
+    padding: 22px;
+  }
+  .job-stats strong {
+    color: var(--clr-accent-gold);
+    font-size: 1.8rem;
+    font-family: var(--ff-heading);
+    font-weight: 800;
+  }
+  .job-stats span {
+    color: var(--clr-text-muted);
+    font-size: 0.88rem;
+  }
+
+  .job-tools {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 18px;
+    margin-bottom: 22px;
+    padding: 22px;
+  }
+  .job-tools label {
+    display: grid;
+    gap: 8px;
+    color: var(--clr-text-secondary);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  .job-tools input,
+  .job-tools select {
+    border: 1px solid var(--clr-glass-border);
+    width: 100%;
+    min-height: 46px;
+    color: var(--clr-text-primary);
+    font: inherit;
+    background: rgba(5, 5, 20, 0.72);
+    border-radius: 9px;
+    padding: 0 14px;
+  }
+  .job-tools input:focus,
+  .job-tools select:focus {
+    outline: none;
+    border-color: var(--clr-accent-gold);
+  }
+
+  .job-result-count {
+    color: var(--clr-text-muted);
+    font-size: 0.9rem;
+    margin: 0 0 15px;
+  }
+
+  .job-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .job-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px;
+    min-height: 380px;
+  }
+  .job-card:hover {
+    background: var(--clr-glass-hover);
+    border-color: rgba(212, 168, 68, 0.35);
+    transform: translateY(-4px);
+  }
+  .job-card[hidden] {
+    display: none;
+  }
+  .job-card-topline {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    color: var(--clr-text-muted);
+    font-size: 0.76rem;
+  }
+  .job-badge {
+    color: var(--clr-accent-gold);
+    border: 1px solid rgba(212, 168, 68, 0.3);
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+  .job-card h2 {
+    margin: 17px 0 7px;
+    font-family: var(--ff-heading);
+    font-size: 1.18rem;
+    line-height: 1.35;
+    font-weight: 800;
+  }
+  .job-card h2 a {
+    color: var(--clr-text-primary);
+  }
+  .job-card h2 a:hover {
+    color: var(--clr-accent-gold);
+  }
+  .job-company {
+    color: var(--clr-accent-gold);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  .job-company-search {
+    color: var(--clr-accent-gold);
+    text-underline-offset: 3px;
+    text-decoration: underline rgba(212, 168, 68, 0.45);
+  }
+  .job-company-search:hover {
+    color: var(--clr-text-primary);
+    text-decoration-color: currentColor;
+  }
+  .job-date {
+    color: var(--clr-text-muted);
+    font-size: 0.78rem;
+    margin: 4px 0 10px;
+  }
+  .job-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: 10px 0 14px;
+  }
+  .job-tags span {
+    color: var(--clr-accent-gold);
+    border: 1px solid rgba(212, 168, 68, 0.3);
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 0.72rem;
+    font-weight: 600;
+  }
+  .job-card > p:last-of-type {
+    color: var(--clr-text-secondary);
+    font-size: 0.86rem;
+    line-height: 1.65;
+    flex-grow: 1;
+  }
+  .job-details-link {
+    color: var(--clr-accent-gold);
+    margin-top: auto;
+    padding-top: 15px;
+    font-size: 0.86rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .job-details-link:hover {
+    color: var(--clr-accent-gold-light);
+    transform: translateX(3px);
+  }
+
+  .job-empty {
+    margin-top: 24px;
+    padding: 22px;
+    text-align: center;
+    color: var(--clr-text-secondary);
+  }
+  .job-notice {
+    margin-top: 32px;
+    padding: 24px;
+  }
+  .job-notice h2 {
+    margin-bottom: 8px;
+    font-family: var(--ff-heading);
+    font-size: 1.1rem;
+    color: var(--clr-accent-gold);
+  }
+  .job-notice p {
+    color: var(--clr-text-secondary);
+    margin: 0;
+    line-height: 1.6;
+    font-size: 0.92rem;
+  }
+
+  /* PUBLICATION META */
+  .page-publication-meta {
+    padding: 20px 0;
+    background: var(--clr-bg-primary);
+    border-top: 1px solid var(--clr-glass-border);
+    border-bottom: 1px solid var(--clr-glass-border);
+    color: var(--clr-text-muted);
+    font-size: 0.85rem;
+    text-align: center;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--clr-bg-secondary);
+    border-top: 1px solid var(--clr-glass-border);
+    padding: 64px 0 32px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1.2fr 1fr 1.4fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+  .footer-brand {
+    max-width: 320px;
+  }
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--ff-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+  .footer-logo-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    background: var(--grad-gold);
+    color: var(--clr-bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 800;
+  }
+  .footer-brand-description {
+    color: var(--clr-text-secondary);
+    font-size: 0.88rem;
+    line-height: 1.7;
+    margin: 0;
+  }
+  .footer-socials {
+    display: flex;
+    gap: 10px;
+    margin-top: 22px;
+  }
+  .footer-socials a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--clr-glass-border);
+    color: var(--clr-text-secondary);
+    transition: all 0.3s var(--ease-out);
+  }
+  .footer-socials a:hover {
+    color: var(--clr-accent-gold);
+    background: rgba(212, 168, 68, 0.12);
+    border-color: rgba(212, 168, 68, 0.45);
+    transform: translateY(-2px);
+  }
+  .footer-socials svg {
+    width: 19px;
+    height: 19px;
+    fill: currentColor;
+  }
+  .footer-heading {
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--clr-text-primary);
+    margin-bottom: 20px;
+  }
+  .footer-links a {
+    display: block;
+    color: var(--clr-text-secondary);
+    font-size: 0.88rem;
+    padding: 5px 0;
+    transition: all 0.3s var(--ease-out);
+  }
+  .footer-links a:hover {
+    color: var(--clr-accent-gold);
+    transform: translateX(4px);
+  }
+  .footer-contact {
+    min-width: 0;
+  }
+  .footer-nap {
+    display: grid;
+    gap: 18px;
+  }
+  .footer-nap-item {
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    gap: 11px;
+    align-items: start;
+  }
+  .footer-nap-item > svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--clr-accent-gold);
+    fill: none;
+    stroke-width: 1.8px;
+    margin-top: 2px;
+  }
+  .footer-nap-item div {
+    display: grid;
+    gap: 4px;
+  }
+  .footer-nap-item span {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--clr-text-muted);
+  }
+  .footer-nap-item strong,
+  .footer-nap-item address,
+  .footer-nap-item a {
+    color: var(--clr-text-secondary);
+    font-size: 0.84rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.55;
+    margin: 0;
+  }
+  .footer-nap-item a {
+    color: var(--clr-accent-gold);
+  }
+  .footer-nap-item a:hover {
+    text-decoration: underline;
+  }
+  .footer-bottom {
+    border-top: 1px solid var(--clr-glass-border);
+    padding-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-copyright {
+    color: var(--clr-text-muted);
+    font-size: 0.82rem;
+  }
+
+  /* BACK TO TOP */
+  .back-to-top {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    z-index: 999;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--grad-gold);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(212, 168, 68, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(16px);
+    transition: all 0.3s var(--ease-out);
+  }
+  .back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .back-to-top svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--clr-bg-primary);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 950px) {
+    .job-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 768px) {
+    .nav-toggle {
+      display: flex;
+    }
+    .nav-links {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(290px, 100%);
+      height: 100vh;
+      background: rgba(10, 10, 26, 0.97);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-left: 1px solid var(--clr-glass-border);
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 90px 32px 40px;
+      transform: translateX(100%);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out);
+    }
+    .nav-links.active {
+      transform: translateX(0);
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+    .footer-bottom {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+  @media (max-width: 640px) {
+    .job-stats,
+    .job-tools,
+    .job-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>
