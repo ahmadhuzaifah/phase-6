@@ -1,27 +1,52 @@
 ---
 /**
- * DHA Phase 6 Lahore — Category Places Page
- * Handles /places/[category]/ for all 41 place categories.
+ * DHA Phase 6 Lahore — Sector Specific Places Category Page
+ * Handles /sectors/[sector]/places/[category]/ (e.g. /sectors/sector-a/places/bakery/)
  */
 import { PLACE_CATEGORIES, PLACES_DATA, type PlaceCategoryMeta } from '@data/places';
 
 export function getStaticPaths() {
-  return PLACE_CATEGORIES.map((category) => ({
-    params: { category: category.key },
-    props: { categoryMeta: category },
-  }));
+  const sectors = [
+    { key: 'sector-a', label: 'Sector A' },
+    { key: 'sector-b', label: 'Sector B' },
+    { key: 'sector-c', label: 'Sector C' },
+    { key: 'sector-d', label: 'Sector D' },
+    { key: 'sector-e', label: 'Sector E' },
+    { key: 'sector-f', label: 'Sector F' },
+    { key: 'sector-g', label: 'Sector G' },
+    { key: 'sector-h', label: 'Sector H' },
+    { key: 'sector-j', label: 'Sector J' },
+    { key: 'sector-k', label: 'Sector K' },
+    { key: 'sector-l', label: 'Sector L' },
+    { key: 'sector-m', label: 'Sector M' },
+    { key: 'sector-n', label: 'Sector N' },
+  ];
+
+  const paths = [];
+
+  for (const sec of sectors) {
+    for (const cat of PLACE_CATEGORIES) {
+      paths.push({
+        params: { sector: sec.key, category: cat.key },
+        props: { sectorMeta: sec, categoryMeta: cat },
+      });
+    }
+  }
+
+  return paths;
 }
 
 interface Props {
+  sectorMeta: { key: string; label: string };
   categoryMeta: PlaceCategoryMeta;
 }
 
-const { categoryMeta } = Astro.props;
+const { sectorMeta, categoryMeta } = Astro.props;
 
-// Filter places matching this category or fallback
-const places = PLACES_DATA.filter((place) => place.category === categoryMeta.key);
-
-const sectors = ['Sector A', 'Sector B', 'Sector C', 'Sector D', 'Sector E', 'Sector F', 'Sector G', 'Sector H', 'Sector J', 'Sector K', 'Sector L', 'Sector M', 'Sector N'];
+// Filter matching places in this sector or fallback
+const places = PLACES_DATA.filter(
+  (p) => p.category === categoryMeta.key && (p.block?.toLowerCase() === sectorMeta.label.toLowerCase() || p.address.toLowerCase().includes(sectorMeta.label.toLowerCase()))
+);
 ---
 
 <!DOCTYPE html>
@@ -32,24 +57,16 @@ const sectors = ['Sector A', 'Sector B', 'Sector C', 'Sector D', 'Sector E', 'Se
   <meta name="theme-color" content="#0a0a1a">
 
   <!-- SEO -->
-  <title>{categoryMeta.seoTitle}</title>
-  <meta name="description" content={categoryMeta.seoDesc}>
-  <meta name="keywords" content={`${categoryMeta.label}, DHA Phase 6 Lahore, Phase 6 places, ${categoryMeta.key}`}>
+  <title>{categoryMeta.label} in {sectorMeta.label} DHA Phase 6 Lahore</title>
+  <meta name="description" content={`Explore ${categoryMeta.label.toLowerCase()} facilities, locations, and directions in ${sectorMeta.label}, DHA Phase 6 Lahore.`}>
+  <meta name="keywords" content={`${categoryMeta.label}, ${sectorMeta.label}, DHA Phase 6 Lahore, Phase 6 places`}>
   <meta name="author" content="DHA Phase 6 Lahore Guide">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <link rel="canonical" href={`https://dhaphase6lahore.pk/places/${categoryMeta.key}/`}>
-  <link rel="alternate" hreflang="en-PK" href={`https://dhaphase6lahore.pk/places/${categoryMeta.key}/`}>
-  <link rel="alternate" hreflang="x-default" href={`https://dhaphase6lahore.pk/places/${categoryMeta.key}/`}>
 
   <!-- Open Graph -->
-  <meta property="og:title" content={categoryMeta.seoTitle}>
-  <meta property="og:description" content={categoryMeta.seoDesc}>
+  <meta property="og:title" content={`${categoryMeta.label} in ${sectorMeta.label} DHA Phase 6 Lahore`}>
+  <meta property="og:description" content={`Explore ${categoryMeta.label.toLowerCase()} facilities in ${sectorMeta.label}, DHA Phase 6 Lahore.`}>
   <meta property="og:type" content="website">
-  <meta property="og:url" content={`https://dhaphase6lahore.pk/places/${categoryMeta.key}/`}>
-  <meta property="og:site_name" content="DHA Phase 6 Lahore">
-  <meta property="og:locale" content="en_PK">
-  <meta property="og:image" content="/images/hero-bg.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;rect width='100' height='100' rx='16' fill='%23d4a844'/&gt;&lt;text x='50' y='66' font-size='48' text-anchor='middle' font-family='serif' font-weight='bold' fill='%230a0a1a'&gt;D6&lt;/text&gt;&lt;/svg&gt;">
@@ -82,15 +99,12 @@ const sectors = ['Sector A', 'Sector B', 'Sector C', 'Sector D', 'Sector E', 'Se
           <a href="/dha-phase-6-lahore-map/">Map</a>
           <a href="/dha-phase-6-lahore-map/#map-pdf-downloads" class="nav-cta">Map PDFs</a>
         </div>
-        <button class="nav-toggle" id="navToggle" type="button" aria-label="Toggle navigation menu" aria-controls="navLinks" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
       </div>
     </nav>
   </header>
 
   <main id="main-content">
-    <!-- Category Hero -->
+    <!-- Hero -->
     <header class="page-hero">
       <div class="container">
         <nav class="page-hero-breadcrumb" aria-label="Breadcrumb">
@@ -98,10 +112,12 @@ const sectors = ['Sector A', 'Sector B', 'Sector C', 'Sector D', 'Sector E', 'Se
           <span class="breadcrumb-sep">›</span>
           <a href="/places/">Places</a>
           <span class="breadcrumb-sep">›</span>
-          <span aria-current="page">{categoryMeta.label}</span>
+          <a href={`/places/${categoryMeta.key}/`}>{categoryMeta.label}</a>
+          <span class="breadcrumb-sep">›</span>
+          <span aria-current="page">{sectorMeta.label}</span>
         </nav>
-        <h1><span class="gold">{categoryMeta.label}</span> in DHA Phase 6 Lahore</h1>
-        <p class="page-hero-description">{categoryMeta.introText}</p>
+        <h1><span class="gold">{categoryMeta.label}</span> in {sectorMeta.label}</h1>
+        <p class="page-hero-description">Find {categoryMeta.label.toLowerCase()} facilities, nearby commercial plaza access, and directions for residents in {sectorMeta.label}, DHA Phase 6 Lahore.</p>
       </div>
     </header>
 
@@ -112,7 +128,7 @@ const sectors = ['Sector A', 'Sector B', 'Sector C', 'Sector D', 'Sector E', 'Se
           <div class="cat-grid">
             {places.map((place) => (
               <article class="place-card glass-card">
-                <span class="place-tag">{place.categoryLabel}</span>
+                <span class="place-tag">{place.categoryLabel} • {sectorMeta.label}</span>
                 <h2>
                   <a href={`/places/${place.category}/${place.slug}/`}>{place.name}</a>
                 </h2>
@@ -126,7 +142,7 @@ const sectors = ['Sector A', 'Sector B', 'Sector C', 'Sector D', 'Sector E', 'Se
                 <div class="place-actions">
                   <a
                     class="map-link"
-                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.name + ' ' + place.address)}`}
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.name + ' ' + sectorMeta.label + ' DHA Phase 6 Lahore')}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -138,42 +154,28 @@ const sectors = ['Sector A', 'Sector B', 'Sector C', 'Sector D', 'Sector E', 'Se
           </div>
         ) : (
           <div class="category-overview-card glass-card">
-            <h2>Category Guide: {categoryMeta.label}</h2>
-            <p>{categoryMeta.seoDesc}</p>
-            <p>Commercial hubs in CCA 1 (Sector C), CCA 2 (Sector J), and Main Boulevard Phase 6 host multiple top-rated {categoryMeta.label.toLowerCase()} facilities.</p>
+            <h2>{categoryMeta.label} in {sectorMeta.label}</h2>
+            <p>Residents of {sectorMeta.label} have convenient access to {categoryMeta.label.toLowerCase()} services located in nearby CCA 1 (Sector C), CCA 2 (Sector J), and Main Boulevard commercial zones.</p>
             
             <div style="margin-top: 24px;">
               <a
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(categoryMeta.label + ' DHA Phase 6 Lahore')}`}
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(categoryMeta.label + ' ' + sectorMeta.label + ' DHA Phase 6 Lahore')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 class="btn btn-primary"
               >
-                Search {categoryMeta.label} on Google Maps ↗
+                Search {categoryMeta.label} in {sectorMeta.label} on Google Maps ↗
               </a>
             </div>
           </div>
         )}
 
-        <!-- Sector Level Filter Links -->
-        <div class="sector-filter-box glass-card" style="margin-top: 48px; padding: 28px;">
-          <h3 style="color: var(--clr-accent-gold); margin-bottom: 14px; font-family: var(--ff-heading);">Browse {categoryMeta.label} by Sector</h3>
-          <p style="color: var(--clr-text-secondary); margin-bottom: 18px; font-size: 0.92rem;">Filter {categoryMeta.label.toLowerCase()} facilities located across individual sectors in DHA Phase 6 Lahore:</p>
-          <div class="sector-buttons-grid">
-            {sectors.map((sec) => {
-              const secSlug = sec.toLowerCase().replace(' ', '-');
-              return (
-                <a href={`/sectors/${secSlug}/places/${categoryMeta.key}/`} class="sector-btn">
-                  {sec}
-                </a>
-              );
-            })}
-          </div>
-        </div>
-
-        <div style="margin-top: 36px; text-align: center;">
-          <a href="/places/" class="job-back-link" style="display: inline-block;">
-            ← Back to Places Directory
+        <div style="margin-top: 48px; text-align: center; display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+          <a href={`/places/${categoryMeta.key}/`} class="job-back-link">
+            ← View All {categoryMeta.label} in Phase 6
+          </a>
+          <a href={`/sectors/${sectorMeta.key}/`} class="job-back-link">
+            View {sectorMeta.label} Sector Guide →
           </a>
         </div>
       </div>
@@ -321,22 +323,14 @@ const sectors = ['Sector A', 'Sector B', 'Sector C', 'Sector D', 'Sector E', 'Se
     border-radius: 8px;
     display: inline-block;
   }
-  .sector-buttons-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  .sector-btn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--clr-glass-border);
-    padding: 6px 14px;
-    border-radius: 999px;
-    font-size: 0.82rem;
-    color: var(--clr-text-secondary);
-  }
-  .sector-btn:hover {
-    border-color: var(--clr-accent-gold);
+  .job-back-link {
+    display: inline-block;
+    padding: 10px 20px;
     color: var(--clr-accent-gold);
+    border: 1px solid var(--clr-glass-border);
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 700;
   }
   .site-header {
     position: relative;
