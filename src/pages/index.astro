@@ -750,6 +750,97 @@ const faqs = [
 
 
   <!-- ══════════════════════════════════════════════════════════════════════════
+       SECTION 10A: FEATURED PROPERTY CONSULTANT
+       ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="section section--alt" id="property-consultant">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="eyebrow">Your Trusted Advisor</span>
+        <h2 class="section-header__title">Al Rehman Garden Phase 2 Property Consultant</h2>
+        <p class="section-header__desc">
+          Get verified guidance on plot availability, current market prices, and on-ground property visits.
+        </p>
+      </div>
+
+      <div class="consultant-showcase">
+        <!-- Consultant Profile Card -->
+        <div class="consultant-profile-card">
+          <div class="consultant-profile-card__inner">
+            <div class="consultant-avatar-wrap">
+              <img
+                src="/images/dealers/ahmad-huzaifah.png"
+                alt="Ahmad Huzaifah — Property Consultant Al Rehman Garden Phase 2 Lahore"
+                class="consultant-avatar"
+                loading="lazy"
+              />
+              <span class="consultant-online-dot" title="Available for inquiry"></span>
+            </div>
+            <div class="consultant-identity">
+              <span class="consultant-badge">PROPERTY CONSULTANT</span>
+              <h3 class="consultant-name">Ahmad Huzaifah</h3>
+              <p class="consultant-location">📍 Al Rehman Garden Phase 2, Lahore</p>
+              <p class="consultant-bio">
+                Helping buyers discover verified residential plots, houses, and investment opportunities in Al Rehman Garden Phase 2 Lahore with transparent and honest property guidance.
+              </p>
+              <div class="consultant-contact-row">
+                <a href="tel:+923257800001" class="consultant-contact-chip">
+                  <span>📞</span>
+                  <span>0325 7800001</span>
+                </a>
+                <a href={CONTACTS.whatsapp.url} target="_blank" rel="noopener noreferrer" class="consultant-contact-chip consultant-contact-chip--wa">
+                  <span>💬</span>
+                  <span>WhatsApp</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="consultant-cta-row">
+            <a
+              href={CONTACTS.whatsapp.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn--whatsapp btn--lg"
+              style="flex: 1;"
+            >
+              <svg class="btn__icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/>
+              </svg>
+              <span>WhatsApp: 0325 7800001</span>
+            </a>
+            <a href="/property-dealer" class="btn btn--outline btn--lg" style="flex: 1; border-color: rgba(212,175,55,0.5); color: #F3D375;">
+              View Full Profile →
+            </a>
+          </div>
+        </div>
+
+        <!-- Services Quick Grid -->
+        <div class="consultant-services-grid">
+          <div class="c-service-item">
+            <span class="c-service-icon">🏡</span>
+            <h4>Residential Plots</h4>
+            <p>3, 5, 10 Marla & 1 Kanal in all society blocks</p>
+          </div>
+          <div class="c-service-item">
+            <span class="c-service-icon">🏰</span>
+            <h4>Ready Houses</h4>
+            <p>Double-story luxury designer villas with possession</p>
+          </div>
+          <div class="c-service-item">
+            <span class="c-service-icon">📈</span>
+            <h4>Investment Advice</h4>
+            <p>Market analysis, capital trends, high-ROI sectors</p>
+          </div>
+          <div class="c-service-item">
+            <span class="c-service-icon">🚗</span>
+            <h4>Site Visits</h4>
+            <p>Guided on-ground tours & plot demarcation</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════════
        SECTION 10: LEAD GENERATION & CONVERSION CTA
        ══════════════════════════════════════════════════════════════════════════ -->
   <section class="section section--dark cta-section" id="contact-advisory">
@@ -1880,5 +1971,197 @@ const faqs = [
     font-size: 11px;
     color: #34D399;
     font-weight: var(--font-bold);
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     CONSULTANT SHOWCASE SECTION
+     ══════════════════════════════════════════════════════════════════════════ */
+  .consultant-showcase {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-8);
+    align-items: start;
+    margin-top: var(--space-8);
+  }
+
+  @media (max-width: 900px) {
+    .consultant-showcase {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .consultant-profile-card {
+    background: var(--surface-card, #141432);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: var(--radius-xl, 20px);
+    padding: var(--space-6);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  .consultant-profile-card__inner {
+    display: flex;
+    gap: var(--space-4);
+    align-items: flex-start;
+    margin-bottom: var(--space-5);
+  }
+
+  .consultant-avatar-wrap {
+    position: relative;
+    flex-shrink: 0;
+    width: 88px;
+    height: 88px;
+  }
+
+  .consultant-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2.5px solid #D4AF37;
+    box-shadow: 0 4px 16px rgba(212, 175, 55, 0.25);
+  }
+
+  .consultant-online-dot {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    width: 13px;
+    height: 13px;
+    background: #22C55E;
+    border-radius: 50%;
+    border: 2px solid #141432;
+    animation: pulse-dot 2s infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
+    50% { box-shadow: 0 0 0 5px rgba(34, 197, 94, 0); }
+  }
+
+  .consultant-identity {
+    flex: 1;
+  }
+
+  .consultant-badge {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.12);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    color: #F3D375;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+
+  .consultant-name {
+    font-size: var(--text-xl, 22px);
+    font-weight: 700;
+    color: var(--text-inverse, #FFFFFF);
+    margin: 4px 0;
+  }
+
+  .consultant-location {
+    font-size: 12.5px;
+    color: #94A3B8;
+    margin: 2px 0 8px;
+  }
+
+  .consultant-bio {
+    font-size: 13.5px;
+    color: #CBD5E1;
+    line-height: 1.6;
+    margin: 0 0 14px;
+  }
+
+  .consultant-contact-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .consultant-contact-chip {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #E2E8F0;
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .consultant-contact-chip:hover {
+    background: rgba(212, 175, 55, 0.12);
+    border-color: rgba(212, 175, 55, 0.4);
+    color: #F3D375;
+  }
+
+  .consultant-contact-chip--wa {
+    background: rgba(37, 211, 102, 0.1);
+    border-color: rgba(37, 211, 102, 0.3);
+    color: #4ADE80;
+  }
+
+  .consultant-contact-chip--wa:hover {
+    background: rgba(37, 211, 102, 0.18);
+    color: #22C55E;
+  }
+
+  .consultant-cta-row {
+    display: flex;
+    gap: 10px;
+    margin-top: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .consultant-services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+
+  @media (max-width: 540px) {
+    .consultant-services-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .c-service-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: var(--radius-lg, 14px);
+    padding: var(--space-4) var(--space-4);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .c-service-item:hover {
+    border-color: rgba(212, 175, 55, 0.35);
+    transform: translateY(-2px);
+  }
+
+  .c-service-icon {
+    font-size: 28px;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .c-service-item h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-inverse, #FFFFFF);
+    margin: 0 0 5px;
+  }
+
+  .c-service-item p {
+    font-size: 12.5px;
+    color: #94A3B8;
+    margin: 0;
+    line-height: 1.5;
   }
 </style>
