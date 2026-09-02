@@ -67,7 +67,10 @@ const housesSchema = {
             sizeUnit={prop.unit}
             block={prop.block}
             location={prop.location.address}
+            image={prop.images && prop.images.length > 0 ? prop.images[0] : undefined}
             verificationStatus={prop.verificationStatus}
+            availabilityStatus={prop.availabilityStatus}
+            lastVerifiedDate={prop.lastVerifiedDate}
             isFeatured={prop.isFeatured}
           />
         ))}

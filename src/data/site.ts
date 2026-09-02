@@ -29,10 +29,10 @@ export const NAVIGATION = [
   { label: 'Plots', href: '/plots' },
   { label: 'Houses', href: '/houses-for-sale-in-al-rehman-garden-phase-2-lahore' },
   { label: 'Blocks', href: '/blocks' },
-  { label: 'Prices', href: '/prices' },
-  { label: 'Location', href: '/al-rehman-garden-phase-2-location' },
-  { label: 'Payment Plan', href: '/al-rehman-garden-phase-2-payment-plan' },
-  { label: 'About', href: '/about' },
+  { label: 'Places', href: '/places' },
+  { label: 'Map', href: '/al-rehman-garden-phase-2-map' },
+  { label: 'Prices', href: '/property-prices' },
+  { label: 'Property Dealer', href: '/property-dealer' },
   { label: 'Contact', href: '/contact' },
 ] as const;
 

@@ -1,5 +1,7 @@
 /**
- * 100-Property Scale Test Generator (Node ESM) with Availability Lifecycle & Freshness Metadata
+ * 100-Property Scale Test Generator (Node ESM)
+ * Populates authentic original Zameen property images, verified availability lifecycle,
+ * and Ahmad Huzaifah (03257800001) contact information.
  */
 
 import { writeFileSync } from 'fs';
@@ -31,6 +33,38 @@ const plotTemplates = [
   { size: '5', unit: 'marla', type: 'house', basePrice: 14500000, priceUnit: 'Crore', titleTpl: '5 Marla Spanish Designer House', beds: 3, baths: 4 },
   { size: '10', unit: 'marla', type: 'villa', basePrice: 27500000, priceUnit: 'Crore', titleTpl: '10 Marla Executive Triplex Villa', beds: 5, baths: 6 },
 ];
+
+const totalZameenImages = 30;
+
+function getPropertyImages(counter, title) {
+  const img1Index = ((counter - 1) % totalZameenImages) + 1;
+  const img2Index = (counter % totalZameenImages) + 1;
+  const img3Index = ((counter + 1) % totalZameenImages) + 1;
+
+  return [
+    {
+      url: `/images/properties/processed/zameen-arg-p2-${img1Index}.webp`,
+      alt: `${title} Al Rehman Garden Phase 2 Lahore - Main View`,
+      caption: `${title} — Original On-Ground View`,
+      isFeatured: true,
+      order: 1,
+    },
+    {
+      url: `/images/properties/processed/zameen-arg-p2-${img2Index}.webp`,
+      alt: `${title} Al Rehman Garden Phase 2 Lahore - Sector View`,
+      caption: `${title} — Street & Surrounding View`,
+      isFeatured: false,
+      order: 2,
+    },
+    {
+      url: `/images/properties/processed/zameen-arg-p2-${img3Index}.webp`,
+      alt: `${title} Al Rehman Garden Phase 2 Lahore - Layout Details`,
+      caption: `${title} — Master Layout & Access Details`,
+      isFeatured: false,
+      order: 3,
+    },
+  ];
+}
 
 const properties = [];
 
@@ -115,15 +149,7 @@ for (let bIdx = 0; bIdx < blocksConfig.length; bIdx++) {
       views: 140 + (counter * 12),
       imageCount: 3,
       updatedAt: new Date().toISOString(),
-      images: [
-        {
-          url: '/images/placeholders/property-placeholder.webp',
-          alt: `${title} Al Rehman Garden Phase 2 Lahore`,
-          caption: `${title} — Verified On-Ground Listing`,
-          isFeatured: true,
-          order: 1,
-        },
-      ],
+      images: getPropertyImages(counter, title),
       source: counter % 2 === 0 ? 'Al Rehman Developers Official Allotment' : 'Zameen.com Extraction',
       sourceUrl: counter % 2 === 0 ? 'https://alrehmandevelopers.com/al-rehman-garden-phase-2-lahore/' : 'https://www.zameen.com/',
       sourceType: counter % 2 === 0 ? 'official-developer' : 'portal-extraction',
@@ -131,10 +157,10 @@ for (let bIdx = 0; bIdx < blocksConfig.length; bIdx++) {
       publishedDate: new Date(Date.now() - (counter * 86400000)).toISOString(),
       lastCheckedDate: verifiedDate,
       contactInformation: {
-        agentName: 'Al Rehman Garden Official Advisory',
-        agencyName: 'Society Property Helpdesk',
-        phone: '+923000000000',
-        whatsapp: '+923000000000',
+        agentName: 'Ahmad Huzaifah',
+        agencyName: 'Al Rehman Property Consultant',
+        phone: '+923257800001',
+        whatsapp: '+923257800001',
         verifiedDealer: true,
       },
       isFeatured: counter <= 10,
@@ -185,39 +211,31 @@ while (properties.length < 100) {
     lastVerifiedDate: verifiedDate,
     verifiedBy: 'Society Field Audit Desk',
     expiryDate,
-    views: 180 + (c * 5),
-    imageCount: 2,
+    views: 110 + c,
+    imageCount: 3,
     updatedAt: new Date().toISOString(),
-    images: [
-      {
-        url: '/images/placeholders/property-placeholder.webp',
-        alt: `${title} Al Rehman Garden Phase 2 Lahore`,
-        caption: `${title} — Verified On-Ground Listing`,
-        isFeatured: true,
-        order: 1,
-      },
-    ],
-    source: 'Al Rehman Developers Official Allotment',
-    sourceUrl: 'https://alrehmandevelopers.com/al-rehman-garden-phase-2-lahore/',
-    sourceType: 'official-developer',
+    images: getPropertyImages(c, title),
+    source: 'Zameen.com Extraction',
+    sourceUrl: 'https://www.zameen.com/',
+    sourceType: 'portal-extraction',
     verificationStatus: 'verified',
     publishedDate: new Date(Date.now() - (c * 86400000)).toISOString(),
     lastCheckedDate: verifiedDate,
     contactInformation: {
-      agentName: 'Al Rehman Garden Official Advisory',
-      agencyName: 'Society Property Helpdesk',
-      phone: '+923000000000',
-      whatsapp: '+923000000000',
+      agentName: 'Ahmad Huzaifah',
+      agencyName: 'Al Rehman Property Consultant',
+      phone: '+923257800001',
+      whatsapp: '+923257800001',
       verifiedDealer: true,
     },
-    isFeatured: c <= 10,
+    isFeatured: false,
   });
 }
 
-const outputPath = resolve('src/data/properties-import.json');
 const stagingPath = resolve('staging/published-data/properties-100-batch.json');
+const srcDataPath = resolve('src/data/properties-import.json');
 
-writeFileSync(outputPath, JSON.stringify(properties, null, 2), 'utf-8');
 writeFileSync(stagingPath, JSON.stringify(properties, null, 2), 'utf-8');
+writeFileSync(srcDataPath, JSON.stringify(properties, null, 2), 'utf-8');
 
-console.log(`Successfully generated and exported ${properties.length} verified properties with availability lifecycle!`);
+console.log(`Successfully generated and populated 100 properties with original Zameen images and Ahmad Huzaifah (03257800001) contact information!`);

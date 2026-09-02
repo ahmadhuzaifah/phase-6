@@ -196,11 +196,28 @@ const breadcrumbsSchema = {
                 src={property.images && property.images.length > 0 ? property.images[0].url : '/images/placeholders/property-placeholder.webp'}
                 alt={property.images && property.images.length > 0 ? property.images[0].alt : property.title}
                 class="prop-gallery__img"
+                id="main-property-image"
                 loading="eager"
               />
               <!-- Official Opacity Watermark -->
               <PropertyWatermark position="bottom-right" opacity={0.85} />
             </div>
+
+            <!-- Thumbnail Selector Strip -->
+            {property.images && property.images.length > 1 && (
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-top: 12px;">
+                {property.images.map((img: any, idx: number) => (
+                  <button
+                    type="button"
+                    style="border: 2px solid rgba(212,175,55,0.3); border-radius: var(--radius-md); overflow: hidden; padding: 0; background: #000; cursor: pointer; aspect-ratio: 16/10;"
+                    onclick={`document.getElementById('main-property-image').src = '${img.url}';`}
+                    title={img.caption || `View ${idx + 1}`}
+                  >
+                    <img src={img.url} alt={img.alt || property.title} style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           <!-- Key Specifications Grid -->
@@ -359,10 +376,23 @@ const breadcrumbsSchema = {
         <!-- Right Column (Inquiry Box & Contact Desk) -->
         <aside class="prop-sidebar">
           <div class="prop-contact-card">
-            <div class="prop-contact-card__badge">Official Property Desk</div>
-            <h3 class="prop-contact-card__title">Interested in this Property?</h3>
+            <!-- Consultant Header -->
+            <div style="display: flex; gap: 14px; align-items: center; margin-bottom: 16px;">
+              <img
+                src="/images/dealers/ahmad-huzaifah.png"
+                alt="Ahmad Huzaifah - Property Consultant"
+                style="width: 64px; height: 64px; border-radius: 50%; border: 2px solid #D4AF37; object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,0.3);"
+              />
+              <div>
+                <span class="prop-contact-card__badge" style="margin-bottom: 4px; display: inline-block;">Authorized Consultant</span>
+                <h4 style="margin: 0; color: #FFFFFF; font-size: 16px; font-weight: 700;">Ahmad Huzaifah</h4>
+                <span style="font-size: 12px; color: #F3D375;">Al Rehman Property Specialist</span>
+              </div>
+            </div>
+
+            <h3 class="prop-contact-card__title" style="font-size: 17px;">Inquire About This Property</h3>
             <p class="prop-contact-card__desc">
-              Contact our on-site representative for exact map location, title verification, and immediate physical visit.
+              Contact senior consultant Ahmad Huzaifah for direct plot demarcation, title verification, and immediate site visit.
             </p>
 
             <div class="prop-contact-card__actions">
@@ -371,20 +401,31 @@ const breadcrumbsSchema = {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="btn btn--accent btn--lg btn--full"
+                class="btn btn--whatsapp btn--lg btn--full"
+                style="font-weight: 700;"
               >
                 <svg class="btn__icon" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/>
+                  <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/>
                 </svg>
-                <span>Inquire on WhatsApp</span>
+                <span>WhatsApp: {CONTACTS.phone.display}</span>
               </a>
 
               <!-- Direct Call Button -->
               <a
                 href={`tel:${CONTACTS.phone.primary}`}
                 class="btn btn--secondary btn--md btn--full"
+                style="font-weight: 700;"
               >
                 📞 Call {CONTACTS.phone.display}
+              </a>
+
+              <!-- Dealer Profile Link -->
+              <a
+                href="/property-dealer"
+                class="btn btn--outline btn--sm btn--full"
+                style="border-color: rgba(212,175,55,0.4); color: #F3D375; margin-top: 6px; font-weight: 600;"
+              >
+                View Consultant Profile &amp; Inventory →
               </a>
             </div>
 
@@ -426,6 +467,7 @@ const breadcrumbsSchema = {
                 sizeUnit={rel.unit}
                 block={rel.block}
                 location={rel.location.address}
+                image={rel.images && rel.images.length > 0 ? rel.images[0] : undefined}
                 verificationStatus={rel.verificationStatus}
                 availabilityStatus={rel.availabilityStatus}
                 lastVerifiedDate={rel.lastVerifiedDate}
