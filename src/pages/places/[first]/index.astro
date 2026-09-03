@@ -1,0 +1,388 @@
+---
+/**
+ * DHA Phase 6 Lahore — Places Sector & Category Directory Handler
+ * Supports:
+ * - /places/[sector]/ (e.g. /places/sector-a/, /places/cca/)
+ * - /places/[category]/ (e.g. /places/restaurants/, /places/schools/)
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import {
+  SECTORS_DIRECTORY,
+  PLACE_CATEGORIES,
+  getSectorPlaces,
+  getCategoryPlaces,
+  type PlaceRecord,
+  type SectorMeta,
+} from '@data/places/index';
+import type { PlaceCategoryMeta } from '@data/places';
+import propertiesRaw from '@data/properties-import.json';
+import { SITE } from '@data/site';
+
+export function getStaticPaths() {
+  const sectorPaths = SECTORS_DIRECTORY.map((sector) => ({
+    params: { first: sector.key },
+    props: {
+      type: 'sector' as const,
+      sectorMeta: sector,
+      categoryMeta: null,
+      places: getSectorPlaces(sector.key),
+    },
+  }));
+
+  const categoryPaths = PLACE_CATEGORIES.map((category) => ({
+    params: { first: category.key },
+    props: {
+      type: 'category' as const,
+      sectorMeta: null,
+      categoryMeta: category,
+      places: getCategoryPlaces(category.key),
+    },
+  }));
+
+  return [...sectorPaths, ...categoryPaths];
+}
+
+interface Props {
+  type: 'sector' | 'category';
+  sectorMeta: SectorMeta | null;
+  categoryMeta: PlaceCategoryMeta | null;
+  places: PlaceRecord[];
+}
+
+const { type, sectorMeta, categoryMeta, places } = Astro.props;
+
+// Page titles and meta descriptions
+const pageTitle =
+  type === 'sector' && sectorMeta
+    ? `${sectorMeta.label} Places, Facilities & Amenities | DHA Phase 6 Lahore`
+    : categoryMeta
+      ? `${categoryMeta.label} in DHA Phase 6 Lahore | Verified Directory`
+      : 'Places & Facilities in DHA Phase 6 Lahore';
+
+const metaDesc =
+  type === 'sector' && sectorMeta
+    ? `Explore verified schools, clinics, restaurants, mosques, banks, and recreation in ${sectorMeta.label}, DHA Phase 6 Lahore with exact addresses, ratings, and maps.`
+    : categoryMeta
+      ? `Find verified ${categoryMeta.label} across all sectors of DHA Phase 6 Lahore with addresses, Google ratings, reviews, and direct Google Maps navigation.`
+      : 'Comprehensive directory of places and amenities in DHA Phase 6 Lahore.';
+
+const canonical = `${SITE.url}/places/${type === 'sector' ? sectorMeta?.key : categoryMeta?.key}/`;
+
+// Matching nearby properties
+const relevantProperties = propertiesRaw.filter((prop) => {
+  if (type === 'sector' && sectorMeta) {
+    return (
+      prop.block?.toLowerCase().includes(sectorMeta.label.toLowerCase()) ||
+      prop.location?.address?.toLowerCase().includes(sectorMeta.label.toLowerCase())
+    );
+  }
+  return true;
+}).slice(0, 3);
+
+// JSON-LD Structured Data
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'CollectionPage',
+      '@id': canonical,
+      url: canonical,
+      name: pageTitle,
+      description: metaDesc,
+      inLanguage: 'en-PK',
+      isPartOf: { '@type': 'WebSite', '@id': `${SITE.url}/#website`, name: SITE.name, url: SITE.url },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${canonical}#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url },
+        { '@type': 'ListItem', position: 2, name: 'Places', item: `${SITE.url}/places/` },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: type === 'sector' ? sectorMeta?.label : categoryMeta?.label,
+          item: canonical,
+        },
+      ],
+    },
+    {
+      '@type': 'ItemList',
+      '@id': `${canonical}#directory`,
+      name: pageTitle,
+      numberOfItems: places.length,
+      itemListElement: places.map((place, idx) => ({
+        '@type': 'ListItem',
+        position: idx + 1,
+        item: {
+          '@type': 'LocalBusiness',
+          name: place.name,
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: place.address,
+            addressLocality: 'Lahore',
+            addressRegion: 'Punjab',
+            postalCode: '54792',
+            addressCountry: 'PK',
+          },
+          ...(place.rating ? {
+            aggregateRating: {
+              '@type': 'AggregateRating',
+              ratingValue: place.rating,
+              reviewCount: place.reviewCount || 1,
+            },
+          } : {}),
+          ...(place.phone ? { telephone: place.phone } : {}),
+          url: `${SITE.url}/places/${place.category}/${place.slug}/`,
+        },
+      })),
+    },
+  ],
+};
+---
+
+<PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+
+  <!-- Hero Header -->
+  <section class="relative bg-gradient-to-b from-[#0a0a1a] via-[#0f172a] to-[#0a0a1a] text-white py-14 px-4 sm:px-6 lg:px-8 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto">
+      <!-- Breadcrumbs -->
+      <nav class="flex items-center gap-2 text-xs sm:text-sm text-slate-400 mb-6 flex-wrap">
+        <a href="/" class="hover:text-amber-400 transition-colors">Home</a>
+        <span>/</span>
+        <a href="/places/" class="hover:text-amber-400 transition-colors">Places</a>
+        <span>/</span>
+        <span class="text-amber-400 font-medium">
+          {type === 'sector' ? sectorMeta?.label : categoryMeta?.label}
+        </span>
+      </nav>
+
+      <div class="max-w-3xl">
+        <span class="inline-block px-3 py-1 bg-amber-500/10 text-amber-400 text-xs font-semibold tracking-wider uppercase rounded-full mb-3 border border-amber-500/20">
+          {type === 'sector' ? 'Sector Directory' : 'Category Guide'}
+        </span>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white mb-4">
+          {type === 'sector' && sectorMeta ? (
+            <>Facilities & Places in <span class="text-amber-400">{sectorMeta.label}</span></>
+          ) : (
+            <><span class="text-amber-400">{categoryMeta?.label}</span> in DHA Phase 6 Lahore</>
+          )}
+        </h1>
+        <p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-6">
+          {type === 'sector' && sectorMeta ? sectorMeta.description : categoryMeta?.introText}
+        </p>
+
+        <!-- Stats Counter -->
+        <div class="flex items-center gap-4 flex-wrap text-sm text-slate-300 bg-slate-900/60 p-4 rounded-xl border border-slate-800 inline-flex">
+          <div>
+            <span class="font-bold text-amber-400 text-lg">{places.length}</span>
+            <span class="text-slate-400 ml-1">Verified Places</span>
+          </div>
+          <span class="text-slate-700">|</span>
+          <div>
+            <span class="font-bold text-amber-400 text-lg">
+              {type === 'sector' ? '17 Sectors' : `${new Set(places.map(p => p.sector)).size || 1} Sectors Active`}
+            </span>
+          </div>
+          <span class="text-slate-700">|</span>
+          <div class="text-emerald-400 font-medium">✓ 100% Phase 6 Verified</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Navigation Filters -->
+  <section class="bg-slate-900/90 py-4 px-4 sm:px-6 lg:px-8 border-b border-slate-800 sticky top-0 z-20 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4 flex-wrap">
+      <div class="text-xs text-slate-400 font-semibold uppercase tracking-wider">
+        {type === 'sector' ? 'Quick Sector Switcher:' : 'Browse Other Categories:'}
+      </div>
+      <div class="flex items-center gap-2 overflow-x-auto pb-1 max-w-full text-xs">
+        {type === 'sector' ? (
+          SECTORS_DIRECTORY.map((s) => (
+            <a
+              href={`/places/${s.key}/`}
+              class={`px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors ${
+                s.key === sectorMeta?.key
+                  ? 'bg-amber-500 text-slate-950 font-bold'
+                  : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white'
+              }`}
+            >
+              {s.label}
+            </a>
+          ))
+        ) : (
+          PLACE_CATEGORIES.slice(0, 10).map((c) => (
+            <a
+              href={`/places/${c.key}/`}
+              class={`px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors ${
+                c.key === categoryMeta?.key
+                  ? 'bg-amber-500 text-slate-950 font-bold'
+                  : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white'
+              }`}
+            >
+              {c.label}
+            </a>
+          ))
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Places Directory Grid -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="mb-8 flex items-center justify-between flex-wrap gap-4">
+      <div>
+        <h2 class="text-2xl font-bold text-white tracking-tight">
+          {type === 'sector' && sectorMeta ? `All Facilities in ${sectorMeta.label}` : `${categoryMeta?.label} Directory`}
+        </h2>
+        <p class="text-sm text-slate-400 mt-1">
+          Showing {places.length} verified listings with direct Google Maps routes, ratings, and phone contacts.
+        </p>
+      </div>
+
+      {type === 'sector' && sectorMeta && (
+        <a
+          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${sectorMeta.label} DHA Phase 6 Lahore`)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white rounded-lg text-sm font-medium border border-slate-700 transition-colors"
+        >
+          <span>📍</span>
+          <span>Open {sectorMeta.label} in Google Maps</span>
+        </a>
+      )}
+    </div>
+
+    {places.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {places.map((place) => (
+          <article class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between hover:border-amber-500/40 hover:shadow-xl hover:shadow-amber-500/5 transition-all group">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-3">
+                <span class="inline-block px-2.5 py-1 bg-slate-800 text-amber-400 text-xs font-semibold rounded-md border border-slate-700">
+                  {place.categoryLabel}
+                </span>
+                {place.rating && (
+                  <div class="flex items-center gap-1 text-xs font-bold bg-amber-500/10 text-amber-400 px-2.5 py-1 rounded-md border border-amber-500/20">
+                    <span>★</span>
+                    <span>{place.rating.toFixed(1)}</span>
+                    {place.reviewCount > 0 && <span class="text-slate-400 font-normal">({place.reviewCount})</span>}
+                  </div>
+                )}
+              </div>
+
+              <h3 class="text-xl font-bold text-white group-hover:text-amber-400 transition-colors mb-2">
+                <a href={`/places/${place.category}/${place.slug}/`}>
+                  {place.name}
+                </a>
+              </h3>
+
+              <p class="text-xs text-slate-400 mb-3 flex items-start gap-1.5">
+                <span class="text-slate-500">📍</span>
+                <span>{place.address}</span>
+              </p>
+
+              <p class="text-sm text-slate-300 mb-4 line-clamp-2 leading-relaxed">
+                {place.description}
+              </p>
+
+              {place.features && place.features.length > 0 && (
+                <div class="flex flex-wrap gap-1.5 mb-4">
+                  {place.features.slice(0, 3).map((f) => (
+                    <span class="text-[11px] bg-slate-800/80 text-slate-300 px-2 py-0.5 rounded border border-slate-700/50">
+                      ✓ {f}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between gap-2 mt-2">
+              <div class="text-xs text-emerald-400 font-medium truncate">
+                {place.status}
+              </div>
+              <div class="flex items-center gap-2">
+                <a
+                  href={place.googleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium rounded-lg transition-colors inline-flex items-center gap-1 border border-slate-700"
+                  title="Open in Google Maps"
+                >
+                  <span>Map</span>
+                  <span>↗</span>
+                </a>
+                <a
+                  href={`/places/${place.category}/${place.slug}/`}
+                  class="px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold rounded-lg transition-colors"
+                >
+                  Details
+                </a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class="text-center py-16 bg-slate-900 rounded-2xl border border-slate-800">
+        <div class="text-4xl mb-3">📍</div>
+        <h3 class="text-lg font-bold text-white">No places currently listed</h3>
+        <p class="text-slate-400 text-sm mt-1 max-w-md mx-auto">
+          We are constantly surveying DHA Phase 6. Browse other sectors or submit a verified listing.
+        </p>
+      </div>
+    )}
+
+    <!-- Properties Cross-Link Section (Task 7) -->
+    {relevantProperties.length > 0 && (
+      <div class="mt-16 bg-slate-900/50 border border-slate-800 rounded-2xl p-8">
+        <div class="flex items-center justify-between gap-4 flex-wrap mb-6">
+          <div>
+            <h3 class="text-xl font-bold text-white">
+              {type === 'sector' && sectorMeta
+                ? `Properties Near Facilities in ${sectorMeta.label}`
+                : 'Featured DHA Phase 6 Property Snapshots'}
+            </h3>
+            <p class="text-sm text-slate-400 mt-0.5">
+              Compare current asking prices and residential opportunities in this sector.
+            </p>
+          </div>
+          <a
+            href="/properties/"
+            class="text-sm font-semibold text-amber-400 hover:text-amber-300 flex items-center gap-1"
+          >
+            <span>View all Phase 6 properties</span>
+            <span>→</span>
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {relevantProperties.map((prop) => (
+            <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 hover:border-slate-700 transition-colors">
+              <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">{prop.propertyType}</span>
+              <h4 class="font-bold text-white text-base mt-1 line-clamp-1">
+                <a href={`/properties/${prop.slug}/`} class="hover:text-amber-400 transition-colors">
+                  {prop.title}
+                </a>
+              </h4>
+              <div class="text-xs text-slate-400 mt-1">{prop.location?.address || prop.block}</div>
+              <div class="mt-3 pt-3 border-t border-slate-800 flex items-center justify-between">
+                <span class="font-extrabold text-white text-sm">
+                  PKR {(prop.price / 10000000).toFixed(2)} Cr
+                </span>
+                <a
+                  href={`/properties/${prop.slug}/`}
+                  class="text-xs font-semibold text-amber-400 hover:text-amber-300"
+                >
+                  View Plot Snapshot →
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+  </section>
+</PageLayout>

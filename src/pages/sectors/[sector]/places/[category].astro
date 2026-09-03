@@ -11,6 +11,10 @@ const SECTORS = [
   { key: 'sector-j', label: 'Sector J' }, { key: 'sector-k', label: 'Sector K' },
   { key: 'sector-l', label: 'Sector L' }, { key: 'sector-m', label: 'Sector M' },
   { key: 'sector-n', label: 'Sector N' },
+  { key: 'cca', label: 'CCA Commercial Area' },
+  { key: 'main-boulevard-commercial', label: 'Main Boulevard Commercial' },
+  { key: 'raya-commercial', label: 'Raya Commercial' },
+  { key: 'defence-raya', label: 'Defence Raya' },
 ];
 
 interface ImportedPlace {
@@ -31,6 +35,10 @@ export function getStaticPaths() {
     { key: 'sector-j', label: 'Sector J' }, { key: 'sector-k', label: 'Sector K' },
     { key: 'sector-l', label: 'Sector L' }, { key: 'sector-m', label: 'Sector M' },
     { key: 'sector-n', label: 'Sector N' },
+    { key: 'cca', label: 'CCA Commercial Area' },
+    { key: 'main-boulevard-commercial', label: 'Main Boulevard Commercial' },
+    { key: 'raya-commercial', label: 'Raya Commercial' },
+    { key: 'defence-raya', label: 'Defence Raya' },
   ];
   return sectors.flatMap((sector) => PLACE_CATEGORIES.map((category) => ({
     params: { sector: sector.key, category: category.key },

@@ -1,0 +1,615 @@
+---
+/**
+ * DHA Phase 6 Lahore — Places Level 3 Handler
+ * Handles:
+ * 1. Sector + Category Directory: /places/[sector]/[category]/ (e.g. /places/sector-a/restaurants/)
+ * 2. Place Detail Page: /places/[category]/[slug]/ (e.g. /places/schools/beaconhouse-school-system-dha-phase-6-campus/)
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import {
+  SECTORS_DIRECTORY,
+  PLACE_CATEGORIES,
+  getAllPlaces,
+  getSectorPlaces,
+  getSectorCategoryPlaces,
+  type PlaceRecord,
+  type SectorMeta,
+} from '@data/places/index';
+import type { PlaceCategoryMeta } from '@data/places';
+import propertiesRaw from '@data/properties-import.json';
+import { SITE } from '@data/site';
+
+export function getStaticPaths() {
+  // 1. Sector + Category combinations (17 sectors * 41 categories = 697 routes)
+  const sectorCategoryPaths = SECTORS_DIRECTORY.flatMap((sector) =>
+    PLACE_CATEGORIES.map((category) => ({
+      params: { first: sector.key, second: category.key },
+      props: {
+        type: 'sector-category' as const,
+        sectorMeta: sector,
+        categoryMeta: category,
+        places: getSectorCategoryPlaces(sector.key, category.key),
+        place: null,
+      },
+    }))
+  );
+
+  // 2. Individual Place Detail Pages (109+ routes)
+  const allPlaces = getAllPlaces();
+  const placeDetailPaths = allPlaces.map((place) => ({
+    params: { first: place.category, second: place.slug },
+    props: {
+      type: 'place-detail' as const,
+      sectorMeta: SECTORS_DIRECTORY.find((s) => s.key === place.sector) || null,
+      categoryMeta: PLACE_CATEGORIES.find((c) => c.key === place.category) || null,
+      places: [],
+      place: place,
+    },
+  }));
+
+  return [...sectorCategoryPaths, ...placeDetailPaths];
+}
+
+interface Props {
+  type: 'sector-category' | 'place-detail';
+  sectorMeta: SectorMeta | null;
+  categoryMeta: PlaceCategoryMeta | null;
+  places: PlaceRecord[];
+  place: PlaceRecord | null;
+}
+
+const { type, sectorMeta, categoryMeta, places, place } = Astro.props;
+
+// Helper variables depending on type
+const isDetail = type === 'place-detail' && place !== null;
+
+// Page Title (matching Task 6 specific example: "Restaurants in DHA Phase 6 Lahore Sector A")
+const pageTitle = isDetail
+  ? `${place.name} | ${place.categoryLabel} in ${place.sectorLabel}, DHA Phase 6 Lahore`
+  : `${categoryMeta?.label || 'Places'} in DHA Phase 6 Lahore ${sectorMeta?.label || ''}`;
+
+const metaDesc = isDetail
+  ? `${place.name} located at ${place.address}. Verified rating: ${place.rating ? `${place.rating}★ (${place.reviewCount} reviews)` : 'Verified'}. Contact, operating status, and direct Google Maps directions.`
+  : `Find verified ${categoryMeta?.label || 'places'} in ${sectorMeta?.label || 'DHA Phase 6'}, Lahore. Check addresses, Google ratings, reviews, contact details, and nearby property snapshots.`;
+
+const canonical = isDetail
+  ? `${SITE.url}/places/${place.category}/${place.slug}/`
+  : `${SITE.url}/places/${sectorMeta?.key}/${categoryMeta?.key}/`;
+
+// Matching nearby properties
+const targetSectorLabel = isDetail ? place.sectorLabel : sectorMeta?.label || 'DHA Phase 6';
+const nearbyProperties = propertiesRaw
+  .filter((prop) => {
+    return (
+      prop.block?.toLowerCase().includes(targetSectorLabel.toLowerCase()) ||
+      prop.location?.address?.toLowerCase().includes(targetSectorLabel.toLowerCase())
+    );
+  })
+  .slice(0, 3);
+
+// Related places in same sector
+const siblingPlaces = isDetail
+  ? getSectorPlaces(place.sector).filter((p) => p.id !== place.id).slice(0, 3)
+  : [];
+
+// Structured Data
+const structuredData = isDetail
+  ? {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'LocalBusiness',
+          '@id': canonical,
+          name: place.name,
+          description: place.description,
+          url: canonical,
+          ...(place.phone ? { telephone: place.phone } : {}),
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: place.address,
+            addressLocality: 'Lahore',
+            addressRegion: 'Punjab',
+            postalCode: '54792',
+            addressCountry: 'PK',
+          },
+          geo: {
+            '@type': 'GeoCoordinates',
+            latitude: place.lat,
+            longitude: place.lng,
+          },
+          ...(place.rating
+            ? {
+                aggregateRating: {
+                  '@type': 'AggregateRating',
+                  ratingValue: place.rating,
+                  reviewCount: place.reviewCount || 1,
+                },
+              }
+            : {}),
+        },
+        {
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url },
+            { '@type': 'ListItem', position: 2, name: 'Places', item: `${SITE.url}/places/` },
+            { '@type': 'ListItem', position: 3, name: place.categoryLabel, item: `${SITE.url}/places/${place.category}/` },
+            { '@type': 'ListItem', position: 4, name: place.name, item: canonical },
+          ],
+        },
+      ],
+    }
+  : {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'CollectionPage',
+          '@id': canonical,
+          name: pageTitle,
+          description: metaDesc,
+          url: canonical,
+        },
+        {
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url },
+            { '@type': 'ListItem', position: 2, name: 'Places', item: `${SITE.url}/places/` },
+            { '@type': 'ListItem', position: 3, name: sectorMeta?.label || 'Sector', item: `${SITE.url}/places/${sectorMeta?.key}/` },
+            { '@type': 'ListItem', position: 4, name: categoryMeta?.label || 'Category', item: canonical },
+          ],
+        },
+        {
+          '@type': 'ItemList',
+          name: pageTitle,
+          numberOfItems: places.length,
+          itemListElement: places.map((p, idx) => ({
+            '@type': 'ListItem',
+            position: idx + 1,
+            item: {
+              '@type': 'LocalBusiness',
+              name: p.name,
+              address: {
+                '@type': 'PostalAddress',
+                streetAddress: p.address,
+                addressLocality: 'Lahore',
+                addressRegion: 'Punjab',
+                postalCode: '54792',
+                addressCountry: 'PK',
+              },
+              url: `${SITE.url}/places/${p.category}/${p.slug}/`,
+            },
+          })),
+        },
+      ],
+    };
+---
+
+<PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+
+  {isDetail ? (
+    /* ================================================================ */
+    /* SINGLE PLACE DETAIL PAGE                                         */
+    /* ================================================================ */
+    <div class="bg-[#0a0a1a] text-white">
+      <!-- Breadcrumbs & Hero -->
+      <section class="border-b border-slate-800 bg-gradient-to-b from-slate-900/80 to-[#0a0a1a] py-10 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto">
+          <nav class="flex items-center gap-2 text-xs text-slate-400 mb-6 flex-wrap">
+            <a href="/" class="hover:text-amber-400">Home</a>
+            <span>/</span>
+            <a href="/places/" class="hover:text-amber-400">Places</a>
+            <span>/</span>
+            <a href={`/places/${place.sector}/`} class="hover:text-amber-400">{place.sectorLabel}</a>
+            <span>/</span>
+            <a href={`/places/${place.category}/`} class="hover:text-amber-400">{place.categoryLabel}</a>
+            <span>/</span>
+            <span class="text-amber-400 font-medium">{place.name}</span>
+          </nav>
+
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div>
+              <div class="flex items-center gap-2.5 mb-3 flex-wrap">
+                <a
+                  href={`/places/${place.sector}/`}
+                  class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold rounded-md border border-slate-700"
+                >
+                  📍 {place.sectorLabel}
+                </a>
+                <a
+                  href={`/places/${place.category}/`}
+                  class="px-2.5 py-1 bg-amber-500/10 text-amber-400 text-xs font-semibold rounded-md border border-amber-500/20"
+                >
+                  {place.categoryLabel}
+                </a>
+                <span class="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 text-xs font-medium rounded-md border border-emerald-500/20">
+                  {place.status}
+                </span>
+              </div>
+
+              <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight mb-2">
+                {place.name}
+              </h1>
+              <p class="text-slate-400 text-sm flex items-center gap-1.5">
+                <span>📍</span>
+                <span>{place.address}</span>
+              </p>
+            </div>
+
+            <!-- Google Rating & Action Buttons -->
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+              {place.rating && (
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 text-center">
+                  <div class="flex items-center justify-center gap-1 text-amber-400 font-extrabold text-xl">
+                    <span>★</span>
+                    <span>{place.rating.toFixed(1)}</span>
+                  </div>
+                  <div class="text-[11px] text-slate-400">{place.reviewCount} Google Reviews</div>
+                </div>
+              )}
+              <a
+                href={place.googleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="px-5 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg shadow-amber-500/10 transition-colors"
+              >
+                <span>Google Maps Directions</span>
+                <span>↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main Detail Content -->
+      <div class="max-w-5xl mx-auto py-12 px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Left 2 Cols: Details & Overview -->
+        <div class="lg:col-span-2 space-y-8">
+          <!-- Overview Card -->
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8">
+            <h2 class="text-xl font-bold text-white mb-4">About {place.name}</h2>
+            <p class="text-slate-300 text-base leading-relaxed mb-6">
+              {place.description}
+            </p>
+
+            {place.features && place.features.length > 0 && (
+              <div>
+                <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">Key Highlights & Amenities</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {place.features.map((f) => (
+                    <div class="flex items-center gap-2 text-sm text-slate-200 bg-slate-800/60 px-3 py-2 rounded-lg border border-slate-700/50">
+                      <span class="text-emerald-400 font-bold">✓</span>
+                      <span>{f}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <!-- Location & Coordinates Card (Task 7) -->
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8">
+            <h2 class="text-xl font-bold text-white mb-4">Location & Navigation Details</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm mb-6">
+              <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                <div class="text-xs text-slate-400">Sector & Area</div>
+                <div class="font-bold text-white text-base mt-1">{place.sectorLabel}, DHA Phase 6 Lahore</div>
+              </div>
+              <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                <div class="text-xs text-slate-400">Exact GPS Coordinates</div>
+                <div class="font-mono text-amber-400 text-sm mt-1">{place.lat.toFixed(4)}° N, {place.lng.toFixed(4)}° E</div>
+              </div>
+            </div>
+
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 flex items-center justify-between gap-4 flex-wrap">
+              <div>
+                <div class="text-xs text-slate-400">Address for Taxi & Courier Navigation:</div>
+                <div class="text-sm font-medium text-slate-200 mt-0.5">{place.address}</div>
+              </div>
+              <a
+                href={place.googleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-amber-400 text-xs font-bold rounded-lg border border-slate-700 transition-colors"
+              >
+                Open in Maps App
+              </a>
+            </div>
+          </div>
+
+          <!-- Properties Near This Place (Task 7) -->
+          {nearbyProperties.length > 0 && (
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8">
+              <div class="flex items-center justify-between gap-4 flex-wrap mb-4">
+                <div>
+                  <h2 class="text-xl font-bold text-white">Properties Near {place.name}</h2>
+                  <p class="text-xs text-slate-400 mt-0.5">
+                    Live market asking-price snapshots in {place.sectorLabel} DHA Phase 6.
+                  </p>
+                </div>
+                <a href="/properties/" class="text-xs font-bold text-amber-400 hover:text-amber-300">
+                  All Properties →
+                </a>
+              </div>
+
+              <div class="space-y-3">
+                {nearbyProperties.map((prop) => (
+                  <div class="bg-slate-950 p-4 rounded-xl border border-slate-800/80 flex items-center justify-between gap-4 flex-wrap hover:border-slate-700 transition-colors">
+                    <div>
+                      <span class="text-[10px] font-bold text-amber-400 uppercase tracking-wider">{prop.propertyType}</span>
+                      <h4 class="font-bold text-white text-sm">
+                        <a href={`/properties/${prop.slug}/`} class="hover:text-amber-400 transition-colors">
+                          {prop.title}
+                        </a>
+                      </h4>
+                      <p class="text-xs text-slate-400 mt-0.5">{prop.location?.address || prop.block}</p>
+                    </div>
+                    <div class="text-right">
+                      <div class="font-extrabold text-white text-sm">PKR {(prop.price / 10000000).toFixed(2)} Cr</div>
+                      <a href={`/properties/${prop.slug}/`} class="text-xs text-amber-400 hover:underline">
+                        View Details →
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <!-- Right 1 Col: Quick Facts & Sibling Facilities -->
+        <div class="space-y-6">
+          <!-- Facility Summary Card -->
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+            <h3 class="text-base font-bold text-white mb-4 border-b border-slate-800 pb-3">Facility Information</h3>
+            <ul class="space-y-3 text-sm">
+              <li class="flex justify-between items-center text-slate-300">
+                <span class="text-slate-400">Category:</span>
+                <a href={`/places/${place.category}/`} class="text-amber-400 font-medium hover:underline">
+                  {place.categoryLabel}
+                </a>
+              </li>
+              <li class="flex justify-between items-center text-slate-300">
+                <span class="text-slate-400">Sector:</span>
+                <a href={`/places/${place.sector}/`} class="text-amber-400 font-medium hover:underline">
+                  {place.sectorLabel}
+                </a>
+              </li>
+              <li class="flex justify-between items-center text-slate-300">
+                <span class="text-slate-400">Timings:</span>
+                <span class="text-emerald-400 font-medium">{place.status}</span>
+              </li>
+              {place.phone && (
+                <li class="flex justify-between items-center text-slate-300">
+                  <span class="text-slate-400">Contact:</span>
+                  <a href={`tel:${place.phone}`} class="text-white font-medium hover:text-amber-400">
+                    {place.phone}
+                  </a>
+                </li>
+              )}
+              <li class="flex justify-between items-center text-slate-300">
+                <span class="text-slate-400">City / Phase:</span>
+                <span class="text-white">DHA Phase 6, Lahore</span>
+              </li>
+              <li class="flex justify-between items-center text-slate-300">
+                <span class="text-slate-400">Postal Code:</span>
+                <span class="text-white">54792</span>
+              </li>
+            </ul>
+
+            <div class="mt-6 pt-4 border-t border-slate-800">
+              <a
+                href={place.googleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-lg border border-slate-700 flex items-center justify-center gap-1.5 transition-colors"
+              >
+                <span>Navigate via Google Maps</span>
+                <span>↗</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Other Facilities in same sector -->
+          {siblingPlaces.length > 0 && (
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+              <h3 class="text-base font-bold text-white mb-3">Other Places in {place.sectorLabel}</h3>
+              <div class="space-y-2.5">
+                {siblingPlaces.map((s) => (
+                  <a
+                    href={`/places/${s.category}/${s.slug}/`}
+                    class="block p-3 bg-slate-950/80 hover:bg-slate-800 rounded-xl border border-slate-800 transition-colors group"
+                  >
+                    <div class="text-xs text-amber-400 font-semibold">{s.categoryLabel}</div>
+                    <div class="font-bold text-white text-sm group-hover:text-amber-400 transition-colors mt-0.5">
+                      {s.name}
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  ) : (
+    /* ================================================================ */
+    /* SECTOR + CATEGORY DIRECTORY PAGE                                 */
+    /* (e.g. /places/sector-a/restaurants/)                             */
+    /* ================================================================ */
+    <div class="bg-[#0a0a1a] text-white">
+      <!-- Hero -->
+      <section class="border-b border-slate-800 bg-gradient-to-b from-slate-900 via-[#0f172a] to-[#0a0a1a] py-14 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+          <!-- Breadcrumbs -->
+          <nav class="flex items-center gap-2 text-xs sm:text-sm text-slate-400 mb-6 flex-wrap">
+            <a href="/" class="hover:text-amber-400 transition-colors">Home</a>
+            <span>/</span>
+            <a href="/places/" class="hover:text-amber-400 transition-colors">Places</a>
+            <span>/</span>
+            <a href={`/places/${sectorMeta?.key}/`} class="hover:text-amber-400 transition-colors">
+              {sectorMeta?.label}
+            </a>
+            <span>/</span>
+            <span class="text-amber-400 font-medium">{categoryMeta?.label}</span>
+          </nav>
+
+          <div class="max-w-3xl">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="px-3 py-1 bg-amber-500/10 text-amber-400 text-xs font-semibold rounded-full border border-amber-500/20">
+                {sectorMeta?.label} Directory
+              </span>
+              <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-semibold rounded-full border border-slate-700">
+                {categoryMeta?.label}
+              </span>
+            </div>
+
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight mb-4">
+              {categoryMeta?.label} in <span class="text-amber-400">{sectorMeta?.label}</span>, DHA Phase 6 Lahore
+            </h1>
+
+            <p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-6">
+              Verified guide to {categoryMeta?.label?.toLowerCase()} in {sectorMeta?.label}, DHA Phase 6 Lahore.
+              Check exact locations, Google star ratings, direct directions, and properties nearby.
+            </p>
+
+            <div class="flex items-center gap-3 text-xs text-slate-300 flex-wrap">
+              <span class="bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800">
+                <strong class="text-amber-400">{places.length}</strong> {categoryMeta?.label} Found
+              </span>
+              <span class="bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800">
+                📍 {sectorMeta?.label} Central Anchor: {sectorMeta?.lat.toFixed(4)}° N, {sectorMeta?.lng.toFixed(4)}° E
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Grid Content -->
+      <section class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        {places.length > 0 ? (
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {places.map((p) => (
+              <article class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between hover:border-amber-500/40 hover:shadow-xl hover:shadow-amber-500/5 transition-all group">
+                <div>
+                  <div class="flex items-center justify-between gap-2 mb-3">
+                    <span class="text-xs font-bold text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded border border-amber-500/20">
+                      {p.categoryLabel}
+                    </span>
+                    {p.rating && (
+                      <div class="flex items-center gap-1 text-xs font-bold text-amber-400 bg-slate-800 px-2 py-1 rounded">
+                        <span>★</span>
+                        <span>{p.rating.toFixed(1)}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  <h3 class="text-xl font-bold text-white group-hover:text-amber-400 transition-colors mb-2">
+                    <a href={`/places/${p.category}/${p.slug}/`}>
+                      {p.name}
+                    </a>
+                  </h3>
+
+                  <p class="text-xs text-slate-400 mb-3 flex items-start gap-1">
+                    <span class="text-slate-500">📍</span>
+                    <span>{p.address}</span>
+                  </p>
+
+                  <p class="text-sm text-slate-300 mb-4 line-clamp-2">
+                    {p.description}
+                  </p>
+
+                  <div class="text-[11px] font-mono text-slate-500 mb-3">
+                    GPS: {p.lat.toFixed(4)}° N, {p.lng.toFixed(4)}° E
+                  </div>
+                </div>
+
+                <div class="pt-4 border-t border-slate-800 flex items-center justify-between gap-2">
+                  <span class="text-xs text-emerald-400 font-medium truncate">{p.status}</span>
+                  <div class="flex items-center gap-2">
+                    <a
+                      href={p.googleMapsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs rounded-lg border border-slate-700"
+                    >
+                      Map ↗
+                    </a>
+                    <a
+                      href={`/places/${p.category}/${p.slug}/`}
+                      class="px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-lg"
+                    >
+                      Details
+                    </a>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center max-w-2xl mx-auto">
+            <div class="text-4xl mb-3">📍</div>
+            <h2 class="text-xl font-bold text-white mb-2">
+              No {categoryMeta?.label} Currently Listed in {sectorMeta?.label}
+            </h2>
+            <p class="text-slate-400 text-sm mb-6">
+              {categoryMeta?.label} may be located in adjacent commercial hubs like CCA 1 & CCA 2 or Main Boulevard.
+            </p>
+            <div class="flex items-center justify-center gap-3 flex-wrap">
+              <a
+                href={`/places/${categoryMeta?.key}/`}
+                class="px-4 py-2 bg-amber-500 text-slate-950 font-bold text-xs rounded-lg"
+              >
+                View {categoryMeta?.label} across Phase 6
+              </a>
+              <a
+                href={`/places/${sectorMeta?.key}/`}
+                class="px-4 py-2 bg-slate-800 text-slate-200 font-medium text-xs rounded-lg border border-slate-700"
+              >
+                All Places in {sectorMeta?.label}
+              </a>
+            </div>
+          </div>
+        )}
+
+        <!-- Properties Near This Category Section (Task 7) -->
+        {nearbyProperties.length > 0 && (
+          <div class="mt-16 bg-slate-900/50 border border-slate-800 rounded-2xl p-8">
+            <div class="flex items-center justify-between gap-4 flex-wrap mb-6">
+              <div>
+                <h3 class="text-xl font-bold text-white">
+                  Properties Near {categoryMeta?.label} in {sectorMeta?.label}
+                </h3>
+                <p class="text-xs text-slate-400 mt-0.5">
+                  Available residential and commercial property listings in {sectorMeta?.label}.
+                </p>
+              </div>
+              <a href="/properties/" class="text-xs font-bold text-amber-400 hover:text-amber-300">
+                Explore all Phase 6 plots →
+              </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {nearbyProperties.map((prop) => (
+                <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 hover:border-slate-700 transition-colors">
+                  <span class="text-[10px] font-bold text-amber-400 uppercase tracking-wider">{prop.propertyType}</span>
+                  <h4 class="font-bold text-white text-sm line-clamp-1 mt-1">
+                    <a href={`/properties/${prop.slug}/`} class="hover:text-amber-400 transition-colors">
+                      {prop.title}
+                    </a>
+                  </h4>
+                  <div class="text-xs text-slate-400 mt-1">{prop.location?.address || prop.block}</div>
+                  <div class="mt-3 pt-3 border-t border-slate-800 flex items-center justify-between">
+                    <span class="font-extrabold text-white text-sm">PKR {(prop.price / 10000000).toFixed(2)} Cr</span>
+                    <a href={`/properties/${prop.slug}/`} class="text-xs text-amber-400 hover:underline">
+                      View Plot →
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </section>
+    </div>
+  )}
+</PageLayout>
