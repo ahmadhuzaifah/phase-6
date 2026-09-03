@@ -6,6 +6,7 @@
  * 2. Place Detail Page: /places/[category]/[slug]/ (e.g. /places/schools/beaconhouse-school-system-dha-phase-6-campus/)
  */
 import PageLayout from '@layouts/PageLayout.astro';
+import PlaceImage from '@components/places/PlaceImage.astro';
 import {
   SECTORS_DIRECTORY,
   PLACE_CATEGORIES,
@@ -14,6 +15,7 @@ import {
   getSectorCategoryPlaces,
   getCategorySectors,
   getPopulatedSectorCategoryPairs,
+  getPlaceImage,
   type PlaceRecord,
   type SectorMeta,
 } from '@data/places/index';
@@ -102,42 +104,6 @@ const relatedCategories = sectorMeta
     )
   : [];
 
-// Image fallback helper
-const categorySvgFallback: Record<string, string> = {
-  mosque: '/images/amenities/mosques.svg',
-  park: '/images/amenities/parks.svg',
-  bakery: '/images/amenities/commercial.svg',
-  banks: '/images/amenities/banks.svg',
-  'beauty-salons': '/images/amenities/services.svg',
-  'fast-food': '/images/amenities/restaurants.svg',
-  gym: '/images/amenities/sports.svg',
-  pharmacy: '/images/amenities/healthcare.svg',
-  'guest-house': '/images/amenities/services.svg',
-  'flower-shop': '/images/amenities/commercial.svg',
-  schools: '/images/amenities/education.svg',
-  cafes: '/images/amenities/restaurants.svg',
-  restaurants: '/images/amenities/restaurants.svg',
-  laundry: '/images/amenities/services.svg',
-  club: '/images/amenities/sports.svg',
-  idc: '/images/amenities/healthcare.svg',
-  supermarkets: '/images/amenities/supermarkets.svg',
-  'police-station': '/images/amenities/services.svg',
-  hospital: '/images/amenities/healthcare.svg',
-  'post-office': '/images/amenities/services.svg',
-  colleges: '/images/amenities/education.svg',
-  'internet-providers': '/images/amenities/services.svg',
-  hostels: '/images/amenities/services.svg',
-  'courier-services': '/images/amenities/services.svg',
-  hotel: '/images/amenities/services.svg',
-  clinic: '/images/amenities/healthcare.svg',
-  shopping: '/images/amenities/commercial.svg',
-  services: '/images/amenities/services.svg',
-};
-
-const getPlaceImg = (p: PlaceRecord) => {
-  if (p.image && !p.image.includes('placeholder')) return p.image;
-  return categorySvgFallback[p.category] || '/images/amenities/commercial.svg';
-};
 
 const structuredData = isDetail
   ? {
@@ -149,6 +115,7 @@ const structuredData = isDetail
           name: place.name,
           description: place.description,
           url: canonical,
+          image: getPlaceImage(place).src,
           address: {
             '@type': 'PostalAddress',
             streetAddress: place.address,
@@ -233,14 +200,7 @@ const structuredData = isDetail
           <div class="detail-two-col">
             <div class="detail-main-info">
               <div class="detail-photo-box">
-                <img
-                  src={getPlaceImg(place)}
-                  alt={`${place.name} in ${place.sectorLabel}, DHA Phase 6 Lahore`}
-                  width="800"
-                  height="460"
-                  onerror="this.onerror=null;this.src='/images/amenities/commercial.svg';"
-                />
-                <span>Google Maps photo</span>
+                <PlaceImage place={place} width={800} height={460} priority={true} />
               </div>
 
               <div class="detail-card">
@@ -441,16 +401,7 @@ const structuredData = isDetail
                   data-reviews={p.reviewCount}
                 >
                   <a class="business-photo" href={`/places/${p.category}/${p.slug}/`}>
-                    <img
-                      src={getPlaceImg(p)}
-                      alt={`${p.name} in ${sectorMeta?.label}, DHA Phase 6 Lahore`}
-                      width="720"
-                      height="440"
-                      loading="lazy"
-                      referrerpolicy="no-referrer"
-                      onerror="this.onerror=null;this.src='/images/amenities/commercial.svg';"
-                    />
-                    <span>Google Maps photo</span>
+                    <PlaceImage place={p} />
                   </a>
 
                   <div class="business-body">

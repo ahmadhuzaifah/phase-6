@@ -1,0 +1,85 @@
+---
+import { getPlaceImage, type PlaceRecord } from '@data/places/index';
+
+interface Props {
+  place: {
+    name: string;
+    sectorLabel?: string;
+    category?: string;
+    image?: string | null;
+    images?: string[];
+  } | PlaceRecord;
+  alt?: string;
+  class?: string;
+  width?: number;
+  height?: number;
+  priority?: boolean;
+  showBadge?: boolean;
+}
+
+const {
+  place,
+  alt,
+  class: className = '',
+  width = 720,
+  height = 440,
+  priority = false,
+  showBadge = true,
+} = Astro.props;
+
+const { src, isOriginal, placeholder } = getPlaceImage(place);
+const altText = alt || `${place.name} in ${place.sectorLabel || 'DHA Phase 6'}, Lahore`;
+---
+
+<div class={`place-image-wrapper ${className}`}>
+  <img
+    src={src}
+    alt={altText}
+    width={width}
+    height={height}
+    loading={priority ? 'eager' : 'lazy'}
+    decoding={priority ? 'sync' : 'async'}
+    referrerpolicy="no-referrer"
+    onerror={`this.onerror=null;this.src='${placeholder}';const b=this.parentElement?.querySelector('.photo-badge');if(b)b.textContent='Phase 6 Guide';`}
+  />
+  {showBadge && (
+    <span class="photo-badge">
+      {isOriginal ? 'Google Maps photo' : 'Phase 6 Guide'}
+    </span>
+  )}
+</div>
+
+<style>
+  .place-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #121226;
+  }
+  .place-image-wrapper img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+  }
+  :global(.business-card:hover) .place-image-wrapper img {
+    transform: scale(1.03);
+  }
+  .photo-badge {
+    position: absolute;
+    right: 0.55rem;
+    bottom: 0.55rem;
+    padding: 0.24rem 0.45rem;
+    border-radius: 4px;
+    background: rgba(8, 8, 24, 0.82);
+    backdrop-filter: blur(4px);
+    color: #fff;
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    pointer-events: none;
+    z-index: 2;
+  }
+</style>

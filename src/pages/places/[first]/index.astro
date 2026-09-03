@@ -6,6 +6,7 @@
  * - /places/[category]/ (e.g. /places/restaurants/, /places/schools/)
  */
 import PageLayout from '@layouts/PageLayout.astro';
+import PlaceImage from '@components/places/PlaceImage.astro';
 import {
   SECTORS_DIRECTORY,
   PLACE_CATEGORIES,
@@ -14,6 +15,7 @@ import {
   getPopulatedCategories,
   getSectorCategoryPlaces,
   getCategorySectors,
+  getPlaceImage,
   type PlaceRecord,
   type SectorMeta,
 } from '@data/places/index';
@@ -152,6 +154,7 @@ const structuredData = {
             },
           } : {}),
           ...(place.phone ? { telephone: place.phone } : {}),
+          image: getPlaceImage(place).src,
           url: `${SITE.url}/places/${place.category}/${place.slug}/`,
         },
       })),
@@ -172,43 +175,6 @@ const relatedCategories =
   type === 'sector' && sectorMeta
     ? PLACE_CATEGORIES.filter((c) => getSectorCategoryPlaces(sectorMeta.key, c.key).length > 0)
     : getPopulatedCategories().filter((c) => c.key !== categoryMeta?.key);
-
-// Image fallback helper
-const categorySvgFallback: Record<string, string> = {
-  mosque: '/images/amenities/mosques.svg',
-  park: '/images/amenities/parks.svg',
-  bakery: '/images/amenities/commercial.svg',
-  banks: '/images/amenities/banks.svg',
-  'beauty-salons': '/images/amenities/services.svg',
-  'fast-food': '/images/amenities/restaurants.svg',
-  gym: '/images/amenities/sports.svg',
-  pharmacy: '/images/amenities/healthcare.svg',
-  'guest-house': '/images/amenities/services.svg',
-  'flower-shop': '/images/amenities/commercial.svg',
-  schools: '/images/amenities/education.svg',
-  cafes: '/images/amenities/restaurants.svg',
-  restaurants: '/images/amenities/restaurants.svg',
-  laundry: '/images/amenities/services.svg',
-  club: '/images/amenities/sports.svg',
-  idc: '/images/amenities/healthcare.svg',
-  supermarkets: '/images/amenities/supermarkets.svg',
-  'police-station': '/images/amenities/services.svg',
-  hospital: '/images/amenities/healthcare.svg',
-  'post-office': '/images/amenities/services.svg',
-  colleges: '/images/amenities/education.svg',
-  'internet-providers': '/images/amenities/services.svg',
-  hostels: '/images/amenities/services.svg',
-  'courier-services': '/images/amenities/services.svg',
-  hotel: '/images/amenities/services.svg',
-  clinic: '/images/amenities/healthcare.svg',
-  shopping: '/images/amenities/commercial.svg',
-  services: '/images/amenities/services.svg',
-};
-
-const getPlaceImg = (p: PlaceRecord) => {
-  if (p.image && !p.image.includes('placeholder')) return p.image;
-  return categorySvgFallback[p.category] || '/images/amenities/commercial.svg';
-};
 ---
 
 <PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
@@ -285,16 +251,7 @@ const getPlaceImg = (p: PlaceRecord) => {
               data-reviews={place.reviewCount}
             >
               <a class="business-photo" href={`/places/${place.category}/${place.slug}/`}>
-                <img
-                  src={getPlaceImg(place)}
-                  alt={`${place.name} in ${place.sectorLabel}, DHA Phase 6 Lahore`}
-                  width="720"
-                  height="440"
-                  loading="lazy"
-                  referrerpolicy="no-referrer"
-                  onerror="this.onerror=null;this.src='/images/amenities/commercial.svg';"
-                />
-                <span>Google Maps photo</span>
+                <PlaceImage place={place} />
               </a>
 
               <div class="business-body">

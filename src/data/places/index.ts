@@ -190,3 +190,78 @@ export function getCategorySectors(categoryKey: string): {
 
 export { PLACE_CATEGORIES };
 
+export const CATEGORY_PLACEHOLDER_MAP: Record<string, string> = {
+  mosque: '/images/amenities/mosques.svg',
+  park: '/images/amenities/parks.svg',
+  bakery: '/images/amenities/bakery.svg',
+  banks: '/images/amenities/banks.svg',
+  'beauty-salons': '/images/amenities/beauty-salons.svg',
+  'fast-food': '/images/amenities/fast-food.svg',
+  gym: '/images/amenities/gym.svg',
+  pharmacy: '/images/amenities/pharmacy.svg',
+  'guest-house': '/images/amenities/guest-house.svg',
+  'flower-shop': '/images/amenities/flower-shop.svg',
+  schools: '/images/amenities/schools.svg',
+  cafes: '/images/amenities/cafes.svg',
+  restaurants: '/images/amenities/restaurants.svg',
+  laundry: '/images/amenities/laundry.svg',
+  club: '/images/amenities/club.svg',
+  idc: '/images/amenities/idc.svg',
+  supermarkets: '/images/amenities/supermarkets.svg',
+  'police-station': '/images/amenities/police-station.svg',
+  hospital: '/images/amenities/hospital.svg',
+  'post-office': '/images/amenities/post-office.svg',
+  colleges: '/images/amenities/colleges.svg',
+  'internet-providers': '/images/amenities/internet-providers.svg',
+  hostels: '/images/amenities/hostels.svg',
+  'courier-services': '/images/amenities/courier-services.svg',
+  hotel: '/images/amenities/hotel.svg',
+  clinic: '/images/amenities/clinic.svg',
+  shopping: '/images/amenities/shopping.svg',
+  services: '/images/amenities/services.svg',
+};
+
+export function getCategoryPlaceholder(category?: string | null): string {
+  if (!category) return '/images/amenities/commercial.svg';
+  return CATEGORY_PLACEHOLDER_MAP[category] || '/images/amenities/commercial.svg';
+}
+
+/**
+ * Image priority resolution:
+ * Priority 1: place.images[0] if exists, valid http URL, and not a placeholder
+ * Priority 2: place.image if exists, valid http URL, and not a placeholder
+ * Priority 3: Category placeholder SVG
+ */
+export function getPlaceImage(place: {
+  image?: string | null;
+  images?: string[];
+  category?: string;
+}): { src: string; isOriginal: boolean; placeholder: string } {
+  const placeholder = getCategoryPlaceholder(place?.category);
+
+  // Priority 1: place.images[0] if exists and valid
+  if (place.images && Array.isArray(place.images) && place.images.length > 0) {
+    const firstValid = place.images.find(
+      (img) => typeof img === 'string' && img.startsWith('http') && !img.includes('placeholder')
+    );
+    if (firstValid) {
+      return { src: firstValid, isOriginal: true, placeholder };
+    }
+  }
+
+  // Priority 2: place.image if exists and is a real image (starts with http or genuine local path)
+  if (
+    place.image &&
+    typeof place.image === 'string' &&
+    place.image.trim() !== '' &&
+    !place.image.includes('/images/amenities/') &&
+    !place.image.includes('placeholder') &&
+    !place.image.endsWith('.svg')
+  ) {
+    return { src: place.image, isOriginal: true, placeholder };
+  }
+
+  // Priority 3: Category placeholder
+  return { src: placeholder, isOriginal: false, placeholder };
+}
+

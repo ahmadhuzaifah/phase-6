@@ -5,10 +5,11 @@ import {
   getSectorCategoryPlaces,
   getCategorySectors,
   getPopulatedSectorCategoryPairs,
-  type PlaceRecord,
+  getPlaceImage,
   type SectorMeta,
 } from '@data/places/index';
 import type { PlaceCategoryMeta } from '@data/places';
+import PlaceImage from '@components/places/PlaceImage.astro';
 import { SITE } from '@data/site';
 
 export function getStaticPaths() {
@@ -42,42 +43,6 @@ const relatedCategories = PLACE_CATEGORIES.filter(
 
 const publishedDate = places[0]?.retrievedAt || '2026-09-03';
 const formattedDate = new Intl.DateTimeFormat('en-PK', { dateStyle: 'long' }).format(new Date(`${publishedDate}T12:00:00`));
-
-const categorySvgFallback: Record<string, string> = {
-  mosque: '/images/amenities/mosques.svg',
-  park: '/images/amenities/parks.svg',
-  bakery: '/images/amenities/commercial.svg',
-  banks: '/images/amenities/banks.svg',
-  'beauty-salons': '/images/amenities/services.svg',
-  'fast-food': '/images/amenities/restaurants.svg',
-  gym: '/images/amenities/sports.svg',
-  pharmacy: '/images/amenities/healthcare.svg',
-  'guest-house': '/images/amenities/services.svg',
-  'flower-shop': '/images/amenities/commercial.svg',
-  schools: '/images/amenities/education.svg',
-  cafes: '/images/amenities/restaurants.svg',
-  restaurants: '/images/amenities/restaurants.svg',
-  laundry: '/images/amenities/services.svg',
-  club: '/images/amenities/sports.svg',
-  idc: '/images/amenities/healthcare.svg',
-  supermarkets: '/images/amenities/supermarkets.svg',
-  'police-station': '/images/amenities/services.svg',
-  hospital: '/images/amenities/healthcare.svg',
-  'post-office': '/images/amenities/services.svg',
-  colleges: '/images/amenities/education.svg',
-  'internet-providers': '/images/amenities/services.svg',
-  hostels: '/images/amenities/services.svg',
-  'courier-services': '/images/amenities/services.svg',
-  hotel: '/images/amenities/services.svg',
-  clinic: '/images/amenities/healthcare.svg',
-  shopping: '/images/amenities/commercial.svg',
-  services: '/images/amenities/services.svg',
-};
-
-const getPlaceImg = (p: PlaceRecord) => {
-  if (p.image && !p.image.includes('placeholder')) return p.image;
-  return categorySvgFallback[p.category] || '/images/amenities/commercial.svg';
-};
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -115,7 +80,7 @@ const structuredData = {
           '@id': `${SITE.url}/places/${place.category}/${place.slug}/`,
           name: place.name,
           url: `${SITE.url}/places/${place.category}/${place.slug}/`,
-          image: getPlaceImg(place),
+          image: getPlaceImage(place).src,
           ...(place.phone ? { telephone: place.phone } : {}),
           address: {
             '@type': 'PostalAddress',
@@ -178,16 +143,7 @@ const structuredData = {
           <div class="business-grid" id="business-grid">{places.map((place) => (
             <article class="business-card" data-name={place.name.toLowerCase()} data-address={place.address.toLowerCase()} data-rating={place.rating || 0} data-reviews={place.reviewCount}>
               <a class="business-photo" href={`/places/${place.category}/${place.slug}/`}>
-                <img
-                  src={getPlaceImg(place)}
-                  alt={`${place.name} in ${sectorMeta.label}, DHA Phase 6 Lahore`}
-                  width="720"
-                  height="440"
-                  loading="lazy"
-                  referrerpolicy="no-referrer"
-                  onerror="this.onerror=null;this.src='/images/amenities/commercial.svg';"
-                />
-                <span>Google Maps photo</span>
+                <PlaceImage place={place} />
               </a>
               <div class="business-body">
                 <div class="business-tags">
