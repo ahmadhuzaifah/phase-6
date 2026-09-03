@@ -147,69 +147,65 @@ const structuredData = {
   <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
 
   <!-- Hero Header -->
-  <section class="relative bg-gradient-to-b from-[#0a0a1a] via-[#0f172a] to-[#0a0a1a] text-white py-14 px-4 sm:px-6 lg:px-8 border-b border-slate-800">
-    <div class="max-w-7xl mx-auto">
+  <header class="place-directory-hero">
+    <div class="container">
       <!-- Breadcrumbs -->
-      <nav class="flex items-center gap-2 text-xs sm:text-sm text-slate-400 mb-6 flex-wrap">
-        <a href="/" class="hover:text-amber-400 transition-colors">Home</a>
-        <span>/</span>
-        <a href="/places/" class="hover:text-amber-400 transition-colors">Places</a>
-        <span>/</span>
-        <span class="text-amber-400 font-medium">
+      <nav class="directory-breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="sep">/</span>
+        <a href="/places/">Places</a>
+        <span class="sep">/</span>
+        <span class="current">
           {type === 'sector' ? sectorMeta?.label : categoryMeta?.label}
         </span>
       </nav>
 
-      <div class="max-w-3xl">
-        <span class="inline-block px-3 py-1 bg-amber-500/10 text-amber-400 text-xs font-semibold tracking-wider uppercase rounded-full mb-3 border border-amber-500/20">
+      <div class="hero-content">
+        <span class="hero-kicker">
           {type === 'sector' ? 'Sector Directory' : 'Category Guide'}
         </span>
-        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white mb-4">
+        <h1 class="hero-title">
           {type === 'sector' && sectorMeta ? (
-            <>Facilities & Places in <span class="text-amber-400">{sectorMeta.label}</span></>
+            <>Facilities &amp; Places in <span class="gold-gradient">{sectorMeta.label}</span></>
           ) : (
-            <><span class="text-amber-400">{categoryMeta?.label}</span> in DHA Phase 6 Lahore</>
+            <><span class="gold-gradient">{categoryMeta?.label}</span> in DHA Phase 6 Lahore</>
           )}
         </h1>
-        <p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-6">
+        <p class="hero-subtitle">
           {type === 'sector' && sectorMeta ? sectorMeta.description : categoryMeta?.introText}
         </p>
 
         <!-- Stats Counter -->
-        <div class="flex items-center gap-4 flex-wrap text-sm text-slate-300 bg-slate-900/60 p-4 rounded-xl border border-slate-800 inline-flex">
-          <div>
-            <span class="font-bold text-amber-400 text-lg">{places.length}</span>
-            <span class="text-slate-400 ml-1">Verified Places</span>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-num">{places.length}</span>
+            <span class="stat-label">Verified Places</span>
           </div>
-          <span class="text-slate-700">|</span>
-          <div>
-            <span class="font-bold text-amber-400 text-lg">
-              {type === 'sector' ? '17 Sectors' : `${new Set(places.map(p => p.sector)).size || 1} Sectors Active`}
+          <span class="stat-divider">|</span>
+          <div class="stat-item">
+            <span class="stat-num">
+              {type === 'sector' ? '17 Sectors' : `${new Set(places.map((p) => p.sector)).size || 1} Sectors Active`}
             </span>
           </div>
-          <span class="text-slate-700">|</span>
-          <div class="text-emerald-400 font-medium">✓ 100% Phase 6 Verified</div>
+          <span class="stat-divider">|</span>
+          <div class="stat-badge">✓ 100% Phase 6 Verified</div>
         </div>
       </div>
     </div>
-  </section>
+  </header>
 
-  <!-- Navigation Filters -->
-  <section class="bg-slate-900/90 py-4 px-4 sm:px-6 lg:px-8 border-b border-slate-800 sticky top-0 z-20 backdrop-blur-md">
-    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4 flex-wrap">
-      <div class="text-xs text-slate-400 font-semibold uppercase tracking-wider">
+  <!-- Sticky Navigation Filters -->
+  <section class="filter-bar-sticky">
+    <div class="container filter-inner">
+      <span class="filter-label">
         {type === 'sector' ? 'Quick Sector Switcher:' : 'Browse Other Categories:'}
-      </div>
-      <div class="flex items-center gap-2 overflow-x-auto pb-1 max-w-full text-xs">
+      </span>
+      <div class="filter-scroll">
         {type === 'sector' ? (
           SECTORS_DIRECTORY.map((s) => (
             <a
               href={`/places/${s.key}/`}
-              class={`px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors ${
-                s.key === sectorMeta?.key
-                  ? 'bg-amber-500 text-slate-950 font-bold'
-                  : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white'
-              }`}
+              class={`filter-pill ${s.key === sectorMeta?.key ? 'active' : ''}`}
             >
               {s.label}
             </a>
@@ -218,11 +214,7 @@ const structuredData = {
           getPopulatedCategories().map((c) => (
             <a
               href={`/places/${c.key}/`}
-              class={`px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors ${
-                c.key === categoryMeta?.key
-                  ? 'bg-amber-500 text-slate-950 font-bold'
-                  : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white'
-              }`}
+              class={`filter-pill ${c.key === categoryMeta?.key ? 'active' : ''}`}
             >
               {c.label}
             </a>
@@ -232,158 +224,732 @@ const structuredData = {
     </div>
   </section>
 
-  <!-- Places Directory Grid -->
-  <section class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-    <div class="mb-8 flex items-center justify-between flex-wrap gap-4">
-      <div>
-        <h2 class="text-2xl font-bold text-white tracking-tight">
-          {type === 'sector' && sectorMeta ? `All Facilities in ${sectorMeta.label}` : `${categoryMeta?.label} Directory`}
-        </h2>
-        <p class="text-sm text-slate-400 mt-1">
-          Showing {places.length} verified listings with direct Google Maps routes, ratings, and phone contacts.
-        </p>
+  <!-- Places Directory Grid Section -->
+  <section class="places-main-section">
+    <div class="container">
+      <div class="section-top-bar">
+        <div>
+          <h2 class="section-heading">
+            {type === 'sector' && sectorMeta ? `All Facilities in ${sectorMeta.label}` : `${categoryMeta?.label} Directory`}
+          </h2>
+          <p class="section-subtext">
+            Showing {places.length} verified listings with direct Google Maps routes, ratings, and phone contacts.
+          </p>
+        </div>
+
+        {type === 'sector' && sectorMeta && (
+          <a
+            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${sectorMeta.label} DHA Phase 6 Lahore`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="maps-cta-btn"
+          >
+            <span>📍</span>
+            <span>Open {sectorMeta.label} in Google Maps</span>
+          </a>
+        )}
       </div>
 
-      {type === 'sector' && sectorMeta && (
-        <a
-          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${sectorMeta.label} DHA Phase 6 Lahore`)}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white rounded-lg text-sm font-medium border border-slate-700 transition-colors"
-        >
-          <span>📍</span>
-          <span>Open {sectorMeta.label} in Google Maps</span>
-        </a>
-      )}
-    </div>
+      {places.length > 0 ? (
+        <div class="places-cards-grid">
+          {places.map((place) => (
+            <article class="place-card">
+              <div class="card-content">
+                <div class="card-meta-top">
+                  <span class="category-tag">
+                    {place.categoryLabel}
+                  </span>
+                  {place.rating && (
+                    <div class="rating-badge">
+                      <span class="star">★</span>
+                      <span class="score">{place.rating.toFixed(1)}</span>
+                      {place.reviewCount > 0 && <span class="reviews">({place.reviewCount})</span>}
+                    </div>
+                  )}
+                </div>
 
-    {places.length > 0 ? (
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {places.map((place) => (
-          <article class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between hover:border-amber-500/40 hover:shadow-xl hover:shadow-amber-500/5 transition-all group">
-            <div>
-              <div class="flex items-start justify-between gap-3 mb-3">
-                <span class="inline-block px-2.5 py-1 bg-slate-800 text-amber-400 text-xs font-semibold rounded-md border border-slate-700">
-                  {place.categoryLabel}
-                </span>
-                {place.rating && (
-                  <div class="flex items-center gap-1 text-xs font-bold bg-amber-500/10 text-amber-400 px-2.5 py-1 rounded-md border border-amber-500/20">
-                    <span>★</span>
-                    <span>{place.rating.toFixed(1)}</span>
-                    {place.reviewCount > 0 && <span class="text-slate-400 font-normal">({place.reviewCount})</span>}
+                <h3 class="place-name">
+                  <a href={`/places/${place.category}/${place.slug}/`}>
+                    {place.name}
+                  </a>
+                </h3>
+
+                <p class="place-address">
+                  <span class="addr-icon">📍</span>
+                  <span>{place.address}</span>
+                </p>
+
+                <p class="place-desc">
+                  {place.description}
+                </p>
+
+                {place.features && place.features.length > 0 && (
+                  <div class="features-list">
+                    {place.features.slice(0, 3).map((f) => (
+                      <span class="feature-chip">
+                        ✓ {f}
+                      </span>
+                    ))}
                   </div>
                 )}
               </div>
 
-              <h3 class="text-xl font-bold text-white group-hover:text-amber-400 transition-colors mb-2">
-                <a href={`/places/${place.category}/${place.slug}/`}>
-                  {place.name}
-                </a>
-              </h3>
-
-              <p class="text-xs text-slate-400 mb-3 flex items-start gap-1.5">
-                <span class="text-slate-500">📍</span>
-                <span>{place.address}</span>
-              </p>
-
-              <p class="text-sm text-slate-300 mb-4 line-clamp-2 leading-relaxed">
-                {place.description}
-              </p>
-
-              {place.features && place.features.length > 0 && (
-                <div class="flex flex-wrap gap-1.5 mb-4">
-                  {place.features.slice(0, 3).map((f) => (
-                    <span class="text-[11px] bg-slate-800/80 text-slate-300 px-2 py-0.5 rounded border border-slate-700/50">
-                      ✓ {f}
-                    </span>
-                  ))}
+              <div class="card-footer">
+                <div class="status-indicator">
+                  {place.status}
                 </div>
-              )}
-            </div>
-
-            <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between gap-2 mt-2">
-              <div class="text-xs text-emerald-400 font-medium truncate">
-                {place.status}
+                <div class="card-actions">
+                  <a
+                    href={place.googleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-action-map"
+                    title="Open in Google Maps"
+                  >
+                    <span>Map</span>
+                    <span>↗</span>
+                  </a>
+                  <a
+                    href={`/places/${place.category}/${place.slug}/`}
+                    class="btn-action-details"
+                  >
+                    Details
+                  </a>
+                </div>
               </div>
-              <div class="flex items-center gap-2">
-                <a
-                  href={place.googleMapsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium rounded-lg transition-colors inline-flex items-center gap-1 border border-slate-700"
-                  title="Open in Google Maps"
-                >
-                  <span>Map</span>
-                  <span>↗</span>
-                </a>
-                <a
-                  href={`/places/${place.category}/${place.slug}/`}
-                  class="px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold rounded-lg transition-colors"
-                >
-                  Details
-                </a>
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
-    ) : (
-      <div class="text-center py-16 bg-slate-900 rounded-2xl border border-slate-800">
-        <div class="text-4xl mb-3">📍</div>
-        <p class="text-slate-300 text-base font-medium max-w-md mx-auto">
-          Currently no verified listings available for this category. New locations will be added after verification.
-        </p>
-      </div>
-    )}
-
-    <!-- Properties Cross-Link Section (Task 7) -->
-    {relevantProperties.length > 0 && (
-      <div class="mt-16 bg-slate-900/50 border border-slate-800 rounded-2xl p-8">
-        <div class="flex items-center justify-between gap-4 flex-wrap mb-6">
-          <div>
-            <h3 class="text-xl font-bold text-white">
-              {type === 'sector' && sectorMeta
-                ? `Properties Near Facilities in ${sectorMeta.label}`
-                : 'Featured DHA Phase 6 Property Snapshots'}
-            </h3>
-            <p class="text-sm text-slate-400 mt-0.5">
-              Compare current asking prices and residential opportunities in this sector.
-            </p>
-          </div>
-          <a
-            href="/properties/"
-            class="text-sm font-semibold text-amber-400 hover:text-amber-300 flex items-center gap-1"
-          >
-            <span>View all Phase 6 properties</span>
-            <span>→</span>
-          </a>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {relevantProperties.map((prop) => (
-            <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 hover:border-slate-700 transition-colors">
-              <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">{prop.propertyType}</span>
-              <h4 class="font-bold text-white text-base mt-1 line-clamp-1">
-                <a href={`/properties/${prop.slug}/`} class="hover:text-amber-400 transition-colors">
-                  {prop.title}
-                </a>
-              </h4>
-              <div class="text-xs text-slate-400 mt-1">{prop.location?.address || prop.block}</div>
-              <div class="mt-3 pt-3 border-t border-slate-800 flex items-center justify-between">
-                <span class="font-extrabold text-white text-sm">
-                  PKR {(prop.price / 10000000).toFixed(2)} Cr
-                </span>
-                <a
-                  href={`/properties/${prop.slug}/`}
-                  class="text-xs font-semibold text-amber-400 hover:text-amber-300"
-                >
-                  View Plot Snapshot →
-                </a>
-              </div>
-            </div>
+            </article>
           ))}
         </div>
-      </div>
-    )}
+      ) : (
+        <div class="empty-state-box">
+          <div class="empty-icon">📍</div>
+          <p class="empty-text">
+            Currently no verified listings available for this category. New locations will be added after verification.
+          </p>
+        </div>
+      )}
+
+      <!-- Properties Cross-Link Section -->
+      {relevantProperties.length > 0 && (
+        <div class="properties-cross-section">
+          <div class="cross-section-header">
+            <div>
+              <h3 class="cross-title">
+                {type === 'sector' && sectorMeta
+                  ? `Properties Near Facilities in ${sectorMeta.label}`
+                  : 'Featured DHA Phase 6 Property Snapshots'}
+              </h3>
+              <p class="cross-desc">
+                Compare current asking prices and residential opportunities in this sector.
+              </p>
+            </div>
+            <a
+              href="/properties/"
+              class="cross-link-all"
+            >
+              <span>View all Phase 6 properties</span>
+              <span>→</span>
+            </a>
+          </div>
+
+          <div class="properties-mini-grid">
+            {relevantProperties.map((prop) => (
+              <div class="property-mini-card">
+                <span class="prop-type-badge">{prop.propertyType}</span>
+                <h4 class="prop-title">
+                  <a href={`/properties/${prop.slug}/`}>
+                    {prop.title}
+                  </a>
+                </h4>
+                <div class="prop-location">{prop.location?.address || prop.block}</div>
+                <div class="prop-bottom">
+                  <span class="prop-price">
+                    PKR {(prop.price / 10000000).toFixed(2)} Cr
+                  </span>
+                  <a
+                    href={`/properties/${prop.slug}/`}
+                    class="prop-link"
+                  >
+                    View Snapshot →
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
   </section>
 </PageLayout>
+
+<style is:global>
+  /* ══════════════════════════════════════════════════════════════════════════
+   * SECTOR & CATEGORY PLACES DIRECTORY STYLES (Vanilla CSS Design System)
+   * ══════════════════════════════════════════════════════════════════════════ */
+  .place-directory-hero {
+    position: relative;
+    padding: 56px 0 44px;
+    background: linear-gradient(180deg, #0a0a1a 0%, #111128 60%, #0a0a1a 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .directory-breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: #9a9ab5;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .directory-breadcrumbs a {
+    color: #9a9ab5;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .directory-breadcrumbs a:hover {
+    color: #f0c95c;
+  }
+  .directory-breadcrumbs .sep {
+    color: #6a6a85;
+  }
+  .directory-breadcrumbs .current {
+    color: #d4a844;
+    font-weight: 600;
+  }
+
+  .hero-content {
+    max-width: 800px;
+  }
+
+  .hero-kicker {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(212, 168, 68, 0.1);
+    color: #d4a844;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 50px;
+    border: 1px solid rgba(212, 168, 68, 0.25);
+    margin-bottom: 14px;
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+
+  .gold-gradient {
+    background: linear-gradient(135deg, #d4a844, #f0c95c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+    color: #c4c4dc;
+    line-height: 1.65;
+    margin-bottom: 24px;
+  }
+
+  .hero-stats {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    background: rgba(22, 22, 53, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px 20px;
+    border-radius: 12px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .stat-item {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .stat-num {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #f0c95c;
+  }
+  .stat-label {
+    font-size: 0.84rem;
+    color: #9a9ab5;
+  }
+  .stat-divider {
+    color: rgba(255, 255, 255, 0.2);
+  }
+  .stat-badge {
+    color: #2ecc71;
+    font-size: 0.84rem;
+    font-weight: 600;
+  }
+
+  /* STICKY FILTER BAR */
+  .filter-bar-sticky {
+    position: sticky;
+    top: 72px;
+    z-index: 40;
+    background: rgba(10, 10, 26, 0.92);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 12px 0;
+  }
+  .filter-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .filter-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #9a9ab5;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+  .filter-scroll {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    max-width: 100%;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(212, 168, 68, 0.3) transparent;
+  }
+  .filter-scroll::-webkit-scrollbar {
+    height: 4px;
+  }
+  .filter-scroll::-webkit-scrollbar-thumb {
+    background: rgba(212, 168, 68, 0.3);
+    border-radius: 4px;
+  }
+  .filter-pill {
+    padding: 6px 14px;
+    border-radius: 8px;
+    white-space: nowrap;
+    font-size: 0.78rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.04);
+    color: #9a9ab5;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+  .filter-pill:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    border-color: rgba(212, 168, 68, 0.3);
+  }
+  .filter-pill.active {
+    background: linear-gradient(135deg, #d4a844, #f0c95c);
+    color: #0a0a1a;
+    font-weight: 800;
+    border-color: transparent;
+    box-shadow: 0 4px 14px rgba(212, 168, 68, 0.3);
+  }
+
+  /* MAIN DIRECTORY GRID */
+  .places-main-section {
+    padding: 48px 0 80px;
+    background: #0a0a1a;
+  }
+  .section-top-bar {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 36px;
+  }
+  .section-heading {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+  }
+  .section-subtext {
+    font-size: 0.92rem;
+    color: #9a9ab5;
+    margin: 0;
+  }
+  .maps-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #f0f0f5;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+  .maps-cta-btn:hover {
+    background: rgba(212, 168, 68, 0.12);
+    border-color: rgba(212, 168, 68, 0.4);
+    color: #f0c95c;
+    transform: translateY(-2px);
+  }
+
+  /* PLACE CARDS GRID */
+  .places-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+    margin-bottom: 56px;
+  }
+  .place-card {
+    background: #161635;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.35s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .place-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(135deg, #d4a844, #f0c95c);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s ease;
+  }
+  .place-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(212, 168, 68, 0.45);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4), 0 0 20px rgba(212, 168, 68, 0.08);
+  }
+  .place-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .card-meta-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .category-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #f0c95c;
+    font-size: 0.72rem;
+    font-weight: 700;
+    border-radius: 6px;
+    border: 1px solid rgba(212, 168, 68, 0.25);
+  }
+  .rating-badge {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    background: rgba(212, 168, 68, 0.12);
+    border: 1px solid rgba(212, 168, 68, 0.3);
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #f0c95c;
+  }
+  .rating-badge .star {
+    color: #f0c95c;
+  }
+  .rating-badge .reviews {
+    color: #9a9ab5;
+    font-weight: 400;
+    font-size: 0.72rem;
+  }
+
+  .place-name {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .place-name a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .place-name a:hover {
+    color: #f0c95c;
+  }
+
+  .place-address {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: #9a9ab5;
+    margin-bottom: 12px;
+    line-height: 1.45;
+  }
+  .addr-icon {
+    flex-shrink: 0;
+  }
+
+  .place-desc {
+    font-size: 0.88rem;
+    color: #c4c4dc;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .features-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 18px;
+  }
+  .feature-chip {
+    padding: 3px 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    font-size: 0.7rem;
+    color: #9a9ab5;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .status-indicator {
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: #2ecc71;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .card-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .btn-action-map {
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #f0f0f5;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.25s ease;
+  }
+  .btn-action-map:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+  }
+  .btn-action-details {
+    padding: 6px 14px;
+    background: linear-gradient(135deg, #d4a844, #f0c95c);
+    color: #0a0a1a;
+    font-size: 0.78rem;
+    font-weight: 800;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+  .btn-action-details:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  /* EMPTY STATE */
+  .empty-state-box {
+    text-align: center;
+    padding: 64px 24px;
+    background: #161635;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    margin-bottom: 56px;
+  }
+  .empty-icon {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+  }
+  .empty-text {
+    font-size: 1rem;
+    color: #c4c4dc;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* PROPERTIES CROSS-SECTION */
+  .properties-cross-section {
+    background: rgba(22, 22, 53, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 32px;
+  }
+  .cross-section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .cross-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 4px;
+  }
+  .cross-desc {
+    font-size: 0.85rem;
+    color: #9a9ab5;
+    margin: 0;
+  }
+  .cross-link-all {
+    color: #d4a844;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s ease;
+  }
+  .cross-link-all:hover {
+    color: #f0c95c;
+  }
+
+  .properties-mini-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .property-mini-card {
+    background: #111128;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+  }
+  .property-mini-card:hover {
+    border-color: rgba(212, 168, 68, 0.35);
+    transform: translateY(-2px);
+  }
+  .prop-type-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    background: rgba(212, 168, 68, 0.1);
+    color: #d4a844;
+    border-radius: 4px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    width: fit-content;
+    margin-bottom: 8px;
+  }
+  .prop-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.35;
+    margin-bottom: 4px;
+  }
+  .prop-title a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .prop-title a:hover {
+    color: #f0c95c;
+  }
+  .prop-location {
+    font-size: 0.78rem;
+    color: #9a9ab5;
+    margin-bottom: 14px;
+  }
+  .prop-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .prop-price {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #ffffff;
+  }
+  .prop-link {
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: #d4a844;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .prop-link:hover {
+    color: #f0c95c;
+  }
+
+  @media (max-width: 768px) {
+    .place-directory-hero {
+      padding: 36px 0 28px;
+    }
+    .hero-title {
+      font-size: 2rem;
+    }
+    .places-cards-grid {
+      grid-template-columns: 1fr;
+    }
+    .properties-mini-grid {
+      grid-template-columns: 1fr;
+    }
+    .properties-cross-section {
+      padding: 20px;
+    }
+    .filter-bar-sticky {
+      top: 60px;
+    }
+  }
+</style>

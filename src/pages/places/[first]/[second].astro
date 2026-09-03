@@ -189,67 +189,61 @@ const structuredData = isDetail
     /* ================================================================ */
     /* SINGLE PLACE DETAIL PAGE                                         */
     /* ================================================================ */
-    <div class="bg-[#0a0a1a] text-white">
+    <div class="place-detail-wrapper">
       <!-- Breadcrumbs & Hero -->
-      <section class="border-b border-slate-800 bg-gradient-to-b from-slate-900/80 to-[#0a0a1a] py-10 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-5xl mx-auto">
-          <nav class="flex items-center gap-2 text-xs text-slate-400 mb-6 flex-wrap">
-            <a href="/" class="hover:text-amber-400">Home</a>
-            <span>/</span>
-            <a href="/places/" class="hover:text-amber-400">Places</a>
-            <span>/</span>
-            <a href={`/places/${place.sector}/`} class="hover:text-amber-400">{place.sectorLabel}</a>
-            <span>/</span>
-            <a href={`/places/${place.category}/`} class="hover:text-amber-400">{place.categoryLabel}</a>
-            <span>/</span>
-            <span class="text-amber-400 font-medium">{place.name}</span>
+      <section class="place-detail-hero">
+        <div class="container">
+          <nav class="detail-breadcrumbs" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span class="sep">/</span>
+            <a href="/places/">Places</a>
+            <span class="sep">/</span>
+            <a href={`/places/${place.sector}/`}>{place.sectorLabel}</a>
+            <span class="sep">/</span>
+            <a href={`/places/${place.category}/`}>{place.categoryLabel}</a>
+            <span class="sep">/</span>
+            <span class="current">{place.name}</span>
           </nav>
 
-          <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div>
-              <div class="flex items-center gap-2.5 mb-3 flex-wrap">
-                <a
-                  href={`/places/${place.sector}/`}
-                  class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold rounded-md border border-slate-700"
-                >
+          <div class="detail-hero-inner">
+            <div class="detail-hero-left">
+              <div class="detail-badges-row">
+                <a href={`/places/${place.sector}/`} class="badge-sector">
                   📍 {place.sectorLabel}
                 </a>
-                <a
-                  href={`/places/${place.category}/`}
-                  class="px-2.5 py-1 bg-amber-500/10 text-amber-400 text-xs font-semibold rounded-md border border-amber-500/20"
-                >
+                <a href={`/places/${place.category}/`} class="badge-category">
                   {place.categoryLabel}
                 </a>
-                <span class="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 text-xs font-medium rounded-md border border-emerald-500/20">
+                <span class="badge-status">
                   {place.status}
                 </span>
               </div>
 
-              <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight mb-2">
+              <h1 class="detail-place-title">
                 {place.name}
               </h1>
-              <p class="text-slate-400 text-sm flex items-center gap-1.5">
-                <span>📍</span>
+              <p class="detail-place-address">
+                <span class="addr-icon">📍</span>
                 <span>{place.address}</span>
               </p>
             </div>
 
-            <!-- Google Rating & Action Buttons -->
-            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <!-- Rating & Action Buttons -->
+            <div class="detail-hero-right">
               {place.rating && (
-                <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 text-center">
-                  <div class="flex items-center justify-center gap-1 text-amber-400 font-extrabold text-xl">
-                    <span>★</span>
+                <div class="detail-rating-card">
+                  <div class="rating-score">
+                    <span class="star">★</span>
                     <span>{place.rating.toFixed(1)}</span>
                   </div>
-                  <div class="text-[11px] text-slate-400">{place.reviewCount} Google Reviews</div>
+                  <div class="rating-count">{place.reviewCount} Google Reviews</div>
                 </div>
               )}
               <a
                 href={place.googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="px-5 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg shadow-amber-500/10 transition-colors"
+                class="btn-maps-directions"
               >
                 <span>Google Maps Directions</span>
                 <span>↗</span>
@@ -260,23 +254,23 @@ const structuredData = isDetail
       </section>
 
       <!-- Main Detail Content -->
-      <div class="max-w-5xl mx-auto py-12 px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Left 2 Cols: Details & Overview -->
-        <div class="lg:col-span-2 space-y-8">
+      <div class="container detail-content-grid">
+        <!-- Left Column: Details & Overview -->
+        <div class="detail-main-col">
           <!-- Overview Card -->
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8">
-            <h2 class="text-xl font-bold text-white mb-4">About {place.name}</h2>
-            <p class="text-slate-300 text-base leading-relaxed mb-6">
+          <div class="detail-card">
+            <h2 class="card-heading">About {place.name}</h2>
+            <p class="card-paragraph">
               {place.description}
             </p>
 
             {place.features && place.features.length > 0 && (
-              <div>
-                <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">Key Highlights & Amenities</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div class="amenities-block">
+                <h3 class="amenities-title">Key Highlights &amp; Amenities</h3>
+                <div class="amenities-grid">
                   {place.features.map((f) => (
-                    <div class="flex items-center gap-2 text-sm text-slate-200 bg-slate-800/60 px-3 py-2 rounded-lg border border-slate-700/50">
-                      <span class="text-emerald-400 font-bold">✓</span>
+                    <div class="amenity-chip">
+                      <span class="check-icon">✓</span>
                       <span>{f}</span>
                     </div>
                   ))}
@@ -285,66 +279,66 @@ const structuredData = isDetail
             )}
           </div>
 
-          <!-- Location & Coordinates Card (Task 7) -->
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8">
-            <h2 class="text-xl font-bold text-white mb-4">Location & Navigation Details</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm mb-6">
-              <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
-                <div class="text-xs text-slate-400">Sector & Area</div>
-                <div class="font-bold text-white text-base mt-1">{place.sectorLabel}, DHA Phase 6 Lahore</div>
+          <!-- Location & Coordinates Card -->
+          <div class="detail-card">
+            <h2 class="card-heading">Location &amp; Navigation Details</h2>
+            <div class="location-facts-grid">
+              <div class="loc-fact-box">
+                <div class="fact-label">Sector &amp; Area</div>
+                <div class="fact-val">{place.sectorLabel}, DHA Phase 6 Lahore</div>
               </div>
-              <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
-                <div class="text-xs text-slate-400">Exact GPS Coordinates</div>
-                <div class="font-mono text-amber-400 text-sm mt-1">{place.lat.toFixed(4)}° N, {place.lng.toFixed(4)}° E</div>
+              <div class="loc-fact-box">
+                <div class="fact-label">Exact GPS Coordinates</div>
+                <div class="fact-val font-mono">{place.lat.toFixed(4)}° N, {place.lng.toFixed(4)}° E</div>
               </div>
             </div>
 
-            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 flex items-center justify-between gap-4 flex-wrap">
+            <div class="taxi-nav-banner">
               <div>
-                <div class="text-xs text-slate-400">Address for Taxi & Courier Navigation:</div>
-                <div class="text-sm font-medium text-slate-200 mt-0.5">{place.address}</div>
+                <div class="banner-label">Address for Taxi &amp; Courier Navigation:</div>
+                <div class="banner-addr">{place.address}</div>
               </div>
               <a
                 href={place.googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-amber-400 text-xs font-bold rounded-lg border border-slate-700 transition-colors"
+                class="btn-open-app"
               >
                 Open in Maps App
               </a>
             </div>
           </div>
 
-          <!-- Properties Near This Place (Task 7) -->
+          <!-- Properties Near This Place -->
           {nearbyProperties.length > 0 && (
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8">
-              <div class="flex items-center justify-between gap-4 flex-wrap mb-4">
+            <div class="detail-card">
+              <div class="prop-card-header">
                 <div>
-                  <h2 class="text-xl font-bold text-white">Properties Near {place.name}</h2>
-                  <p class="text-xs text-slate-400 mt-0.5">
+                  <h2 class="card-heading">Properties Near {place.name}</h2>
+                  <p class="card-subtext">
                     Live market asking-price snapshots in {place.sectorLabel} DHA Phase 6.
                   </p>
                 </div>
-                <a href="/properties/" class="text-xs font-bold text-amber-400 hover:text-amber-300">
+                <a href="/properties/" class="link-all-props">
                   All Properties →
                 </a>
               </div>
 
-              <div class="space-y-3">
+              <div class="prop-snapshots-list">
                 {nearbyProperties.map((prop) => (
-                  <div class="bg-slate-950 p-4 rounded-xl border border-slate-800/80 flex items-center justify-between gap-4 flex-wrap hover:border-slate-700 transition-colors">
+                  <div class="prop-snapshot-item">
                     <div>
-                      <span class="text-[10px] font-bold text-amber-400 uppercase tracking-wider">{prop.propertyType}</span>
-                      <h4 class="font-bold text-white text-sm">
-                        <a href={`/properties/${prop.slug}/`} class="hover:text-amber-400 transition-colors">
+                      <span class="prop-type-tag">{prop.propertyType}</span>
+                      <h4 class="prop-item-title">
+                        <a href={`/properties/${prop.slug}/`}>
                           {prop.title}
                         </a>
                       </h4>
-                      <p class="text-xs text-slate-400 mt-0.5">{prop.location?.address || prop.block}</p>
+                      <p class="prop-item-loc">{prop.location?.address || prop.block}</p>
                     </div>
-                    <div class="text-right">
-                      <div class="font-extrabold text-white text-sm">PKR {(prop.price / 10000000).toFixed(2)} Cr</div>
-                      <a href={`/properties/${prop.slug}/`} class="text-xs text-amber-400 hover:underline">
+                    <div class="prop-item-right">
+                      <div class="prop-item-price">PKR {(prop.price / 10000000).toFixed(2)} Cr</div>
+                      <a href={`/properties/${prop.slug}/`} class="prop-item-btn">
                         View Details →
                       </a>
                     </div>
@@ -355,52 +349,52 @@ const structuredData = isDetail
           )}
         </div>
 
-        <!-- Right 1 Col: Quick Facts & Sibling Facilities -->
-        <div class="space-y-6">
+        <!-- Right Column: Sidebar Facts & Sibling Facilities -->
+        <aside class="detail-sidebar-col">
           <!-- Facility Summary Card -->
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
-            <h3 class="text-base font-bold text-white mb-4 border-b border-slate-800 pb-3">Facility Information</h3>
-            <ul class="space-y-3 text-sm">
-              <li class="flex justify-between items-center text-slate-300">
-                <span class="text-slate-400">Category:</span>
-                <a href={`/places/${place.category}/`} class="text-amber-400 font-medium hover:underline">
+          <div class="sidebar-card">
+            <h3 class="sidebar-heading">Facility Information</h3>
+            <ul class="facility-info-list">
+              <li>
+                <span class="info-label">Category:</span>
+                <a href={`/places/${place.category}/`} class="info-link">
                   {place.categoryLabel}
                 </a>
               </li>
-              <li class="flex justify-between items-center text-slate-300">
-                <span class="text-slate-400">Sector:</span>
-                <a href={`/places/${place.sector}/`} class="text-amber-400 font-medium hover:underline">
+              <li>
+                <span class="info-label">Sector:</span>
+                <a href={`/places/${place.sector}/`} class="info-link">
                   {place.sectorLabel}
                 </a>
               </li>
-              <li class="flex justify-between items-center text-slate-300">
-                <span class="text-slate-400">Timings:</span>
-                <span class="text-emerald-400 font-medium">{place.status}</span>
+              <li>
+                <span class="info-label">Timings:</span>
+                <span class="info-status">{place.status}</span>
               </li>
               {place.phone && (
-                <li class="flex justify-between items-center text-slate-300">
-                  <span class="text-slate-400">Contact:</span>
-                  <a href={`tel:${place.phone}`} class="text-white font-medium hover:text-amber-400">
+                <li>
+                  <span class="info-label">Contact:</span>
+                  <a href={`tel:${place.phone}`} class="info-phone">
                     {place.phone}
                   </a>
                 </li>
               )}
-              <li class="flex justify-between items-center text-slate-300">
-                <span class="text-slate-400">City / Phase:</span>
-                <span class="text-white">DHA Phase 6, Lahore</span>
+              <li>
+                <span class="info-label">City / Phase:</span>
+                <span class="info-val">DHA Phase 6, Lahore</span>
               </li>
-              <li class="flex justify-between items-center text-slate-300">
-                <span class="text-slate-400">Postal Code:</span>
-                <span class="text-white">54792</span>
+              <li>
+                <span class="info-label">Postal Code:</span>
+                <span class="info-val">54792</span>
               </li>
             </ul>
 
-            <div class="mt-6 pt-4 border-t border-slate-800">
+            <div class="sidebar-cta-wrap">
               <a
                 href={place.googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-lg border border-slate-700 flex items-center justify-center gap-1.5 transition-colors"
+                class="btn-sidebar-nav"
               >
                 <span>Navigate via Google Maps</span>
                 <span>↗</span>
@@ -410,24 +404,22 @@ const structuredData = isDetail
 
           <!-- Other Facilities in same sector -->
           {siblingPlaces.length > 0 && (
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
-              <h3 class="text-base font-bold text-white mb-3">Other Places in {place.sectorLabel}</h3>
-              <div class="space-y-2.5">
+            <div class="sidebar-card">
+              <h3 class="sidebar-heading">Other Places in {place.sectorLabel}</h3>
+              <div class="sibling-places-list">
                 {siblingPlaces.map((s) => (
                   <a
                     href={`/places/${s.category}/${s.slug}/`}
-                    class="block p-3 bg-slate-950/80 hover:bg-slate-800 rounded-xl border border-slate-800 transition-colors group"
+                    class="sibling-place-item"
                   >
-                    <div class="text-xs text-amber-400 font-semibold">{s.categoryLabel}</div>
-                    <div class="font-bold text-white text-sm group-hover:text-amber-400 transition-colors mt-0.5">
-                      {s.name}
-                    </div>
+                    <div class="sib-cat">{s.categoryLabel}</div>
+                    <div class="sib-name">{s.name}</div>
                   </a>
                 ))}
               </div>
             </div>
           )}
-        </div>
+        </aside>
       </div>
     </div>
   ) : (
@@ -435,177 +427,749 @@ const structuredData = isDetail
     /* SECTOR + CATEGORY DIRECTORY PAGE                                 */
     /* (e.g. /places/sector-a/restaurants/)                             */
     /* ================================================================ */
-    <div class="bg-[#0a0a1a] text-white">
+    <div class="sector-cat-wrapper">
       <!-- Hero -->
-      <section class="border-b border-slate-800 bg-gradient-to-b from-slate-900 via-[#0f172a] to-[#0a0a1a] py-14 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-7xl mx-auto">
-          <!-- Breadcrumbs -->
-          <nav class="flex items-center gap-2 text-xs sm:text-sm text-slate-400 mb-6 flex-wrap">
-            <a href="/" class="hover:text-amber-400 transition-colors">Home</a>
-            <span>/</span>
-            <a href="/places/" class="hover:text-amber-400 transition-colors">Places</a>
-            <span>/</span>
-            <a href={`/places/${sectorMeta?.key}/`} class="hover:text-amber-400 transition-colors">
+      <header class="place-directory-hero">
+        <div class="container">
+          <nav class="directory-breadcrumbs" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span class="sep">/</span>
+            <a href="/places/">Places</a>
+            <span class="sep">/</span>
+            <a href={`/places/${sectorMeta?.key}/`}>
               {sectorMeta?.label}
             </a>
-            <span>/</span>
-            <span class="text-amber-400 font-medium">{categoryMeta?.label}</span>
+            <span class="sep">/</span>
+            <span class="current">{categoryMeta?.label}</span>
           </nav>
 
-          <div class="max-w-3xl">
-            <div class="flex items-center gap-2 mb-3">
-              <span class="px-3 py-1 bg-amber-500/10 text-amber-400 text-xs font-semibold rounded-full border border-amber-500/20">
+          <div class="hero-content">
+            <div class="cat-badges-top">
+              <span class="hero-kicker">
                 {sectorMeta?.label} Directory
               </span>
-              <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-semibold rounded-full border border-slate-700">
+              <span class="hero-pill-category">
                 {categoryMeta?.label}
               </span>
             </div>
 
-            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight mb-4">
-              {categoryMeta?.label} in <span class="text-amber-400">{sectorMeta?.label}</span>, DHA Phase 6 Lahore
+            <h1 class="hero-title">
+              {categoryMeta?.label} in <span class="gold-gradient">{sectorMeta?.label}</span>, DHA Phase 6 Lahore
             </h1>
 
-            <p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-6">
+            <p class="hero-subtitle">
               Verified guide to {categoryMeta?.label?.toLowerCase()} in {sectorMeta?.label}, DHA Phase 6 Lahore.
               Check exact locations, Google star ratings, direct directions, and properties nearby.
             </p>
 
-            <div class="flex items-center gap-3 text-xs text-slate-300 flex-wrap">
-              <span class="bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800">
-                <strong class="text-amber-400">{places.length}</strong> {categoryMeta?.label} Found
+            <div class="cat-stats-row">
+              <span class="cat-stat-badge">
+                <strong class="gold-text">{places.length}</strong> {categoryMeta?.label} Found
               </span>
-              <span class="bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800">
-                📍 {sectorMeta?.label} Central Anchor: {sectorMeta?.lat.toFixed(4)}° N, {sectorMeta?.lng.toFixed(4)}° E
+              <span class="cat-stat-badge">
+                📍 {sectorMeta?.label} Anchor: {sectorMeta?.lat.toFixed(4)}° N, {sectorMeta?.lng.toFixed(4)}° E
               </span>
             </div>
           </div>
         </div>
-      </section>
+      </header>
 
       <!-- Grid Content -->
-      <section class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        {places.length > 0 ? (
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {places.map((p) => (
-              <article class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between hover:border-amber-500/40 hover:shadow-xl hover:shadow-amber-500/5 transition-all group">
-                <div>
-                  <div class="flex items-center justify-between gap-2 mb-3">
-                    <span class="text-xs font-bold text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded border border-amber-500/20">
-                      {p.categoryLabel}
-                    </span>
-                    {p.rating && (
-                      <div class="flex items-center gap-1 text-xs font-bold text-amber-400 bg-slate-800 px-2 py-1 rounded">
-                        <span>★</span>
-                        <span>{p.rating.toFixed(1)}</span>
-                      </div>
-                    )}
+      <section class="places-main-section">
+        <div class="container">
+          {places.length > 0 ? (
+            <div class="places-cards-grid">
+              {places.map((p) => (
+                <article class="place-card">
+                  <div class="card-content">
+                    <div class="card-meta-top">
+                      <span class="category-tag">
+                        {p.categoryLabel}
+                      </span>
+                      {p.rating && (
+                        <div class="rating-badge">
+                          <span class="star">★</span>
+                          <span class="score">{p.rating.toFixed(1)}</span>
+                          {p.reviewCount > 0 && <span class="reviews">({p.reviewCount})</span>}
+                        </div>
+                      )}
+                    </div>
+
+                    <h3 class="place-name">
+                      <a href={`/places/${p.category}/${p.slug}/`}>
+                        {p.name}
+                      </a>
+                    </h3>
+
+                    <p class="place-address">
+                      <span class="addr-icon">📍</span>
+                      <span>{p.address}</span>
+                    </p>
+
+                    <p class="place-desc">
+                      {p.description}
+                    </p>
+
+                    <div class="gps-text">
+                      GPS: {p.lat.toFixed(4)}° N, {p.lng.toFixed(4)}° E
+                    </div>
                   </div>
 
-                  <h3 class="text-xl font-bold text-white group-hover:text-amber-400 transition-colors mb-2">
-                    <a href={`/places/${p.category}/${p.slug}/`}>
-                      {p.name}
-                    </a>
-                  </h3>
-
-                  <p class="text-xs text-slate-400 mb-3 flex items-start gap-1">
-                    <span class="text-slate-500">📍</span>
-                    <span>{p.address}</span>
-                  </p>
-
-                  <p class="text-sm text-slate-300 mb-4 line-clamp-2">
-                    {p.description}
-                  </p>
-
-                  <div class="text-[11px] font-mono text-slate-500 mb-3">
-                    GPS: {p.lat.toFixed(4)}° N, {p.lng.toFixed(4)}° E
+                  <div class="card-footer">
+                    <span class="status-indicator">{p.status}</span>
+                    <div class="card-actions">
+                      <a
+                        href={p.googleMapsUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn-action-map"
+                      >
+                        Map ↗
+                      </a>
+                      <a
+                        href={`/places/${p.category}/${p.slug}/`}
+                        class="btn-action-details"
+                      >
+                        Details
+                      </a>
+                    </div>
                   </div>
-                </div>
-
-                <div class="pt-4 border-t border-slate-800 flex items-center justify-between gap-2">
-                  <span class="text-xs text-emerald-400 font-medium truncate">{p.status}</span>
-                  <div class="flex items-center gap-2">
-                    <a
-                      href={p.googleMapsUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs rounded-lg border border-slate-700"
-                    >
-                      Map ↗
-                    </a>
-                    <a
-                      href={`/places/${p.category}/${p.slug}/`}
-                      class="px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-lg"
-                    >
-                      Details
-                    </a>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        ) : (
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center max-w-2xl mx-auto">
-            <div class="text-4xl mb-3">📍</div>
-            <p class="text-slate-300 text-base font-medium mb-6">
-              Currently no verified listings available for this category. New locations will be added after verification.
-            </p>
-            <div class="flex items-center justify-center gap-3 flex-wrap">
-              <a
-                href={`/places/${categoryMeta?.key}/`}
-                class="px-4 py-2 bg-amber-500 text-slate-950 font-bold text-xs rounded-lg"
-              >
-                View {categoryMeta?.label} across Phase 6
-              </a>
-              <a
-                href={`/places/${sectorMeta?.key}/`}
-                class="px-4 py-2 bg-slate-800 text-slate-200 font-medium text-xs rounded-lg border border-slate-700"
-              >
-                All Places in {sectorMeta?.label}
-              </a>
-            </div>
-          </div>
-        )}
-
-        <!-- Properties Near This Category Section (Task 7) -->
-        {nearbyProperties.length > 0 && (
-          <div class="mt-16 bg-slate-900/50 border border-slate-800 rounded-2xl p-8">
-            <div class="flex items-center justify-between gap-4 flex-wrap mb-6">
-              <div>
-                <h3 class="text-xl font-bold text-white">
-                  Properties Near {categoryMeta?.label} in {sectorMeta?.label}
-                </h3>
-                <p class="text-xs text-slate-400 mt-0.5">
-                  Available residential and commercial property listings in {sectorMeta?.label}.
-                </p>
-              </div>
-              <a href="/properties/" class="text-xs font-bold text-amber-400 hover:text-amber-300">
-                Explore all Phase 6 plots →
-              </a>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {nearbyProperties.map((prop) => (
-                <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 hover:border-slate-700 transition-colors">
-                  <span class="text-[10px] font-bold text-amber-400 uppercase tracking-wider">{prop.propertyType}</span>
-                  <h4 class="font-bold text-white text-sm line-clamp-1 mt-1">
-                    <a href={`/properties/${prop.slug}/`} class="hover:text-amber-400 transition-colors">
-                      {prop.title}
-                    </a>
-                  </h4>
-                  <div class="text-xs text-slate-400 mt-1">{prop.location?.address || prop.block}</div>
-                  <div class="mt-3 pt-3 border-t border-slate-800 flex items-center justify-between">
-                    <span class="font-extrabold text-white text-sm">PKR {(prop.price / 10000000).toFixed(2)} Cr</span>
-                    <a href={`/properties/${prop.slug}/`} class="text-xs text-amber-400 hover:underline">
-                      View Plot →
-                    </a>
-                  </div>
-                </div>
+                </article>
               ))}
             </div>
-          </div>
-        )}
+          ) : (
+            <div class="empty-state-box">
+              <div class="empty-icon">📍</div>
+              <p class="empty-text">
+                Currently no verified listings available for this category. New locations will be added after verification.
+              </p>
+              <div class="empty-actions">
+                <a
+                  href={`/places/${categoryMeta?.key}/`}
+                  class="btn-action-details"
+                >
+                  View {categoryMeta?.label} across Phase 6
+                </a>
+                <a
+                  href={`/places/${sectorMeta?.key}/`}
+                  class="btn-action-map"
+                >
+                  All Places in {sectorMeta?.label}
+                </a>
+              </div>
+            </div>
+          )}
+
+          <!-- Properties Near This Category Section -->
+          {nearbyProperties.length > 0 && (
+            <div class="properties-cross-section">
+              <div class="cross-section-header">
+                <div>
+                  <h3 class="cross-title">
+                    Properties Near {categoryMeta?.label} in {sectorMeta?.label}
+                  </h3>
+                  <p class="cross-desc">
+                    Available residential and commercial property listings in {sectorMeta?.label}.
+                  </p>
+                </div>
+                <a href="/properties/" class="cross-link-all">
+                  Explore all Phase 6 plots →
+                </a>
+              </div>
+
+              <div class="properties-mini-grid">
+                {nearbyProperties.map((prop) => (
+                  <div class="property-mini-card">
+                    <span class="prop-type-badge">{prop.propertyType}</span>
+                    <h4 class="prop-title">
+                      <a href={`/properties/${prop.slug}/`}>
+                        {prop.title}
+                      </a>
+                    </h4>
+                    <div class="prop-location">{prop.location?.address || prop.block}</div>
+                    <div class="prop-bottom">
+                      <span class="prop-price">PKR {(prop.price / 10000000).toFixed(2)} Cr</span>
+                      <a href={`/properties/${prop.slug}/`} class="prop-link">
+                        View Plot →
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
       </section>
     </div>
   )}
 </PageLayout>
+
+<style is:global>
+  /* ══════════════════════════════════════════════════════════════════════════
+   * PLACE DETAIL & SECTOR-CATEGORY DIRECTORY STYLES (Vanilla CSS)
+   * ══════════════════════════════════════════════════════════════════════════ */
+  .place-detail-wrapper,
+  .sector-cat-wrapper {
+    background: #0a0a1a;
+    color: #f0f0f5;
+    min-height: 80vh;
+  }
+
+  /* DETAIL HERO */
+  .place-detail-hero {
+    position: relative;
+    padding: 48px 0 36px;
+    background: linear-gradient(180deg, #111128 0%, #0a0a1a 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .detail-breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: #9a9ab5;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .detail-breadcrumbs a {
+    color: #9a9ab5;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .detail-breadcrumbs a:hover {
+    color: #f0c95c;
+  }
+  .detail-breadcrumbs .sep {
+    color: #6a6a85;
+  }
+  .detail-breadcrumbs .current {
+    color: #d4a844;
+    font-weight: 600;
+  }
+
+  .detail-hero-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .detail-hero-left {
+    max-width: 720px;
+  }
+  .detail-badges-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .badge-sector {
+    padding: 4px 12px;
+    background: #161635;
+    color: #f0f0f5;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .badge-sector:hover {
+    background: rgba(212, 168, 68, 0.15);
+    border-color: rgba(212, 168, 68, 0.4);
+    color: #f0c95c;
+  }
+  .badge-category {
+    padding: 4px 12px;
+    background: rgba(212, 168, 68, 0.12);
+    color: #d4a844;
+    border: 1px solid rgba(212, 168, 68, 0.25);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .badge-status {
+    padding: 4px 12px;
+    background: rgba(46, 204, 113, 0.12);
+    color: #2ecc71;
+    border: 1px solid rgba(46, 204, 113, 0.25);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .detail-place-title {
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .detail-place-address {
+    font-size: 0.95rem;
+    color: #9a9ab5;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .detail-hero-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .detail-rating-card {
+    background: #161635;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 12px 18px;
+    text-align: center;
+  }
+  .rating-score {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #f0c95c;
+  }
+  .rating-count {
+    font-size: 0.72rem;
+    color: #9a9ab5;
+    margin-top: 2px;
+  }
+  .btn-maps-directions {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, #d4a844, #f0c95c);
+    color: #0a0a1a;
+    font-size: 0.92rem;
+    font-weight: 800;
+    border-radius: 12px;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(212, 168, 68, 0.25);
+    transition: all 0.25s ease;
+  }
+  .btn-maps-directions:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(212, 168, 68, 0.4);
+  }
+
+  /* DETAIL CONTENT 2-COLUMN GRID */
+  .detail-content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 36px;
+    padding-top: 48px;
+    padding-bottom: 80px;
+  }
+  .detail-main-col {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .detail-sidebar-col {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* DETAIL CARDS */
+  .detail-card {
+    background: #161635;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 32px;
+  }
+  .card-heading {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 14px;
+  }
+  .card-paragraph {
+    font-size: 1rem;
+    color: #c4c4dc;
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  .amenities-block {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .amenities-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #9a9ab5;
+    margin-bottom: 14px;
+  }
+  .amenities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+  }
+  .amenity-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 8px;
+    font-size: 0.82rem;
+    color: #f0f0f5;
+  }
+  .check-icon {
+    color: #2ecc71;
+    font-weight: 800;
+  }
+
+  /* LOCATION CARD */
+  .location-facts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .loc-fact-box {
+    background: #111128;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .fact-label {
+    font-size: 0.74rem;
+    color: #9a9ab5;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+  .fact-val {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .fact-val.font-mono {
+    font-family: monospace;
+    color: #f0c95c;
+  }
+  .taxi-nav-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background: #0d0d22;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 18px 24px;
+    flex-wrap: wrap;
+  }
+  .banner-label {
+    font-size: 0.75rem;
+    color: #9a9ab5;
+  }
+  .banner-addr {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-top: 2px;
+  }
+  .btn-open-app {
+    padding: 8px 16px;
+    background: #161635;
+    color: #f0c95c;
+    border: 1px solid rgba(212, 168, 68, 0.4);
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .btn-open-app:hover {
+    background: rgba(212, 168, 68, 0.15);
+  }
+
+  /* SIDEBAR CARDS */
+  .sidebar-card {
+    background: #161635;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 24px;
+  }
+  .sidebar-heading {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #ffffff;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 16px;
+  }
+  .facility-info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .facility-info-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 0.85rem;
+  }
+  .info-label {
+    color: #9a9ab5;
+  }
+  .info-link {
+    color: #f0c95c;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .info-link:hover {
+    text-decoration: underline;
+  }
+  .info-status {
+    color: #2ecc71;
+    font-weight: 600;
+  }
+  .info-phone {
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .info-phone:hover {
+    color: #f0c95c;
+  }
+  .info-val {
+    color: #ffffff;
+    font-weight: 600;
+  }
+  .sidebar-cta-wrap {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .btn-sidebar-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #f0f0f5;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .btn-sidebar-nav:hover {
+    background: rgba(212, 168, 68, 0.15);
+    border-color: rgba(212, 168, 68, 0.4);
+    color: #f0c95c;
+  }
+
+  /* SIBLING PLACES */
+  .sibling-places-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .sibling-place-item {
+    display: block;
+    padding: 12px 14px;
+    background: #111128;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+  .sibling-place-item:hover {
+    background: #1b1b3a;
+    border-color: rgba(212, 168, 68, 0.35);
+    transform: translateX(4px);
+  }
+  .sib-cat {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #d4a844;
+    text-transform: uppercase;
+  }
+  .sib-name {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-top: 2px;
+  }
+
+  /* PROPERTY SNAPSHOTS IN DETAIL */
+  .prop-card-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .card-subtext {
+    font-size: 0.82rem;
+    color: #9a9ab5;
+    margin: 0;
+  }
+  .link-all-props {
+    color: #d4a844;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .prop-snapshots-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .prop-snapshot-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background: #111128;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 16px;
+    transition: all 0.2s ease;
+  }
+  .prop-snapshot-item:hover {
+    border-color: rgba(212, 168, 68, 0.3);
+  }
+  .prop-type-tag {
+    display: inline-block;
+    padding: 2px 6px;
+    background: rgba(212, 168, 68, 0.1);
+    color: #d4a844;
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    border-radius: 4px;
+    margin-bottom: 4px;
+  }
+  .prop-item-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+  }
+  .prop-item-title a {
+    color: #ffffff;
+    text-decoration: none;
+  }
+  .prop-item-title a:hover {
+    color: #f0c95c;
+  }
+  .prop-item-loc {
+    font-size: 0.75rem;
+    color: #9a9ab5;
+    margin-top: 2px;
+  }
+  .prop-item-right {
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .prop-item-price {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #ffffff;
+  }
+  .prop-item-btn {
+    font-size: 0.74rem;
+    color: #d4a844;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  /* SECTOR + CATEGORY SPECIFIC STYLES */
+  .cat-badges-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .hero-pill-category {
+    padding: 4px 12px;
+    background: #161635;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .cat-stats-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+  }
+  .cat-stat-badge {
+    background: #161635;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: #c4c4dc;
+  }
+  .gold-text {
+    color: #f0c95c;
+  }
+  .gps-text {
+    font-family: monospace;
+    font-size: 0.72rem;
+    color: #6a6a85;
+    margin-bottom: 12px;
+  }
+  .empty-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 992px) {
+    .detail-content-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 768px) {
+    .place-detail-hero {
+      padding: 32px 0 24px;
+    }
+    .detail-hero-inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+    }
+    .detail-place-title {
+      font-size: 2.2rem;
+    }
+    .location-facts-grid {
+      grid-template-columns: 1fr;
+    }
+    .detail-card {
+      padding: 20px;
+    }
+  }
+</style>
