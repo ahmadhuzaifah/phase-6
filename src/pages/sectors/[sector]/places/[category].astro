@@ -1,126 +1,94 @@
 ---
-import { PLACE_CATEGORIES, PLACES_DATA, type PlaceCategoryMeta } from '@data/places';
-import googlePlaces from '@data/google-places-import.json';
+import {
+  PLACE_CATEGORIES,
+  SECTORS_DIRECTORY,
+  getSectorCategoryPlaces,
+  getCategorySectors,
+  getPopulatedSectorCategoryPairs,
+  type PlaceRecord,
+  type SectorMeta,
+} from '@data/places/index';
+import type { PlaceCategoryMeta } from '@data/places';
 import { SITE } from '@data/site';
 
-const SECTORS = [
-  { key: 'sector-a', label: 'Sector A' }, { key: 'sector-b', label: 'Sector B' },
-  { key: 'sector-c', label: 'Sector C' }, { key: 'sector-d', label: 'Sector D' },
-  { key: 'sector-e', label: 'Sector E' }, { key: 'sector-f', label: 'Sector F' },
-  { key: 'sector-g', label: 'Sector G' }, { key: 'sector-h', label: 'Sector H' },
-  { key: 'sector-j', label: 'Sector J' }, { key: 'sector-k', label: 'Sector K' },
-  { key: 'sector-l', label: 'Sector L' }, { key: 'sector-m', label: 'Sector M' },
-  { key: 'sector-n', label: 'Sector N' },
-  { key: 'cca', label: 'CCA Commercial Area' },
-  { key: 'main-boulevard-commercial', label: 'Main Boulevard Commercial' },
-  { key: 'raya-commercial', label: 'Raya Commercial' },
-  { key: 'defence-raya', label: 'Defence Raya' },
-];
-
-interface ImportedPlace {
-  id: string; name: string; sector: string; sectorLabel: string; category: string;
-  categoryLabel: string; rating: number | null; reviewCount: number; address: string;
-  phone: string | null; status: string; image: string | null; googleMapsUrl: string;
-  sourceQuery: string; retrievedAt: string;
-}
-
-interface DirectoryPlace extends ImportedPlace { tags: string[]; internalUrl?: string }
-
 export function getStaticPaths() {
-  const sectors = [
-    { key: 'sector-a', label: 'Sector A' }, { key: 'sector-b', label: 'Sector B' },
-    { key: 'sector-c', label: 'Sector C' }, { key: 'sector-d', label: 'Sector D' },
-    { key: 'sector-e', label: 'Sector E' }, { key: 'sector-f', label: 'Sector F' },
-    { key: 'sector-g', label: 'Sector G' }, { key: 'sector-h', label: 'Sector H' },
-    { key: 'sector-j', label: 'Sector J' }, { key: 'sector-k', label: 'Sector K' },
-    { key: 'sector-l', label: 'Sector L' }, { key: 'sector-m', label: 'Sector M' },
-    { key: 'sector-n', label: 'Sector N' },
-    { key: 'cca', label: 'CCA Commercial Area' },
-    { key: 'main-boulevard-commercial', label: 'Main Boulevard Commercial' },
-    { key: 'raya-commercial', label: 'Raya Commercial' },
-    { key: 'defence-raya', label: 'Defence Raya' },
-  ];
-
-  const paths = [];
-  for (const sector of sectors) {
-    for (const category of PLACE_CATEGORIES) {
-      const hasImported = (googlePlaces as ImportedPlace[]).some(
-        (p) => p.sector === sector.key && p.category === category.key
-      );
-      const hasExisting = PLACES_DATA.some(
-        (p) =>
-          p.category === category.key &&
-          (p.block?.toLowerCase() === sector.label.toLowerCase() ||
-            p.address.toLowerCase().includes(sector.label.toLowerCase()))
-      );
-
-      if (hasImported || hasExisting) {
-        paths.push({
-          params: { sector: sector.key, category: category.key },
-          props: { sectorMeta: sector, categoryMeta: category },
-        });
-      }
-    }
-  }
-
-  return paths;
+  const populatedPairs = getPopulatedSectorCategoryPairs();
+  return populatedPairs.map(({ sector, category }) => ({
+    params: { sector: sector.key, category: category.key },
+    props: { sectorMeta: sector, categoryMeta: category },
+  }));
 }
 
-interface Props { sectorMeta: { key: string; label: string }; categoryMeta: PlaceCategoryMeta }
+interface Props {
+  sectorMeta: SectorMeta;
+  categoryMeta: PlaceCategoryMeta;
+}
+
 const { sectorMeta, categoryMeta } = Astro.props as Props;
-const importedPlaces = (googlePlaces as ImportedPlace[])
-  .filter((place) => place.sector === sectorMeta.key && place.category === categoryMeta.key)
-  .map((place): DirectoryPlace => ({
-    ...place,
-    tags: [categoryMeta.label, sectorMeta.label],
-  }));
-const existingPlaces: DirectoryPlace[] = PLACES_DATA
-  .filter((place) => place.category === categoryMeta.key && (place.block?.toLowerCase() === sectorMeta.label.toLowerCase() || place.address.toLowerCase().includes(sectorMeta.label.toLowerCase())))
-  .filter((place) => !importedPlaces.some((imported) => imported.name.toLowerCase() === place.name.toLowerCase()))
-  .map((place) => ({
-    id: place.id, name: place.name, sector: sectorMeta.key, sectorLabel: sectorMeta.label,
-    category: categoryMeta.key, categoryLabel: place.categoryLabel, rating: place.rating,
-    reviewCount: place.reviewCount, address: place.address, phone: place.phone || null,
-    status: place.timings || 'Check current hours', image: place.images[0] || null,
-    googleMapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${place.name} ${place.address}`)}`,
-    sourceQuery: `${categoryMeta.label} in ${sectorMeta.label} DHA Phase 6 Lahore`, retrievedAt: '2026-09-03',
-    tags: [place.categoryLabel, sectorMeta.label], internalUrl: `/places/${place.category}/${place.slug}/`,
-  }));
-const places = [...importedPlaces, ...existingPlaces];
+const places = getSectorCategoryPlaces(sectorMeta.key, categoryMeta.key);
 const canonical = `${SITE.url}/sectors/${sectorMeta.key}/places/${categoryMeta.key}/`;
 const pageTitle = `${categoryMeta.label} in ${sectorMeta.label} DHA Phase 6 Lahore`;
 const description = `A focused local guide to ${categoryMeta.label.toLowerCase()} businesses and services in ${sectorMeta.label}, DHA Phase 6 Lahore.`;
 
-// Only link to sectors that actually have places in this category (Task 8)
-const nearbySectors = SECTORS.filter(
-  (sector) =>
-    sector.key !== sectorMeta.key &&
-    ((googlePlaces as ImportedPlace[]).some((p) => p.sector === sector.key && p.category === categoryMeta.key) ||
-      PLACES_DATA.some((p) => p.category === categoryMeta.key && (p.block?.toLowerCase() === sector.label.toLowerCase() || p.address.toLowerCase().includes(sector.label.toLowerCase()))))
-).slice(0, 8);
+// Only link to sectors that actually have places in this category
+const nearbySectors = getCategorySectors(categoryMeta.key)
+  .filter((s) => s.sector.key !== sectorMeta.key)
+  .map((s) => s.sector);
 
-// Only link to categories that actually have places in this sector (Task 8)
+// Only link to categories that actually have places in this sector
 const relatedCategories = PLACE_CATEGORIES.filter(
-  (category) =>
-    category.key !== categoryMeta.key &&
-    ((googlePlaces as ImportedPlace[]).some((p) => p.sector === sectorMeta.key && p.category === category.key) ||
-      PLACES_DATA.some((p) => p.category === category.key && (p.block?.toLowerCase() === sectorMeta.label.toLowerCase() || p.address.toLowerCase().includes(sectorMeta.label.toLowerCase()))))
-).slice(0, 10);
+  (c) => getSectorCategoryPlaces(sectorMeta.key, c.key).length > 0 && c.key !== categoryMeta.key
+);
+
 const publishedDate = places[0]?.retrievedAt || '2026-09-03';
 const formattedDate = new Intl.DateTimeFormat('en-PK', { dateStyle: 'long' }).format(new Date(`${publishedDate}T12:00:00`));
+
+const categorySvgFallback: Record<string, string> = {
+  mosque: '/images/amenities/mosques.svg',
+  park: '/images/amenities/parks.svg',
+  bakery: '/images/amenities/commercial.svg',
+  banks: '/images/amenities/banks.svg',
+  'beauty-salons': '/images/amenities/services.svg',
+  'fast-food': '/images/amenities/restaurants.svg',
+  gym: '/images/amenities/sports.svg',
+  pharmacy: '/images/amenities/healthcare.svg',
+  'guest-house': '/images/amenities/services.svg',
+  'flower-shop': '/images/amenities/commercial.svg',
+  schools: '/images/amenities/education.svg',
+  cafes: '/images/amenities/restaurants.svg',
+  restaurants: '/images/amenities/restaurants.svg',
+  laundry: '/images/amenities/services.svg',
+  club: '/images/amenities/sports.svg',
+  idc: '/images/amenities/healthcare.svg',
+  supermarkets: '/images/amenities/supermarkets.svg',
+  'police-station': '/images/amenities/services.svg',
+  hospital: '/images/amenities/healthcare.svg',
+  'post-office': '/images/amenities/services.svg',
+  colleges: '/images/amenities/education.svg',
+  'internet-providers': '/images/amenities/services.svg',
+  hostels: '/images/amenities/services.svg',
+  'courier-services': '/images/amenities/services.svg',
+  hotel: '/images/amenities/services.svg',
+  clinic: '/images/amenities/healthcare.svg',
+  shopping: '/images/amenities/commercial.svg',
+  services: '/images/amenities/services.svg',
+};
+
+const getPlaceImg = (p: PlaceRecord) => {
+  if (p.image && !p.image.includes('placeholder')) return p.image;
+  return categorySvgFallback[p.category] || '/images/amenities/commercial.svg';
+};
+
 const structuredData = {
   '@context': 'https://schema.org',
   '@graph': [
     {
-      '@type': 'WebPage',
+      '@type': 'CollectionPage',
       '@id': canonical,
       url: canonical,
       name: pageTitle,
       description,
-      dateModified: publishedDate,
       inLanguage: 'en-PK',
-      breadcrumb: { '@id': `${canonical}#breadcrumb` },
-      mainEntity: { '@id': `${canonical}#directory` },
       isPartOf: { '@type': 'WebSite', '@id': `${SITE.url}/#website`, name: SITE.name, url: SITE.url },
     },
     {
@@ -144,16 +112,17 @@ const structuredData = {
         position: index + 1,
         item: {
           '@type': 'LocalBusiness',
-          '@id': place.internalUrl ? `${SITE.url}${place.internalUrl}` : place.googleMapsUrl,
+          '@id': `${SITE.url}/places/${place.category}/${place.slug}/`,
           name: place.name,
-          url: place.internalUrl ? `${SITE.url}${place.internalUrl}` : place.googleMapsUrl,
-          ...(place.image ? { image: place.image } : {}),
+          url: `${SITE.url}/places/${place.category}/${place.slug}/`,
+          image: getPlaceImg(place),
           ...(place.phone ? { telephone: place.phone } : {}),
           address: {
             '@type': 'PostalAddress',
             streetAddress: place.address,
             addressLocality: 'Lahore',
             addressRegion: 'Punjab',
+            postalCode: '54792',
             addressCountry: 'PK',
           },
           ...(place.rating && place.reviewCount > 0 ? {
@@ -208,22 +177,75 @@ const structuredData = {
         {places.length > 0 ? (
           <div class="business-grid" id="business-grid">{places.map((place) => (
             <article class="business-card" data-name={place.name.toLowerCase()} data-address={place.address.toLowerCase()} data-rating={place.rating || 0} data-reviews={place.reviewCount}>
-              <a class="business-photo" href={place.internalUrl || place.googleMapsUrl}><img src={place.image || '/images/og/blog-og.svg'} alt={`${place.name} in ${sectorMeta.label}, DHA Phase 6 Lahore`} width="720" height="440" loading="lazy" referrerpolicy="no-referrer" />{place.image && <span>Google Maps photo</span>}</a>
-              <div class="business-body"><div class="business-tags">{place.tags.map((tag) => <span>{tag}</span>)}</div><h3><a href={place.internalUrl || place.googleMapsUrl}>{place.name}</a></h3>
-                <div class="business-rating">{place.rating ? <><span aria-label={`${place.rating} out of 5 stars`}>★</span><strong>{place.rating.toFixed(1)}</strong><small>{place.reviewCount > 0 ? `${place.reviewCount.toLocaleString('en-PK')} reviews` : 'Google rating'}</small></> : <small>Rating not shown</small>}</div>
-                <address>{place.address}</address><div class="business-chips"><span>{categoryMeta.label}</span>{place.phone && <span>{place.phone}</span>}</div>
-                <div class="business-actions"><a class="business-primary" href={place.internalUrl || place.googleMapsUrl}>View business</a><a class="business-directions" href={place.googleMapsUrl} target="_blank" rel="noopener noreferrer">Directions ↗</a></div>
+              <a class="business-photo" href={`/places/${place.category}/${place.slug}/`}>
+                <img
+                  src={getPlaceImg(place)}
+                  alt={`${place.name} in ${sectorMeta.label}, DHA Phase 6 Lahore`}
+                  width="720"
+                  height="440"
+                  loading="lazy"
+                  referrerpolicy="no-referrer"
+                  onerror="this.onerror=null;this.src='/images/amenities/commercial.svg';"
+                />
+                <span>Google Maps photo</span>
+              </a>
+              <div class="business-body">
+                <div class="business-tags">
+                  <span>{categoryMeta.label}</span>
+                  <span>{sectorMeta.label}</span>
+                </div>
+                <h3><a href={`/places/${place.category}/${place.slug}/`}>{place.name}</a></h3>
+                <div class="business-rating">
+                  {place.rating ? (
+                    <>
+                      <span aria-label={`${place.rating} out of 5 stars`}>★</span>
+                      <strong>{place.rating.toFixed(1)}</strong>
+                      <small>{place.reviewCount > 0 ? `${place.reviewCount.toLocaleString('en-PK')} reviews` : 'Google rating'}</small>
+                    </>
+                  ) : (
+                    <small>Rating not shown</small>
+                  )}
+                </div>
+                <address>{place.address}</address>
+                <div class="business-chips"><span>{categoryMeta.label}</span>{place.phone && <span>{place.phone}</span>}</div>
+                <div class="business-actions">
+                  <a class="business-primary" href={`/places/${place.category}/${place.slug}/`}>View business</a>
+                  <a class="business-directions" href={place.googleMapsUrl} target="_blank" rel="noopener noreferrer">Directions ↗</a>
+                </div>
               </div>
             </article>
           ))}</div>
         ) : (
-          <div class="empty-state"><p>Currently no verified listings available for this category. New locations will be added after verification.</p><a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${categoryMeta.label} in ${sectorMeta.label} DHA Phase 6 Lahore`)}`} target="_blank" rel="noopener noreferrer">Search Google Maps ↗</a></div>
+          <div class="empty-state">
+            <p>Currently no verified listings available for this category. New locations will be added after verification.</p>
+            <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${categoryMeta.label} in ${sectorMeta.label} DHA Phase 6 Lahore`)}`} target="_blank" rel="noopener noreferrer">Search Google Maps ↗</a>
+          </div>
         )}
         <p class="no-results" id="no-results" hidden>No businesses match your search.</p>
 
         <section class="sector-callout"><p class="section-kicker"><span></span> {sectorMeta.label} local guide</p><h2>Explore more in {sectorMeta.label}</h2><p>Browse all sectors or return to the {sectorMeta.label} property directory.</p><div><a class="gold-button" href="/sectors/">View all sectors</a><a class="outline-button" href={`/sectors/${sectorMeta.key}/`}>View {sectorMeta.label} property directory</a></div></section>
-        <section class="link-section"><h2>Also search nearby sectors</h2><div>{nearbySectors.map((sector) => <a href={`/sectors/${sector.key}/places/${categoryMeta.key}/`}>{sector.label}</a>)}</div></section>
-        <section class="link-section"><h2>Related places and services</h2><div>{relatedCategories.map((category) => <a href={`/sectors/${sectorMeta.key}/places/${category.key}/`}>{category.label}</a>)}</div></section>
+        
+        {nearbySectors.length > 0 && (
+          <section class="link-section">
+            <h2>Also search nearby sectors</h2>
+            <div>
+              {nearbySectors.map((sector) => (
+                <a href={`/sectors/${sector.key}/places/${categoryMeta.key}/`}>{sector.label}</a>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {relatedCategories.length > 0 && (
+          <section class="link-section">
+            <h2>Related places and services</h2>
+            <div>
+              {relatedCategories.map((category) => (
+                <a href={`/sectors/${sectorMeta.key}/places/${category.key}/`}>{category.label}</a>
+              ))}
+            </div>
+          </section>
+        )}
       </div></section>
     </main>
 
@@ -231,7 +253,7 @@ const structuredData = {
     <footer class="site-footer"><div class="container footer-grid">
       <div class="footer-brand"><a href="/"><span>D6</span><strong>DHA Phase 6 Lahore</strong></a><p>An independent local guide to sectors, properties, maps, places, services and everyday life across DHA Phase 6 Lahore.</p></div>
       <div><h2>Pages</h2><a href="/">Home</a><a href="/sectors/">Sectors</a><a href="/properties/">Property Listings</a><a href="/plots/">Plots</a><a href="/dealers/">Property Dealers</a><a href="/places/">Places & Services</a><a href="/jobs/">Jobs</a><a href="/faq/">FAQ</a><a href="/sitemap/">Sitemap</a></div>
-      <div><h2>Sectors</h2>{SECTORS.slice(0, 9).map((sector) => <a href={`/sectors/${sector.key}/`}>{sector.label}</a>)}</div>
+      <div><h2>Sectors</h2>{SECTORS_DIRECTORY.slice(0, 9).map((sector) => <a href={`/sectors/${sector.key}/`}>{sector.label}</a>)}</div>
       <div><h2>Useful links</h2><a href="/dha-phase-6-lahore-map/">Phase 6 Map</a><a href="/helplines/">Helplines</a><a href="/postal-code/">Postal Code</a><a href="/weather/">Weather</a><a href="/contact/">Contact</a><a href="/privacy-policy/">Privacy Policy</a><a href="/disclaimer/">Disclaimer</a></div>
     </div><div class="container footer-bottom">© 2026 DHA Phase 6 Lahore Guide. All rights reserved.</div></footer>
     <a class="back-top" href="#main-content" aria-label="Back to top">↑</a>
@@ -247,24 +269,130 @@ const structuredData = {
         const query = search?.value.trim().toLowerCase() || '';
         const visible = cards.filter((card) => `${card.dataset.name} ${card.dataset.address}`.includes(query));
         cards.forEach((card) => { card.hidden = !visible.includes(card); });
-        visible.sort((a, b) => { if (sort?.value === 'name') return (a.dataset.name || '').localeCompare(b.dataset.name || ''); const key = sort?.value === 'rating' ? 'rating' : 'reviews'; return Number(b.dataset[key]) - Number(a.dataset[key]); });
-        visible.forEach((card) => grid?.append(card)); if (count) count.textContent = String(visible.length); if (empty) empty.hidden = visible.length > 0;
+        visible.sort((a, b) => {
+          if (sort?.value === 'name') return (a.dataset.name || '').localeCompare(b.dataset.name || '');
+          const key = sort?.value === 'rating' ? 'rating' : 'reviews';
+          return Number(b.dataset[key]) - Number(a.dataset[key]);
+        });
+        visible.forEach((card) => grid?.append(card));
+        if (count) count.textContent = String(visible.length);
+        if (empty) empty.hidden = visible.length > 0;
       };
-      search?.addEventListener('input', updateDirectory); sort?.addEventListener('change', updateDirectory);
-      const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle'); const nav = document.querySelector<HTMLElement>('#nav-links');
-      toggle?.addEventListener('click', () => { const open = toggle.getAttribute('aria-expanded') === 'true'; toggle.setAttribute('aria-expanded', String(!open)); nav?.classList.toggle('open', !open); });
+      search?.addEventListener('input', updateDirectory);
+      sort?.addEventListener('change', updateDirectory);
     </script>
   </body>
 </html>
 
 <style is:global>
-  :root{--bg:#080818;--surface:#111125;--surface-2:#15152d;--gold:#d4a844;--gold-light:#f0c95c;--text:#f0f0f5;--muted:#9292ad;--dim:#64647f;--line:rgba(255,255,255,.09);font-family:'Inter',sans-serif;color-scheme:dark}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.65}a{color:inherit;text-decoration:none}img{display:block;max-width:100%}.container{width:min(1120px,calc(100% - 40px));margin-inline:auto}.skip-link{position:fixed;left:1rem;top:-5rem;z-index:9999;padding:.7rem 1rem;background:var(--gold);color:#090918}.skip-link:focus{top:1rem}
-  .navbar{position:fixed;inset:0 0 auto;z-index:1000;height:68px;background:rgba(10,10,26,.94);border-bottom:1px solid var(--line);backdrop-filter:blur(16px)}.nav-inner{display:flex;height:100%;align-items:center;justify-content:space-between}.nav-logo{display:flex;align-items:center;gap:.65rem;font-size:.88rem}.nav-logo>span{display:grid;width:32px;height:32px;place-items:center;border-radius:6px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#090918;font-weight:900}.nav-logo strong{font-weight:800}.nav-logo b{color:var(--gold)}.nav-links{display:flex;align-items:center;gap:1.25rem}.nav-links>a{padding:.6rem 0;color:var(--muted);font-size:.72rem;font-weight:600}.nav-links>a:hover,.nav-links>a.active{color:#fff}.nav-links>a.active{border-bottom:2px solid var(--gold)}.nav-links .nav-cta{padding:.66rem 1rem;border-radius:6px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#090918;font-weight:800}.nav-toggle{display:none;width:40px;height:40px;padding:8px;border:1px solid var(--line);background:transparent}.nav-toggle span{display:block;height:2px;margin:5px 0;background:#fff}
-  .page-hero{padding:150px 0 72px;background:#101024;border-bottom:1px solid var(--line);text-align:center}.breadcrumb{display:flex;flex-wrap:wrap;justify-content:center;gap:.48rem;margin-bottom:1.25rem;color:var(--dim);font-size:.7rem}.breadcrumb a:hover{color:var(--gold-light)}.page-hero h1{max-width:900px;margin:0 auto;color:#fff;font-size:clamp(2rem,4.7vw,3.5rem);line-height:1.1;letter-spacing:-.04em}.page-hero p{max-width:620px;margin:1rem auto 0;color:var(--muted);font-size:.92rem}
-  .directory-section{padding:74px 0 88px}.directory-toolbar{display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:end;margin-bottom:1.5rem}.section-kicker{display:flex;align-items:center;gap:.6rem;margin:0 0 .75rem;color:var(--gold);font-size:.64rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.section-kicker>span{width:28px;height:2px;background:var(--gold)}.directory-toolbar h2,.sector-callout h2,.link-section h2{margin:0;color:#fff;font-size:1.25rem}.directory-toolbar>div>p:last-child{margin:.35rem 0 0;color:var(--muted);font-size:.78rem}.directory-controls{display:grid;grid-template-columns:230px 145px;gap:.7rem}.directory-controls label{color:var(--dim);font-size:.56rem;font-weight:800;text-transform:uppercase}.directory-controls input,.directory-controls select{display:block;width:100%;height:42px;margin-top:.35rem;padding:0 .75rem;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--text);font:inherit;font-size:.72rem;outline:none}.directory-controls input:focus,.directory-controls select:focus{border-color:var(--gold)}
-  .business-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;align-items:start}.business-card{overflow:hidden;border:1px solid var(--line);border-radius:10px;background:var(--surface);box-shadow:0 18px 45px -35px #000}.business-card[hidden]{display:none}.business-photo{position:relative;display:block;aspect-ratio:16/10;overflow:hidden;background:#1a1a31}.business-photo img{width:100%;height:100%;object-fit:cover;transition:transform .35s}.business-card:hover .business-photo img{transform:scale(1.025)}.business-photo>span{position:absolute;right:.55rem;bottom:.55rem;padding:.24rem .42rem;border-radius:4px;background:rgba(8,8,24,.82);color:#fff;font-size:.55rem}.business-body{padding:1rem}.business-tags,.business-chips{display:flex;flex-wrap:wrap;gap:.35rem}.business-tags span,.business-chips span{padding:.22rem .4rem;border:1px solid rgba(212,168,68,.22);border-radius:999px;color:var(--gold);font-size:.54rem}.business-card h3{margin:.62rem 0 .35rem;font-size:1rem}.business-card h3 a:hover{color:var(--gold-light)}.business-rating{display:flex;align-items:center;gap:.3rem;font-size:.68rem}.business-rating>span{color:var(--gold)}.business-rating small{color:var(--dim)}.business-card address{min-height:2.6em;margin:.55rem 0;color:var(--muted);font-size:.67rem;font-style:normal;line-height:1.5}.business-chips{margin:.75rem 0}.business-chips span{border-color:var(--line);color:var(--dim)}.business-actions{display:flex;align-items:center;justify-content:space-between;gap:.65rem;margin-top:.9rem}.business-primary,.gold-button{padding:.6rem .78rem;border-radius:5px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#090918;font-size:.64rem;font-weight:800}.business-directions{color:#2ecc71;font-size:.62rem;font-weight:800}.empty-state,.no-results{padding:2rem;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-align:center}.empty-state h3{margin:0}.empty-state p{color:var(--muted)}.empty-state a{color:var(--gold);font-weight:800}.no-results{color:var(--muted)}
-  .sector-callout{margin-top:2.5rem;padding:1.8rem;border:1px solid var(--line);border-radius:9px;background:var(--surface)}.sector-callout>p:not(.section-kicker){margin:.65rem 0 1rem;color:var(--muted);font-size:.75rem}.sector-callout>div{display:flex;flex-wrap:wrap;gap:.65rem}.outline-button{padding:.58rem .78rem;border:1px solid var(--line);border-radius:5px;color:#fff;font-size:.64rem;font-weight:800}.link-section{margin-top:2rem}.link-section h2{margin-bottom:.8rem}.link-section>div{display:flex;flex-wrap:wrap;gap:.4rem}.link-section a{padding:.42rem .62rem;border:1px solid var(--line);border-radius:5px;background:var(--surface);color:var(--muted);font-size:.6rem}.link-section a:hover{border-color:rgba(212,168,68,.35);color:var(--gold-light)}
-  .publication{padding:.8rem 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#0d0d21;color:var(--dim);font-size:.56rem}.publication .container{display:flex;justify-content:space-between;gap:1rem}.site-footer{background:#111125}.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.3fr;gap:3rem;padding-top:3.4rem;padding-bottom:3rem}.footer-grid>div:not(.footer-brand){display:flex;flex-direction:column;gap:.55rem}.footer-brand>a{display:flex;align-items:center;gap:.6rem}.footer-brand>a span{display:grid;width:32px;height:32px;place-items:center;border-radius:5px;background:var(--gold);color:#090918;font-size:.68rem;font-weight:900}.footer-brand p{max-width:320px;color:var(--muted);font-size:.65rem}.footer-grid h2{margin:0 0 .4rem;color:#fff;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase}.footer-grid>div>a{color:var(--muted);font-size:.62rem}.footer-grid>div>a:hover{color:var(--gold-light)}.footer-bottom{padding:1.3rem 0;border-top:1px solid var(--line);color:var(--dim);font-size:.56rem}.back-top{position:fixed;right:1rem;bottom:1rem;display:grid;width:36px;height:36px;place-items:center;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#090918;font-weight:900;box-shadow:0 8px 24px rgba(212,168,68,.25)}
-  @media(max-width:900px){.nav-toggle{display:block}.nav-links{position:absolute;top:68px;right:20px;display:none;width:250px;flex-direction:column;align-items:stretch;gap:0;padding:1rem;border:1px solid var(--line);background:#111125}.nav-links.open{display:flex}.nav-links>a{padding:.65rem}.directory-toolbar{grid-template-columns:1fr}.business-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.footer-grid{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:620px){.container{width:min(100% - 28px,1120px)}.page-hero{padding:112px 0 55px}.directory-section{padding:48px 0}.directory-controls,.business-grid{grid-template-columns:1fr}.publication .container{flex-direction:column}.footer-grid{grid-template-columns:1fr;gap:2rem}.business-card{max-width:none}}
+  :root {
+    --dir-bg: #080818;
+    --dir-surface: #111125;
+    --dir-surface-2: #15152d;
+    --dir-gold: #d4a844;
+    --dir-gold-light: #f0c95c;
+    --dir-text: #f0f0f5;
+    --dir-muted: #9292ad;
+    --dir-dim: #64647f;
+    --dir-line: rgba(255, 255, 255, 0.09);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Inter', sans-serif; background: var(--dir-bg); color: var(--dir-text); }
+  .container { width: min(1200px, 92%); margin-inline: auto; }
+  .skip-link { position: absolute; left: -999px; top: 1rem; z-index: 99; padding: .5rem 1rem; background: var(--dir-gold); color: #000; font-weight: 700; text-decoration: none; border-radius: 4px; }
+  .skip-link:focus { left: 1rem; }
+  .site-header { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(14px); background: rgba(8, 8, 24, .88); border-bottom: 1px solid var(--dir-line); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .nav-logo { display: inline-flex; align-items: center; gap: .6rem; color: #fff; text-decoration: none; font-size: 1.05rem; }
+  .nav-logo span { width: 34px; height: 34px; border-radius: 6px; display: grid; place-items: center; background: linear-gradient(135deg, var(--dir-gold), var(--dir-gold-light)); color: #080818; font-weight: 800; font-size: .88rem; }
+  .nav-logo b { color: var(--dir-gold-light); }
+  .nav-links { display: flex; align-items: center; gap: 1.25rem; }
+  .nav-links a { color: var(--dir-muted); text-decoration: none; font-size: .84rem; font-weight: 600; transition: color .2s; }
+  .nav-links a:hover, .nav-links a.active { color: #fff; }
+  .nav-cta { padding: .45rem .85rem; border-radius: 5px; background: linear-gradient(135deg, var(--dir-gold), var(--dir-gold-light)) !important; color: #080818 !important; font-weight: 700 !important; }
+  .nav-toggle { display: none; background: transparent; border: 0; cursor: pointer; padding: .5rem; }
+  .nav-toggle span { display: block; width: 22px; height: 2px; background: #fff; margin: 4px 0; border-radius: 1px; }
+
+  .page-hero { padding: 72px 0 56px; background: #101024; border-bottom: 1px solid var(--dir-line); text-align: center; }
+  .breadcrumb { display: flex; flex-wrap: wrap; justify-content: center; gap: .48rem; margin-bottom: 1.25rem; color: var(--dir-dim); font-size: .72rem; }
+  .breadcrumb a { color: var(--dir-dim); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--dir-gold-light); }
+  .page-hero h1 { max-width: 900px; margin: 0 auto; color: #fff; font-size: clamp(2rem, 4.7vw, 3.2rem); line-height: 1.15; letter-spacing: -.03em; font-weight: 800; }
+  .page-hero p { max-width: 620px; margin: 1rem auto 0; color: var(--dir-muted); font-size: .92rem; line-height: 1.6; }
+
+  .directory-section { padding: 64px 0 88px; }
+  .directory-toolbar { display: grid; grid-template-columns: 1fr auto; gap: 2.5rem; align-items: end; margin-bottom: 1.5rem; }
+  .section-kicker { display: flex; align-items: center; gap: .6rem; margin: 0 0 .75rem; color: var(--dir-gold); font-size: .64rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+  .section-kicker > span { width: 28px; height: 2px; background: var(--dir-gold); }
+  .directory-toolbar h2, .sector-callout h2, .link-section h2 { margin: 0; color: #fff; font-size: 1.25rem; font-weight: 800; }
+  .directory-toolbar > div > p:last-child { margin: .35rem 0 0; color: var(--dir-muted); font-size: .78rem; }
+  .directory-controls { display: grid; grid-template-columns: 230px 145px; gap: .7rem; }
+  .directory-controls label { color: var(--dir-dim); font-size: .58rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; }
+  .directory-controls input, .directory-controls select { display: block; width: 100%; height: 42px; margin-top: .35rem; padding: 0 .75rem; border: 1px solid var(--dir-line); border-radius: 6px; background: var(--dir-surface); color: var(--dir-text); font: inherit; font-size: .72rem; outline: none; }
+  .directory-controls input:focus, .directory-controls select:focus { border-color: var(--dir-gold); }
+
+  .business-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; align-items: start; }
+  .business-card { overflow: hidden; border: 1px solid var(--dir-line); border-radius: 10px; background: var(--dir-surface); box-shadow: 0 18px 45px -35px #000; transition: transform .25s ease, border-color .25s ease; }
+  .business-card:hover { border-color: rgba(212, 168, 68, .3); transform: translateY(-2px); }
+  .business-card[hidden] { display: none; }
+  .business-photo { position: relative; display: block; aspect-ratio: 16 / 10; overflow: hidden; background: #1a1a31; }
+  .business-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s; }
+  .business-card:hover .business-photo img { transform: scale(1.03); }
+  .business-photo > span { position: absolute; right: .55rem; bottom: .55rem; padding: .24rem .42rem; border-radius: 4px; background: rgba(8, 8, 24, .82); color: #fff; font-size: .55rem; }
+  .business-body { padding: 1rem; }
+  .business-tags, .business-chips { display: flex; flex-wrap: wrap; gap: .35rem; }
+  .business-tags span, .business-chips span { padding: .22rem .45rem; border: 1px solid rgba(212, 168, 68, .22); border-radius: 999px; color: var(--dir-gold); font-size: .55rem; font-weight: 600; }
+  .business-card h3 { margin: .62rem 0 .35rem; font-size: 1.05rem; font-weight: 700; }
+  .business-card h3 a { color: #fff; text-decoration: none; }
+  .business-card h3 a:hover { color: var(--dir-gold-light); }
+  .business-rating { display: flex; align-items: center; gap: .3rem; font-size: .68rem; }
+  .business-rating > span { color: var(--dir-gold); }
+  .business-rating small { color: var(--dir-dim); }
+  .business-card address { min-height: 2.6em; margin: .55rem 0; color: var(--dir-muted); font-size: .68rem; font-style: normal; line-height: 1.5; }
+  .business-chips { margin: .75rem 0; }
+  .business-chips span { border-color: var(--dir-line); color: var(--dir-dim); }
+  .business-actions { display: flex; align-items: center; justify-content: space-between; gap: .65rem; margin-top: .9rem; }
+  .business-primary, .gold-button { padding: .6rem .85rem; border-radius: 5px; background: linear-gradient(135deg, var(--dir-gold), var(--dir-gold-light)); color: #090918; font-size: .64rem; font-weight: 800; text-decoration: none; }
+  .business-directions { color: #2ecc71; font-size: .64rem; font-weight: 800; text-decoration: none; }
+
+  .empty-state, .no-results { padding: 2.5rem; border: 1px solid var(--dir-line); border-radius: 10px; background: var(--dir-surface); text-align: center; }
+  .empty-state p, .no-results { color: var(--dir-muted); font-size: .9rem; margin: 0 0 1rem; }
+  .empty-state a { color: var(--dir-gold); font-weight: 800; text-decoration: none; }
+
+  .sector-callout { margin-top: 2.5rem; padding: 1.8rem; border: 1px solid var(--dir-line); border-radius: 9px; background: var(--dir-surface); }
+  .sector-callout > p:not(.section-kicker) { margin: .65rem 0 1rem; color: var(--dir-muted); font-size: .75rem; }
+  .sector-callout > div { display: flex; flex-wrap: wrap; gap: .65rem; }
+  .outline-button { padding: .58rem .78rem; border: 1px solid var(--dir-line); border-radius: 5px; color: #fff; font-size: .64rem; font-weight: 800; text-decoration: none; }
+
+  .link-section { margin-top: 2rem; }
+  .link-section h2 { margin-bottom: .8rem; }
+  .link-section > div { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .link-section a { padding: .42rem .62rem; border: 1px solid var(--dir-line); border-radius: 5px; background: var(--dir-surface); color: var(--dir-muted); font-size: .62rem; text-decoration: none; }
+  .link-section a:hover { border-color: rgba(212, 168, 68, .35); color: var(--dir-gold-light); }
+
+  .publication { padding: .8rem 0; border-top: 1px solid var(--dir-line); border-bottom: 1px solid var(--dir-line); background: #0d0d21; color: var(--dir-dim); font-size: .58rem; }
+  .publication .container { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+
+  .site-footer { padding: 48px 0 28px; background: #060613; border-top: 1px solid var(--dir-line); }
+  .footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+  .footer-brand p { color: var(--dir-dim); font-size: .74rem; line-height: 1.6; max-width: 320px; }
+  .footer-grid h2 { color: #fff; font-size: .74rem; text-transform: uppercase; letter-spacing: .08em; margin: 0 0 .8rem; }
+  .footer-grid a { display: block; color: var(--dir-muted); text-decoration: none; font-size: .72rem; margin-bottom: .45rem; }
+  .footer-grid a:hover { color: #fff; }
+  .footer-bottom { color: var(--dir-dim); font-size: .65rem; border-top: 1px solid var(--dir-line); padding-top: 1.2rem; }
+  .back-top { position: fixed; right: 1.2rem; bottom: 1.2rem; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; background: var(--dir-surface-2); border: 1px solid var(--dir-line); color: #fff; text-decoration: none; font-size: .9rem; z-index: 40; }
+
+  @media (max-width: 900px) {
+    .directory-toolbar { grid-template-columns: 1fr; }
+    .business-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 620px) {
+    .page-hero { padding: 48px 0 36px; }
+    .directory-section { padding: 40px 0 60px; }
+    .directory-controls, .business-grid, .footer-grid { grid-template-columns: 1fr; }
+    .publication .container { flex-direction: column; }
+    .nav-links { display: none; }
+    .nav-toggle { display: block; }
+  }
 </style>

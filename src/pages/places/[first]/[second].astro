@@ -11,7 +11,8 @@ import {
   PLACE_CATEGORIES,
   getAllPlaces,
   getSectorPlaces,
-  getPopulatedCategories,
+  getSectorCategoryPlaces,
+  getCategorySectors,
   getPopulatedSectorCategoryPairs,
   type PlaceRecord,
   type SectorMeta,
@@ -87,13 +88,56 @@ const canonical = isDetail
 const publishedDate = isDetail && place ? place.retrievedAt : places[0]?.retrievedAt || '2026-09-03';
 const formattedDate = new Intl.DateTimeFormat('en-PK', { dateStyle: 'long' }).format(new Date(`${publishedDate}T12:00:00`));
 
-const nearbySectors = sectorMeta
-  ? SECTORS_DIRECTORY.filter((s) => s.key !== sectorMeta.key)
+// Only link to sectors that actually have places in this category
+const nearbySectors = categoryMeta
+  ? getCategorySectors(categoryMeta.key)
+      .map((s) => s.sector)
+      .filter((s) => s.key !== sectorMeta?.key)
   : [];
 
-const relatedCategories = categoryMeta
-  ? getPopulatedCategories().filter((c) => c.key !== categoryMeta.key)
-  : getPopulatedCategories();
+// Only link to categories that actually exist in this sector
+const relatedCategories = sectorMeta
+  ? PLACE_CATEGORIES.filter(
+      (c) => getSectorCategoryPlaces(sectorMeta.key, c.key).length > 0 && c.key !== categoryMeta?.key
+    )
+  : [];
+
+// Image fallback helper
+const categorySvgFallback: Record<string, string> = {
+  mosque: '/images/amenities/mosques.svg',
+  park: '/images/amenities/parks.svg',
+  bakery: '/images/amenities/commercial.svg',
+  banks: '/images/amenities/banks.svg',
+  'beauty-salons': '/images/amenities/services.svg',
+  'fast-food': '/images/amenities/restaurants.svg',
+  gym: '/images/amenities/sports.svg',
+  pharmacy: '/images/amenities/healthcare.svg',
+  'guest-house': '/images/amenities/services.svg',
+  'flower-shop': '/images/amenities/commercial.svg',
+  schools: '/images/amenities/education.svg',
+  cafes: '/images/amenities/restaurants.svg',
+  restaurants: '/images/amenities/restaurants.svg',
+  laundry: '/images/amenities/services.svg',
+  club: '/images/amenities/sports.svg',
+  idc: '/images/amenities/healthcare.svg',
+  supermarkets: '/images/amenities/supermarkets.svg',
+  'police-station': '/images/amenities/services.svg',
+  hospital: '/images/amenities/healthcare.svg',
+  'post-office': '/images/amenities/services.svg',
+  colleges: '/images/amenities/education.svg',
+  'internet-providers': '/images/amenities/services.svg',
+  hostels: '/images/amenities/services.svg',
+  'courier-services': '/images/amenities/services.svg',
+  hotel: '/images/amenities/services.svg',
+  clinic: '/images/amenities/healthcare.svg',
+  shopping: '/images/amenities/commercial.svg',
+  services: '/images/amenities/services.svg',
+};
+
+const getPlaceImg = (p: PlaceRecord) => {
+  if (p.image && !p.image.includes('placeholder')) return p.image;
+  return categorySvgFallback[p.category] || '/images/amenities/commercial.svg';
+};
 
 const structuredData = isDetail
   ? {
@@ -190,10 +234,11 @@ const structuredData = isDetail
             <div class="detail-main-info">
               <div class="detail-photo-box">
                 <img
-                  src={place.image || '/images/og/homepage-og.svg'}
+                  src={getPlaceImg(place)}
                   alt={`${place.name} in ${place.sectorLabel}, DHA Phase 6 Lahore`}
                   width="800"
                   height="460"
+                  onerror="this.onerror=null;this.src='/images/amenities/commercial.svg';"
                 />
                 <span>Google Maps photo</span>
               </div>
@@ -397,12 +442,13 @@ const structuredData = isDetail
                 >
                   <a class="business-photo" href={`/places/${p.category}/${p.slug}/`}>
                     <img
-                      src={p.image || '/images/og/homepage-og.svg'}
+                      src={getPlaceImg(p)}
                       alt={`${p.name} in ${sectorMeta?.label}, DHA Phase 6 Lahore`}
                       width="720"
                       height="440"
                       loading="lazy"
                       referrerpolicy="no-referrer"
+                      onerror="this.onerror=null;this.src='/images/amenities/commercial.svg';"
                     />
                     <span>Google Maps photo</span>
                   </a>
@@ -477,23 +523,27 @@ const structuredData = isDetail
             </div>
           </section>
 
-          <section class="link-section">
-            <h2>Also search nearby sectors</h2>
-            <div>
-              {nearbySectors.map((sector) => (
-                <a href={`/places/${sector.key}/${categoryMeta?.key}/`}>{sector.label}</a>
-              ))}
-            </div>
-          </section>
+          {nearbySectors.length > 0 && (
+            <section class="link-section">
+              <h2>Also search nearby sectors</h2>
+              <div>
+                {nearbySectors.map((sector) => (
+                  <a href={`/places/${sector.key}/${categoryMeta?.key}/`}>{sector.label}</a>
+                ))}
+              </div>
+            </section>
+          )}
 
-          <section class="link-section">
-            <h2>Related places and services</h2>
-            <div>
-              {relatedCategories.map((category) => (
-                <a href={`/places/${sectorMeta?.key}/${category.key}/`}>{category.label}</a>
-              ))}
-            </div>
-          </section>
+          {relatedCategories.length > 0 && (
+            <section class="link-section">
+              <h2>Related places and services</h2>
+              <div>
+                {relatedCategories.map((category) => (
+                  <a href={`/places/${sectorMeta?.key}/${category.key}/`}>{category.label}</a>
+                ))}
+              </div>
+            </section>
+          )}
         </div>
       </section>
 

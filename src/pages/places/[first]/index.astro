@@ -8,9 +8,12 @@
 import PageLayout from '@layouts/PageLayout.astro';
 import {
   SECTORS_DIRECTORY,
-  getPopulatedCategories,
+  PLACE_CATEGORIES,
   getSectorPlaces,
   getCategoryPlaces,
+  getPopulatedCategories,
+  getSectorCategoryPlaces,
+  getCategorySectors,
   type PlaceRecord,
   type SectorMeta,
 } from '@data/places/index';
@@ -40,7 +43,33 @@ export function getStaticPaths() {
     },
   }));
 
-  return [...sectorPaths, ...categoryPaths];
+  // Plural aliases (prevents 404 on common plural routes like /places/mosques/, /places/parks/, etc.)
+  const ALIASES: Record<string, string> = {
+    mosques: 'mosque',
+    parks: 'park',
+    gyms: 'gym',
+    hospitals: 'hospital',
+    supermarket: 'supermarkets',
+    school: 'schools',
+    bank: 'banks',
+    cafe: 'cafes',
+    restaurant: 'restaurants',
+  };
+
+  const aliasPaths = Object.entries(ALIASES).map(([aliasKey, canonicalKey]) => {
+    const category = PLACE_CATEGORIES.find((c) => c.key === canonicalKey);
+    return {
+      params: { first: aliasKey },
+      props: {
+        type: 'category' as const,
+        sectorMeta: null,
+        categoryMeta: category || null,
+        places: category ? getCategoryPlaces(canonicalKey) : [],
+      },
+    };
+  }).filter((p) => p.props.categoryMeta !== null);
+
+  return [...sectorPaths, ...categoryPaths, ...aliasPaths];
 }
 
 interface Props {
@@ -65,7 +94,7 @@ const metaDesc =
     ? `Explore verified schools, clinics, restaurants, mosques, banks, and recreation in ${sectorMeta.label}, DHA Phase 6 Lahore with exact addresses, ratings, and maps.`
     : categoryMeta
       ? `Find verified ${categoryMeta.label} across all sectors of DHA Phase 6 Lahore with addresses, Google ratings, reviews, and direct Google Maps navigation.`
-      : 'Comprehensive directory of places and amenities in DHA Phase 6 Lahore.';
+      : 'Comprehensive directory of verified local businesses, amenities, and essential services across DHA Phase 6 Lahore.';
 
 const canonical = `${SITE.url}/places/${type === 'sector' ? sectorMeta?.key : categoryMeta?.key}/`;
 
@@ -132,17 +161,54 @@ const structuredData = {
 const publishedDate = places[0]?.retrievedAt || '2026-09-03';
 const formattedDate = new Intl.DateTimeFormat('en-PK', { dateStyle: 'long' }).format(new Date(`${publishedDate}T12:00:00`));
 
-// Sectors for "Also search nearby sectors"
+// Sectors for "Also search nearby sectors" (only sectors with places for this category)
 const nearbySectors =
-  type === 'sector'
-    ? SECTORS_DIRECTORY.filter((s) => s.key !== sectorMeta?.key)
-    : SECTORS_DIRECTORY.filter((s) => places.some((p) => p.sector === s.key));
+  type === 'category' && categoryMeta
+    ? getCategorySectors(categoryMeta.key).map((s) => s.sector)
+    : SECTORS_DIRECTORY.filter((s) => s.key !== sectorMeta?.key);
 
-// Categories for "Related places and services"
+// Categories for "Related places and services" (only categories that actually exist in this sector)
 const relatedCategories =
-  type === 'sector'
-    ? getPopulatedCategories()
+  type === 'sector' && sectorMeta
+    ? PLACE_CATEGORIES.filter((c) => getSectorCategoryPlaces(sectorMeta.key, c.key).length > 0)
     : getPopulatedCategories().filter((c) => c.key !== categoryMeta?.key);
+
+// Image fallback helper
+const categorySvgFallback: Record<string, string> = {
+  mosque: '/images/amenities/mosques.svg',
+  park: '/images/amenities/parks.svg',
+  bakery: '/images/amenities/commercial.svg',
+  banks: '/images/amenities/banks.svg',
+  'beauty-salons': '/images/amenities/services.svg',
+  'fast-food': '/images/amenities/restaurants.svg',
+  gym: '/images/amenities/sports.svg',
+  pharmacy: '/images/amenities/healthcare.svg',
+  'guest-house': '/images/amenities/services.svg',
+  'flower-shop': '/images/amenities/commercial.svg',
+  schools: '/images/amenities/education.svg',
+  cafes: '/images/amenities/restaurants.svg',
+  restaurants: '/images/amenities/restaurants.svg',
+  laundry: '/images/amenities/services.svg',
+  club: '/images/amenities/sports.svg',
+  idc: '/images/amenities/healthcare.svg',
+  supermarkets: '/images/amenities/supermarkets.svg',
+  'police-station': '/images/amenities/services.svg',
+  hospital: '/images/amenities/healthcare.svg',
+  'post-office': '/images/amenities/services.svg',
+  colleges: '/images/amenities/education.svg',
+  'internet-providers': '/images/amenities/services.svg',
+  hostels: '/images/amenities/services.svg',
+  'courier-services': '/images/amenities/services.svg',
+  hotel: '/images/amenities/services.svg',
+  clinic: '/images/amenities/healthcare.svg',
+  shopping: '/images/amenities/commercial.svg',
+  services: '/images/amenities/services.svg',
+};
+
+const getPlaceImg = (p: PlaceRecord) => {
+  if (p.image && !p.image.includes('placeholder')) return p.image;
+  return categorySvgFallback[p.category] || '/images/amenities/commercial.svg';
+};
 ---
 
 <PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
@@ -220,12 +286,13 @@ const relatedCategories =
             >
               <a class="business-photo" href={`/places/${place.category}/${place.slug}/`}>
                 <img
-                  src={place.image || '/images/og/homepage-og.svg'}
+                  src={getPlaceImg(place)}
                   alt={`${place.name} in ${place.sectorLabel}, DHA Phase 6 Lahore`}
                   width="720"
                   height="440"
                   loading="lazy"
                   referrerpolicy="no-referrer"
+                  onerror="this.onerror=null;this.src='/images/amenities/commercial.svg';"
                 />
                 <span>Google Maps photo</span>
               </a>
@@ -319,26 +386,32 @@ const relatedCategories =
       </section>
 
       <!-- Also search nearby sectors (matches screenshot) -->
-      <section class="link-section">
-        <h2>Also search nearby sectors</h2>
-        <div>
-          {nearbySectors.map((sector) => (
-            <a href={`/places/${sector.key}/`}>{sector.label}</a>
-          ))}
-        </div>
-      </section>
+      {nearbySectors.length > 0 && (
+        <section class="link-section">
+          <h2>Also search nearby sectors</h2>
+          <div>
+            {nearbySectors.map((sector) => (
+              <a href={type === 'category' && categoryMeta ? `/places/${sector.key}/${categoryMeta.key}/` : `/places/${sector.key}/`}>
+                {sector.label}
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
 
       <!-- Related places and services (matches screenshot) -->
-      <section class="link-section">
-        <h2>Related places and services</h2>
-        <div>
-          {relatedCategories.map((category) => (
-            <a href={type === 'sector' && sectorMeta ? `/places/${sectorMeta.key}/${category.key}/` : `/places/${category.key}/`}>
-              {category.label}
-            </a>
-          ))}
-        </div>
-      </section>
+      {relatedCategories.length > 0 && (
+        <section class="link-section">
+          <h2>Related places and services</h2>
+          <div>
+            {relatedCategories.map((category) => (
+              <a href={type === 'sector' && sectorMeta ? `/places/${sectorMeta.key}/${category.key}/` : `/places/${category.key}/`}>
+                {category.label}
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   </section>
 
