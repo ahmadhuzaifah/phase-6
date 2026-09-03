@@ -4,18 +4,18 @@
  * ═══════════════════════════════════════════════════════════════════════════════ */
 
 :root {
-  /* ── Primary Colors — Regal Real Estate Gold / Champagne ───────────────── */
-  --color-primary-50: #FFF9E8;
-  --color-primary-100: #FBECC0;
-  --color-primary-200: #F6DE91;
-  --color-primary-300: #F0C95C;
-  --color-primary-400: #E2B74B;
-  --color-primary-500: #D4A844;   /* Homepage brand gold */
-  --color-primary-600: #BA8C2D;
-  --color-primary-700: #98701E;
-  --color-primary-800: #765515;
-  --color-primary-900: #533B0E;
-  --color-primary-950: #302006;
+  /* ── Primary Colors — Emerald Prestige / Luxury Jade ─────────────────── */
+  --color-primary-50: #ECFDF5;
+  --color-primary-100: #D1FAE5;
+  --color-primary-200: #A7F3D0;
+  --color-primary-300: #6EE7B7;
+  --color-primary-400: #34D399;
+  --color-primary-500: #10B981;   /* Homepage brand emerald */
+  --color-primary-600: #059669;
+  --color-primary-700: #047857;
+  --color-primary-800: #065F46;
+  --color-primary-900: #064E3B;
+  --color-primary-950: #022C22;
 
   /* ── Secondary Colors — Royal Navy & Slate (Prestige, Authority & Trust) ── */
   --color-secondary-50: #F0F4FA;
@@ -64,8 +64,9 @@
   --color-info: #0284C7;
 
   /* ── Luxury Gradients ──────────────────────────────────────────────────── */
-  --gradient-gold: linear-gradient(135deg, #D4A844 0%, #F0C95C 100%);
-  --gradient-gold-soft: linear-gradient(135deg, rgba(212, 168, 68, 0.18) 0%, rgba(240, 201, 92, 0.08) 100%);
+  --gradient-gold: linear-gradient(135deg, #059669 0%, #10B981 100%);
+  --gradient-primary: linear-gradient(135deg, #059669 0%, #10B981 100%);
+  --gradient-gold-soft: linear-gradient(135deg, rgba(16, 185, 129, 0.18) 0%, rgba(52, 211, 153, 0.08) 100%);
   --gradient-navy: linear-gradient(135deg, #161635 0%, #0A0A1A 100%);
   --gradient-dark-hero: linear-gradient(180deg, #0A0A1A 0%, #111128 60%, #0A0A1A 100%);
   --gradient-card-overlay: linear-gradient(180deg, rgba(10, 10, 26, 0) 0%, rgba(10, 10, 26, 0.9) 100%);
@@ -79,7 +80,7 @@
   --bg-dark: #0A0A1A;
   --bg-dark-secondary: #111128;
   --bg-dark-card: #161635;
-  --bg-gold-subtle: rgba(212, 168, 68, 0.08);
+  --bg-gold-subtle: rgba(16, 185, 129, 0.08);
 
   /* ── Text Colors ───────────────────────────────────────────────────────── */
   --text-primary: #F0F0F5;
@@ -88,17 +89,18 @@
   --text-muted: #6A6A85;
   --text-inverse: #FFFFFF;
   --text-inverse-muted: #9A9AB5;
-  --text-accent: #D4A844;
-  --text-accent-dark: #F0C95C;
-  --text-link: #D4A844;
-  --text-link-hover: #F0C95C;
+  --text-accent: #10B981;
+  --text-accent-dark: #34D399;
+  --text-link: #10B981;
+  --text-link-hover: #34D399;
 
   /* ── Border Colors ─────────────────────────────────────────────────────── */
   --border-light: rgba(255, 255, 255, 0.08);
   --border-subtle: rgba(255, 255, 255, 0.05);
   --border-medium: rgba(255, 255, 255, 0.14);
-  --border-gold: rgba(212, 168, 68, 0.35);
-  --border-gold-strong: #D4A844;
+  --border-gold: rgba(16, 185, 129, 0.35);
+  --border-gold-strong: #10B981;
+  --border-dark: rgba(255, 255, 255, 0.12);
   --border-dark: rgba(255, 255, 255, 0.12);
 
   /* ── Spacing Scale (4px base) ──────────────────────────────────────────── */
