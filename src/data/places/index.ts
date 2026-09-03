@@ -123,4 +123,70 @@ export function getCategoryMeta(categoryKey: string): PlaceCategoryMeta | undefi
   return PLACE_CATEGORIES.find((c) => c.key === categoryKey);
 }
 
+/**
+ * Returns only categories that have at least 1 verified place in DHA Phase 6.
+ * Prevents generating empty category directory routes.
+ */
+export function getPopulatedCategories(): PlaceCategoryMeta[] {
+  return PLACE_CATEGORIES.filter((category) =>
+    ALL_SECTOR_PLACES.some((place) => place.category === category.key)
+  );
+}
+
+/**
+ * Returns only (sector, category) combinations that have at least 1 verified place.
+ * Prevents generating 600+ empty thin pages.
+ */
+export function getPopulatedSectorCategoryPairs(): {
+  sector: SectorMeta;
+  category: PlaceCategoryMeta;
+  places: PlaceRecord[];
+}[] {
+  const pairs: { sector: SectorMeta; category: PlaceCategoryMeta; places: PlaceRecord[] }[] = [];
+  for (const sector of SECTORS_DIRECTORY) {
+    for (const category of PLACE_CATEGORIES) {
+      const places = getSectorCategoryPlaces(sector.key, category.key);
+      if (places.length > 0) {
+        pairs.push({ sector, category, places });
+      }
+    }
+  }
+  return pairs;
+}
+
+/**
+ * Summarizes top categories and total places for a given sector.
+ */
+export function getSectorCategorySummary(sectorKey: string): {
+  totalPlaces: number;
+  topCategories: string[];
+} {
+  const places = getSectorPlaces(sectorKey);
+  const catSet = new Set<string>();
+  places.forEach((p) => catSet.add(p.categoryLabel));
+  return {
+    totalPlaces: places.length,
+    topCategories: Array.from(catSet).slice(0, 4),
+  };
+}
+
+/**
+ * Returns all sectors that contain verified places for a given category.
+ * Used for building reliable internal links without dead ends.
+ */
+export function getCategorySectors(categoryKey: string): {
+  sector: SectorMeta;
+  count: number;
+}[] {
+  const matchingSectors: { sector: SectorMeta; count: number }[] = [];
+  for (const sector of SECTORS_DIRECTORY) {
+    const count = getSectorCategoryPlaces(sector.key, categoryKey).length;
+    if (count > 0) {
+      matchingSectors.push({ sector, count });
+    }
+  }
+  return matchingSectors;
+}
+
 export { PLACE_CATEGORIES };
+

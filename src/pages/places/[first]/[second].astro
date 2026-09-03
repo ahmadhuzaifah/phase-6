@@ -11,7 +11,7 @@ import {
   PLACE_CATEGORIES,
   getAllPlaces,
   getSectorPlaces,
-  getSectorCategoryPlaces,
+  getPopulatedSectorCategoryPairs,
   type PlaceRecord,
   type SectorMeta,
 } from '@data/places/index';
@@ -20,19 +20,18 @@ import propertiesRaw from '@data/properties-import.json';
 import { SITE } from '@data/site';
 
 export function getStaticPaths() {
-  // 1. Sector + Category combinations (17 sectors * 41 categories = 697 routes)
-  const sectorCategoryPaths = SECTORS_DIRECTORY.flatMap((sector) =>
-    PLACE_CATEGORIES.map((category) => ({
-      params: { first: sector.key, second: category.key },
-      props: {
-        type: 'sector-category' as const,
-        sectorMeta: sector,
-        categoryMeta: category,
-        places: getSectorCategoryPlaces(sector.key, category.key),
-        place: null,
-      },
-    }))
-  );
+  // 1. Populated Sector + Category combinations ONLY (strictly prunes empty 0-place routes)
+  const populatedPairs = getPopulatedSectorCategoryPairs();
+  const sectorCategoryPaths = populatedPairs.map(({ sector, category, places }) => ({
+    params: { first: sector.key, second: category.key },
+    props: {
+      type: 'sector-category' as const,
+      sectorMeta: sector,
+      categoryMeta: category,
+      places,
+      place: null,
+    },
+  }));
 
   // 2. Individual Place Detail Pages (109+ routes)
   const allPlaces = getAllPlaces();
@@ -548,11 +547,8 @@ const structuredData = isDetail
         ) : (
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center max-w-2xl mx-auto">
             <div class="text-4xl mb-3">📍</div>
-            <h2 class="text-xl font-bold text-white mb-2">
-              No {categoryMeta?.label} Currently Listed in {sectorMeta?.label}
-            </h2>
-            <p class="text-slate-400 text-sm mb-6">
-              {categoryMeta?.label} may be located in adjacent commercial hubs like CCA 1 & CCA 2 or Main Boulevard.
+            <p class="text-slate-300 text-base font-medium mb-6">
+              Currently no verified listings available for this category. New locations will be added after verification.
             </p>
             <div class="flex items-center justify-center gap-3 flex-wrap">
               <a

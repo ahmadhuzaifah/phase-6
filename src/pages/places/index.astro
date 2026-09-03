@@ -3,6 +3,14 @@
  * DHA Phase 6 Lahore — Places and Services Directory Page
  * Matching the exact structure, layout, aesthetic, and components requested.
  */
+import {
+  SECTORS_DIRECTORY,
+  getPopulatedCategories,
+  getSectorCategorySummary,
+  getCategorySectors,
+} from '@data/places/index';
+
+const populatedCategories = getPopulatedCategories();
 ---
 
 <!DOCTYPE html>
@@ -269,956 +277,85 @@
       </div>
     </header>
 
-    <!-- Sector Directory Navigation Grid -->
-    <section class="content-section bg-secondary" style="padding: 2.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.08);">
+    <!-- Explore DHA Phase 6 Lahore Facilities (Task 4) -->
+    <section class="facilities-showcase" id="facilities-overview">
       <div class="container">
-        <div style="text-align: center; max-width: 700px; margin: 0 auto 2rem;">
-          <span style="display: inline-block; padding: 0.25rem 0.75rem; background: rgba(245,158,11,0.1); color: #f59e0b; border: 1px solid rgba(245,158,11,0.2); border-radius: 9999px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">
-            Complete Phase 6 Coverage
-          </span>
-          <h2 style="font-size: 1.75rem; font-weight: 800; color: #fff; margin-bottom: 0.5rem;">Browse Places by Sector &amp; Zone</h2>
-          <p style="color: #94a3b8; font-size: 0.95rem;">
-            Explore dedicated facility directories for each sector, including schools, mosques, clinics, banks, and dining.
+        <div class="facilities-header reveal">
+          <span class="facilities-badge">Phase 6 Facilities Directory</span>
+          <h2 class="facilities-title">Explore DHA Phase 6 Lahore Facilities</h2>
+          <p class="facilities-subtitle">
+            Discover schools, hospitals, restaurants, shopping areas and essential services across DHA Phase 6 Lahore.
           </p>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.85rem;">
-          <a href="/places/sector-a/" class="glass-card" style="padding: 1rem; text-align: center; border-radius: 0.75rem; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; transition: transform 0.2s, border-color 0.2s;">
-            <span style="font-size: 1.1rem; font-weight: 800; color: #fff;">Sector A</span>
-            <span style="font-size: 0.75rem; color: #f59e0b; font-weight: 600;">Western Gateway</span>
-          </a>
-          <a href="/places/sector-b/" class="glass-card" style="padding: 1rem; text-align: center; border-radius: 0.75rem; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; transition: transform 0.2s, border-color 0.2s;">
-            <span style="font-size: 1.1rem; font-weight: 800; color: #fff;">Sector B</span>
-            <span style="font-size: 0.75rem; color: #f59e0b; font-weight: 600;">Schools &amp; Cafes</span>
-          </a>
-          <a href="/places/sector-c/" class="glass-card" style="padding: 1rem; text-align: center; border-radius: 0.75rem; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; transition: transform 0.2s, border-color 0.2s;">
-            <span style="font-size: 1.1rem; font-weight: 800; color: #fff;">Sector C</span>
-            <span style="font-size: 0.75rem; color: #f59e0b; font-weight: 600;">Grand Mosque</span>
-          </a>
-          <a href="/places/sector-d/" class="glass-card" style="padding: 1rem; text-align: center; border-radius: 0.75rem; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; transition: transform 0.2s, border-color 0.2s;">
-            <span style="font-size: 1.1rem; font-weight: 800; color: #fff;">Sector D</span>
-            <span style="font-size: 0.75rem; color: #f59e0b; font-weight: 600;">Beaconhouse &amp; Police</span>
-          </a>
-          <a href="/places/sector-e/" class="glass-card" style="padding: 1rem; text-align: center; border-radius: 0.75rem; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; transition: transform 0.2s, border-color 0.2s;">
-            <span style="font-size: 1.1rem; font-weight: 800; color: #fff;">Sector E</span>
-            <span style="font-size: 0.75rem; color: #f59e0b; font-weight: 600;">DHA Medical Centre</span>
-          </a>
-          <a href="/places/sector-f/" class="glass-card" style="padding: 1rem; text-align: center; border-radius: 0.75rem; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; transition: transform 0.2s, border-color 0.2s;">
-            <span style="font-size: 1.1rem; font-weight: 800; color: #fff;">Sector F</span>
-            <span style="font-size: 0.75rem; color: #f59e0b; font-weight: 600;">Sports Complex</span>
-          </a>
-          <a href="/places/sector-g/" class="glass-card" style="padding: 1rem; text-align: center; border-radius: 0.75rem; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; transition: transform 0.2s, border-color 0.2s;">
-            <span style="font-size: 1.1rem; font-weight: 800; color: #fff;">Sector G</span>
-            <span style="font-size: 0.75rem; color: #f59e0b; font-weight: 600;">Bedian Approach</span>
-          </a>
-          <a href="/places/sector-h/" class="glass-card" style="padding: 1rem; text-align: center; border-radius: 0.75rem; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; transition: transform 0.2s, border-color 0.2s;">
-            <span style="font-size: 1.1rem; font-weight: 800; color: #fff;">Sector H</span>
-            <span style="font-size: 0.75rem; color: #f59e0b; font-weight: 600;">Central Park &amp; Banks</span>
-          </a>
-          <a href="/places/sector-j/" class="glass-card" style="padding: 1rem; text-align: center; border-radius: 0.75rem; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; transition: transform 0.2s, border-color 0.2s;">
-            <span style="font-size: 1.1rem; font-weight: 800; color: #fff;">Sector J</span>
-            <span style="font-size: 0.75rem; color: #f59e0b; font-weight: 600;">Post Office &amp; LGU</span>
-          </a>
-          <a href="/places/sector-k/" class="glass-card" style="padding: 1rem; text-align: center; border-radius: 0.75rem; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; transition: transform 0.2s, border-color 0.2s;">
-            <span style="font-size: 1.1rem; font-weight: 800; color: #fff;">Sector K</span>
-            <span style="font-size: 0.75rem; color: #f59e0b; font-weight: 600;">Quiet Living &amp; Gym</span>
-          </a>
-          <a href="/places/sector-l/" class="glass-card" style="padding: 1rem; text-align: center; border-radius: 0.75rem; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; transition: transform 0.2s, border-color 0.2s;">
-            <span style="font-size: 1.1rem; font-weight: 800; color: #fff;">Sector L</span>
-            <span style="font-size: 0.75rem; color: #f59e0b; font-weight: 600;">APS School &amp; Parks</span>
-          </a>
-          <a href="/places/sector-m/" class="glass-card" style="padding: 1rem; text-align: center; border-radius: 0.75rem; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; transition: transform 0.2s, border-color 0.2s;">
-            <span style="font-size: 1.1rem; font-weight: 800; color: #fff;">Sector M</span>
-            <span style="font-size: 0.75rem; color: #f59e0b; font-weight: 600;">Future World College</span>
-          </a>
-          <a href="/places/sector-n/" class="glass-card" style="padding: 1rem; text-align: center; border-radius: 0.75rem; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; transition: transform 0.2s, border-color 0.2s;">
-            <span style="font-size: 1.1rem; font-weight: 800; color: #fff;">Sector N</span>
-            <span style="font-size: 0.75rem; color: #f59e0b; font-weight: 600;">PKLI &amp; Luxury Stays</span>
-          </a>
-          <a href="/places/cca/" class="glass-card" style="padding: 1rem; text-align: center; border-radius: 0.75rem; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; border-color: rgba(245,158,11,0.4); background: rgba(245,158,11,0.05); transition: transform 0.2s, border-color 0.2s;">
-            <span style="font-size: 1.1rem; font-weight: 800; color: #f59e0b;">CCA 1 &amp; 2</span>
-            <span style="font-size: 0.75rem; color: #fff; font-weight: 600;">Commercial Broadway</span>
-          </a>
-          <a href="/places/main-boulevard-commercial/" class="glass-card" style="padding: 1rem; text-align: center; border-radius: 0.75rem; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; border-color: rgba(245,158,11,0.4); background: rgba(245,158,11,0.05); transition: transform 0.2s, border-color 0.2s;">
-            <span style="font-size: 1.1rem; font-weight: 800; color: #f59e0b;">Main Boulevard</span>
-            <span style="font-size: 0.75rem; color: #fff; font-weight: 600;">Dolmen &amp; DHA Office</span>
-          </a>
-          <a href="/places/raya-commercial/" class="glass-card" style="padding: 1rem; text-align: center; border-radius: 0.75rem; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; border-color: rgba(245,158,11,0.4); background: rgba(245,158,11,0.05); transition: transform 0.2s, border-color 0.2s;">
-            <span style="font-size: 1.1rem; font-weight: 800; color: #f59e0b;">Raya Commercial</span>
-            <span style="font-size: 0.75rem; color: #fff; font-weight: 600;">Fairways Promenade</span>
-          </a>
-          <a href="/places/defence-raya/" class="glass-card" style="padding: 1rem; text-align: center; border-radius: 0.75rem; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; border-color: rgba(245,158,11,0.4); background: rgba(245,158,11,0.05); transition: transform 0.2s, border-color 0.2s;">
-            <span style="font-size: 1.1rem; font-weight: 800; color: #f59e0b;">Defence Raya</span>
-            <span style="font-size: 0.75rem; color: #fff; font-weight: 600;">18-Hole Golf Club</span>
-          </a>
+        <div class="facilities-grid">
+          {SECTORS_DIRECTORY.map((sector) => {
+            const summary = getSectorCategorySummary(sector.key);
+            const letter = sector.key.startsWith('sector-')
+              ? sector.key.replace('sector-', '').toUpperCase()
+              : sector.label.charAt(0);
+            return (
+              <a href={`/places/${sector.key}/`} class="facility-sector-card glass-card reveal">
+                <div class="facility-sector-top">
+                  <div class="facility-sector-letter">{letter}</div>
+                  <span class="facility-sector-count">{summary.totalPlaces} Places</span>
+                </div>
+                <div class="facility-sector-name">{sector.label}</div>
+                <div class="facility-sector-cats">
+                  {summary.topCategories.length > 0
+                    ? summary.topCategories.join(' • ')
+                    : 'Verified Community Facilities'}
+                </div>
+                <div class="facility-sector-btn">
+                  <span>Explore Facilities</span>
+                  <span>→</span>
+                </div>
+              </a>
+            );
+          })}
         </div>
       </div>
     </section>
 
-    <!-- Places Directory Section -->
-    <section class="content-section bg-primary">
+    <!-- Verified Places by Category Section -->
+    <section class="content-section bg-primary" id="all-categories">
       <div class="container">
+        <div class="section-header text-center" style="margin: 0 auto 40px; max-width: 750px;">
+          <h2 style="font-size: 2rem; font-weight: 800; color: #fff; margin-bottom: 10px;">
+            Verified Places by Category
+          </h2>
+          <p style="color: var(--clr-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+            Browse verified institutions, services, and commercial establishments in DHA Phase 6 Lahore.
+            Select a sector below to jump directly to verified local sector branches.
+          </p>
+        </div>
+
         <div class="directory-grid">
-          <!-- 1. Bakery -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/bakery/">Bakery</a></h2>
-            <p>Explore bakeries, cake shops, desserts, and fresh bread in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/bakery/">Sector A</a>
-              <a href="/sectors/sector-b/places/bakery/">Sector B</a>
-              <a href="/sectors/sector-c/places/bakery/">Sector C</a>
-              <a href="/sectors/sector-d/places/bakery/">Sector D</a>
-              <a href="/sectors/sector-e/places/bakery/">Sector E</a>
-              <a href="/sectors/sector-f/places/bakery/">Sector F</a>
-              <a href="/sectors/sector-g/places/bakery/">Sector G</a>
-              <a href="/sectors/sector-h/places/bakery/">Sector H</a>
-              <a href="/sectors/sector-j/places/bakery/">Sector J</a>
-              <a href="/sectors/sector-k/places/bakery/">Sector K</a>
-              <a href="/sectors/sector-l/places/bakery/">Sector L</a>
-              <a href="/sectors/sector-m/places/bakery/">Sector M</a>
-              <a href="/sectors/sector-n/places/bakery/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 2. Banks -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/banks/">Banks</a></h2>
-            <p>Explore bank branches, ATMs, HBL, UBL, MCB, Allied Bank, Askari Bank, Bank Alfalah, Bank Al Habib, Meezan Bank, Faysal Bank, National Bank, Soneri Bank, Standard Chartered, Dubai Islamic Bank, JS Bank, and other banking services in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/banks/">Sector A</a>
-              <a href="/sectors/sector-b/places/banks/">Sector B</a>
-              <a href="/sectors/sector-c/places/banks/">Sector C</a>
-              <a href="/sectors/sector-d/places/banks/">Sector D</a>
-              <a href="/sectors/sector-e/places/banks/">Sector E</a>
-              <a href="/sectors/sector-f/places/banks/">Sector F</a>
-              <a href="/sectors/sector-g/places/banks/">Sector G</a>
-              <a href="/sectors/sector-h/places/banks/">Sector H</a>
-              <a href="/sectors/sector-j/places/banks/">Sector J</a>
-              <a href="/sectors/sector-k/places/banks/">Sector K</a>
-              <a href="/sectors/sector-l/places/banks/">Sector L</a>
-              <a href="/sectors/sector-m/places/banks/">Sector M</a>
-              <a href="/sectors/sector-n/places/banks/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 3. Beauty Salons -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/beauty-salons/">Beauty Salons</a></h2>
-            <p>Explore beauty salons, hair studios, spas, and grooming services in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/beauty-salons/">Sector A</a>
-              <a href="/sectors/sector-b/places/beauty-salons/">Sector B</a>
-              <a href="/sectors/sector-c/places/beauty-salons/">Sector C</a>
-              <a href="/sectors/sector-d/places/beauty-salons/">Sector D</a>
-              <a href="/sectors/sector-e/places/beauty-salons/">Sector E</a>
-              <a href="/sectors/sector-f/places/beauty-salons/">Sector F</a>
-              <a href="/sectors/sector-g/places/beauty-salons/">Sector G</a>
-              <a href="/sectors/sector-h/places/beauty-salons/">Sector H</a>
-              <a href="/sectors/sector-j/places/beauty-salons/">Sector J</a>
-              <a href="/sectors/sector-k/places/beauty-salons/">Sector K</a>
-              <a href="/sectors/sector-l/places/beauty-salons/">Sector L</a>
-              <a href="/sectors/sector-m/places/beauty-salons/">Sector M</a>
-              <a href="/sectors/sector-n/places/beauty-salons/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 4. Club -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/club/">Club</a></h2>
-            <p>Explore Defence Raya Golf &amp; Country Club, social clubs, and membership-based recreation options in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/club/">Sector A</a>
-              <a href="/sectors/sector-b/places/club/">Sector B</a>
-              <a href="/sectors/sector-c/places/club/">Sector C</a>
-              <a href="/sectors/sector-d/places/club/">Sector D</a>
-              <a href="/sectors/sector-e/places/club/">Sector E</a>
-              <a href="/sectors/sector-f/places/club/">Sector F</a>
-              <a href="/sectors/sector-g/places/club/">Sector G</a>
-              <a href="/sectors/sector-h/places/club/">Sector H</a>
-              <a href="/sectors/sector-j/places/club/">Sector J</a>
-              <a href="/sectors/sector-k/places/club/">Sector K</a>
-              <a href="/sectors/sector-l/places/club/">Sector L</a>
-              <a href="/sectors/sector-m/places/club/">Sector M</a>
-              <a href="/sectors/sector-n/places/club/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 5. Cafes -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/cafes/">Cafes</a></h2>
-            <p>Explore coffee shops, tea spots, bakeries, and casual meeting places in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/cafes/">Sector A</a>
-              <a href="/sectors/sector-b/places/cafes/">Sector B</a>
-              <a href="/sectors/sector-c/places/cafes/">Sector C</a>
-              <a href="/sectors/sector-d/places/cafes/">Sector D</a>
-              <a href="/sectors/sector-e/places/cafes/">Sector E</a>
-              <a href="/sectors/sector-f/places/cafes/">Sector F</a>
-              <a href="/sectors/sector-g/places/cafes/">Sector G</a>
-              <a href="/sectors/sector-h/places/cafes/">Sector H</a>
-              <a href="/sectors/sector-j/places/cafes/">Sector J</a>
-              <a href="/sectors/sector-k/places/cafes/">Sector K</a>
-              <a href="/sectors/sector-l/places/cafes/">Sector L</a>
-              <a href="/sectors/sector-m/places/cafes/">Sector M</a>
-              <a href="/sectors/sector-n/places/cafes/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 6. Clinic -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/clinic/">Clinic</a></h2>
-            <p>Explore local clinics, specialist practices, and outpatient care options in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/clinic/">Sector A</a>
-              <a href="/sectors/sector-b/places/clinic/">Sector B</a>
-              <a href="/sectors/sector-c/places/clinic/">Sector C</a>
-              <a href="/sectors/sector-d/places/clinic/">Sector D</a>
-              <a href="/sectors/sector-e/places/clinic/">Sector E</a>
-              <a href="/sectors/sector-f/places/clinic/">Sector F</a>
-              <a href="/sectors/sector-g/places/clinic/">Sector G</a>
-              <a href="/sectors/sector-h/places/clinic/">Sector H</a>
-              <a href="/sectors/sector-j/places/clinic/">Sector J</a>
-              <a href="/sectors/sector-k/places/clinic/">Sector K</a>
-              <a href="/sectors/sector-l/places/clinic/">Sector L</a>
-              <a href="/sectors/sector-m/places/clinic/">Sector M</a>
-              <a href="/sectors/sector-n/places/clinic/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 7. Cinema -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/cinema/">Cinema</a></h2>
-            <p>Explore cinemas, movie schedules, and nearby entertainment options in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/cinema/">Sector A</a>
-              <a href="/sectors/sector-b/places/cinema/">Sector B</a>
-              <a href="/sectors/sector-c/places/cinema/">Sector C</a>
-              <a href="/sectors/sector-d/places/cinema/">Sector D</a>
-              <a href="/sectors/sector-e/places/cinema/">Sector E</a>
-              <a href="/sectors/sector-f/places/cinema/">Sector F</a>
-              <a href="/sectors/sector-g/places/cinema/">Sector G</a>
-              <a href="/sectors/sector-h/places/cinema/">Sector H</a>
-              <a href="/sectors/sector-j/places/cinema/">Sector J</a>
-              <a href="/sectors/sector-k/places/cinema/">Sector K</a>
-              <a href="/sectors/sector-l/places/cinema/">Sector L</a>
-              <a href="/sectors/sector-m/places/cinema/">Sector M</a>
-              <a href="/sectors/sector-n/places/cinema/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 8. Central Park -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/central-park/">Central Park</a></h2>
-            <p>Explore Central Park access, recreation, walking, and family activities in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/central-park/">Sector A</a>
-              <a href="/sectors/sector-b/places/central-park/">Sector B</a>
-              <a href="/sectors/sector-c/places/central-park/">Sector C</a>
-              <a href="/sectors/sector-d/places/central-park/">Sector D</a>
-              <a href="/sectors/sector-e/places/central-park/">Sector E</a>
-              <a href="/sectors/sector-f/places/central-park/">Sector F</a>
-              <a href="/sectors/sector-g/places/central-park/">Sector G</a>
-              <a href="/sectors/sector-h/places/central-park/">Sector H</a>
-              <a href="/sectors/sector-j/places/central-park/">Sector J</a>
-              <a href="/sectors/sector-k/places/central-park/">Sector K</a>
-              <a href="/sectors/sector-l/places/central-park/">Sector L</a>
-              <a href="/sectors/sector-m/places/central-park/">Sector M</a>
-              <a href="/sectors/sector-n/places/central-park/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 9. Dispensary -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/dispensary/">Dispensary</a></h2>
-            <p>Explore dispensaries and primary healthcare services in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/dispensary/">Sector A</a>
-              <a href="/sectors/sector-b/places/dispensary/">Sector B</a>
-              <a href="/sectors/sector-c/places/dispensary/">Sector C</a>
-              <a href="/sectors/sector-d/places/dispensary/">Sector D</a>
-              <a href="/sectors/sector-e/places/dispensary/">Sector E</a>
-              <a href="/sectors/sector-f/places/dispensary/">Sector F</a>
-              <a href="/sectors/sector-g/places/dispensary/">Sector G</a>
-              <a href="/sectors/sector-h/places/dispensary/">Sector H</a>
-              <a href="/sectors/sector-j/places/dispensary/">Sector J</a>
-              <a href="/sectors/sector-k/places/dispensary/">Sector K</a>
-              <a href="/sectors/sector-l/places/dispensary/">Sector L</a>
-              <a href="/sectors/sector-m/places/dispensary/">Sector M</a>
-              <a href="/sectors/sector-n/places/dispensary/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 10. Food Delivery -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/food-delivery/">Food Delivery</a></h2>
-            <p>Explore restaurants and services delivering food to the area in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/food-delivery/">Sector A</a>
-              <a href="/sectors/sector-b/places/food-delivery/">Sector B</a>
-              <a href="/sectors/sector-c/places/food-delivery/">Sector C</a>
-              <a href="/sectors/sector-d/places/food-delivery/">Sector D</a>
-              <a href="/sectors/sector-e/places/food-delivery/">Sector E</a>
-              <a href="/sectors/sector-f/places/food-delivery/">Sector F</a>
-              <a href="/sectors/sector-g/places/food-delivery/">Sector G</a>
-              <a href="/sectors/sector-h/places/food-delivery/">Sector H</a>
-              <a href="/sectors/sector-j/places/food-delivery/">Sector J</a>
-              <a href="/sectors/sector-k/places/food-delivery/">Sector K</a>
-              <a href="/sectors/sector-l/places/food-delivery/">Sector L</a>
-              <a href="/sectors/sector-m/places/food-delivery/">Sector M</a>
-              <a href="/sectors/sector-n/places/food-delivery/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 11. Hot N Spicy -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/hot-n-spicy/">Hot N Spicy</a></h2>
-            <p>Explore Hot N Spicy branches, menus, takeaway, and food delivery options in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/hot-n-spicy/">Sector A</a>
-              <a href="/sectors/sector-b/places/hot-n-spicy/">Sector B</a>
-              <a href="/sectors/sector-c/places/hot-n-spicy/">Sector C</a>
-              <a href="/sectors/sector-d/places/hot-n-spicy/">Sector D</a>
-              <a href="/sectors/sector-e/places/hot-n-spicy/">Sector E</a>
-              <a href="/sectors/sector-f/places/hot-n-spicy/">Sector F</a>
-              <a href="/sectors/sector-g/places/hot-n-spicy/">Sector G</a>
-              <a href="/sectors/sector-h/places/hot-n-spicy/">Sector H</a>
-              <a href="/sectors/sector-j/places/hot-n-spicy/">Sector J</a>
-              <a href="/sectors/sector-k/places/hot-n-spicy/">Sector K</a>
-              <a href="/sectors/sector-l/places/hot-n-spicy/">Sector L</a>
-              <a href="/sectors/sector-m/places/hot-n-spicy/">Sector M</a>
-              <a href="/sectors/sector-n/places/hot-n-spicy/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 12. Guest House -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/guest-house/">Guest House</a></h2>
-            <p>Explore short-stay guest houses and furnished accommodation in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/guest-house/">Sector A</a>
-              <a href="/sectors/sector-b/places/guest-house/">Sector B</a>
-              <a href="/sectors/sector-c/places/guest-house/">Sector C</a>
-              <a href="/sectors/sector-d/places/guest-house/">Sector D</a>
-              <a href="/sectors/sector-e/places/guest-house/">Sector E</a>
-              <a href="/sectors/sector-f/places/guest-house/">Sector F</a>
-              <a href="/sectors/sector-g/places/guest-house/">Sector G</a>
-              <a href="/sectors/sector-h/places/guest-house/">Sector H</a>
-              <a href="/sectors/sector-j/places/guest-house/">Sector J</a>
-              <a href="/sectors/sector-k/places/guest-house/">Sector K</a>
-              <a href="/sectors/sector-l/places/guest-house/">Sector L</a>
-              <a href="/sectors/sector-m/places/guest-house/">Sector M</a>
-              <a href="/sectors/sector-n/places/guest-house/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 13. Flower Shop -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/flower-shop/">Flower Shop</a></h2>
-            <p>Explore florists offering bouquets, gifts, and event arrangements in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/flower-shop/">Sector A</a>
-              <a href="/sectors/sector-b/places/flower-shop/">Sector B</a>
-              <a href="/sectors/sector-c/places/flower-shop/">Sector C</a>
-              <a href="/sectors/sector-d/places/flower-shop/">Sector D</a>
-              <a href="/sectors/sector-e/places/flower-shop/">Sector E</a>
-              <a href="/sectors/sector-f/places/flower-shop/">Sector F</a>
-              <a href="/sectors/sector-g/places/flower-shop/">Sector G</a>
-              <a href="/sectors/sector-h/places/flower-shop/">Sector H</a>
-              <a href="/sectors/sector-j/places/flower-shop/">Sector J</a>
-              <a href="/sectors/sector-k/places/flower-shop/">Sector K</a>
-              <a href="/sectors/sector-l/places/flower-shop/">Sector L</a>
-              <a href="/sectors/sector-m/places/flower-shop/">Sector M</a>
-              <a href="/sectors/sector-n/places/flower-shop/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 14. Fast Food -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/fast-food/">Fast Food</a></h2>
-            <p>Explore fast-food restaurants, takeaways, and quick delivery options in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/fast-food/">Sector A</a>
-              <a href="/sectors/sector-b/places/fast-food/">Sector B</a>
-              <a href="/sectors/sector-c/places/fast-food/">Sector C</a>
-              <a href="/sectors/sector-d/places/fast-food/">Sector D</a>
-              <a href="/sectors/sector-e/places/fast-food/">Sector E</a>
-              <a href="/sectors/sector-f/places/fast-food/">Sector F</a>
-              <a href="/sectors/sector-g/places/fast-food/">Sector G</a>
-              <a href="/sectors/sector-h/places/fast-food/">Sector H</a>
-              <a href="/sectors/sector-j/places/fast-food/">Sector J</a>
-              <a href="/sectors/sector-k/places/fast-food/">Sector K</a>
-              <a href="/sectors/sector-l/places/fast-food/">Sector L</a>
-              <a href="/sectors/sector-m/places/fast-food/">Sector M</a>
-              <a href="/sectors/sector-n/places/fast-food/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 15. Gym -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/gym/">Gym</a></h2>
-            <p>Explore fitness centres, gyms, trainers, and workout facilities in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/gym/">Sector A</a>
-              <a href="/sectors/sector-b/places/gym/">Sector B</a>
-              <a href="/sectors/sector-c/places/gym/">Sector C</a>
-              <a href="/sectors/sector-d/places/gym/">Sector D</a>
-              <a href="/sectors/sector-e/places/gym/">Sector E</a>
-              <a href="/sectors/sector-f/places/gym/">Sector F</a>
-              <a href="/sectors/sector-g/places/gym/">Sector G</a>
-              <a href="/sectors/sector-h/places/gym/">Sector H</a>
-              <a href="/sectors/sector-j/places/gym/">Sector J</a>
-              <a href="/sectors/sector-k/places/gym/">Sector K</a>
-              <a href="/sectors/sector-l/places/gym/">Sector L</a>
-              <a href="/sectors/sector-m/places/gym/">Sector M</a>
-              <a href="/sectors/sector-n/places/gym/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 16. Hospital -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/hospital/">Hospital</a></h2>
-            <p>Explore hospitals, emergency care, PKLI, and specialist medical facilities in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/hospital/">Sector A</a>
-              <a href="/sectors/sector-b/places/hospital/">Sector B</a>
-              <a href="/sectors/sector-c/places/hospital/">Sector C</a>
-              <a href="/sectors/sector-d/places/hospital/">Sector D</a>
-              <a href="/sectors/sector-e/places/hospital/">Sector E</a>
-              <a href="/sectors/sector-f/places/hospital/">Sector F</a>
-              <a href="/sectors/sector-g/places/hospital/">Sector G</a>
-              <a href="/sectors/sector-h/places/hospital/">Sector H</a>
-              <a href="/sectors/sector-j/places/hospital/">Sector J</a>
-              <a href="/sectors/sector-k/places/hospital/">Sector K</a>
-              <a href="/sectors/sector-l/places/hospital/">Sector L</a>
-              <a href="/sectors/sector-m/places/hospital/">Sector M</a>
-              <a href="/sectors/sector-n/places/hospital/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 17. Hostels -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/hostels/">Hostels</a></h2>
-            <p>Explore hostels and budget long-stay accommodation in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/hostels/">Sector A</a>
-              <a href="/sectors/sector-b/places/hostels/">Sector B</a>
-              <a href="/sectors/sector-c/places/hostels/">Sector C</a>
-              <a href="/sectors/sector-d/places/hostels/">Sector D</a>
-              <a href="/sectors/sector-e/places/hostels/">Sector E</a>
-              <a href="/sectors/sector-f/places/hostels/">Sector F</a>
-              <a href="/sectors/sector-g/places/hostels/">Sector G</a>
-              <a href="/sectors/sector-h/places/hostels/">Sector H</a>
-              <a href="/sectors/sector-j/places/hostels/">Sector J</a>
-              <a href="/sectors/sector-k/places/hostels/">Sector K</a>
-              <a href="/sectors/sector-l/places/hostels/">Sector L</a>
-              <a href="/sectors/sector-m/places/hostels/">Sector M</a>
-              <a href="/sectors/sector-n/places/hostels/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 18. Hotel -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/hotel/">Hotel</a></h2>
-            <p>Explore hotels and serviced accommodation for short stays in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/hotel/">Sector A</a>
-              <a href="/sectors/sector-b/places/hotel/">Sector B</a>
-              <a href="/sectors/sector-c/places/hotel/">Sector C</a>
-              <a href="/sectors/sector-d/places/hotel/">Sector D</a>
-              <a href="/sectors/sector-e/places/hotel/">Sector E</a>
-              <a href="/sectors/sector-f/places/hotel/">Sector F</a>
-              <a href="/sectors/sector-g/places/hotel/">Sector G</a>
-              <a href="/sectors/sector-h/places/hotel/">Sector H</a>
-              <a href="/sectors/sector-j/places/hotel/">Sector J</a>
-              <a href="/sectors/sector-k/places/hotel/">Sector K</a>
-              <a href="/sectors/sector-l/places/hotel/">Sector L</a>
-              <a href="/sectors/sector-m/places/hotel/">Sector M</a>
-              <a href="/sectors/sector-n/places/hotel/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 19. IDC -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/idc/">IDC &amp; Diagnostic Labs</a></h2>
-            <p>Explore Chughtai Lab, IDC branches, and diagnostic services in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/idc/">Sector A</a>
-              <a href="/sectors/sector-b/places/idc/">Sector B</a>
-              <a href="/sectors/sector-c/places/idc/">Sector C</a>
-              <a href="/sectors/sector-d/places/idc/">Sector D</a>
-              <a href="/sectors/sector-e/places/idc/">Sector E</a>
-              <a href="/sectors/sector-f/places/idc/">Sector F</a>
-              <a href="/sectors/sector-g/places/idc/">Sector G</a>
-              <a href="/sectors/sector-h/places/idc/">Sector H</a>
-              <a href="/sectors/sector-j/places/idc/">Sector J</a>
-              <a href="/sectors/sector-k/places/idc/">Sector K</a>
-              <a href="/sectors/sector-l/places/idc/">Sector L</a>
-              <a href="/sectors/sector-m/places/idc/">Sector M</a>
-              <a href="/sectors/sector-n/places/idc/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 20. Imtiaz -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/imtiaz/">Imtiaz Super Market</a></h2>
-            <p>Explore Imtiaz Mega Store access, groceries, and household shopping in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/imtiaz/">Sector A</a>
-              <a href="/sectors/sector-b/places/imtiaz/">Sector B</a>
-              <a href="/sectors/sector-c/places/imtiaz/">Sector C</a>
-              <a href="/sectors/sector-d/places/imtiaz/">Sector D</a>
-              <a href="/sectors/sector-e/places/imtiaz/">Sector E</a>
-              <a href="/sectors/sector-f/places/imtiaz/">Sector F</a>
-              <a href="/sectors/sector-g/places/imtiaz/">Sector G</a>
-              <a href="/sectors/sector-h/places/imtiaz/">Sector H</a>
-              <a href="/sectors/sector-j/places/imtiaz/">Sector J</a>
-              <a href="/sectors/sector-k/places/imtiaz/">Sector K</a>
-              <a href="/sectors/sector-l/places/imtiaz/">Sector L</a>
-              <a href="/sectors/sector-m/places/imtiaz/">Sector M</a>
-              <a href="/sectors/sector-n/places/imtiaz/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 21. Internet Providers -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/internet-providers/">Internet Providers</a></h2>
-            <p>Explore internet service providers, fiber optic connections, exchanges, and customer support locations in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/internet-providers/">Sector A</a>
-              <a href="/sectors/sector-b/places/internet-providers/">Sector B</a>
-              <a href="/sectors/sector-c/places/internet-providers/">Sector C</a>
-              <a href="/sectors/sector-d/places/internet-providers/">Sector D</a>
-              <a href="/sectors/sector-e/places/internet-providers/">Sector E</a>
-              <a href="/sectors/sector-f/places/internet-providers/">Sector F</a>
-              <a href="/sectors/sector-g/places/internet-providers/">Sector G</a>
-              <a href="/sectors/sector-h/places/internet-providers/">Sector H</a>
-              <a href="/sectors/sector-j/places/internet-providers/">Sector J</a>
-              <a href="/sectors/sector-k/places/internet-providers/">Sector K</a>
-              <a href="/sectors/sector-l/places/internet-providers/">Sector L</a>
-              <a href="/sectors/sector-m/places/internet-providers/">Sector M</a>
-              <a href="/sectors/sector-n/places/internet-providers/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 22. Restaurants -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/restaurants/">Restaurants</a></h2>
-            <p>Explore restaurants, fine dining, cafes, takeaways, and local cuisine in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/restaurants/">Sector A</a>
-              <a href="/sectors/sector-b/places/restaurants/">Sector B</a>
-              <a href="/sectors/sector-c/places/restaurants/">Sector C</a>
-              <a href="/sectors/sector-d/places/restaurants/">Sector D</a>
-              <a href="/sectors/sector-e/places/restaurants/">Sector E</a>
-              <a href="/sectors/sector-f/places/restaurants/">Sector F</a>
-              <a href="/sectors/sector-g/places/restaurants/">Sector G</a>
-              <a href="/sectors/sector-h/places/restaurants/">Sector H</a>
-              <a href="/sectors/sector-j/places/restaurants/">Sector J</a>
-              <a href="/sectors/sector-k/places/restaurants/">Sector K</a>
-              <a href="/sectors/sector-l/places/restaurants/">Sector L</a>
-              <a href="/sectors/sector-m/places/restaurants/">Sector M</a>
-              <a href="/sectors/sector-n/places/restaurants/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 23. Schools -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/schools/">Schools</a></h2>
-            <p>Explore schools, colleges, academies, and education services in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/schools/">Sector A</a>
-              <a href="/sectors/sector-b/places/schools/">Sector B</a>
-              <a href="/sectors/sector-c/places/schools/">Sector C</a>
-              <a href="/sectors/sector-d/places/schools/">Sector D</a>
-              <a href="/sectors/sector-e/places/schools/">Sector E</a>
-              <a href="/sectors/sector-f/places/schools/">Sector F</a>
-              <a href="/sectors/sector-g/places/schools/">Sector G</a>
-              <a href="/sectors/sector-h/places/schools/">Sector H</a>
-              <a href="/sectors/sector-j/places/schools/">Sector J</a>
-              <a href="/sectors/sector-k/places/schools/">Sector K</a>
-              <a href="/sectors/sector-l/places/schools/">Sector L</a>
-              <a href="/sectors/sector-m/places/schools/">Sector M</a>
-              <a href="/sectors/sector-n/places/schools/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 24. Supermarkets -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/supermarkets/">Supermarkets</a></h2>
-            <p>Explore supermarkets, grocery stores, and household shopping in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/supermarkets/">Sector A</a>
-              <a href="/sectors/sector-b/places/supermarkets/">Sector B</a>
-              <a href="/sectors/sector-c/places/supermarkets/">Sector C</a>
-              <a href="/sectors/sector-d/places/supermarkets/">Sector D</a>
-              <a href="/sectors/sector-e/places/supermarkets/">Sector E</a>
-              <a href="/sectors/sector-f/places/supermarkets/">Sector F</a>
-              <a href="/sectors/sector-g/places/supermarkets/">Sector G</a>
-              <a href="/sectors/sector-h/places/supermarkets/">Sector H</a>
-              <a href="/sectors/sector-j/places/supermarkets/">Sector J</a>
-              <a href="/sectors/sector-k/places/supermarkets/">Sector K</a>
-              <a href="/sectors/sector-l/places/supermarkets/">Sector L</a>
-              <a href="/sectors/sector-m/places/supermarkets/">Sector M</a>
-              <a href="/sectors/sector-n/places/supermarkets/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 25. Japan Electronics -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/japan-electronics/">Japan Electronics</a></h2>
-            <p>Explore Japan Electronics access and nearby electronics shopping in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/japan-electronics/">Sector A</a>
-              <a href="/sectors/sector-b/places/japan-electronics/">Sector B</a>
-              <a href="/sectors/sector-c/places/japan-electronics/">Sector C</a>
-              <a href="/sectors/sector-d/places/japan-electronics/">Sector D</a>
-              <a href="/sectors/sector-e/places/japan-electronics/">Sector E</a>
-              <a href="/sectors/sector-f/places/japan-electronics/">Sector F</a>
-              <a href="/sectors/sector-g/places/japan-electronics/">Sector G</a>
-              <a href="/sectors/sector-h/places/japan-electronics/">Sector H</a>
-              <a href="/sectors/sector-j/places/japan-electronics/">Sector J</a>
-              <a href="/sectors/sector-k/places/japan-electronics/">Sector K</a>
-              <a href="/sectors/sector-l/places/japan-electronics/">Sector L</a>
-              <a href="/sectors/sector-m/places/japan-electronics/">Sector M</a>
-              <a href="/sectors/sector-n/places/japan-electronics/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 26. Courier Services -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/courier-services/">Courier Services</a></h2>
-            <p>Explore TCS, Leopard, M&amp;P courier branches, parcel booking, tracking, and delivery services in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/courier-services/">Sector A</a>
-              <a href="/sectors/sector-b/places/courier-services/">Sector B</a>
-              <a href="/sectors/sector-c/places/courier-services/">Sector C</a>
-              <a href="/sectors/sector-d/places/courier-services/">Sector D</a>
-              <a href="/sectors/sector-e/places/courier-services/">Sector E</a>
-              <a href="/sectors/sector-f/places/courier-services/">Sector F</a>
-              <a href="/sectors/sector-g/places/courier-services/">Sector G</a>
-              <a href="/sectors/sector-h/places/courier-services/">Sector H</a>
-              <a href="/sectors/sector-j/places/courier-services/">Sector J</a>
-              <a href="/sectors/sector-k/places/courier-services/">Sector K</a>
-              <a href="/sectors/sector-l/places/courier-services/">Sector L</a>
-              <a href="/sectors/sector-m/places/courier-services/">Sector M</a>
-              <a href="/sectors/sector-n/places/courier-services/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 27. Jamil Sweets -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/jamil-sweets/">Jamil Sweets</a></h2>
-            <p>Explore Jamil Sweets access, bakery products, and traditional sweets in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/jamil-sweets/">Sector A</a>
-              <a href="/sectors/sector-b/places/jamil-sweets/">Sector B</a>
-              <a href="/sectors/sector-c/places/jamil-sweets/">Sector C</a>
-              <a href="/sectors/sector-d/places/jamil-sweets/">Sector D</a>
-              <a href="/sectors/sector-e/places/jamil-sweets/">Sector E</a>
-              <a href="/sectors/sector-f/places/jamil-sweets/">Sector F</a>
-              <a href="/sectors/sector-g/places/jamil-sweets/">Sector G</a>
-              <a href="/sectors/sector-h/places/jamil-sweets/">Sector H</a>
-              <a href="/sectors/sector-j/places/jamil-sweets/">Sector J</a>
-              <a href="/sectors/sector-k/places/jamil-sweets/">Sector K</a>
-              <a href="/sectors/sector-l/places/jamil-sweets/">Sector L</a>
-              <a href="/sectors/sector-m/places/jamil-sweets/">Sector M</a>
-              <a href="/sectors/sector-n/places/jamil-sweets/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 28. KFC -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/kfc/">KFC</a></h2>
-            <p>Explore KFC branches, menus, takeaway, and food delivery options in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/kfc/">Sector A</a>
-              <a href="/sectors/sector-b/places/kfc/">Sector B</a>
-              <a href="/sectors/sector-c/places/kfc/">Sector C</a>
-              <a href="/sectors/sector-d/places/kfc/">Sector D</a>
-              <a href="/sectors/sector-e/places/kfc/">Sector E</a>
-              <a href="/sectors/sector-f/places/kfc/">Sector F</a>
-              <a href="/sectors/sector-g/places/kfc/">Sector G</a>
-              <a href="/sectors/sector-h/places/kfc/">Sector H</a>
-              <a href="/sectors/sector-j/places/kfc/">Sector J</a>
-              <a href="/sectors/sector-k/places/kfc/">Sector K</a>
-              <a href="/sectors/sector-l/places/kfc/">Sector L</a>
-              <a href="/sectors/sector-m/places/kfc/">Sector M</a>
-              <a href="/sectors/sector-n/places/kfc/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 29. McDonald's -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/mcdonalds/">McDonald's</a></h2>
-            <p>Explore McDonald's branches, menus, takeaway, and food delivery options in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/mcdonalds/">Sector A</a>
-              <a href="/sectors/sector-b/places/mcdonalds/">Sector B</a>
-              <a href="/sectors/sector-c/places/mcdonalds/">Sector C</a>
-              <a href="/sectors/sector-d/places/mcdonalds/">Sector D</a>
-              <a href="/sectors/sector-e/places/mcdonalds/">Sector E</a>
-              <a href="/sectors/sector-f/places/mcdonalds/">Sector F</a>
-              <a href="/sectors/sector-g/places/mcdonalds/">Sector G</a>
-              <a href="/sectors/sector-h/places/mcdonalds/">Sector H</a>
-              <a href="/sectors/sector-j/places/mcdonalds/">Sector J</a>
-              <a href="/sectors/sector-k/places/mcdonalds/">Sector K</a>
-              <a href="/sectors/sector-l/places/mcdonalds/">Sector L</a>
-              <a href="/sectors/sector-m/places/mcdonalds/">Sector M</a>
-              <a href="/sectors/sector-n/places/mcdonalds/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 30. Mosque -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/mosque/">Mosque</a></h2>
-            <p>Explore mosques, prayer facilities, and community worship spaces in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/mosque/">Sector A</a>
-              <a href="/sectors/sector-b/places/mosque/">Sector B</a>
-              <a href="/sectors/sector-c/places/mosque/">Sector C</a>
-              <a href="/sectors/sector-d/places/mosque/">Sector D</a>
-              <a href="/sectors/sector-e/places/mosque/">Sector E</a>
-              <a href="/sectors/sector-f/places/mosque/">Sector F</a>
-              <a href="/sectors/sector-g/places/mosque/">Sector G</a>
-              <a href="/sectors/sector-h/places/mosque/">Sector H</a>
-              <a href="/sectors/sector-j/places/mosque/">Sector J</a>
-              <a href="/sectors/sector-k/places/mosque/">Sector K</a>
-              <a href="/sectors/sector-l/places/mosque/">Sector L</a>
-              <a href="/sectors/sector-m/places/mosque/">Sector M</a>
-              <a href="/sectors/sector-n/places/mosque/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 31. OPTP -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/optp/">OPTP</a></h2>
-            <p>Explore OPTP access, takeaway, and food delivery options in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/optp/">Sector A</a>
-              <a href="/sectors/sector-b/places/optp/">Sector B</a>
-              <a href="/sectors/sector-c/places/optp/">Sector C</a>
-              <a href="/sectors/sector-d/places/optp/">Sector D</a>
-              <a href="/sectors/sector-e/places/optp/">Sector E</a>
-              <a href="/sectors/sector-f/places/optp/">Sector F</a>
-              <a href="/sectors/sector-g/places/optp/">Sector G</a>
-              <a href="/sectors/sector-h/places/optp/">Sector H</a>
-              <a href="/sectors/sector-j/places/optp/">Sector J</a>
-              <a href="/sectors/sector-k/places/optp/">Sector K</a>
-              <a href="/sectors/sector-l/places/optp/">Sector L</a>
-              <a href="/sectors/sector-m/places/optp/">Sector M</a>
-              <a href="/sectors/sector-n/places/optp/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 32. Park -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/park/">Park</a></h2>
-            <p>Explore parks, playgrounds, walking areas, and green spaces in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/park/">Sector A</a>
-              <a href="/sectors/sector-b/places/park/">Sector B</a>
-              <a href="/sectors/sector-c/places/park/">Sector C</a>
-              <a href="/sectors/sector-d/places/park/">Sector D</a>
-              <a href="/sectors/sector-e/places/park/">Sector E</a>
-              <a href="/sectors/sector-f/places/park/">Sector F</a>
-              <a href="/sectors/sector-g/places/park/">Sector G</a>
-              <a href="/sectors/sector-h/places/park/">Sector H</a>
-              <a href="/sectors/sector-j/places/park/">Sector J</a>
-              <a href="/sectors/sector-k/places/park/">Sector K</a>
-              <a href="/sectors/sector-l/places/park/">Sector L</a>
-              <a href="/sectors/sector-m/places/park/">Sector M</a>
-              <a href="/sectors/sector-n/places/park/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 33. Police Station -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/police-station/">Police Station</a></h2>
-            <p>Explore police stations, public safety contacts, and reporting guidance in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/police-station/">Sector A</a>
-              <a href="/sectors/sector-b/places/police-station/">Sector B</a>
-              <a href="/sectors/sector-c/places/police-station/">Sector C</a>
-              <a href="/sectors/sector-d/places/police-station/">Sector D</a>
-              <a href="/sectors/sector-e/places/police-station/">Sector E</a>
-              <a href="/sectors/sector-f/places/police-station/">Sector F</a>
-              <a href="/sectors/sector-g/places/police-station/">Sector G</a>
-              <a href="/sectors/sector-h/places/police-station/">Sector H</a>
-              <a href="/sectors/sector-j/places/police-station/">Sector J</a>
-              <a href="/sectors/sector-k/places/police-station/">Sector K</a>
-              <a href="/sectors/sector-l/places/police-station/">Sector L</a>
-              <a href="/sectors/sector-m/places/police-station/">Sector M</a>
-              <a href="/sectors/sector-n/places/police-station/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 34. Post Office -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/post-office/">Post Office</a></h2>
-            <p>Explore post offices, mail, parcel, and courier services in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/post-office/">Sector A</a>
-              <a href="/sectors/sector-b/places/post-office/">Sector B</a>
-              <a href="/sectors/sector-c/places/post-office/">Sector C</a>
-              <a href="/sectors/sector-d/places/post-office/">Sector D</a>
-              <a href="/sectors/sector-e/places/post-office/">Sector E</a>
-              <a href="/sectors/sector-f/places/post-office/">Sector F</a>
-              <a href="/sectors/sector-g/places/post-office/">Sector G</a>
-              <a href="/sectors/sector-h/places/post-office/">Sector H</a>
-              <a href="/sectors/sector-j/places/post-office/">Sector J</a>
-              <a href="/sectors/sector-k/places/post-office/">Sector K</a>
-              <a href="/sectors/sector-l/places/post-office/">Sector L</a>
-              <a href="/sectors/sector-m/places/post-office/">Sector M</a>
-              <a href="/sectors/sector-n/places/post-office/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 35. Subway -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/subway/">Subway</a></h2>
-            <p>Explore Subway branches, menus, takeaway, and food delivery options in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/subway/">Sector A</a>
-              <a href="/sectors/sector-b/places/subway/">Sector B</a>
-              <a href="/sectors/sector-c/places/subway/">Sector C</a>
-              <a href="/sectors/sector-d/places/subway/">Sector D</a>
-              <a href="/sectors/sector-e/places/subway/">Sector E</a>
-              <a href="/sectors/sector-f/places/subway/">Sector F</a>
-              <a href="/sectors/sector-g/places/subway/">Sector G</a>
-              <a href="/sectors/sector-h/places/subway/">Sector H</a>
-              <a href="/sectors/sector-j/places/subway/">Sector J</a>
-              <a href="/sectors/sector-k/places/subway/">Sector K</a>
-              <a href="/sectors/sector-l/places/subway/">Sector L</a>
-              <a href="/sectors/sector-m/places/subway/">Sector M</a>
-              <a href="/sectors/sector-n/places/subway/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 36. Pharmacy -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/pharmacy/">Pharmacy</a></h2>
-            <p>Explore pharmacies, medicine delivery, Fazal Din's, and health supplies in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/pharmacy/">Sector A</a>
-              <a href="/sectors/sector-b/places/pharmacy/">Sector B</a>
-              <a href="/sectors/sector-c/places/pharmacy/">Sector C</a>
-              <a href="/sectors/sector-d/places/pharmacy/">Sector D</a>
-              <a href="/sectors/sector-e/places/pharmacy/">Sector E</a>
-              <a href="/sectors/sector-f/places/pharmacy/">Sector F</a>
-              <a href="/sectors/sector-g/places/pharmacy/">Sector G</a>
-              <a href="/sectors/sector-h/places/pharmacy/">Sector H</a>
-              <a href="/sectors/sector-j/places/pharmacy/">Sector J</a>
-              <a href="/sectors/sector-k/places/pharmacy/">Sector K</a>
-              <a href="/sectors/sector-l/places/pharmacy/">Sector L</a>
-              <a href="/sectors/sector-m/places/pharmacy/">Sector M</a>
-              <a href="/sectors/sector-n/places/pharmacy/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 37. Pizza Hut -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/pizza-hut/">Pizza Hut</a></h2>
-            <p>Explore Pizza Hut branches, menus, pizza delivery, Pizza Inn, and pizza restaurants in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/pizza-hut/">Sector A</a>
-              <a href="/sectors/sector-b/places/pizza-hut/">Sector B</a>
-              <a href="/sectors/sector-c/places/pizza-hut/">Sector C</a>
-              <a href="/sectors/sector-d/places/pizza-hut/">Sector D</a>
-              <a href="/sectors/sector-e/places/pizza-hut/">Sector E</a>
-              <a href="/sectors/sector-f/places/pizza-hut/">Sector F</a>
-              <a href="/sectors/sector-g/places/pizza-hut/">Sector G</a>
-              <a href="/sectors/sector-h/places/pizza-hut/">Sector H</a>
-              <a href="/sectors/sector-j/places/pizza-hut/">Sector J</a>
-              <a href="/sectors/sector-k/places/pizza-hut/">Sector K</a>
-              <a href="/sectors/sector-l/places/pizza-hut/">Sector L</a>
-              <a href="/sectors/sector-m/places/pizza-hut/">Sector M</a>
-              <a href="/sectors/sector-n/places/pizza-hut/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 38. Hyperstar & Carrefour -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/hyperstar/">Hyperstar &amp; Carrefour</a></h2>
-            <p>Explore Carrefour, hypermarket access, bulk grocery shopping, and retail stores in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/hyperstar/">Sector A</a>
-              <a href="/sectors/sector-b/places/hyperstar/">Sector B</a>
-              <a href="/sectors/sector-c/places/hyperstar/">Sector C</a>
-              <a href="/sectors/sector-d/places/hyperstar/">Sector D</a>
-              <a href="/sectors/sector-e/places/hyperstar/">Sector E</a>
-              <a href="/sectors/sector-f/places/hyperstar/">Sector F</a>
-              <a href="/sectors/sector-g/places/hyperstar/">Sector G</a>
-              <a href="/sectors/sector-h/places/hyperstar/">Sector H</a>
-              <a href="/sectors/sector-j/places/hyperstar/">Sector J</a>
-              <a href="/sectors/sector-k/places/hyperstar/">Sector K</a>
-              <a href="/sectors/sector-l/places/hyperstar/">Sector L</a>
-              <a href="/sectors/sector-m/places/hyperstar/">Sector M</a>
-              <a href="/sectors/sector-n/places/hyperstar/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 39. Laundry -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/laundry/">Laundry</a></h2>
-            <p>Explore laundry services, dry cleaning, ironing, and garment care in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/laundry/">Sector A</a>
-              <a href="/sectors/sector-b/places/laundry/">Sector B</a>
-              <a href="/sectors/sector-c/places/laundry/">Sector C</a>
-              <a href="/sectors/sector-d/places/laundry/">Sector D</a>
-              <a href="/sectors/sector-e/places/laundry/">Sector E</a>
-              <a href="/sectors/sector-f/places/laundry/">Sector F</a>
-              <a href="/sectors/sector-g/places/laundry/">Sector G</a>
-              <a href="/sectors/sector-h/places/laundry/">Sector H</a>
-              <a href="/sectors/sector-j/places/laundry/">Sector J</a>
-              <a href="/sectors/sector-k/places/laundry/">Sector K</a>
-              <a href="/sectors/sector-l/places/laundry/">Sector L</a>
-              <a href="/sectors/sector-m/places/laundry/">Sector M</a>
-              <a href="/sectors/sector-n/places/laundry/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 40. Colleges -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/colleges/">Colleges</a></h2>
-            <p>Explore colleges, universities, higher education, Army Public School, APSACS, and degree programs in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/colleges/">Sector A</a>
-              <a href="/sectors/sector-b/places/colleges/">Sector B</a>
-              <a href="/sectors/sector-c/places/colleges/">Sector C</a>
-              <a href="/sectors/sector-d/places/colleges/">Sector D</a>
-              <a href="/sectors/sector-e/places/colleges/">Sector E</a>
-              <a href="/sectors/sector-f/places/colleges/">Sector F</a>
-              <a href="/sectors/sector-g/places/colleges/">Sector G</a>
-              <a href="/sectors/sector-h/places/colleges/">Sector H</a>
-              <a href="/sectors/sector-j/places/colleges/">Sector J</a>
-              <a href="/sectors/sector-k/places/colleges/">Sector K</a>
-              <a href="/sectors/sector-l/places/colleges/">Sector L</a>
-              <a href="/sectors/sector-m/places/colleges/">Sector M</a>
-              <a href="/sectors/sector-n/places/colleges/">Sector N</a>
-            </div>
-          </article>
-
-          <!-- 41. Union Council -->
-          <article class="directory-card glass-card reveal">
-            <h2><a href="/places/union-council/">Union Council</a></h2>
-            <p>Explore Union Council information and local civic services in DHA Phase 6 Lahore.</p>
-            <div class="directory-actions">
-              <a href="/sectors/sector-a/places/union-council/">Sector A</a>
-              <a href="/sectors/sector-b/places/union-council/">Sector B</a>
-              <a href="/sectors/sector-c/places/union-council/">Sector C</a>
-              <a href="/sectors/sector-d/places/union-council/">Sector D</a>
-              <a href="/sectors/sector-e/places/union-council/">Sector E</a>
-              <a href="/sectors/sector-f/places/union-council/">Sector F</a>
-              <a href="/sectors/sector-g/places/union-council/">Sector G</a>
-              <a href="/sectors/sector-h/places/union-council/">Sector H</a>
-              <a href="/sectors/sector-j/places/union-council/">Sector J</a>
-              <a href="/sectors/sector-k/places/union-council/">Sector K</a>
-              <a href="/sectors/sector-l/places/union-council/">Sector L</a>
-              <a href="/sectors/sector-m/places/union-council/">Sector M</a>
-              <a href="/sectors/sector-n/places/union-council/">Sector N</a>
-            </div>
-          </article>
+          {populatedCategories.map((cat) => {
+            const sectorsWithPlaces = getCategorySectors(cat.key);
+            const totalInCat = sectorsWithPlaces.reduce((sum, s) => sum + s.count, 0);
+            return (
+              <article class="directory-card glass-card reveal">
+                <h2>
+                  <a href={`/places/${cat.key}/`}>{cat.label}</a>
+                </h2>
+                <p>{cat.seoDesc}</p>
+                <div class="directory-actions">
+                  <a
+                    href={`/places/${cat.key}/`}
+                    class="view-all-pill"
+                  >
+                    View All ({totalInCat})
+                  </a>
+                  {sectorsWithPlaces.map(({ sector, count }) => (
+                    <a href={`/places/${sector.key}/${cat.key}/`}>
+                      {sector.label} ({count})
+                    </a>
+                  ))}
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -1713,6 +850,140 @@
     background: rgba(212, 168, 68, 0.14);
     border-color: rgba(212, 168, 68, 0.4);
     color: var(--clr-accent-gold);
+  }
+  .view-all-pill {
+    background: rgba(212, 168, 68, 0.15) !important;
+    color: var(--clr-accent-gold) !important;
+    border-color: rgba(212, 168, 68, 0.4) !important;
+  }
+
+  /* SECTOR FACILITIES SHOWCASE (Task 4) */
+  .facilities-showcase {
+    padding: 60px 0;
+    background: var(--clr-bg-secondary);
+    border-bottom: 1px solid var(--clr-glass-border);
+  }
+  .facilities-header {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 40px;
+  }
+  .facilities-badge {
+    display: inline-block;
+    padding: 5px 14px;
+    border-radius: 50px;
+    background: rgba(212, 168, 68, 0.1);
+    color: var(--clr-accent-gold);
+    border: 1px solid rgba(212, 168, 68, 0.25);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+  }
+  .facilities-title {
+    font-family: var(--ff-heading);
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: var(--clr-text-primary);
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+  }
+  .facilities-subtitle {
+    font-size: 1rem;
+    color: var(--clr-text-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+  .facilities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  .facility-sector-card {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+  }
+  .facility-sector-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--grad-gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s var(--ease-out);
+  }
+  .facility-sector-card:hover::before {
+    transform: scaleX(1);
+  }
+  .facility-sector-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .facility-sector-letter {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    background: rgba(212, 168, 68, 0.12);
+    border: 1px solid rgba(212, 168, 68, 0.3);
+    color: var(--clr-accent-gold);
+    font-weight: 800;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--ff-heading);
+  }
+  .facility-sector-count {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--clr-accent-gold-light);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--clr-glass-border);
+  }
+  .facility-sector-name {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--clr-text-primary);
+    margin-bottom: 8px;
+  }
+  .facility-sector-cats {
+    font-size: 0.82rem;
+    color: var(--clr-text-secondary);
+    line-height: 1.5;
+    margin-bottom: 18px;
+    flex-grow: 1;
+  }
+  .facility-sector-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--clr-glass-border);
+    color: var(--clr-text-primary);
+    font-size: 0.82rem;
+    font-weight: 700;
+    transition: all 0.3s var(--ease-out);
+  }
+  .facility-sector-card:hover .facility-sector-btn {
+    background: var(--grad-gold);
+    color: var(--clr-bg-primary);
+    border-color: transparent;
   }
 
   /* PUBLICATION META */

@@ -8,7 +8,7 @@
 import PageLayout from '@layouts/PageLayout.astro';
 import {
   SECTORS_DIRECTORY,
-  PLACE_CATEGORIES,
+  getPopulatedCategories,
   getSectorPlaces,
   getCategoryPlaces,
   type PlaceRecord,
@@ -29,7 +29,9 @@ export function getStaticPaths() {
     },
   }));
 
-  const categoryPaths = PLACE_CATEGORIES.map((category) => ({
+  // Only generate category pages for categories that have at least 1 verified place (Task 1 & 7)
+  const populatedCategories = getPopulatedCategories();
+  const categoryPaths = populatedCategories.map((category) => ({
     params: { first: category.key },
     props: {
       type: 'category' as const,
@@ -213,7 +215,7 @@ const structuredData = {
             </a>
           ))
         ) : (
-          PLACE_CATEGORIES.slice(0, 10).map((c) => (
+          getPopulatedCategories().map((c) => (
             <a
               href={`/places/${c.key}/`}
               class={`px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors ${
@@ -328,9 +330,8 @@ const structuredData = {
     ) : (
       <div class="text-center py-16 bg-slate-900 rounded-2xl border border-slate-800">
         <div class="text-4xl mb-3">📍</div>
-        <h3 class="text-lg font-bold text-white">No places currently listed</h3>
-        <p class="text-slate-400 text-sm mt-1 max-w-md mx-auto">
-          We are constantly surveying DHA Phase 6. Browse other sectors or submit a verified listing.
+        <p class="text-slate-300 text-base font-medium max-w-md mx-auto">
+          Currently no verified listings available for this category. New locations will be added after verification.
         </p>
       </div>
     )}

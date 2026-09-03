@@ -40,10 +40,30 @@ export function getStaticPaths() {
     { key: 'raya-commercial', label: 'Raya Commercial' },
     { key: 'defence-raya', label: 'Defence Raya' },
   ];
-  return sectors.flatMap((sector) => PLACE_CATEGORIES.map((category) => ({
-    params: { sector: sector.key, category: category.key },
-    props: { sectorMeta: sector, categoryMeta: category },
-  })));
+
+  const paths = [];
+  for (const sector of sectors) {
+    for (const category of PLACE_CATEGORIES) {
+      const hasImported = (googlePlaces as ImportedPlace[]).some(
+        (p) => p.sector === sector.key && p.category === category.key
+      );
+      const hasExisting = PLACES_DATA.some(
+        (p) =>
+          p.category === category.key &&
+          (p.block?.toLowerCase() === sector.label.toLowerCase() ||
+            p.address.toLowerCase().includes(sector.label.toLowerCase()))
+      );
+
+      if (hasImported || hasExisting) {
+        paths.push({
+          params: { sector: sector.key, category: category.key },
+          props: { sectorMeta: sector, categoryMeta: category },
+        });
+      }
+    }
+  }
+
+  return paths;
 }
 
 interface Props { sectorMeta: { key: string; label: string }; categoryMeta: PlaceCategoryMeta }
@@ -70,8 +90,22 @@ const places = [...importedPlaces, ...existingPlaces];
 const canonical = `${SITE.url}/sectors/${sectorMeta.key}/places/${categoryMeta.key}/`;
 const pageTitle = `${categoryMeta.label} in ${sectorMeta.label} DHA Phase 6 Lahore`;
 const description = `A focused local guide to ${categoryMeta.label.toLowerCase()} businesses and services in ${sectorMeta.label}, DHA Phase 6 Lahore.`;
-const relatedCategories = PLACE_CATEGORIES.filter((category) => category.key !== categoryMeta.key).slice(0, 10);
-const nearbySectors = SECTORS.filter((sector) => sector.key !== sectorMeta.key).slice(0, 8);
+
+// Only link to sectors that actually have places in this category (Task 8)
+const nearbySectors = SECTORS.filter(
+  (sector) =>
+    sector.key !== sectorMeta.key &&
+    ((googlePlaces as ImportedPlace[]).some((p) => p.sector === sector.key && p.category === categoryMeta.key) ||
+      PLACES_DATA.some((p) => p.category === categoryMeta.key && (p.block?.toLowerCase() === sector.label.toLowerCase() || p.address.toLowerCase().includes(sector.label.toLowerCase()))))
+).slice(0, 8);
+
+// Only link to categories that actually have places in this sector (Task 8)
+const relatedCategories = PLACE_CATEGORIES.filter(
+  (category) =>
+    category.key !== categoryMeta.key &&
+    ((googlePlaces as ImportedPlace[]).some((p) => p.sector === sectorMeta.key && p.category === category.key) ||
+      PLACES_DATA.some((p) => p.category === category.key && (p.block?.toLowerCase() === sectorMeta.label.toLowerCase() || p.address.toLowerCase().includes(sectorMeta.label.toLowerCase()))))
+).slice(0, 10);
 const publishedDate = places[0]?.retrievedAt || '2026-09-03';
 const formattedDate = new Intl.DateTimeFormat('en-PK', { dateStyle: 'long' }).format(new Date(`${publishedDate}T12:00:00`));
 const structuredData = {
@@ -183,7 +217,7 @@ const structuredData = {
             </article>
           ))}</div>
         ) : (
-          <div class="empty-state"><h3>No sourced listing is published yet</h3><p>Use the live map search to check nearby results while this directory is being verified.</p><a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${categoryMeta.label} in ${sectorMeta.label} DHA Phase 6 Lahore`)}`} target="_blank" rel="noopener noreferrer">Search Google Maps ↗</a></div>
+          <div class="empty-state"><p>Currently no verified listings available for this category. New locations will be added after verification.</p><a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${categoryMeta.label} in ${sectorMeta.label} DHA Phase 6 Lahore`)}`} target="_blank" rel="noopener noreferrer">Search Google Maps ↗</a></div>
         )}
         <p class="no-results" id="no-results" hidden>No businesses match your search.</p>
 
