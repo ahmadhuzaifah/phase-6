@@ -12,6 +12,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
+    "places:import": "python scripts/import_google_maps_places.py --sector sector-a --category all --limit 3",
     "seo:audit": "node scripts/seo-audit.mjs",
     "lint": "eslint .",
     "format": "prettier --write ."

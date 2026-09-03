@@ -3,6 +3,11 @@
  * DHA Phase 6 Lahore — Interactive Map & Map PDFs Page
  * Updated with official DHA Lahore Maps Portal (https://maps.dhalahore.org/) alignment.
  */
+interface Props {
+  noindex?: boolean;
+}
+
+const { noindex = false } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -17,8 +22,8 @@
   <meta name="description" content="Official DHA Phase 6 Lahore master plan map (Sectors A–N, CCA 1 & 2, Defence Raya). Access official maps on maps.dhalahore.org and download sector map PDFs.">
   <meta name="keywords" content="DHA Phase 6 map, DHA Phase VI Lahore master plan, DHA Lahore sectors map, Defence Raya map, maps.dhalahore.org, Phase 6 master plan PDF">
   <meta name="author" content="DHA Phase 6 Lahore Guide">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}>
+  <meta name="googlebot" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}>
   <link rel="canonical" href="https://dhaphase6lahore.pk/dha-phase-6-lahore-map/">
   <link rel="alternate" hreflang="en-PK" href="https://dhaphase6lahore.pk/dha-phase-6-lahore-map/">
   <link rel="alternate" hreflang="x-default" href="https://dhaphase6lahore.pk/dha-phase-6-lahore-map/">
