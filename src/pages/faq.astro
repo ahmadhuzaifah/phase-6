@@ -84,6 +84,13 @@ const pageSchema = {
                   </summary>
                   <div class="faq-answer">
                     <p>{q.answer}</p>
+                    {q.relatedUrl && (
+                      <div class="faq-related-link">
+                        <a href={q.relatedUrl} class="btn-faq-link">
+                          → Read In-Depth: {q.relatedLabel || 'View Guide'}
+                        </a>
+                      </div>
+                    )}
                   </div>
                 </details>
               ))}
@@ -259,10 +266,30 @@ const pageSchema = {
   }
 
   .faq-answer p {
-    font-size: var(--text-sm);
+    margin: 0 0 1rem;
+    line-height: var(--line-height-relaxed);
     color: var(--text-secondary);
-    line-height: var(--leading-relaxed);
-    margin: 0;
+    font-size: var(--text-sm);
+  }
+
+  .faq-related-link {
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed var(--border-light);
+  }
+
+  .btn-faq-link {
+    display: inline-block;
+    color: #c8960c;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .btn-faq-link:hover {
+    color: #0f172a;
+    text-decoration: underline;
   }
 
   .faq-support-card {

@@ -61,6 +61,31 @@ const structuredData = {
 
   <main class="container search-workspace">
     
+    <!-- QUICK DISCOVERY: POPULAR SEARCHES & TRENDING SECTORS -->
+    <div class="search-shortcuts-bar">
+      <div class="shortcut-row">
+        <span class="shortcut-label">🔥 Popular Searches:</span>
+        <div class="shortcut-pills">
+          <button type="button" class="btn-quick-tag" data-type="house" data-size="1" data-sector="all">1 Kanal Houses</button>
+          <button type="button" class="btn-quick-tag" data-type="plot" data-size="1" data-sector="Sector C">1 Kanal Plot Sector C</button>
+          <button type="button" class="btn-quick-tag" data-type="house" data-size="10" data-sector="Sector J">10 Marla House Sector J</button>
+          <button type="button" class="btn-quick-tag" data-type="plot" data-size="10" data-sector="all">10 Marla Plots</button>
+          <button type="button" class="btn-quick-tag" data-type="commercial" data-size="all" data-sector="CCA">CCA Commercial Plazas</button>
+          <button type="button" class="btn-quick-tag" data-type="all" data-size="all" data-sector="Defence Raya">Defence Raya Golf</button>
+        </div>
+      </div>
+      <div class="shortcut-row">
+        <span class="shortcut-label">📈 Trending Sectors:</span>
+        <div class="shortcut-pills">
+          <button type="button" class="btn-quick-sector" data-sector="Sector C">Sector C (Prime)</button>
+          <button type="button" class="btn-quick-sector" data-sector="Sector D">Sector D (CCA 1)</button>
+          <button type="button" class="btn-quick-sector" data-sector="Sector J">Sector J (Beaconhouse)</button>
+          <button type="button" class="btn-quick-sector" data-sector="Sector K">Sector K (Value ROI)</button>
+          <button type="button" class="btn-quick-sector" data-sector="Sector B">Sector B (Roots)</button>
+        </div>
+      </div>
+    </div>
+
     <!-- SEARCH & FILTER TOOLBAR -->
     <section class="filter-toolbar" aria-label="Property Search Filters">
       <div class="filter-grid">
@@ -169,6 +194,15 @@ const structuredData = {
         <p>Try widening your price range, selecting "All Sectors", or clearing your keyword filter.</p>
         <button id="clearAllBtn" class="btn-gold">Reset Filters</button>
       </div>
+    </section>
+
+    <!-- RECENTLY VIEWED PROPERTIES -->
+    <section id="recentlyViewedSection" class="recent-viewed-section" style="display: none;">
+      <div class="recent-header">
+        <h3>🕒 Recently Viewed Properties</h3>
+        <button type="button" id="clearRecentBtn" class="btn-clear-recent">Clear History</button>
+      </div>
+      <div id="recentPropertiesGrid" class="recent-properties-grid"></div>
     </section>
 
   </main>
@@ -348,10 +382,61 @@ const structuredData = {
     typeFilter.addEventListener('change', applyFilters);
     sizeFilter.addEventListener('change', applyFilters);
     sectorFilter.addEventListener('change', applyFilters);
-    priceFilter.addEventListener('change', applyFilters);
-    sortFilter.addEventListener('change', applyFilters);
-    resetBtn.addEventListener('click', resetFilters);
-    if (clearAllBtn) clearAllBtn.addEventListener('click', resetFilters);
+    // QUICK SHORTCUT BUTTONS
+    document.querySelectorAll('.btn-quick-tag').forEach(btn => {
+      btn.addEventListener('click', () => {
+        typeFilter.value = btn.dataset.type || 'all';
+        sizeFilter.value = btn.dataset.size || 'all';
+        sectorFilter.value = btn.dataset.sector || 'all';
+        applyFilters();
+        window.scrollTo({ top: document.querySelector('.filter-toolbar').offsetTop - 20, behavior: 'smooth' });
+      });
+    });
+
+    document.querySelectorAll('.btn-quick-sector').forEach(btn => {
+      btn.addEventListener('click', () => {
+        sectorFilter.value = btn.dataset.sector || 'all';
+        applyFilters();
+        window.scrollTo({ top: document.querySelector('.filter-toolbar').offsetTop - 20, behavior: 'smooth' });
+      });
+    });
+
+    // RECENTLY VIEWED LOGIC (READ FROM LOCALSTORAGE)
+    const recentSection = document.getElementById('recentlyViewedSection');
+    const recentGrid = document.getElementById('recentPropertiesGrid');
+    const clearRecentBtn = document.getElementById('clearRecentBtn');
+
+    function renderRecentlyViewed() {
+      try {
+        const stored = JSON.parse(localStorage.getItem('dha6_recent_views') || '[]');
+        if (!stored || stored.length === 0) {
+          recentSection.style.display = 'none';
+          return;
+        }
+        recentSection.style.display = 'block';
+        recentGrid.innerHTML = stored.map(item => `
+          <a href="/properties/${item.slug}/" class="recent-card-mini">
+            <img src="${item.image || '/images/placeholders/property-placeholder.svg'}" alt="${item.title}" loading="lazy" />
+            <div class="recent-info">
+              <span class="recent-sector">${item.block}</span>
+              <h4>${item.title}</h4>
+              <strong>${item.price}</strong>
+            </div>
+          </a>
+        `).join('');
+      } catch (err) {
+        console.warn('Unable to load recently viewed', err);
+      }
+    }
+
+    if (clearRecentBtn) {
+      clearRecentBtn.addEventListener('click', () => {
+        localStorage.removeItem('dha6_recent_views');
+        renderRecentlyViewed();
+      });
+    }
+
+    renderRecentlyViewed();
 
     // Initial render
     applyFilters();
@@ -691,5 +776,134 @@ const structuredData = {
     font-size: 0.9rem;
     border: none;
     cursor: pointer;
+  }
+
+  /* SHORTCUTS & TRENDING SECTORS BAR */
+  .search-shortcuts-bar {
+    background: #111129;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .shortcut-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .shortcut-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    min-width: 140px;
+  }
+  .shortcut-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .btn-quick-tag, .btn-quick-sector {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #e2e8f0;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .btn-quick-tag:hover, .btn-quick-sector:hover {
+    background: #c8960c;
+    color: #ffffff;
+    border-color: #c8960c;
+  }
+
+  /* RECENTLY VIEWED SECTION */
+  .recent-viewed-section {
+    background: #111129;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 24px;
+    margin-top: 40px;
+  }
+  .recent-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .recent-header h3 {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+  }
+  .btn-clear-recent {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    font-size: 0.8rem;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .btn-clear-recent:hover {
+    color: #f87171;
+  }
+  .recent-properties-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  :global(.recent-card-mini) {
+    display: flex;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    padding: 10px;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s ease;
+  }
+  :global(.recent-card-mini:hover) {
+    background: rgba(255, 255, 255, 0.08);
+  }
+  :global(.recent-card-mini img) {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+  :global(.recent-info) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  :global(.recent-sector) {
+    font-size: 0.7rem;
+    color: #c8960c;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  :global(.recent-info h4) {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 2px 0 4px;
+    line-height: 1.2;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  :global(.recent-info strong) {
+    font-size: 0.85rem;
+    color: #34d399;
   }
 </style>

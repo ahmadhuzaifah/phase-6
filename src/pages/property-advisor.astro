@@ -1,0 +1,479 @@
+---
+/**
+ * Interactive Property Advisor Consultation System
+ * /property-advisor/
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+import { CONTACTS } from '@data/contacts';
+
+const title = "DHA Phase 6 Property Advisor — Interactive Consultation & Instant WhatsApp Dispatch";
+const description = "Specify your property type, budget, preferred sector, and living vs investment goal to instantly generate an expert advisory brief and connect directly with our DHA Phase 6 desk on WhatsApp.";
+const canonical = `${SITE.url}/property-advisor/`;
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": `${canonical}#advisor`,
+      "isPartOf": { "@type": "WebSite", "@id": `${SITE.url}/#website` },
+      "name": "DHA Phase 6 Property Advisor Assistant",
+      "applicationCategory": "RealEstateApplication",
+      "url": canonical,
+      "description": description
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonical}#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE.url },
+        { "@type": "ListItem", "position": 2, "name": "Property Advisor", "item": canonical }
+      ]
+    }
+  ]
+};
+---
+
+<PageLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+
+  <header class="advisor-hero">
+    <div class="container">
+      <div class="hero-tag">🎯 Guided Buyer &amp; Investor Consultation</div>
+      <h1 class="hero-h1">
+        DHA Phase 6 <span class="text-gold">Property Advisor</span>
+      </h1>
+      <p class="hero-p">
+        Select your criteria below to instantly generate a tailored consultation brief. Our property desk will review available inventory, title history, and current market demand before scheduling a call or site visit.
+      </p>
+    </div>
+  </header>
+
+  <main class="container advisor-main">
+
+    <div class="advisor-workspace">
+      
+      <!-- CONSULTATION BUILDER FORM -->
+      <section class="builder-card" aria-label="Advisor Criteria Builder">
+        <h2>1. Configure Your Property Criteria</h2>
+        
+        <form id="advisorForm" class="builder-form" onsubmit="return false;">
+          
+          <!-- LOOKING FOR -->
+          <div class="form-group">
+            <label class="group-label">Looking For:</label>
+            <div class="radio-pill-group">
+              <label class="radio-pill">
+                <input type="radio" name="propertyType" value="House (Ready to Move)" checked />
+                <span>🏠 House</span>
+              </label>
+              <label class="radio-pill">
+                <input type="radio" name="propertyType" value="Residential Plot" />
+                <span>📐 Plot</span>
+              </label>
+              <label class="radio-pill">
+                <input type="radio" name="propertyType" value="Commercial Plaza / Floor" />
+                <span>🏢 Commercial</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- SIZE -->
+          <div class="form-group">
+            <label class="group-label" for="sizeSelect">Preferred Size:</label>
+            <select id="sizeSelect" class="form-select">
+              <option value="1 Kanal">1 Kanal (500 sq yds)</option>
+              <option value="10 Marla">10 Marla (250 sq yds)</option>
+              <option value="5 Marla">5 Marla (125 sq yds)</option>
+              <option value="2 Kanal">2 Kanal (Executive Estate)</option>
+              <option value="4 Marla Commercial">4 Marla Commercial</option>
+              <option value="8 Marla Commercial">8 Marla Commercial</option>
+            </select>
+          </div>
+
+          <!-- BUDGET TIER -->
+          <div class="form-group">
+            <label class="group-label" for="budgetSelect">Target Budget:</label>
+            <select id="budgetSelect" class="form-select">
+              <option value="Under PKR 3.0 Crore">Under PKR 3.0 Crore</option>
+              <option value="PKR 3.0 to 5.0 Crore">PKR 3.0 to 5.0 Crore</option>
+              <option value="PKR 5.0 to 8.0 Crore">PKR 5.0 to 8.0 Crore</option>
+              <option value="PKR 8.0 to 12.0 Crore" selected>PKR 8.0 to 12.0 Crore</option>
+              <option value="PKR 12.0 to 18.0 Crore">PKR 12.0 to 18.0 Crore</option>
+              <option value="Above PKR 18.0 Crore">Above PKR 18.0 Crore</option>
+            </select>
+          </div>
+
+          <!-- PREFERRED SECTOR -->
+          <div class="form-group">
+            <label class="group-label" for="sectorSelect">Preferred Sector:</label>
+            <select id="sectorSelect" class="form-select">
+              <option value="Open to Best Value / Advisor Recommendation" selected>Advisor Recommendation (Best ROI)</option>
+              <option value="Sector A (Main Gate)">Sector A (Main Gate)</option>
+              <option value="Sector B (Roots School)">Sector B (Roots School)</option>
+              <option value="Sector C (Grand Jamia)">Sector C (Grand Jamia)</option>
+              <option value="Sector D (Facing CCA 1)">Sector D (Facing CCA 1)</option>
+              <option value="Sector E (Medical Centre)">Sector E (Medical Centre)</option>
+              <option value="Sector F (Quiet Secluded)">Sector F (Quiet Secluded)</option>
+              <option value="Sector G (Bedian Corridor)">Sector G (Bedian Corridor)</option>
+              <option value="Sector H (Near CCA 2)">Sector H (Near CCA 2)</option>
+              <option value="Sector J (Beaconhouse / 10M)">Sector J (Beaconhouse / 10M)</option>
+              <option value="Sector K (Growth Corridor)">Sector K (Growth Corridor)</option>
+              <option value="Sector L (Ring Road)">Sector L (Ring Road)</option>
+              <option value="Defence Raya (Golf Resort)">Defence Raya (Golf Resort)</option>
+            </select>
+          </div>
+
+          <!-- PRIMARY PURPOSE -->
+          <div class="form-group">
+            <label class="group-label">Primary Purpose:</label>
+            <div class="radio-pill-group">
+              <label class="radio-pill">
+                <input type="radio" name="purpose" value="Family Living / Relocation" checked />
+                <span>👨‍👩‍👧 Family Living</span>
+              </label>
+              <label class="radio-pill">
+                <input type="radio" name="purpose" value="Capital Growth / Investment" />
+                <span>📈 Capital Growth</span>
+              </label>
+              <label class="radio-pill">
+                <input type="radio" name="purpose" value="Rental Yield / Buy-to-Let" />
+                <span>💵 Rental Cashflow</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- TIMEFRAME -->
+          <div class="form-group">
+            <label class="group-label" for="timelineSelect">Purchase Timeline:</label>
+            <select id="timelineSelect" class="form-select">
+              <option value="Immediate (Within 1-2 Weeks)">Immediate (Within 1-2 Weeks)</option>
+              <option value="Within 1-3 Months" selected>Within 1-3 Months</option>
+              <option value="Exploring & Market Research">Exploring &amp; Market Research</option>
+            </select>
+          </div>
+
+        </form>
+      </section>
+
+      <!-- PREVIEW & WHATSAPP DISPATCH CARD -->
+      <aside class="dispatch-card">
+        <div class="dispatch-header">
+          <span class="preview-tag">Live Consultation Brief</span>
+          <h3>Your Advisor Request</h3>
+        </div>
+
+        <div class="brief-preview-box">
+          <pre id="briefOutput" class="brief-text">Generating brief...</pre>
+        </div>
+
+        <div class="dispatch-actions">
+          <a
+            id="whatsappSendBtn"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-send-whatsapp"
+          >
+            <span class="wa-icon">💬</span>
+            <div class="btn-copy">
+              <strong>Send Brief via WhatsApp</strong>
+              <small>Instant connection with our advisory desk</small>
+            </div>
+          </a>
+          <small class="disclaimer-mini">
+            🔒 Strictly confidential. No unsolicited marketing spam. Direct communication with senior property advisors.
+          </small>
+        </div>
+
+        <div class="advisor-contacts-row">
+          <div>
+            <span class="label-mini">Direct Desk Phone</span>
+            <strong><a href={`tel:${CONTACTS.phone.primary}`}>{CONTACTS.phone.display}</a></strong>
+          </div>
+          <div>
+            <span class="label-mini">Advisory Office</span>
+            <span>{CONTACTS.address.short}</span>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+
+    <script is:inline define:vars={{ whatsappNumber: CONTACTS.whatsapp.number.replace(/[^0-9]/g, '') }}>
+      document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('advisorForm');
+        const briefOutput = document.getElementById('briefOutput');
+        const whatsappSendBtn = document.getElementById('whatsappSendBtn');
+
+        function updateBrief() {
+          const propType = form ? form.querySelector('input[name="propertyType"]:checked')?.value || 'House' : 'House';
+          const size = document.getElementById('sizeSelect')?.value || '1 Kanal';
+          const budget = document.getElementById('budgetSelect')?.value || 'PKR 8.0 to 12.0 Crore';
+          const sector = document.getElementById('sectorSelect')?.value || 'Advisor Recommendation';
+          const purpose = form ? form.querySelector('input[name="purpose"]:checked')?.value || 'Family Living' : 'Family Living';
+          const timeline = document.getElementById('timelineSelect')?.value || 'Within 1-3 Months';
+
+          const briefMessage = 
+`Hello Ahmad / DHA Phase 6 Property Desk,
+
+I would like an independent property consultation for DHA Phase 6 Lahore based on the following criteria:
+
+- Property Type: ${propType}
+- Size: ${size}
+- Target Budget: ${budget}
+- Preferred Sector: ${sector}
+- Purpose: ${purpose}
+- Timeline: ${timeline}
+
+Please share verified on-ground options, recent price comps, and assist with document verification. Thank you!`;
+
+          if (briefOutput) briefOutput.textContent = briefMessage;
+
+          const encoded = encodeURIComponent(briefMessage);
+          if (whatsappSendBtn) whatsappSendBtn.href = `https://wa.me/${whatsappNumber}?text=${encoded}`;
+        }
+
+        if (form) form.addEventListener('change', updateBrief);
+        updateBrief();
+      });
+    </script>
+
+  </main>
+</PageLayout>
+
+<style>
+  .advisor-hero {
+    background: linear-gradient(135deg, #09121d 0%, #152436 100%);
+    color: #ffffff;
+    padding: 3.5rem 0 2.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(200, 150, 12, 0.2);
+    color: #facc15;
+    border: 1px solid rgba(200, 150, 12, 0.4);
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  .hero-h1 {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .text-gold {
+    background: linear-gradient(135deg, #e5b324 0%, #fef08a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-p {
+    font-size: 1.15rem;
+    color: #94a3b8;
+    max-width: 800px;
+    line-height: 1.6;
+  }
+
+  .advisor-main {
+    padding: 3.5rem 0 5rem;
+  }
+  .advisor-workspace {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 2.5rem;
+  }
+
+  .builder-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  }
+  .builder-card h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 2rem 0;
+  }
+  .builder-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .group-label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1e293b;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .radio-pill-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .radio-pill {
+    cursor: pointer;
+  }
+  .radio-pill input {
+    display: none;
+  }
+  .radio-pill span {
+    display: inline-block;
+    padding: 0.65rem 1.2rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #334155;
+    transition: all 0.2s ease;
+  }
+  .radio-pill input:checked + span {
+    background: #0f172a;
+    color: #ffffff;
+    border-color: #0f172a;
+  }
+
+  .form-select {
+    padding: 0.85rem 1rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #0f172a;
+    background: #ffffff;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+  .form-select:focus {
+    border-color: #c8960c;
+  }
+
+  /* DISPATCH ASIDE */
+  .dispatch-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+  .preview-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #c8960c;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  .dispatch-header h3 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+  }
+
+  .brief-preview-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1.25rem;
+    max-height: 320px;
+    overflow-y: auto;
+  }
+  .brief-text {
+    font-family: inherit;
+    font-size: 0.85rem;
+    color: #334155;
+    white-space: pre-wrap;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .btn-send-whatsapp {
+    background: #25d366;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .btn-send-whatsapp:hover {
+    background: #1eb956;
+    transform: translateY(-2px);
+  }
+  .wa-icon {
+    font-size: 1.8rem;
+  }
+  .btn-copy strong {
+    font-size: 1.05rem;
+    display: block;
+  }
+  .btn-copy small {
+    font-size: 0.75rem;
+    opacity: 0.9;
+  }
+
+  .disclaimer-mini {
+    display: block;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    line-height: 1.4;
+    margin-top: 0.75rem;
+    text-align: center;
+  }
+
+  .advisor-contacts-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #f1f5f9;
+  }
+  .label-mini {
+    display: block;
+    font-size: 0.75rem;
+    color: #64748b;
+    text-transform: uppercase;
+  }
+  .advisor-contacts-row strong a {
+    color: #0f172a;
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+  .advisor-contacts-row strong a:hover {
+    color: #c8960c;
+  }
+  .advisor-contacts-row span {
+    font-size: 0.85rem;
+    color: #475569;
+  }
+
+  @media (max-width: 900px) {
+    .advisor-workspace {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

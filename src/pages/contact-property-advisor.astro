@@ -1,0 +1,390 @@
+---
+/**
+ * Buyer Intent Funnel: Action Stage
+ * /contact-property-advisor/
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+import { CONTACTS } from '@data/contacts';
+
+const title = "Contact DHA Phase 6 Property Advisor — Independent Buyer Due Diligence Desk";
+const description = "Connect with our independent DHA Phase 6 Lahore property advisors. Get prompt assistance with allotment verification, NDC clearance, physical site inspections, and negotiated purchases.";
+const canonical = `${SITE.url}/contact-property-advisor/`;
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ContactPage",
+      "@id": `${canonical}#contact`,
+      "isPartOf": { "@type": "WebSite", "@id": `${SITE.url}/#website` },
+      "name": title,
+      "description": description,
+      "url": canonical
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonical}#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE.url },
+        { "@type": "ListItem", "position": 2, "name": "Contact", "item": `${SITE.url}/contact/` },
+        { "@type": "ListItem", "position": 3, "name": "Property Advisor", "item": canonical }
+      ]
+    }
+  ]
+};
+---
+
+<PageLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+
+  <header class="action-hero">
+    <div class="container">
+      <div class="stage-tag">Stage 4: Action &amp; Consultation</div>
+      <h1 class="hero-h1">
+        Contact a <span class="text-gold">DHA Phase 6 Property Advisor</span>
+      </h1>
+      <p class="hero-p">
+        Independent guidance without commission pressure. We verify document authenticity, inspect physical site conditions, calculate exact transfer fees, and assist through official DHA transfer completion.
+      </p>
+    </div>
+  </header>
+
+  <main class="container action-main">
+
+    <div class="action-grid">
+      <!-- ADVISOR HIGHLIGHT & VALUE PROPOSITION -->
+      <div class="advisor-info-col">
+        <div class="card-advisor">
+          <div class="advisor-header">
+            <span class="shield-badge">🛡️ Independent Real Estate Advisory</span>
+            <h2>How Our Advisory Desk Protects You</h2>
+          </div>
+          <ul class="protection-list">
+            <li>
+              <strong>Document &amp; NDC Verification:</strong>
+              <p>We guide you on requesting verified DHA Lahore record checks to ensure the allotment letter is authentic, unencumbered, and ready for NDC clearance.</p>
+            </li>
+            <li>
+              <strong>Physical Site &amp; Map Audit:</strong>
+              <p>Confirm that the physical plot or house matches the DHA master plan with no underground sewage or high-voltage line easements.</p>
+            </li>
+            <li>
+              <strong>FBR &amp; Transfer Tax Calculations:</strong>
+              <p>Know exactly what you will pay in Advance Tax (236K), Stamp Duty, and DHA transfer charges before entering negotiations.</p>
+            </li>
+            <li>
+              <strong>Zero False-Listing Frustration:</strong>
+              <p>We eliminate phantom listings and non-available inventory common on generic real estate portals.</p>
+            </li>
+          </ul>
+
+          <div class="funnel-links-box">
+            <h4>Explore Previous Funnel Stages:</h4>
+            <div class="funnel-links">
+              <a href="/why-dha-phase-6-lahore/">1. Why DHA Phase 6?</a>
+              <a href="/dha-phase-6-sector-comparison/">2. Sector Comparison</a>
+              <a href="/dha-phase-6-best-properties/">3. Curated Best Properties</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DIRECT CONTACT FORM & WHATSAPP GATEWAY -->
+      <div class="contact-gateway-col">
+        <div class="gateway-card">
+          <h3>Immediate Advisor Dispatch</h3>
+          <p>Choose your preferred communication channel for priority consultation.</p>
+
+          <!-- WHATSAPP INSTANT CONNECT -->
+          <a
+            href={CONTACTS.whatsapp.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-whatsapp-large"
+          >
+            <span class="wa-icon">💬</span>
+            <div class="wa-text">
+              <strong>Chat via WhatsApp Now</strong>
+              <small>Instant response for overseas &amp; local buyers ({CONTACTS.phone.display})</small>
+            </div>
+          </a>
+
+          <div class="divider-or"><span>OR USE INTERACTIVE ADVISOR</span></div>
+
+          <div class="advisor-tool-box">
+            <h4>Build Custom Criteria First:</h4>
+            <p>Prefer to specify your budget, sector preference, and property size before chatting?</p>
+            <a href="/property-advisor/" class="btn-advisor-builder">
+              Launch Custom Consultation Builder →
+            </a>
+          </div>
+
+          <div class="direct-phone-box">
+            <span>Direct Desk Hotline:</span>
+            <a href={`tel:${CONTACTS.phone.primary}`} class="phone-link">{CONTACTS.phone.display}</a>
+            <small>Office hours: Monday – Saturday, 9:00 AM – 7:00 PM PKT</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</PageLayout>
+
+<style>
+  .action-hero {
+    background: linear-gradient(135deg, #09121d 0%, #152436 100%);
+    color: #ffffff;
+    padding: 3.5rem 0 2.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .stage-tag {
+    display: inline-block;
+    background: rgba(200, 150, 12, 0.2);
+    color: #facc15;
+    border: 1px solid rgba(200, 150, 12, 0.4);
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  .hero-h1 {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .text-gold {
+    background: linear-gradient(135deg, #e5b324 0%, #fef08a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-p {
+    font-size: 1.15rem;
+    color: #94a3b8;
+    max-width: 800px;
+    line-height: 1.6;
+  }
+
+  .action-main {
+    padding: 3.5rem 0 5rem;
+  }
+  .action-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 2.5rem;
+  }
+
+  .card-advisor {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  }
+  .shield-badge {
+    background: #f1f5f9;
+    color: #0f172a;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: inline-block;
+    margin-bottom: 0.75rem;
+  }
+  .advisor-header h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 1.5rem 0;
+  }
+  .protection-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .protection-list li strong {
+    font-size: 1.05rem;
+    color: #0f172a;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  .protection-list li p {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .funnel-links-box {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 1.25rem;
+  }
+  .funnel-links-box h4 {
+    font-size: 0.9rem;
+    color: #475569;
+    margin: 0 0 0.5rem 0;
+  }
+  .funnel-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .funnel-links a {
+    color: #c8960c;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .funnel-links a:hover {
+    text-decoration: underline;
+  }
+
+  .gateway-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .gateway-card h3 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+  }
+  .gateway-card p {
+    color: #64748b;
+    font-size: 0.95rem;
+    margin: 0;
+  }
+
+  .btn-whatsapp-large {
+    background: #25d366;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .btn-whatsapp-large:hover {
+    background: #1eb956;
+    transform: translateY(-2px);
+  }
+  .wa-icon {
+    font-size: 2rem;
+  }
+  .wa-text strong {
+    font-size: 1.1rem;
+    display: block;
+  }
+  .wa-text small {
+    font-size: 0.8rem;
+    opacity: 0.9;
+  }
+
+  .divider-or {
+    text-align: center;
+    position: relative;
+    margin: 0.5rem 0;
+  }
+  .divider-or span {
+    background: #ffffff;
+    padding: 0 0.75rem;
+    color: #94a3b8;
+    font-size: 0.8rem;
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+  }
+  .divider-or::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #e2e8f0;
+    z-index: 0;
+  }
+
+  .advisor-tool-box {
+    background: #fefce8;
+    border: 1px solid #fef08a;
+    border-radius: 12px;
+    padding: 1.25rem;
+    text-align: center;
+  }
+  .advisor-tool-box h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #854d0e;
+    margin: 0 0 0.35rem 0;
+  }
+  .advisor-tool-box p {
+    font-size: 0.9rem;
+    color: #a16207;
+    margin-bottom: 1rem;
+  }
+  .btn-advisor-builder {
+    display: inline-block;
+    background: #c8960c;
+    color: #ffffff;
+    font-weight: 700;
+    padding: 0.65rem 1.25rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  .btn-advisor-builder:hover {
+    background: #b08207;
+  }
+
+  .direct-phone-box {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f1f5f9;
+  }
+  .direct-phone-box span {
+    font-size: 0.85rem;
+    color: #64748b;
+  }
+  .phone-link {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #0f172a;
+    text-decoration: none;
+  }
+  .phone-link:hover {
+    color: #c8960c;
+  }
+  .direct-phone-box small {
+    font-size: 0.8rem;
+    color: #94a3b8;
+  }
+
+  @media (max-width: 900px) {
+    .action-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

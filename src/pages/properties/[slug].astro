@@ -51,8 +51,10 @@ const mainImage = property.images?.[0]?.url || '/images/placeholders/property-pl
 const imageAlt = property.images?.[0]?.alt || `${property.title} in DHA Phase 6 Lahore`;
 
 const canonical = `${SITE.url}/properties/${property.slug}/`;
-const pageTitle = `${property.title} | DHA Phase 6 Lahore`;
-const pageDesc = `${property.title} in ${property.block}, DHA Phase 6 Lahore. Asking demand: ${formattedPrice}. Size: ${property.size} ${property.unit}. Verified market snapshot and buyer due diligence.`;
+const pageTitle = `${property.title} in ${property.block} | DHA Phase 6 Lahore Real Estate`;
+const pageDesc = `Verified market snapshot: ${property.title} in ${property.block}, DHA Phase 6 Lahore. Asking demand: ${formattedPrice}. Located near premier schools, mosques, and CCA commercial hubs with 100% underground utilities.`;
+
+const landmarkContext = `Located in prestigious ${property.block}, DHA Phase 6 Lahore, this ${property.size} ${property.unit} ${property.propertyType.replaceAll('-', ' ')} enjoys immediate proximity to key sector landmarks including Grand Jamia mosques, neighborhood parks, premier educational institutions, and arterial boulevards with direct access to Lahore Ring Road and Bedian Road.`;
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -138,7 +140,8 @@ const structuredData = {
 
           <!-- Description Section -->
           <section class="prop-section prop-card">
-            <h2>Property Overview &amp; Market Details</h2>
+            <h2>Property Overview &amp; Sector Context</h2>
+            <p class="landmark-context-lead"><strong>Neighborhood Setting:</strong> {landmarkContext}</p>
             <p class="lead-desc">{property.description}</p>
             <div class="features-list">
               {property.features.map((feat) => (
@@ -818,3 +821,25 @@ const structuredData = {
     }
   }
 </style>
+
+<script is:inline define:vars={{
+  viewedItem: {
+    slug: property.slug,
+    title: property.title,
+    block: property.block,
+    price: formattedPrice,
+    image: mainImage
+  }
+}}>
+  document.addEventListener('DOMContentLoaded', () => {
+    try {
+      let recent = JSON.parse(localStorage.getItem('dha6_recent_views') || '[]');
+      recent = recent.filter(item => item.slug !== viewedItem.slug);
+      recent.unshift(viewedItem);
+      if (recent.length > 6) recent = recent.slice(0, 6);
+      localStorage.setItem('dha6_recent_views', JSON.stringify(recent));
+    } catch (e) {
+      console.warn('Could not persist recently viewed property', e);
+    }
+  });
+</script>

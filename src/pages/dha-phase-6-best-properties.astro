@@ -1,0 +1,309 @@
+---
+/**
+ * Buyer Intent Funnel: Decision Stage
+ * /dha-phase-6-best-properties/
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import PropertyCard from '@components/property/PropertyCard.astro';
+import properties from '@data/properties-import.json';
+import { SITE } from '@data/site';
+
+const title = "Best Properties in DHA Phase 6 Lahore — Curated Luxury Houses, Plots & Commercial Plazas";
+const description = "Explore our handpicked curation of the best properties in DHA Phase 6 Lahore. Filter top ready-to-move designer houses, prime investment plots in Sectors C, D, J & K, and high-yield commercial assets.";
+const canonical = `${SITE.url}/dha-phase-6-best-properties/`;
+
+// Curated selections from property data
+const featuredProperties = properties.slice(0, 6);
+
+const categories = [
+  {
+    title: "Best Luxury 1 Kanal Turnkey Houses",
+    desc: "Architect-designed brand-new designer houses in prime sectors (C, D, B, A) featuring imported sanitary fixtures, dirty kitchens, servant quarters, and solar net metering.",
+    targetUrl: "/houses-for-sale-dha-phase-6-lahore/"
+  },
+  {
+    title: "Best Value 10 Marla Family Houses",
+    desc: "Compact luxury houses tailored for modern families in Sectors J and G, within walking distance of Beaconhouse and Roots Millennium.",
+    targetUrl: "/10-marla-houses-dha-phase-6-lahore/"
+  },
+  {
+    title: "Best Capital Appreciation Plots",
+    desc: "1 Kanal and 10 Marla residential plots in growth corridors (Sectors K, L & G) offering immediate possession, clear title, and strong 3-year capital headroom.",
+    targetUrl: "/plots-for-sale-dha-phase-6-lahore/"
+  },
+  {
+    title: "Best High-Yield Commercial Plazas",
+    desc: "4 and 8 Marla commercial buildings in CCA 1, CCA 2, and Main Boulevard with verified national bank, cafe, and corporate leases yielding 6.5% to 7.8% annually.",
+    targetUrl: "/dha-phase-6-commercial-areas/"
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ItemList",
+      "@id": `${canonical}#itemlist`,
+      "name": title,
+      "description": description,
+      "url": canonical,
+      "numberOfItems": featuredProperties.length
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonical}#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE.url },
+        { "@type": "ListItem", "position": 2, "name": "Properties", "item": `${SITE.url}/properties/` },
+        { "@type": "ListItem", "position": 3, "name": "Best Properties", "item": canonical }
+      ]
+    }
+  ]
+};
+---
+
+<PageLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+
+  <header class="decision-hero">
+    <div class="container">
+      <div class="stage-tag">Stage 3: Property Decision &amp; Curated Selection</div>
+      <h1 class="hero-h1">
+        Best Properties in <span class="text-gold">DHA Phase 6 Lahore</span>
+      </h1>
+      <p class="hero-p">
+        A hand-screened portfolio of top-tier residential houses, strategic investment plots, and income-generating commercial plazas audited for legal clarity and market value.
+      </p>
+    </div>
+  </header>
+
+  <main class="container decision-main">
+
+    <!-- CURATED ASSET CATEGORIES -->
+    <section class="curated-cats">
+      <div class="section-title">
+        <h2>Curated Real Estate Portfolios</h2>
+        <p>Browse by specific investment strategy or end-user preference.</p>
+      </div>
+
+      <div class="cats-grid">
+        {categories.map(cat => (
+          <div class="cat-card">
+            <h3>{cat.title}</h3>
+            <p>{cat.desc}</p>
+            <a href={cat.targetUrl} class="cat-link">Explore Category →</a>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- FEATURED PROPERTY SNAPSHOTS -->
+    <section class="properties-showcase">
+      <div class="section-title">
+        <h2>Prime Verified Property Records</h2>
+        <p>Representative market records undergoing continuous source verification and physical checks.</p>
+      </div>
+
+      <div class="props-grid">
+        {featuredProperties.map(property => (
+          <PropertyCard
+            id={property.id}
+            title={property.title}
+            slug={property.slug}
+            propertyType={property.propertyType}
+            purpose={property.purpose}
+            price={property.price}
+            size={property.size}
+            sizeUnit={property.unit}
+            block={property.block}
+            location={`${property.location.address}, Lahore`}
+            image={property.images?.[0]}
+            verificationStatus={property.verificationStatus}
+            availabilityStatus={property.availabilityStatus}
+            isFeatured={property.isFeatured}
+          />
+        ))}
+      </div>
+    </section>
+
+    <!-- FUNNEL STEP 4 NEXT-STEP TRANSITION -->
+    <section class="funnel-next-step">
+      <div class="step-card">
+        <span class="step-number">Final Step in Buyer Journey</span>
+        <h2>Stage 4: Action &amp; Advisor Consultation</h2>
+        <p>Ready to verify title documents, inspect a physical site, or negotiate directly with registered owners? Connect with our dedicated property advisory desk.</p>
+        <div class="btn-group">
+          <a href="/contact-property-advisor/" class="btn-step">Contact Property Advisor →</a>
+          <a href="/property-advisor/" class="btn-step-subtle">Build Custom Consultation Criteria</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</PageLayout>
+
+<style>
+  .decision-hero {
+    background: linear-gradient(135deg, #09121d 0%, #152436 100%);
+    color: #ffffff;
+    padding: 3.5rem 0 2.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .stage-tag {
+    display: inline-block;
+    background: rgba(200, 150, 12, 0.2);
+    color: #facc15;
+    border: 1px solid rgba(200, 150, 12, 0.4);
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  .hero-h1 {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .text-gold {
+    background: linear-gradient(135deg, #e5b324 0%, #fef08a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-p {
+    font-size: 1.15rem;
+    color: #94a3b8;
+    max-width: 800px;
+    line-height: 1.6;
+  }
+
+  .decision-main {
+    padding: 3.5rem 0 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  .section-title h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.5rem 0;
+  }
+  .section-title p {
+    color: #64748b;
+    margin: 0 0 2rem 0;
+  }
+
+  .cats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 1.5rem;
+  }
+  .cat-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .cat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  }
+  .cat-card h3 {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.75rem 0;
+  }
+  .cat-card p {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+  }
+  .cat-link {
+    color: #c8960c;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+  .cat-link:hover {
+    text-decoration: underline;
+  }
+
+  .props-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+  }
+
+  .funnel-next-step {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #ffffff;
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+  .step-card {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .step-number {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #facc15;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .step-card h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin: 0 0 1rem 0;
+  }
+  .step-card p {
+    font-size: 1.05rem;
+    color: #cbd5e1;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+  .btn-group {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .btn-step {
+    background: #c8960c;
+    color: #ffffff;
+    padding: 0.85rem 1.75rem;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 0.2s ease;
+  }
+  .btn-step:hover {
+    background: #b08207;
+  }
+  .btn-step-subtle {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    padding: 0.85rem 1.75rem;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+</style>

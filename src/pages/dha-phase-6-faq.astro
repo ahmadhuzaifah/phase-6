@@ -1,0 +1,451 @@
+---
+/**
+ * /dha-phase-6-faq/ — Direct 100+ Question Authority Database Route
+ * Re-exports the full comprehensive FAQ experience under the canonical /dha-phase-6-faq/ path.
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
+import { SITE } from '@data/site';
+import { CONTACTS } from '@data/contacts';
+import { FAQS_DATA } from '@data/faqs';
+
+const allFaqItems = FAQS_DATA.flatMap((cat) => cat.questions);
+
+const faqSchema = {
+  itemListElement: allFaqItems.map((f) => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: f.answer,
+    },
+  })),
+};
+
+const pageSchema = {
+  name: `DHA Phase 6 Lahore 100+ FAQ Authority Database — ${SITE.name}`,
+  description: 'The definitive 100+ questions and verified answers database for DHA Phase 6 Lahore covering prices, sectors, bylaws, transfer fees, taxes, schools, and infrastructure.',
+  url: `${SITE.url}/dha-phase-6-faq/`,
+};
+---
+
+<PageLayout
+  title={`100+ DHA Phase 6 Lahore FAQs | Complete Property & Resident Knowledgebase`}
+  description="Comprehensive 100+ question knowledgebase for DHA Phase 6 Lahore. Answers on plot prices, sector ratings, FBR taxes, DHA NDC transfer process, schools, and utilities."
+  canonical={`${SITE.url}/dha-phase-6-faq/`}
+>
+  <Schema type="WebSite" data={pageSchema} />
+  <Schema type="FAQPage" data={faqSchema} />
+
+  <!-- Hero Section -->
+  <header class="faq-hero">
+    <div class="container">
+      <div class="eyebrow-pill">100+ Verified Questions &amp; Answers</div>
+      <h1 class="faq-hero__title">
+        DHA Phase 6 Lahore <span class="text-gradient-gold">FAQ Authority Database</span>
+      </h1>
+      <p class="faq-hero__lead">
+        Your definitive repository of verified answers regarding property prices, sector comparisons, DHA bylaws, FBR taxes, transfer procedures, school networks, and infrastructure across Sectors A to N.
+      </p>
+
+      <!-- Quick Category Pills -->
+      <div class="category-pills-row">
+        {FAQS_DATA.map(cat => (
+          <a href={`#cat-${cat.id}`} class="cat-jump-pill">
+            <span>{cat.icon}</span> {cat.name}
+          </a>
+        ))}
+      </div>
+    </div>
+  </header>
+
+  <!-- Main FAQ Content -->
+  <main class="container faq-main-wrap">
+    
+    <!-- Search Box -->
+    <div class="faq-search-box">
+      <span class="faq-search-icon">🔍</span>
+      <input
+        type="text"
+        id="faq-search-input"
+        placeholder="Type to search 100+ questions (e.g. 10 Marla price, FBR tax filer, NDC transfer, Beaconhouse, Sui gas...)"
+        class="faq-search-input"
+      />
+    </div>
+
+    <!-- Categories Container -->
+    <div class="faq-categories" id="faq-categories">
+      {FAQS_DATA.map((cat) => (
+        <section class="faq-category-group" id={`cat-${cat.id}`} data-category-id={cat.id}>
+          <div class="faq-category-header">
+            <span class="faq-cat-icon">{cat.icon}</span>
+            <div>
+              <h2 class="faq-cat-title">{cat.name}</h2>
+              <p class="faq-cat-desc">{cat.description}</p>
+            </div>
+          </div>
+
+          <div class="faq-accordion-list">
+            {cat.questions.map((q) => (
+              <details class="faq-accordion-item">
+                <summary class="faq-summary">
+                  <span class="faq-q-text">{q.question}</span>
+                  <span class="faq-toggle-icon">+</span>
+                </summary>
+                <div class="faq-answer">
+                  <p>{q.answer}</p>
+                  {q.relatedUrl && (
+                    <div class="faq-related-link">
+                      <a href={q.relatedUrl} class="btn-faq-link">
+                        → In-Depth Guide: {q.relatedLabel || 'Read Guide'}
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+
+    <!-- Live Empty State -->
+    <div id="faq-empty-state" style="display: none;" class="faq-empty-box">
+      <div class="empty-icon">❓</div>
+      <h3>No questions matched your search criteria</h3>
+      <p>Need specific advice on a plot, house, or sector not listed here? Connect with our independent property desk directly on WhatsApp.</p>
+      <a href={CONTACTS.whatsapp.url} target="_blank" rel="noopener noreferrer" class="btn-empty-wa">
+        💬 Ask Advisor on WhatsApp ({CONTACTS.phone.display})
+      </a>
+    </div>
+
+    <!-- Bottom Advisory Banner -->
+    <section class="bottom-support-banner">
+      <div class="support-text">
+        <h3>Still Have Unanswered Questions?</h3>
+        <p>Our independent research desk is available 6 days a week to review title documents, calculate transfer dues, and provide objective market guidance.</p>
+      </div>
+      <div class="support-actions">
+        <a href="/property-advisor/" class="btn-gold-support">Launch Property Advisor Tool →</a>
+        <a href={CONTACTS.whatsapp.url} target="_blank" rel="noopener noreferrer" class="btn-wa-support">
+          WhatsApp Desk
+        </a>
+      </div>
+    </section>
+
+  </main>
+</PageLayout>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('faq-search-input');
+    const categoriesContainer = document.getElementById('faq-categories');
+    const emptyState = document.getElementById('faq-empty-state');
+    const accordionItems = document.querySelectorAll('.faq-accordion-item');
+    const categoryGroups = document.querySelectorAll('.faq-category-group');
+
+    if (!searchInput) return;
+
+    searchInput.addEventListener('input', (e) => {
+      const term = e.target.value.toLowerCase().trim();
+      let totalVisible = 0;
+
+      categoryGroups.forEach((group) => {
+        let groupVisibleCount = 0;
+        const items = group.querySelectorAll('.faq-accordion-item');
+
+        items.forEach((item) => {
+          const qText = item.querySelector('.faq-q-text')?.textContent.toLowerCase() || '';
+          const aText = item.querySelector('.faq-answer')?.textContent.toLowerCase() || '';
+
+          if (!term || qText.includes(term) || aText.includes(term)) {
+            item.style.display = '';
+            groupVisibleCount++;
+            totalVisible++;
+            if (term && (qText.includes(term) || aText.includes(term))) {
+              item.open = true;
+            }
+          } else {
+            item.style.display = 'none';
+            item.open = false;
+          }
+        });
+
+        if (groupVisibleCount === 0 && term) {
+          group.style.display = 'none';
+        } else {
+          group.style.display = '';
+        }
+      });
+
+      if (emptyState) {
+        emptyState.style.display = totalVisible === 0 ? 'block' : 'none';
+      }
+    });
+  });
+</script>
+
+<style>
+  .faq-hero {
+    background: linear-gradient(135deg, #09121d 0%, #152436 100%);
+    color: #ffffff;
+    padding: 3.5rem 0 2.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .eyebrow-pill {
+    display: inline-block;
+    background: rgba(200, 150, 12, 0.2);
+    color: #facc15;
+    border: 1px solid rgba(200, 150, 12, 0.4);
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  .faq-hero__title {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #e5b324 0%, #fef08a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .faq-hero__lead {
+    font-size: 1.15rem;
+    color: #94a3b8;
+    max-width: 820px;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .category-pills-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .cat-jump-pill {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #e2e8f0;
+    padding: 0.45rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .cat-jump-pill:hover {
+    background: #c8960c;
+    color: #ffffff;
+    border-color: #c8960c;
+  }
+
+  .faq-main-wrap {
+    padding: 3rem 0 5rem;
+  }
+
+  .faq-search-box {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 0.75rem 1.25rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    margin-bottom: 3rem;
+  }
+  .faq-search-box:focus-within {
+    border-color: #c8960c;
+  }
+  .faq-search-icon {
+    font-size: 1.3rem;
+    margin-right: 0.75rem;
+  }
+  .faq-search-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 1.05rem;
+    color: #0f172a;
+  }
+
+  .faq-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+  .faq-category-group {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+  }
+  .faq-category-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .faq-cat-icon {
+    font-size: 2rem;
+  }
+  .faq-cat-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.25rem 0;
+  }
+  .faq-cat-desc {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin: 0;
+  }
+
+  .faq-accordion-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .faq-accordion-item {
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    background: #f8fafc;
+    overflow: hidden;
+    transition: background 0.2s ease;
+  }
+  .faq-accordion-item[open] {
+    background: #ffffff;
+    border-color: #cbd5e1;
+  }
+  .faq-summary {
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    color: #1e293b;
+    font-size: 1rem;
+    list-style: none;
+  }
+  .faq-summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-toggle-icon {
+    font-size: 1.2rem;
+    color: #c8960c;
+    transition: transform 0.2s ease;
+  }
+  .faq-accordion-item[open] .faq-toggle-icon {
+    transform: rotate(45deg);
+  }
+  .faq-answer {
+    padding: 0 1.25rem 1.25rem;
+    color: #475569;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .faq-answer p {
+    margin: 0 0 0.75rem 0;
+  }
+
+  .faq-related-link {
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed #e2e8f0;
+  }
+  .btn-faq-link {
+    color: #c8960c;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 0.85rem;
+  }
+  .btn-faq-link:hover {
+    text-decoration: underline;
+  }
+
+  .faq-empty-box {
+    background: #ffffff;
+    border: 2px dashed #cbd5e1;
+    border-radius: 16px;
+    padding: 3rem;
+    text-align: center;
+    margin-top: 2rem;
+  }
+  .empty-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .faq-empty-box h3 {
+    font-size: 1.3rem;
+    color: #0f172a;
+    margin: 0 0 0.5rem 0;
+  }
+  .faq-empty-box p {
+    color: #64748b;
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+    font-size: 0.95rem;
+  }
+  .btn-empty-wa {
+    display: inline-block;
+    background: #25d366;
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .bottom-support-banner {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #ffffff;
+    border-radius: 16px;
+    padding: 2.5rem;
+    margin-top: 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+  .support-text h3 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: 0 0 0.5rem 0;
+  }
+  .support-text p {
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    max-width: 600px;
+    margin: 0;
+  }
+  .support-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .btn-gold-support {
+    background: #c8960c;
+    color: #ffffff;
+    padding: 0.85rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .btn-wa-support {
+    background: #25d366;
+    color: #ffffff;
+    padding: 0.85rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+</style>

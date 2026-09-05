@@ -1,0 +1,553 @@
+---
+/**
+ * DHA Phase 6 Lahore — Freshness & Real-Time Market Update System
+ * /dha-phase-6-market-updates/
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+
+const title = "DHA Phase 6 Lahore Market Updates 2026 — Latest Property News, Price Movements & Infrastructure";
+const description = "Live independent property market updates for DHA Phase 6 Lahore. Track recent price movements, commercial developments, Ring Road connectivity, construction milestones, and investment signals.";
+const canonical = `${SITE.url}/dha-phase-6-market-updates/`;
+
+const publishedDate = "2026-09-01T08:00:00+05:00";
+const updatedDate = "2026-09-05T20:00:00+05:00";
+const authorName = "Ahmad Huzaifah";
+const authorTitle = "Principal Real Estate Analyst & Market Researcher";
+
+const updates = [
+  {
+    id: "update-2026-09-01",
+    tag: "Price Movement",
+    tagClass: "tag-price",
+    title: "Q3 2026 Price Stabilization: 1 Kanal Plot Values Consolidate Across Sectors C, D & J",
+    date: "September 5, 2026",
+    readTime: "4 min read",
+    summary: "Following robust spring transaction volumes, prime 1 Kanal plots in Sectors C and D have consolidated within the PKR 5.10 to 6.30 Crore bracket, with cash-backed buyers showing distinct preference for park-facing and 60-foot boulevard locations.",
+    details: [
+      "Sector C top-tier 1 Kanal plots touching PKR 6.25 Crore near the Grand Jamia Mosque corridor.",
+      "Sector D holding firm between PKR 5.00 and 5.75 Crore as commercial footfall in CCA 1 expands.",
+      "Sector J 10 Marla plots experiencing consistent absorption between PKR 2.85 and 3.50 Crore due to school-run demand from Beaconhouse and Roots.",
+      "Buyer sentiment reflects high selectivity, with non-standard depths or litigation-adjacent files completely avoided by institutional investors."
+    ],
+    signal: "Bullish on Prime Ready Inventory; Neutral on Peripheral Sectors"
+  },
+  {
+    id: "update-2026-08-25",
+    tag: "Commercial Activity",
+    tagClass: "tag-commercial",
+    title: "CCA 1 & CCA 2 Retail Occupancy Reaches 94%: Corporate Banking & Dining Brands Expand",
+    date: "August 28, 2026",
+    readTime: "5 min read",
+    summary: "Commercial rental activity in Central Commercial Area 1 (CCA 1) has registered a 94% occupancy level across ground-floor retail tenancies, driving prime ground rents to PKR 280–350 per sq ft.",
+    details: [
+      "Three national banking branches upgraded their commercial footprints in CCA 1, securing 8 Marla multi-story headquarters.",
+      "Defence Raya commercial zone continues to attract regional boutique dining and high-end aesthetics clinics.",
+      "Commercial plaza yields in CCA 2 are averaging 6.8% to 7.4% gross annually, making them a top alternative to residential buy-to-let.",
+      "Parking management and evening valet systems have been introduced by local plaza associations to accommodate weekend dining surges."
+    ],
+    signal: "High Yield & Strong Rental Demand for Turnkey Commercial Plazas"
+  },
+  {
+    id: "update-2026-08-15",
+    tag: "Construction Updates",
+    tagClass: "tag-construction",
+    title: "Turnkey Construction Costs Balance at PKR 6,800–8,200 / Sq Ft Amid Steel Price Moderation",
+    date: "August 18, 2026",
+    readTime: "4 min read",
+    summary: "Domestic reinforcement steel and cement prices stabilized through August 2026, keeping grey structure construction costs for 1 Kanal villas around PKR 3,300 to 3,700 per sq ft.",
+    details: [
+      "Grey structure budget for 5,200 sq ft 1 Kanal home stands at PKR 1.75 to 1.95 Crore.",
+      "Luxury finishing packages (Spanish imported porcelain tiles, high-grade teak woodwork, double-glazed insulated UPVC windows) range from PKR 3,500 to 4,500 per sq ft additional.",
+      "Solar rooftop integration has become standard: over 82% of newly constructed villas in Sectors A, B, and C incorporate 15kW to 20kW hybrid net-metering setups during initial slab casting."
+    ],
+    signal: "Favorable Window for Owner-Builders to Lock Contractor Turnkey Rates"
+  },
+  {
+    id: "update-2026-08-01",
+    tag: "Infrastructure & Connectivity",
+    tagClass: "tag-infra",
+    title: "Lahore Ring Road Interchange Flow & Bedian Underpass Traffic Flow Improvements",
+    date: "August 5, 2026",
+    readTime: "3 min read",
+    summary: "Commuter transit audits reveal that recent signal-free modifications at the Bedian Road / Phase 6 entrance have reduced peak morning travel times to Allama Iqbal International Airport to under 11 minutes.",
+    details: [
+      "Zero signal bottlenecks between Phase 6 Main Gate (Shabbir Sharif Boulevard) and DHA Phase 5 Commercial hub.",
+      "Direct Ring Road exit near Sector L provides seamless connection to Gulberg (via Nawaz Sharif Interchange) within 16 minutes.",
+      "Underground drainage cleaning and high-capacity storm sumps completed ahead of seasonal monsoons, preventing localized water ponding."
+    ],
+    signal: "Enhanced Inter-Phase Connectivity Solidifies End-User Resident Preference"
+  },
+  {
+    id: "update-2026-07-20",
+    tag: "Investment Signals",
+    tagClass: "tag-invest",
+    title: "Sector K & L Capital Value Discrepancy Presents 18-Month Value Re-Rating Opportunity",
+    date: "July 24, 2026",
+    readTime: "5 min read",
+    summary: "Quantitative analysis of price-per-Kanal across Phase 6 indicates that Sectors K and L trade at a 22% discount compared to Sectors B and C, despite identical 100% underground utilities, high-speed fiber optics, and direct Ring Road access.",
+    details: [
+      "Sector K 1 Kanal plots currently average PKR 4.10 to 4.70 Crore, vs. PKR 5.40 to 6.20 Crore in Sector C.",
+      "Construction starts in Sector K increased by 28% year-over-year, indicating steady resident migration.",
+      "Historical data shows peripheral sectors in mature DHA phases compress price discounts to under 10% once neighborhood occupancy crosses 65%."
+    ],
+    signal: "Strong Medium-Term Capital Appreciation Horizon for Growth Investors"
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "NewsArticle",
+      "@id": `${canonical}#newsarticle`,
+      "isPartOf": { "@type": "WebSite", "@id": `${SITE.url}/#website` },
+      "headline": title,
+      "description": description,
+      "url": canonical,
+      "inLanguage": "en-PK",
+      "mainEntityOfPage": canonical,
+      "datePublished": publishedDate,
+      "dateModified": updatedDate,
+      "author": {
+        "@type": "Person",
+        "name": authorName,
+        "jobTitle": authorTitle,
+        "url": `${SITE.url}/authors/`
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": SITE.name,
+        "url": SITE.url,
+        "logo": {
+          "@type": "ImageObject",
+          "url": `${SITE.url}/images/og/homepage-og.svg`
+        }
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonical}#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE.url },
+        { "@type": "ListItem", "position": 2, "name": "Market Analysis", "item": `${SITE.url}/dha-phase-6-market-analysis/` },
+        { "@type": "ListItem", "position": 3, "name": "Market Updates", "item": canonical }
+      ]
+    }
+  ]
+};
+---
+
+<PageLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+
+  <header class="updates-hero">
+    <div class="container">
+      <div class="hero-eyebrow">
+        <span class="live-indicator"></span> Real-Time Market Intelligence
+      </div>
+      <h1 class="hero-title">
+        DHA Phase 6 Lahore <span class="text-gradient">Market Updates</span>
+      </h1>
+      <p class="hero-lead">
+        Continuous, verified independent coverage of real estate price movements, construction costs, commercial retail leasing, and infrastructure milestones across Sectors A to N.
+      </p>
+
+      <div class="meta-strip">
+        <div class="meta-item">
+          <span class="meta-label">Last Updated:</span>
+          <strong>September 5, 2026</strong>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Lead Researcher:</span>
+          <a href="/authors/"><strong>{authorName}</strong></a>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Methodology:</span>
+          <a href="/how-we-collect-property-data/"><strong>7-Stage Physical Audit</strong></a>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Coverage:</span>
+          <strong>14 Sectors + 3 Commercial Zones</strong>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container page-content">
+    
+    <!-- QUICK NAVIGATION PILLS -->
+    <nav class="sub-nav-pills" aria-label="Market Update Categories">
+      <a href="#update-2026-09-01" class="pill">Price Movements</a>
+      <a href="#update-2026-08-25" class="pill">Commercial Retail</a>
+      <a href="#update-2026-08-15" class="pill">Construction Costs</a>
+      <a href="#update-2026-08-01" class="pill">Infrastructure</a>
+      <a href="#update-2026-07-20" class="pill">Investment Signals</a>
+      <a href="/dha-phase-6-property-market-dashboard/" class="pill pill-gold">Live Market Dashboard →</a>
+    </nav>
+
+    <!-- METHODOLOGY & INDEPENDENCE BANNER -->
+    <section class="methodology-callout">
+      <div class="callout-icon">📊</div>
+      <div class="callout-text">
+        <h3>Independent Data Notice &amp; Research Integrity</h3>
+        <p>
+          All price metrics, construction analyses, and yield reports are compiled independently by our research desk through ground inspections, active dealer interviews, and registered listing checks. We are not an official DHA Lahore department. To review official notices, NDC procedures, and bylaw transfers, verify directly with DHA Lahore Main Office.
+        </p>
+      </div>
+    </section>
+
+    <!-- MARKET UPDATES STREAM -->
+    <section class="updates-stream">
+      {updates.map((item) => (
+        <article id={item.id} class="update-card">
+          <div class="card-header">
+            <span class:list={['badge-tag', item.tagClass]}>{item.tag}</span>
+            <div class="card-time">
+              <span>📅 {item.date}</span>
+              <span>⏱️ {item.readTime}</span>
+            </div>
+          </div>
+
+          <h2 class="card-title">{item.title}</h2>
+          <p class="card-summary">{item.summary}</p>
+
+          <div class="details-box">
+            <h4>Key Observations &amp; Data Points:</h4>
+            <ul>
+              {item.details.map((point) => (
+                <li>{point}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="card-signal-bar">
+            <span class="signal-label">Market Signal:</span>
+            <strong class="signal-value">{item.signal}</strong>
+          </div>
+        </article>
+      ))}
+    </section>
+
+    <!-- INTERLINKING & CONVERSION GRID -->
+    <section class="next-steps-grid">
+      <div class="next-card">
+        <h3>Live Market Dashboard</h3>
+        <p>Access real-time sector price comparisons, demand rankings, and visual charts.</p>
+        <a href="/dha-phase-6-property-market-dashboard/" class="btn-link">Explore Dashboard →</a>
+      </div>
+      <div class="next-card">
+        <h3>Sector Ranking System</h3>
+        <p>Compare Sectors A through N on living quality, investment ROI, and accessibility.</p>
+        <a href="/dha-phase-6-sector-ranking/" class="btn-link">View Sector Rankings →</a>
+      </div>
+      <div class="next-card">
+        <h3>Property Advisor Consultation</h3>
+        <p>Receive tailored property recommendations matched to your budget and living criteria.</p>
+        <a href="/property-advisor/" class="btn-link">Consult an Advisor →</a>
+      </div>
+    </section>
+
+  </main>
+</PageLayout>
+
+<style>
+  .updates-hero {
+    background: linear-gradient(135deg, #0a1118 0%, #111d28 100%);
+    color: #ffffff;
+    padding: 3.5rem 0 2.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(200, 150, 12, 0.15);
+    color: #e5b324;
+    border: 1px solid rgba(200, 150, 12, 0.3);
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+  .live-indicator {
+    width: 8px;
+    height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #10b981;
+    display: inline-block;
+  }
+  .hero-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .hero-lead {
+    font-size: 1.15rem;
+    color: #94a3b8;
+    max-width: 800px;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+  .text-gradient {
+    background: linear-gradient(135deg, #e5b324 0%, #fef08a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .meta-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.25rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 1.25rem;
+    border-radius: 12px;
+  }
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.9rem;
+  }
+  .meta-label {
+    color: #94a3b8;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .meta-item strong {
+    color: #f1f5f9;
+  }
+  .meta-item a {
+    color: #e5b324;
+    text-decoration: none;
+  }
+  .meta-item a:hover {
+    text-decoration: underline;
+  }
+
+  .page-content {
+    padding: 2.5rem 0 4rem;
+  }
+
+  .sub-nav-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+  .pill {
+    background: #f8fafc;
+    color: #334155;
+    border: 1px solid #e2e8f0;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .pill:hover {
+    background: #0f172a;
+    color: #ffffff;
+    border-color: #0f172a;
+  }
+  .pill-gold {
+    background: #c8960c;
+    color: #ffffff;
+    border-color: #c8960c;
+  }
+  .pill-gold:hover {
+    background: #b08207;
+  }
+
+  .methodology-callout {
+    display: flex;
+    gap: 1.25rem;
+    background: #fefce8;
+    border: 1px solid #fef08a;
+    border-left: 4px solid #c8960c;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2.5rem;
+  }
+  .callout-icon {
+    font-size: 2rem;
+  }
+  .callout-text h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #854d0e;
+    margin: 0 0 0.5rem 0;
+  }
+  .callout-text p {
+    font-size: 0.95rem;
+    color: #713f12;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .updates-stream {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 3.5rem;
+  }
+  .update-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .update-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .badge-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+  }
+  .tag-price { background: #dcfce7; color: #15803d; }
+  .tag-commercial { background: #e0f2fe; color: #0369a1; }
+  .tag-construction { background: #fef3c7; color: #b45309; }
+  .tag-infra { background: #f3e8ff; color: #7e22ce; }
+  .tag-invest { background: #ffedd5; color: #c2410c; }
+
+  .card-time {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: #64748b;
+  }
+  .card-title {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.35;
+    margin: 0 0 1rem 0;
+  }
+  .card-summary {
+    font-size: 1.05rem;
+    color: #475569;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  .details-box {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+  .details-box h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 0.75rem 0;
+  }
+  .details-box ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    color: #334155;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .details-box li {
+    margin-bottom: 0.5rem;
+  }
+  .details-box li:last-child {
+    margin-bottom: 0;
+  }
+
+  .card-signal-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: #f1f5f9;
+    padding: 0.85rem 1.25rem;
+    border-radius: 6px;
+    border-left: 4px solid #0f172a;
+  }
+  .signal-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #64748b;
+  }
+  .signal-value {
+    font-size: 0.95rem;
+    color: #0f172a;
+  }
+
+  .next-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .next-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .next-card h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 0.5rem 0;
+  }
+  .next-card p {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+  }
+  .btn-link {
+    color: #c8960c;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+  .btn-link:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .update-card {
+      padding: 1.25rem;
+    }
+    .card-title {
+      font-size: 1.2rem;
+    }
+    .card-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

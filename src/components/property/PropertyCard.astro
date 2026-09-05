@@ -41,16 +41,23 @@ const formatPKR = (value: number) => {
   if (value >= 100_000) return `${(value / 100_000).toFixed(2)} Lakh`;
   return new Intl.NumberFormat('en-PK').format(value);
 };
-const imageUrl = image?.url || '/images/placeholders/property-placeholder.svg';
-const imageAlt = image?.alt || `${title}, DHA Phase 6 Lahore`;
+const cleanBlock = block || 'Phase 6';
 const typeLabel = propertyType.replaceAll('-', ' ');
+const imageUrl = image?.url || '/images/placeholders/property-placeholder.svg';
+const seoImageAlt = image?.alt && !image.alt.includes('placeholder')
+  ? image.alt
+  : `${title} - ${size} ${sizeUnit} ${typeLabel} in ${cleanBlock}, DHA Phase 6 Lahore`;
+const imageCaption = `${size} ${sizeUnit} in ${cleanBlock}, DHA Phase 6 Lahore`;
 const propId = id || `DHA6-${slug.substring(0, 10).toUpperCase()}`;
 const whatsappUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Please help me verify this DHA Phase 6 market record (${propId}): ${title}.`)}`;
 ---
 
 <article class:list={['market-card', { 'market-card--featured': isFeatured }]}>
   <a class="market-card__visual" href={`/properties/${slug}`} aria-label={`Read ${title}`}>
-    <img src={imageUrl} alt={imageAlt} width="800" height="560" loading="lazy" />
+    <figure class="market-card__figure">
+      <img src={imageUrl} alt={seoImageAlt} width="800" height="560" loading="lazy" />
+      <figcaption class="sr-only">{imageCaption}</figcaption>
+    </figure>
     <span class="trust-badge">✓ {verificationStatus}</span>
     <span class="avail-badge">{availabilityStatus}</span>
   </a>
