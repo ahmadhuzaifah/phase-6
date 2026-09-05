@@ -1,0 +1,400 @@
+---
+/**
+ * Defence Raya Commercial DHA Phase 6 Lahore — Complete Authority Guide
+ * Route: /defence-raya-commercial/
+ * Content: Fairways Commercial promenade, upscale dining, designer boutiques, offices, golf views, investment ROI.
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+import { CONTACTS } from '@data/contacts';
+import rayaPlaces from '@data/places/raya-commercial.json';
+
+const canonical = `${SITE.url}/defence-raya-commercial/`;
+const pageTitle = `Defence Raya Commercial DHA Phase 6 Lahore — Fairways Promenade & Dining Guide`;
+const metaDesc = `The authoritative guide to Defence Raya Commercial (Fairways Promenade) in DHA Phase 6 Lahore. Explore fine dining restaurants, cafes, corporate suites, retail shops, and rental yields.`;
+
+const rayaSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Place",
+      "@id": canonical,
+      "name": "Defence Raya Commercial DHA Phase 6 Lahore",
+      "description": metaDesc,
+      "geo": { "@type": "GeoCoordinates", "latitude": 31.4900, "longitude": 74.4760 },
+      "address": { "@type": "PostalAddress", "streetAddress": "Fairways Commercial Promenade, Defence Raya, DHA Phase 6", "addressLocality": "Lahore", "postalCode": "54792", "addressCountry": "PK" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": `${SITE.url}/` },
+        { "@type": "ListItem", "position": 2, "name": "Commercial", "item": `${SITE.url}/dha-phase-6-commercial-areas/` },
+        { "@type": "ListItem", "position": 3, "name": "Defence Raya Commercial", "item": canonical }
+      ]
+    }
+  ]
+};
+---
+
+<PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(rayaSchema)} />
+
+  <header class="comm-zone-header">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="/">Home</a> <span>/</span>
+        <a href="/dha-phase-6-commercial-areas/">Commercial Areas</a> <span>/</span>
+        <span aria-current="page">Defence Raya Commercial</span>
+      </nav>
+      <div class="zone-badge">Luxury Golf Promenade &bull; Fairways Commercial</div>
+      <h1>Defence Raya Commercial DHA Phase 6 Lahore</h1>
+      <p class="zone-intro">
+        Defence Raya Fairways Commercial is Pakistan's most exclusive open-air golf resort retail promenade. 
+        Overlooking the lush rolling greens of the 18-hole international championship golf course, 
+        Raya Commercial blends high-end gastronomy, specialty designer fashion, cigar lounges, and corporate executive suites.
+      </p>
+    </div>
+  </header>
+
+  <main class="container comm-zone-body">
+    <div class="zone-layout">
+      
+      <div class="zone-main">
+        
+        <section class="info-card">
+          <h2>1. Overview &amp; International Joint Venture Heritage</h2>
+          <p>
+            Developed as part of the landmark joint venture between DHA Lahore and Bandar Raya Developments Berhad (BRDB) of Malaysia, 
+            Defence Raya Fairways Commercial was architecturally engineered around pedestrian piazzas, fountain courts, 
+            and tiered alfresco dining balconies facing the fairway greens.
+          </p>
+          <div class="quick-facts-box">
+            <div><strong>Environment:</strong> Open-Air Pedestrian Piazza with Golf Fairway Vistas</div>
+            <div><strong>Flagship Venue:</strong> Defence Raya Golf &amp; Country Club</div>
+            <div><strong>Dining Scene:</strong> Steakhouses, Italian Trattorias, Rooftop Coffee Lounges</div>
+            <div><strong>Tenant Profile:</strong> Luxury Brands, Corporate Advisory, Private Clinics</div>
+          </div>
+        </section>
+
+        <!-- Signature Dining Section -->
+        <section class="info-card">
+          <h2>2. Fine Dining, Steakhouses &amp; Artisan Cafes</h2>
+          <p>
+            Defence Raya has emerged as the premier weekend dining and corporate entertainment district in Lahore. 
+            Patrons enjoy panoramic golf course views while sampling top-tier international cuisine:
+          </p>
+          <div class="place-pills-grid">
+            {rayaPlaces.map(p => (
+              <div class="place-pill">
+                <strong>{p.name}</strong>
+                <small>{p.address}</small>
+                {p.rating && <span class="rating-tag">&#9733; {p.rating} ({p.reviewCount})</span>}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- Golf & Wellness Facilities -->
+        <section class="info-card">
+          <h2>3. Defence Raya Golf &amp; Country Club Integration</h2>
+          <p>
+            Connected directly to the Fairways promenade is the <strong>Defence Raya Golf &amp; Country Club</strong>, 
+            featuring:
+          </p>
+          <ul>
+            <li><strong>18-Hole Championship Golf Course:</strong> Designed by Nelson &amp; Haworth, featuring manicured fairways, challenging water hazards, and night-lit driving range.</li>
+            <li><strong>Wellness &amp; Health Club:</strong> Temperature-controlled Olympic swimming pool, luxury sauna, steam rooms, and modern fitness center.</li>
+            <li><strong>Private Banquet Halls:</strong> Grand banquet suites hosting corporate conferences, product launches, and society weddings.</li>
+            <li><strong>Boutique Hotel Accommodations:</strong> Luxury guest rooms and suites for visiting golf enthusiasts and corporate guests.</li>
+          </ul>
+        </section>
+
+        <!-- Investment & Commercial Plaza Valuations -->
+        <section class="info-card">
+          <h2>4. Commercial Investment &amp; Rental Rates (2026)</h2>
+          <p>
+            Properties in Defence Raya Fairways Commercial enjoy exceptionally high brand equity and low tenant turnover:
+          </p>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Unit Type / Level</th>
+                  <th>Floor Area</th>
+                  <th>Capital Price Range</th>
+                  <th>Monthly Rental Expectation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Piazza Promenade Ground Shop</strong></td>
+                  <td>1,200 – 2,500 sq ft</td>
+                  <td>PKR 7.50 – 16.00 Crore</td>
+                  <td>PKR 450,000 – 900,000</td>
+                </tr>
+                <tr>
+                  <td><strong>Fairway View 1st Floor Cafe</strong></td>
+                  <td>1,500 – 3,000 sq ft</td>
+                  <td>PKR 6.00 – 12.50 Crore</td>
+                  <td>PKR 350,000 – 700,000</td>
+                </tr>
+                <tr>
+                  <td><strong>Executive Corporate Penthouse</strong></td>
+                  <td>2,000 – 4,500 sq ft</td>
+                  <td>PKR 8.00 – 18.00 Crore</td>
+                  <td>PKR 400,000 – 850,000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      </div>
+
+      <aside class="zone-sidebar">
+        <div class="side-card cta-side">
+          <h3>Defence Raya Advisory</h3>
+          <p>Verify available commercial spaces, rental leases, and membership privileges at Defence Raya.</p>
+          <a href={`https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello, I want to inquire about Defence Raya Commercial properties in DHA Phase 6 Lahore.')}`} target="_blank" rel="noopener noreferrer" class="btn-wa">
+            Consult Raya Specialist
+          </a>
+        </div>
+
+        <div class="side-card">
+          <h4>Commercial Zones</h4>
+          <ul class="side-links">
+            <li><a href="/dha-phase-6-commercial-areas/">Commercial Areas Overview</a></li>
+            <li><a href="/cca-1-dha-phase-6-lahore/">CCA 1 Commercial Guide</a></li>
+            <li><a href="/cca-2-dha-phase-6-lahore/">CCA 2 Commercial Guide</a></li>
+            <li><a href="/main-boulevard-commercial-dha-phase-6/">Main Boulevard Commercial</a></li>
+            <li><a href="/defence-raya-commercial/" class="active">Defence Raya Fairways</a></li>
+          </ul>
+        </div>
+
+        <div class="side-card">
+          <h4>Surrounding Residential Sectors</h4>
+          <ul class="side-links">
+            <li><a href="/dha-phase-6-sector-m-lahore/">Sector M</a></li>
+            <li><a href="/dha-phase-6-sector-n-lahore/">Sector N (PKLI)</a></li>
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+</PageLayout>
+
+<style>
+  .comm-zone-header {
+    background: linear-gradient(135deg, #090e1a 0%, #064e3b 100%);
+    color: #fff;
+    padding: 3rem 0 2.5rem;
+  }
+  .breadcrumb {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 0.45rem;
+  }
+  .breadcrumb a { color: #94a3b8; text-decoration: none; }
+  .breadcrumb a:hover { color: #10b981; }
+  .zone-badge {
+    display: inline-block;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 0.3rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .comm-zone-header h1 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 800;
+    margin: 0 0 0.85rem;
+  }
+  .zone-intro {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #cbd5e1;
+    max-width: 850px;
+    margin: 0;
+  }
+
+  .comm-zone-body { padding: 3rem 0; }
+  .zone-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 2.5rem;
+  }
+  .zone-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .info-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.75rem;
+  }
+  .info-card h2 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.85rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .info-card p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #334155;
+    margin-bottom: 1rem;
+  }
+  .info-card ul {
+    margin: 0 0 1.25rem;
+    padding-left: 1.35rem;
+    color: #334155;
+    line-height: 1.7;
+  }
+  .info-card li { margin-bottom: 0.4rem; }
+
+  .quick-facts-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    color: #334155;
+  }
+
+  .place-pills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+  .place-pill {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 0.75rem;
+  }
+  .place-pill strong {
+    display: block;
+    font-size: 0.85rem;
+    color: #0f172a;
+  }
+  .place-pill small {
+    display: block;
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 0.2rem;
+  }
+  .rating-tag {
+    display: inline-block;
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    margin-top: 0.3rem;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+    margin-top: 1rem;
+  }
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  .data-table th {
+    background: #f1f5f9;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 700;
+    color: #0f172a;
+    border-bottom: 2px solid #cbd5e1;
+  }
+  .data-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+  }
+
+  .zone-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .side-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  .side-card h3, .side-card h4 {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.65rem;
+  }
+  .cta-side {
+    background: #0f172a;
+    color: #fff;
+  }
+  .cta-side h3 { color: #fff; }
+  .cta-side p {
+    font-size: 0.82rem;
+    color: #94a3b8;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  .btn-wa {
+    display: block;
+    text-align: center;
+    background: #10b981;
+    color: #042014;
+    font-weight: 800;
+    padding: 0.65rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+  }
+  .btn-wa:hover { background: #059669; color: #fff; }
+
+  .side-links {
+    margin: 0;
+    padding-left: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .side-links a {
+    font-size: 0.82rem;
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .side-links a.active {
+    font-weight: 800;
+    color: #047857;
+  }
+
+  @media (max-width: 900px) {
+    .zone-layout { grid-template-columns: 1fr; }
+    .quick-facts-box { grid-template-columns: 1fr; }
+  }
+</style>

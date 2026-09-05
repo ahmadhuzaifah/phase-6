@@ -1,0 +1,378 @@
+---
+/**
+ * CCA 2 DHA Phase 6 Lahore — Complete Commercial Authority Guide
+ * Route: /cca-2-dha-phase-6-lahore/
+ * Content: Restaurants, Brands, Banks, Offices, Investment Value, Nearby Properties.
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+import { CONTACTS } from '@data/contacts';
+import ccaPlaces from '@data/places/cca.json';
+
+const canonical = `${SITE.url}/cca-2-dha-phase-6-lahore/`;
+const pageTitle = `CCA 2 DHA Phase 6 Lahore — Complete Commercial, Dining & Investment Guide`;
+const metaDesc = `Authoritative guide to CCA 2 (Central Commercial Area 2) in DHA Phase 6 Lahore. Cafes, restaurants, retail outlets, corporate offices, 4 & 8 Marla commercial plots, and investment analysis.`;
+
+const cca2Schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Place",
+      "@id": canonical,
+      "name": "CCA 2 DHA Phase 6 Lahore",
+      "description": metaDesc,
+      "geo": { "@type": "GeoCoordinates", "latitude": 31.4710, "longitude": 74.4620 },
+      "address": { "@type": "PostalAddress", "addressLocality": "Lahore", "postalCode": "54792", "addressCountry": "PK" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": `${SITE.url}/` },
+        { "@type": "ListItem", "position": 2, "name": "Commercial", "item": `${SITE.url}/dha-phase-6-commercial-areas/` },
+        { "@type": "ListItem", "position": 3, "name": "CCA 2", "item": canonical }
+      ]
+    }
+  ]
+};
+---
+
+<PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(cca2Schema)} />
+
+  <header class="comm-zone-header">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="/">Home</a> <span>/</span>
+        <a href="/dha-phase-6-commercial-areas/">Commercial Areas</a> <span>/</span>
+        <span aria-current="page">CCA 2 DHA Phase 6</span>
+      </nav>
+      <div class="zone-badge">Emerging Lifestyle &bull; Eastern Sectors</div>
+      <h1>CCA 2 DHA Phase 6 Lahore</h1>
+      <p class="zone-intro">
+        Central Commercial Area 2 (CCA 2) serves as the primary commercial, dining, and corporate nexus for the eastern sectors of DHA Phase 6 
+        (Sectors H, J, K, L, M, and N). Known for its spacious avenue layout, trendy cafes, boutique dental and medical practices, 
+        and high capital appreciation potential.
+      </p>
+    </div>
+  </header>
+
+  <main class="container comm-zone-body">
+    <div class="zone-layout">
+      
+      <div class="zone-main">
+        
+        <section class="info-card">
+          <h2>Overview &amp; Market Position</h2>
+          <p>
+            While CCA 1 handles high-density banking and supermarket transactions, CCA 2 has evolved into a curated dining, professional services, 
+            and boutique commercial enclave. Designed with wider secondary road buffers and dedicated curbside parking bays, 
+            CCA 2 offers a more relaxed, modern consumer experience.
+          </p>
+          <div class="quick-facts-box">
+            <div><strong>Plot Dimensions:</strong> 4 Marla (30' &times; 30') &amp; 8 Marla (30' &times; 60')</div>
+            <div><strong>Building Regulations:</strong> Basement + Ground + Mezzanine + 4 Floors</div>
+            <div><strong>Primary Sector Access:</strong> Sectors H, J, K, L, M, and Barki Road</div>
+            <div><strong>Specialty Focus:</strong> Artisan Cafes, Clinics, Corporate Real Estate Offices</div>
+          </div>
+        </section>
+
+        <section class="info-card">
+          <h2>Dining, Cafes &amp; Bakeries</h2>
+          <p>
+            CCA 2 is celebrated for its thriving evening culinary scene. Outdoor patio cafes, gourmet burger kitchens, 
+            dessert boutiques, and family barbecue dining draw residents from both Phase 6 and neighboring Phase 7.
+          </p>
+          <div class="place-pills-grid">
+            {ccaPlaces.slice(10, 18).map(r => (
+              <div class="place-pill">
+                <strong>{r.name}</strong>
+                <small>{r.address}</small>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section class="info-card">
+          <h2>Corporate Offices &amp; Professional Clinics</h2>
+          <p>
+            The upper floors of CCA 2 commercial plazas house executive corporate offices, international IT software houses, 
+            specialist dental aesthetic studios, Chartered Accountancy firms, and high-end architectural consultancies.
+          </p>
+          <ul>
+            <li><strong>IT &amp; Tech Startups:</strong> High-speed optical fiber connectivity (StormFiber, PTCL Flash Fiber) makes CCA 2 a prime tech hub.</li>
+            <li><strong>Medical &amp; Aesthetics:</strong> Specialized skin, dental, and physiotherapy clinics catering to affluent residents.</li>
+            <li><strong>Real Estate Brokerages:</strong> Authorised corporate consultants and property research agencies.</li>
+          </ul>
+        </section>
+
+        <section class="info-card">
+          <h2>Investment Valuation &amp; Comparison with CCA 1</h2>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Property Type</th>
+                  <th>CCA 2 Demand Range</th>
+                  <th>CCA 1 Comparison</th>
+                  <th>Expected Rental Yield</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>4 Marla Commercial Plaza</strong></td>
+                  <td>PKR 14.00 – 21.00 Crore</td>
+                  <td>PKR 15.00 – 24.00 Crore</td>
+                  <td>4.8% – 5.8%</td>
+                </tr>
+                <tr>
+                  <td><strong>8 Marla Commercial Plaza</strong></td>
+                  <td>PKR 26.00 – 42.00 Crore</td>
+                  <td>PKR 28.00 – 48.00 Crore</td>
+                  <td>5.0% – 6.2%</td>
+                </tr>
+                <tr>
+                  <td><strong>Ground Floor Retail Shop</strong></td>
+                  <td>PKR 4.00 – 6.50 Crore</td>
+                  <td>PKR 4.50 – 7.50 Crore</td>
+                  <td>5.5% – 6.5%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            <em>Investment Takeaway:</em> CCA 2 offers a slightly lower capital entry barrier compared to CCA 1, 
+            with higher room for capital appreciation as residential construction in Sectors K, L, M, and N reaches 100% density.
+          </p>
+        </section>
+
+      </div>
+
+      <aside class="zone-sidebar">
+        <div class="side-card cta-side">
+          <h3>Commercial Consultation</h3>
+          <p>Inquire about available 4 Marla &amp; 8 Marla commercial plazas and retail spaces in CCA 2.</p>
+          <a href={`https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello, I am interested in CCA 2 DHA Phase 6 commercial properties.')}`} target="_blank" rel="noopener noreferrer" class="btn-wa">
+            WhatsApp Commercial Desk
+          </a>
+        </div>
+
+        <div class="side-card">
+          <h4>Commercial Zones</h4>
+          <ul class="side-links">
+            <li><a href="/dha-phase-6-commercial-areas/">Commercial Areas Overview</a></li>
+            <li><a href="/cca-1-dha-phase-6-lahore/">CCA 1 Commercial Guide</a></li>
+            <li><a href="/cca-2-dha-phase-6-lahore/" class="active">CCA 2 Commercial Guide</a></li>
+            <li><a href="/main-boulevard-commercial-dha-phase-6/">Main Boulevard Commercial</a></li>
+            <li><a href="/defence-raya-commercial/">Defence Raya Fairways</a></li>
+          </ul>
+        </div>
+
+        <div class="side-card">
+          <h4>Nearby Residential Sectors</h4>
+          <ul class="side-links">
+            <li><a href="/dha-phase-6-sector-h-lahore/">Sector H (Adjacent)</a></li>
+            <li><a href="/dha-phase-6-sector-j-lahore/">Sector J (Adjacent)</a></li>
+            <li><a href="/dha-phase-6-sector-k-lahore/">Sector K (Adjacent)</a></li>
+            <li><a href="/dha-phase-6-sector-l-lahore/">Sector L (Adjacent)</a></li>
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+</PageLayout>
+
+<style>
+  .comm-zone-header {
+    background: linear-gradient(135deg, #090e1a 0%, #1e293b 100%);
+    color: #fff;
+    padding: 3rem 0 2.5rem;
+  }
+  .breadcrumb {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 0.45rem;
+  }
+  .breadcrumb a { color: #94a3b8; text-decoration: none; }
+  .breadcrumb a:hover { color: #10b981; }
+  .zone-badge {
+    display: inline-block;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 0.3rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .comm-zone-header h1 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 800;
+    margin: 0 0 0.85rem;
+  }
+  .zone-intro {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #cbd5e1;
+    max-width: 850px;
+    margin: 0;
+  }
+
+  .comm-zone-body { padding: 3rem 0; }
+  .zone-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 2.5rem;
+  }
+  .zone-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .info-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.75rem;
+  }
+  .info-card h2 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.85rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .info-card p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #334155;
+    margin-bottom: 1rem;
+  }
+  .quick-facts-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    color: #334155;
+  }
+  .place-pills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+  .place-pill {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 0.75rem;
+  }
+  .place-pill strong {
+    display: block;
+    font-size: 0.85rem;
+    color: #0f172a;
+  }
+  .place-pill small {
+    display: block;
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 0.2rem;
+  }
+  .table-responsive {
+    overflow-x: auto;
+    margin-top: 1rem;
+  }
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  .data-table th {
+    background: #f1f5f9;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 700;
+    color: #0f172a;
+    border-bottom: 2px solid #cbd5e1;
+  }
+  .data-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+  }
+
+  .zone-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .side-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  .side-card h3, .side-card h4 {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.65rem;
+  }
+  .cta-side {
+    background: #0f172a;
+    color: #fff;
+  }
+  .cta-side h3 { color: #fff; }
+  .cta-side p {
+    font-size: 0.82rem;
+    color: #94a3b8;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  .btn-wa {
+    display: block;
+    text-align: center;
+    background: #10b981;
+    color: #042014;
+    font-weight: 800;
+    padding: 0.65rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+  }
+  .btn-wa:hover { background: #059669; color: #fff; }
+
+  .side-links {
+    margin: 0;
+    padding-left: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .side-links a {
+    font-size: 0.82rem;
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .side-links a.active {
+    font-weight: 800;
+    color: #047857;
+  }
+
+  @media (max-width: 900px) {
+    .zone-layout { grid-template-columns: 1fr; }
+    .quick-facts-box { grid-template-columns: 1fr; }
+  }
+</style>

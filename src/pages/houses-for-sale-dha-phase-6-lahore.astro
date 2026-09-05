@@ -1,0 +1,413 @@
+---
+/**
+ * Houses for Sale DHA Phase 6 Lahore — Search Intent Landing Page
+ * Route: /houses-for-sale-dha-phase-6-lahore/
+ * Features: Unique content, price guidance, buyer intent, FAQs, related listings.
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+import { CONTACTS } from '@data/contacts';
+import propertiesRaw from '@data/properties-import.json';
+
+const canonical = `${SITE.url}/houses-for-sale-dha-phase-6-lahore/`;
+const pageTitle = `Houses for Sale DHA Phase 6 Lahore — 2026 Luxury Villas & Bungalows`;
+const metaDesc = `Browse verified houses for sale in DHA Phase 6 Lahore. Explore 5 Marla, 10 Marla, 1 Kanal & 2 Kanal luxury villas, latest price guidance, sector availability, and buyer FAQs.`;
+
+interface PropertyItem {
+  id: string;
+  slug: string;
+  title: string;
+  price?: number;
+  propertyType: string;
+  size?: string;
+  unit?: string;
+  block?: string;
+}
+const allProps = (Array.isArray(propertiesRaw) ? propertiesRaw : []) as PropertyItem[];
+const houseListings = allProps.filter(p => p.propertyType.toLowerCase().includes('house') || p.propertyType.toLowerCase().includes('villa')).slice(0, 6);
+
+const searchSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": canonical,
+      "name": pageTitle,
+      "description": metaDesc,
+      "publisher": { "@type": "Organization", "name": SITE.name, "url": SITE.url }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": `${SITE.url}/` },
+        { "@type": "ListItem", "position": 2, "name": "Properties", "item": `${SITE.url}/properties/` },
+        { "@type": "ListItem", "position": 3, "name": "Houses for Sale DHA Phase 6", "item": canonical }
+      ]
+    }
+  ]
+};
+---
+
+<PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(searchSchema)} />
+
+  <header class="search-hero">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="/">Home</a> <span>/</span>
+        <a href="/properties/">Properties</a> <span>/</span>
+        <span aria-current="page">Houses for Sale DHA Phase 6 Lahore</span>
+      </nav>
+      <div class="intent-badge">Exact Intent Query &bull; Verified Inventory</div>
+      <h1>Houses for Sale in DHA Phase 6 Lahore</h1>
+      <p class="hero-desc">
+        Explore turn-key luxury villas, brand-new designer bungalows, and family homes in DHA Phase 6 Lahore. 
+        Featuring full DHA completion certificates, underground utilities, and premium imported architectural finishes.
+      </p>
+
+      <div class="quick-size-pills">
+        <a href="/5-marla-house-for-sale-dha-phase-6-lahore/">5 Marla Houses</a>
+        <a href="/10-marla-house-for-sale-dha-phase-6-lahore/">10 Marla Houses</a>
+        <a href="/1-kanal-house-for-sale-dha-phase-6-lahore/">1 Kanal Houses</a>
+        <a href="/plots-for-sale-dha-phase-6-lahore/">Looking for Plots? &rarr;</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container search-body">
+    <div class="search-layout">
+      
+      <div class="search-main">
+        
+        <!-- Section: Market Overview & Price Guidance -->
+        <section class="search-card">
+          <h2>House Price Guidance in DHA Phase 6 (2026 Assessment)</h2>
+          <p>
+            House demands in DHA Phase 6 are determined by plot frontage, location within the sector (corner, boulevard, park-facing), 
+            and whether the property is a brand-new architectural showcase or a pre-owned 5-to-10-year-old residence:
+          </p>
+
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Floor Plan &amp; Covered Area</th>
+                  <th>Brand New Luxury Villa</th>
+                  <th>5 to 10 Year Old House</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>5 Marla House</strong></td>
+                  <td>3 to 4 Beds (1,800 – 2,200 sq ft)</td>
+                  <td>PKR 2.20 – 3.00 Crore</td>
+                  <td>PKR 1.80 – 2.30 Crore</td>
+                </tr>
+                <tr>
+                  <td><strong>10 Marla House</strong></td>
+                  <td>4 to 5 Beds (3,200 – 3,800 sq ft)</td>
+                  <td>PKR 5.20 – 6.80 Crore</td>
+                  <td>PKR 4.20 – 5.00 Crore</td>
+                </tr>
+                <tr>
+                  <td><strong>1 Kanal House</strong></td>
+                  <td>5 to 6 Beds (5,000 – 6,500 sq ft)</td>
+                  <td>PKR 9.50 – 14.50 Crore</td>
+                  <td>PKR 7.50 – 9.00 Crore</td>
+                </tr>
+                <tr>
+                  <td><strong>2 Kanal Luxury Mansion</strong></td>
+                  <td>6 to 8 Beds (9,000 – 12,000 sq ft)</td>
+                  <td>PKR 22.00 – 38.00 Crore</td>
+                  <td>PKR 17.00 – 21.00 Crore</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Section: Active Listings -->
+        <section class="search-card">
+          <h2>Available Houses for Sale in DHA Phase 6</h2>
+          <div class="props-grid">
+            {houseListings.map(p => (
+              <div class="prop-box">
+                <h3><a href={`/properties/${p.slug}/`}>{p.title}</a></h3>
+                <span class="meta">{p.size} {p.unit} &bull; {p.block}</span>
+                <strong class="price">
+                  {p.price && p.price >= 10000000 
+                    ? `PKR ${(p.price / 10000000).toFixed(2)} Crore`
+                    : p.price ? `PKR ${(p.price / 100000).toFixed(2)} Lakh` : 'Demand on Request'}
+                </strong>
+                <a href={`/properties/${p.slug}/`} class="btn-card">View Full Listing &rarr;</a>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- Buyer Intent Guidance -->
+        <section class="search-card">
+          <h2>Buyer Due Diligence Checklist for Houses in Phase 6</h2>
+          <ul class="checklist">
+            <li><strong>DHA Completion Certificate:</strong> Verify that the house has an official DHA Completion Certificate ensuring strict adherence to structural setbacks and bylaws.</li>
+            <li><strong>Utility Meters:</strong> Confirm installed LESCO 3-phase electric meter, SNGPL gas connection, and clean water line connection.</li>
+            <li><strong>Soil &amp; Basement Clearance:</strong> For houses featuring basements, ensure high-grade bitumen waterproofing and no moisture seepage.</li>
+            <li><strong>Active Taxpayer Verification:</strong> Advance Tax (Section 236K) differs significantly between active tax filers and non-filers.</li>
+          </ul>
+        </section>
+
+        <!-- FAQs -->
+        <section class="search-card">
+          <h2>Frequently Asked Questions About Houses in DHA Phase 6</h2>
+          <div class="faqs-list">
+            <details class="faq-item" open>
+              <summary><strong>What is the standard size of a 1 Kanal house in DHA Phase 6?</strong></summary>
+              <p>A 1 Kanal plot measures 50 &times; 90 feet (4,500 sq ft / 500 sq yds). A double-story house on this plot typically yields 5,000 to 6,200 sq ft of covered area, accommodating 5 ensuite bedrooms, 2 kitchens, drawing/dining, lounge, and servant quarters.</p>
+            </details>
+            <details class="faq-item">
+              <summary><strong>Which sectors in Phase 6 have the highest concentration of houses?</strong></summary>
+              <p>Sectors A, B, C, D, and H have occupancy rates exceeding 75%, making them the most established neighborhoods with mature greenery and active community life.</p>
+            </details>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="search-sidebar">
+        <div class="side-box cta-box">
+          <h3>House Buying Support</h3>
+          <p>Get authentic property due diligence, owner contact, and verified physical inspection appointments.</p>
+          <a href={`https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello, I want to inquire about houses for sale in DHA Phase 6 Lahore.')}`} target="_blank" rel="noopener noreferrer" class="btn-wa">
+            WhatsApp Property Desk
+          </a>
+        </div>
+
+        <div class="side-box">
+          <h4>By Size (Houses)</h4>
+          <ul class="side-nav">
+            <li><a href="/5-marla-house-for-sale-dha-phase-6-lahore/">5 Marla Houses</a></li>
+            <li><a href="/10-marla-house-for-sale-dha-phase-6-lahore/">10 Marla Houses</a></li>
+            <li><a href="/1-kanal-house-for-sale-dha-phase-6-lahore/">1 Kanal Houses</a></li>
+          </ul>
+        </div>
+
+        <div class="side-box">
+          <h4>By Size (Plots)</h4>
+          <ul class="side-nav">
+            <li><a href="/5-marla-plot-for-sale-dha-phase-6-lahore/">5 Marla Plots</a></li>
+            <li><a href="/10-marla-plot-for-sale-dha-phase-6-lahore/">10 Marla Plots</a></li>
+            <li><a href="/1-kanal-plot-for-sale-dha-phase-6-lahore/">1 Kanal Plots</a></li>
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+</PageLayout>
+
+<style>
+  .search-hero {
+    background: linear-gradient(135deg, #090e1a 0%, #1e293b 100%);
+    color: #fff;
+    padding: 3rem 0 2.5rem;
+  }
+  .breadcrumb {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 0.45rem;
+  }
+  .breadcrumb a { color: #94a3b8; text-decoration: none; }
+  .breadcrumb a:hover { color: #10b981; }
+  .intent-badge {
+    display: inline-block;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 0.3rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .search-hero h1 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 800;
+    margin: 0 0 0.85rem;
+  }
+  .hero-desc {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #cbd5e1;
+    max-width: 850px;
+    margin: 0 0 1.5rem;
+  }
+  .quick-size-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .quick-size-pills a {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #f1f5f9;
+    padding: 0.4rem 0.85rem;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .quick-size-pills a:hover {
+    background: #10b981;
+    color: #042014;
+  }
+
+  .search-body { padding: 3rem 0; }
+  .search-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 2.5rem;
+  }
+  .search-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  .search-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.75rem;
+  }
+  .search-card h2 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.85rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .search-card p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #334155;
+    margin-bottom: 1rem;
+  }
+
+  .table-wrap { overflow-x: auto; margin-top: 1rem; }
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  .data-table th {
+    background: #f1f5f9;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 700;
+    color: #0f172a;
+    border-bottom: 2px solid #cbd5e1;
+  }
+  .data-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+  }
+
+  .props-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+  }
+  .prop-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .prop-box h3 { font-size: 1rem; margin: 0 0 0.35rem; }
+  .prop-box h3 a { color: #0f172a; text-decoration: none; }
+  .prop-box h3 a:hover { color: #059669; }
+  .prop-box .meta { font-size: 0.8rem; color: #64748b; margin-bottom: 0.5rem; }
+  .prop-box .price { font-size: 0.95rem; color: #059669; margin-bottom: 1rem; }
+  .btn-card { font-size: 0.8rem; color: #059669; font-weight: 700; text-decoration: none; }
+
+  .checklist {
+    margin: 0;
+    padding-left: 1.25rem;
+    line-height: 1.7;
+    color: #334155;
+  }
+  .checklist li { margin-bottom: 0.5rem; }
+
+  .faqs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+  .faq-item {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 0.85rem 1.15rem;
+  }
+  .faq-item summary { cursor: pointer; font-size: 0.95rem; color: #0f172a; }
+  .faq-item p { margin: 0.5rem 0 0; font-size: 0.9rem; line-height: 1.6; color: #475569; }
+
+  .search-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .side-box {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  .side-box h3, .side-box h4 {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.65rem;
+  }
+  .cta-box { background: #0f172a; color: #fff; }
+  .cta-box h3 { color: #fff; }
+  .cta-box p { font-size: 0.82rem; color: #94a3b8; line-height: 1.5; margin-bottom: 1rem; }
+  .btn-wa {
+    display: block;
+    text-align: center;
+    background: #10b981;
+    color: #042014;
+    font-weight: 800;
+    padding: 0.65rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+  }
+  .btn-wa:hover { background: #059669; color: #fff; }
+
+  .side-nav {
+    margin: 0;
+    padding-left: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .side-nav a { font-size: 0.82rem; color: #059669; text-decoration: none; }
+  .side-nav a:hover { text-decoration: underline; }
+
+  @media (max-width: 900px) {
+    .search-layout { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,427 @@
+---
+/**
+ * Schools in DHA Phase 6 Lahore — Complete Facility Authority Guide
+ * Route: /schools-in-dha-phase-6-lahore/
+ * Length: 1000-2000 words with complete listings, categories, related sectors, and properties.
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+import { getAllPlaces } from '@data/places/index';
+import propertiesRaw from '@data/properties-import.json';
+
+const allPlaces = getAllPlaces();
+const schools = allPlaces.filter(p => ['schools', 'school', 'colleges', 'college'].includes(p.category));
+
+const canonical = `${SITE.url}/schools-in-dha-phase-6-lahore/`;
+const pageTitle = `Schools in DHA Phase 6 Lahore — Complete 2026 Directory & Educational Guide`;
+const metaDesc = `Comprehensive guide to top schools, colleges, and universities in DHA Phase 6 Lahore. Beaconhouse, LGU, TMUC, Future World, APS, fee structures, curriculum, and nearby family houses.`;
+
+interface PropertyItem {
+  id: string;
+  slug: string;
+  title: string;
+  price?: number;
+  propertyType: string;
+  size?: string;
+  unit?: string;
+  block?: string;
+}
+const allProps = (Array.isArray(propertiesRaw) ? propertiesRaw : []) as PropertyItem[];
+const nearbyHouses = allProps.filter(p => p.propertyType.toLowerCase().includes('house')).slice(0, 4);
+
+const schoolsSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": canonical,
+      "name": pageTitle,
+      "description": metaDesc,
+      "publisher": { "@type": "Organization", "name": SITE.name, "url": SITE.url }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": `${SITE.url}/` },
+        { "@type": "ListItem", "position": 2, "name": "Facilities", "item": `${SITE.url}/places/` },
+        { "@type": "ListItem", "position": 3, "name": "Schools in DHA Phase 6", "item": canonical }
+      ]
+    }
+  ]
+};
+---
+
+<PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(schoolsSchema)} />
+
+  <header class="facility-hero">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="/">Home</a> <span>/</span>
+        <a href="/places/">Facilities</a> <span>/</span>
+        <span aria-current="page">Schools in DHA Phase 6</span>
+      </nav>
+      <div class="fac-badge">Educational Ecosystem Authority &bull; DHA Phase 6 Lahore</div>
+      <h1>Schools, Colleges &amp; Universities in DHA Phase 6 Lahore</h1>
+      <p class="hero-sub">
+        Explore the educational landscape of DHA Phase 6 Lahore. From Cambridge International O &amp; A Level institutions 
+        and transnational higher education campuses to elite pre-schools, discover why Phase 6 is Lahore’s premier neighborhood for family living.
+      </p>
+
+      <div class="stats-bar">
+        <span><strong>{schools.length}+</strong> Verified Educational Campuses</span>
+        <span><strong>Pre-K to Higher Ed</strong> Full Spectrum</span>
+        <span><strong>Cambridge &amp; Matric</strong> Dual Curricula</span>
+        <span><strong>LUMS</strong> 7-Min Proximity</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container fac-body">
+    <div class="fac-layout">
+      
+      <div class="fac-content">
+        
+        <!-- Chapter 1: Introduction -->
+        <section class="fac-section">
+          <h2>1. Education Ecosystem Overview in DHA Phase 6</h2>
+          <p>
+            When families evaluate residential relocation across Lahore, educational accessibility ranks as the paramount priority. 
+            DHA Phase 6 was deliberately planned with designated educational land parcels across residential sectors, 
+            ensuring that students travel via quiet, safe internal boulevards without traversing hazardous industrial highways.
+          </p>
+          <p>
+            The educational ecosystem in Phase 6 spans three tiers:
+          </p>
+          <ul>
+            <li><strong>Early Childhood &amp; Preparatory Montessoris:</strong> High-end pre-schools operating in Sectors C, D, and H offering British Early Years Foundation Stage (EYFS) curriculum.</li>
+            <li><strong>Primary &amp; Secondary High Schools:</strong> World-class campuses including Beaconhouse School System (Sector D), Future World School (Sector M), and Army Public School (Sector L).</li>
+            <li><strong>Universities &amp; Degree Institutes:</strong> Lahore Garrison University (LGU) and The Millennium Universal College (TMUC) in Sector J offering recognized international undergraduate and postgraduate degrees.</li>
+          </ul>
+        </section>
+
+        <!-- Chapter 2: Detailed Listings -->
+        <section class="fac-section">
+          <h2>2. Verified School &amp; College Listings in DHA Phase 6</h2>
+          <p>
+            The following educational institutions are verified, active, and located directly within DHA Phase 6:
+          </p>
+
+          <div class="listings-grid">
+            {schools.map(s => (
+              <div class="place-detail-card">
+                <div class="card-head">
+                  <h3>{s.name}</h3>
+                  <span class="sector-tag">{s.sectorLabel}</span>
+                </div>
+                <p class="address">{s.address}</p>
+                {s.description && <p class="desc">{s.description}</p>}
+                
+                <div class="card-footer">
+                  {s.rating ? (
+                    <span class="rating">&#9733; {s.rating} ({s.reviewCount} reviews)</span>
+                  ) : <span>Verified Campus</span>}
+                  
+                  <div class="action-links">
+                    {s.phone && <a href={`tel:${s.phone}`} class="tel-link">{s.phone}</a>}
+                    <a href={s.googleMapsUrl} target="_blank" rel="noopener noreferrer" class="map-link">Google Maps &rarr;</a>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- Chapter 3: Curriculum Comparison -->
+        <section class="fac-section">
+          <h2>3. Curricula, Cambridge Examination Centers &amp; Activities</h2>
+          <p>
+            Institutions in DHA Phase 6 cater to multiple academic pathways. Cambridge International (CIE) O/A Levels are offered at Beaconhouse and Future World, 
+            featuring purpose-built scientific laboratories, STEAM robotics centers, and Olympic-sized sports grounds. 
+            Simultaneously, Army Public School (APS) delivers rigorous national curriculum (BISE Lahore Matric &amp; Intermediate) alongside Cambridge tracks.
+          </p>
+        </section>
+
+        <!-- Chapter 4: Nearby Properties -->
+        {nearbyHouses.length > 0 && (
+          <section class="fac-section">
+            <h2>4. Houses for Sale Near DHA Phase 6 Schools</h2>
+            <p>Families seeking to live within 3 to 5 minutes of top campuses can explore these verified luxury homes:</p>
+            <div class="prop-chips-grid">
+              {nearbyHouses.map(p => (
+                <div class="prop-chip">
+                  <h4><a href={`/properties/${p.slug}/`}>{p.title}</a></h4>
+                  <span>{p.size} {p.unit} &bull; {p.block}</span>
+                  <strong>
+                    {p.price && p.price >= 10000000 
+                      ? `PKR ${(p.price / 10000000).toFixed(2)} Crore`
+                      : p.price ? `PKR ${(p.price / 100000).toFixed(2)} Lakh` : 'Demand on Request'}
+                  </strong>
+                  <a href={`/properties/${p.slug}/`} class="view-btn">View Property &rarr;</a>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="fac-sidebar">
+        <div class="side-card">
+          <h3>Related Facilities</h3>
+          <ul class="side-links">
+            <li><a href="/schools-in-dha-phase-6-lahore/" class="active">Schools &amp; Colleges</a></li>
+            <li><a href="/hospitals-in-dha-phase-6-lahore/">Hospitals &amp; Healthcare</a></li>
+            <li><a href="/restaurants-in-dha-phase-6-lahore/">Restaurants &amp; Dining</a></li>
+            <li><a href="/mosques-in-dha-phase-6-lahore/">Mosques &amp; Prayer Centers</a></li>
+            <li><a href="/parks-in-dha-phase-6-lahore/">Parks &amp; Sports Grounds</a></li>
+          </ul>
+        </div>
+
+        <div class="side-card">
+          <h4>Top Educational Sectors</h4>
+          <ul class="side-links">
+            <li><a href="/dha-phase-6-sector-d-lahore/">Sector D (Beaconhouse)</a></li>
+            <li><a href="/dha-phase-6-sector-j-lahore/">Sector J (LGU &amp; TMUC)</a></li>
+            <li><a href="/dha-phase-6-sector-m-lahore/">Sector M (Future World)</a></li>
+            <li><a href="/dha-phase-6-sector-l-lahore/">Sector L (Army Public School)</a></li>
+          </ul>
+        </div>
+
+        <div class="side-card">
+          <h4>Property Search Intent</h4>
+          <ul class="side-links">
+            <li><a href="/houses-near-schools-dha-phase-6-lahore/">Houses Near Schools</a></li>
+            <li><a href="/plots-near-schools-dha-phase-6-lahore/">Plots Near Schools</a></li>
+            <li><a href="/houses-for-sale-dha-phase-6-lahore/">All Houses for Sale</a></li>
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+</PageLayout>
+
+<style>
+  .facility-hero {
+    background: linear-gradient(135deg, #090e1a 0%, #1e1b4b 100%);
+    color: #fff;
+    padding: 3rem 0 2.5rem;
+  }
+  .breadcrumb {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 0.45rem;
+  }
+  .breadcrumb a { color: #94a3b8; text-decoration: none; }
+  .breadcrumb a:hover { color: #10b981; }
+  .fac-badge {
+    display: inline-block;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 0.3rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .facility-hero h1 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 800;
+    margin: 0 0 0.85rem;
+  }
+  .hero-sub {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #cbd5e1;
+    max-width: 850px;
+    margin: 0 0 1.5rem;
+  }
+  .stats-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .stats-bar span {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    color: #e2e8f0;
+  }
+  .stats-bar strong { color: #34d399; }
+
+  .fac-body { padding: 3rem 0; }
+  .fac-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 2.5rem;
+  }
+  .fac-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  .fac-section h2 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .fac-section p {
+    font-size: 0.98rem;
+    line-height: 1.75;
+    color: #334155;
+    margin-bottom: 1rem;
+  }
+  .fac-section ul {
+    margin: 0 0 1.25rem;
+    padding-left: 1.4rem;
+    line-height: 1.7;
+    color: #334155;
+  }
+  .fac-section li { margin-bottom: 0.4rem; }
+
+  .listings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+  }
+  .place-detail-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .card-head h3 {
+    font-size: 1.05rem;
+    color: #0f172a;
+    margin: 0;
+  }
+  .sector-tag {
+    background: #ecfdf5;
+    color: #059669;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .address {
+    font-size: 0.82rem;
+    color: #64748b;
+    margin: 0 0 0.5rem;
+  }
+  .desc {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #334155;
+    flex-grow: 1;
+    margin: 0 0 1rem;
+  }
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 0.75rem;
+    font-size: 0.78rem;
+  }
+  .rating {
+    background: #fef3c7;
+    color: #92400e;
+    font-weight: 700;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+  }
+  .action-links {
+    display: flex;
+    gap: 0.75rem;
+  }
+  .tel-link, .map-link {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .tel-link:hover, .map-link:hover { text-decoration: underline; }
+
+  .prop-chips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+  .prop-chip {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .prop-chip h4 {
+    font-size: 0.92rem;
+    margin: 0 0 0.35rem;
+  }
+  .prop-chip h4 a { color: #0f172a; text-decoration: none; }
+  .prop-chip h4 a:hover { color: #059669; }
+  .prop-chip span { font-size: 0.78rem; color: #64748b; margin-bottom: 0.5rem; }
+  .prop-chip strong { font-size: 0.95rem; color: #059669; margin-bottom: 0.75rem; }
+  .view-btn { font-size: 0.8rem; color: #059669; font-weight: 700; text-decoration: none; }
+
+  .fac-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .side-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  .side-card h3, .side-card h4 {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.65rem;
+  }
+  .side-links {
+    margin: 0;
+    padding-left: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .side-links a {
+    font-size: 0.82rem;
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .side-links a.active { font-weight: 800; color: #047857; }
+
+  @media (max-width: 900px) {
+    .fac-layout { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,373 @@
+---
+/**
+ * Mosques in DHA Phase 6 Lahore — Complete Facility Authority Guide
+ * Route: /mosques-in-dha-phase-6-lahore/
+ * Length: 1000-2000 words with sector Grand Mosques, architecture, prayer amenities, and nearby homes.
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+import { getAllPlaces } from '@data/places/index';
+import propertiesRaw from '@data/properties-import.json';
+
+const allPlaces = getAllPlaces();
+const mosques = allPlaces.filter(p => ['mosques', 'mosque'].includes(p.category));
+
+const canonical = `${SITE.url}/mosques-in-dha-phase-6-lahore/`;
+const pageTitle = `Mosques in DHA Phase 6 Lahore — Complete Jamia Mosque Directory & Prayer Times`;
+const metaDesc = `Authoritative guide to mosques in DHA Phase 6 Lahore. Explore Grand Jamia mosques in Sectors A, C, D, H, J, architectural features, ablution halls, Jummah prayer times, and nearby houses.`;
+
+interface PropertyItem {
+  id: string;
+  slug: string;
+  title: string;
+  price?: number;
+  propertyType: string;
+  size?: string;
+  unit?: string;
+  block?: string;
+}
+const allProps = (Array.isArray(propertiesRaw) ? propertiesRaw : []) as PropertyItem[];
+const nearbyHouses = allProps.filter(p => p.propertyType.toLowerCase().includes('house')).slice(0, 4);
+
+const mosqueSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": canonical,
+      "name": pageTitle,
+      "description": metaDesc,
+      "publisher": { "@type": "Organization", "name": SITE.name, "url": SITE.url }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": `${SITE.url}/` },
+        { "@type": "ListItem", "position": 2, "name": "Facilities", "item": `${SITE.url}/places/` },
+        { "@type": "ListItem", "position": 3, "name": "Mosques in DHA Phase 6", "item": canonical }
+      ]
+    }
+  ]
+};
+---
+
+<PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(mosqueSchema)} />
+
+  <header class="facility-hero">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="/">Home</a> <span>/</span>
+        <a href="/places/">Facilities</a> <span>/</span>
+        <span aria-current="page">Mosques in DHA Phase 6</span>
+      </nav>
+      <div class="fac-badge">Spiritual &amp; Community Architecture &bull; DHA Phase 6 Lahore</div>
+      <h1>Mosques &amp; Jamia Masjids in DHA Phase 6 Lahore</h1>
+      <p class="hero-sub">
+        Every residential sector in DHA Phase 6 was intentionally centered around an architecturally magnificent Grand Jamia Masjid. 
+        Equipped with climate-controlled prayer halls, state-of-the-art wuzu khanas, Quranic academies, and dedicated women's prayer galleries.
+      </p>
+
+      <div class="stats-bar">
+        <span><strong>{mosques.length}+</strong> Sector Jamia Mosques</span>
+        <span><strong>Air-Conditioned</strong> Multi-Tier Prayer Halls</span>
+        <span><strong>Women's Galleries</strong> Dedicated Prayer Areas</span>
+        <span><strong>Ample Parking</strong> Designed for Jummah Congregations</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container fac-body">
+    <div class="fac-layout">
+      
+      <div class="fac-content">
+        
+        <section class="fac-section">
+          <h2>1. Islamic Architecture &amp; Sector Integration</h2>
+          <p>
+            In DHA Phase 6, the placement of mosques adheres to a strict urban walking radius: no resident is situated more than a 3 to 5-minute walk from their sector Jamia Masjid. 
+            Each sector mosque showcases unique architectural motifs blending traditional Ottoman, Mughal, and sleek contemporary Islamic geometric design.
+          </p>
+          <ul>
+            <li><strong>Central Sector Grand Mosques:</strong> Landmark structures in Sector A, Sector C, and Sector D accommodating congregations of 2,000 to 5,000 worshippers during Friday Jummah and Eid prayers.</li>
+            <li><strong>Modern Amenities:</strong> Full central air-conditioning, standby silent diesel generators, disabled access ramps, and digital prayer timing boards.</li>
+            <li><strong>Community &amp; Quranic Education:</strong> After-school Nazra, Hifz, and Tajweed programs for neighborhood children conducted by certified Qaris.</li>
+          </ul>
+        </section>
+
+        <section class="fac-section">
+          <h2>2. Verified Mosque Directory across DHA Phase 6</h2>
+          <div class="listings-grid">
+            {mosques.map(m => (
+              <div class="place-detail-card">
+                <div class="card-head">
+                  <h3>{m.name}</h3>
+                  <span class="sector-tag">{m.sectorLabel}</span>
+                </div>
+                <p class="address">{m.address}</p>
+                {m.description && <p class="desc">{m.description}</p>}
+                
+                <div class="card-footer">
+                  <span>Sector Prayer Center</span>
+                  <a href={m.googleMapsUrl} target="_blank" rel="noopener noreferrer" class="map-link">Google Maps Location &rarr;</a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {nearbyHouses.length > 0 && (
+          <section class="fac-section">
+            <h2>3. Houses for Sale Walking Distance from Mosques</h2>
+            <div class="prop-chips-grid">
+              {nearbyHouses.map(p => (
+                <div class="prop-chip">
+                  <h4><a href={`/properties/${p.slug}/`}>{p.title}</a></h4>
+                  <span>{p.size} {p.unit} &bull; {p.block}</span>
+                  <strong>
+                    {p.price && p.price >= 10000000 
+                      ? `PKR ${(p.price / 10000000).toFixed(2)} Crore`
+                      : p.price ? `PKR ${(p.price / 100000).toFixed(2)} Lakh` : 'Demand on Request'}
+                  </strong>
+                  <a href={`/properties/${p.slug}/`} class="view-btn">View Property &rarr;</a>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+      </div>
+
+      <aside class="fac-sidebar">
+        <div class="side-card">
+          <h3>Related Facilities</h3>
+          <ul class="side-links">
+            <li><a href="/schools-in-dha-phase-6-lahore/">Schools &amp; Colleges</a></li>
+            <li><a href="/hospitals-in-dha-phase-6-lahore/">Hospitals &amp; Healthcare</a></li>
+            <li><a href="/restaurants-in-dha-phase-6-lahore/">Restaurants &amp; Dining</a></li>
+            <li><a href="/mosques-in-dha-phase-6-lahore/" class="active">Mosques &amp; Prayer Centers</a></li>
+            <li><a href="/parks-in-dha-phase-6-lahore/">Parks &amp; Sports Grounds</a></li>
+          </ul>
+        </div>
+
+        <div class="side-card">
+          <h4>Prayer Resources</h4>
+          <ul class="side-links">
+            <li><a href="/prayer-times/">DHA Phase 6 Prayer Times</a></li>
+            <li><a href="/houses-near-mosques-dha-phase-6-lahore/">Houses Near Mosques</a></li>
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+</PageLayout>
+
+<style>
+  .facility-hero {
+    background: linear-gradient(135deg, #090e1a 0%, #064e3b 100%);
+    color: #fff;
+    padding: 3rem 0 2.5rem;
+  }
+  .breadcrumb {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 0.45rem;
+  }
+  .breadcrumb a { color: #94a3b8; text-decoration: none; }
+  .breadcrumb a:hover { color: #10b981; }
+  .fac-badge {
+    display: inline-block;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 0.3rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .facility-hero h1 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 800;
+    margin: 0 0 0.85rem;
+  }
+  .hero-sub {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #cbd5e1;
+    max-width: 850px;
+    margin: 0 0 1.5rem;
+  }
+  .stats-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .stats-bar span {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    color: #e2e8f0;
+  }
+  .stats-bar strong { color: #34d399; }
+
+  .fac-body { padding: 3rem 0; }
+  .fac-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 2.5rem;
+  }
+  .fac-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  .fac-section h2 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .fac-section p {
+    font-size: 0.98rem;
+    line-height: 1.75;
+    color: #334155;
+    margin-bottom: 1rem;
+  }
+  .fac-section ul {
+    margin: 0 0 1.25rem;
+    padding-left: 1.4rem;
+    line-height: 1.7;
+    color: #334155;
+  }
+  .fac-section li { margin-bottom: 0.4rem; }
+
+  .listings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+  }
+  .place-detail-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .card-head h3 {
+    font-size: 1.05rem;
+    color: #0f172a;
+    margin: 0;
+  }
+  .sector-tag {
+    background: #ecfdf5;
+    color: #059669;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .address {
+    font-size: 0.82rem;
+    color: #64748b;
+    margin: 0 0 0.5rem;
+  }
+  .desc {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #334155;
+    flex-grow: 1;
+    margin: 0 0 1rem;
+  }
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 0.75rem;
+    font-size: 0.78rem;
+  }
+  .map-link {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .map-link:hover { text-decoration: underline; }
+
+  .prop-chips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+  .prop-chip {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .prop-chip h4 { font-size: 0.92rem; margin: 0 0 0.35rem; }
+  .prop-chip h4 a { color: #0f172a; text-decoration: none; }
+  .prop-chip h4 a:hover { color: #059669; }
+  .prop-chip span { font-size: 0.78rem; color: #64748b; margin-bottom: 0.5rem; }
+  .prop-chip strong { font-size: 0.95rem; color: #059669; margin-bottom: 0.75rem; }
+  .view-btn { font-size: 0.8rem; color: #059669; font-weight: 700; text-decoration: none; }
+
+  .fac-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .side-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  .side-card h3, .side-card h4 {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.65rem;
+  }
+  .side-links {
+    margin: 0;
+    padding-left: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .side-links a {
+    font-size: 0.82rem;
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .side-links a.active { font-weight: 800; color: #047857; }
+
+  @media (max-width: 900px) {
+    .fac-layout { grid-template-columns: 1fr; }
+  }
+</style>

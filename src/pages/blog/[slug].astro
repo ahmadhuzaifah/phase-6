@@ -58,7 +58,26 @@ const faqSchema = article.faqs && article.faqs.length > 0 ? {
       </section>
     )}
 
-    <aside class="article-page__links"><strong>Continue your research</strong><div>{article.relatedLinks.map((link) => <a href={link.href}>{link.label}</a>)}</div></aside>
+    <aside class="article-page__links">
+      <strong>Continue your research</strong>
+      <div>{article.relatedLinks.map((link) => <a href={link.href}>{link.label}</a>)}</div>
+    </aside>
+
+    <div class="blog-knowledge-cluster">
+      <h3>DHA Phase 6 Lahore Knowledge Hub</h3>
+      <p>Explore authoritative research, price matrices, and market data across our complete cluster:</p>
+      <div class="cluster-links-grid">
+        <a href="/dha-phase-6-lahore/">DHA Phase 6 Master Pillar Guide &rarr;</a>
+        <a href="/dha-phase-6-market-analysis/">2026 Real Estate Market Analysis &rarr;</a>
+        <a href="/dha-phase-6-price-history/">Historical Price Trends (2010–2026) &rarr;</a>
+        <a href="/dha-phase-6-commercial-areas/">Commercial Areas &amp; CCA Guide &rarr;</a>
+        <a href="/houses-for-sale-dha-phase-6-lahore/">Houses for Sale in DHA Phase 6 &rarr;</a>
+        <a href="/plots-for-sale-dha-phase-6-lahore/">Plots for Sale in DHA Phase 6 &rarr;</a>
+        <a href="/dha-phase-6-property-calculator/">Property Tax &amp; Cost Calculator &rarr;</a>
+        <a href="/how-we-collect-property-data/">Data Collection Methodology &rarr;</a>
+      </div>
+    </div>
+
     <p class="article-page__note">Information on this independent portal is for research and buyer guidance. Confirm current availability, prices, title, dues, and transfer requirements with the authorized management office before transacting.</p>
   </div></article>
 </PageLayout>
@@ -81,4 +100,35 @@ const faqSchema = article.faqs && article.faqs.length > 0 ? {
   .faq-detail summary { cursor: pointer; color: var(--text-primary); font-size: var(--text-base); }
   .faq-detail p { margin-top: var(--space-3); margin-bottom: 0; color: var(--text-secondary); font-size: var(--text-sm); line-height: var(--leading-relaxed); }
   .article-page__note { margin-top: var(--space-8); color: var(--text-muted); font-size: var(--text-sm); }
+  .blog-knowledge-cluster {
+    margin-top: var(--space-10);
+    padding: var(--space-6);
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-lg);
+  }
+  .blog-knowledge-cluster h3 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-lg);
+    color: #0f172a;
+  }
+  .blog-knowledge-cluster p {
+    font-size: var(--text-sm);
+    color: #64748b;
+    margin: 0 0 var(--space-4);
+  }
+  .cluster-links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-3);
+  }
+  .cluster-links-grid a {
+    color: #059669;
+    font-size: var(--text-sm);
+    font-weight: var(--font-bold);
+    text-decoration: none;
+  }
+  .cluster-links-grid a:hover {
+    text-decoration: underline;
+  }
 </style>

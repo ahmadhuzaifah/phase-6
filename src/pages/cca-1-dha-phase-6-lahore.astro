@@ -1,0 +1,464 @@
+---
+/**
+ * CCA 1 DHA Phase 6 Lahore — Complete Commercial Authority Guide
+ * Route: /cca-1-dha-phase-6-lahore/
+ * Content: Restaurants, Brands, Banks, Offices, Investment Value, Nearby Properties.
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+import { CONTACTS } from '@data/contacts';
+import ccaPlaces from '@data/places/cca.json';
+import propertiesRaw from '@data/properties-import.json';
+
+const canonical = `${SITE.url}/cca-1-dha-phase-6-lahore/`;
+const pageTitle = `CCA 1 DHA Phase 6 Lahore — Complete Commercial, Dining & Investment Guide`;
+const metaDesc = `In-depth authority guide to CCA 1 (Central Commercial Area 1) in DHA Phase 6 Lahore. Explore banks, Jalal Sons, restaurants, offices, 4 & 8 Marla commercial plaza prices, and rental yields.`;
+
+// Filter places within CCA 1
+const banks = ccaPlaces.filter(p => ['bank', 'banks'].includes(p.category));
+const restaurants = ccaPlaces.filter(p => ['restaurant', 'restaurants', 'cafe', 'cafes', 'fast-food', 'bakery'].includes(p.category));
+const retail = ccaPlaces.filter(p => ['shopping', 'supermarket', 'pharmacy', 'pharmacies', 'retail'].includes(p.category));
+
+interface PropertyItem {
+  id: string;
+  slug: string;
+  title: string;
+  price?: number;
+  propertyType: string;
+  size?: string;
+  unit?: string;
+  block?: string;
+}
+const allProps = (Array.isArray(propertiesRaw) ? propertiesRaw : []) as PropertyItem[];
+const nearbyProps = allProps.filter(p => (p.block || '').toLowerCase().includes('cca') || (p.title || '').toLowerCase().includes('cca')).slice(0, 3);
+
+const cca1Schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Place",
+      "@id": canonical,
+      "name": "CCA 1 DHA Phase 6 Lahore",
+      "description": metaDesc,
+      "geo": { "@type": "GeoCoordinates", "latitude": 31.4720, "longitude": 74.4580 },
+      "address": { "@type": "PostalAddress", "addressLocality": "Lahore", "postalCode": "54792", "addressCountry": "PK" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": `${SITE.url}/` },
+        { "@type": "ListItem", "position": 2, "name": "Commercial", "item": `${SITE.url}/dha-phase-6-commercial-areas/` },
+        { "@type": "ListItem", "position": 3, "name": "CCA 1", "item": canonical }
+      ]
+    }
+  ]
+};
+---
+
+<PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(cca1Schema)} />
+
+  <header class="comm-zone-header">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="/">Home</a> <span>/</span>
+        <a href="/dha-phase-6-commercial-areas/">Commercial Areas</a> <span>/</span>
+        <span aria-current="page">CCA 1 DHA Phase 6</span>
+      </nav>
+      <div class="zone-badge">Prime Commercial Node &bull; High Footfall</div>
+      <h1>CCA 1 DHA Phase 6 Lahore</h1>
+      <p class="zone-intro">
+        Central Commercial Area 1 (CCA 1) is the bustling financial, retail, and lifestyle heart of DHA Phase 6 Lahore. 
+        Surrounded by prime residential Sectors C, D, E, and F, CCA 1 houses the largest concentration of commercial banks, diagnostic laboratories, 
+        premium grocers like Jalal Sons, and multi-story corporate office plazas.
+      </p>
+    </div>
+  </header>
+
+  <main class="container comm-zone-body">
+    <div class="zone-layout">
+      
+      <div class="zone-main">
+        
+        <!-- Section: Overview & Footfall -->
+        <section class="info-card">
+          <h2>Overview &amp; Urban Position</h2>
+          <p>
+            Positioned at the intersection of major sector collector avenues connecting Sectors C, D, and E, 
+            CCA 1 was the earliest commercial center developed in DHA Phase 6. Because of its mature occupancy, 
+            it boasts zero vacant plots, unmatched footfall seven days a week, and the highest rental yields in the phase.
+          </p>
+          <div class="quick-facts-box">
+            <div><strong>Plot Dimensions:</strong> 4 Marla (30' &times; 30') &amp; 8 Marla (30' &times; 60')</div>
+            <div><strong>Building Regulations:</strong> Basement + Ground + Mezzanine + 4 Floors</div>
+            <div><strong>Total Outlets:</strong> 120+ Commercial Businesses Operating</div>
+            <div><strong>Prime Anchor:</strong> Jalal Sons &amp; National Banking Row</div>
+          </div>
+        </section>
+
+        <!-- Section: Banking Ecosystem -->
+        <section class="info-card">
+          <h2>Banking &amp; Financial Services Hub</h2>
+          <p>
+            CCA 1 represents the undisputed "Bank Street" of DHA Phase 6. Over 15 national and international commercial banking institutions operate fully staffed branches with 24/7 ATM lobbies and safe deposit vaults:
+          </p>
+          <div class="place-pills-grid">
+            {banks.slice(0, 8).map(b => (
+              <div class="place-pill">
+                <strong>{b.name}</strong>
+                <small>{b.address}</small>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- Section: Dining & Restaurants -->
+        <section class="info-card">
+          <h2>Dining, Cafes &amp; Bakeries</h2>
+          <p>
+            From fast-casual dining to specialty breakfast bakeries and coffee shops, CCA 1 attracts a steady stream of lunch and dinner patrons:
+          </p>
+          <div class="place-pills-grid">
+            {restaurants.slice(0, 8).map(r => (
+              <div class="place-pill">
+                <strong>{r.name}</strong>
+                <small>{r.address}</small>
+              </div>
+            ))}
+          </div>
+          <p class="see-more-link">
+            Explore all dining options in our <a href="/restaurants-in-dha-phase-6-lahore/">Restaurants in DHA Phase 6 Guide</a>.
+          </p>
+        </section>
+
+        <!-- Section: Brands, Supermarkets & Healthcare -->
+        <section class="info-card">
+          <h2>Brands, Supermarkets &amp; Healthcare</h2>
+          <p>
+            CCA 1 is anchored by <strong>Jalal Sons</strong>, Lahore's benchmark upscale supermarket and bakery. 
+            The commercial zone also features extensive diagnostic collection centers (Chughtai Lab, Shaukat Khanum, IDC) and round-the-clock pharmacies (Servaid, Fazal Din's).
+          </p>
+          <div class="place-pills-grid">
+            {retail.slice(0, 6).map(rt => (
+              <div class="place-pill">
+                <strong>{rt.name}</strong>
+                <small>{rt.address}</small>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- Section: Investment & Rental Yields -->
+        <section class="info-card">
+          <h2>Investment Valuation &amp; Rental Yields (2026)</h2>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Commercial Property Type</th>
+                  <th>Sale Demand (Capital Value)</th>
+                  <th>Monthly Rental Income</th>
+                  <th>Net Annual Yield</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>4 Marla Full Commercial Plaza</strong></td>
+                  <td>PKR 15.00 – 24.00 Crore</td>
+                  <td>PKR 700,000 – 1,100,000</td>
+                  <td>5.6% – 6.5%</td>
+                </tr>
+                <tr>
+                  <td><strong>8 Marla Full Commercial Plaza</strong></td>
+                  <td>PKR 28.00 – 48.00 Crore</td>
+                  <td>PKR 1,400,000 – 2,500,000</td>
+                  <td>5.8% – 6.8%</td>
+                </tr>
+                <tr>
+                  <td><strong>Individual Ground Floor Shop</strong></td>
+                  <td>PKR 4.50 – 7.50 Crore</td>
+                  <td>PKR 250,000 – 400,000</td>
+                  <td>6.0% – 7.0%</td>
+                </tr>
+                <tr>
+                  <td><strong>Office Floor (1st / 2nd / 3rd Floor)</strong></td>
+                  <td>PKR 2.20 – 3.80 Crore</td>
+                  <td>PKR 110,000 – 190,000</td>
+                  <td>5.2% – 6.2%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {nearbyProps.length > 0 && (
+          <section class="info-card">
+            <h2>Nearby Commercial Opportunities &amp; Plazas</h2>
+            <div class="place-pills-grid">
+              {nearbyProps.map(p => (
+                <div class="place-pill">
+                  <strong><a href={`/properties/${p.slug}/`} style="color:#0f172a;text-decoration:none;">{p.title}</a></strong>
+                  <small>{p.size} {p.unit} &bull; {p.block}</small>
+                  <span style="display:block;margin-top:0.35rem;color:#059669;font-weight:700;">
+                    {p.price && p.price >= 10000000 
+                      ? `PKR ${(p.price / 10000000).toFixed(2)} Crore`
+                      : p.price ? `PKR ${(p.price / 100000).toFixed(2)} Lakh` : 'Demand on Request'}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="zone-sidebar">
+        <div class="side-card cta-side">
+          <h3>Commercial Plaza Due Diligence</h3>
+          <p>Verify tenant lease agreements, rental yields, and DHA transfer NDC clearance.</p>
+          <a href={`https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello, I want to verify commercial property in CCA 1 DHA Phase 6 Lahore.')}`} target="_blank" rel="noopener noreferrer" class="btn-wa">
+            WhatsApp Commercial Desk
+          </a>
+        </div>
+
+        <div class="side-card">
+          <h4>Commercial Zones</h4>
+          <ul class="side-links">
+            <li><a href="/dha-phase-6-commercial-areas/">Commercial Areas Overview</a></li>
+            <li><a href="/cca-1-dha-phase-6-lahore/" class="active">CCA 1 Commercial Guide</a></li>
+            <li><a href="/cca-2-dha-phase-6-lahore/">CCA 2 Commercial Guide</a></li>
+            <li><a href="/main-boulevard-commercial-dha-phase-6/">Main Boulevard Commercial</a></li>
+            <li><a href="/defence-raya-commercial/">Defence Raya Fairways</a></li>
+          </ul>
+        </div>
+
+        <div class="side-card">
+          <h4>Nearby Residential Sectors</h4>
+          <ul class="side-links">
+            <li><a href="/dha-phase-6-sector-c-lahore/">Sector C (Adjacent)</a></li>
+            <li><a href="/dha-phase-6-sector-d-lahore/">Sector D (Adjacent)</a></li>
+            <li><a href="/dha-phase-6-sector-e-lahore/">Sector E (Adjacent)</a></li>
+            <li><a href="/dha-phase-6-sector-f-lahore/">Sector F (Adjacent)</a></li>
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+</PageLayout>
+
+<style>
+  .comm-zone-header {
+    background: linear-gradient(135deg, #090e1a 0%, #1e293b 100%);
+    color: #fff;
+    padding: 3rem 0 2.5rem;
+  }
+  .breadcrumb {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 0.45rem;
+  }
+  .breadcrumb a { color: #94a3b8; text-decoration: none; }
+  .breadcrumb a:hover { color: #10b981; }
+  .zone-badge {
+    display: inline-block;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 0.3rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .comm-zone-header h1 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 800;
+    margin: 0 0 0.85rem;
+  }
+  .zone-intro {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #cbd5e1;
+    max-width: 850px;
+    margin: 0;
+  }
+
+  .comm-zone-body {
+    padding: 3rem 0;
+  }
+  .zone-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 2.5rem;
+  }
+  .zone-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .info-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.75rem;
+  }
+  .info-card h2 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.85rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .info-card p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #334155;
+    margin-bottom: 1rem;
+  }
+
+  .quick-facts-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    color: #334155;
+  }
+
+  .place-pills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+  .place-pill {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 0.75rem;
+  }
+  .place-pill strong {
+    display: block;
+    font-size: 0.85rem;
+    color: #0f172a;
+  }
+  .place-pill small {
+    display: block;
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 0.2rem;
+  }
+
+  .see-more-link {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-top: 1rem;
+  }
+  .see-more-link a {
+    color: #059669;
+    font-weight: 600;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+    margin-top: 1rem;
+  }
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  .data-table th {
+    background: #f1f5f9;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 700;
+    color: #0f172a;
+    border-bottom: 2px solid #cbd5e1;
+  }
+  .data-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+  }
+
+  /* Sidebar */
+  .zone-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .side-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  .side-card h3, .side-card h4 {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.65rem;
+  }
+  .cta-side {
+    background: #0f172a;
+    color: #fff;
+  }
+  .cta-side h3 { color: #fff; }
+  .cta-side p {
+    font-size: 0.82rem;
+    color: #94a3b8;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  .btn-wa {
+    display: block;
+    text-align: center;
+    background: #10b981;
+    color: #042014;
+    font-weight: 800;
+    padding: 0.65rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+  }
+  .btn-wa:hover { background: #059669; color: #fff; }
+
+  .side-links {
+    margin: 0;
+    padding-left: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .side-links a {
+    font-size: 0.82rem;
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .side-links a.active {
+    font-weight: 800;
+    color: #047857;
+  }
+
+  @media (max-width: 900px) {
+    .zone-layout {
+      grid-template-columns: 1fr;
+    }
+    .quick-facts-box {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

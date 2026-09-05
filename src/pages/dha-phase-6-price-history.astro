@@ -1,0 +1,366 @@
+---
+/**
+ * DHA Phase 6 Lahore — Historical Price Trends & Growth Analysis (2010–2026)
+ * Route: /dha-phase-6-price-history/
+ * Features: Year-wise market changes, infrastructure growth catalysts, compound annual growth, and future expectations.
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+import { CONTACTS } from '@data/contacts';
+
+const canonical = `${SITE.url}/dha-phase-6-price-history/`;
+const pageTitle = `DHA Phase 6 Lahore Price History (2010–2026) — Historical Trends & Growth`;
+const metaDesc = `Comprehensive historical price analysis of DHA Phase 6 Lahore from 2010 to 2026. Year-by-year 1 Kanal and 10 Marla plot valuations, infrastructure growth factors, and future appreciation forecasts.`;
+
+const historySchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": canonical,
+      "headline": pageTitle,
+      "description": metaDesc,
+      "datePublished": "2026-01-15T08:00:00+05:00",
+      "dateModified": "2026-09-05T23:00:00+05:00",
+      "publisher": { "@type": "Organization", "name": SITE.name, "url": SITE.url },
+      "author": { "@type": "Organization", "name": "DHA Phase 6 Real Estate Research Desk" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": `${SITE.url}/` },
+        { "@type": "ListItem", "position": 2, "name": "Guides", "item": `${SITE.url}/guides/` },
+        { "@type": "ListItem", "position": 3, "name": "Price History", "item": canonical }
+      ]
+    }
+  ]
+};
+---
+
+<PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(historySchema)} />
+
+  <header class="history-hero">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="/">Home</a> <span>/</span>
+        <a href="/guides/">Guides</a> <span>/</span>
+        <span aria-current="page">DHA Phase 6 Price History</span>
+      </nav>
+      <div class="history-badge">16-Year Real Estate Valuation Analysis &bull; 2010 to 2026</div>
+      <h1>DHA Phase 6 Lahore Historical Price Trends (2010–2026)</h1>
+      <p class="hero-intro">
+        Track the long-term capital evolution of DHA Phase 6 Lahore across 16 years of economic cycles. 
+        Analyzing compound annual growth rates (CAGR), infrastructure milestones, and future valuation expectations.
+      </p>
+
+      <div class="history-metrics-strip">
+        <div class="h-metric"><strong>+520%</strong> 16-Year Cumulative Return</div>
+        <div class="h-metric"><strong>11.8%</strong> Compound Annual Growth Rate</div>
+        <div class="h-metric"><strong>2012 Ring Road</strong> Major Price Catalyst</div>
+        <div class="h-metric"><strong>2023 Dolmen Mall</strong> Commercial Surge</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container history-body">
+    <div class="history-layout">
+      
+      <div class="history-main">
+        
+        <!-- Chapter 1 -->
+        <section class="history-card">
+          <h2>1. 16-Year Year-Wise Historical Price Table (2010–2026)</h2>
+          <p>
+            The table below documents average secondary market transaction demands for a standard on-ground <strong>1 Kanal residential plot</strong> 
+            and <strong>10 Marla residential plot</strong> in prime sectors of DHA Phase 6:
+          </p>
+
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Year</th>
+                  <th>1 Kanal Plot (Avg)</th>
+                  <th>10 Marla Plot (Avg)</th>
+                  <th>Key Infrastructure Milestone / Market Event</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>2010</strong></td>
+                  <td>PKR 75 – 95 Lakh</td>
+                  <td>PKR 45 – 55 Lakh</td>
+                  <td>Initial possession granted in Sectors A and B; early house construction begins.</td>
+                </tr>
+                <tr>
+                  <td><strong>2012</strong></td>
+                  <td>PKR 1.10 – 1.45 Crore</td>
+                  <td>PKR 65 – 85 Lakh</td>
+                  <td>Lahore Ring Road Southern Package opens; travel time from Airport drops to 10 mins.</td>
+                </tr>
+                <tr>
+                  <td><strong>2014</strong></td>
+                  <td>PKR 1.50 – 2.10 Crore</td>
+                  <td>PKR 95 – 1.25 Crore</td>
+                  <td>CCA 1 commercial area launched; Beaconhouse opens campus in Sector D.</td>
+                </tr>
+                <tr>
+                  <td><strong>2016</strong></td>
+                  <td>PKR 2.20 – 2.90 Crore</td>
+                  <td>PKR 1.35 – 1.80 Crore</td>
+                  <td>General real estate boom; Defence Raya 18-hole golf course soft opens.</td>
+                </tr>
+                <tr>
+                  <td><strong>2018</strong></td>
+                  <td>PKR 2.60 – 3.40 Crore</td>
+                  <td>PKR 1.65 – 2.10 Crore</td>
+                  <td>Inauguration of PKLI Hospital in Sector N; DHA Phase 6 Medical Centre operational.</td>
+                </tr>
+                <tr>
+                  <td><strong>2020</strong></td>
+                  <td>PKR 3.00 – 4.20 Crore</td>
+                  <td>PKR 1.90 – 2.50 Crore</td>
+                  <td>Post-COVID real estate construction incentive package drives massive bungalow starts.</td>
+                </tr>
+                <tr>
+                  <td><strong>2022</strong></td>
+                  <td>PKR 3.80 – 5.40 Crore</td>
+                  <td>PKR 2.40 – 3.20 Crore</td>
+                  <td>DHA Lahore Central Administrative Headquarters shifts to Main Boulevard Sector A.</td>
+                </tr>
+                <tr>
+                  <td><strong>2024</strong></td>
+                  <td>PKR 4.50 – 6.50 Crore</td>
+                  <td>PKR 2.90 – 3.90 Crore</td>
+                  <td>Dolmen Mall Lahore soft opening; commercial footfall skyrockets across Phase 6.</td>
+                </tr>
+                <tr>
+                  <td><strong>2026 (Current)</strong></td>
+                  <td>PKR 4.80 – 7.50 Crore</td>
+                  <td>PKR 3.20 – 4.50 Crore</td>
+                  <td>Mature end-user living enclave; residential occupancy exceeds 70% in prime sectors.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Chapter 2 -->
+        <section class="history-card">
+          <h2>2. Primary Growth Factors &amp; Value Catalysts</h2>
+          <p>
+            Three major structural catalysts drove Phase 6 from an agricultural fringe into Lahore's highest-valued suburban address:
+          </p>
+          <div class="catalysts-grid">
+            <div class="cat-card">
+              <h4>Ring Road Integration (2012)</h4>
+              <p>Direct connectivity to Nawaz Sharif Interchange eliminated the historic isolation of Bedian Road, providing express access to the Airport, Cantt, and Motorways.</p>
+            </div>
+            <div class="cat-card">
+              <h4>Civic Institutions &amp; PKLI (2018)</h4>
+              <p>The construction of PKLI, Beaconhouse, LGU, and the DHA Head Office shifted top medical, educational, and administrative professionals into Phase 6.</p>
+            </div>
+            <div class="cat-card">
+              <h4>Retail Modernization (2024–2026)</h4>
+              <p>Dolmen Mall, Jalal Sons, and international restaurant franchises created a self-sufficient luxury suburban ecosystem requiring no travel to older city centers.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Chapter 3 -->
+        <section class="history-card">
+          <h2>3. Future Expectations &amp; 2030 Projections</h2>
+          <p>
+            Historical data reveals that DHA Phase 6 exhibits low downside volatility during macroeconomic downturns due to equity-backed end-user holding. 
+            Projections indicate steady 8% to 12% annual capital appreciation through 2030, driven by the completion of remaining infill plots and high rental yields.
+          </p>
+        </section>
+
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="history-sidebar">
+        <div class="side-box cta-box">
+          <h3>Historical Due Diligence</h3>
+          <p>Consult our real estate research desk for historical transaction records, plot pricing graphs, and investment analysis.</p>
+          <a href={`https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello, I would like to inquire about the DHA Phase 6 Price History data.')}`} target="_blank" rel="noopener noreferrer" class="btn-wa">
+            WhatsApp Research Desk
+          </a>
+        </div>
+
+        <div class="side-box">
+          <h4>Related Market Guides</h4>
+          <ul class="side-nav">
+            <li><a href="/dha-phase-6-market-analysis/">2026 Market Analysis</a></li>
+            <li><a href="/dha-phase-6-lahore-plot-prices/">Current Plot Prices</a></li>
+            <li><a href="/dha-phase-6-lahore-house-prices/">Current House Prices</a></li>
+            <li><a href="/dha-phase-6-property-calculator/">Property Tax Calculator</a></li>
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+</PageLayout>
+
+<style>
+  .history-hero {
+    background: linear-gradient(135deg, #090e1a 0%, #1e1b4b 100%);
+    color: #fff;
+    padding: 3.5rem 0 3rem;
+  }
+  .breadcrumb {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 0.45rem;
+  }
+  .breadcrumb a { color: #94a3b8; text-decoration: none; }
+  .breadcrumb a:hover { color: #10b981; }
+  .history-badge {
+    display: inline-block;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 0.35rem 0.85rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.85rem;
+  }
+  .history-hero h1 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(2rem, 4vw, 2.85rem);
+    font-weight: 800;
+    margin: 0 0 1rem;
+  }
+  .hero-intro {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #cbd5e1;
+    max-width: 850px;
+    margin: 0 0 2rem;
+  }
+  .history-metrics-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .h-metric {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: #f1f5f9;
+  }
+  .h-metric strong { color: #34d399; font-size: 1.1rem; margin-right: 0.35rem; }
+
+  .history-body { padding: 3rem 0; }
+  .history-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 2.5rem;
+  }
+  .history-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  .history-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 2rem;
+  }
+  .history-card h2 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .history-card p {
+    font-size: 0.98rem;
+    line-height: 1.75;
+    color: #334155;
+    margin-bottom: 1rem;
+  }
+
+  .table-wrap { overflow-x: auto; margin-top: 1rem; }
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  .data-table th {
+    background: #f1f5f9;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 700;
+    color: #0f172a;
+    border-bottom: 2px solid #cbd5e1;
+  }
+  .data-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+  }
+
+  .catalysts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+  }
+  .cat-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 1.25rem;
+  }
+  .cat-card h4 { font-size: 0.95rem; color: #0f172a; margin: 0 0 0.5rem; }
+  .cat-card p { font-size: 0.85rem; line-height: 1.6; color: #475569; margin: 0; }
+
+  .history-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .side-box {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  .side-box h3, .side-box h4 {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.65rem;
+  }
+  .cta-box { background: #0f172a; color: #fff; }
+  .cta-box h3 { color: #fff; }
+  .cta-box p { font-size: 0.82rem; color: #94a3b8; line-height: 1.5; margin-bottom: 1rem; }
+  .btn-wa { display: block; text-align: center; background: #10b981; color: #042014; font-weight: 800; padding: 0.65rem; border-radius: 6px; text-decoration: none; font-size: 0.85rem; }
+  .btn-wa:hover { background: #059669; color: #fff; }
+
+  .side-nav {
+    margin: 0;
+    padding-left: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .side-nav a { font-size: 0.82rem; color: #059669; text-decoration: none; font-weight: 500; }
+  .side-nav a:hover { text-decoration: underline; }
+
+  @media (max-width: 900px) {
+    .history-layout { grid-template-columns: 1fr; }
+  }
+</style>

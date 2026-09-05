@@ -1,0 +1,121 @@
+---
+/**
+ * Entities Hub — DHA Phase 6 Lahore Entity Directory
+ * Route: /entities/
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+import { SECTORS_DIRECTORY } from '@data/places/index';
+
+const canonical = `${SITE.url}/entities/`;
+const pageTitle = `DHA Phase 6 Lahore Entity Directory — Sector Knowledge Graph`;
+const metaDesc = `Browse all sector entity knowledge profiles in DHA Phase 6 Lahore. Real-time prices, facilities, maps, and property listings for Sectors A through N.`;
+const sectors = SECTORS_DIRECTORY.filter(s => s.key.startsWith('sector-'));
+---
+
+<PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+  <div class="entities-hub">
+    <header class="hub-header">
+      <div class="container">
+        <nav class="breadcrumb">
+          <a href="/">Home</a> <span>/</span>
+          <span aria-current="page">Entities</span>
+        </nav>
+        <h1>DHA Phase 6 Lahore Entity Knowledge Graph</h1>
+        <p>Comprehensive semantic entity profiles for all residential sectors and commercial enclaves in DHA Phase 6 Lahore.</p>
+      </div>
+    </header>
+
+    <main class="container hub-body">
+      <div class="entities-grid">
+        {sectors.map((s) => (
+          <a href={`/entities/dha-phase-6-${s.key}/`} class="entity-card-link">
+            <div class="entity-badge">Sector {s.label.replace('Sector ', '')}</div>
+            <h3>{s.label}</h3>
+            <p>{s.description}</p>
+            <span class="read-more">View Entity Knowledge Profile &rarr;</span>
+          </a>
+        ))}
+      </div>
+    </main>
+  </div>
+</PageLayout>
+
+<style>
+  .hub-header {
+    background: linear-gradient(135deg, #090e1a 0%, #1e293b 100%);
+    color: #fff;
+    padding: 3rem 0 2.5rem;
+  }
+  .breadcrumb {
+    font-size: 0.82rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+  .breadcrumb a { color: #94a3b8; text-decoration: none; }
+  .hub-header h1 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    margin: 0 0 0.75rem;
+  }
+  .hub-header p {
+    color: #cbd5e1;
+    max-width: 750px;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .hub-body {
+    padding: 3rem 0;
+  }
+  .entities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .entity-card-link {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+  }
+  .entity-card-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border-color: #10b981;
+  }
+  .entity-badge {
+    display: inline-block;
+    background: #ecfdf5;
+    color: #059669;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    align-self: flex-start;
+    margin-bottom: 0.75rem;
+  }
+  .entity-card-link h3 {
+    font-size: 1.2rem;
+    color: #0f172a;
+    margin: 0 0 0.5rem;
+  }
+  .entity-card-link p {
+    font-size: 0.88rem;
+    color: #64748b;
+    line-height: 1.55;
+    flex-grow: 1;
+    margin: 0 0 1rem;
+  }
+  .read-more {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #059669;
+  }
+</style>

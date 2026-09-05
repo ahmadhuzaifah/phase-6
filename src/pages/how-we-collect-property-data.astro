@@ -1,0 +1,364 @@
+---
+/**
+ * How We Collect & Verify Property Data — Data Integrity & E-E-A-T
+ * Route: /how-we-collect-property-data/
+ * Explains: Property updates, Verification, Image checks, Source handling, Update frequency.
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+import { CONTACTS } from '@data/contacts';
+
+const canonical = `${SITE.url}/how-we-collect-property-data/`;
+const pageTitle = `How We Collect & Verify Property Data — DHA Phase 6 Lahore Methodology`;
+const metaDesc = `Discover how our independent research team collects, audits, and verifies property listings, prices, places, and images in DHA Phase 6 Lahore. Zero duplicate or fake listings.`;
+
+const methodSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": canonical,
+      "name": pageTitle,
+      "description": metaDesc,
+      "publisher": { "@type": "Organization", "name": SITE.name, "url": SITE.url }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": `${SITE.url}/` },
+        { "@type": "ListItem", "position": 2, "name": "Authors", "item": `${SITE.url}/authors/` },
+        { "@type": "ListItem", "position": 3, "name": "Data Methodology", "item": canonical }
+      ]
+    }
+  ]
+};
+---
+
+<PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(methodSchema)} />
+
+  <header class="method-hero">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="/">Home</a> <span>/</span>
+        <a href="/authors/">Authors</a> <span>/</span>
+        <span aria-current="page">Data Collection Methodology</span>
+      </nav>
+      <div class="method-badge">Data Integrity &bull; Verification Protocols</div>
+      <h1>How We Collect &amp; Verify Property Data</h1>
+      <p class="hero-intro">
+        Transparency is the bedrock of trusted real estate decisions. 
+        Learn how our research team gathers, filters, audits, and maintains real estate data and local business listings across DHA Phase 6 Lahore.
+      </p>
+    </div>
+  </header>
+
+  <main class="container method-body">
+    <div class="method-layout">
+      
+      <div class="method-main">
+        
+        <!-- Pillar 1: Sourcing -->
+        <section class="method-card">
+          <h2>1. Multi-Channel Source Handling</h2>
+          <p>
+            Rather than relying on unmoderated classified ads where bait-and-switch pricing is common, 
+            our platform aggregates real estate data through authenticated, professional channels:
+          </p>
+          <div class="method-box-grid">
+            <div class="m-box">
+              <h4>Registered DHA Realtors</h4>
+              <p>Direct daily feeds from verified real estate agencies holding registered DHA Lahore membership numbers.</p>
+            </div>
+            <div class="m-box">
+              <h4>Direct Owner Filings</h4>
+              <p>Property owners submitting title allocation letters for independent price indexing and marketing.</p>
+            </div>
+            <div class="m-box">
+              <h4>Bank Valuation Benchmarks</h4>
+              <p>Quarterly reviews of institutional mortgage valuation tables and appraisal benchmarks conducted by accredited surveyors.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Pillar 2: Verification Protocols -->
+        <section class="method-card">
+          <h2>2. Three-Step Verification Protocol</h2>
+          <p>
+            Every property record uploaded to our database passes through our proprietary verification filter:
+          </p>
+          <ol class="protocol-list">
+            <li>
+              <strong>Plot &amp; Location Cross-Check:</strong> 
+              The plot number is cross-referenced against the master DHA Phase 6 zoning blueprint to ensure correct sector assignment, street width, and absence of utility easement conflicts.
+            </li>
+            <li>
+              <strong>Price Sanity Audit:</strong> 
+              Asking demands that fall suspiciously below or drastically above prevailing market rates (by more than 25%) are flagged for manual review to prevent market manipulation.
+            </li>
+            <li>
+              <strong>Availability Confirmation:</strong> 
+              Our desk contacts the listing agent or owner every 14 days to confirm whether the property remains actively for sale or has been transferred.
+            </li>
+          </ol>
+        </section>
+
+        <!-- Pillar 3: Image & Media Checks -->
+        <section class="method-card">
+          <h2>3. Image Integrity &amp; Architectural Verification</h2>
+          <p>
+            Fake images and misleading 3D renders distort buyer expectations. We enforce strict image guidelines:
+          </p>
+          <ul>
+            <li><strong>No Stolen Renders:</strong> Listings claiming to be "ready brand-new houses" must feature actual site photographs of the exterior facade, interior wood finish, and sanitary installations.</li>
+            <li><strong>Timestamp Verification:</strong> Ground photographs must be current to depict actual construction completion rather than progress photos from previous years.</li>
+            <li><strong>High-Resolution Standards:</strong> All property imagery is optimized and web-delivered to ensure clear examination of fixtures and elevation.</li>
+          </ul>
+        </section>
+
+        <!-- Pillar 4: Places & Facilities Survey -->
+        <section class="method-card">
+          <h2>4. Local Business &amp; Facility Data Survey (790+ Places)</h2>
+          <p>
+            Our directory of schools, hospitals, restaurants, mosques, and parks is maintained through physical on-ground surveys and Google Places API synchronization:
+          </p>
+          <ul>
+            <li><strong>Physical Street Audits:</strong> Verification that listed businesses actively operate in CCA 1, CCA 2, Main Boulevard, or residential sectors.</li>
+            <li><strong>Operational Hours &amp; Helplines:</strong> Periodic calls to medical emergency centers, bank branches, and schools to confirm working telephone lines and operating hours.</li>
+            <li><strong>Precise Coordinates:</strong> High-precision GPS tagging ensuring accurate Google Maps navigation.</li>
+          </ul>
+        </section>
+
+        <!-- Pillar 5: Frequency -->
+        <section class="method-card">
+          <h2>5. Update Frequency &amp; Data Recalibration</h2>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Data Category</th>
+                  <th>Audit Frequency</th>
+                  <th>Verification Method</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Property Prices (Plots &amp; Houses)</strong></td>
+                  <td>Weekly</td>
+                  <td>Agent interviews, transaction checks, DHA transfer reports.</td>
+                </tr>
+                <tr>
+                  <td><strong>Property Availability</strong></td>
+                  <td>Bi-weekly (14 Days)</td>
+                  <td>Direct owner/broker communication &amp; WhatsApp checks.</td>
+                </tr>
+                <tr>
+                  <td><strong>Local Places &amp; Facilities</strong></td>
+                  <td>Monthly</td>
+                  <td>Field surveys &amp; Google Maps API verification.</td>
+                </tr>
+                <tr>
+                  <td><strong>Tax &amp; Transfer Charges</strong></td>
+                  <td>Immediate (Upon FBR/Punjab Govt Gazette updates)</td>
+                  <td>Official government notifications &amp; DHA circulars.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      </div>
+
+      <aside class="method-sidebar">
+        <div class="side-card">
+          <h3>Report Inaccuracy</h3>
+          <p>If you identify a sold property, outdated price, or incorrect facility record, notify our verification desk immediately.</p>
+          <a href={`https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello, I want to report a property data update or correction on DHA Phase 6 Lahore.')}`} target="_blank" rel="noopener noreferrer" class="btn-wa">
+            Report Data Update
+          </a>
+        </div>
+
+        <div class="side-card">
+          <h4>Related Pages</h4>
+          <ul class="side-links">
+            <li><a href="/authors/">Research Team &amp; Authors</a></li>
+            <li><a href="/disclaimer/">Platform Disclaimer</a></li>
+            <li><a href="/dha-phase-6-property-calculator/">Property Tax Calculator</a></li>
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+</PageLayout>
+
+<style>
+  .method-hero {
+    background: linear-gradient(135deg, #090e1a 0%, #172554 100%);
+    color: #fff;
+    padding: 3.5rem 0 3rem;
+  }
+  .breadcrumb {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 0.45rem;
+  }
+  .breadcrumb a { color: #94a3b8; text-decoration: none; }
+  .breadcrumb a:hover { color: #10b981; }
+  .method-badge {
+    display: inline-block;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 0.35rem 0.85rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.85rem;
+  }
+  .method-hero h1 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(2rem, 4vw, 2.85rem);
+    font-weight: 800;
+    margin: 0 0 1rem;
+  }
+  .hero-intro {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #cbd5e1;
+    max-width: 850px;
+    margin: 0;
+  }
+
+  .method-body { padding: 3rem 0; }
+  .method-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 2.5rem;
+  }
+  .method-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  .method-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 2rem;
+  }
+  .method-card h2 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .method-card p {
+    font-size: 0.98rem;
+    line-height: 1.75;
+    color: #334155;
+    margin-bottom: 1.25rem;
+  }
+  .method-card ul {
+    margin: 0 0 1.25rem;
+    padding-left: 1.4rem;
+    color: #334155;
+    line-height: 1.7;
+  }
+  .method-card li { margin-bottom: 0.5rem; }
+
+  .method-box-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+  }
+  .m-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 1.25rem;
+  }
+  .m-box h4 { font-size: 0.95rem; color: #0f172a; margin: 0 0 0.45rem; }
+  .m-box p { font-size: 0.85rem; line-height: 1.55; color: #475569; margin: 0; }
+
+  .protocol-list {
+    margin: 0;
+    padding-left: 1.35rem;
+    line-height: 1.75;
+    color: #334155;
+  }
+  .protocol-list li { margin-bottom: 0.75rem; }
+  .protocol-list strong { color: #0f172a; }
+
+  .table-wrap { overflow-x: auto; margin-top: 1rem; }
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  .data-table th {
+    background: #f1f5f9;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 700;
+    color: #0f172a;
+    border-bottom: 2px solid #cbd5e1;
+  }
+  .data-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+  }
+
+  .method-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .side-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  .side-card h3, .side-card h4 {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.65rem;
+  }
+  .side-card p { font-size: 0.82rem; color: #64748b; line-height: 1.5; margin-bottom: 1rem; }
+  .btn-wa {
+    display: block;
+    text-align: center;
+    background: #10b981;
+    color: #042014;
+    font-weight: 800;
+    padding: 0.65rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+  }
+  .btn-wa:hover { background: #059669; color: #fff; }
+
+  .side-links {
+    margin: 0;
+    padding-left: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .side-links a { font-size: 0.82rem; color: #059669; text-decoration: none; font-weight: 500; }
+  .side-links a:hover { text-decoration: underline; }
+
+  @media (max-width: 900px) {
+    .method-layout { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,561 @@
+---
+/**
+ * DHA Phase 6 Lahore — Commercial Area Authority Hub
+ * Route: /dha-phase-6-commercial-areas/
+ * Covers: CCA 1, CCA 2, Main Boulevard Commercial, Defence Raya Fairways Commercial.
+ * Content: Commercial zoning, restaurants, brands, banks, offices, investment value, rental yields, nearby properties.
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+import { CONTACTS } from '@data/contacts';
+import ccaPlaces from '@data/places/cca.json';
+import mainBlvdPlaces from '@data/places/main-boulevard-commercial.json';
+import rayaPlaces from '@data/places/raya-commercial.json';
+import defRayaPlaces from '@data/places/defence-raya.json';
+import propertiesRaw from '@data/properties-import.json';
+
+const canonical = `${SITE.url}/dha-phase-6-commercial-areas/`;
+const pageTitle = `DHA Phase 6 Commercial Areas Lahore — Complete Business & Investment Guide`;
+const metaDesc = `Authoritative guide to commercial real estate in DHA Phase 6 Lahore. In-depth analysis of CCA 1, CCA 2, Main Boulevard, and Defence Raya commercial plazas, rental yields, brands, banks, and offices.`;
+
+const totalCommercialPlaces = ccaPlaces.length + mainBlvdPlaces.length + rayaPlaces.length + defRayaPlaces.length;
+
+// Filter commercial properties
+interface PropertyItem {
+  id: string;
+  slug: string;
+  title: string;
+  price?: number;
+  propertyType: string;
+  size?: string;
+  unit?: string;
+  block?: string;
+}
+const allProperties = (Array.isArray(propertiesRaw) ? (propertiesRaw as any[]) : []) as PropertyItem[];
+const commercialProps = allProperties.filter(p => 
+  p.propertyType.toLowerCase().includes('commercial') || 
+  (p.block || '').toLowerCase().includes('cca') ||
+  (p.title || '').toLowerCase().includes('commercial')
+).slice(0, 4);
+
+const commSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": canonical,
+      "name": pageTitle,
+      "description": metaDesc,
+      "publisher": { "@type": "Organization", "name": SITE.name, "url": SITE.url }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": `${SITE.url}/` },
+        { "@type": "ListItem", "position": 2, "name": "Commercial", "item": `${SITE.url}/commercial/` },
+        { "@type": "ListItem", "position": 3, "name": "DHA Phase 6 Commercial Areas", "item": canonical }
+      ]
+    }
+  ]
+};
+---
+
+<PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(commSchema)} />
+
+  <header class="comm-hero">
+    <div class="container comm-hero__inner">
+      <nav class="breadcrumb">
+        <a href="/">Home</a> <span>/</span>
+        <a href="/commercial/">Commercial</a> <span>/</span>
+        <span aria-current="page">DHA Phase 6 Commercial Areas</span>
+      </nav>
+      <div class="hero-tag">Commercial Real Estate Authority &bull; DHA Phase 6 Lahore</div>
+      <h1>DHA Phase 6 Commercial Areas &amp; Business Hubs</h1>
+      <p class="hero-lead">
+        Explore the multi-billion rupee commercial ecosystem of DHA Phase 6 Lahore. 
+        From the bustling daily footfall of CCA 1 and CCA 2 to high-visibility corporate plazas along Main Boulevard and luxury open-air retail at Defence Raya Fairways.
+      </p>
+
+      <div class="comm-stats-row">
+        <div class="stat-pill"><strong>{totalCommercialPlaces}+</strong> Verified Commercial Outlets</div>
+        <div class="stat-pill"><strong>4.5% – 6.8%</strong> Annual Rental Yield</div>
+        <div class="stat-pill"><strong>4 &amp; 8 Marla</strong> Standard Plaza Plots</div>
+        <div class="stat-pill"><strong>Basement + G + 4</strong> Permitted Heights</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container comm-main-content">
+    
+    <!-- Four Primary Commercial Zones Overview -->
+    <section class="comm-zones-overview">
+      <h2>The 4 Pillars of DHA Phase 6 Commercial Real Estate</h2>
+      <p>
+        Commercial development in DHA Phase 6 is engineered into four distinct geographic and functional districts, each serving dedicated commercial search and investment intents:
+      </p>
+
+      <div class="zones-grid">
+        <!-- Zone 1: CCA 1 -->
+        <article class="zone-card">
+          <div class="zone-card__header">
+            <span class="zone-num">01</span>
+            <div>
+              <h3><a href="/cca-1-dha-phase-6-lahore/">CCA 1 (Central Commercial Area 1)</a></h3>
+              <span class="zone-type">Daily Convenience &amp; Banking Epicenter</span>
+            </div>
+          </div>
+          <p>
+            The highest footfall commercial pocket in Phase 6. Home to Jalal Sons, premier grocery marts, 15+ commercial bank branches, 
+            24/7 pharmacies, medical testing labs, and dental clinics. Plazas feature 4 and 8 Marla footprints.
+          </p>
+          <div class="zone-meta">
+            <span><strong>4 Marla Plaza Demand:</strong> PKR 15 – 24 Crore</span>
+            <span><strong>Rental Income:</strong> PKR 700,000 – 1,100,000 / mo</span>
+          </div>
+          <a href="/cca-1-dha-phase-6-lahore/" class="zone-action-btn">Detailed CCA 1 Guide &rarr;</a>
+        </article>
+
+        <!-- Zone 2: CCA 2 -->
+        <article class="zone-card">
+          <div class="zone-card__header">
+            <span class="zone-num">02</span>
+            <div>
+              <h3><a href="/cca-2-dha-phase-6-lahore/">CCA 2 (Central Commercial Area 2)</a></h3>
+              <span class="zone-type">Culinary &amp; Specialty Lifestyle Hub</span>
+            </div>
+          </div>
+          <p>
+            Serving the eastern residential sectors (H, J, K, L, M). Characterized by artisan dessert parlors, specialty roaster cafes, 
+            boutique fitness studios, real estate brokerages, and family dining terraces.
+          </p>
+          <div class="zone-meta">
+            <span><strong>4 Marla Plaza Demand:</strong> PKR 14 – 22 Crore</span>
+            <span><strong>Rental Income:</strong> PKR 600,000 – 950,000 / mo</span>
+          </div>
+          <a href="/cca-2-dha-phase-6-lahore/" class="zone-action-btn">Detailed CCA 2 Guide &rarr;</a>
+        </article>
+
+        <!-- Zone 3: Main Boulevard Commercial -->
+        <article class="zone-card">
+          <div class="zone-card__header">
+            <span class="zone-num">03</span>
+            <div>
+              <h3><a href="/main-boulevard-commercial-dha-phase-6/">Main Boulevard Commercial</a></h3>
+              <span class="zone-type">Corporate Flagships &amp; Dolmen Mall</span>
+            </div>
+          </div>
+          <p>
+            The 150-foot wide central spine hosting regional corporate offices, automotive showrooms, fuel stations with fast-food drive-thrus, 
+            and the flagship Dolmen Mall Lahore. Unmatched vehicular visibility and corporate branding impact.
+          </p>
+          <div class="zone-meta">
+            <span><strong>8 Marla / Plot Demand:</strong> PKR 32 – 55 Crore</span>
+            <span><strong>Rental Yield:</strong> 5.0% – 6.5% Net</span>
+          </div>
+          <a href="/main-boulevard-commercial-dha-phase-6/" class="zone-action-btn">Detailed Main Blvd Guide &rarr;</a>
+        </article>
+
+        <!-- Zone 4: Defence Raya Commercial -->
+        <article class="zone-card">
+          <div class="zone-card__header">
+            <span class="zone-num">04</span>
+            <div>
+              <h3><a href="/defence-raya-commercial/">Defence Raya Fairways Commercial</a></h3>
+              <span class="zone-type">Luxury Open-Air Promenade &amp; Golf Views</span>
+            </div>
+          </div>
+          <p>
+            Lahore's premier outdoor shopping and dining promenade overlooking the 18-hole golf championship fairways. 
+            Host to upscale steakhouses, designer apparel houses, luxury wellness clinics, and executive corporate penthouses.
+          </p>
+          <div class="zone-meta">
+            <span><strong>Commercial Unit Demand:</strong> PKR 6 – 18 Crore</span>
+            <span><strong>Rental Rate:</strong> PKR 350 – 550 / sq ft</span>
+          </div>
+          <a href="/defence-raya-commercial/" class="zone-action-btn">Detailed Defence Raya Guide &rarr;</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- Commercial Comparative Investment Table -->
+    <section class="comm-analysis-table-sec">
+      <h2>Commercial Zone Comparative Matrix</h2>
+      <p>A data-backed comparative analysis of footfall, parking capacity, tenant profiles, and capital liquidity:</p>
+      
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Commercial Zone</th>
+              <th>Primary Tenant Profile</th>
+              <th>Parking &amp; Access</th>
+              <th>Avg Rental Yield</th>
+              <th>Investment Horizon</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>CCA 1</strong></td>
+              <td>Commercial banks, supermarkets, diagnostics, casual eateries</td>
+              <td>Ample street &amp; dedicated plaza basement parking</td>
+              <td>5.5% – 6.5%</td>
+              <td>Immediate cash flow &amp; blue-chip tenants</td>
+            </tr>
+            <tr>
+              <td><strong>CCA 2</strong></td>
+              <td>Cafes, boutiques, clinics, corporate real estate firms</td>
+              <td>Wide perimeter bays, convenient pedestrian circulation</td>
+              <td>4.8% – 5.8%</td>
+              <td>High capital growth potential as eastern sectors mature</td>
+            </tr>
+            <tr>
+              <td><strong>Main Boulevard</strong></td>
+              <td>Corporate HQs, fashion flagships, auto showrooms, Dolmen Mall</td>
+              <td>Dedicated 150-ft service lanes, valet &amp; mall basements</td>
+              <td>5.2% – 6.8%</td>
+              <td>Institutional wealth preservation &amp; multi-decade holding</td>
+            </tr>
+            <tr>
+              <td><strong>Defence Raya</strong></td>
+              <td>Fine dining, specialty luxury brands, executive offices</td>
+              <td>Designated covered parking &amp; secure golf club valet</td>
+              <td>5.0% – 6.2%</td>
+              <td>High-end niche lifestyle &amp; foreign corporate tenants</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Available Commercial Opportunities -->
+    {commercialProps.length > 0 && (
+      <section class="available-comm-props">
+        <h2>Featured Commercial Listings &amp; Plots in Phase 6</h2>
+        <div class="comm-prop-grid">
+          {commercialProps.map((p) => (
+            <div class="comm-prop-card">
+              <h3><a href={`/properties/${p.slug}/`}>{p.title}</a></h3>
+              <p class="prop-size">{p.size} {p.unit} &bull; {p.block}</p>
+              <strong class="prop-price">
+                {p.price && p.price >= 10000000 
+                  ? `PKR ${(p.price / 10000000).toFixed(2)} Crore`
+                  : p.price ? `PKR ${(p.price / 100000).toFixed(2)} Lakh` : 'Demand on Request'}
+              </strong>
+              <a href={`/properties/${p.slug}/`} class="btn-prop-detail">Explore Property Listing &rarr;</a>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Commercial Due Diligence & Regulations -->
+    <section class="comm-bylaws-sec">
+      <h2>Commercial Bylaws &amp; Building Guidelines in Phase 6</h2>
+      <p>
+        Commercial development in DHA Phase 6 is subject to strict building codes enforced by DHA Lahore:
+      </p>
+      <div class="bylaws-grid">
+        <div class="bylaw-card">
+          <h4>Height Restrictions</h4>
+          <p>Standard CCA commercial plots allow Basement + Ground + Mezzanine + 4 upper floors, adhering to a 72-foot total permissible building height.</p>
+        </div>
+        <div class="bylaw-card">
+          <h4>Basement Parking</h4>
+          <p>Excavation of a full-footprint basement is mandatory for all new commercial plazas, reserved strictly for vehicle parking and technical services.</p>
+        </div>
+        <div class="bylaw-card">
+          <h4>Fire Safety &amp; Emergency Exits</h4>
+          <p>Mandatory installation of certified dry-pipe sprinkler systems, pressurized emergency staircases, and direct compliance with DHA Fire &amp; Rescue bylaws.</p>
+        </div>
+        <div class="bylaw-card">
+          <h4>Signage &amp; Facade Aesthetics</h4>
+          <p>Commercial facades must comply with DHA-approved structural architectural standards. Exterior HVAC units must be screened from street view.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Consultation CTA -->
+    <section class="comm-cta-box">
+      <h3>Looking for Commercial Investment Advisory in DHA Phase 6?</h3>
+      <p>
+        Our research desk verifies commercial plaza tenancy registers, rental yield agreements, and legal NDC documentation.
+      </p>
+      <a href={`https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello, I am seeking commercial investment guidance in DHA Phase 6 Lahore.')}`} target="_blank" rel="noopener noreferrer" class="btn-wa-comm">
+        Consult Commercial Desk via WhatsApp
+      </a>
+    </section>
+
+  </main>
+</PageLayout>
+
+<style>
+  .comm-hero {
+    background: linear-gradient(135deg, #090e1a 0%, #172554 60%, #042f2e 100%);
+    color: #fff;
+    padding: 3.5rem 0 3rem;
+  }
+  .breadcrumb {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 0.45rem;
+  }
+  .breadcrumb a { color: #94a3b8; text-decoration: none; }
+  .breadcrumb a:hover { color: #10b981; }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 0.35rem 0.85rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.85rem;
+  }
+  .comm-hero h1 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(2rem, 4vw, 2.85rem);
+    font-weight: 800;
+    margin: 0 0 1rem;
+  }
+  .hero-lead {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #cbd5e1;
+    max-width: 850px;
+    margin-bottom: 2rem;
+  }
+  .comm-stats-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .stat-pill {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 0.4rem 0.85rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: #f1f5f9;
+  }
+  .stat-pill strong { color: #34d399; }
+
+  /* Body */
+  .comm-main-content {
+    padding: 3rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+  .comm-main-content h2 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.85rem;
+  }
+  .comm-main-content p {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #334155;
+  }
+
+  /* Zones Grid */
+  .zones-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  .zone-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.75rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+  }
+  .zone-card__header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .zone-num {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #10b981;
+    line-height: 1;
+  }
+  .zone-card h3 {
+    font-size: 1.15rem;
+    margin: 0 0 0.25rem;
+  }
+  .zone-card h3 a {
+    color: #0f172a;
+    text-decoration: none;
+  }
+  .zone-card h3 a:hover { color: #059669; }
+  .zone-type {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+  }
+  .zone-card p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin: 0 0 1.25rem;
+    flex-grow: 1;
+  }
+  .zone-meta {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 0.75rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+    color: #334155;
+  }
+  .zone-action-btn {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #059669;
+    text-decoration: none;
+  }
+  .zone-action-btn:hover { text-decoration: underline; }
+
+  /* Table */
+  .table-wrap {
+    overflow-x: auto;
+    margin-top: 1.25rem;
+  }
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  .data-table th {
+    background: #f1f5f9;
+    padding: 0.85rem 1rem;
+    font-weight: 700;
+    color: #0f172a;
+    border-bottom: 2px solid #cbd5e1;
+    text-align: left;
+  }
+  .data-table td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+  }
+
+  /* Available Props */
+  .comm-prop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+  }
+  .comm-prop-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .comm-prop-card h3 {
+    font-size: 1rem;
+    margin: 0 0 0.35rem;
+  }
+  .comm-prop-card h3 a {
+    color: #0f172a;
+    text-decoration: none;
+  }
+  .comm-prop-card h3 a:hover { color: #059669; }
+  .prop-size {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 0.75rem;
+  }
+  .prop-price {
+    font-size: 0.95rem;
+    color: #059669;
+    margin-bottom: 1rem;
+  }
+  .btn-prop-detail {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #059669;
+    text-decoration: none;
+  }
+
+  /* Bylaws */
+  .bylaws-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+  }
+  .bylaw-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 1.25rem;
+  }
+  .bylaw-card h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 0.5rem;
+  }
+  .bylaw-card p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 0;
+    color: #475569;
+  }
+
+  /* CTA */
+  .comm-cta-box {
+    background: #0f172a;
+    color: #fff;
+    border-radius: 8px;
+    padding: 2.5rem;
+    text-align: center;
+  }
+  .comm-cta-box h3 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: 1.5rem;
+    margin: 0 0 0.5rem;
+  }
+  .comm-cta-box p {
+    color: #94a3b8;
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+  }
+  .btn-wa-comm {
+    display: inline-block;
+    background: #10b981;
+    color: #042014;
+    font-weight: 800;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  .btn-wa-comm:hover {
+    background: #059669;
+    color: #fff;
+  }
+</style>

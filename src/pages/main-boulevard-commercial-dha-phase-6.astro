@@ -1,0 +1,399 @@
+---
+/**
+ * Main Boulevard Commercial DHA Phase 6 Lahore — Complete Authority Guide
+ * Route: /main-boulevard-commercial-dha-phase-6/
+ * Content: Dolmen Mall Lahore, Corporate HQs, Flagships, Banks, Plazas, Investment Value.
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+import { CONTACTS } from '@data/contacts';
+import mainBlvdPlaces from '@data/places/main-boulevard-commercial.json';
+
+const canonical = `${SITE.url}/main-boulevard-commercial-dha-phase-6/`;
+const pageTitle = `Main Boulevard Commercial DHA Phase 6 Lahore — Complete Flagship Guide`;
+const metaDesc = `Authoritative guide to Main Boulevard Commercial in DHA Phase 6 Lahore. Featuring Dolmen Mall Lahore, corporate headquarters, high-visibility commercial plazas, and investment metrics.`;
+
+const mainSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Place",
+      "@id": canonical,
+      "name": "Main Boulevard Commercial DHA Phase 6 Lahore",
+      "description": metaDesc,
+      "geo": { "@type": "GeoCoordinates", "latitude": 31.4730, "longitude": 74.4510 },
+      "address": { "@type": "PostalAddress", "streetAddress": "Main Boulevard, DHA Phase 6", "addressLocality": "Lahore", "postalCode": "54792", "addressCountry": "PK" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": `${SITE.url}/` },
+        { "@type": "ListItem", "position": 2, "name": "Commercial", "item": `${SITE.url}/dha-phase-6-commercial-areas/` },
+        { "@type": "ListItem", "position": 3, "name": "Main Boulevard Commercial", "item": canonical }
+      ]
+    }
+  ]
+};
+---
+
+<PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(mainSchema)} />
+
+  <header class="comm-zone-header">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="/">Home</a> <span>/</span>
+        <a href="/dha-phase-6-commercial-areas/">Commercial Areas</a> <span>/</span>
+        <span aria-current="page">Main Boulevard Commercial</span>
+      </nav>
+      <div class="zone-badge">Flagship 150-ft Corridor &bull; Corporate Headquarters</div>
+      <h1>Main Boulevard Commercial DHA Phase 6 Lahore</h1>
+      <p class="zone-intro">
+        The grand 150-foot Main Boulevard is the undisputed corporate and luxury retail spine of DHA Phase 6. 
+        Anchored by the multi-level Dolmen Mall Lahore and the DHA Lahore Central Administrative Headquarters, 
+        this corridor commands the highest visibility, corporate prestige, and land valuations in suburban Lahore.
+      </p>
+    </div>
+  </header>
+
+  <main class="container comm-zone-body">
+    <div class="zone-layout">
+      
+      <div class="zone-main">
+        
+        <section class="info-card">
+          <h2>1. Corridor Overview &amp; Urban Stature</h2>
+          <p>
+            Running east-to-west through the heart of DHA Phase 6, Main Boulevard serves as the monumental thoroughfare connecting Bedian Road directly with Phase 7 and Barki Road. 
+            Unlike typical inner-city boulevards that suffer from severe congestion, the 150-foot profile includes high-capacity multi-lane express lanes, 
+            wide service roads, dedicated pedestrian pavers, and central landscaped islands equipped with computerized LED lighting.
+          </p>
+          <div class="quick-facts-box">
+            <div><strong>Road Width:</strong> 150 Feet with Dedicated Service Tracks</div>
+            <div><strong>Flagship Retail Anchor:</strong> Dolmen Mall Lahore &amp; Carrefour Hypermarket</div>
+            <div><strong>Civic Anchor:</strong> DHA Lahore Main Administrative Complex (Sector A)</div>
+            <div><strong>Visibility Rating:</strong> Highest Traffic Exposure in DHA Lahore</div>
+          </div>
+        </section>
+
+        <!-- Dolmen Mall Landmark Section -->
+        <section class="info-card">
+          <h2>2. Dolmen Mall Lahore — The Retail Game-Changer</h2>
+          <p>
+            The establishment of <strong>Dolmen Mall Lahore</strong> on Main Boulevard Phase 6 represents a landmark shift in Lahore's retail geography. 
+            Spanning hundreds of thousands of square feet of prime climate-controlled retail space, the mall features:
+          </p>
+          <ul>
+            <li><strong>International Anchor Brands:</strong> Flagship outlets for global fashion labels, luxury watchmakers, and cosmetics brands.</li>
+            <li><strong>Carrefour Hypermarket:</strong> Massive retail department store and international grocery market serving tens of thousands of households weekly.</li>
+            <li><strong>Family Entertainment:</strong> Sindbad's Wonderland, multi-screen cineplex, and international children's activity zones.</li>
+            <li><strong>Multi-Level Food Court &amp; Terraces:</strong> Diverse dining options ranging from international fast-casual chains to gourmet cafes.</li>
+            <li><strong>Underground Multi-Story Parking:</strong> High-capacity secure basement parking with automated bay guidance systems.</li>
+          </ul>
+        </section>
+
+        <!-- Verified Establishments List -->
+        <section class="info-card">
+          <h2>3. Key Establishments &amp; Flagship Plazas</h2>
+          <div class="place-pills-grid">
+            {mainBlvdPlaces.map(p => (
+              <div class="place-pill">
+                <strong>{p.name}</strong>
+                <small>{p.address}</small>
+                {p.rating && <span class="rating-tag">&#9733; {p.rating} ({p.reviewCount})</span>}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- Investment & Commercial Plaza Valuations -->
+        <section class="info-card">
+          <h2>4. Investment Valuation &amp; Plot Rates (2026)</h2>
+          <p>
+            Commercial plots along Main Boulevard DHA Phase 6 represent generational family office and institutional holdings:
+          </p>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Commercial Asset Category</th>
+                  <th>Asking Demand Benchmark</th>
+                  <th>Primary Use Case</th>
+                  <th>Rental Yield Dynamics</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>8 Marla Main Blvd Plot</strong></td>
+                  <td>PKR 30.00 – 45.00 Crore</td>
+                  <td>Corporate Headquarters, Banking Plazas</td>
+                  <td>5.2% – 6.5% Net</td>
+                </tr>
+                <tr>
+                  <td><strong>16 Marla / 1 Kanal Commercial Plot</strong></td>
+                  <td>PKR 65.00 – 110.00 Crore</td>
+                  <td>Multi-Story Department Store, Hospital</td>
+                  <td>5.5% – 7.0% Net</td>
+                </tr>
+                <tr>
+                  <td><strong>Full Built Commercial Plaza</strong></td>
+                  <td>PKR 55.00 – 120.00 Crore</td>
+                  <td>Institutional Tenant Leases</td>
+                  <td>6.0% – 7.2% Net</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      </div>
+
+      <aside class="zone-sidebar">
+        <div class="side-card cta-side">
+          <h3>Main Boulevard Advisory</h3>
+          <p>Access off-market corporate commercial plots and verified tenancy plazas on Main Boulevard.</p>
+          <a href={`https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello, I want to inquire about commercial properties on Main Boulevard DHA Phase 6 Lahore.')}`} target="_blank" rel="noopener noreferrer" class="btn-wa">
+            Contact Commercial Desk
+          </a>
+        </div>
+
+        <div class="side-card">
+          <h4>Commercial Zones</h4>
+          <ul class="side-links">
+            <li><a href="/dha-phase-6-commercial-areas/">Commercial Areas Overview</a></li>
+            <li><a href="/cca-1-dha-phase-6-lahore/">CCA 1 Commercial Guide</a></li>
+            <li><a href="/cca-2-dha-phase-6-lahore/">CCA 2 Commercial Guide</a></li>
+            <li><a href="/main-boulevard-commercial-dha-phase-6/" class="active">Main Boulevard Commercial</a></li>
+            <li><a href="/defence-raya-commercial/">Defence Raya Fairways</a></li>
+          </ul>
+        </div>
+
+        <div class="side-card">
+          <h4>Flanking Sectors</h4>
+          <ul class="side-links">
+            <li><a href="/dha-phase-6-sector-a-lahore/">Sector A (DHA Office)</a></li>
+            <li><a href="/dha-phase-6-sector-c-lahore/">Sector C</a></li>
+            <li><a href="/dha-phase-6-sector-d-lahore/">Sector D</a></li>
+            <li><a href="/dha-phase-6-sector-h-lahore/">Sector H</a></li>
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+</PageLayout>
+
+<style>
+  .comm-zone-header {
+    background: linear-gradient(135deg, #090e1a 0%, #1e293b 100%);
+    color: #fff;
+    padding: 3rem 0 2.5rem;
+  }
+  .breadcrumb {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 0.45rem;
+  }
+  .breadcrumb a { color: #94a3b8; text-decoration: none; }
+  .breadcrumb a:hover { color: #10b981; }
+  .zone-badge {
+    display: inline-block;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 0.3rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .comm-zone-header h1 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 800;
+    margin: 0 0 0.85rem;
+  }
+  .zone-intro {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #cbd5e1;
+    max-width: 850px;
+    margin: 0;
+  }
+
+  .comm-zone-body { padding: 3rem 0; }
+  .zone-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 2.5rem;
+  }
+  .zone-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .info-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.75rem;
+  }
+  .info-card h2 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.85rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .info-card p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #334155;
+    margin-bottom: 1rem;
+  }
+  .info-card ul {
+    margin: 0 0 1.25rem;
+    padding-left: 1.35rem;
+    color: #334155;
+    line-height: 1.7;
+  }
+  .info-card li { margin-bottom: 0.4rem; }
+
+  .quick-facts-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    color: #334155;
+  }
+
+  .place-pills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+  .place-pill {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 0.75rem;
+  }
+  .place-pill strong {
+    display: block;
+    font-size: 0.85rem;
+    color: #0f172a;
+  }
+  .place-pill small {
+    display: block;
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 0.2rem;
+  }
+  .rating-tag {
+    display: inline-block;
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    margin-top: 0.3rem;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+    margin-top: 1rem;
+  }
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  .data-table th {
+    background: #f1f5f9;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 700;
+    color: #0f172a;
+    border-bottom: 2px solid #cbd5e1;
+  }
+  .data-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+  }
+
+  .zone-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .side-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  .side-card h3, .side-card h4 {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.65rem;
+  }
+  .cta-side {
+    background: #0f172a;
+    color: #fff;
+  }
+  .cta-side h3 { color: #fff; }
+  .cta-side p {
+    font-size: 0.82rem;
+    color: #94a3b8;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  .btn-wa {
+    display: block;
+    text-align: center;
+    background: #10b981;
+    color: #042014;
+    font-weight: 800;
+    padding: 0.65rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+  }
+  .btn-wa:hover { background: #059669; color: #fff; }
+
+  .side-links {
+    margin: 0;
+    padding-left: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .side-links a {
+    font-size: 0.82rem;
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .side-links a.active {
+    font-weight: 800;
+    color: #047857;
+  }
+
+  @media (max-width: 900px) {
+    .zone-layout { grid-template-columns: 1fr; }
+    .quick-facts-box { grid-template-columns: 1fr; }
+  }
+</style>

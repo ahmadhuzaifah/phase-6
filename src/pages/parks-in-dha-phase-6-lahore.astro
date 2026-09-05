@@ -1,0 +1,392 @@
+---
+/**
+ * Parks in DHA Phase 6 Lahore — Complete Facility Authority Guide
+ * Route: /parks-in-dha-phase-6-lahore/
+ * Length: 1000-2000 words with sector parks, jogging tracks, sports complexes, and nearby houses.
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+import { getAllPlaces } from '@data/places/index';
+import propertiesRaw from '@data/properties-import.json';
+
+const allPlaces = getAllPlaces();
+const parks = allPlaces.filter(p => ['parks', 'park', 'gym', 'gyms', 'sports', 'club'].includes(p.category));
+
+const canonical = `${SITE.url}/parks-in-dha-phase-6-lahore/`;
+const pageTitle = `Parks & Recreation in DHA Phase 6 Lahore — 2026 Sports & Park Guide`;
+const metaDesc = `Authoritative guide to parks and sports facilities in DHA Phase 6 Lahore. Sector H 800m jogging track, Sector F sports complex, Raya golf course, gymnasiums, and park-facing properties.`;
+
+interface PropertyItem {
+  id: string;
+  slug: string;
+  title: string;
+  price?: number;
+  propertyType: string;
+  size?: string;
+  unit?: string;
+  block?: string;
+}
+const allProps = (Array.isArray(propertiesRaw) ? propertiesRaw : []) as PropertyItem[];
+const nearbyHouses = allProps.filter(p => p.propertyType.toLowerCase().includes('house')).slice(0, 4);
+
+const parkSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": canonical,
+      "name": pageTitle,
+      "description": metaDesc,
+      "publisher": { "@type": "Organization", "name": SITE.name, "url": SITE.url }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": `${SITE.url}/` },
+        { "@type": "ListItem", "position": 2, "name": "Facilities", "item": `${SITE.url}/places/` },
+        { "@type": "ListItem", "position": 3, "name": "Parks in DHA Phase 6", "item": canonical }
+      ]
+    }
+  ]
+};
+---
+
+<PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(parkSchema)} />
+
+  <header class="facility-hero">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="/">Home</a> <span>/</span>
+        <a href="/places/">Facilities</a> <span>/</span>
+        <span aria-current="page">Parks in DHA Phase 6</span>
+      </nav>
+      <div class="fac-badge">Green Spaces &amp; Sports Authority &bull; DHA Phase 6 Lahore</div>
+      <h1>Parks, Jogging Tracks &amp; Sports in DHA Phase 6 Lahore</h1>
+      <p class="hero-sub">
+        Explore the manicured green sanctuaries of DHA Phase 6 Lahore. Featuring the monumental Sector H Central Park with an 800-meter jogging circuit, 
+        floodlit sports arenas in Sector F, and the world-class 18-hole championship greens of Defence Raya.
+      </p>
+
+      <div class="stats-bar">
+        <span><strong>{parks.length}+</strong> Parks &amp; Sports Centers</span>
+        <span><strong>800m</strong> Sector H Jogging Track</span>
+        <span><strong>Sports Complex</strong> Sector F Facilities</span>
+        <span><strong>Championship Golf</strong> Defence Raya</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container fac-body">
+    <div class="fac-layout">
+      
+      <div class="fac-content">
+        
+        <section class="fac-section">
+          <h2>1. Urban Green Design &amp; Environmental Quality</h2>
+          <p>
+            DHA Phase 6 incorporates one of the highest park-to-resident ratios in urban Pakistan. 
+            Every sector features both a centralized neighborhood park and localized green pockets designed with shaded canopies, 
+            children's play equipment, open-air fitness gyms, and soft-cushioned rubberized walking tracks.
+          </p>
+          <div class="park-highlights-grid">
+            <div class="highlight-card">
+              <h4>Sector H Grand Central Park</h4>
+              <p>The crown jewel of community fitness in Phase 6. Features an 800-meter jogging track, badminton courts, open gym machines, and aviary gardens.</p>
+            </div>
+            <div class="highlight-card">
+              <h4>Captain Fasih Babar Amin Sports Complex</h4>
+              <p>Located in Sector F, offering synthetic turf football grounds, floodlit cricket batting nets, and professional training academies.</p>
+            </div>
+            <div class="highlight-card">
+              <h4>Defence Raya Golf Club</h4>
+              <p>18-hole championship greens, Olympic swimming pool, squash courts, and fine-dining resort clubhouses.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="fac-section">
+          <h2>2. Verified Parks &amp; Fitness Centers Directory</h2>
+          <div class="listings-grid">
+            {parks.map(pk => (
+              <div class="place-detail-card">
+                <div class="card-head">
+                  <h3>{pk.name}</h3>
+                  <span class="sector-tag">{pk.sectorLabel}</span>
+                </div>
+                <p class="address">{pk.address}</p>
+                {pk.description && <p class="desc">{pk.description}</p>}
+                
+                <div class="card-footer">
+                  <span>Recreation Landmark</span>
+                  <a href={pk.googleMapsUrl} target="_blank" rel="noopener noreferrer" class="map-link">Google Maps Location &rarr;</a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {nearbyHouses.length > 0 && (
+          <section class="fac-section">
+            <h2>3. Park-Facing Houses for Sale in DHA Phase 6</h2>
+            <p>Park-facing properties command a 10% to 15% location premium due to uninterrupted views, fresh air, and abundant natural light:</p>
+            <div class="prop-chips-grid">
+              {nearbyHouses.map(p => (
+                <div class="prop-chip">
+                  <h4><a href={`/properties/${p.slug}/`}>{p.title}</a></h4>
+                  <span>{p.size} {p.unit} &bull; {p.block}</span>
+                  <strong>
+                    {p.price && p.price >= 10000000 
+                      ? `PKR ${(p.price / 10000000).toFixed(2)} Crore`
+                      : p.price ? `PKR ${(p.price / 100000).toFixed(2)} Lakh` : 'Demand on Request'}
+                  </strong>
+                  <a href={`/properties/${p.slug}/`} class="view-btn">View Property &rarr;</a>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+      </div>
+
+      <aside class="fac-sidebar">
+        <div class="side-card">
+          <h3>Related Facilities</h3>
+          <ul class="side-links">
+            <li><a href="/schools-in-dha-phase-6-lahore/">Schools &amp; Colleges</a></li>
+            <li><a href="/hospitals-in-dha-phase-6-lahore/">Hospitals &amp; Healthcare</a></li>
+            <li><a href="/restaurants-in-dha-phase-6-lahore/">Restaurants &amp; Dining</a></li>
+            <li><a href="/mosques-in-dha-phase-6-lahore/">Mosques &amp; Prayer Centers</a></li>
+            <li><a href="/parks-in-dha-phase-6-lahore/" class="active">Parks &amp; Sports Grounds</a></li>
+          </ul>
+        </div>
+
+        <div class="side-card">
+          <h4>Park Searches</h4>
+          <ul class="side-links">
+            <li><a href="/houses-near-parks-dha-phase-6-lahore/">Houses Near Parks</a></li>
+            <li><a href="/defence-raya-commercial/">Defence Raya Golf Club</a></li>
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+</PageLayout>
+
+<style>
+  .facility-hero {
+    background: linear-gradient(135deg, #090e1a 0%, #064e3b 100%);
+    color: #fff;
+    padding: 3rem 0 2.5rem;
+  }
+  .breadcrumb {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 0.45rem;
+  }
+  .breadcrumb a { color: #94a3b8; text-decoration: none; }
+  .breadcrumb a:hover { color: #10b981; }
+  .fac-badge {
+    display: inline-block;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 0.3rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .facility-hero h1 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 800;
+    margin: 0 0 0.85rem;
+  }
+  .hero-sub {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #cbd5e1;
+    max-width: 850px;
+    margin: 0 0 1.5rem;
+  }
+  .stats-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .stats-bar span {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    color: #e2e8f0;
+  }
+  .stats-bar strong { color: #34d399; }
+
+  .fac-body { padding: 3rem 0; }
+  .fac-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 2.5rem;
+  }
+  .fac-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  .fac-section h2 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .fac-section p {
+    font-size: 0.98rem;
+    line-height: 1.75;
+    color: #334155;
+    margin-bottom: 1rem;
+  }
+
+  .park-highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .highlight-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 1rem;
+  }
+  .highlight-card h4 { font-size: 0.95rem; color: #0f172a; margin: 0 0 0.35rem; }
+  .highlight-card p { font-size: 0.85rem; line-height: 1.55; margin: 0; color: #475569; }
+
+  .listings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+  }
+  .place-detail-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .card-head h3 {
+    font-size: 1.05rem;
+    color: #0f172a;
+    margin: 0;
+  }
+  .sector-tag {
+    background: #ecfdf5;
+    color: #059669;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .address {
+    font-size: 0.82rem;
+    color: #64748b;
+    margin: 0 0 0.5rem;
+  }
+  .desc {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #334155;
+    flex-grow: 1;
+    margin: 0 0 1rem;
+  }
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 0.75rem;
+    font-size: 0.78rem;
+  }
+  .map-link {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .map-link:hover { text-decoration: underline; }
+
+  .prop-chips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+  .prop-chip {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .prop-chip h4 { font-size: 0.92rem; margin: 0 0 0.35rem; }
+  .prop-chip h4 a { color: #0f172a; text-decoration: none; }
+  .prop-chip h4 a:hover { color: #059669; }
+  .prop-chip span { font-size: 0.78rem; color: #64748b; margin-bottom: 0.5rem; }
+  .prop-chip strong { font-size: 0.95rem; color: #059669; margin-bottom: 0.75rem; }
+  .view-btn { font-size: 0.8rem; color: #059669; font-weight: 700; text-decoration: none; }
+
+  .fac-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .side-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  .side-card h3, .side-card h4 {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.65rem;
+  }
+  .side-links {
+    margin: 0;
+    padding-left: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .side-links a {
+    font-size: 0.82rem;
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .side-links a.active { font-weight: 800; color: #047857; }
+
+  @media (max-width: 900px) {
+    .fac-layout { grid-template-columns: 1fr; }
+  }
+</style>

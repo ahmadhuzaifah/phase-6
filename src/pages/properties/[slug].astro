@@ -269,6 +269,21 @@ const structuredData = {
               <small>Notice: This is an independent market research platform and is not affiliated with or endorsed by DHA Lahore. Advertised prices reflect public listings and are subject to confirmation.</small>
             </div>
           </div>
+
+          <!-- Semantic Internal Linking Authority Box -->
+          <div class="prop-knowledge-box">
+            <h4>Knowledge Hub &amp; Due Diligence</h4>
+            <ul class="prop-internal-links">
+              <li><a href={`/dha-phase-6-${cleanSectorKey}-lahore/`}>Complete {property.block} Guide &rarr;</a></li>
+              <li><a href={`/entities/dha-phase-6-${cleanSectorKey}/`}>{property.block} Entity Profile &rarr;</a></li>
+              <li><a href="/dha-phase-6-lahore/">DHA Phase 6 Master Pillar &rarr;</a></li>
+              <li><a href="/dha-phase-6-market-analysis/">2026 Market Analysis &rarr;</a></li>
+              <li><a href="/dha-phase-6-price-history/">Historical Price Trends &rarr;</a></li>
+              <li><a href="/dha-phase-6-commercial-areas/">Commercial Areas Hub &rarr;</a></li>
+              <li><a href="/dha-phase-6-property-calculator/">Transfer Cost Calculator &rarr;</a></li>
+              <li><a href="/how-we-collect-property-data/">Data Verification Protocol &rarr;</a></li>
+            </ul>
+          </div>
         </aside>
       </div>
 
@@ -703,6 +718,38 @@ const structuredData = {
     font-size: 0.68rem;
     color: #64748b;
     line-height: 1.5;
+  }
+  .prop-knowledge-box {
+    background: #111128;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+  }
+  .prop-knowledge-box h4 {
+    margin: 0 0 0.85rem;
+    font-size: 0.88rem;
+    color: #10b981;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .prop-internal-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+  .prop-internal-links a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.82rem;
+    transition: color 0.15s;
+  }
+  .prop-internal-links a:hover {
+    color: #34d399;
+    text-decoration: underline;
   }
 
   /* Similar Properties */

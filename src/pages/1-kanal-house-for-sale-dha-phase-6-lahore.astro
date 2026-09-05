@@ -1,0 +1,171 @@
+---
+/**
+ * 1 Kanal House for Sale DHA Phase 6 Lahore — Search Intent Landing Page
+ * Route: /1-kanal-house-for-sale-dha-phase-6-lahore/
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+import { CONTACTS } from '@data/contacts';
+import propertiesRaw from '@data/properties-import.json';
+
+const canonical = `${SITE.url}/1-kanal-house-for-sale-dha-phase-6-lahore/`;
+const pageTitle = `1 Kanal House for Sale DHA Phase 6 Lahore — 2026 Luxury Mansions`;
+const metaDesc = `Explore 1 Kanal luxury houses for sale in DHA Phase 6 Lahore. Turnkey 5-6 bedroom modern architectural villas, basement options, swimming pools, and price guidance (PKR 9.5 to 14.5 Crore).`;
+
+interface PropertyItem {
+  id: string;
+  slug: string;
+  title: string;
+  price?: number;
+  propertyType: string;
+  size?: string;
+  unit?: string;
+  block?: string;
+}
+const allProps = (Array.isArray(propertiesRaw) ? propertiesRaw : []) as PropertyItem[];
+const listings = allProps.filter(p => (p.size === '1' || p.title.toLowerCase().includes('1 kanal')) && p.propertyType.toLowerCase().includes('house')).slice(0, 6);
+---
+
+<PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+  <header class="search-hero">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="/">Home</a> <span>/</span>
+        <a href="/houses-for-sale-dha-phase-6-lahore/">Houses for Sale</a> <span>/</span>
+        <span aria-current="page">1 Kanal House for Sale</span>
+      </nav>
+      <div class="intent-badge">The Flagship Standard &bull; 50 &times; 90 ft &bull; All Sectors</div>
+      <h1>1 Kanal House for Sale in DHA Phase 6 Lahore</h1>
+      <p class="hero-desc">
+        1 Kanal (approx. 4,500 sq ft / 500 sq yds) is the definitive residential standard of DHA Phase 6 Lahore. 
+        Featuring sprawling 5 to 6 ensuite bedrooms, double-height grand entrance lobbies, imported Italian/Spanish fixtures, and basement home theaters.
+      </p>
+    </div>
+  </header>
+
+  <main class="container search-body">
+    <div class="search-layout">
+      <div class="search-main">
+        <section class="search-card">
+          <h2>1 Kanal House Price Guidance in DHA Phase 6 (2026)</h2>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Architectural Tier</th>
+                  <th>Key Features</th>
+                  <th>Price Demand Range</th>
+                  <th>Monthly Rental Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Full Basement Ultra Luxury Designer</strong></td>
+                  <td>6 Beds, Swimming Pool, Home Cinema, Imported SMEG Kitchen</td>
+                  <td>PKR 12.00 – 15.50 Crore</td>
+                  <td>PKR 450,000 – 600,000</td>
+                </tr>
+                <tr>
+                  <td><strong>Brand New Modern Double Story</strong></td>
+                  <td>5 Beds, Spanish Porcelain, 2 Kitchens, 3-Car Parking</td>
+                  <td>PKR 9.50 – 12.50 Crore</td>
+                  <td>PKR 350,000 – 480,000</td>
+                </tr>
+                <tr>
+                  <td><strong>5 to 8 Year Old Solid Construction</strong></td>
+                  <td>5 Beds, Teak Woodwork, Spacious Lawns</td>
+                  <td>PKR 7.50 – 9.20 Crore</td>
+                  <td>PKR 280,000 – 350,000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="search-card">
+          <h2>Featured 1 Kanal Luxury Houses for Sale</h2>
+          <div class="props-grid">
+            {listings.map(p => (
+              <div class="prop-box">
+                <h3><a href={`/properties/${p.slug}/`}>{p.title}</a></h3>
+                <span class="meta">{p.size} {p.unit} &bull; {p.block}</span>
+                <strong class="price">
+                  {p.price && p.price >= 10000000 
+                    ? `PKR ${(p.price / 10000000).toFixed(2)} Crore`
+                    : p.price ? `PKR ${(p.price / 100000).toFixed(2)} Lakh` : 'Demand on Request'}
+                </strong>
+                <a href={`/properties/${p.slug}/`} class="btn-card">View Full Listing &rarr;</a>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section class="search-card">
+          <h2>1 Kanal Specifications &amp; DHA Building Bylaws</h2>
+          <ul>
+            <li><strong>Plot Dimensions:</strong> 50 ft width by 90 ft depth (4,500 sq ft).</li>
+            <li><strong>Max Permissible Height:</strong> 35 ft (Ground plus First Floor, optional Basement).</li>
+            <li><strong>Mandatory Setbacks:</strong> Front 15 ft, Rear 7 ft, Sides 5 ft each.</li>
+            <li><strong>Covered Area:</strong> Standard double-story builds achieve 5,200 to 6,200 sq ft; full basement additions extend covered area up to 8,000 sq ft.</li>
+          </ul>
+        </section>
+      </div>
+
+      <aside class="search-sidebar">
+        <div class="side-box cta-box">
+          <h3>1 Kanal House Advisory</h3>
+          <p>Arrange private villa viewings, structural inspections, and title verification with our Phase 6 specialists.</p>
+          <a href={`https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello, I want to inquire about 1 Kanal houses for sale in DHA Phase 6 Lahore.')}`} target="_blank" rel="noopener noreferrer" class="btn-wa">
+            WhatsApp 1 Kanal Desk
+          </a>
+        </div>
+        <div class="side-box">
+          <h4>Related Links</h4>
+          <ul class="side-nav">
+            <li><a href="/1-kanal-plot-for-sale-dha-phase-6-lahore/">1 Kanal Plots</a></li>
+            <li><a href="/houses-for-sale-dha-phase-6-lahore/">All Houses for Sale</a></li>
+            <li><a href="/dha-phase-6-lahore-house-prices/">Phase 6 House Price Analysis</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </main>
+</PageLayout>
+
+<style>
+  .search-hero { background: linear-gradient(135deg, #090e1a 0%, #1e293b 100%); color: #fff; padding: 3rem 0 2.5rem; }
+  .breadcrumb { font-size: 0.8rem; color: #94a3b8; margin-bottom: 1rem; display: flex; gap: 0.45rem; }
+  .breadcrumb a { color: #94a3b8; text-decoration: none; }
+  .breadcrumb a:hover { color: #10b981; }
+  .intent-badge { display: inline-block; background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); padding: 0.3rem 0.75rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.75rem; }
+  .search-hero h1 { font-family: var(--font-display, Georgia, serif); font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 800; margin: 0 0 0.85rem; }
+  .hero-desc { font-size: 1.05rem; line-height: 1.65; color: #cbd5e1; max-width: 850px; margin: 0; }
+  .search-body { padding: 3rem 0; }
+  .search-layout { display: grid; grid-template-columns: 1fr 320px; gap: 2.5rem; }
+  .search-main { display: flex; flex-direction: column; gap: 2.5rem; }
+  .search-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.75rem; }
+  .search-card h2 { font-family: var(--font-display, Georgia, serif); font-size: 1.35rem; font-weight: 800; color: #0f172a; margin: 0 0 0.85rem; padding-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0; }
+  .search-card p { font-size: 0.95rem; line-height: 1.7; color: #334155; margin-bottom: 1rem; }
+  .table-wrap { overflow-x: auto; margin-top: 1rem; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .data-table th { background: #f1f5f9; padding: 0.75rem 1rem; text-align: left; font-weight: 700; color: #0f172a; border-bottom: 2px solid #cbd5e1; }
+  .data-table td { padding: 0.75rem 1rem; border-bottom: 1px solid #e2e8f0; color: #334155; }
+  .props-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; margin-top: 1.25rem; }
+  .prop-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 1.25rem; display: flex; flex-direction: column; }
+  .prop-box h3 { font-size: 1rem; margin: 0 0 0.35rem; }
+  .prop-box h3 a { color: #0f172a; text-decoration: none; }
+  .prop-box h3 a:hover { color: #059669; }
+  .prop-box .meta { font-size: 0.8rem; color: #64748b; margin-bottom: 0.5rem; }
+  .prop-box .price { font-size: 0.95rem; color: #059669; margin-bottom: 1rem; }
+  .btn-card { font-size: 0.8rem; color: #059669; font-weight: 700; text-decoration: none; }
+  .search-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+  .side-box { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; }
+  .side-box h3, .side-box h4 { font-size: 0.95rem; font-weight: 800; color: #0f172a; margin: 0 0 0.65rem; }
+  .cta-box { background: #0f172a; color: #fff; }
+  .cta-box h3 { color: #fff; }
+  .cta-box p { font-size: 0.82rem; color: #94a3b8; line-height: 1.5; margin-bottom: 1rem; }
+  .btn-wa { display: block; text-align: center; background: #10b981; color: #042014; font-weight: 800; padding: 0.65rem; border-radius: 6px; text-decoration: none; font-size: 0.85rem; }
+  .side-nav { margin: 0; padding-left: 1.15rem; display: flex; flex-direction: column; gap: 0.45rem; }
+  .side-nav a { font-size: 0.82rem; color: #059669; text-decoration: none; }
+  @media (max-width: 900px) { .search-layout { grid-template-columns: 1fr; } }
+</style>

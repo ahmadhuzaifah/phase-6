@@ -1,0 +1,129 @@
+---
+/**
+ * 5 Marla Plot for Sale DHA Phase 6 Lahore — Search Intent Landing Page
+ * Route: /5-marla-plot-for-sale-dha-phase-6-lahore/
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+import { CONTACTS } from '@data/contacts';
+
+const canonical = `${SITE.url}/5-marla-plot-for-sale-dha-phase-6-lahore/`;
+const pageTitle = `5 Marla Plot for Sale DHA Phase 6 Lahore — 2026 Prices & Sector Map`;
+const metaDesc = `Explore 5 Marla residential plots for sale in DHA Phase 6 Lahore. Current price guidance, rare pocket sectors, dimensions (25x45), possession details, and legal verification.`;
+---
+
+<PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+  <header class="search-hero">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="/">Home</a> <span>/</span>
+        <a href="/plots-for-sale-dha-phase-6-lahore/">Plots for Sale</a> <span>/</span>
+        <span aria-current="page">5 Marla Plot for Sale</span>
+      </nav>
+      <div class="intent-badge">5 Marla Residential &bull; 25 &times; 45 ft</div>
+      <h1>5 Marla Plot for Sale in DHA Phase 6 Lahore</h1>
+      <p class="hero-desc">
+        Detailed buyer guide to rare 5 Marla residential plots in DHA Phase 6 Lahore. 
+        Dimensions, sector locations, price ranges, and building bylaws for 3-4 bedroom compact homes.
+      </p>
+    </div>
+  </header>
+
+  <main class="container search-body">
+    <div class="search-layout">
+      <div class="search-main">
+        <section class="search-card">
+          <h2>5 Marla Plot Price Guidance in DHA Phase 6 (2026)</h2>
+          <p>
+            Because DHA Phase 6 was planned primarily around 1 Kanal plots, 5 Marla plots are limited to select designated blocks. 
+            This scarcity makes them highly prized among builders and private homeowners seeking an entry into Phase 6:
+          </p>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Plot Dimensions</th>
+                  <th>Price Range (2026)</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>General Category Plot</strong></td>
+                  <td>25' &times; 45' (1,125 sq ft)</td>
+                  <td>PKR 1.20 – 1.65 Crore</td>
+                  <td>On-Ground / Ready to Build</td>
+                </tr>
+                <tr>
+                  <td><strong>Corner / Park Facing Plot</strong></td>
+                  <td>25' &times; 45' (1,125 sq ft)</td>
+                  <td>PKR 1.40 – 1.85 Crore</td>
+                  <td>10-15% Location Premium</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="search-card">
+          <h2>Construction Bylaws for 5 Marla in DHA Phase 6</h2>
+          <ul>
+            <li><strong>Max Height:</strong> 30 ft (Ground + First Floor).</li>
+            <li><strong>Front Setback:</strong> 5 ft mandatory front open space.</li>
+            <li><strong>Rear Setback:</strong> 3 ft rear open ventilation space.</li>
+            <li><strong>Covered Area Potential:</strong> Approximately 1,800 to 2,100 sq ft, enabling 3 or 4 ensuite bedrooms, lounge, and compact kitchen.</li>
+          </ul>
+        </section>
+      </div>
+
+      <aside class="search-sidebar">
+        <div class="side-box cta-box">
+          <h3>5 Marla Plot Verification</h3>
+          <p>Verify plot map, clear DHA title, and seller NDC status.</p>
+          <a href={`https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello, I want to inquire about 5 Marla plots for sale in DHA Phase 6 Lahore.')}`} target="_blank" rel="noopener noreferrer" class="btn-wa">
+            WhatsApp Plot Specialist
+          </a>
+        </div>
+        <div class="side-box">
+          <h4>Related Plot Searches</h4>
+          <ul class="side-nav">
+            <li><a href="/10-marla-plot-for-sale-dha-phase-6-lahore/">10 Marla Plots</a></li>
+            <li><a href="/1-kanal-plot-for-sale-dha-phase-6-lahore/">1 Kanal Plots</a></li>
+            <li><a href="/5-marla-house-for-sale-dha-phase-6-lahore/">5 Marla Houses for Sale</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </main>
+</PageLayout>
+
+<style>
+  .search-hero { background: linear-gradient(135deg, #090e1a 0%, #1e293b 100%); color: #fff; padding: 3rem 0 2.5rem; }
+  .breadcrumb { font-size: 0.8rem; color: #94a3b8; margin-bottom: 1rem; display: flex; gap: 0.45rem; }
+  .breadcrumb a { color: #94a3b8; text-decoration: none; }
+  .breadcrumb a:hover { color: #10b981; }
+  .intent-badge { display: inline-block; background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); padding: 0.3rem 0.75rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.75rem; }
+  .search-hero h1 { font-family: var(--font-display, Georgia, serif); font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 800; margin: 0 0 0.85rem; }
+  .hero-desc { font-size: 1.05rem; line-height: 1.65; color: #cbd5e1; max-width: 850px; margin: 0; }
+  .search-body { padding: 3rem 0; }
+  .search-layout { display: grid; grid-template-columns: 1fr 320px; gap: 2.5rem; }
+  .search-main { display: flex; flex-direction: column; gap: 2.5rem; }
+  .search-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.75rem; }
+  .search-card h2 { font-family: var(--font-display, Georgia, serif); font-size: 1.35rem; font-weight: 800; color: #0f172a; margin: 0 0 0.85rem; padding-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0; }
+  .search-card p { font-size: 0.95rem; line-height: 1.7; color: #334155; margin-bottom: 1rem; }
+  .table-wrap { overflow-x: auto; margin-top: 1rem; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .data-table th { background: #f1f5f9; padding: 0.75rem 1rem; text-align: left; font-weight: 700; color: #0f172a; border-bottom: 2px solid #cbd5e1; }
+  .data-table td { padding: 0.75rem 1rem; border-bottom: 1px solid #e2e8f0; color: #334155; }
+  .search-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+  .side-box { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; }
+  .side-box h3, .side-box h4 { font-size: 0.95rem; font-weight: 800; color: #0f172a; margin: 0 0 0.65rem; }
+  .cta-box { background: #0f172a; color: #fff; }
+  .cta-box h3 { color: #fff; }
+  .cta-box p { font-size: 0.82rem; color: #94a3b8; line-height: 1.5; margin-bottom: 1rem; }
+  .btn-wa { display: block; text-align: center; background: #10b981; color: #042014; font-weight: 800; padding: 0.65rem; border-radius: 6px; text-decoration: none; font-size: 0.85rem; }
+  .side-nav { margin: 0; padding-left: 1.15rem; display: flex; flex-direction: column; gap: 0.45rem; }
+  .side-nav a { font-size: 0.82rem; color: #059669; text-decoration: none; }
+  @media (max-width: 900px) { .search-layout { grid-template-columns: 1fr; } }
+</style>

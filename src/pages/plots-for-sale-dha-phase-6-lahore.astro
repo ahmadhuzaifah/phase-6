@@ -1,0 +1,391 @@
+---
+/**
+ * Plots for Sale DHA Phase 6 Lahore — Search Intent Landing Page
+ * Route: /plots-for-sale-dha-phase-6-lahore/
+ * Features: Sector plot price matrix, buyer guidance, possession status, FAQs, verified listings.
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+import { CONTACTS } from '@data/contacts';
+import propertiesRaw from '@data/properties-import.json';
+
+const canonical = `${SITE.url}/plots-for-sale-dha-phase-6-lahore/`;
+const pageTitle = `Plots for Sale DHA Phase 6 Lahore — 2026 Residential Plot Prices`;
+const metaDesc = `Explore verified residential and commercial plots for sale in DHA Phase 6 Lahore. Real-time plot prices for 5 Marla, 10 Marla, 1 Kanal & 2 Kanal across all sectors.`;
+
+interface PropertyItem {
+  id: string;
+  slug: string;
+  title: string;
+  price?: number;
+  propertyType: string;
+  size?: string;
+  unit?: string;
+  block?: string;
+}
+const allProps = (Array.isArray(propertiesRaw) ? propertiesRaw : []) as PropertyItem[];
+const plotListings = allProps.filter(p => p.propertyType.toLowerCase().includes('plot')).slice(0, 6);
+
+const plotSearchSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": canonical,
+      "name": pageTitle,
+      "description": metaDesc,
+      "publisher": { "@type": "Organization", "name": SITE.name, "url": SITE.url }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": `${SITE.url}/` },
+        { "@type": "ListItem", "position": 2, "name": "Properties", "item": `${SITE.url}/properties/` },
+        { "@type": "ListItem", "position": 3, "name": "Plots for Sale DHA Phase 6", "item": canonical }
+      ]
+    }
+  ]
+};
+---
+
+<PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(plotSearchSchema)} />
+
+  <header class="search-hero">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="/">Home</a> <span>/</span>
+        <a href="/properties/">Properties</a> <span>/</span>
+        <span aria-current="page">Plots for Sale DHA Phase 6 Lahore</span>
+      </nav>
+      <div class="intent-badge">Residential &amp; Commercial Plots &bull; 100% Possession</div>
+      <h1>Plots for Sale in DHA Phase 6 Lahore</h1>
+      <p class="hero-desc">
+        Explore ready-for-possession residential and commercial plots in DHA Phase 6 Lahore. 
+        Featuring direct DHA title transfer, complete underground utilities, and zero litigation risk.
+      </p>
+
+      <div class="quick-size-pills">
+        <a href="/5-marla-plot-for-sale-dha-phase-6-lahore/">5 Marla Plots</a>
+        <a href="/10-marla-plot-for-sale-dha-phase-6-lahore/">10 Marla Plots</a>
+        <a href="/1-kanal-plot-for-sale-dha-phase-6-lahore/">1 Kanal Plots</a>
+        <a href="/houses-for-sale-dha-phase-6-lahore/">Looking for Built Houses? &rarr;</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container search-body">
+    <div class="search-layout">
+      
+      <div class="search-main">
+        
+        <section class="search-card">
+          <h2>Residential Plot Price Matrix across DHA Phase 6 Sectors (2026)</h2>
+          <p>
+            Plot valuations vary by sector maturity, proximity to Main Boulevard, park-facing orientation, and corner dimensions:
+          </p>
+
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Sector Location</th>
+                  <th>10 Marla Plot Demand</th>
+                  <th>1 Kanal Plot Demand</th>
+                  <th>2 Kanal Plot Demand</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Sector A &amp; B (Main Entrance)</strong></td>
+                  <td>N/A (Exclusively 1 &amp; 2K)</td>
+                  <td>PKR 5.50 – 7.50 Crore</td>
+                  <td>PKR 12.50 – 16.50 Crore</td>
+                </tr>
+                <tr>
+                  <td><strong>Sector C &amp; D (Central Hubs)</strong></td>
+                  <td>PKR 3.20 – 4.50 Crore</td>
+                  <td>PKR 5.00 – 7.00 Crore</td>
+                  <td>N/A</td>
+                </tr>
+                <tr>
+                  <td><strong>Sector E &amp; F (Sports Complex)</strong></td>
+                  <td>N/A</td>
+                  <td>PKR 4.80 – 6.60 Crore</td>
+                  <td>PKR 11.50 – 14.20 Crore</td>
+                </tr>
+                <tr>
+                  <td><strong>Sector G &amp; H (Grand Park)</strong></td>
+                  <td>N/A</td>
+                  <td>PKR 4.60 – 6.40 Crore</td>
+                  <td>PKR 11.00 – 13.80 Crore</td>
+                </tr>
+                <tr>
+                  <td><strong>Sector J &amp; K (Universities)</strong></td>
+                  <td>N/A</td>
+                  <td>PKR 4.30 – 5.80 Crore</td>
+                  <td>N/A</td>
+                </tr>
+                <tr>
+                  <td><strong>Sector L &amp; M (Barki Road)</strong></td>
+                  <td>N/A</td>
+                  <td>PKR 4.20 – 5.60 Crore</td>
+                  <td>N/A</td>
+                </tr>
+                <tr>
+                  <td><strong>Sector N (PKLI &amp; Raya)</strong></td>
+                  <td>N/A</td>
+                  <td>PKR 4.50 – 6.00 Crore</td>
+                  <td>N/A</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="search-card">
+          <h2>Available Plots for Sale in DHA Phase 6</h2>
+          <div class="props-grid">
+            {plotListings.map(p => (
+              <div class="prop-box">
+                <h3><a href={`/properties/${p.slug}/`}>{p.title}</a></h3>
+                <span class="meta">{p.size} {p.unit} &bull; {p.block}</span>
+                <strong class="price">
+                  {p.price && p.price >= 10000000 
+                    ? `PKR ${(p.price / 10000000).toFixed(2)} Crore`
+                    : p.price ? `PKR ${(p.price / 100000).toFixed(2)} Lakh` : 'Demand on Request'}
+                </strong>
+                <a href={`/properties/${p.slug}/`} class="btn-card">View Full Listing &rarr;</a>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section class="search-card">
+          <h2>Plot Transfer &amp; Legal Verification Process</h2>
+          <p>
+            All plot transactions in DHA Phase 6 must be executed through the official <strong>DHA Lahore Main Office</strong> in Sector A. 
+            Key verification requirements include:
+          </p>
+          <ol class="steps-list">
+            <li>Original Allotment / Transfer Letter verification.</li>
+            <li>No Demand Certificate (NDC) clearance showing zero outstanding development or maintenance charges.</li>
+            <li>Punjab e-Stamp Duty payment and FBR Advance Tax (Sections 236K &amp; 236C).</li>
+            <li>In-person biometric confirmation before the DHA Transfer Officer.</li>
+          </ol>
+        </section>
+
+      </div>
+
+      <aside class="search-sidebar">
+        <div class="side-box cta-box">
+          <h3>Plot Advisory Desk</h3>
+          <p>Verify clear plot numbers, maps, and seller NDC status before paying bayana deposit.</p>
+          <a href={`https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello, I want to inquire about plots for sale in DHA Phase 6 Lahore.')}`} target="_blank" rel="noopener noreferrer" class="btn-wa">
+            WhatsApp Plot Desk
+          </a>
+        </div>
+
+        <div class="side-box">
+          <h4>Plots by Size</h4>
+          <ul class="side-nav">
+            <li><a href="/5-marla-plot-for-sale-dha-phase-6-lahore/">5 Marla Plots</a></li>
+            <li><a href="/10-marla-plot-for-sale-dha-phase-6-lahore/">10 Marla Plots</a></li>
+            <li><a href="/1-kanal-plot-for-sale-dha-phase-6-lahore/">1 Kanal Plots</a></li>
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+</PageLayout>
+
+<style>
+  .search-hero {
+    background: linear-gradient(135deg, #090e1a 0%, #1e293b 100%);
+    color: #fff;
+    padding: 3rem 0 2.5rem;
+  }
+  .breadcrumb {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 0.45rem;
+  }
+  .breadcrumb a { color: #94a3b8; text-decoration: none; }
+  .breadcrumb a:hover { color: #10b981; }
+  .intent-badge {
+    display: inline-block;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 0.3rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .search-hero h1 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 800;
+    margin: 0 0 0.85rem;
+  }
+  .hero-desc {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #cbd5e1;
+    max-width: 850px;
+    margin: 0 0 1.5rem;
+  }
+  .quick-size-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .quick-size-pills a {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #f1f5f9;
+    padding: 0.4rem 0.85rem;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .quick-size-pills a:hover {
+    background: #10b981;
+    color: #042014;
+  }
+
+  .search-body { padding: 3rem 0; }
+  .search-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 2.5rem;
+  }
+  .search-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  .search-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.75rem;
+  }
+  .search-card h2 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.85rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .search-card p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #334155;
+    margin-bottom: 1rem;
+  }
+
+  .table-wrap { overflow-x: auto; margin-top: 1rem; }
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  .data-table th {
+    background: #f1f5f9;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 700;
+    color: #0f172a;
+    border-bottom: 2px solid #cbd5e1;
+  }
+  .data-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+  }
+
+  .props-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+  }
+  .prop-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .prop-box h3 { font-size: 1rem; margin: 0 0 0.35rem; }
+  .prop-box h3 a { color: #0f172a; text-decoration: none; }
+  .prop-box h3 a:hover { color: #059669; }
+  .prop-box .meta { font-size: 0.8rem; color: #64748b; margin-bottom: 0.5rem; }
+  .prop-box .price { font-size: 0.95rem; color: #059669; margin-bottom: 1rem; }
+  .btn-card { font-size: 0.8rem; color: #059669; font-weight: 700; text-decoration: none; }
+
+  .steps-list {
+    margin: 0;
+    padding-left: 1.25rem;
+    line-height: 1.75;
+    color: #334155;
+  }
+  .steps-list li { margin-bottom: 0.5rem; }
+
+  .search-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .side-box {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  .side-box h3, .side-box h4 {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.65rem;
+  }
+  .cta-box { background: #0f172a; color: #fff; }
+  .cta-box h3 { color: #fff; }
+  .cta-box p { font-size: 0.82rem; color: #94a3b8; line-height: 1.5; margin-bottom: 1rem; }
+  .btn-wa {
+    display: block;
+    text-align: center;
+    background: #10b981;
+    color: #042014;
+    font-weight: 800;
+    padding: 0.65rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+  }
+  .btn-wa:hover { background: #059669; color: #fff; }
+
+  .side-nav {
+    margin: 0;
+    padding-left: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .side-nav a { font-size: 0.82rem; color: #059669; text-decoration: none; }
+  .side-nav a:hover { text-decoration: underline; }
+
+  @media (max-width: 900px) {
+    .search-layout { grid-template-columns: 1fr; }
+  }
+</style>

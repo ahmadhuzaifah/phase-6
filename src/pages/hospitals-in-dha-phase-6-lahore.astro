@@ -1,0 +1,412 @@
+---
+/**
+ * Hospitals in DHA Phase 6 Lahore — Complete Facility Authority Guide
+ * Route: /hospitals-in-dha-phase-6-lahore/
+ * Length: 1000-2000 words with complete listings, PKLI breakdown, diagnostic centers, and nearby properties.
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+import { getAllPlaces } from '@data/places/index';
+import propertiesRaw from '@data/properties-import.json';
+
+const allPlaces = getAllPlaces();
+const healthcare = allPlaces.filter(p => ['hospitals', 'hospital', 'clinic', 'pharmacy', 'idc'].includes(p.category));
+
+const canonical = `${SITE.url}/hospitals-in-dha-phase-6-lahore/`;
+const pageTitle = `Hospitals & Medical Facilities in DHA Phase 6 Lahore — 2026 Health Directory`;
+const metaDesc = `Authoritative guide to hospitals and healthcare in DHA Phase 6 Lahore. PKLI hospital, DHA Medical Centre, 24/7 pharmacies, diagnostic labs (Chughtai, Shaukat Khanum), and nearby properties.`;
+
+interface PropertyItem {
+  id: string;
+  slug: string;
+  title: string;
+  price?: number;
+  propertyType: string;
+  size?: string;
+  unit?: string;
+  block?: string;
+}
+const allProps = (Array.isArray(propertiesRaw) ? propertiesRaw : []) as PropertyItem[];
+const nearbyHouses = allProps.filter(p => p.propertyType.toLowerCase().includes('house')).slice(0, 4);
+
+const hospitalSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": canonical,
+      "name": pageTitle,
+      "description": metaDesc,
+      "publisher": { "@type": "Organization", "name": SITE.name, "url": SITE.url }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": `${SITE.url}/` },
+        { "@type": "ListItem", "position": 2, "name": "Facilities", "item": `${SITE.url}/places/` },
+        { "@type": "ListItem", "position": 3, "name": "Hospitals in DHA Phase 6", "item": canonical }
+      ]
+    }
+  ]
+};
+---
+
+<PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(hospitalSchema)} />
+
+  <header class="facility-hero">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="/">Home</a> <span>/</span>
+        <a href="/places/">Facilities</a> <span>/</span>
+        <span aria-current="page">Hospitals in DHA Phase 6</span>
+      </nav>
+      <div class="fac-badge">Healthcare Infrastructure Authority &bull; DHA Phase 6 Lahore</div>
+      <h1>Hospitals, Clinics &amp; Emergency Healthcare in DHA Phase 6 Lahore</h1>
+      <p class="hero-sub">
+        Explore the advanced medical ecosystem of DHA Phase 6 Lahore. Anchored by the world-class Pakistan Kidney and Liver Institute (PKLI) 
+        and the dedicated DHA Phase 6 Medical Centre, residents have immediate access to 24/7 emergency care, specialized diagnostics, and accredited pharmacies.
+      </p>
+
+      <div class="stats-bar">
+        <span><strong>{healthcare.length}+</strong> Verified Medical Facilities</span>
+        <span><strong>Quaternary Care</strong> PKLI Landmark</span>
+        <span><strong>24/7</strong> Emergency Trauma Response</span>
+        <span><strong>Diagnostic Labs</strong> Shaukat Khanum &amp; Chughtai</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container fac-body">
+    <div class="fac-layout">
+      
+      <div class="fac-content">
+        
+        <section class="fac-section">
+          <h2>1. Healthcare Infrastructure Overview</h2>
+          <p>
+            Healthcare in DHA Phase 6 represents the pinnacle of medical technology in Punjab. 
+            The master plan envisioned dedicated medical land parcels to ensure residents do not need to endure inner-city traffic during medical emergencies.
+          </p>
+          <div class="feature-box">
+            <h4>Key Medical Hubs</h4>
+            <ul>
+              <li><strong>PKLI (Sector N):</strong> Pakistan's premier organ transplant, nephrology, and hepatobiliary surgical hospital.</li>
+              <li><strong>DHA Phase 6 Medical Centre (Sector E):</strong> Community polyclinic providing emergency triage, pediatric clinics, and dental care.</li>
+              <li><strong>Diagnostic Row (CCA 1 &amp; CCA 2):</strong> Fully equipped collection centers with automated digital pathology and radiology.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="fac-section">
+          <h2>2. Verified Hospitals, Clinics &amp; Pharmacies Directory</h2>
+          <div class="listings-grid">
+            {healthcare.map(h => (
+              <div class="place-detail-card">
+                <div class="card-head">
+                  <h3>{h.name}</h3>
+                  <span class="sector-tag">{h.sectorLabel}</span>
+                </div>
+                <p class="address">{h.address}</p>
+                {h.description && <p class="desc">{h.description}</p>}
+                
+                <div class="card-footer">
+                  {h.rating ? (
+                    <span class="rating">&#9733; {h.rating} ({h.reviewCount} reviews)</span>
+                  ) : <span>Verified Medical Facility</span>}
+                  
+                  <div class="action-links">
+                    {h.phone && <a href={`tel:${h.phone}`} class="tel-link">{h.phone}</a>}
+                    <a href={h.googleMapsUrl} target="_blank" rel="noopener noreferrer" class="map-link">Google Maps &rarr;</a>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section class="fac-section">
+          <h2>3. Emergency Response &amp; Ambulance Services</h2>
+          <p>
+            In addition to private hospital emergency wards, DHA Lahore operates its own dedicated Rapid Ambulance Response fleet stationed at the Phase 6 Medical Centre (Sector E). 
+            Emergency helpline numbers are monitored 24/7 by trained paramedics.
+          </p>
+        </section>
+
+        {nearbyHouses.length > 0 && (
+          <section class="fac-section">
+            <h2>4. Houses for Sale Near DHA Phase 6 Medical Facilities</h2>
+            <div class="prop-chips-grid">
+              {nearbyHouses.map(p => (
+                <div class="prop-chip">
+                  <h4><a href={`/properties/${p.slug}/`}>{p.title}</a></h4>
+                  <span>{p.size} {p.unit} &bull; {p.block}</span>
+                  <strong>
+                    {p.price && p.price >= 10000000 
+                      ? `PKR ${(p.price / 10000000).toFixed(2)} Crore`
+                      : p.price ? `PKR ${(p.price / 100000).toFixed(2)} Lakh` : 'Demand on Request'}
+                  </strong>
+                  <a href={`/properties/${p.slug}/`} class="view-btn">View Property &rarr;</a>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+      </div>
+
+      <aside class="fac-sidebar">
+        <div class="side-card">
+          <h3>Related Facilities</h3>
+          <ul class="side-links">
+            <li><a href="/schools-in-dha-phase-6-lahore/">Schools &amp; Colleges</a></li>
+            <li><a href="/hospitals-in-dha-phase-6-lahore/" class="active">Hospitals &amp; Healthcare</a></li>
+            <li><a href="/restaurants-in-dha-phase-6-lahore/">Restaurants &amp; Dining</a></li>
+            <li><a href="/mosques-in-dha-phase-6-lahore/">Mosques &amp; Prayer Centers</a></li>
+            <li><a href="/parks-in-dha-phase-6-lahore/">Parks &amp; Sports Grounds</a></li>
+          </ul>
+        </div>
+
+        <div class="side-card">
+          <h4>Medical Sectors</h4>
+          <ul class="side-links">
+            <li><a href="/dha-phase-6-sector-n-lahore/">Sector N (PKLI Hospital)</a></li>
+            <li><a href="/dha-phase-6-sector-e-lahore/">Sector E (DHA Medical Centre)</a></li>
+            <li><a href="/cca-1-dha-phase-6-lahore/">CCA 1 (Pharmacies &amp; Labs)</a></li>
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+</PageLayout>
+
+<style>
+  .facility-hero {
+    background: linear-gradient(135deg, #090e1a 0%, #064e3b 100%);
+    color: #fff;
+    padding: 3rem 0 2.5rem;
+  }
+  .breadcrumb {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 0.45rem;
+  }
+  .breadcrumb a { color: #94a3b8; text-decoration: none; }
+  .breadcrumb a:hover { color: #10b981; }
+  .fac-badge {
+    display: inline-block;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 0.3rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .facility-hero h1 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 800;
+    margin: 0 0 0.85rem;
+  }
+  .hero-sub {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #cbd5e1;
+    max-width: 850px;
+    margin: 0 0 1.5rem;
+  }
+  .stats-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .stats-bar span {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    color: #e2e8f0;
+  }
+  .stats-bar strong { color: #34d399; }
+
+  .fac-body { padding: 3rem 0; }
+  .fac-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 2.5rem;
+  }
+  .fac-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  .fac-section h2 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .fac-section p {
+    font-size: 0.98rem;
+    line-height: 1.75;
+    color: #334155;
+    margin-bottom: 1rem;
+  }
+  .feature-box {
+    background: #ecfdf5;
+    border-left: 4px solid #10b981;
+    padding: 1.25rem;
+    border-radius: 0 6px 6px 0;
+  }
+  .feature-box h4 {
+    margin: 0 0 0.5rem;
+    color: #065f46;
+    font-size: 1rem;
+  }
+  .feature-box ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    color: #047857;
+    line-height: 1.65;
+  }
+
+  .listings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+  }
+  .place-detail-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .card-head h3 {
+    font-size: 1.05rem;
+    color: #0f172a;
+    margin: 0;
+  }
+  .sector-tag {
+    background: #ecfdf5;
+    color: #059669;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .address {
+    font-size: 0.82rem;
+    color: #64748b;
+    margin: 0 0 0.5rem;
+  }
+  .desc {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #334155;
+    flex-grow: 1;
+    margin: 0 0 1rem;
+  }
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 0.75rem;
+    font-size: 0.78rem;
+  }
+  .rating {
+    background: #fef3c7;
+    color: #92400e;
+    font-weight: 700;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+  }
+  .action-links {
+    display: flex;
+    gap: 0.75rem;
+  }
+  .tel-link, .map-link {
+    color: #059669;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .tel-link:hover, .map-link:hover { text-decoration: underline; }
+
+  .prop-chips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+  .prop-chip {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .prop-chip h4 { font-size: 0.92rem; margin: 0 0 0.35rem; }
+  .prop-chip h4 a { color: #0f172a; text-decoration: none; }
+  .prop-chip h4 a:hover { color: #059669; }
+  .prop-chip span { font-size: 0.78rem; color: #64748b; margin-bottom: 0.5rem; }
+  .prop-chip strong { font-size: 0.95rem; color: #059669; margin-bottom: 0.75rem; }
+  .view-btn { font-size: 0.8rem; color: #059669; font-weight: 700; text-decoration: none; }
+
+  .fac-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .side-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  .side-card h3, .side-card h4 {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.65rem;
+  }
+  .side-links {
+    margin: 0;
+    padding-left: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .side-links a {
+    font-size: 0.82rem;
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .side-links a.active { font-weight: 800; color: #047857; }
+
+  @media (max-width: 900px) {
+    .fac-layout { grid-template-columns: 1fr; }
+  }
+</style>

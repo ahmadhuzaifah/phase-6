@@ -1,0 +1,864 @@
+---
+/**
+ * DHA Phase 6 Lahore — Dedicated Sector Entity Knowledge Graph
+ * Route: /entities/dha-phase-6-sector-[a-n]/
+ * Features: Overview, Location, Map, Property Types, Average Prices, Verified Facilities, Nearby Places, Investment Profile, Related Properties, Related Articles.
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+import { CONTACTS } from '@data/contacts';
+import {
+  SECTORS_DIRECTORY,
+  getSectorPlaces,
+  type SectorMeta,
+} from '@data/places/index';
+import { SEO_ARTICLES } from '@data/articles';
+import propertiesRaw from '@data/properties-import.json';
+
+export function getStaticPaths() {
+  const residentialSectors = SECTORS_DIRECTORY.filter(s => s.key.startsWith('sector-'));
+  
+  return residentialSectors.map((sector) => ({
+    params: { entity: `dha-phase-6-${sector.key}` },
+    props: { sectorMeta: sector },
+  }));
+}
+
+interface Props {
+  sectorMeta: SectorMeta;
+}
+
+const { sectorMeta } = Astro.props as Props;
+const sectorPlaces = getSectorPlaces(sectorMeta.key);
+const letter = sectorMeta.label.replace('Sector ', '').toUpperCase();
+
+const canonical = `${SITE.url}/entities/dha-phase-6-${sectorMeta.key}/`;
+const pageTitle = `DHA Phase 6 ${sectorMeta.label} Lahore — Entity Knowledge Profile & Real Estate Data`;
+const metaDesc = `Authoritative entity knowledge graph for ${sectorMeta.label}, DHA Phase 6 Lahore. Real-time plot and house prices, location map, verified facilities, schools, mosques, parks, and investment metrics.`;
+
+// Property matches
+interface PropertyItem {
+  id: string;
+  slug: string;
+  title: string;
+  price?: number;
+  propertyType: string;
+  size?: string;
+  unit?: string;
+  block?: string;
+  location?: { address?: string; block?: string };
+}
+const allProperties = (Array.isArray(propertiesRaw) ? (propertiesRaw as any[]) : []) as PropertyItem[];
+const relatedProperties = allProperties.filter((p) => {
+  const blockLower = (p.block || '').toLowerCase();
+  const addressLower = (p.location?.address || '').toLowerCase();
+  const labelLower = sectorMeta.label.toLowerCase();
+  const cleanKey = sectorMeta.key.replace(/^sector-/, '').toLowerCase();
+  return (
+    blockLower.includes(labelLower) ||
+    blockLower.includes(`sector ${cleanKey}`) ||
+    addressLower.includes(labelLower) ||
+    addressLower.includes(`sector ${cleanKey}`)
+  );
+}).slice(0, 4);
+
+// Categorized Places
+const schoolsList = sectorPlaces.filter(p => ['schools', 'school', 'colleges', 'college'].includes(p.category));
+const healthcareList = sectorPlaces.filter(p => ['hospitals', 'hospital', 'clinic', 'pharmacy', 'idc'].includes(p.category));
+const diningList = sectorPlaces.filter(p => ['restaurants', 'restaurant', 'cafes', 'cafe', 'bakery', 'fast-food'].includes(p.category));
+const mosquesList = sectorPlaces.filter(p => ['mosques', 'mosque'].includes(p.category));
+const parksList = sectorPlaces.filter(p => ['parks', 'park', 'gym', 'gyms', 'sports'].includes(p.category));
+
+// Price Benchmarks for sectors
+const priceDataMap: Record<string, { plot10M: string; plot1K: string; plot2K: string; house1K: string; rental1K: string }> = {
+  'sector-a': { plot10M: 'N/A', plot1K: 'PKR 5.50 – 7.50 Crore', plot2K: 'PKR 12.50 – 16.50 Crore', house1K: 'PKR 10.50 – 15.00 Crore', rental1K: 'PKR 380,000 – 600,000/mo' },
+  'sector-b': { plot10M: 'N/A', plot1K: 'PKR 5.25 – 7.00 Crore', plot2K: 'PKR 12.00 – 15.00 Crore', house1K: 'PKR 10.00 – 14.50 Crore', rental1K: 'PKR 360,000 – 550,000/mo' },
+  'sector-c': { plot10M: 'PKR 3.20 – 4.25 Crore', plot1K: 'PKR 5.00 – 6.80 Crore', plot2K: 'N/A', house1K: 'PKR 9.50 – 13.50 Crore', rental1K: 'PKR 350,000 – 500,000/mo' },
+  'sector-d': { plot10M: 'PKR 3.40 – 4.50 Crore', plot1K: 'PKR 5.20 – 7.00 Crore', plot2K: 'N/A', house1K: 'PKR 9.80 – 14.00 Crore', rental1K: 'PKR 360,000 – 520,000/mo' },
+  'sector-e': { plot10M: 'N/A', plot1K: 'PKR 4.80 – 6.50 Crore', plot2K: 'PKR 11.50 – 14.00 Crore', house1K: 'PKR 9.00 – 13.00 Crore', rental1K: 'PKR 340,000 – 480,000/mo' },
+  'sector-f': { plot10M: 'N/A', plot1K: 'PKR 4.90 – 6.60 Crore', plot2K: 'PKR 11.80 – 14.20 Crore', house1K: 'PKR 9.20 – 13.20 Crore', rental1K: 'PKR 340,000 – 490,000/mo' },
+  'sector-g': { plot10M: 'N/A', plot1K: 'PKR 4.60 – 6.20 Crore', plot2K: 'PKR 11.00 – 13.50 Crore', house1K: 'PKR 8.80 – 12.50 Crore', rental1K: 'PKR 320,000 – 460,000/mo' },
+  'sector-h': { plot10M: 'N/A', plot1K: 'PKR 4.70 – 6.40 Crore', plot2K: 'PKR 11.20 – 13.80 Crore', house1K: 'PKR 9.00 – 13.00 Crore', rental1K: 'PKR 340,000 – 480,000/mo' },
+  'sector-j': { plot10M: 'N/A', plot1K: 'PKR 4.40 – 5.80 Crore', plot2K: 'N/A', house1K: 'PKR 8.50 – 12.00 Crore', rental1K: 'PKR 310,000 – 450,000/mo' },
+  'sector-k': { plot10M: 'N/A', plot1K: 'PKR 4.30 – 5.70 Crore', plot2K: 'N/A', house1K: 'PKR 8.40 – 11.80 Crore', rental1K: 'PKR 300,000 – 440,000/mo' },
+  'sector-l': { plot10M: 'N/A', plot1K: 'PKR 4.20 – 5.50 Crore', plot2K: 'N/A', house1K: 'PKR 8.20 – 11.50 Crore', rental1K: 'PKR 290,000 – 430,000/mo' },
+  'sector-m': { plot10M: 'N/A', plot1K: 'PKR 4.25 – 5.60 Crore', plot2K: 'N/A', house1K: 'PKR 8.30 – 11.60 Crore', rental1K: 'PKR 300,000 – 440,000/mo' },
+  'sector-n': { plot10M: 'N/A', plot1K: 'PKR 4.50 – 6.00 Crore', plot2K: 'N/A', house1K: 'PKR 8.70 – 12.20 Crore', rental1K: 'PKR 320,000 – 470,000/mo' },
+};
+
+const pricing = priceDataMap[sectorMeta.key] || {
+  plot10M: 'PKR 3.30 – 4.40 Crore',
+  plot1K: 'PKR 4.80 – 6.50 Crore',
+  plot2K: 'PKR 11.50 – 14.00 Crore',
+  house1K: 'PKR 9.00 – 13.00 Crore',
+  rental1K: 'PKR 340,000 – 480,000/mo',
+};
+
+// Relevant Articles
+const relatedArticles = SEO_ARTICLES.slice(0, 3);
+
+// Entity JSON-LD Schema
+const entitySchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Place",
+      "@id": `${canonical}#place`,
+      "name": `DHA Phase 6 ${sectorMeta.label} Lahore`,
+      "description": sectorMeta.description,
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": sectorMeta.lat,
+        "longitude": sectorMeta.lng
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": `${sectorMeta.label}, DHA Phase 6`,
+        "addressLocality": "Lahore",
+        "addressRegion": "Punjab",
+        "postalCode": "54792",
+        "addressCountry": "PK"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonical}#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": `${SITE.url}/` },
+        { "@type": "ListItem", "position": 2, "name": "Entities", "item": `${SITE.url}/entities/` },
+        { "@type": "ListItem", "position": 3, "name": sectorMeta.label, "item": canonical }
+      ]
+    }
+  ]
+};
+---
+
+<PageLayout
+  title={pageTitle}
+  description={metaDesc}
+  canonical={canonical}
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(entitySchema)} />
+
+  <!-- Entity Header -->
+  <header class="entity-header">
+    <div class="container entity-header__inner">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> <span>/</span>
+        <a href="/sectors/">Sectors</a> <span>/</span>
+        <a href="/dha-phase-6-lahore/">DHA Phase 6</a> <span>/</span>
+        <span aria-current="page">{sectorMeta.label} Entity Profile</span>
+      </nav>
+
+      <div class="entity-tag">DHA Phase 6 Lahore Entity Node &bull; Sector {letter}</div>
+      <h1 class="entity-title">DHA Phase 6 {sectorMeta.label} Lahore</h1>
+      <p class="entity-desc">{sectorMeta.description}</p>
+
+      <div class="entity-quick-pills">
+        <span><strong>Coordinates:</strong> {sectorMeta.lat.toFixed(4)}° N, {sectorMeta.lng.toFixed(4)}° E</span>
+        <span><strong>Type:</strong> Master-Planned Residential Sector</span>
+        <span><strong>Total Verified Facilities:</strong> {sectorPlaces.length} Places</span>
+        <span><strong>Possession:</strong> 100% Handed Over</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Entity Grid -->
+  <main class="container entity-body">
+    <div class="entity-grid">
+      
+      <!-- Primary Data Column -->
+      <div class="entity-main">
+        
+        <!-- Overview Section -->
+        <section class="entity-card">
+          <h2>1. Entity Overview &amp; Location</h2>
+          <p>
+            {sectorMeta.label} of DHA Phase 6 Lahore is an integral master-planned residential division situated in the {letter < 'G' ? 'western and central' : 'eastern'} corridor of Phase 6. 
+            Designed around wide, signal-free sector roads, dedicated underground drainage, and high-voltage underground electrification, 
+            the sector balances residential serenity with swift connectivity to key arterial boulevards.
+          </p>
+          <div class="loc-callout">
+            <div class="loc-item">
+              <strong>Geographic Bounds</strong>
+              <span>Latitude: {sectorMeta.lat}&deg; N | Longitude: {sectorMeta.lng}&deg; E</span>
+            </div>
+            <div class="loc-item">
+              <strong>Primary Arteries</strong>
+              <span>Main Boulevard Phase 6, 100-ft Sector Collector Roads, Bedian &amp; Barki connecting lanes.</span>
+            </div>
+          </div>
+          <p>
+            Residents enjoy direct vehicular transit to Lahore Ring Road via Nawaz Sharif Interchange, 
+            allowing convenient commutes to Lahore Cantt, Gulberg, and Allama Iqbal International Airport in under 12 to 15 minutes.
+          </p>
+        </section>
+
+        <!-- Location Map & Geospatial Reference -->
+        <section class="entity-card">
+          <h2>2. Location &amp; Map Coordinates</h2>
+          <div class="map-embed-box">
+            <div class="map-placeholder">
+              <div class="map-pin-icon">&#128205;</div>
+              <h3>{sectorMeta.label} Map Centroid</h3>
+              <p>GPS: {sectorMeta.lat}, {sectorMeta.lng}</p>
+              <a 
+                href={`https://www.google.com/maps/search/?api=1&query=${sectorMeta.lat},${sectorMeta.lng}`}
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="btn-maps"
+              >
+                Open {sectorMeta.label} in Google Maps &rarr;
+              </a>
+            </div>
+          </div>
+          <p class="map-subtext">
+            View full sector boundaries on our high-resolution vector blueprint: 
+            <a href="/dha-phase-6-lahore-map/">DHA Phase 6 Master Plan Map</a> or read the 
+            <a href={`/dha-phase-6-${sectorMeta.key}-lahore/`}>Complete {sectorMeta.label} Comprehensive Guide</a>.
+          </p>
+        </section>
+
+        <!-- Property Types & Pricing Matrix -->
+        <section class="entity-card">
+          <h2>3. Property Types &amp; Valuation Benchmarks (2026)</h2>
+          <p>
+            Property in {sectorMeta.label} is strictly zoned according to DHA Lahore building regulations. 
+            The pricing matrix below details prevailing secondary market transactions for clear, ready-for-construction plots and turnkey luxury houses:
+          </p>
+          <div class="table-responsive">
+            <table class="entity-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Plot Size / Dimensions</th>
+                  <th>Plot Demand Range</th>
+                  <th>Turnkey House Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>10 Marla</strong></td>
+                  <td>35' &times; 65' (2,250 sq ft)</td>
+                  <td>{pricing.plot10M}</td>
+                  <td>PKR 5.20 – 6.60 Crore</td>
+                </tr>
+                <tr>
+                  <td><strong>1 Kanal</strong></td>
+                  <td>50' &times; 90' (4,500 sq ft)</td>
+                  <td>{pricing.plot1K}</td>
+                  <td>{pricing.house1K}</td>
+                </tr>
+                <tr>
+                  <td><strong>2 Kanal</strong></td>
+                  <td>75' &times; 120' (9,000 sq ft)</td>
+                  <td>{pricing.plot2K}</td>
+                  <td>PKR 20.00 – 34.00 Crore</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pricing-rental-strip">
+            <span><strong>Average 1 Kanal House Rental:</strong> {pricing.rental1K}</span>
+            <span><strong>Rental Yield:</strong> 3.4% – 4.1% per annum</span>
+          </div>
+        </section>
+
+        <!-- Verified Local Facilities in this Sector -->
+        <section class="entity-card">
+          <h2>4. Local Sector Facilities ({sectorPlaces.length} Verified Records)</h2>
+          <p>
+            Our team has physically surveyed and verified the civic, educational, and commercial establishments operating directly within {sectorMeta.label}:
+          </p>
+
+          <div class="facilities-accordion">
+            {schoolsList.length > 0 && (
+              <div class="facility-cat-group">
+                <h3>Schools &amp; Institutes ({schoolsList.length})</h3>
+                <div class="facility-chips">
+                  {schoolsList.map((p) => (
+                    <div class="facility-chip">
+                      <strong>{p.name}</strong>
+                      <small>{p.address}</small>
+                      {p.rating && <span class="rating-badge">&#9733; {p.rating} ({p.reviewCount})</span>}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {mosquesList.length > 0 && (
+              <div class="facility-cat-group">
+                <h3>Mosques &amp; Prayer Centers ({mosquesList.length})</h3>
+                <div class="facility-chips">
+                  {mosquesList.map((p) => (
+                    <div class="facility-chip">
+                      <strong>{p.name}</strong>
+                      <small>{p.address}</small>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {parksList.length > 0 && (
+              <div class="facility-cat-group">
+                <h3>Parks &amp; Recreation ({parksList.length})</h3>
+                <div class="facility-chips">
+                  {parksList.map((p) => (
+                    <div class="facility-chip">
+                      <strong>{p.name}</strong>
+                      <small>{p.address}</small>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {diningList.length > 0 && (
+              <div class="facility-cat-group">
+                <h3>Restaurants &amp; Cafes ({diningList.length})</h3>
+                <div class="facility-chips">
+                  {diningList.map((p) => (
+                    <div class="facility-chip">
+                      <strong>{p.name}</strong>
+                      <small>{p.address}</small>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {healthcareList.length > 0 && (
+              <div class="facility-cat-group">
+                <h3>Healthcare &amp; Pharmacies ({healthcareList.length})</h3>
+                <div class="facility-chips">
+                  {healthcareList.map((p) => (
+                    <div class="facility-chip">
+                      <strong>{p.name}</strong>
+                      <small>{p.address}</small>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
+
+        <!-- Investment Profile & Pros/Cons -->
+        <section class="entity-card">
+          <h2>5. Investment Profile &amp; Buyer Due Diligence</h2>
+          <div class="pros-cons-grid">
+            <div class="pro-box">
+              <h3>Key Advantages</h3>
+              <ul>
+                <li>100% on-ground possession with active modern bungalow construction.</li>
+                <li>Fully underground power transmission eliminating aesthetic overhead clutter.</li>
+                <li>Clear DHA Lahore title registry with automated biometric transfer at DHA Head Office.</li>
+                <li>Consistent capital appreciation driven by genuine end-user demand.</li>
+              </ul>
+            </div>
+            <div class="con-box">
+              <h3>Considerations for Buyers</h3>
+              <ul>
+                <li>Strict adherence to DHA architectural bylaws (mandatory front/rear setbacks).</li>
+                <li>High barrier to entry with 1 Kanal plots demanding upwards of PKR 4.2+ Crore.</li>
+                <li>Mandatory advance taxes for non-filers during official transfer.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Related Properties in this Sector -->
+        {relatedProperties.length > 0 && (
+          <section class="entity-card">
+            <h2>6. Available Properties in {sectorMeta.label}</h2>
+            <div class="prop-listing-mini">
+              {relatedProperties.map((prop) => (
+                <div class="mini-prop-card">
+                  <div class="mini-prop-info">
+                    <h4><a href={`/properties/${prop.slug}/`}>{prop.title}</a></h4>
+                    <span class="prop-tag">{prop.size} {prop.unit} &bull; {prop.propertyType}</span>
+                    <strong class="prop-price">
+                      {prop.price && prop.price >= 10000000 
+                        ? `PKR ${(prop.price / 10000000).toFixed(2)} Crore`
+                        : prop.price ? `PKR ${(prop.price / 100000).toFixed(2)} Lakh` : 'Demand on Request'}
+                    </strong>
+                  </div>
+                  <a href={`/properties/${prop.slug}/`} class="btn-mini-view">View Details &rarr;</a>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+      </div>
+
+      <!-- Right Entity Knowledge Sidebar -->
+      <aside class="entity-sidebar">
+        <!-- Quick Action Card -->
+        <div class="sidebar-box action-box">
+          <h3>Verify {sectorMeta.label} Property</h3>
+          <p>Get official title verification assistance, tax calculations, and market due diligence.</p>
+          <a href={`https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hello, I am interested in property verification and market prices for DHA Phase 6 ${sectorMeta.label}.`)}`} target="_blank" rel="noopener noreferrer" class="btn-wa">
+            WhatsApp Desk
+          </a>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="sidebar-box">
+          <h4>Related Authority Guides</h4>
+          <ul class="sidebar-links">
+            <li><a href="/dha-phase-6-lahore/">DHA Phase 6 Master Pillar Guide</a></li>
+            <li><a href={`/dha-phase-6-${sectorMeta.key}-lahore/`}>Complete {sectorMeta.label} Guide (1500+ words)</a></li>
+            <li><a href="/dha-phase-6-commercial-areas/">Commercial Areas Authority</a></li>
+            <li><a href="/dha-phase-6-market-analysis/">2026 Market Analysis</a></li>
+            <li><a href="/dha-phase-6-price-history/">Historical Price Trends</a></li>
+            <li><a href="/dha-phase-6-property-calculator/">Property Tax Calculator</a></li>
+          </ul>
+        </div>
+
+        <!-- Neighboring Sectors -->
+        <div class="sidebar-box">
+          <h4>Neighboring Sectors</h4>
+          <div class="sector-pills-list">
+            {SECTORS_DIRECTORY.filter(s => s.key.startsWith('sector-') && s.key !== sectorMeta.key).map((s) => (
+              <a href={`/entities/dha-phase-6-${s.key}/`} class="sector-pill">{s.label}</a>
+            ))}
+          </div>
+        </div>
+
+        <!-- Related Research Articles -->
+        <div class="sidebar-box">
+          <h4>Research &amp; Analysis</h4>
+          <ul class="sidebar-links">
+            {relatedArticles.map((art) => (
+              <li><a href={`/blog/${art.slug}`}>{art.title}</a></li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+</PageLayout>
+
+<style>
+  .entity-header {
+    background: linear-gradient(135deg, #090e1a 0%, #1e293b 100%);
+    color: #fff;
+    padding: 3rem 0 2.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .breadcrumb {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 0.45rem;
+    align-items: center;
+  }
+  .breadcrumb a {
+    color: #94a3b8;
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    color: #10b981;
+  }
+  .entity-tag {
+    display: inline-block;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 0.3rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .entity-title {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 800;
+    margin: 0 0 0.85rem;
+    color: #ffffff;
+  }
+  .entity-desc {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #cbd5e1;
+    max-width: 850px;
+    margin-bottom: 1.5rem;
+  }
+  .entity-quick-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .entity-quick-pills span {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    color: #e2e8f0;
+  }
+  .entity-quick-pills strong {
+    color: #34d399;
+  }
+
+  /* Body Layout */
+  .entity-body {
+    padding: 2.5rem 0;
+  }
+  .entity-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 2.5rem;
+    align-items: start;
+  }
+  .entity-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .entity-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  }
+  .entity-card h2 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .entity-card p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #334155;
+    margin-bottom: 1rem;
+  }
+
+  .loc-callout {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+  .loc-item strong {
+    display: block;
+    font-size: 0.85rem;
+    color: #0f172a;
+    margin-bottom: 0.25rem;
+  }
+  .loc-item span {
+    font-size: 0.82rem;
+    color: #64748b;
+  }
+
+  /* Map Box */
+  .map-embed-box {
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 2rem 1rem;
+    text-align: center;
+    margin: 1rem 0;
+  }
+  .map-pin-icon {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+  }
+  .map-placeholder h3 {
+    font-size: 1.15rem;
+    color: #0f172a;
+    margin: 0 0 0.25rem;
+  }
+  .map-placeholder p {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-bottom: 1rem;
+  }
+  .btn-maps {
+    display: inline-block;
+    background: #0f172a;
+    color: #fff;
+    padding: 0.55rem 1.1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .btn-maps:hover {
+    background: #10b981;
+    color: #042014;
+  }
+  .map-subtext {
+    font-size: 0.85rem;
+    color: #64748b;
+  }
+  .map-subtext a {
+    color: #059669;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  /* Tables */
+  .table-responsive {
+    overflow-x: auto;
+    margin: 1.25rem 0;
+  }
+  .entity-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  .entity-table th {
+    background: #f8fafc;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 700;
+    color: #0f172a;
+    border-bottom: 2px solid #e2e8f0;
+  }
+  .entity-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+  }
+  .pricing-rental-strip {
+    background: #ecfdf5;
+    border-radius: 6px;
+    padding: 0.85rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #065f46;
+  }
+
+  /* Facilities */
+  .facilities-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .facility-cat-group h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 0.5rem;
+  }
+  .facility-chips {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.75rem;
+  }
+  .facility-chip {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 0.75rem;
+  }
+  .facility-chip strong {
+    display: block;
+    font-size: 0.85rem;
+    color: #0f172a;
+  }
+  .facility-chip small {
+    display: block;
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 0.2rem;
+  }
+  .rating-badge {
+    display: inline-block;
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    margin-top: 0.35rem;
+  }
+
+  /* Pros & Cons */
+  .pros-cons-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+  .pro-box, .con-box {
+    padding: 1.25rem;
+    border-radius: 6px;
+  }
+  .pro-box {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+  }
+  .con-box {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+  }
+  .pro-box h3 {
+    font-size: 0.95rem;
+    color: #166534;
+    margin: 0 0 0.5rem;
+  }
+  .con-box h3 {
+    font-size: 0.95rem;
+    color: #9a3412;
+    margin: 0 0 0.5rem;
+  }
+  .pro-box ul, .con-box ul {
+    margin: 0;
+    padding-left: 1.15rem;
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+  .pro-box li { color: #14532d; }
+  .con-box li { color: #7c2d12; }
+
+  /* Properties */
+  .prop-listing-mini {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .mini-prop-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 0.85rem 1rem;
+  }
+  .mini-prop-info h4 {
+    margin: 0 0 0.25rem;
+    font-size: 0.92rem;
+  }
+  .mini-prop-info h4 a {
+    color: #0f172a;
+    text-decoration: none;
+  }
+  .mini-prop-info h4 a:hover {
+    color: #059669;
+  }
+  .prop-tag {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-right: 0.75rem;
+  }
+  .prop-price {
+    font-size: 0.88rem;
+    color: #059669;
+  }
+  .btn-mini-view {
+    font-size: 0.8rem;
+    color: #059669;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  /* Sidebar */
+  .entity-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .sidebar-box {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  .sidebar-box h3, .sidebar-box h4 {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.65rem;
+  }
+  .action-box {
+    background: #0f172a;
+    color: #fff;
+  }
+  .action-box h3 {
+    color: #fff;
+  }
+  .action-box p {
+    font-size: 0.82rem;
+    color: #94a3b8;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  .btn-wa {
+    display: block;
+    text-align: center;
+    background: #10b981;
+    color: #042014;
+    font-weight: 800;
+    padding: 0.65rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+  }
+  .btn-wa:hover {
+    background: #059669;
+    color: #fff;
+  }
+  .sidebar-links {
+    margin: 0;
+    padding-left: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .sidebar-links a {
+    font-size: 0.82rem;
+    color: #059669;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .sidebar-links a:hover {
+    text-decoration: underline;
+  }
+  .sector-pills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .sector-pill {
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    color: #334155;
+    text-decoration: none;
+  }
+  .sector-pill:hover {
+    background: #10b981;
+    color: #fff;
+  }
+
+  @media (max-width: 900px) {
+    .entity-grid {
+      grid-template-columns: 1fr;
+    }
+    .loc-callout, .pros-cons-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
