@@ -4,6 +4,7 @@ import Schema from '@components/seo/Schema.astro';
 import PropertyCard from './PropertyCard.astro';
 import { SITE } from '@data/site';
 import properties from '@data/properties-import.json';
+import { SECTORS_DIRECTORY } from '@data/places/index';
 
 interface Props {
   title: string;
@@ -48,36 +49,323 @@ const breadcrumbSchema = {
   <section class="collection-section">
     <div class="container">
       <div class="collection-heading">
-        <div><p>Source-referenced records</p><h2>{listings.length} market snapshots</h2></div>
+        <div>
+          <p>Source-referenced records</p>
+          <h2><span id="active-count">{listings.length}</span> Market Snapshots</h2>
+        </div>
         <a href="/verification-and-transfer">Open verification checklist</a>
       </div>
+
+      <!-- PREMIUM FILTER PANEL (Phase 10.17) -->
+      <div class="filter-panel" id="property-filters">
+        <div class="filter-group">
+          <label for="filter-category">Category</label>
+          <select id="filter-category">
+            <option value="all">All Categories</option>
+            <option value="house">House / Villa</option>
+            <option value="residential-plot">Residential Plot</option>
+            <option value="commercial">Commercial</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filter-size">Size</label>
+          <select id="filter-size">
+            <option value="all">All Sizes</option>
+            <option value="3">3 Marla</option>
+            <option value="5">5 Marla</option>
+            <option value="10">10 Marla</option>
+            <option value="1-kanal">1 Kanal</option>
+            <option value="2-kanal">2 Kanal</option>
+            <option value="4-marla">4 Marla (Commercial)</option>
+            <option value="8-marla">8 Marla (Commercial)</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filter-sector">Sector</label>
+          <select id="filter-sector">
+            <option value="all">All Sectors (A–N)</option>
+            <option value="Sector A">Sector A</option>
+            <option value="Sector B">Sector B</option>
+            <option value="Sector C">Sector C</option>
+            <option value="Sector D">Sector D</option>
+            <option value="Sector E">Sector E</option>
+            <option value="Sector F">Sector F</option>
+            <option value="Sector G">Sector G</option>
+            <option value="Sector H">Sector H</option>
+            <option value="Sector J">Sector J</option>
+            <option value="Sector K">Sector K</option>
+            <option value="Sector L">Sector L</option>
+            <option value="Sector M">Sector M</option>
+            <option value="Sector N">Sector N</option>
+            <option value="CCA">CCA Commercial</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filter-price">Price Bracket</label>
+          <select id="filter-price">
+            <option value="all">Any Price</option>
+            <option value="under-1cr">Under 1 Crore</option>
+            <option value="1cr-3cr">1 – 3 Crore</option>
+            <option value="3cr-5cr">3 – 5 Crore</option>
+            <option value="5cr-plus">5+ Crore</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filter-status">Status</label>
+          <select id="filter-status">
+            <option value="all">All Statuses</option>
+            <option value="available">Available</option>
+            <option value="reserved">Reserved</option>
+            <option value="sold">Sold</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filter-sort">Sort By</label>
+          <select id="filter-sort">
+            <option value="latest">Latest Updated</option>
+            <option value="recent">Recently Added</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+          </select>
+        </div>
+
+        <button type="button" id="reset-filters-btn" class="reset-btn">Reset</button>
+      </div>
+
       {listings.length > 0 ? (
-        <div class="collection-grid">
+        <div class="collection-grid" id="property-grid">
           {listings.map((property) => (
-            <PropertyCard
-              title={property.title}
-              slug={property.slug}
-              propertyType={property.propertyType}
-              purpose={property.purpose}
-              price={property.price}
-              priceUnit={property.priceUnit}
-              size={property.size}
-              sizeUnit={property.unit}
-              block={property.block}
-              location={property.location.address}
-              image={property.images[0]}
-              verificationStatus={property.verificationStatus}
-              availabilityStatus={property.availabilityStatus}
-              lastVerifiedDate={property.lastVerifiedDate}
-              sourceName={property.source}
-              sourceURL={property.sourceURL}
-              isFeatured={property.isFeatured}
-            />
+            <div
+              class="property-item"
+              data-type={property.propertyType}
+              data-size={property.size}
+              data-unit={property.unit}
+              data-sector={property.block}
+              data-price={property.price}
+              data-status={property.availabilityStatus || 'available'}
+              data-date={property.lastCheckedDate || '2026-09-02'}
+            >
+              <PropertyCard
+                title={property.title}
+                slug={property.slug}
+                propertyType={property.propertyType}
+                purpose={property.purpose}
+                price={property.price}
+                priceUnit={property.priceUnit}
+                size={property.size}
+                sizeUnit={property.unit}
+                block={property.block}
+                location={property.location.address}
+                image={property.images[0]}
+                verificationStatus={property.verificationStatus}
+                availabilityStatus={property.availabilityStatus}
+                lastVerifiedDate={property.lastVerifiedDate}
+                sourceName={property.source}
+                sourceURL={property.sourceURL}
+                isFeatured={property.isFeatured}
+              />
+            </div>
           ))}
         </div>
       ) : (
         <div class="empty-state"><h2>No source-referenced records yet</h2><p>Use the contact page to submit owner-authorized inventory with clean, licensed images.</p></div>
       )}
+      <div id="no-filter-match" class="empty-state" style="display: none; margin-top: 2rem;">
+        <h2>No properties match your current filters</h2>
+        <p>Try broadening your price range, sector, or size criteria.</p>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    (function initPropertyFilter() {
+      const catSelect = document.getElementById('filter-category');
+      const sizeSelect = document.getElementById('filter-size');
+      const sectorSelect = document.getElementById('filter-sector');
+      const priceSelect = document.getElementById('filter-price');
+      const statusSelect = document.getElementById('filter-status');
+      const sortSelect = document.getElementById('filter-sort');
+      const resetBtn = document.getElementById('reset-filters-btn');
+      const grid = document.getElementById('property-grid');
+      const counter = document.getElementById('active-count');
+      const noMatch = document.getElementById('no-filter-match');
+
+      if (!grid) return;
+      const items = Array.from(grid.querySelectorAll('.property-item'));
+
+      function applyFilters() {
+        const cat = catSelect ? catSelect.value : 'all';
+        const size = sizeSelect ? sizeSelect.value : 'all';
+        const sector = sectorSelect ? sectorSelect.value : 'all';
+        const price = priceSelect ? priceSelect.value : 'all';
+        const status = statusSelect ? statusSelect.value : 'all';
+        const sort = sortSelect ? sortSelect.value : 'latest';
+
+        let visibleCount = 0;
+
+        items.forEach((item) => {
+          const itemType = (item.dataset.type || '').toLowerCase();
+          const itemSize = (item.dataset.size || '').toLowerCase();
+          const itemUnit = (item.dataset.unit || '').toLowerCase();
+          const itemSector = item.dataset.sector || '';
+          const itemPrice = parseFloat(item.dataset.price || '0');
+          const itemStatus = (item.dataset.status || 'available').toLowerCase();
+
+          // Category match
+          let matchCat = cat === 'all';
+          if (!matchCat) {
+            if (cat === 'house' && (itemType.includes('house') || itemType.includes('villa'))) matchCat = true;
+            else if (cat === 'residential-plot' && itemType.includes('plot') && !itemType.includes('commercial')) matchCat = true;
+            else if (cat === 'commercial' && (itemType.includes('commercial') || itemType.includes('shop'))) matchCat = true;
+          }
+
+          // Size match
+          let matchSize = size === 'all';
+          if (!matchSize) {
+            if (size === '1-kanal' && itemSize === '1' && itemUnit === 'kanal') matchSize = true;
+            else if (size === '2-kanal' && itemSize === '2' && itemUnit === 'kanal') matchSize = true;
+            else if (size === '10' && itemSize === '10' && itemUnit === 'marla') matchSize = true;
+            else if (size === '5' && itemSize === '5' && itemUnit === 'marla') matchSize = true;
+            else if (size === '3' && itemSize === '3' && itemUnit === 'marla') matchSize = true;
+            else if (size === '4-marla' && itemSize === '4' && itemUnit === 'marla') matchSize = true;
+            else if (size === '8-marla' && itemSize === '8' && itemUnit === 'marla') matchSize = true;
+          }
+
+          // Sector match
+          let matchSector = sector === 'all';
+          if (!matchSector) {
+            if (sector === 'CCA') matchSector = itemSector.includes('CCA') || itemSector.includes('Commercial');
+            else matchSector = itemSector.includes(sector);
+          }
+
+          // Price match
+          let matchPrice = price === 'all';
+          if (!matchPrice) {
+            if (price === 'under-1cr' && itemPrice < 10000000) matchPrice = true;
+            else if (price === '1cr-3cr' && itemPrice >= 10000000 && itemPrice <= 30000000) matchPrice = true;
+            else if (price === '3cr-5cr' && itemPrice > 30000000 && itemPrice <= 50000000) matchPrice = true;
+            else if (price === '5cr-plus' && itemPrice > 50000000) matchPrice = true;
+          }
+
+          // Status match
+          let matchStatus = status === 'all';
+          if (!matchStatus) {
+            if (status === 'available') matchStatus = itemStatus.includes('available') || itemStatus.includes('source-check');
+            else if (status === 'reserved') matchStatus = itemStatus.includes('reserved');
+            else if (status === 'sold') matchStatus = itemStatus.includes('sold');
+          }
+
+          if (matchCat && matchSize && matchSector && matchPrice && matchStatus) {
+            item.style.display = '';
+            visibleCount++;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        // Sorting
+        const visibleItems = items.filter(it => it.style.display !== 'none');
+        visibleItems.sort((a, b) => {
+          const priceA = parseFloat(a.dataset.price || '0');
+          const priceB = parseFloat(b.dataset.price || '0');
+          const dateA = new Date(a.dataset.date || 0).getTime();
+          const dateB = new Date(b.dataset.date || 0).getTime();
+
+          if (sort === 'price-asc') return priceA - priceB;
+          if (sort === 'price-desc') return priceB - priceA;
+          if (sort === 'recent') return dateB - dateA;
+          return 0; // default latest order
+        });
+        visibleItems.forEach(it => grid.appendChild(it));
+
+        if (counter) counter.textContent = visibleCount.toString();
+        if (noMatch) noMatch.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+
+      [catSelect, sizeSelect, sectorSelect, priceSelect, statusSelect, sortSelect].forEach(sel => {
+        if (sel) sel.addEventListener('change', applyFilters);
+      });
+
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          if (catSelect) catSelect.value = 'all';
+          if (sizeSelect) sizeSelect.value = 'all';
+          if (sectorSelect) sectorSelect.value = 'all';
+          if (priceSelect) priceSelect.value = 'all';
+          if (statusSelect) statusSelect.value = 'all';
+          if (sortSelect) sortSelect.value = 'latest';
+          applyFilters();
+        });
+      }
+    })();
+  </script>
+
+  <!-- SECTOR PROPERTY GUIDES (Phase 10.13) -->
+  <section class="sector-guides-section">
+    <div class="container">
+      <div class="collection-heading">
+        <div>
+          <p>Sector-by-sector property intelligence</p>
+          <h2>Explore Properties by Sector</h2>
+        </div>
+      </div>
+      <div class="sector-nav-grid">
+        {SECTORS_DIRECTORY.filter((s) => s.type === 'residential').map((sector) => (
+          <a href={`/sectors/${sector.key}/properties/`} class="sector-nav-card">
+            <strong>{sector.label}</strong>
+            <span>Plot &amp; House Guide →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATION & LIFESTYLE PROPERTY GUIDES (Phase 10.13) -->
+  <section class="location-seo-section">
+    <div class="container">
+      <div class="collection-heading">
+        <div>
+          <p>Lifestyle &amp; Proximity Search</p>
+          <h2>Location Intelligence Guides</h2>
+        </div>
+      </div>
+      <div class="location-nav-grid">
+        <a href="/houses-near-schools-dha-phase-6-lahore/" class="location-nav-card">
+          <span class="loc-badge">Education</span>
+          <strong>Houses Near Schools</strong>
+          <p>LGS, Beaconhouse &amp; Roots IVY school commute guide.</p>
+        </a>
+        <a href="/houses-near-hospitals-dha-phase-6-lahore/" class="location-nav-card">
+          <span class="loc-badge">Healthcare</span>
+          <strong>Houses Near Hospitals</strong>
+          <p>DHA Medical Centre &amp; 24/7 clinic proximity analysis.</p>
+        </a>
+        <a href="/houses-near-mosques-dha-phase-6-lahore/" class="location-nav-card">
+          <span class="loc-badge">Spiritual</span>
+          <strong>Houses Near Mosques</strong>
+          <p>Walking distance to Grand Jamia Masjids across sectors.</p>
+        </a>
+        <a href="/houses-near-parks-dha-phase-6-lahore/" class="location-nav-card">
+          <span class="loc-badge">Greenery</span>
+          <strong>Houses Near Parks</strong>
+          <p>Park-facing properties, jogging tracks &amp; green living.</p>
+        </a>
+        <a href="/plots-near-schools-dha-phase-6-lahore/" class="location-nav-card">
+          <span class="loc-badge">Land</span>
+          <strong>Plots Near Schools</strong>
+          <p>10 Marla &amp; 1 Kanal residential plots for home building.</p>
+        </a>
+        <a href="/plots-near-commercial-dha-phase-6-lahore/" class="location-nav-card">
+          <span class="loc-badge">Commercial</span>
+          <strong>Plots Near Commercial Areas</strong>
+          <p>Walkable residential &amp; high-yield commercial land in CCA.</p>
+        </a>
+      </div>
     </div>
   </section>
 </PageLayout>
@@ -98,6 +386,114 @@ const breadcrumbSchema = {
   .collection-heading a { color:#10b981;font-weight:800; }
   .collection-grid { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem; }
   .empty-state { padding:3rem;background:#161635;border:1px solid rgba(255,255,255,.08); }
-  @media(max-width:950px){.collection-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
-  @media(max-width:680px){.collection-grid,.collection-hero__intro,.source-notice .container{grid-template-columns:1fr}.collection-heading{align-items:start;flex-direction:column}.source-notice{padding:1.25rem 0}}
+
+  /* Premium Filter Panel */
+  .filter-panel {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr) auto;
+    gap: 0.85rem;
+    align-items: flex-end;
+    background: #111128;
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  }
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .filter-group label {
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #10b981;
+  }
+  .filter-group select {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 0.4rem;
+    color: #fff;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.78rem;
+    outline: none;
+    cursor: pointer;
+  }
+  .filter-group select:focus {
+    border-color: #10b981;
+  }
+  .filter-group select option {
+    background: #0f0f26;
+    color: #fff;
+  }
+  .reset-btn {
+    padding: 0.62rem 1.1rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #94a3b8;
+    border-radius: 0.4rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .reset-btn:hover {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #f87171;
+  }
+  .property-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: 1100px) {
+    .filter-panel {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .reset-btn {
+      grid-column: span 3;
+    }
+  }
+  @media (max-width: 680px) {
+    .filter-panel {
+      grid-template-columns: 1fr;
+    }
+    .reset-btn {
+      grid-column: span 1;
+    }
+  }
+
+  /* Sector Navigation Grid */
+  .sector-guides-section { padding: 4.5rem 0; background: #0e0e24; border-top: 1px solid rgba(255, 255, 255, 0.08); }
+  .sector-nav-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .sector-nav-card { display: flex; flex-direction: column; padding: 1.25rem 1.4rem; border-radius: 8px; background: #161635; border: 1px solid rgba(255, 255, 255, 0.08); text-decoration: none; transition: all 0.2s; }
+  .sector-nav-card:hover { border-color: #10b981; transform: translateY(-2px); }
+  .sector-nav-card strong { color: #ffffff; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .sector-nav-card span { color: #10b981; font-size: 0.72rem; font-weight: 700; }
+
+  /* Location Navigation Grid */
+  .location-seo-section { padding: 4.5rem 0; background: #090919; border-top: 1px solid rgba(255, 255, 255, 0.08); }
+  .location-nav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .location-nav-card { display: flex; flex-direction: column; padding: 1.5rem; border-radius: 10px; background: #12122b; border: 1px solid rgba(255, 255, 255, 0.08); text-decoration: none; transition: all 0.25s; }
+  .location-nav-card:hover { border-color: #f0c857; transform: translateY(-2px); }
+  .loc-badge { align-self: flex-start; padding: 0.2rem 0.5rem; border-radius: 4px; background: rgba(212, 168, 68, 0.15); color: #f0c857; font-size: 0.6rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.75rem; }
+  .location-nav-card strong { color: #ffffff; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .location-nav-card p { color: #9292ad; font-size: 0.8rem; line-height: 1.5; margin: 0; }
+
+  @media(max-width:950px){
+    .collection-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+    .sector-nav-grid{grid-template-columns:repeat(2, 1fr);}
+    .location-nav-grid{grid-template-columns:repeat(2, 1fr);}
+  }
+  @media(max-width:680px){
+    .collection-grid,.collection-hero__intro,.source-notice .container{grid-template-columns:1fr}
+    .sector-nav-grid{grid-template-columns:1fr;}
+    .location-nav-grid{grid-template-columns:1fr;}
+    .collection-heading{align-items:start;flex-direction:column}
+    .source-notice{padding:1.25rem 0}
+  }
 </style>

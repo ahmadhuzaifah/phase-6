@@ -1,0 +1,160 @@
+---
+/**
+ * Route: /houses-near-parks-dha-phase-6-lahore/
+ * Location Intelligence & SEO Guide for Houses Near Parks in DHA Phase 6 Lahore.
+ */
+import LocationSeoTemplate from '@components/seo/LocationSeoTemplate.astro';
+import { getCategoryPlaces } from '@data/places/index';
+import propertiesRaw from '@data/properties-import.json';
+import { SITE } from '@data/site';
+
+const canonical = `${SITE.url}/houses-near-parks-dha-phase-6-lahore/`;
+const parks = getCategoryPlaces('park').slice(0, 6);
+
+const houseProperties = (propertiesRaw as any[]).filter(
+  (p) => p.propertyType === 'house' || p.propertyType === 'residential-plot'
+).slice(0, 3);
+
+const tableRows = [
+  {
+    sector: 'Sector A',
+    amenities: 'Sector A Central Park, Jogging Track, Children Play Area',
+    popularSizes: '1 Kanal, 2 Kanal Luxury Houses',
+    priceRange: 'PKR 9.50 - 22.00 Cr',
+    travelTime: '1-3 mins walk / Direct Frontage',
+    recommendedFor: 'Luxury buyers seeking prestigious park-facing frontages',
+  },
+  {
+    sector: 'Sector C',
+    amenities: 'Sector C Family Recreation Park, Outdoor Gym',
+    popularSizes: '1 Kanal Built Houses',
+    priceRange: 'PKR 12.00 - 24.50 Cr',
+    travelTime: '1-4 mins walk',
+    recommendedFor: 'Active families and fitness enthusiasts',
+  },
+  {
+    sector: 'Sector D',
+    amenities: 'Sector D Model Park, Badminton Courts, Floral Garden',
+    popularSizes: '1 Kanal Houses & Plots',
+    priceRange: 'PKR 8.50 - 16.00 Cr',
+    travelTime: '2-4 mins walk',
+    recommendedFor: 'Long-term residents wanting central green buffers',
+  },
+  {
+    sector: 'Sector J',
+    amenities: 'Sector J Community Park, Safe Enclosed Play Area',
+    popularSizes: '10 Marla, 1 Kanal Houses',
+    priceRange: 'PKR 4.80 - 11.50 Cr',
+    travelTime: '1-3 mins walk',
+    recommendedFor: 'Young households with toddlers and small children',
+  },
+  {
+    sector: 'Sector G',
+    amenities: 'Sector G Green Belts & Walking Tracks',
+    popularSizes: '10 Marla, 1 Kanal Houses',
+    priceRange: 'PKR 5.00 - 11.00 Cr',
+    travelTime: '2-5 mins walk',
+    recommendedFor: 'Morning walkers & pet owners',
+  },
+  {
+    sector: 'Sector K',
+    amenities: 'Sector K Landscaped Parks, Low Noise Environment',
+    popularSizes: '1 Kanal, 2 Kanal Houses',
+    priceRange: 'PKR 8.00 - 17.50 Cr',
+    travelTime: '2-4 mins walk',
+    recommendedFor: 'Nature lovers desiring calm, low-traffic surroundings',
+  },
+];
+
+const faqs = [
+  {
+    question: 'How much premium do park-facing houses carry in DHA Phase 6 Lahore?',
+    answer: 'Park-facing residential plots and houses in DHA Phase 6 typically command a 5% to 15% price premium over standard off-park inventory. The premium is driven by unobstructed natural light, open front ventilation, and guaranteed green vistas that can never be built over.',
+  },
+  {
+    question: 'Are parks in DHA Phase 6 securely enclosed and maintained?',
+    answer: 'Yes. DHA Lahore security guards patrol and manage all sector parks. Parks are fenced with secure gates, operating designated opening and closing hours (typically 6:00 AM to 10:00 PM), with daily horticulture maintenance and garbage clearance.',
+  },
+  {
+    question: 'Do park-facing homes experience privacy issues or noise from visitors?',
+    answer: 'While park-facing homes enjoy open views, houses located directly opposite high-activity children play zones can experience evening activity. Selecting a house facing a quiet botanical garden or corner park pocket balances stunning green views with total privacy.',
+  },
+  {
+    question: 'Which sector has the largest green spaces in DHA Phase 6?',
+    answer: 'Sectors A, B, C, and D feature substantial central parks exceeding several kanals in size, complete with certified jogging tracks, outdoor exercise machinery, shaded pergolas, and seasonal flower beds.',
+  },
+  {
+    question: 'Are dogs or pets allowed in DHA Phase 6 parks?',
+    answer: 'DHA regulations generally permit pets on leashes along designated perimeter jogging tracks and green belts, provided owners practice responsible cleanup and adhere to community guidelines.',
+  },
+];
+
+const relatedLinks = [
+  {
+    label: 'DHA Phase 6 Parks Directory',
+    href: '/places/park/',
+    desc: 'Explore all 18+ verified family parks, jogging tracks, and green belts.',
+  },
+  {
+    label: 'Sector A Facilities Guide',
+    href: '/sectors/sector-a/places/',
+    desc: 'Explore luxury properties and park amenities in Sector A.',
+  },
+  {
+    label: 'Sector D Facilities Guide',
+    href: '/sectors/sector-d/places/',
+    desc: 'Browse central parks, schools, and homes in Sector D.',
+  },
+  {
+    label: 'Browse Property Snapshots',
+    href: '/properties/',
+    desc: 'View current market asking price snapshots across DHA Phase 6.',
+  },
+];
+---
+
+<LocationSeoTemplate
+  title="Houses Near Parks in DHA Phase 6 Lahore"
+  metaTitle="Houses Near Parks in DHA Phase 6 Lahore | Park Facing Homes & Prices"
+  description="Discover park-facing houses and homes near parks in DHA Phase 6 Lahore. Compare Sectors A, C, D, J, and K for green living, jogging tracks, and property premiums."
+  canonical={canonical}
+  badge="Green Living & Wellness Intelligence"
+  headline="Houses Near Parks & Green Belts in DHA Phase 6 Lahore"
+  lead="An in-depth buyer guide to park-facing houses and homes near family recreation parks, jogging circuits, and open green expanses across DHA Phase 6 Lahore."
+  statPills={[
+    { value: '18+', label: 'Verified Sector Parks' },
+    { value: '+10%', label: 'Average Park Facing Premium' },
+    { value: '1-3 min', label: 'Walking Access to Greenery' },
+    { value: 'Jogging', label: 'Dedicated Rubberized Tracks' },
+  ]}
+  editorialParagraphs={[
+    'In a sprawling metropolis like Lahore, access to fresh air, manicured greenery, and secure open spaces has become a cherished luxury. DHA Phase 6 was deliberately planned with extensive green infrastructure, dedicating expansive acreage in every sector to community parks, botanical pockets, and wide tree-lined boulevards.',
+    'Living adjacent to or within a short walk of a sector park transforms the daily routine. Residents enjoy morning jogs along dedicated all-weather tracks, evening strolls with family members, and safe, gated play areas for children away from vehicular traffic. Studies consistently show that green living environments significantly reduce stress and promote cardiovascular health.',
+    'In the DHA Phase 6 property market, park-facing properties represent the pinnacle of residential prestige. These homes benefit from permanent unobstructed sightlines, enhanced natural breeze circulation, and an abundance of ambient daylight that makes interior living spaces feel dramatically more expansive.',
+    'From an asset value perspective, park-facing homes and plots in Sectors A, C, D, and J historically demonstrate superior value retention during market corrections and sell significantly faster when listed, making them prime acquisitions for both discerning owner-occupants and capital-growth investors.',
+  ]}
+  placesTitle="Featured Sector Parks in DHA Phase 6 Lahore"
+  placesSubtitle="Verified municipal parks with facilities, jogging tracks, and Google Maps walking routes."
+  places={parks}
+  allPlacesCategoryUrl="/places/park/"
+  allPlacesCategoryLabel="Browse All 18+ Verified Parks & Playgrounds"
+  tableTitle="Sector-by-Sector Park Living & Housing Comparison"
+  tableSubtitle="Compare park features, walking times, typical house sizes, and asking price valuations."
+  tableRows={tableRows}
+  propertiesTitle="Featured Houses Near Parks"
+  propertiesSubtitle="Representative market snapshots for homes with green proximity in Phase 6."
+  properties={houseProperties}
+  zameenSearchUrl="https://www.zameen.com/Houses_Property/Lahore_Defence__DHA__Phase_6-1448-1.html"
+  zameenSearchLabel="Search DHA Phase 6 Houses on Zameen.com ↗"
+  checklistTitle="Park-Facing Home Inspection Checklist"
+  checklistBullets={[
+    'Park Orientation & Sun Path: Verify which direction the park faces; north or east-facing park views provide glorious morning sun without excessive summer afternoon heat.',
+    'Evening Activity Assessment: Visit the park between 5:30 PM and 7:30 PM on a weekend to observe lighting, visitor volume, and sound levels.',
+    'Street Parking Controls: Ensure the street has clear parking restrictions preventing non-resident park visitors from parking on your front apron.',
+    'Perimeter Security & Lighting: Check whether the park boundary features operational floodlights, CCTV coverage, and night-time security patrolling.',
+    'Drainage & Mosquito Management: Inquire about DHA vector control (mosquito fogging frequency) and verify that park grass grading does not drain water onto your driveway.',
+    'Corner Park Advantage: Consider a corner plot or house opposite the park for dual ventilation and maximum architectural street presence.',
+  ]}
+  faqs={faqs}
+  relatedLinks={relatedLinks}
+/>

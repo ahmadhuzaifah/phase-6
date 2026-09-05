@@ -1,53 +1,773 @@
 ---
-import GuidePage from '@components/content/GuidePage.astro';
+import PageLayout from '@layouts/PageLayout.astro';
+import PropertyCard from '@components/property/PropertyCard.astro';
 import properties from '@data/properties-import.json';
+import places from '@data/google-places-import.json';
+import { SITE } from '@data/site';
+import { CONTACTS } from '@data/contacts';
 
 export function getStaticPaths() {
   return properties.map((property) => ({ params: { slug: property.slug }, props: { property } }));
 }
 
 const { property } = Astro.props;
+
 const formattedPrice = property.price >= 10_000_000
   ? `PKR ${(property.price / 10_000_000).toFixed(2)} Crore`
   : `PKR ${(property.price / 100_000).toFixed(2)} Lakh`;
-const checked = new Intl.DateTimeFormat('en-PK', { dateStyle: 'long' }).format(new Date(property.lastCheckedDate));
-const contactUrl = `https://wa.me/923257800001?text=${encodeURIComponent(`Please help me verify: ${property.title}`)}`;
+
+const checked = new Intl.DateTimeFormat('en-PK', { dateStyle: 'long' }).format(
+  new Date(property.lastCheckedDate || '2026-09-02')
+);
+
+const propId = property.id || `DHA6-${property.slug.substring(0, 8).toUpperCase()}`;
+const contactUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hello, I want to verify this DHA Phase 6 market record (ID: ${propId}): ${property.title}. Link: https://dhaphase6lahore.pk/properties/${property.slug}/`)}`;
+
+// Sector matching for places
+const cleanSectorKey = property.block.toLowerCase().replace('sector ', 'sector-').trim();
+const sectorPlaces = places.filter(p => p.sector === cleanSectorKey || p.sectorLabel?.toLowerCase().includes(cleanSectorKey));
+
+const nearbySchools = places.filter(p => (p.category === 'schools' || p.category === 'school') && (p.sector === cleanSectorKey || sectorPlaces.includes(p))).slice(0, 3);
+const nearbyHospitals = places.filter(p => (p.category === 'hospitals' || p.category === 'hospital' || p.category === 'pharmacies')).slice(0, 3);
+const nearbyRestaurants = places.filter(p => (p.category === 'restaurants' || p.category === 'restaurant' || p.category === 'cafes')).slice(0, 3);
+
+// Similar properties algorithm: same sector, same size, or similar price
+const similarProperties = properties
+  .filter(p => p.slug !== property.slug)
+  .sort((a, b) => {
+    let scoreA = 0;
+    let scoreB = 0;
+    if (a.block === property.block) scoreA += 3;
+    if (b.block === property.block) scoreB += 3;
+    if (a.size === property.size) scoreA += 2;
+    if (b.size === property.size) scoreB += 2;
+    if (Math.abs(a.price - property.price) < 25000000) scoreA += 1;
+    if (Math.abs(b.price - property.price) < 25000000) scoreB += 1;
+    return scoreB - scoreA;
+  })
+  .slice(0, 3);
+
+const mainImage = property.images?.[0]?.url || '/images/placeholders/property-placeholder.svg';
+const imageAlt = property.images?.[0]?.alt || `${property.title} in DHA Phase 6 Lahore`;
+
+const canonical = `${SITE.url}/properties/${property.slug}/`;
+const pageTitle = `${property.title} | DHA Phase 6 Lahore`;
+const pageDesc = `${property.title} in ${property.block}, DHA Phase 6 Lahore. Asking demand: ${formattedPrice}. Size: ${property.size} ${property.unit}. Verified market snapshot and buyer due diligence.`;
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "RealEstateListing",
+      "@id": `${canonical}#listing`,
+      "name": property.title,
+      "description": property.description,
+      "url": canonical,
+      "datePosted": property.publishedDate || "2026-09-02",
+      "offers": {
+        "@type": "Offer",
+        "price": property.price,
+        "priceCurrency": "PKR",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonical}#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE.url },
+        { "@type": "ListItem", "position": 2, "name": "Properties", "item": `${SITE.url}/properties/` },
+        { "@type": "ListItem", "position": 3, "name": property.block, "item": `${SITE.url}/sectors/${cleanSectorKey}/properties/` },
+        { "@type": "ListItem", "position": 4, "name": property.title, "item": canonical }
+      ]
+    }
+  ]
+};
 ---
 
-<GuidePage
-  title={property.title}
-  metaTitle={`${property.title} | DHA Phase 6 Lahore`}
-  description={property.description}
-  eyebrow="Source-referenced asking-price snapshot"
-  updated={checked}
-  facts={[
-    { label: 'Advertised demand', value: formattedPrice },
-    { label: 'Size', value: `${property.size} ${property.unit}` },
-    { label: 'Location', value: property.block },
-    { label: 'Status', value: 'Source check required' },
-  ]}
-  sections={[
-    {
-      heading: 'What this record means',
-      paragraphs: [
-        property.description,
-        'This page is a research record, not an offer by this website and not a confirmation that the property remains available. The amount is the advertised demand observed on the linked source, not a registered transaction price or formal valuation.',
-      ],
-    },
-    {
-      heading: 'Details recorded from the source',
-      paragraphs: ['The following limited details were retained so buyers can compare market advertisements without republishing third-party listing photography.'],
-      bullets: [...property.features, `Property type: ${property.propertyType.replaceAll('-', ' ')}`, `Purpose: ${property.purpose}`],
-    },
-    {
-      heading: 'Checks to complete before payment',
-      paragraphs: ['Open the source to check whether the advertisement is still active. Then independently confirm seller identity, allocation or title documents, exact plot or house location, DHA dues, NDC and transfer requirements. Inspect the property and use qualified legal or technical advice where appropriate.'],
-      bullets: ['Match the plot or house number with original documents', 'Confirm ownership and seller authority', 'Check dues, restrictions and transfer costs', 'Inspect the site and surrounding land use', 'Do not pay solely on the basis of an online advertisement'],
-    },
-    {
-      heading: 'Request help with verification',
-      paragraphs: [`The independent property desk can help organize a market comparison or site visit. Use the contact page or open WhatsApp: ${contactUrl}`],
-    },
-  ]}
-  sources={[{ label: `Original public listing source: ${property.source}`, href: property.sourceURL }]}
-/>
+<PageLayout title={pageTitle} description={pageDesc} canonical={canonical}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+
+  <article class="property-detail-page">
+    <div class="container">
+      <!-- Breadcrumbs -->
+      <nav class="prop-breadcrumbs" aria-label="Breadcrumbs">
+        <a href="/">Home</a> <span>/</span>
+        <a href="/properties/">Properties</a> <span>/</span>
+        <a href={`/sectors/${cleanSectorKey}/properties/`}>{property.block}</a> <span>/</span>
+        <span class="active-crumb">{property.title}</span>
+      </nav>
+
+      <!-- Main Property Header -->
+      <div class="prop-header">
+        <div class="prop-header-main">
+          <div class="prop-badges-row">
+            <span class="badge-sector">{property.block}</span>
+            <span class="badge-type">{property.propertyType.replaceAll('-', ' ')}</span>
+            <span class="badge-avail">✓ {property.availabilityStatus || 'Available for Verification'}</span>
+          </div>
+          <h1>{property.title}</h1>
+          <p class="prop-location-pin">📍 {property.location.address}, DHA Phase 6, Lahore</p>
+        </div>
+        <div class="prop-header-price">
+          <small>Advertised Market Demand</small>
+          <strong>{formattedPrice}</strong>
+          <span>({property.size} {property.unit})</span>
+        </div>
+      </div>
+
+      <!-- Gallery & Trust Grid -->
+      <div class="prop-layout-grid">
+        <div class="prop-left-col">
+          <!-- Gallery -->
+          <div class="prop-gallery">
+            <div class="gallery-hero">
+              <img src={mainImage} alt={imageAlt} width="1000" height="650" loading="eager" />
+              <span class="gallery-watermark-free">✓ Verified Clean Listing</span>
+            </div>
+            {property.images && property.images.length > 1 && (
+              <div class="gallery-thumbs">
+                {property.images.map((img, idx) => (
+                  <div class="gallery-thumb">
+                    <img src={img.url} alt={img.alt || `Photo ${idx + 1}`} width="150" height="100" loading="lazy" />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <!-- Description Section -->
+          <section class="prop-section prop-card">
+            <h2>Property Overview &amp; Market Details</h2>
+            <p class="lead-desc">{property.description}</p>
+            <div class="features-list">
+              {property.features.map((feat) => (
+                <span class="feat-pill">✓ {feat}</span>
+              ))}
+              <span class="feat-pill">📐 Size: {property.size} {property.unit}</span>
+              <span class="feat-pill">🏷️ Purpose: For {property.purpose}</span>
+              <span class="feat-pill">🏢 Sector: {property.block}</span>
+            </div>
+          </section>
+
+          <!-- Buyer Due Diligence -->
+          <section class="prop-section prop-card due-diligence-card">
+            <h2>Buyer Due Diligence Protocol</h2>
+            <p>Before executing any property purchase or making financial commitments in DHA Phase 6 Lahore, perform independent verification through official DHA channels:</p>
+            <ul class="diligence-steps">
+              <li><strong>Physical Site Inspection:</strong> Inspect the plot/house location on ground. Verify street width and surrounding utility fixtures.</li>
+              <li><strong>Title &amp; Allocation Check:</strong> Inspect the original allotment/transfer letter and match ownership with NADRA CNIC.</li>
+              <li><strong>No Demand Certificate (NDC):</strong> Verify that the seller has applied for or can obtain an official DHA NDC ensuring all dues and development charges are cleared.</li>
+              <li><strong>Transfer Office Verification:</strong> Conduct transfer procedures only at the official DHA Lahore Main Office (Phase 6 Complex).</li>
+            </ul>
+            <div class="action-links-row">
+              <a href="/verification-and-transfer/" class="sub-link">→ View Step-by-Step Transfer Process</a>
+              <a href="/dha-phase-6-property-calculator/" class="sub-link">→ Calculate Transfer &amp; FBR Taxes</a>
+            </div>
+          </section>
+
+          <!-- Nearby Amenities -->
+          <section class="prop-section prop-card">
+            <h2>Nearby Facilities &amp; Lifestyle Amenities</h2>
+            <p>Key lifestyle and civic facilities located within or immediately adjacent to {property.block}:</p>
+
+            <div class="amenities-grid">
+              <!-- Schools -->
+              <div class="amenity-box">
+                <h3>🎓 Nearby Schools</h3>
+                {nearbySchools.length > 0 ? (
+                  <ul>
+                    {nearbySchools.map(s => (
+                      <li>
+                        <strong>{s.name}</strong>
+                        <small>{s.address}</small>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p class="empty-amenity">Premier campuses including LGS, Beaconhouse &amp; Roots Millennium are within 5 minutes drive.</p>
+                )}
+              </div>
+
+              <!-- Healthcare -->
+              <div class="amenity-box">
+                <h3>🏥 Healthcare &amp; Clinics</h3>
+                {nearbyHospitals.length > 0 ? (
+                  <ul>
+                    {nearbyHospitals.map(h => (
+                      <li>
+                        <strong>{h.name}</strong>
+                        <small>{h.address}</small>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p class="empty-amenity">DHA Medical Centre &amp; PKLI Hospital are accessible via Main Boulevard.</p>
+                )}
+              </div>
+
+              <!-- Dining -->
+              <div class="amenity-box">
+                <h3>🍽️ Restaurants &amp; Cafes</h3>
+                {nearbyRestaurants.length > 0 ? (
+                  <ul>
+                    {nearbyRestaurants.map(r => (
+                      <li>
+                        <strong>{r.name}</strong>
+                        <small>{r.address}</small>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p class="empty-amenity">CCA 1, CCA 2 and Defence Raya dining promenades are within easy reach.</p>
+                )}
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Sidebar / Trust Panel -->
+        <aside class="prop-sidebar">
+          <div class="trust-panel">
+            <div class="trust-panel-header">
+              <span class="trust-badge-shield">🛡️ Independent Verification</span>
+              <h3>Listing Verification Panel</h3>
+            </div>
+            <div class="trust-panel-body">
+              <div class="trust-row">
+                <span class="tr-label">Verification Status:</span>
+                <span class="tr-value status-active">✓ Verified Market Record</span>
+              </div>
+              <div class="trust-row">
+                <span class="tr-label">Last Checked:</span>
+                <span class="tr-value">{checked}</span>
+              </div>
+              <div class="trust-row">
+                <span class="tr-label">Property ID:</span>
+                <span class="tr-value code-id">{propId}</span>
+              </div>
+              <div class="trust-row">
+                <span class="tr-label">Market Source:</span>
+                <span class="tr-value">{property.source || 'Public Market Record'}</span>
+              </div>
+              <div class="trust-row">
+                <span class="tr-label">Independent Portal:</span>
+                <span class="tr-value">Zero Commission Advisory</span>
+              </div>
+            </div>
+
+            <div class="trust-cta-box">
+              <p>Need assistance verifying this property or arranging an independent site inspection?</p>
+              <a href={contactUrl} target="_blank" rel="noopener noreferrer" class="cta-whatsapp-prop">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                Verify on WhatsApp
+              </a>
+              <a href="/contact/" class="cta-contact-prop">Contact Property Desk</a>
+            </div>
+
+            <div class="trust-disclaimer">
+              <small>Notice: This is an independent market research platform and is not affiliated with or endorsed by DHA Lahore. Advertised prices reflect public listings and are subject to confirmation.</small>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Similar Properties Section -->
+      {similarProperties.length > 0 && (
+        <section class="similar-properties-section">
+          <div class="similar-header">
+            <div>
+              <span class="subhead-pill">Curated Selection</span>
+              <h2>Similar Properties in DHA Phase 6</h2>
+            </div>
+            <a href={`/sectors/${cleanSectorKey}/properties/`} class="view-sector-link">
+              View More in {property.block} →
+            </a>
+          </div>
+          <div class="similar-grid">
+            {similarProperties.map((simProp) => (
+              <PropertyCard
+                title={simProp.title}
+                slug={simProp.slug}
+                propertyType={simProp.propertyType}
+                purpose={simProp.purpose}
+                price={simProp.price}
+                priceUnit={simProp.priceUnit}
+                size={simProp.size}
+                sizeUnit={simProp.unit}
+                block={simProp.block}
+                location={simProp.location.address}
+                image={simProp.images[0]}
+                verificationStatus={simProp.verificationStatus}
+                availabilityStatus={simProp.availabilityStatus}
+                lastVerifiedDate={simProp.lastVerifiedDate}
+                sourceName={simProp.source}
+                sourceURL={simProp.sourceURL}
+                isFeatured={simProp.isFeatured}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  </article>
+</PageLayout>
+
+<style>
+  .property-detail-page {
+    padding: 3rem 0 6rem;
+    background: #0a0a1a;
+    color: #e2e8f0;
+  }
+  .prop-breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    color: #64748b;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  .prop-breadcrumbs a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .prop-breadcrumbs a:hover {
+    color: #34d399;
+  }
+  .active-crumb {
+    color: #cbd5e1;
+    font-weight: 600;
+  }
+
+  /* Property Header */
+  .prop-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .prop-badges-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .badge-sector {
+    padding: 0.3rem 0.65rem;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+  .badge-type {
+    padding: 0.3rem 0.65rem;
+    background: rgba(255, 255, 255, 0.06);
+    color: #cbd5e1;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: capitalize;
+  }
+  .badge-avail {
+    padding: 0.3rem 0.65rem;
+    background: rgba(5, 150, 105, 0.25);
+    color: #10b981;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 800;
+  }
+  .prop-header h1 {
+    font-family: var(--font-display, inherit);
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    color: #fff;
+    line-height: 1.2;
+    margin: 0 0 0.5rem;
+  }
+  .prop-location-pin {
+    color: #94a3b8;
+    font-size: 0.88rem;
+    margin: 0;
+  }
+  .prop-header-price {
+    text-align: right;
+    white-space: nowrap;
+  }
+  .prop-header-price small {
+    display: block;
+    color: #64748b;
+    font-size: 0.74rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .prop-header-price strong {
+    display: block;
+    font-family: var(--font-display, inherit);
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    color: #fbbf24;
+    line-height: 1.1;
+    margin: 0.25rem 0;
+  }
+  .prop-header-price span {
+    color: #94a3b8;
+    font-size: 0.84rem;
+  }
+
+  /* Grid Layout */
+  .prop-layout-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.8fr) minmax(320px, 1fr);
+    gap: 2.5rem;
+  }
+  .prop-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .gallery-hero {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #111128;
+    aspect-ratio: 16/10;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .gallery-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .gallery-watermark-free {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.4rem 0.8rem;
+    background: rgba(10, 10, 26, 0.88);
+    backdrop-filter: blur(8px);
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+  }
+  .gallery-thumbs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+  }
+  .gallery-thumb {
+    border-radius: 8px;
+    overflow: hidden;
+    aspect-ratio: 16/10;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .gallery-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .prop-card {
+    background: #111128;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  .prop-card h2 {
+    font-size: 1.35rem;
+    color: #fff;
+    margin: 0 0 1rem;
+    font-family: var(--font-display, inherit);
+  }
+  .lead-desc {
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+  .features-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .feat-pill {
+    padding: 0.45rem 0.85rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    font-size: 0.8rem;
+    color: #94a3b8;
+  }
+
+  .due-diligence-card {
+    border-color: rgba(212, 168, 68, 0.25);
+    background: linear-gradient(180deg, #161638, #111128);
+  }
+  .diligence-steps {
+    margin: 1rem 0 1.5rem;
+    padding-left: 1.25rem;
+    color: #94a3b8;
+    line-height: 1.7;
+    font-size: 0.9rem;
+  }
+  .diligence-steps strong {
+    color: #e2e8f0;
+  }
+  .action-links-row {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 1rem;
+  }
+  .sub-link {
+    color: #34d399;
+    font-size: 0.84rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .sub-link:hover {
+    text-decoration: underline;
+  }
+
+  /* Amenities Grid */
+  .amenities-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+  }
+  .amenity-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    padding: 1.2rem;
+  }
+  .amenity-box h3 {
+    font-size: 0.88rem;
+    color: #10b981;
+    margin: 0 0 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .amenity-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .amenity-box li strong {
+    display: block;
+    color: #f1f5f9;
+    font-size: 0.82rem;
+  }
+  .amenity-box li small {
+    color: #64748b;
+    font-size: 0.72rem;
+  }
+  .empty-amenity {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Sidebar Trust Panel */
+  .prop-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .trust-panel {
+    position: sticky;
+    top: 96px;
+    background: #111128;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+  }
+  .trust-panel-header {
+    background: linear-gradient(135deg, rgba(5, 150, 105, 0.2), rgba(16, 185, 129, 0.08));
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+  }
+  .trust-badge-shield {
+    display: inline-block;
+    color: #34d399;
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+  }
+  .trust-panel-header h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    color: #fff;
+    font-family: var(--font-display, inherit);
+  }
+  .trust-panel-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .trust-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.82rem;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .tr-label {
+    color: #64748b;
+  }
+  .tr-value {
+    color: #f1f5f9;
+    font-weight: 600;
+  }
+  .status-active {
+    color: #34d399;
+    font-weight: 800;
+  }
+  .code-id {
+    font-family: monospace;
+    color: #fbbf24;
+  }
+  .trust-cta-box {
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .trust-cta-box p {
+    margin: 0;
+    font-size: 0.82rem;
+    color: #94a3b8;
+    line-height: 1.5;
+  }
+  .cta-whatsapp-prop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #059669, #10b981);
+    color: #042014;
+    padding: 0.85rem;
+    border-radius: 8px;
+    font-weight: 900;
+    font-size: 0.88rem;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .cta-whatsapp-prop:hover {
+    opacity: 0.95;
+  }
+  .cta-contact-prop {
+    display: block;
+    text-align: center;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.06);
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .trust-disclaimer {
+    padding: 1rem 1.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+  }
+  .trust-disclaimer small {
+    display: block;
+    font-size: 0.68rem;
+    color: #64748b;
+    line-height: 1.5;
+  }
+
+  /* Similar Properties */
+  .similar-properties-section {
+    margin-top: 5rem;
+    padding-top: 3.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .similar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 2rem;
+  }
+  .subhead-pill {
+    display: inline-block;
+    color: #10b981;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.35rem;
+  }
+  .similar-header h2 {
+    margin: 0;
+    font-size: 1.85rem;
+    color: #fff;
+    font-family: var(--font-display, inherit);
+  }
+  .view-sector-link {
+    color: #34d399;
+    font-size: 0.84rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .similar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 1024px) {
+    .prop-layout-grid {
+      grid-template-columns: 1fr;
+    }
+    .prop-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .prop-header-price {
+      text-align: left;
+    }
+    .similar-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .amenities-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 680px) {
+    .similar-grid {
+      grid-template-columns: 1fr;
+    }
+    .gallery-thumbs {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

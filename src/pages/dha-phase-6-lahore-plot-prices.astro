@@ -1,0 +1,485 @@
+---
+/**
+ * DHA Phase 6 Lahore — Comprehensive Plot Price Guide (Phase 10.15 Task 3)
+ * Route: /dha-phase-6-lahore-plot-prices/
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+
+const canonical = `${SITE.url}/dha-phase-6-lahore-plot-prices/`;
+const pageTitle = 'DHA Phase 6 Lahore Plot Prices Guide — 5, 10 Marla, 1 & 2 Kanal Land Rates';
+const metaDesc = 'Definitive guide to plot prices in DHA Phase 6 Lahore. Compare 5 Marla, 10 Marla, 1 Kanal, and 2 Kanal residential and commercial plot rates across all 17 sectors with latest market valuation trends.';
+
+const faqs = [
+  {
+    q: 'What is the average price of a 1 Kanal residential plot in DHA Phase 6 Lahore?',
+    a: 'A 1 Kanal plot in DHA Phase 6 currently trades between PKR 3.50 Crore in growing eastern sectors up to PKR 6.50 Crore in prime mature sectors like Sector A, Sector B, and Sector C.'
+  },
+  {
+    q: 'How much do 10 Marla plots cost in Phase 6?',
+    a: '10 Marla plots in Sector D, Sector J, and Sector L range between PKR 2.25 Crore and PKR 3.80 Crore depending on on-ground location and street width.'
+  },
+  {
+    q: 'What are the commercial plot rates in DHA Phase 6 CCA?',
+    a: 'Commercial plots in CCA 1 and CCA 2 range from PKR 14.0 Crore to PKR 24.0 Crore for 4 Marla, and PKR 24.0 Crore to PKR 45.0 Crore for 8 Marla plots.'
+  },
+  {
+    q: 'Are all plots in DHA Phase 6 balloted and possessed?',
+    a: 'Yes, 100% of DHA Phase 6 residential and commercial sectors are balloted, demarcated, and in possession with complete underground utilities.'
+  }
+];
+
+const structuredData: { '@context': string; '@graph': any[] } = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Article',
+      '@id': `${canonical}#article`,
+      headline: pageTitle,
+      description: metaDesc,
+      inLanguage: 'en-PK',
+      mainEntityOfPage: canonical,
+      publisher: {
+        '@type': 'Organization',
+        name: SITE.name,
+        url: SITE.url,
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${canonical}#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url },
+        { '@type': 'ListItem', position: 2, name: 'Price Guides', item: canonical },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${canonical}#faq`,
+      mainEntity: faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.q,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.a,
+        },
+      })),
+    },
+  ],
+};
+---
+
+<PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+
+  <header class="price-guide-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span>/</span>
+        <a href="/properties/">Properties</a>
+        <span>/</span>
+        <span aria-current="page">Plot Prices</span>
+      </nav>
+
+      <span class="hero-tag">Land Valuation &amp; Market Dynamics</span>
+      <h1>DHA Phase 6 Lahore Plot Prices Guide</h1>
+      <p class="hero-lead">
+        Verified market price matrix, sector-by-sector valuation comparisons, possession status breakdown, and investment trends for residential and commercial land in DHA Phase 6 Lahore.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#plot-matrix" class="btn-primary">View Plot Price Table ↓</a>
+        <a href="/dha-phase-6-lahore-house-prices/" class="btn-secondary">House Prices Guide →</a>
+        <a href="/plots-for-sale-in-dha-phase-6-lahore/" class="btn-secondary">Browse Plots for Sale →</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="price-guide-main">
+    <div class="container">
+      <!-- Plot Price Table -->
+      <section id="plot-matrix" class="guide-section">
+        <h2>Plot Rates by Size &amp; Category in DHA Phase 6</h2>
+        <p>
+          Current trading price ranges for residential and commercial plots across DHA Phase 6 Lahore based on direct transaction records:
+        </p>
+
+        <div class="table-responsive">
+          <table class="price-table">
+            <thead>
+              <tr>
+                <th>Plot Size</th>
+                <th>Standard General</th>
+                <th>Prime Location / Corner</th>
+                <th>Park Facing / Boulevard</th>
+                <th>Availability Sectors</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>5 Marla</strong></td>
+                <td>PKR 1.20 Cr – 1.65 Cr</td>
+                <td>PKR 1.65 Cr – 1.95 Cr</td>
+                <td>PKR 1.95 Cr – 2.25 Cr</td>
+                <td>Sector J, Sector L (Selective)</td>
+              </tr>
+              <tr>
+                <td><strong>8 Marla (Rare)</strong></td>
+                <td>PKR 1.90 Cr – 2.40 Cr</td>
+                <td>PKR 2.40 Cr – 2.80 Cr</td>
+                <td>PKR 2.80 Cr – 3.20 Cr</td>
+                <td>Special Residential Pockets</td>
+              </tr>
+              <tr>
+                <td><strong>10 Marla (250 sq yds)</strong></td>
+                <td>PKR 2.25 Cr – 2.90 Cr</td>
+                <td>PKR 2.90 Cr – 3.40 Cr</td>
+                <td>PKR 3.40 Cr – 3.90 Cr</td>
+                <td>Sector D, Sector J, Sector L, Sector N</td>
+              </tr>
+              <tr>
+                <td><strong>1 Kanal (500 sq yds)</strong></td>
+                <td>PKR 3.50 Cr – 4.50 Cr</td>
+                <td>PKR 4.50 Cr – 5.50 Cr</td>
+                <td>PKR 5.50 Cr – 6.80 Cr</td>
+                <td>All Residential Sectors (A to N)</td>
+              </tr>
+              <tr>
+                <td><strong>2 Kanal (1,000 sq yds)</strong></td>
+                <td>PKR 7.80 Cr – 10.50 Cr</td>
+                <td>PKR 10.50 Cr – 13.00 Cr</td>
+                <td>PKR 13.00 Cr – 16.00 Cr</td>
+                <td>Sector A, B, C, F, H, K, Raya</td>
+              </tr>
+              <tr>
+                <td><strong>4 Marla Commercial</strong></td>
+                <td>PKR 12.00 Cr – 16.00 Cr</td>
+                <td>PKR 16.00 Cr – 20.00 Cr</td>
+                <td>PKR 20.00 Cr – 24.00 Cr</td>
+                <td>CCA 1, CCA 2, Main Boulevard</td>
+              </tr>
+              <tr>
+                <td><strong>8 Marla Commercial</strong></td>
+                <td>PKR 22.00 Cr – 30.00 Cr</td>
+                <td>PKR 30.00 Cr – 38.00 Cr</td>
+                <td>PKR 38.00 Cr – 48.00 Cr</td>
+                <td>Commercial Broadway, CCA 1, CCA 2</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Sector by Sector Comparison -->
+      <section class="guide-section">
+        <h2>Sector-Wise 1 Kanal Plot Price Variance</h2>
+        <p>
+          Plot valuations vary substantially based on distance from Phase 5, elevation, proximity to commercial nodes, and surrounding construction density:
+        </p>
+
+        <div class="sectors-grid">
+          <div class="sec-col">
+            <h3>Tier 1: Prime Western Sectors</h3>
+            <p><strong>Sector A, B, C:</strong> PKR 4.20 Cr – 6.50 Cr</p>
+            <small>Direct access from Bedian Road &amp; Main Boulevard; mature 90%+ occupancy; Grand Mosque &amp; top schools.</small>
+          </div>
+          <div class="sec-col">
+            <h3>Tier 2: Central Institutional Hubs</h3>
+            <p><strong>Sector D, E, F:</strong> PKR 3.80 Cr – 5.60 Cr</p>
+            <small>Home to Beaconhouse, Police Station, Medical Centre, multi-acre sports parks, and central commercial hubs.</small>
+          </div>
+          <div class="sec-col">
+            <h3>Tier 3: Eastern &amp; Ring Road Links</h3>
+            <p><strong>Sector G, H, J, K:</strong> PKR 3.50 Cr – 5.20 Cr</p>
+            <small>Near Ring Road Barki Interchange, Defence Raya Golf Course, and high-demand 10 Marla and 1 Kanal enclaves.</small>
+          </div>
+          <div class="sec-col">
+            <h3>Tier 4: Expanding Growth Zones</h3>
+            <p><strong>Sector L, M, N:</strong> PKR 3.20 Cr – 4.80 Cr</p>
+            <small>High capital growth potential, active home construction, and direct access to southern ring road expansion.</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- Key Value Drivers -->
+      <section class="guide-section">
+        <h2>Key Value Drivers in Phase 6 Land Transactions</h2>
+        <div class="drivers-list">
+          <div class="driver-item">
+            <h4>Direct Transfer &amp; Clean Legal Title</h4>
+            <p>All plots in Phase 6 are governed by DHA Lahore's biometric transfer protocol, guaranteeing zero risk of encroachment, overlapping claims, or title defects.</p>
+          </div>
+          <div class="driver-item">
+            <h4>Ready Possession &amp; Active Utilities</h4>
+            <p>Immediate construction approvals are available upon transfer. Water, sewer, and electricity lines are ready for connection without development surcharge backlogs.</p>
+          </div>
+          <div class="driver-item">
+            <h4>Ring Road Interchange Multiplier</h4>
+            <p>Proximity to Barki Road and Bedian Road interchanges ensures that commute times to Gulberg, DHA Phase 5, and the Airport remain under 15 minutes.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQs -->
+      <section class="guide-section">
+        <h2>Frequently Asked Questions About DHA Phase 6 Plot Prices</h2>
+        <div class="faqs-list">
+          {faqs.map((faq) => (
+            <details class="faq-item" open>
+              <summary class="faq-q">
+                <span>{faq.q}</span>
+                <span class="faq-icon">+</span>
+              </summary>
+              <div class="faq-a">
+                <p>{faq.a}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </section>
+    </div>
+  </main>
+</PageLayout>
+
+<style>
+  :root {
+    --pr-bg: #080818;
+    --pr-surface: #111125;
+    --pr-surface-2: #161633;
+    --pr-gold: #10b981;
+    --pr-gold-light: #34d399;
+    --pr-text: #f0f0f5;
+    --pr-muted: #9494b8;
+    --pr-dim: #646485;
+    --pr-line: rgba(255, 255, 255, 0.08);
+  }
+
+  .price-guide-hero {
+    padding: 70px 0 50px;
+    background: linear-gradient(180deg, #101024 0%, #0c0c1b 100%);
+    border-bottom: 1px solid var(--pr-line);
+    text-align: center;
+  }
+  .breadcrumb {
+    display: flex;
+    justify-content: center;
+    gap: 0.45rem;
+    font-size: 0.75rem;
+    color: var(--pr-dim);
+    margin-bottom: 1.25rem;
+  }
+  .breadcrumb a {
+    color: var(--pr-muted);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    color: var(--pr-gold-light);
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(16, 185, 129, 0.12);
+    color: var(--pr-gold-light);
+    border: 1px solid rgba(16, 185, 129, 0.28);
+    padding: 0.2rem 0.65rem;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    margin-bottom: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .price-guide-hero h1 {
+    font-size: 2.3rem;
+    font-weight: 800;
+    color: var(--pr-text);
+    margin: 0 0 1rem;
+  }
+  .hero-lead {
+    max-width: 780px;
+    margin: 0 auto 1.75rem;
+    color: var(--pr-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--pr-gold), var(--pr-gold-light));
+    color: #06101d;
+    font-size: 0.82rem;
+    font-weight: 800;
+    padding: 0.65rem 1.25rem;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+  .btn-secondary {
+    background: var(--pr-surface);
+    color: var(--pr-text);
+    border: 1px solid var(--pr-line);
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 0.65rem 1.25rem;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+  .btn-secondary:hover {
+    border-color: var(--pr-gold);
+    color: var(--pr-gold-light);
+  }
+
+  .price-guide-main {
+    padding: 50px 0 80px;
+    background: var(--pr-bg);
+  }
+  .guide-section {
+    margin-bottom: 3.5rem;
+    padding: 2.25rem;
+    background: var(--pr-surface);
+    border: 1px solid var(--pr-line);
+    border-radius: 12px;
+  }
+  .guide-section h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--pr-text);
+    margin: 0 0 1rem;
+  }
+  .guide-section p {
+    color: var(--pr-muted);
+    font-size: 0.9rem;
+    line-height: 1.65;
+    margin: 0 0 1.25rem;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+  }
+  .price-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    background: #0d0d21;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .price-table th,
+  .price-table td {
+    padding: 0.9rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--pr-line);
+  }
+  .price-table th {
+    background: #151530;
+    color: var(--pr-text);
+    font-weight: 700;
+  }
+  .price-table td {
+    color: var(--pr-muted);
+  }
+
+  .sectors-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+  .sec-col {
+    background: #0d0d21;
+    border: 1px solid var(--pr-line);
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  .sec-col h3 {
+    font-size: 1rem;
+    color: var(--pr-gold-light);
+    margin: 0 0 0.4rem;
+  }
+  .sec-col p {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--pr-text);
+    margin: 0 0 0.4rem;
+  }
+  .sec-col small {
+    color: var(--pr-dim);
+    font-size: 0.78rem;
+    line-height: 1.4;
+    display: block;
+  }
+
+  .drivers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .driver-item {
+    background: #0d0d21;
+    border-left: 3px solid var(--pr-gold);
+    padding: 1rem 1.25rem;
+    border-radius: 0 6px 6px 0;
+  }
+  .driver-item h4 {
+    margin: 0 0 0.35rem;
+    font-size: 0.92rem;
+    color: var(--pr-text);
+  }
+  .driver-item p {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--pr-muted);
+  }
+
+  .faqs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .faq-item {
+    background: #0d0d21;
+    border: 1px solid var(--pr-line);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .faq-q {
+    padding: 0.85rem 1.1rem;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--pr-text);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+  }
+  .faq-icon {
+    color: var(--pr-gold-light);
+  }
+  .faq-a {
+    padding: 0 1.1rem 0.85rem;
+    color: var(--pr-muted);
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+  .faq-a p {
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .sectors-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 640px) {
+    .price-guide-hero {
+      padding: 48px 0 36px;
+    }
+    .price-guide-hero h1 {
+      font-size: 1.65rem;
+    }
+    .guide-section {
+      padding: 1.5rem;
+    }
+  }
+</style>

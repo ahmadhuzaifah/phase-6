@@ -1,0 +1,167 @@
+---
+/**
+ * Route: /plots-near-commercial-dha-phase-6-lahore/
+ * Location Intelligence & SEO Guide for Plots Near Commercial Areas in DHA Phase 6 Lahore.
+ */
+import LocationSeoTemplate from '@components/seo/LocationSeoTemplate.astro';
+import { getSectorPlaces } from '@data/places/index';
+import propertiesRaw from '@data/properties-import.json';
+import { SITE } from '@data/site';
+
+const canonical = `${SITE.url}/plots-near-commercial-dha-phase-6-lahore/`;
+const ccaPlaces = getSectorPlaces('cca');
+const mainBlvdPlaces = getSectorPlaces('main-boulevard-commercial');
+const commercialHubPlaces = [...ccaPlaces, ...mainBlvdPlaces].slice(0, 6);
+
+const commercialProperties = (propertiesRaw as any[]).filter(
+  (p) => p.propertyType === 'commercial-plot' || p.block?.includes('CCA') || p.block?.includes('Main Boulevard')
+).slice(0, 3);
+
+// If fewer than 3, fallback with other plots
+const displayProperties = commercialProperties.length >= 3
+  ? commercialProperties
+  : [...commercialProperties, ...(propertiesRaw as any[]).filter((p) => !commercialProperties.includes(p))].slice(0, 3);
+
+const tableRows = [
+  {
+    sector: 'CCA 1',
+    amenities: 'Retail Hub, Banks, Fast Food Chains, Supermarkets',
+    popularSizes: '4 Marla & 8 Marla Commercial',
+    priceRange: 'PKR 8.50 - 24.00 Cr',
+    travelTime: 'Direct Commercial Zone',
+    recommendedFor: 'Corporate offices, retail flagships & commercial rentals',
+  },
+  {
+    sector: 'CCA 2',
+    amenities: 'Eastern Commercial Anchor, Diagnostic Labs, Dining',
+    popularSizes: '4 Marla & 8 Marla Commercial',
+    priceRange: 'PKR 9.00 - 26.00 Cr',
+    travelTime: 'Direct Commercial Zone',
+    recommendedFor: 'High-yield commercial investments and multi-story plazas',
+  },
+  {
+    sector: 'Main Boulevard',
+    amenities: '120-Foot Boulevard Frontage, Brand Showrooms, Banks',
+    popularSizes: '8 Marla Commercial & Paired Plots',
+    priceRange: 'PKR 25.00 - 45.00 Cr',
+    travelTime: 'Arterial Spine Access',
+    recommendedFor: 'Flagship commercial developments and institutional investors',
+  },
+  {
+    sector: 'Sector D (Near CCA)',
+    amenities: 'Walking Distance to Central Markets & Dining',
+    popularSizes: '1 Kanal Residential Plots',
+    priceRange: 'PKR 4.80 - 6.50 Cr',
+    travelTime: '2-4 mins walk to commercial',
+    recommendedFor: 'Home builders seeking walk-to-shop lifestyle without noise',
+  },
+  {
+    sector: 'Sector H (Near CCA 2)',
+    amenities: 'Quick Access to CCA 2 Services, Pharmacies & Cafes',
+    popularSizes: '10 Marla & 1 Kanal Residential Plots',
+    priceRange: 'PKR 2.50 - 5.50 Cr',
+    travelTime: '2-3 mins drive to commercial',
+    recommendedFor: 'Families prioritizing daily convenience & rapid appreciation',
+  },
+  {
+    sector: 'Sector C (Near Markets)',
+    amenities: 'Artisan Cafes, Boutiques & Sector Shopping Plazas',
+    popularSizes: '1 Kanal Residential Plots',
+    priceRange: 'PKR 5.50 - 7.80 Cr',
+    travelTime: '2-4 mins walk',
+    recommendedFor: 'Urban lifestyle lovers wanting walkable neighborhood amenities',
+  },
+];
+
+const faqs = [
+  {
+    question: 'What is the difference between commercial plots and residential plots near commercial areas?',
+    answer: 'Commercial plots (such as 4 Marla and 8 Marla in CCA 1, CCA 2, and Main Boulevard) are strictly designated for commercial activities: multi-story office buildings, retail shops, restaurants, and banks. Residential plots near commercial areas are zoned exclusively for residential housing but enjoy the convenience of walking to nearby shops, groceries, and dining.',
+  },
+  {
+    question: 'What rental yields do commercial plots in CCA 1 and CCA 2 typically generate?',
+    answer: 'Commercial multi-story plazas in DHA Phase 6 typically yield gross rental returns between 5% and 8% annually, with established tenants including national banks, pharmacy chains, multinational food franchises, and healthcare laboratories.',
+  },
+  {
+    question: 'What height and basement permissions are granted by DHA for commercial plots?',
+    answer: 'DHA Lahore commercial bylaws permit Basement + Ground + Multiple Upper Floors depending on plot size and road width (typically G+4 or G+5 on 8 Marla plots). Always review the latest DHA building regulations for mandatory parking, setback, and fire safety provisions.',
+  },
+  {
+    question: 'Does living on a residential plot near a commercial area create noise or security concerns?',
+    answer: 'DHA Lahore enforces strict zoning separation. Commercial activities are restricted from encroaching onto residential streets. Plots situated 1 to 2 streets behind the commercial perimeter offer the optimal balance: full walking convenience with complete residential tranquility.',
+  },
+  {
+    question: 'Can commercial plots be paired together for larger developments in DHA Phase 6?',
+    answer: 'Yes, DHA Lahore permits pairing (combining) of adjacent commercial plots with formal DHA approval, enabling larger floor plates for corporate headquarters, department stores, and branded culinary ventures.',
+  },
+];
+
+const relatedLinks = [
+  {
+    label: 'CCA Commercial Places Directory',
+    href: '/places/cca/supermarkets/',
+    desc: 'Browse verified retail, dining, and banking establishments in CCA.',
+  },
+  {
+    label: 'Main Boulevard Commercial Guide',
+    href: '/places/main-boulevard-commercial/restaurants/',
+    desc: 'Explore landmark showrooms, dining spots, and banks on Main Boulevard.',
+  },
+  {
+    label: 'Commercial Property Listings',
+    href: '/properties/',
+    desc: 'View asking-price snapshots for 4 Marla and 8 Marla commercial plots.',
+  },
+  {
+    label: 'DHA Phase 6 Investment Guide',
+    href: '/investment-guide/',
+    desc: 'Understand commercial due diligence, tenant leases, and tax rules.',
+  },
+];
+---
+
+<LocationSeoTemplate
+  title="Plots Near Commercial Areas in DHA Phase 6 Lahore"
+  metaTitle="Plots Near Commercial Areas in DHA Phase 6 Lahore | CCA & Boulevard"
+  description="Explore commercial and residential plots near CCA 1, CCA 2, and Main Boulevard in DHA Phase 6 Lahore. Compare commercial yields, plot sizes, and price snapshots."
+  canonical={canonical}
+  badge="Commercial & Urban Intelligence"
+  headline="Plots Near Commercial Centers & Boulevards in DHA Phase 6"
+  lead="A comprehensive investment guide to commercial land and walkable residential plots situated near CCA 1, CCA 2, Raya Commercial, and Main Boulevard in DHA Phase 6 Lahore."
+  statPills={[
+    { value: 'CCA 1 & 2', label: 'Core Commercial Zones' },
+    { value: '4M & 8M', label: 'Prime Commercial Sizes' },
+    { value: '5-8%', label: 'Commercial Rental Yield Band' },
+    { value: 'Walkable', label: 'Residential Proximity Advantage' },
+  ]}
+  editorialParagraphs={[
+    'In premium master-planned developments like DHA Phase 6 Lahore, the relationship between commercial infrastructure and property value is paramount. Proximity to vibrant retail, financial institutions, and dining destinations is the single greatest catalyst for both capital appreciation and everyday lifestyle convenience.',
+    'Phase 6 features distinct, purpose-zoned commercial centers. CCA 1 serves the western and central sectors with grocery supermarkets, corporate banks, and retail outlets. CCA 2 anchors the eastern half, providing state-of-the-art diagnostic labs, fitness centers, and casual dining. Spanning the entire phase is the prestigious 120-foot Main Boulevard, accommodating flagship banks, car showrooms, and corporate offices.',
+    'For commercial investors, 4 Marla and 8 Marla commercial plots in CCA 1, CCA 2, and Main Boulevard offer lucrative development potential. Multi-story plazas let to reputable corporate tenants generate strong, inflation-hedged rental returns and unmatched long-term asset security under DHA Lahore’s stringent property protections.',
+    'For residential buyers, acquiring a residential plot located 150 to 300 meters from a CCA hub represents the ultimate "walkable urban living" experience in Lahore. Homeowners can stroll to pick up morning groceries, visit the bank, or grab coffee without the hassle of vehicular traffic, while remaining shielded from commercial noise on dedicated residential lanes.',
+  ]}
+  placesTitle="Top Commercial Hubs & Verified Businesses in DHA Phase 6"
+  placesSubtitle="Verified banks, supermarkets, and dining destinations across CCA and Main Boulevard."
+  places={commercialHubPlaces}
+  allPlacesCategoryUrl="/places/supermarkets/"
+  allPlacesCategoryLabel="Browse All Supermarkets & Commercial Retailers"
+  tableTitle="Commercial Centers & Surrounding Plot Valuation Matrix"
+  tableSubtitle="Compare commercial land formats, residential proximity, travel times, and current market demand."
+  tableRows={tableRows}
+  propertiesTitle="Featured Commercial & Residential Plot Snapshots"
+  propertiesSubtitle="Representative market asking price snapshots in CCA 1, CCA 2, and Main Boulevard."
+  properties={displayProperties}
+  zameenSearchUrl="https://www.zameen.com/Commercial_Plots/Lahore_Defence__DHA__Phase_6-1448-1.html"
+  zameenSearchLabel="Search Commercial Plots on Zameen.com ↗"
+  checklistTitle="Commercial Land & Proximity Buyer Checklist"
+  checklistBullets={[
+    'Commercial Zoning & Permitted Use: Confirm exact permitted commercial usage (retail, corporate office, restaurant, medical) with DHA planning authorities before signing.',
+    'Road Frontage & Parking Ratios: Inspect the plot road width (minimum 60-foot or 120-foot) and ensure adequate municipal parking courts are available in front of the site.',
+    'Building Height & Basement Bylaws: Verify the permitted number of floors (Basement + Ground + Upper Floors) and floor-area ratios (FAR) applicable to the specific block.',
+    'Utility Load Capacity: Verify high-amperage commercial electrical transformer availability, backup generator space, and high-volume commercial water and sewerage connections.',
+    'Residential Distance Buffer: When purchasing residential land near commercial zones, choose plots situated at least 1 to 2 streets behind the commercial rear line for noise protection.',
+    'Transfer Dues & Tax Calculations: Factor in commercial transfer fees, advance taxes (236K/236C), and municipal development charges which differ substantially from residential land.',
+  ]}
+  faqs={faqs}
+  relatedLinks={relatedLinks}
+/>

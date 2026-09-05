@@ -1,0 +1,160 @@
+---
+/**
+ * Route: /houses-near-mosques-dha-phase-6-lahore/
+ * Location Intelligence & SEO Guide for Houses Near Mosques in DHA Phase 6 Lahore.
+ */
+import LocationSeoTemplate from '@components/seo/LocationSeoTemplate.astro';
+import { getCategoryPlaces } from '@data/places/index';
+import propertiesRaw from '@data/properties-import.json';
+import { SITE } from '@data/site';
+
+const canonical = `${SITE.url}/houses-near-mosques-dha-phase-6-lahore/`;
+const mosques = getCategoryPlaces('mosque').slice(0, 6);
+
+const houseProperties = (propertiesRaw as any[]).filter(
+  (p) => p.propertyType === 'house' || p.propertyType === 'residential-plot'
+).slice(0, 3);
+
+const tableRows = [
+  {
+    sector: 'Sector C',
+    amenities: 'Grand Jamia Mosque Sector C (Landmark Architecture)',
+    popularSizes: '1 Kanal Luxury Houses',
+    priceRange: 'PKR 12.00 - 24.50 Cr',
+    travelTime: '2-4 mins walk',
+    recommendedFor: 'Devout families seeking an iconic community prayer hub',
+  },
+  {
+    sector: 'Sector A',
+    amenities: 'Sector A Central Mosque, Quran Academy & Library',
+    popularSizes: '1 Kanal, 2 Kanal Houses',
+    priceRange: 'PKR 9.50 - 22.00 Cr',
+    travelTime: '2-5 mins walk',
+    recommendedFor: 'Large residential buyers prioritizing traditional community values',
+  },
+  {
+    sector: 'Sector J',
+    amenities: 'Sector J Jamia Mosque, Daily Tajweed Classes',
+    popularSizes: '10 Marla, 1 Kanal Houses',
+    priceRange: 'PKR 4.80 - 11.50 Cr',
+    travelTime: '1-3 mins walk',
+    recommendedFor: 'Young families wanting walking access for five daily prayers',
+  },
+  {
+    sector: 'Sector D',
+    amenities: 'Sector D Jamia Masjid, Air-Conditioned Prayer Halls',
+    popularSizes: '1 Kanal Houses & Plots',
+    priceRange: 'PKR 8.50 - 16.00 Cr',
+    travelTime: '2-4 mins walk',
+    recommendedFor: 'Residents seeking central sector walking access',
+  },
+  {
+    sector: 'Sector K',
+    amenities: 'Grand Jamia Mosque Sector K, Spacious Courtyard',
+    popularSizes: '1 Kanal, 2 Kanal Houses',
+    priceRange: 'PKR 8.00 - 17.50 Cr',
+    travelTime: '3-5 mins walk',
+    recommendedFor: 'Families desiring serene eastern streets near major mosques',
+  },
+  {
+    sector: 'Sector H',
+    amenities: 'Sector H Central Mosque, Community Hall',
+    popularSizes: '10 Marla, 1 Kanal Houses',
+    priceRange: 'PKR 5.20 - 12.00 Cr',
+    travelTime: '2-4 mins walk',
+    recommendedFor: '10 Marla home seekers prioritizing spiritual proximity',
+  },
+];
+
+const faqs = [
+  {
+    question: 'How many mosques are located in DHA Phase 6 Lahore?',
+    answer: 'DHA Phase 6 features over 41 verified mosques distributed across all 13 residential sectors and commercial zones. Every sector has at least one central Jamia Masjid with Friday congregations, plus several sector-level neighborhood prayer facilities.',
+  },
+  {
+    question: 'Does every sector in DHA Phase 6 have a Jamia Mosque for Friday prayers?',
+    answer: 'Yes. Master-planned urban bylaws ensure that every sector (A through N) contains a designated central Jamia Mosque with dedicated ladies prayer galleries, ablution areas, mortuary services, and parking courts.',
+  },
+  {
+    question: 'How far is the average house from a mosque in DHA Phase 6?',
+    answer: 'Due to DHA’s thoughtful sector layout, nearly 90% of residential plots and houses are situated within a 3 to 7-minute leisurely walk (200 to 500 meters) from a verified mosque.',
+  },
+  {
+    question: 'Does living directly adjacent to a mosque affect property value or noise?',
+    answer: 'Homes located 2 to 4 streets away from a mosque are considered the most desirable "sweet spot" — offering effortless walking convenience for Fajr and Isha prayers while avoiding concentrated parking traffic during Friday and Taraweeh prayers.',
+  },
+  {
+    question: 'Are there Quran academies and educational programs at DHA Phase 6 mosques?',
+    answer: 'Yes. Prominent mosques like Grand Jamia Mosque Sector C and Sector A Mosque conduct regular Hifz classes, Tajweed programs, Arabic language learning, and community lectures for children and adults.',
+  },
+];
+
+const relatedLinks = [
+  {
+    label: 'DHA Phase 6 Mosques Directory',
+    href: '/places/mosque/',
+    desc: 'Browse all 41+ verified Jamia and sector mosques across DHA Phase 6.',
+  },
+  {
+    label: 'Sector C Facilities & Guide',
+    href: '/sectors/sector-c/places/',
+    desc: 'Explore Sector C places, Grand Jamia Mosque, and surrounding cafes.',
+  },
+  {
+    label: 'Sector J Facilities & Guide',
+    href: '/sectors/sector-j/places/',
+    desc: 'Browse 10 Marla and 1 Kanal residential facilities in Sector J.',
+  },
+  {
+    label: 'Browse Houses for Sale',
+    href: '/properties/',
+    desc: 'Current market asking price snapshots for houses across DHA Phase 6.',
+  },
+];
+---
+
+<LocationSeoTemplate
+  title="Houses Near Mosques in DHA Phase 6 Lahore"
+  metaTitle="Houses Near Mosques in DHA Phase 6 Lahore | Walking Distance Guide"
+  description="Find houses for sale within walking distance of Grand Jamia Mosques in DHA Phase 6 Lahore. Compare Sectors C, A, J, D, and K for prayer accessibility and community life."
+  canonical={canonical}
+  badge="Community & Spiritual Living"
+  headline="Houses Near Mosques in DHA Phase 6 Lahore"
+  lead="An essential guide for buyers seeking homes within comfortable walking distance of central Jamia Masjids and prayer facilities across all sectors of DHA Phase 6 Lahore."
+  statPills={[
+    { value: '41+', label: 'Verified Mosques in Phase 6' },
+    { value: '2-5 min', label: 'Average Walking Distance' },
+    { value: '13 Sectors', label: 'Complete Sector Coverage' },
+    { value: 'Grand Jamia', label: 'Landmark Architecture in Sector C' },
+  ]}
+  editorialParagraphs={[
+    'In Pakistani cultural and community life, being within effortless walking distance of a clean, well-maintained mosque is among the top criteria when evaluating a residential property. For thousands of homeowners in DHA Phase 6 Lahore, the ability to attend five daily congregational prayers without driving is a defining lifestyle blessing.',
+    'DHA Phase 6 stands out across Lahore for the architectural beauty, spaciousness, and immaculate upkeep of its mosques. Every residential sector, from Sector A to Sector N, features a central Jamia Masjid designed with climate-controlled prayer halls, sound acoustic dampening, manicured gardens, and comprehensive Quran learning academies.',
+    'The architectural crown jewel of the phase is the Grand Jamia Mosque in Sector C, boasting magnificent minarets, Turkish-inspired domes, and capacity for thousands of worshippers during Eid and Friday prayers. Similar grand mosques grace Sectors A, D, J, and K, anchoring tight-knit neighborhood communities.',
+    'When choosing a house near a mosque, experienced property advisors suggest selecting homes located 100 to 300 meters away (approximately a 2 to 4-minute walk). This positioning allows seniors and children to walk comfortably while ensuring the street remains quiet and clear during peak prayer arrivals.',
+  ]}
+  placesTitle="Prominent Jamia Mosques in DHA Phase 6 Lahore"
+  placesSubtitle="Verified mosques with full addresses, prayer facilities, and Google Maps walking directions."
+  places={mosques}
+  allPlacesCategoryUrl="/places/mosque/"
+  allPlacesCategoryLabel="Browse All 41+ Verified Mosques"
+  tableTitle="Sector-by-Sector Mosque Accessibility & Housing Table"
+  tableSubtitle="Compare walking times, mosque facilities, and prevailing housing prices across sectors."
+  tableRows={tableRows}
+  propertiesTitle="Featured Houses Near Mosques"
+  propertiesSubtitle="Representative market snapshots for homes with excellent prayer accessibility."
+  properties={houseProperties}
+  zameenSearchUrl="https://www.zameen.com/Houses_Property/Lahore_Defence__DHA__Phase_6-1448-1.html"
+  zameenSearchLabel="Search DHA Phase 6 Houses on Zameen.com ↗"
+  checklistTitle="Walking Proximity Checklist for Mosque Selection"
+  checklistBullets={[
+    'Walk Test: Walk from the candidate house to the nearest mosque at Fajr or Maghrib to verify the exact foot route, pavement quality, and lighting.',
+    'Adhan Acoustics: Listen to the call to prayer from inside the master bedroom and living areas to ensure the volume is pleasing and comfortable for your family.',
+    'Jummah Parking Impact: Inspect the street during Friday noon prayers (1:00 PM to 2:00 PM) to confirm whether parked attendee cars block your driveway or through-lane.',
+    'Ladies Prayer Facilities: Verify whether the nearest mosque includes a designated women’s prayer hall, ablution space, and weekend Islamic lecture facilities.',
+    'Safe Crossings for Children: Ensure young family members do not have to cross high-speed 100-foot commercial boulevards to reach the mosque.',
+    'Street Level Drainage: Check street drainage around the mosque entrance to ensure water does not accumulate during monsoon season rainstorms.',
+  ]}
+  faqs={faqs}
+  relatedLinks={relatedLinks}
+/>

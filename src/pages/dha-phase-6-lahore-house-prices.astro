@@ -1,0 +1,511 @@
+---
+/**
+ * DHA Phase 6 Lahore — Comprehensive House Price Guide (Phase 10.15 Task 3)
+ * Route: /dha-phase-6-lahore-house-prices/
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SECTORS_DIRECTORY } from '@data/places/index';
+import { SITE } from '@data/site';
+
+const canonical = `${SITE.url}/dha-phase-6-lahore-house-prices/`;
+const pageTitle = 'DHA Phase 6 Lahore House Prices Guide — 10 Marla, 1 & 2 Kanal Rates';
+const metaDesc = 'Authoritative guide to house prices in DHA Phase 6 Lahore. Compare 10 Marla, 1 Kanal, and 2 Kanal brand new designer home rates across sectors, construction cost factors, and rental yields.';
+
+const faqs = [
+  {
+    q: 'How much does a brand-new 1 Kanal house cost in DHA Phase 6 Lahore?',
+    a: 'A newly constructed 1 Kanal luxury house in DHA Phase 6 typically ranges from PKR 7.50 Crore for standard A-grade finishes to PKR 14.50 Crore for custom designer mansions with basements, swimming pools, and imported Italian fixtures.'
+  },
+  {
+    q: 'What is the price of a 10 Marla house in DHA Phase 6?',
+    a: '10 Marla houses in sectors such as Sector D and Sector J range between PKR 4.50 Crore and PKR 7.50 Crore depending on location, corner orientation, and finish quality.'
+  },
+  {
+    q: 'Why are houses in Sector A and Sector C priced higher than eastern sectors?',
+    a: 'Sector A and C command premium pricing due to immediate access to Bedian Road, Dolmen Mall, the Grand Jamia Mosque, and mature residential occupancy exceeding 90%.'
+  },
+  {
+    q: 'What is the typical rental return for a house in DHA Phase 6 Lahore?',
+    a: 'Annual rental yields for residential homes in Phase 6 range between 4.8% and 5.6%, with 1 Kanal homes renting for PKR 2.50 Lac to PKR 4.50 Lac per month.'
+  }
+];
+
+const structuredData: { '@context': string; '@graph': any[] } = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Article',
+      '@id': `${canonical}#article`,
+      headline: pageTitle,
+      description: metaDesc,
+      inLanguage: 'en-PK',
+      mainEntityOfPage: canonical,
+      publisher: {
+        '@type': 'Organization',
+        name: SITE.name,
+        url: SITE.url,
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${canonical}#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url },
+        { '@type': 'ListItem', position: 2, name: 'Price Guides', item: `${SITE.url}/dha-phase-6-lahore-plot-prices/` },
+        { '@type': 'ListItem', position: 3, name: 'House Prices', item: canonical },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${canonical}#faq`,
+      mainEntity: faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.q,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.a,
+        },
+      })),
+    },
+  ],
+};
+---
+
+<PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+
+  <header class="price-guide-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span>/</span>
+        <a href="/properties/">Properties</a>
+        <span>/</span>
+        <span aria-current="page">House Prices</span>
+      </nav>
+
+      <span class="hero-tag">Real Estate Market Intelligence</span>
+      <h1>DHA Phase 6 Lahore House Prices Guide</h1>
+      <p class="hero-lead">
+        Comprehensive analysis of residential house values, construction cost factors, sector-by-sector pricing differentials, and rental yields across DHA Phase 6 Lahore.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#price-matrix" class="btn-primary">View House Price Matrix ↓</a>
+        <a href="/dha-phase-6-lahore-plot-prices/" class="btn-secondary">Plot Prices Guide →</a>
+        <a href="/houses-for-sale-in-dha-phase-6-lahore/" class="btn-secondary">Browse Houses for Sale →</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="price-guide-main">
+    <div class="container">
+      <!-- House Sizes Matrix -->
+      <section id="price-matrix" class="guide-section">
+        <h2>DHA Phase 6 House Price Ranges by Size</h2>
+        <p>
+          Residential house prices in DHA Phase 6 Lahore reflect architectural layout, structural quality, interior specifications, and sector positioning. Here is the verified price benchmark:
+        </p>
+
+        <div class="table-responsive">
+          <table class="price-table">
+            <thead>
+              <tr>
+                <th>House Size</th>
+                <th>Standard Brand New</th>
+                <th>Luxury Designer / Spanish</th>
+                <th>With Basement / Pool</th>
+                <th>Monthly Rental Range</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>5 Marla</strong></td>
+                <td>PKR 2.40 Cr – 3.20 Cr</td>
+                <td>PKR 3.20 Cr – 3.90 Cr</td>
+                <td>N/A</td>
+                <td>PKR 85,000 – 130,000</td>
+              </tr>
+              <tr>
+                <td><strong>10 Marla</strong></td>
+                <td>PKR 4.50 Cr – 5.80 Cr</td>
+                <td>PKR 5.80 Cr – 6.80 Cr</td>
+                <td>PKR 6.80 Cr – 7.80 Cr</td>
+                <td>PKR 140,000 – 220,000</td>
+              </tr>
+              <tr>
+                <td><strong>1 Kanal (500 sq yds)</strong></td>
+                <td>PKR 7.50 Cr – 9.20 Cr</td>
+                <td>PKR 9.50 Cr – 12.00 Cr</td>
+                <td>PKR 12.00 Cr – 14.50 Cr</td>
+                <td>PKR 250,000 – 450,000</td>
+              </tr>
+              <tr>
+                <td><strong>2 Kanal (1,000 sq yds)</strong></td>
+                <td>PKR 14.00 Cr – 18.00 Cr</td>
+                <td>PKR 18.00 Cr – 22.00 Cr</td>
+                <td>PKR 22.00 Cr – 26.00 Cr</td>
+                <td>PKR 500,000 – 850,000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Key Factors Determining House Prices -->
+      <section class="guide-section">
+        <h2>Key Factors Determining House Valuations in Phase 6</h2>
+        <div class="factors-grid">
+          <div class="factor-card">
+            <h3>1. Architectural Quality &amp; Materials</h3>
+            <p>Houses built with solid ash wood doors, Spanish or Italian porcelain tiles, Grohe/Kohler sanitaryware, and imported SMD lighting command a 25% to 35% premium over builder-grade specs.</p>
+          </div>
+          <div class="factor-card">
+            <h3>2. Full Basement Construction</h3>
+            <p>A full basement with proper waterproofing, home theatre acoustic treatment, and gym facilities adds PKR 1.50 Crore to 2.50 Crore to the overall construction valuation of a 1 Kanal home.</p>
+          </div>
+          <div class="factor-card">
+            <h3>3. Street Width &amp; Orientation</h3>
+            <p>Homes located on 60-ft, 80-ft, or 100-ft boulevards, as well as park-facing and corner plots, enjoy superior curb appeal, effortless parking, and faster resale turnaround times.</p>
+          </div>
+          <div class="factor-card">
+            <h3>4. Sector Proximity &amp; Occupancy</h3>
+            <p>Sectors A, B, C, and D benefit from higher construction density, immediate access to commercial hubs, and walking distance to top schools, justifying higher square-foot price tags.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sector-Wise Differences -->
+      <section class="guide-section">
+        <h2>Sector-Wise House Price Comparison</h2>
+        <div class="sectors-price-cards">
+          {SECTORS_DIRECTORY.slice(0, 8).map((sec) => (
+            <div class="sec-price-pill">
+              <span class="sec-pill-title">{sec.label}</span>
+              <span class="sec-pill-rate">1 Kanal: PKR 7.80 Cr – 13.50 Cr</span>
+              <p>{sec.description}</p>
+              <a href={`/dha-phase-6-${sec.key}-lahore/`}>Explore {sec.label} Guide →</a>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Commercial Value & Rental Yield -->
+      <section class="guide-section">
+        <h2>Commercial Value &amp; Rental Yield Analysis</h2>
+        <p>
+          For buy-to-let investors, DHA Phase 6 houses offer exceptionally stable rental demand from corporate executives, embassy personnel, multinational consultants, and high-net-worth families.
+        </p>
+        <div class="metrics-row">
+          <div class="metric-box">
+            <span class="m-val">4.8% – 5.6%</span>
+            <span class="m-title">Gross Residential Rental Yield</span>
+          </div>
+          <div class="metric-box">
+            <span class="m-val">10% – 14%</span>
+            <span class="m-title">Annual Capital Appreciation</span>
+          </div>
+          <div class="metric-box">
+            <span class="m-val">&lt; 30 Days</span>
+            <span class="m-title">Average Tenant Vacancy Time</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQs -->
+      <section class="guide-section">
+        <h2>Frequently Asked Questions About DHA Phase 6 House Prices</h2>
+        <div class="faqs-list">
+          {faqs.map((faq) => (
+            <details class="faq-item" open>
+              <summary class="faq-q">
+                <span>{faq.q}</span>
+                <span class="faq-icon">+</span>
+              </summary>
+              <div class="faq-a">
+                <p>{faq.a}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </section>
+    </div>
+  </main>
+</PageLayout>
+
+<style>
+  :root {
+    --pr-bg: #080818;
+    --pr-surface: #111125;
+    --pr-surface-2: #161633;
+    --pr-gold: #10b981;
+    --pr-gold-light: #34d399;
+    --pr-text: #f0f0f5;
+    --pr-muted: #9494b8;
+    --pr-dim: #646485;
+    --pr-line: rgba(255, 255, 255, 0.08);
+  }
+
+  .price-guide-hero {
+    padding: 70px 0 50px;
+    background: linear-gradient(180deg, #101024 0%, #0c0c1b 100%);
+    border-bottom: 1px solid var(--pr-line);
+    text-align: center;
+  }
+  .breadcrumb {
+    display: flex;
+    justify-content: center;
+    gap: 0.45rem;
+    font-size: 0.75rem;
+    color: var(--pr-dim);
+    margin-bottom: 1.25rem;
+  }
+  .breadcrumb a {
+    color: var(--pr-muted);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    color: var(--pr-gold-light);
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(16, 185, 129, 0.12);
+    color: var(--pr-gold-light);
+    border: 1px solid rgba(16, 185, 129, 0.28);
+    padding: 0.2rem 0.65rem;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    margin-bottom: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .price-guide-hero h1 {
+    font-size: 2.3rem;
+    font-weight: 800;
+    color: var(--pr-text);
+    margin: 0 0 1rem;
+  }
+  .hero-lead {
+    max-width: 780px;
+    margin: 0 auto 1.75rem;
+    color: var(--pr-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--pr-gold), var(--pr-gold-light));
+    color: #06101d;
+    font-size: 0.82rem;
+    font-weight: 800;
+    padding: 0.65rem 1.25rem;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+  .btn-secondary {
+    background: var(--pr-surface);
+    color: var(--pr-text);
+    border: 1px solid var(--pr-line);
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 0.65rem 1.25rem;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+  .btn-secondary:hover {
+    border-color: var(--pr-gold);
+    color: var(--pr-gold-light);
+  }
+
+  .price-guide-main {
+    padding: 50px 0 80px;
+    background: var(--pr-bg);
+  }
+  .guide-section {
+    margin-bottom: 3.5rem;
+    padding: 2.25rem;
+    background: var(--pr-surface);
+    border: 1px solid var(--pr-line);
+    border-radius: 12px;
+  }
+  .guide-section h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--pr-text);
+    margin: 0 0 1rem;
+  }
+  .guide-section p {
+    color: var(--pr-muted);
+    font-size: 0.9rem;
+    line-height: 1.65;
+    margin: 0 0 1.25rem;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+  }
+  .price-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    background: #0d0d21;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .price-table th,
+  .price-table td {
+    padding: 0.9rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--pr-line);
+  }
+  .price-table th {
+    background: #151530;
+    color: var(--pr-text);
+    font-weight: 700;
+  }
+  .price-table td {
+    color: var(--pr-muted);
+  }
+
+  .factors-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+  .factor-card {
+    background: #0d0d21;
+    border: 1px solid var(--pr-line);
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  .factor-card h3 {
+    font-size: 1rem;
+    color: var(--pr-gold-light);
+    margin: 0 0 0.5rem;
+  }
+  .factor-card p {
+    margin: 0;
+    font-size: 0.82rem;
+  }
+
+  .sectors-price-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  .sec-price-pill {
+    background: #0d0d21;
+    border: 1px solid var(--pr-line);
+    border-radius: 8px;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .sec-pill-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--pr-text);
+    margin-bottom: 0.3rem;
+  }
+  .sec-pill-rate {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--pr-gold-light);
+    margin-bottom: 0.5rem;
+  }
+  .sec-price-pill p {
+    font-size: 0.75rem;
+    color: var(--pr-muted);
+    margin: 0 0 0.85rem;
+    flex-grow: 1;
+  }
+  .sec-price-pill a {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--pr-gold);
+    text-decoration: none;
+  }
+
+  .metrics-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .metric-box {
+    background: #0d0d21;
+    border: 1px solid var(--pr-line);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .m-val {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--pr-gold-light);
+  }
+  .m-title {
+    font-size: 0.78rem;
+    color: var(--pr-muted);
+  }
+
+  .faqs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .faq-item {
+    background: #0d0d21;
+    border: 1px solid var(--pr-line);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .faq-q {
+    padding: 0.85rem 1.1rem;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--pr-text);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+  }
+  .faq-icon {
+    color: var(--pr-gold-light);
+  }
+  .faq-a {
+    padding: 0 1.1rem 0.85rem;
+    color: var(--pr-muted);
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+  .faq-a p {
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .factors-grid,
+    .metrics-row {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 640px) {
+    .price-guide-hero {
+      padding: 48px 0 36px;
+    }
+    .price-guide-hero h1 {
+      font-size: 1.65rem;
+    }
+    .guide-section {
+      padding: 1.5rem;
+    }
+  }
+</style>

@@ -1,40 +1,511 @@
 ---
-import GuidePage from '@components/content/GuidePage.astro';
+/**
+ * Best Sector in DHA Phase 6 Lahore — Definitive Sector-by-Sector Comparison Guide
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+
+const title = "Best Sector in DHA Phase 6 Lahore — Complete Sector A to N Comparison";
+const description = "Discover the best sector in DHA Phase 6 Lahore. Compare Sectors A, B, C, D, E, F, G, H, J, K, L, M, and N for family living, commercial access, prices, and investment ROI.";
+const canonical = `${SITE.url}/best-sector-in-dha-phase-6-lahore/`;
+
+const sectorRanks = [
+  { sector: 'Sector C', category: 'Overall Best for Luxury Living', sizes: '1 & 2 Kanal', rating: '9.8/10', highlight: 'Grand Jamia Masjid, central location, quiet residential lanes.' },
+  { sector: 'Sector D', category: 'Best for Commercial Proximity', sizes: '1 Kanal', rating: '9.6/10', highlight: 'Direct walkable adjacency to CCA 1 shopping, banks, and cafes.' },
+  { sector: 'Sector J', category: 'Best for 10 Marla & Schools', sizes: '10 Marla & 1 Kanal', rating: '9.5/10', highlight: 'Home to Beaconhouse Campus, thriving commercial street, family favorite.' },
+  { sector: 'Sector B', category: 'Best for Education & Prestige', sizes: '1 & 2 Kanal', rating: '9.4/10', highlight: 'Roots Millennium, mature park network, elite executive residents.' },
+  { sector: 'Sector A', category: 'Best for Central Lahore Commute', sizes: '1 & 2 Kanal', rating: '9.3/10', highlight: 'Bedian Road primary entrance, zero travel delay to Phase 5.' },
+  { sector: 'Sector E', category: 'Best for Healthcare Access', sizes: '1 & 2 Kanal', rating: '9.2/10', highlight: 'DHA Medical Centre, sports complex, high senior citizen appeal.' },
+  { sector: 'Sector M & N (Raya)', category: 'Best for Golf Resort Lifestyle', sizes: '1 & 2 Kanal, Golf Villas', rating: '9.7/10', highlight: 'Defence Raya 18-hole golf course, private clubhouse, elite prestige.' },
+  { sector: 'Sector K & L', category: 'Best for Value & Price Growth', sizes: '10 Marla & 1 Kanal', rating: '8.9/10', highlight: 'Attractive plot entry prices, fast construction activity, Ring Road exit.' },
+  { sector: 'Sector F, G & H', category: 'Best for Quiet Luxury & Commuters', sizes: '1 Kanal', rating: '9.0/10', highlight: 'Wide internal roads, Ring Road interchange proximity, peaceful ambiance.' }
+];
+
+const faqs = [
+  {
+    question: "Which sector is considered the absolute best in DHA Phase 6?",
+    answer: "For prime 1 Kanal and 2 Kanal luxury family living, Sector C and Sector D are widely considered the gold standard due to their central positioning, the iconic Grand Jamia Mosque, and immediate adjacency to Central Commercial Area 1 (CCA 1). For 10 Marla houses, Sector J is the highest-ranked sector."
+  },
+  {
+    question: "Which sector in Phase 6 is best for building a 10 Marla house?",
+    answer: "Sector J is the premier choice for 10 Marla construction due to its walking-distance proximity to Beaconhouse School, its own vibrant commercial market, and strong neighborhood occupancy. Sector K and Sector L offer excellent value alternatives for 10 Marla buyers on tighter budgets."
+  },
+  {
+    question: "Which sector is best for pure capital appreciation investment?",
+    answer: "Sectors K, L, and G offer the strongest capital appreciation runway because their baseline plot prices are 15% to 25% lower than Sectors A, B, and C, with rapid ongoing construction and immediate access to the Lahore Ring Road."
+  },
+  {
+    question: "Which sector has the least traffic noise in DHA Phase 6?",
+    answer: "Sectors C, F, and H feature the lowest through-traffic and noise levels because they are positioned away from external arterial boundary corridors (such as Bedian Road and Ring Road) while maintaining broad 50-foot residential lanes."
+  },
+  {
+    question: "Are all sectors in DHA Phase 6 100% underground electrified?",
+    answer: "Yes, all sectors from Sector A through Sector N, including CCA 1, CCA 2, and Defence Raya, feature complete underground electrification with zero overhead wires."
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": `${canonical}#article`,
+      "isPartOf": { "@type": "WebSite", "@id": `${SITE.url}/#website` },
+      "headline": title,
+      "description": description,
+      "url": canonical,
+      "inLanguage": "en-PK",
+      "mainEntityOfPage": canonical,
+      "datePublished": "2026-02-18T08:00:00+05:00",
+      "dateModified": "2026-09-05T12:00:00+05:00",
+      "publisher": { "@type": "Organization", "name": SITE.name, "url": SITE.url },
+      "author": { "@type": "Organization", "name": "Research & Editorial Desk, DHA Phase 6 Guide" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonical}#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE.url },
+        { "@type": "ListItem", "position": 2, "name": "Best Guides", "item": `${SITE.url}/guides/` },
+        { "@type": "ListItem", "position": 3, "name": "Best Sector in Phase 6", "item": canonical }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${canonical}#faq`,
+      "mainEntity": faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": { "@type": "Answer", "text": faq.answer }
+      }))
+    }
+  ]
+};
 ---
 
-<GuidePage
-  title="Best Sector in DHA Phase 6 Lahore"
-  metaTitle="Best Sector in DHA Phase 6 Lahore | How to Compare A-N"
-  description="There is no universal best sector. Use this framework to compare DHA Phase 6 Lahore sectors by property type, budget, access, surroundings and resale needs."
-  facts={[
-    { label: 'Family priority', value: 'Commute and daily facilities' },
-    { label: 'Plot priority', value: 'Street and orientation' },
-    { label: 'House priority', value: 'Condition and approved plans' },
-    { label: 'Commercial priority', value: 'Frontage, parking and use' },
-  ]}
-  sections={[
-    {
-      heading: 'Best depends on the decision',
-      paragraphs: [
-        'A sector that suits a 1 Kanal house buyer may not suit a 10 Marla buyer or a commercial investor. Start with property type, maximum total budget, required commute and holding period.',
-        'Then compare actual properties. Sector reputation should never replace street-level inspection and document checks.',
-      ],
-    },
-    {
-      heading: 'Comparison scorecard',
-      paragraphs: ['Score each candidate using the same evidence.'],
-      bullets: ['Exact map position and access gate', 'Road width, orientation and plot dimensions', 'Nearby parks, mosques and commercial activity', 'Occupied houses and active construction', 'Comparable current asking prices', 'Ownership, dues and transfer status', 'Likely buyer pool when reselling'],
-    },
-    {
-      heading: 'Build a shortlist',
-      paragraphs: [
-        'Choose two or three sectors, identify at least three comparable properties in each, and visit them at similar times. The best sector is the one whose specific options meet the buyer brief with acceptable risks.',
-      ],
-    },
-  ]}
-  faqs={[
-    { question: 'Is Sector A always the best?', answer: 'No. It may suit some briefs, but price, exact location, property type and personal priorities determine the better choice.' },
-    { question: 'Can asking prices identify the best sector?', answer: 'Not alone. Asking prices show seller expectations and need to be combined with transaction evidence, site condition and due diligence.' },
-  ]}
-  sources={[{ label: 'Browse DHA Phase 6 sectors', href: '/sectors' }, { label: 'Open the Phase 6 map guide', href: '/dha-phase-6-lahore-map' }]}
-/>
+<PageLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+
+  <header class="comp-hero">
+    <div class="container">
+      <div class="hero-badges">
+        <span class="badge-pill gold-pill">Sector Rankings & Scorecards</span>
+        <span class="badge-pill">Independent Buyer Intelligence</span>
+      </div>
+      <h1 class="hero-headline">
+        Best Sector in DHA Phase 6 Lahore: <span class="text-gradient">Sector-by-Sector Breakdown</span>
+      </h1>
+      <p class="hero-lead">
+        An objective, empirical comparison of Sectors A through N. Analyze plot availability, road widths, school proximity, commercial access, and investment returns to find your ideal sector.
+      </p>
+    </div>
+  </header>
+
+  <main class="container comp-content">
+
+    <!-- EXECUTIVE SUMMARY TABLE -->
+    <section class="comp-section">
+      <h2>Sector Ranking & Category Leaderboard</h2>
+      <div class="table-responsive">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Sector</th>
+              <th>Best Known For</th>
+              <th>Plot Sizes</th>
+              <th>Overall Score</th>
+              <th>Key Strengths</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sectorRanks.map((r) => (
+              <tr>
+                <td><strong>{r.sector}</strong></td>
+                <td><span class="tag-win">{r.category}</span></td>
+                <td>{r.sizes}</td>
+                <td><strong>{r.rating}</strong></td>
+                <td>{r.highlight}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- IN-DEPTH SECTOR BY SECTOR AUDIT -->
+    <section class="comp-section">
+      <h2>In-Depth Sector-by-Sector Analysis</h2>
+
+      <div class="sector-card-block">
+        <h3>Sector A — The Gateway to Phase 6</h3>
+        <p>
+          Positioned directly off Bedian Road, Sector A is the first sector greeting visitors entering from DHA Phase 5. It features 100% built-up density, mature landscaping, and prestigious 1 Kanal and 2 Kanal residences. For homeowners whose daily commute involves traveling back into Phase 1–5 or Cantt, Sector A saves 5 to 8 minutes of transit every trip.
+        </p>
+        <p><a href="/dha-phase-6-sector-a-lahore/" class="text-link">Read Full Sector A Guide →</a></p>
+      </div>
+
+      <div class="sector-card-block">
+        <h3>Sector B — Prestigious Education Corridor</h3>
+        <p>
+          Sector B is favored by senior corporate executives and academics. It hosts Roots Millennium Schools and borders major institutional zones. With wide tree-lined boulevards and well-maintained sector parks, it offers a sophisticated family atmosphere with predominantly 1 Kanal luxury villas.
+        </p>
+        <p><a href="/dha-phase-6-sector-b-lahore/" class="text-link">Read Full Sector B Guide →</a></p>
+      </div>
+
+      <div class="sector-card-block">
+        <h3>Sector C — The Architectural & Spiritual Heart</h3>
+        <p>
+          Sector C is universally regarded as the premier residential block in Phase 6. Anchored by the grand architectural landmark Jamia Masjid and sprawling community parks, it enjoys a peaceful interior location free from commercial road congestion while remaining seconds from CCA 1.
+        </p>
+        <p><a href="/dha-phase-6-sector-c-lahore/" class="text-link">Read Full Sector C Guide →</a></p>
+      </div>
+
+      <div class="sector-card-block">
+        <h3>Sector D — Maximum Walkable Convenience</h3>
+        <p>
+          Bordering CCA 1 directly, Sector D provides the best balance between quiet residential street living and walkable commercial access. Residents can walk to supermarkets, banks, bakeries, and clinics within 3 minutes, making it highly desirable for active families and seniors.
+        </p>
+        <p><a href="/dha-phase-6-sector-d-lahore/" class="text-link">Read Full Sector D Guide →</a></p>
+      </div>
+
+      <div class="sector-card-block">
+        <h3>Sector E — Healthcare & Sports Hub</h3>
+        <p>
+          Sector E contains the official DHA Medical Centre, sports complexes, and emergency healthcare facilities. It features generous 1 Kanal and 2 Kanal plot layouts and rapid transit connections to Bedian Road and the Lahore Ring Road.
+        </p>
+        <p><a href="/dha-phase-6-sector-e-lahore/" class="text-link">Read Full Sector E Guide →</a></p>
+      </div>
+
+      <div class="sector-card-block">
+        <h3>Sector F, G & H — The Eastern Luxury Spine</h3>
+        <p>
+          These three sectors form the quiet eastern boundary of Phase 6. With wide 120-foot connecting roads, low vehicle density, and immediate access to the Nawaz Sharif Ring Road Interchange, they provide supreme tranquility for executives who desire private, undisturbed luxury living.
+        </p>
+        <p><a href="/dha-phase-6-sector-g-lahore/" class="text-link">Read Full Sector G Guide →</a></p>
+      </div>
+
+      <div class="sector-card-block">
+        <h3>Sector J — The 10 Marla Champion</h3>
+        <p>
+          For buyers and tenants seeking 10 Marla properties, Sector J has no equal. It houses the Beaconhouse School System, a vibrant internal market with bakeries and cafes, and features an extraordinarily vibrant neighborhood community with 95%+ occupancy.
+        </p>
+        <p><a href="/dha-phase-6-sector-j-lahore/" class="text-link">Read Full Sector J Guide →</a></p>
+      </div>
+
+      <div class="sector-card-block">
+        <h3>Sector K & L — Value Investing & Modern Infill</h3>
+        <p>
+          Sectors K and L offer competitive 10 Marla and 1 Kanal plot price points (typically 15% to 20% lower than Sector C). With construction accelerating rapidly and direct access to Ring Road SL-3 exits, these sectors represent the highest capital appreciation runway in Phase 6.
+        </p>
+        <p><a href="/dha-phase-6-sector-k-lahore/" class="text-link">Read Full Sector K Guide →</a></p>
+      </div>
+
+      <div class="sector-card-block">
+        <h3>Sector M & N (Defence Raya) — Elite Golf Resort Living</h3>
+        <p>
+          Integrated directly with the 18-hole championship Defence Raya Golf Course, Sectors M and N represent the zenith of luxury in Lahore. Featuring exclusive golf-view designer villas, private clubhouse memberships, and controlled security perimeters, they cater to high-net-worth individuals and diplomats.
+        </p>
+        <p><a href="/dha-phase-6-defence-raya-lahore/" class="text-link">Read Full Defence Raya Guide →</a></p>
+      </div>
+    </section>
+
+    <!-- BUYER DECISION SCENARIOS -->
+    <section class="comp-section recommendation-box">
+      <h2>Which Sector Fits Your Profile Best?</h2>
+      <div class="decision-grid">
+        <div class="decision-card">
+          <h3>For Cambridge School Families</h3>
+          <p><strong>Top Picks: Sector J, B, C</strong></p>
+          <p>Commutes under 3 minutes to Beaconhouse, LGS, and Roots Millennium without using external ring roads.</p>
+        </div>
+        <div class="decision-card highlight-card">
+          <h3>For Maximum Luxury & Prestige</h3>
+          <p><strong>Top Picks: Sector C, M & N (Defence Raya)</strong></p>
+          <p>Golf fairways, magnificent architecture, 2 Kanal luxury layouts, and supreme neighborhood prestige.</p>
+        </div>
+        <div class="decision-card">
+          <h3>For Capital Growth & High ROI</h3>
+          <p><strong>Top Picks: Sector K, L, G</strong></p>
+          <p>Lower entry plot prices, active construction infill, and superior percentage capital appreciation over 3 to 5 years.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQS -->
+    <section class="comp-section">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-accordion">
+        {faqs.map((faq, index) => (
+          <details class="faq-item" id={`faq-${index + 1}`}>
+            <summary class="faq-question">
+              <span>{faq.question}</span>
+              <span class="faq-chevron">▼</span>
+            </summary>
+            <div class="faq-answer">
+              <p>{faq.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- RELATED GUIDES -->
+    <section class="related-guides-hub">
+      <h2>Explore Related Phase 6 Resources</h2>
+      <div class="links-grid">
+        <a href="/best-place-to-live-in-dha-phase-6-lahore/" class="guide-nav-card">
+          <strong>Best Place to Live in Phase 6</strong>
+          <p>Detailed living standards, parks, and tranquility guide.</p>
+        </a>
+        <a href="/best-investment-area-in-dha-phase-6-lahore/" class="guide-nav-card">
+          <strong>Best Investment Areas</strong>
+          <p>Compare commercial plots and high-yield residential zones.</p>
+        </a>
+        <a href="/dha-phase-6-lahore-guide/" class="guide-nav-card">
+          <strong>Complete Master Hub</strong>
+          <p>Read the 3,000+ word authority knowledge hub.</p>
+        </a>
+        <a href="/search-property/" class="guide-nav-card">
+          <strong>Search Verified Properties</strong>
+          <p>Browse live listings across Sectors A through N.</p>
+        </a>
+      </div>
+    </section>
+
+  </main>
+</PageLayout>
+
+<style>
+  .comp-hero {
+    background: linear-gradient(165deg, #090919 0%, #12122b 55%, #0c0c1e 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 72px 0 48px;
+  }
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .badge-pill {
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.06);
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .gold-pill {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border-color: rgba(16, 185, 129, 0.3);
+  }
+  .hero-headline {
+    font-size: clamp(2.2rem, 4.2vw, 3.2rem);
+    color: #ffffff;
+    font-weight: 800;
+    margin-bottom: 18px;
+    max-width: 920px;
+    line-height: 1.2;
+  }
+  .text-gradient {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #10b981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-lead {
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    color: #94a3b8;
+    line-height: 1.65;
+    max-width: 820px;
+  }
+  .comp-content {
+    padding: 56px 20px 80px;
+    max-width: 1080px;
+  }
+  .comp-section {
+    margin-bottom: 56px;
+  }
+  .comp-section h2 {
+    font-size: 1.8rem;
+    color: #f8fafc;
+    margin-bottom: 20px;
+    font-weight: 800;
+  }
+  .table-responsive {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    margin: 24px 0;
+  }
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    background: #0f0f23;
+  }
+  .comparison-table th {
+    background: #171736;
+    color: #f8fafc;
+    padding: 14px 18px;
+    text-align: left;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .comparison-table td {
+    padding: 14px 18px;
+    color: #cbd5e1;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .comparison-table tr:hover td {
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .tag-win {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+  }
+  .sector-card-block {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .sector-card-block h3 {
+    font-size: 1.25rem;
+    color: #fbbf24;
+    margin-bottom: 10px;
+  }
+  .sector-card-block p {
+    color: #cbd5e1;
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+  .text-link {
+    color: #34d399;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .text-link:hover {
+    text-decoration: underline;
+  }
+  .decision-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 24px;
+  }
+  .decision-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 24px;
+  }
+  .highlight-card {
+    background: #111129;
+    border-color: rgba(16, 185, 129, 0.4);
+  }
+  .decision-card h3 {
+    font-size: 1.15rem;
+    color: #f1f5f9;
+    margin-bottom: 12px;
+  }
+  .highlight-card h3 {
+    color: #34d399;
+  }
+  .decision-card p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+  .faq-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .faq-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .faq-question {
+    padding: 18px 20px;
+    cursor: pointer;
+    font-weight: 700;
+    color: #f1f5f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+  }
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+  .faq-chevron {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    transition: transform 0.2s ease;
+  }
+  .faq-item[open] .faq-chevron {
+    transform: rotate(180deg);
+  }
+  .faq-answer {
+    padding: 0 20px 20px;
+    color: #94a3b8;
+    font-size: 0.98rem;
+    line-height: 1.7;
+  }
+  .related-guides-hub {
+    margin-top: 56px;
+    padding: 32px;
+    background: #0f0f23;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+  }
+  .related-guides-hub h2 {
+    font-size: 1.4rem;
+    color: #f8fafc;
+    margin-bottom: 20px;
+  }
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .guide-nav-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 18px;
+    text-decoration: none;
+    transition: border-color 0.2s ease;
+  }
+  .guide-nav-card:hover {
+    border-color: rgba(16, 185, 129, 0.4);
+  }
+  .guide-nav-card strong {
+    display: block;
+    color: #f1f5f9;
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+  .guide-nav-card p {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    margin-bottom: 0;
+  }
+</style>

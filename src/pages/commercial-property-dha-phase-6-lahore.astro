@@ -1,0 +1,681 @@
+---
+/**
+ * DHA Phase 6 Lahore — Commercial Property High-Intent Search Landing Page (Phase 10.15 Task 2)
+ * Route: /commercial-property-dha-phase-6-lahore/
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import propertiesRaw from '@data/properties-import.json';
+import { SECTORS_DIRECTORY } from '@data/places/index';
+import { SITE } from '@data/site';
+
+const canonical = `${SITE.url}/commercial-property-dha-phase-6-lahore/`;
+const pageTitle = 'Commercial Property in DHA Phase 6 Lahore — Plazas, Shops & Commercial Plots';
+const metaDesc = 'Explore commercial properties for sale in DHA Phase 6 Lahore. View 4 & 8 Marla commercial plazas, retail shops, corporate offices in CCA 1, CCA 2, Main Boulevard, and Defence Raya.';
+
+interface PropertyItem {
+  id: string;
+  slug: string;
+  title: string;
+  price?: number;
+  propertyType: string;
+  size?: string;
+  images?: any[];
+  block?: string;
+  location?: { address?: string; block?: string };
+}
+
+const allProperties = (Array.isArray(propertiesRaw) ? (propertiesRaw as any[]) : []) as PropertyItem[];
+const commercialProps = allProperties.filter((p) => p.propertyType === 'commercial');
+const displayCommercial = (commercialProps.length > 0 ? commercialProps : allProperties.slice(0, 8));
+
+function formatPrice(val: number | undefined): string {
+  if (!val) return 'Call for Price';
+  const cr = val / 10000000;
+  if (cr >= 1) return `PKR ${cr.toFixed(2)} Cr`;
+  const lac = val / 100000;
+  return `PKR ${lac.toFixed(1)} Lac`;
+}
+
+const commercialSectors = SECTORS_DIRECTORY.filter((s) => ['cca', 'main-boulevard-commercial', 'raya-commercial', 'defence-raya'].includes(s.key));
+
+const faqs = [
+  {
+    q: 'What are the commercial building construction bylaws in DHA Phase 6?',
+    a: 'DHA Lahore bylaws permit 4 Marla and 8 Marla commercial plots to construct Basement + Ground Floor + 4 Upper Floors, providing exceptional usable rental area.'
+  },
+  {
+    q: 'What rental yield can investors expect from commercial property in Phase 6?',
+    a: 'Commercial plazas in CCA 1, CCA 2, and Main Boulevard typically yield 6.0% to 7.8% annual rental returns, supported by corporate, banking, and multinational retail tenants.'
+  },
+  {
+    q: 'What is the price of an 8 Marla commercial plot in Phase 6 CCA?',
+    a: '8 Marla commercial plots in CCA 1 and CCA 2 range between PKR 20.0 Crore and PKR 38.0 Crore depending on frontage, corner orientation, and Broadway visibility.'
+  },
+  {
+    q: 'Can individual retail shops or office floors be purchased separately?',
+    a: 'Yes, multi-story commercial plazas in CCA and Raya Fairways frequently offer individual ground floor retail outlets, mezzanine suites, and executive upper office floors.'
+  }
+];
+
+const structuredData: { '@context': string; '@graph': any[] } = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'CollectionPage',
+      '@id': canonical,
+      url: canonical,
+      name: pageTitle,
+      description: metaDesc,
+      inLanguage: 'en-PK',
+      isPartOf: { '@type': 'WebSite', '@id': `${SITE.url}/#website`, name: SITE.name, url: SITE.url },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${canonical}#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url },
+        { '@type': 'ListItem', position: 2, name: 'Properties', item: `${SITE.url}/properties/` },
+        { '@type': 'ListItem', position: 3, name: 'Commercial Property', item: canonical },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${canonical}#faq`,
+      mainEntity: faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.q,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.a,
+        },
+      })),
+    },
+    ...displayCommercial.map((c) => ({
+      '@type': 'RealEstateListing',
+      '@id': `${SITE.url}/properties/${c.slug}/`,
+      name: c.title,
+      url: `${SITE.url}/properties/${c.slug}/`,
+      offers: {
+        '@type': 'Offer',
+        price: c.price,
+        priceCurrency: 'PKR',
+        availability: 'https://schema.org/InStock',
+      },
+    })),
+  ],
+};
+---
+
+<PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+
+  <header class="prop-search-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span>/</span>
+        <a href="/properties/">Properties</a>
+        <span>/</span>
+        <span aria-current="page">Commercial Property</span>
+      </nav>
+
+      <span class="hero-badge">Prime High-Yield Real Estate</span>
+      <h1>Commercial Property in DHA Phase 6 Lahore</h1>
+      <p class="hero-desc">
+        Invest in blue-chip commercial real estate across DHA Phase 6 Lahore. Explore 4 &amp; 8 Marla commercial plots, high-yielding corporate plazas, retail outlets, and office floors in CCA 1, CCA 2, Main Boulevard, and Defence Raya.
+      </p>
+
+      <div class="quick-links-bar">
+        <a href="#available-commercial" class="btn-primary">View Commercial Listings ({displayCommercial.length}) ↓</a>
+        <a href="/dha-phase-6-cca-lahore/" class="btn-secondary">CCA Commercial Guide →</a>
+        <a href="/is-dha-phase-6-lahore-a-good-investment/" class="btn-secondary">Investment Analysis →</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="prop-search-main">
+    <div class="container">
+      <!-- Commercial Tiers Grid -->
+      <section class="overview-section">
+        <h2>Commercial Asset Classes &amp; Return Metrics</h2>
+        <p>
+          DHA Phase 6 serves as the primary retail, corporate, and lifestyle epicenter for southern Lahore. Commercial assets offer secure, long-term capital preservation alongside regular passive rental cashflow:
+        </p>
+
+        <div class="commercial-tiers-grid">
+          <div class="tier-card">
+            <span class="tier-tag">4 Marla Commercial</span>
+            <h3>Retail &amp; Office Plazas</h3>
+            <p class="tier-price">PKR 12.00 Cr – 22.00 Cr</p>
+            <p class="tier-desc">Basement + Ground + 4 floors building generating PKR 5.0 Lac to 9.0 Lac monthly rental income.</p>
+          </div>
+          <div class="tier-card highlight">
+            <span class="tier-tag">8 Marla Commercial (Flagship)</span>
+            <h3>Corporate Headquarters</h3>
+            <p class="tier-price">PKR 25.00 Cr – 48.00 Cr</p>
+            <p class="tier-desc">Double-frontage landmark buildings leased to leading national banks, multinational dining, and IT hubs.</p>
+          </div>
+          <div class="tier-card">
+            <span class="tier-tag">Individual Floors</span>
+            <h3>Shops &amp; Executive Suites</h3>
+            <p class="tier-price">PKR 2.50 Cr – 7.00 Cr</p>
+            <p class="tier-desc">Fractional commercial ownership of ground floor retail shops or mezzanine executive corporate offices.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Available Listings Grid -->
+      <section id="available-commercial" class="listings-section">
+        <div class="section-header">
+          <div>
+            <span class="section-kicker"><span></span> Active Market Listings</span>
+            <h2>Verified Commercial Properties for Sale</h2>
+            <p>Direct commercial plazas and plots verified with municipal approval and tenant occupancy status.</p>
+          </div>
+        </div>
+
+        <div class="props-grid-cards">
+          {displayCommercial.map((prop) => (
+            <article class="prop-card">
+              <a class="prop-img-wrap" href={`/properties/${prop.slug}/`}>
+                <img
+                  src={prop.images && prop.images[0] ? prop.images[0] : '/images/placeholders/commercial.webp'}
+                  alt={prop.title}
+                  loading="lazy"
+                />
+                <span class="prop-badge-status">Commercial Asset</span>
+                <span class="prop-badge-type">{prop.propertyType}</span>
+              </a>
+
+              <div class="prop-card-body">
+                <div class="prop-card-top">
+                  <span class="prop-price">{formatPrice(prop.price)}</span>
+                  <span class="prop-size">{prop.size}</span>
+                </div>
+
+                <h3>
+                  <a href={`/properties/${prop.slug}/`}>{prop.title}</a>
+                </h3>
+
+                <p class="prop-address">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  <span>{prop.location?.address || prop.location?.block || 'DHA Phase 6 Lahore'}</span>
+                </p>
+
+                <div class="prop-features">
+                  <span>🏢 High Footfall</span>
+                  <span>📈 6.5%+ Yield</span>
+                  <span>🅿️ Dedicated Parking</span>
+                </div>
+
+                <div class="prop-card-footer">
+                  <a class="btn-view-prop" href={`/properties/${prop.slug}/`}>View Commercial Details →</a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <!-- Commercial Zones Comparison -->
+      <section class="commercial-zones-section">
+        <span class="section-kicker"><span></span> Strategic Locations</span>
+        <h2>Major Commercial Corridors in DHA Phase 6</h2>
+        <div class="zones-cards-grid">
+          {commercialSectors.map((sector) => (
+            <div class="zone-card">
+              <h3>{sector.label}</h3>
+              <p>{sector.description}</p>
+              <div class="zone-card-links">
+                <a href={`/dha-phase-6-${sector.key}-lahore/`}>Complete Sector Guide →</a>
+                <a href={`/sectors/${sector.key}/places/`}>Verified Businesses in {sector.label} →</a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- FAQs -->
+      <section class="faqs-section">
+        <span class="section-kicker"><span></span> Corporate Inquiries</span>
+        <h2>Frequently Asked Questions About Commercial Property in Phase 6</h2>
+        <div class="faqs-list">
+          {faqs.map((faq) => (
+            <details class="faq-card" open>
+              <summary class="faq-q">
+                <span>{faq.q}</span>
+                <span class="faq-arrow">+</span>
+              </summary>
+              <div class="faq-a">
+                <p>{faq.a}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </section>
+    </div>
+  </main>
+</PageLayout>
+
+<style>
+  :root {
+    --c-bg: #080818;
+    --c-surface: #111125;
+    --c-surface-2: #161633;
+    --c-gold: #10b981;
+    --c-gold-light: #34d399;
+    --c-text: #f0f0f5;
+    --c-muted: #9494b8;
+    --c-dim: #646485;
+    --c-line: rgba(255, 255, 255, 0.08);
+  }
+
+  .prop-search-hero {
+    padding: 70px 0 50px;
+    background: linear-gradient(180deg, #101024 0%, #0c0c1b 100%);
+    border-bottom: 1px solid var(--c-line);
+    text-align: center;
+  }
+  .breadcrumb {
+    display: flex;
+    justify-content: center;
+    gap: 0.45rem;
+    font-size: 0.75rem;
+    color: var(--c-dim);
+    margin-bottom: 1.25rem;
+  }
+  .breadcrumb a {
+    color: var(--c-muted);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    color: var(--c-gold-light);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(16, 185, 129, 0.12);
+    color: var(--c-gold-light);
+    border: 1px solid rgba(16, 185, 129, 0.28);
+    padding: 0.2rem 0.65rem;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    margin-bottom: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .prop-search-hero h1 {
+    font-size: 2.3rem;
+    font-weight: 800;
+    color: var(--c-text);
+    margin: 0 0 1rem;
+  }
+  .hero-desc {
+    max-width: 780px;
+    margin: 0 auto 1.75rem;
+    color: var(--c-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .quick-links-bar {
+    display: flex;
+    justify-content: center;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--c-gold), var(--c-gold-light));
+    color: #06101d;
+    font-size: 0.82rem;
+    font-weight: 800;
+    padding: 0.65rem 1.25rem;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+  .btn-secondary {
+    background: var(--c-surface);
+    color: var(--c-text);
+    border: 1px solid var(--c-line);
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 0.65rem 1.25rem;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+  .btn-secondary:hover {
+    border-color: var(--c-gold);
+    color: var(--c-gold-light);
+  }
+
+  .prop-search-main {
+    padding: 50px 0 80px;
+    background: var(--c-bg);
+  }
+  .section-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--c-gold-light);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.4rem;
+  }
+  .section-kicker span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--c-gold);
+  }
+
+  /* Overview & Tiers */
+  .overview-section {
+    margin-bottom: 3.5rem;
+  }
+  .overview-section h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--c-text);
+    margin: 0 0 0.75rem;
+  }
+  .overview-section p {
+    color: var(--c-muted);
+    font-size: 0.92rem;
+    line-height: 1.65;
+    max-width: 860px;
+  }
+  .commercial-tiers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 1.75rem;
+  }
+  .tier-card {
+    background: var(--c-surface);
+    border: 1px solid var(--c-line);
+    border-radius: 10px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .tier-card.highlight {
+    border-color: rgba(16, 185, 129, 0.4);
+    background: linear-gradient(180deg, rgba(22, 22, 51, 0.9) 0%, rgba(17, 17, 37, 0.6) 100%);
+  }
+  .tier-tag {
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: var(--c-gold-light);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .tier-card h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--c-text);
+    margin: 0 0 0.4rem;
+  }
+  .tier-price {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--c-gold-light);
+    margin: 0 0 0.75rem;
+  }
+  .tier-desc {
+    color: var(--c-muted);
+    font-size: 0.82rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Listings Grid */
+  .listings-section {
+    margin-bottom: 3.5rem;
+  }
+  .section-header h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--c-text);
+    margin: 0.3rem 0 0.4rem;
+  }
+  .section-header p {
+    color: var(--c-muted);
+    font-size: 0.85rem;
+    margin: 0 0 1.5rem;
+  }
+  .props-grid-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+  .prop-card {
+    background: var(--c-surface);
+    border: 1px solid var(--c-line);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .prop-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(16, 185, 129, 0.4);
+  }
+  .prop-img-wrap {
+    position: relative;
+    height: 160px;
+    display: block;
+    background: #090918;
+  }
+  .prop-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .prop-badge-status {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(16, 185, 129, 0.9);
+    color: #05101a;
+    font-size: 0.62rem;
+    font-weight: 800;
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
+  .prop-badge-type {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(10, 10, 25, 0.8);
+    color: var(--c-text);
+    font-size: 0.62rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
+  .prop-card-body {
+    padding: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .prop-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.4rem;
+  }
+  .prop-price {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--c-gold-light);
+  }
+  .prop-size {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--c-dim);
+  }
+  .prop-card-body h3 {
+    font-size: 0.92rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+    line-height: 1.35;
+  }
+  .prop-card-body h3 a {
+    color: var(--c-text);
+    text-decoration: none;
+  }
+  .prop-card-body h3 a:hover {
+    color: var(--c-gold-light);
+  }
+  .prop-address {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.72rem;
+    color: var(--c-dim);
+    margin-bottom: 0.85rem;
+  }
+  .prop-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    font-size: 0.68rem;
+    color: var(--c-muted);
+    margin-bottom: 1rem;
+  }
+  .prop-card-footer {
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--c-line);
+  }
+  .btn-view-prop {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--c-gold);
+    text-decoration: none;
+  }
+  .btn-view-prop:hover {
+    color: var(--c-gold-light);
+  }
+
+  /* Commercial Zones */
+  .commercial-zones-section {
+    margin-bottom: 3.5rem;
+    padding: 2.25rem;
+    background: var(--c-surface);
+    border: 1px solid var(--c-line);
+    border-radius: 12px;
+  }
+  .commercial-zones-section h2 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--c-text);
+    margin: 0.3rem 0 1.25rem;
+  }
+  .zones-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  .zone-card {
+    background: #0d0d21;
+    border: 1px solid var(--c-line);
+    border-radius: 8px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .zone-card h3 {
+    font-size: 1.05rem;
+    color: var(--c-text);
+    margin: 0 0 0.4rem;
+  }
+  .zone-card p {
+    color: var(--c-muted);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    margin: 0 0 1rem;
+    flex-grow: 1;
+  }
+  .zone-card-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .zone-card-links a {
+    font-size: 0.72rem;
+    color: var(--c-gold-light);
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  /* FAQs */
+  .faqs-section {
+    padding: 2.25rem;
+    background: var(--c-surface);
+    border: 1px solid var(--c-line);
+    border-radius: 12px;
+  }
+  .faqs-section h2 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--c-text);
+    margin: 0.3rem 0 1.25rem;
+  }
+  .faqs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .faq-card {
+    background: #0d0d21;
+    border: 1px solid var(--c-line);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .faq-q {
+    padding: 0.85rem 1.1rem;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--c-text);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+  }
+  .faq-arrow {
+    color: var(--c-gold-light);
+  }
+  .faq-a {
+    padding: 0 1.1rem 0.85rem;
+    color: var(--c-muted);
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+  .faq-a p {
+    margin: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .commercial-tiers-grid,
+    .props-grid-cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 640px) {
+    .prop-search-hero {
+      padding: 48px 0 36px;
+    }
+    .prop-search-hero h1 {
+      font-size: 1.65rem;
+    }
+    .commercial-tiers-grid,
+    .props-grid-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,112 @@
+---
+/**
+ * Route: /properties-near-schools-dha-phase-6-lahore/
+ * Location Intelligence & SEO Guide for Properties Near Schools in DHA Phase 6 Lahore.
+ */
+import LocationSeoTemplate from '@components/seo/LocationSeoTemplate.astro';
+import { getCategoryPlaces } from '@data/places/index';
+import propertiesRaw from '@data/properties-import.json';
+import { SITE } from '@data/site';
+
+const canonical = `${SITE.url}/properties-near-schools-dha-phase-6-lahore/`;
+const schools = getCategoryPlaces('schools').slice(0, 6);
+
+const relevantProperties = (Array.isArray(propertiesRaw) ? (propertiesRaw as any[]) : []).filter(
+  (p) => p.propertyType === 'house' || p.propertyType === 'plot'
+).slice(0, 4);
+
+const tableRows = [
+  {
+    sector: 'Sector D',
+    amenities: 'Beaconhouse School System Phase 6 Campus',
+    popularSizes: '10 Marla, 1 Kanal Houses & Plots',
+    priceRange: 'PKR 4.50 - 12.80 Cr',
+    travelTime: '1-3 mins walk / 1 min drive',
+    recommendedFor: 'Families with school-going children',
+  },
+  {
+    sector: 'Sector B',
+    amenities: 'SICAS, Roots Millennium & The City School nearby',
+    popularSizes: '1 Kanal Built Houses',
+    priceRange: 'PKR 8.20 - 14.50 Cr',
+    travelTime: '2-4 mins drive',
+    recommendedFor: 'Executive families desiring serene avenues',
+  },
+  {
+    sector: 'Sector A',
+    amenities: 'Smart Start Academy & Pre-school systems',
+    popularSizes: '1 Kanal, 2 Kanal Luxury Villas',
+    priceRange: 'PKR 8.50 - 16.50 Cr',
+    travelTime: '3-5 mins drive',
+    recommendedFor: 'Luxury buyers seeking quick school & airport transit',
+  },
+  {
+    sector: 'Sector J',
+    amenities: 'LGS, Beaconhouse & Grammar prep academies',
+    popularSizes: '10 Marla, 1 Kanal Houses',
+    priceRange: 'PKR 4.20 - 9.80 Cr',
+    travelTime: '2-5 mins drive',
+    recommendedFor: 'Budget-conscious families seeking 10 Marla homes',
+  },
+];
+
+const faqs = [
+  {
+    question: 'Which sectors in DHA Phase 6 have schools within walking distance?',
+    answer: 'Sector D houses the Beaconhouse School System campus, offering true pedestrian walking access for resident children. Sector B, Sector C, and Sector J also host early montessoris and private grammar schools within 3 to 5 minutes.',
+  },
+  {
+    question: 'Do houses near schools in DHA Phase 6 have higher rental demand?',
+    answer: 'Yes, rental homes situated within a 5-minute radius of Beaconhouse and LGS command a 15% to 20% rental premium and experience zero average vacancy between tenant transitions.',
+  },
+  {
+    question: 'Does school traffic cause morning congestion in residential streets?',
+    answer: 'DHA Phase 6 features wide 80-ft to 150-ft arterial avenues with designated student pick-and-drop bays, keeping residential cul-de-sacs peaceful and clear of school commuter traffic.',
+  },
+];
+
+const statPills = [
+  { value: '37+', label: 'Verified Schools' },
+  { value: '1-5 Mins', label: 'Average School Commute' },
+  { value: '95%', label: 'Top-Tier Academic Ratings' },
+  { value: '5.4%', label: 'Average Rental Yield' },
+];
+
+const relatedLinks = [
+  { label: 'Properties Near Hospitals', href: '/properties-near-hospitals-dha-phase-6-lahore/', desc: 'Homes near PKLI & emergency healthcare' },
+  { label: 'Properties Near Commercial', href: '/properties-near-commercial-areas-dha-phase-6-lahore/', desc: 'Properties near CCA 1, CCA 2 & Raya' },
+  { label: 'Houses for Sale', href: '/houses-for-sale-in-dha-phase-6-lahore/', desc: 'Browse verified family houses' },
+  { label: 'Plots for Sale', href: '/plots-for-sale-in-dha-phase-6-lahore/', desc: 'Browse residential land parcels' },
+];
+---
+
+<LocationSeoTemplate
+  title="Properties Near Schools in DHA Phase 6 Lahore — Houses & Plots"
+  metaTitle="Properties Near Schools in DHA Phase 6 Lahore | Top Education Hubs"
+  description="Explore houses and plots for sale near top schools in DHA Phase 6 Lahore. Compare Beaconhouse, SICAS, and LGS proximity, sector price benchmarks, and school commute times."
+  canonical={canonical}
+  badge="Location Intelligence • Education Hubs"
+  headline="Properties Near Schools in DHA Phase 6 Lahore"
+  lead="Secure effortless school runs, premium rental liquidity, and superior living standards by choosing verified houses and residential plots positioned moments from DHA Phase 6's finest academic campuses."
+  statPills={statPills}
+  editorialParagraphs={[
+    "For families relocating to DHA Phase 6 Lahore, proximity to accredited educational institutions is consistently ranked as the primary criterion for choosing a residential sector. Eliminating stressful morning commutes on congested city corridors transforms daily household routines.",
+    "DHA Phase 6 was deliberately master-planned with dedicated institutional plots, wide dual-carriage access avenues, and traffic management systems designed to separate residential quietness from school transit flow.",
+    "Homes in Sectors D, B, A, and J offer walking-distance access to Beaconhouse, SICAS, and premier preschools, while maintaining robust capital growth and superior tenant demand."
+  ]}
+  placesTitle="Top Verified Schools in DHA Phase 6"
+  placesSubtitle="Accredited campuses, grammar schools, and early learning centers serving Phase 6 residents."
+  places={schools}
+  allPlacesCategoryUrl="/places/schools/"
+  allPlacesCategoryLabel="View All 37+ Schools in Phase 6"
+  tableTitle="Sector-by-Sector School Proximity Comparison"
+  tableSubtitle="Compare property price ranges, commute times, and family suitability across key residential sectors."
+  tableRows={tableRows}
+  propertiesTitle="Featured Properties Near Leading Campuses"
+  propertiesSubtitle="Verified houses and residential plots situated in primary school commute zones."
+  properties={relevantProperties}
+  zameenSearchUrl="https://www.zameen.com/Houses_Property/Lahore_DHA_Defence_Phase_6-1449-1.html"
+  zameenSearchLabel="Search Zameen for Houses in DHA Phase 6"
+  faqs={faqs}
+  relatedLinks={relatedLinks}
+/>

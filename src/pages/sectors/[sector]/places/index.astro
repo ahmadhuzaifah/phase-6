@@ -14,6 +14,7 @@ import {
 } from '@data/places/index';
 
 import PlaceImage from '@components/places/PlaceImage.astro';
+import propertiesRaw from '@data/properties-import.json';
 import { SITE } from '@data/site';
 
 export function getStaticPaths() {
@@ -64,6 +65,21 @@ const nearbySectors = SECTORS_DIRECTORY
   .filter(s => s.key !== sectorMeta.key && s.type === 'residential')
   .slice(0, 6);
 
+// Property integration (Phase 10.13 Task 1)
+const sectorProperties = (propertiesRaw as any[]).filter((prop) => {
+  return (
+    prop.block?.toLowerCase().includes(sectorMeta.label.toLowerCase()) ||
+    prop.location?.address?.toLowerCase().includes(sectorMeta.label.toLowerCase())
+  );
+});
+
+// Nearby properties fallback (other sectors) if few in this sector
+const otherSectorProperties = (propertiesRaw as any[])
+  .filter((prop) => !sectorProperties.some((sp) => sp.id === prop.id))
+  .slice(0, Math.max(0, 3 - sectorProperties.length));
+
+const displayedProperties = [...sectorProperties, ...otherSectorProperties].slice(0, 3);
+
 // FAQs
 const faqs = [
   {
@@ -87,6 +103,20 @@ const faqs = [
     a: `No. This is an independent information portal. Business listings are compiled from publicly available data including Google Maps. Always verify details directly before visiting.`,
   },
 ];
+
+const propertySchemas = sectorProperties.map((prop) => ({
+  '@type': 'RealEstateListing',
+  '@id': `${SITE.url}/properties/${prop.slug}/`,
+  name: prop.title,
+  url: `${SITE.url}/properties/${prop.slug}/`,
+  description: prop.description,
+  offers: {
+    '@type': 'Offer',
+    price: prop.price,
+    priceCurrency: prop.currency || 'PKR',
+    availability: 'https://schema.org/InStock',
+  },
+}));
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -145,6 +175,7 @@ const structuredData = {
         acceptedAnswer: { '@type': 'Answer', text: faq.a },
       })),
     },
+    ...propertySchemas,
   ],
 };
 ---
@@ -354,9 +385,9 @@ const structuredData = {
                           No Phone
                         </span>
                       )}
-                      <a class="btn-maps" href={place.googleMapsUrl} target="_blank" rel="noopener noreferrer" aria-label={`${place.name} on Google Maps`}>
+                      <a class="btn-maps" href={place.googleMapsUrl} target="_blank" rel="noopener" aria-label={`Open ${place.name} in Google Maps`}>
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
-                        Maps ↗
+                        Open in Google Maps
                       </a>
                       <a class="btn-detail" href={`/places/${place.category}/${place.slug}/`} aria-label={`View details for ${place.name}`}>Details</a>
                     </div>
@@ -366,6 +397,70 @@ const structuredData = {
             })}
           </div>
           <p class="no-results" id="no-results" hidden>No places match your search.</p>
+        </div>
+      </section>
+
+      <!-- Properties Available Near Facilities (Phase 10.13) -->
+      <section class="sector-properties-section" id="properties">
+        <div class="container">
+          <div class="props-header">
+            <p class="section-kicker"><span></span> Property &amp; Lifestyle Intelligence</p>
+            <h2>Properties Available Near {sectorMeta.label} Facilities</h2>
+            <p class="props-subtext">Verified asking-price snapshots and active market listings in and around {sectorMeta.label}, DHA Phase 6 Lahore. Filter priority: {sectorMeta.label} records first, nearby sectors second.</p>
+          </div>
+
+          <div class="props-cards-grid">
+            {displayedProperties.map((prop) => {
+              const isSameSector = prop.block?.toLowerCase().includes(sectorMeta.label.toLowerCase()) ||
+                prop.location?.address?.toLowerCase().includes(sectorMeta.label.toLowerCase());
+              return (
+                <article class="prop-card">
+                  <div class="prop-card-media">
+                    <img src={prop.images?.[0]?.url || '/images/placeholders/property-placeholder.svg'} alt={prop.title} loading="lazy" />
+                    <span class={`prop-badge ${isSameSector ? 'badge-local' : 'badge-nearby'}`}>
+                      {isSameSector ? sectorMeta.label : (prop.block || 'Nearby')}
+                    </span>
+                    <span class="prop-type-badge">{prop.propertyType.replace('-', ' ')}</span>
+                  </div>
+                  <div class="prop-card-body">
+                    <div class="prop-price-row">
+                      <strong>PKR {(prop.price / 10000000).toFixed(2)} Cr</strong>
+                      <span class="prop-size">{prop.size} {prop.unit.toUpperCase()}</span>
+                    </div>
+                    <h3><a href={`/properties/${prop.slug}/`}>{prop.title}</a></h3>
+                    <p class="prop-address">{prop.location?.address || `${prop.block}, DHA Phase 6`}</p>
+                    <div class="prop-meta-row">
+                      <span class="prop-avail">Market Snapshot</span>
+                      <span class="prop-date">Verified Sep 2026</span>
+                    </div>
+                    <div class="prop-actions">
+                      <a href={`/properties/${prop.slug}/`} class="btn-prop-view">View Property →</a>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+
+            <!-- Search Zameen / Sector Property Guide CTA card -->
+            <div class="prop-cta-card">
+              <div class="prop-cta-badge">Market Search</div>
+              <h3>Explore All {sectorMeta.label} Properties</h3>
+              <p>Compare asking prices, plot orientations, and live listings across DHA Phase 6.</p>
+              <div class="prop-cta-actions">
+                <a
+                  href="https://www.zameen.com/Plots/Lahore_Defence__DHA__Phase_6-1448-1.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-gold"
+                >
+                  Search on Zameen ↗
+                </a>
+                <a href={`/sectors/${sectorMeta.key}/properties/`} class="btn-outline">
+                  {sectorMeta.label} Property Guide →
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -448,10 +543,17 @@ const structuredData = {
         <div class="container">
           <div class="links-hub-grid">
             <div class="links-hub-card">
-              <h3>Property Directory</h3>
-              <p>View market snapshot prices and plot information for {sectorMeta.label}.</p>
+              <h3>{sectorMeta.label} Property Guide</h3>
+              <p>Explore plots, houses, and market price analysis for {sectorMeta.label}.</p>
+              <a href={`/sectors/${sectorMeta.key}/properties/`} class="link-hub-btn">
+                {sectorMeta.label} Properties →
+              </a>
+            </div>
+            <div class="links-hub-card">
+              <h3>{sectorMeta.label} Sector Profile</h3>
+              <p>Detailed sector layout, possession history, and road connectivity guide.</p>
               <a href={`/sectors/${sectorMeta.key}/`} class="link-hub-btn">
-                {sectorMeta.label} Property Guide →
+                {sectorMeta.label} Overview →
               </a>
             </div>
             <div class="links-hub-card">
@@ -693,7 +795,8 @@ const structuredData = {
   .business-card address{margin:.4rem 0 .65rem;color:var(--muted);font-size:.66rem;font-style:normal;line-height:1.4;}
 
   /* Action buttons */
-  .business-actions{display:grid;grid-template-columns:1fr 1.15fr .95fr;gap:.4rem;padding-top:.7rem;border-top:1px solid rgba(255,255,255,.06);}
+  .business-actions{display:grid;grid-template-columns:1fr 1fr;gap:.45rem;padding-top:.7rem;border-top:1px solid rgba(255,255,255,.06);}
+  .btn-maps{grid-column:span 2;}
   .btn-phone,.btn-maps,.btn-detail{display:inline-flex;align-items:center;justify-content:center;gap:.25rem;padding:.4rem .35rem;border-radius:6px;font-size:.62rem;font-weight:700;text-decoration:none;transition:all .2s;white-space:nowrap;}
   .btn-phone{background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.28);color:#2ecc71;}
   .btn-phone:hover:not(.disabled){background:rgba(46,204,113,.22);border-color:#2ecc71;}
@@ -704,6 +807,48 @@ const structuredData = {
   .btn-detail:hover{opacity:.88;transform:translateY(-1px);}
 
   .no-results{padding:2.5rem;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-align:center;color:var(--muted);font-size:.88rem;margin:0;}
+
+  /* PROPERTIES SECTION (Phase 10.13) */
+  .sector-properties-section{padding:72px 0;background:var(--surface2);border-top:1px solid var(--line);}
+  .props-header{margin-bottom:2rem;}
+  .props-header h2{margin:.3rem 0 .5rem;color:#fff;font-size:1.5rem;font-weight:800;}
+  .props-subtext{color:var(--muted);font-size:.85rem;margin:0;max-width:700px;}
+  .props-cards-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem;align-items:stretch;}
+  .prop-card{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:10px;background:var(--surface);overflow:hidden;transition:transform .25s,border-color .25s;}
+  .prop-card:hover{border-color:rgba(212,168,68,.35);transform:translateY(-2px);}
+  .prop-card-media{position:relative;aspect-ratio:16/10;background:#18182e;overflow:hidden;}
+  .prop-card-media img{width:100%;height:100%;object-fit:cover;}
+  .prop-badge{position:absolute;top:.5rem;left:.5rem;padding:.2rem .45rem;border-radius:4px;font-size:.52rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;}
+  .badge-local{background:rgba(212,168,68,.9);color:#080818;}
+  .badge-nearby{background:rgba(8,8,24,.85);color:var(--muted);border:1px solid var(--line);}
+  .prop-type-badge{position:absolute;bottom:.5rem;left:.5rem;padding:.18rem .4rem;border-radius:4px;background:rgba(8,8,24,.85);color:#fff;font-size:.52rem;font-weight:700;text-transform:capitalize;}
+  .prop-card-body{display:flex;flex-direction:column;flex:1;padding:1rem;}
+  .prop-price-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.4rem;}
+  .prop-price-row strong{color:var(--gold-l);font-size:1.1rem;font-weight:800;}
+  .prop-size{color:var(--dim);font-size:.65rem;font-weight:700;}
+  .prop-card h3{margin:.2rem 0 .4rem;font-size:.86rem;font-weight:700;line-height:1.35;}
+  .prop-card h3 a{color:#fff;text-decoration:none;transition:color .2s;}
+  .prop-card h3 a:hover{color:var(--gold-l);}
+  .prop-address{color:var(--muted);font-size:.68rem;margin:0 0 .6rem;}
+  .prop-meta-row{display:flex;justify-content:space-between;gap:.4rem;padding:.4rem 0;border-top:1px solid rgba(255,255,255,.06);font-size:.6rem;color:var(--dim);margin-top:auto;}
+  .prop-actions{margin-top:.6rem;}
+  .btn-prop-view{display:block;text-align:center;padding:.45rem .6rem;border-radius:6px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:#fff;font-size:.68rem;font-weight:700;text-decoration:none;transition:all .2s;}
+  .btn-prop-view:hover{background:rgba(212,168,68,.15);border-color:var(--gold);color:var(--gold-l);}
+
+  /* CTA Card */
+  .prop-cta-card{display:flex;flex-direction:column;justify-content:center;padding:1.5rem;border-radius:10px;background:linear-gradient(145deg,#13132e,#181836);border:1px solid rgba(212,168,68,.25);text-align:left;}
+  .prop-cta-badge{display:inline-block;align-self:flex-start;margin-bottom:.75rem;padding:.2rem .5rem;border-radius:4px;background:rgba(212,168,68,.15);color:var(--gold-l);font-size:.56rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;}
+  .prop-cta-card h3{margin:0 0 .5rem;color:#fff;font-size:1.05rem;font-weight:800;}
+  .prop-cta-card p{color:var(--muted);font-size:.76rem;line-height:1.5;margin:0 0 1.25rem;}
+  .prop-cta-actions{display:flex;flex-direction:column;gap:.5rem;}
+  .prop-cta-actions .btn-gold,.prop-cta-actions .btn-outline{justify-content:center;text-align:center;}
+
+  @media(max-width:960px){
+    .props-cards-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media(max-width:640px){
+    .props-cards-grid{grid-template-columns:1fr;}
+  }
 
   /* MAP CONTEXT */
   .map-context-section{padding:72px 0;background:var(--bg);border-top:1px solid var(--line);}

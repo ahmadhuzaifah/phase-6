@@ -1,0 +1,632 @@
+---
+/**
+ * DHA Phase 6 Lahore — Comprehensive Investment Analysis (Phase 10.15 Task 4)
+ * Route: /is-dha-phase-6-lahore-a-good-investment/
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+
+const canonical = `${SITE.url}/is-dha-phase-6-lahore-a-good-investment/`;
+const pageTitle = 'Is DHA Phase 6 Lahore a Good Investment? — ROI, Analysis & Comparisons';
+const metaDesc = 'In-depth independent investment analysis of DHA Phase 6 Lahore. Explore capital appreciation trends, rental yields, future growth catalysts, and comprehensive comparisons with DHA Phase 5, Bahria Town, and Lake City.';
+
+const faqs = [
+  {
+    q: 'Is DHA Phase 6 Lahore a safe and profitable real estate investment?',
+    a: 'Yes. DHA Phase 6 is 100% developed, possessed, and backed by DHA Lahore biometric legal transfer procedures, offering complete title security, steady 10%–14% annual capital appreciation, and reliable rental yields.'
+  },
+  {
+    q: 'How does DHA Phase 6 compare to DHA Phase 5 for property investment?',
+    a: 'While Phase 5 is older and mature, Phase 6 offers wider 150-ft boulevards, underground electricity, newer contemporary construction, and superior modern commercial hubs like CCA and Defence Raya.'
+  },
+  {
+    q: 'What is the expected rental return in DHA Phase 6 Lahore?',
+    a: 'Residential villas yield between 4.8% and 5.6% gross annual rental income, while commercial plazas in CCA 1 and CCA 2 deliver 6.0% to 7.8% annual returns.'
+  },
+  {
+    q: 'What are the main future growth catalysts for DHA Phase 6?',
+    a: 'Key growth drivers include the full opening of Dolmen Mall Phase 6, ongoing commercial densification in Defence Raya, and the southern extension of Lahore Ring Road.'
+  }
+];
+
+const structuredData: { '@context': string; '@graph': any[] } = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Article',
+      '@id': `${canonical}#article`,
+      headline: pageTitle,
+      description: metaDesc,
+      inLanguage: 'en-PK',
+      mainEntityOfPage: canonical,
+      publisher: {
+        '@type': 'Organization',
+        name: SITE.name,
+        url: SITE.url,
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${canonical}#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url },
+        { '@type': 'ListItem', position: 2, name: 'Investment Guides', item: `${SITE.url}/investment-guide/` },
+        { '@type': 'ListItem', position: 3, name: 'Is Phase 6 a Good Investment?', item: canonical },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${canonical}#faq`,
+      mainEntity: faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.q,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.a,
+        },
+      })),
+    },
+  ],
+};
+---
+
+<PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+
+  <header class="invest-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span>/</span>
+        <a href="/investment-guide/">Guides</a>
+        <span>/</span>
+        <span aria-current="page">Investment Analysis</span>
+      </nav>
+
+      <span class="hero-badge">Financial Feasibility &amp; ROI Research</span>
+      <h1>Is DHA Phase 6 Lahore a Good Investment?</h1>
+      <p class="hero-lead">
+        A rigorous, independent real estate investment appraisal evaluating capital growth trajectories, rental yields, infrastructure maturity, and detailed comparative benchmarks against competing luxury communities.
+      </p>
+
+      <div class="metrics-banner">
+        <div class="m-card">
+          <span class="m-num">10% – 14%</span>
+          <span class="m-txt">Historical Annual Capital Gain</span>
+        </div>
+        <div class="m-card">
+          <span class="m-num">4.8% – 7.8%</span>
+          <span class="m-txt">Rental Yield (Res. vs Comm.)</span>
+        </div>
+        <div class="m-card">
+          <span class="m-num">100%</span>
+          <span class="m-txt">Possession &amp; Underground Utilities</span>
+        </div>
+        <div class="m-card">
+          <span class="m-num">Zero</span>
+          <span class="m-txt">Title Risk (Biometric Transfer)</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="invest-main">
+    <div class="container">
+      <!-- Section 1: Macro Location Advantages -->
+      <section class="invest-section">
+        <span class="section-kicker"><span></span> Strategic Geography</span>
+        <h2>1. Macro Location &amp; Regional Connectivity Advantages</h2>
+        <p>
+          DHA Phase 6 occupies an unrivaled strategic position in Lahore's south-eastern expansion corridor. Connected directly to the Lahore Ring Road via multiple interchanges (Barki Road, Bedian Road), residents can commute to Allama Iqbal International Airport in 12 minutes, DHA Phase 5 in 3 minutes, and the Gulberg financial district in under 20 minutes.
+        </p>
+        <p>
+          Unlike suburban projects situated outside the municipal perimeter, Phase 6 is seamlessly bordered by established urban infrastructure, prestigious hospitals like PKLI, and Lahore Garrison University, cementing permanent high residential utility.
+        </p>
+      </section>
+
+      <!-- Section 2: Rental Demand & Demographics -->
+      <section class="invest-section">
+        <span class="section-kicker"><span></span> Cash Flow Dynamics</span>
+        <h2>2. Rental Demand &amp; Tenant Profile Analysis</h2>
+        <p>
+          Rental demand in DHA Phase 6 is among the most resilient in Pakistan. The tenant demographic is dominated by four high-income cohorts:
+        </p>
+        <div class="demographics-grid">
+          <div class="demo-card">
+            <h4>Overseas Pakistani Expatriates</h4>
+            <p>Families relocating from North America, Europe, and the GCC seeking international living standards, green open spaces, and modern home layouts.</p>
+          </div>
+          <div class="demo-card">
+            <h4>Multinational &amp; Corporate Executives</h4>
+            <p>Senior management of banking, telecom, and FMCG corporations seeking rapid access to Ring Road and secure gated environments.</p>
+          </div>
+          <div class="demo-card">
+            <h4>Medical &amp; Academic Professionals</h4>
+            <p>Consultant doctors at PKLI and faculty members at Lahore Garrison University and nearby medical institutions requiring high proximity.</p>
+          </div>
+          <div class="demo-card">
+            <h4>Commercial Retail &amp; Tech Tenants</h4>
+            <p>IT firms, fintech startups, and national retail brands leasing multi-story spaces in CCA 1, CCA 2, and Broadway.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Comparative Analysis -->
+      <section class="invest-section">
+        <span class="section-kicker"><span></span> Benchmark Comparisons</span>
+        <h2>3. Head-to-Head Housing Society Comparisons</h2>
+        <p>
+          To make an informed capital allocation decision, evaluate how DHA Phase 6 measures up against leading alternative residential and investment options in Lahore:
+        </p>
+
+        <!-- Comparison 1: Phase 6 vs Phase 5 -->
+        <div class="comp-card">
+          <h3>DHA Phase 6 vs. DHA Phase 5</h3>
+          <div class="table-wrap">
+            <table class="comp-table">
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>DHA Phase 6</th>
+                  <th>DHA Phase 5</th>
+                  <th>Investment Advantage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Road Network</strong></td>
+                  <td>150-ft Boulevards, 50-80ft Streets</td>
+                  <td>Older 30-50ft Streets in Sectors</td>
+                  <td><span class="win">Phase 6 (Modern Grid)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Utilities</strong></td>
+                  <td>100% Underground Electrification</td>
+                  <td>Partially Overhead in Early Blocks</td>
+                  <td><span class="win">Phase 6 (Aesthetic &amp; Safe)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Price per Kanal (Plot)</strong></td>
+                  <td>PKR 3.50 Cr – 6.50 Cr</td>
+                  <td>PKR 5.50 Cr – 8.50 Cr</td>
+                  <td><span class="win">Phase 6 (Higher Growth Upside)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Lifestyle Hubs</strong></td>
+                  <td>Defence Raya Golf Resort, Dolmen Mall</td>
+                  <td>CCA 5, Commercial Broadway</td>
+                  <td><span class="tie">Tie (Both Strong)</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Comparison 2: Phase 6 vs Bahria Town -->
+        <div class="comp-card">
+          <h3>DHA Phase 6 vs. Bahria Town Lahore</h3>
+          <div class="table-wrap">
+            <table class="comp-table">
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>DHA Phase 6</th>
+                  <th>Bahria Town Lahore</th>
+                  <th>Investment Advantage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Location &amp; Commute</strong></td>
+                  <td>12 mins to Airport, Ring Road Access</td>
+                  <td>Southern Canal Road, 45 mins to Airport</td>
+                  <td><span class="win">Phase 6 (Prime Core)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Resale Liquidity</strong></td>
+                  <td>Instant Cash Liquidity, High Global Demand</td>
+                  <td>Subject to Market Volatility</td>
+                  <td><span class="win">Phase 6 (Safe Haven)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Prestige Index</strong></td>
+                  <td>Tier-1 Elite Luxury Benchmark</td>
+                  <td>Upper-Middle Class Mixed Community</td>
+                  <td><span class="win">Phase 6 (Prestige Asset)</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Comparison 3: Phase 6 vs Lake City -->
+        <div class="comp-card">
+          <h3>DHA Phase 6 vs. Lake City Lahore</h3>
+          <div class="table-wrap">
+            <table class="comp-table">
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>DHA Phase 6</th>
+                  <th>Lake City Lahore</th>
+                  <th>Investment Advantage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Community Scale</strong></td>
+                  <td>Mega Master Community (17 Sectors)</td>
+                  <td>Boutique Golf Community (Raiwind Rd)</td>
+                  <td><span class="win">Phase 6 (Complete City Center)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Commercial Ecosystem</strong></td>
+                  <td>Hundreds of Plazas, Multi-Billion CCA</td>
+                  <td>Neighborhood Retail Hubs</td>
+                  <td><span class="win">Phase 6 (Massive Footfall)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Capital Growth Trajectory</strong></td>
+                  <td>Proven Multi-Decade Sustained Returns</td>
+                  <td>Stable but Niche Market Volume</td>
+                  <td><span class="win">Phase 6 (Broad Liquidity)</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Future Growth Catalysts -->
+      <section class="invest-section">
+        <span class="section-kicker"><span></span> Future Appreciation</span>
+        <h2>4. Major Future Catalysts for Capital Appreciation</h2>
+        <div class="catalysts-grid">
+          <div class="cat-item">
+            <h4>Dolmen Mall Phase 6</h4>
+            <p>The operational expansion of Dolmen Mall brings international retail flagship brands, luxury cinemas, and immense footfall directly into Phase 6.</p>
+          </div>
+          <div class="cat-item">
+            <h4>Defence Raya Commercial Densification</h4>
+            <p>Ongoing development of corporate office towers and boutique hotels around the golf course continues to elevate commercial rental values.</p>
+          </div>
+          <div class="cat-item">
+            <h4>Southern Ring Road Loop Connectivity</h4>
+            <p>Enhanced ring road bypasses funnel traffic smoothly around Phase 6, making it the central conduit between northern Lahore and southern luxury phases.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5: Risk & Investor Recommendations -->
+      <section class="invest-section">
+        <span class="section-kicker"><span></span> Strategy &amp; Risks</span>
+        <h2>5. Investor Profiles &amp; Recommended Strategies</h2>
+        
+        <div class="strategy-grid">
+          <div class="strat-card">
+            <h3>For Long-Term Capital Appreciation (3–5 Years)</h3>
+            <p>Target vacant 1 Kanal residential plots in eastern growth sectors (Sector J, L, M, N). Entry prices are competitive with substantial room for appreciation as construction density reaches 90%.</p>
+          </div>
+          <div class="strat-card">
+            <h3>For Immediate High-Yield Passive Cash Flow</h3>
+            <p>Target 4 Marla or 8 Marla commercial plazas or individual commercial floors in CCA 1, CCA 2, or Main Boulevard. Yields of 6.5% to 7.8% provide robust recurring cash flow.</p>
+          </div>
+          <div class="strat-card">
+            <h3>For Luxury End-User Living &amp; Capital Safety</h3>
+            <p>Target newly built designer homes in Sector A, C, or D, or golf-facing villas in Defence Raya. Highest quality of life, pristine security, and immediate neighborhood community.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 6: FAQs -->
+      <section class="invest-section">
+        <h2>Frequently Asked Questions on DHA Phase 6 Investment</h2>
+        <div class="faqs-stack">
+          {faqs.map((faq) => (
+            <details class="faq-item" open>
+              <summary class="faq-q">
+                <span>{faq.q}</span>
+                <span class="faq-icon">+</span>
+              </summary>
+              <div class="faq-a">
+                <p>{faq.a}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </section>
+    </div>
+  </main>
+</PageLayout>
+
+<style>
+  :root {
+    --inv-bg: #080818;
+    --inv-surface: #111125;
+    --inv-surface-2: #161633;
+    --inv-gold: #10b981;
+    --inv-gold-light: #34d399;
+    --inv-text: #f0f0f5;
+    --inv-muted: #9494b8;
+    --inv-dim: #646485;
+    --inv-line: rgba(255, 255, 255, 0.08);
+  }
+
+  .invest-hero {
+    padding: 72px 0 54px;
+    background: linear-gradient(180deg, #111124 0%, #0a0a19 100%);
+    border-bottom: 1px solid var(--inv-line);
+    text-align: center;
+  }
+  .breadcrumb {
+    display: flex;
+    justify-content: center;
+    gap: 0.45rem;
+    font-size: 0.75rem;
+    color: var(--inv-dim);
+    margin-bottom: 1.25rem;
+  }
+  .breadcrumb a {
+    color: var(--inv-muted);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    color: var(--inv-gold-light);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(16, 185, 129, 0.12);
+    color: var(--inv-gold-light);
+    border: 1px solid rgba(16, 185, 129, 0.28);
+    padding: 0.2rem 0.65rem;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    margin-bottom: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .invest-hero h1 {
+    font-size: 2.3rem;
+    font-weight: 800;
+    color: var(--inv-text);
+    margin: 0 0 1rem;
+  }
+  .hero-lead {
+    max-width: 800px;
+    margin: 0 auto 2.25rem;
+    color: var(--inv-muted);
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+  .metrics-banner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .m-card {
+    background: var(--inv-surface);
+    border: 1px solid var(--inv-line);
+    border-radius: 8px;
+    padding: 1.25rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .m-num {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--inv-gold-light);
+  }
+  .m-txt {
+    font-size: 0.72rem;
+    color: var(--inv-dim);
+    line-height: 1.35;
+  }
+
+  .invest-main {
+    padding: 50px 0 80px;
+    background: var(--inv-bg);
+  }
+  .invest-section {
+    margin-bottom: 3.5rem;
+    padding: 2.25rem;
+    background: var(--inv-surface);
+    border: 1px solid var(--inv-line);
+    border-radius: 12px;
+  }
+  .section-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--inv-gold-light);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.4rem;
+  }
+  .section-kicker span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--inv-gold);
+  }
+  .invest-section h2 {
+    font-size: 1.55rem;
+    font-weight: 800;
+    color: var(--inv-text);
+    margin: 0 0 1rem;
+  }
+  .invest-section p {
+    color: var(--inv-muted);
+    font-size: 0.92rem;
+    line-height: 1.7;
+    margin: 0 0 1.25rem;
+  }
+
+  .demographics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+  .demo-card {
+    background: #0d0d21;
+    border: 1px solid var(--inv-line);
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  .demo-card h4 {
+    color: var(--inv-gold-light);
+    font-size: 0.95rem;
+    margin: 0 0 0.5rem;
+  }
+  .demo-card p {
+    margin: 0;
+    font-size: 0.82rem;
+  }
+
+  /* Comp Cards */
+  .comp-card {
+    background: #0d0d21;
+    border: 1px solid var(--inv-line);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .comp-card h3 {
+    font-size: 1.15rem;
+    color: var(--inv-text);
+    margin: 0 0 1rem;
+  }
+  .table-wrap {
+    overflow-x: auto;
+  }
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+  .comp-table th,
+  .comp-table td {
+    padding: 0.85rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--inv-line);
+  }
+  .comp-table th {
+    background: #151532;
+    color: var(--inv-text);
+    font-weight: 700;
+  }
+  .comp-table td {
+    color: var(--inv-muted);
+  }
+  .win {
+    color: #10b981;
+    font-weight: 700;
+  }
+  .tie {
+    color: #93c5fd;
+    font-weight: 700;
+  }
+
+  .catalysts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+  .cat-item {
+    background: #0d0d21;
+    border: 1px solid var(--inv-line);
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  .cat-item h4 {
+    color: var(--inv-gold-light);
+    font-size: 0.95rem;
+    margin: 0 0 0.5rem;
+  }
+  .cat-item p {
+    margin: 0;
+    font-size: 0.82rem;
+  }
+
+  .strategy-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+  .strat-card {
+    background: #0d0d21;
+    border: 1px solid var(--inv-line);
+    border-radius: 8px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .strat-card h3 {
+    font-size: 0.95rem;
+    color: var(--inv-text);
+    margin: 0 0 0.5rem;
+    line-height: 1.4;
+  }
+  .strat-card p {
+    margin: 0;
+    font-size: 0.82rem;
+  }
+
+  .faqs-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .faq-item {
+    background: #0d0d21;
+    border: 1px solid var(--inv-line);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .faq-q {
+    padding: 0.85rem 1.1rem;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--inv-text);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+  }
+  .faq-icon {
+    color: var(--inv-gold-light);
+  }
+  .faq-a {
+    padding: 0 1.1rem 0.85rem;
+    color: var(--inv-muted);
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+  .faq-a p {
+    margin: 0;
+  }
+
+  @media (max-width: 960px) {
+    .metrics-banner,
+    .demographics-grid,
+    .catalysts-grid,
+    .strategy-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 640px) {
+    .invest-hero {
+      padding: 48px 0 36px;
+    }
+    .invest-hero h1 {
+      font-size: 1.65rem;
+    }
+    .invest-section {
+      padding: 1.5rem;
+    }
+  }
+</style>

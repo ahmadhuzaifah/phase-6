@@ -35,7 +35,7 @@ const currentPath = Astro.url.pathname;
               class:list={[
                 'mobile-menu__link',
                 { 'mobile-menu__link--active': currentPath === item.href },
-                { 'mobile-menu__link--accent': item.label === 'Map PDFs' }
+                { 'mobile-menu__link--accent': item.label === 'Properties' || item.label === 'Guide' }
               ]}
               aria-current={currentPath === item.href ? 'page' : undefined}
             >
@@ -45,6 +45,12 @@ const currentPath = Astro.url.pathname;
         ))
       }
     </ul>
+
+    <div class="mobile-menu__actions">
+      <a href="/search-property/" class="mobile-action-btn search-cta">⚡ Search Properties</a>
+      <a href="/dha-phase-6-property-calculator/" class="mobile-action-btn calc-cta">📊 Property Calculator</a>
+      <a href="https://wa.me/923257800001?text=Hello%2C%20I%20need%20assistance%20with%20DHA%20Phase%206%20property." target="_blank" rel="noopener noreferrer" class="mobile-action-btn wa-cta">💬 WhatsApp Support</a>
+    </div>
   </nav>
 </div>
 
@@ -198,7 +204,39 @@ const currentPath = Astro.url.pathname;
     font-weight: 700;
   }
 
-  @media (min-width: 1200px) {
+  .mobile-menu__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .mobile-action-btn {
+    display: block;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    font-size: 0.82rem;
+    font-weight: 800;
+    text-decoration: none;
+  }
+  .search-cta {
+    background: linear-gradient(135deg, #059669, #10b981);
+    color: #042014;
+  }
+  .calc-cta {
+    background: rgba(255, 255, 255, 0.08);
+    color: #f1f5f9;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .wa-cta {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+  }
+
+  @media (min-width: 1220px) {
     .mobile-menu {
       display: none;
     }

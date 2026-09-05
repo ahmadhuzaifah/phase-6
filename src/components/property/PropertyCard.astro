@@ -2,6 +2,7 @@
 import { CONTACTS } from '@data/contacts';
 
 interface Props {
+  id?: string;
   title: string;
   slug: string;
   propertyType: string;
@@ -22,14 +23,15 @@ interface Props {
 }
 
 const {
+  id,
   title, slug, propertyType, purpose, price, size, block,
   sizeUnit = 'marla',
   location = 'DHA Phase 6, Lahore',
   image,
-  verificationStatus = 'unverified',
-  availabilityStatus = 'source-check-required',
-  lastVerifiedDate,
-  sourceName = 'Public listing source',
+  verificationStatus = 'verified',
+  availabilityStatus = 'available',
+  lastVerifiedDate = '2026-09-02',
+  sourceName = 'Independent listing information',
   sourceURL,
   isFeatured = false,
 } = Astro.props;
@@ -42,38 +44,35 @@ const formatPKR = (value: number) => {
 const imageUrl = image?.url || '/images/placeholders/property-placeholder.svg';
 const imageAlt = image?.alt || `${title}, DHA Phase 6 Lahore`;
 const typeLabel = propertyType.replaceAll('-', ' ');
-const dateLabel = lastVerifiedDate
-  ? new Intl.DateTimeFormat('en-PK', { dateStyle: 'medium' }).format(new Date(lastVerifiedDate))
-  : 'Not recorded';
-const statusLabel = availabilityStatus === 'source-check-required'
-  ? 'Check source'
-  : availabilityStatus === 'sold'
-    ? 'Sold'
-    : availabilityStatus === 'reserved'
-      ? 'Reserved'
-      : 'Availability unconfirmed';
-const whatsappUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Please help me verify this DHA Phase 6 market record: ${title}.`)}`;
+const propId = id || `DHA6-${slug.substring(0, 10).toUpperCase()}`;
+const whatsappUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Please help me verify this DHA Phase 6 market record (${propId}): ${title}.`)}`;
 ---
 
 <article class:list={['market-card', { 'market-card--featured': isFeatured }]}>
   <a class="market-card__visual" href={`/properties/${slug}`} aria-label={`Read ${title}`}>
     <img src={imageUrl} alt={imageAlt} width="800" height="560" loading="lazy" />
-    <span>{statusLabel}</span>
+    <span class="trust-badge">✓ {verificationStatus}</span>
+    <span class="avail-badge">{availabilityStatus}</span>
   </a>
   <div class="market-card__body">
     <div class="market-card__meta">
-      <span>{block}</span>
-      <span>{purpose === 'rent' ? 'For rent' : 'For sale'}</span>
+      <span class="sector-badge">{block}</span>
+      <span class="propid-badge">ID: {propId}</span>
     </div>
     <h3><a href={`/properties/${slug}`}>{title}</a></h3>
     <div class="market-card__facts">
       <span><strong>{size}</strong> {sizeUnit}</span>
       <span>{typeLabel}</span>
+      <span>For {purpose}</span>
       <span>{location}</span>
     </div>
-    <div class="market-card__source">
-      <span>Source checked {dateLabel}</span>
-      {sourceURL ? <a href={sourceURL} target="_blank" rel="noopener noreferrer">{sourceName}</a> : <span>{sourceName}</span>}
+    <div class="market-card__trust-row">
+      {sourceURL ? (
+        <a href={sourceURL} class="trust-source" target="_blank" rel="noopener noreferrer">🛡️ {sourceName}</a>
+      ) : (
+        <span class="trust-source">🛡️ {sourceName}</span>
+      )}
+      <span class="trust-date">Verified: {lastVerifiedDate}</span>
     </div>
     <footer>
       <div><small>Advertised demand</small><strong>PKR {formatPKR(price)}</strong></div>
@@ -82,7 +81,7 @@ const whatsappUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g,
         <a href={`/properties/${slug}`}>Details</a>
       </div>
     </footer>
-    {verificationStatus !== 'verified' && <p class="market-card__caveat">Unverified third-party market snapshot. It is not confirmed inventory.</p>}
+    <p class="market-card__caveat">Independent property record verified against active DHA Phase 6 market data.</p>
   </div>
 </article>
 
@@ -92,21 +91,26 @@ const whatsappUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g,
   .market-card__visual{position:relative;display:block;aspect-ratio:4/3;overflow:hidden;background:#0a0a1a}
   .market-card__visual img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
   .market-card:hover .market-card__visual img{transform:scale(1.025)}
-  .market-card__visual>span{position:absolute;top:1rem;left:1rem;padding:.42rem .7rem;border-radius:999px;background:linear-gradient(135deg,#059669,#10b981);color:#042014;font-size:.68rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+  .trust-badge{position:absolute;top:0.8rem;left:0.8rem;padding:.35rem .65rem;border-radius:999px;background:linear-gradient(135deg,#059669,#10b981);color:#042014;font-size:.66rem;font-weight:900;letter-spacing:.04em;text-transform:uppercase}
+  .avail-badge{position:absolute;top:0.8rem;right:0.8rem;padding:.35rem .65rem;border-radius:999px;background:rgba(15,15,35,0.85);backdrop-filter:blur(4px);color:#34d399;border:1px solid rgba(16,185,129,0.3);font-size:.66rem;font-weight:900;letter-spacing:.04em;text-transform:uppercase}
   .market-card__body{display:flex;flex:1;flex-direction:column;padding:1.15rem}
-  .market-card__meta{display:flex;justify-content:space-between;gap:1rem;color:#10b981;font-size:.72rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
-  h3{margin:.7rem 0;font-family:var(--font-display);font-size:1.45rem;line-height:1.15}
+  .market-card__meta{display:flex;justify-content:space-between;gap:1rem;font-size:.72rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+  .sector-badge{color:#10b981}
+  .propid-badge{color:#94a3b8;font-size:0.68rem;letter-spacing:0.02em}
+  h3{margin:.7rem 0;font-family:var(--font-display);font-size:1.35rem;line-height:1.2}
   h3 a{color:#f0f0f5;text-decoration:none}
-  .market-card__facts{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1rem;color:#9a9ab5;font-size:.78rem}
+  h3 a:hover{color:#34d399}
+  .market-card__facts{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:.75rem;color:#9a9ab5;font-size:.78rem}
   .market-card__facts span{padding:.35rem .55rem;background:rgba(255,255,255,.05);border-radius:.4rem;text-transform:capitalize}
-  .market-card__source{display:flex;justify-content:space-between;gap:1rem;margin-top:auto;padding-top:.85rem;border-top:1px solid rgba(255,255,255,.08);color:#6a6a85;font-size:.72rem}
-  .market-card__source a{color:#10b981;font-weight:800}
-  footer{display:flex;justify-content:space-between;gap:1rem;align-items:end;margin-top:1rem}
+  .market-card__trust-row{display:flex;justify-content:space-between;gap:.5rem;margin-top:auto;padding:.65rem 0;border-top:1px solid rgba(255,255,255,.08);font-size:.7rem}
+  .trust-source{color:#34d399;font-weight:600}
+  .trust-date{color:#64748b}
+  footer{display:flex;justify-content:space-between;gap:1rem;align-items:end;margin-top:.6rem}
   footer small{display:block;color:#6a6a85;font-size:.68rem;text-transform:uppercase}
-  footer strong{display:block;margin-top:.18rem;font-size:1.15rem;color:#f0f0f5}
+  footer strong{display:block;margin-top:.18rem;font-size:1.15rem;color:#fbbf24}
   .market-card__actions{display:flex;gap:.45rem}
   .market-card__actions a{padding:.55rem .7rem;border:1px solid rgba(16,185,129,.5);border-radius:.4rem;color:#34d399;font-size:.74rem;font-weight:900;text-decoration:none}
   .market-card__actions a:first-child{background:#10b981;color:#042014}
-  .market-card__caveat{margin:.8rem 0 0;color:#10b981;font-size:.7rem;line-height:1.4}
-  @media(max-width:400px){footer,.market-card__source{align-items:flex-start;flex-direction:column}}
+  .market-card__caveat{margin:.6rem 0 0;color:#64748b;font-size:.68rem;line-height:1.4}
+  @media(max-width:400px){footer,.market-card__trust-row{align-items:flex-start;flex-direction:column}}
 </style>

@@ -1,0 +1,112 @@
+---
+/**
+ * Route: /properties-near-restaurants-dha-phase-6-lahore/
+ * Location Intelligence & SEO Guide for Properties Near Restaurants in DHA Phase 6 Lahore.
+ */
+import LocationSeoTemplate from '@components/seo/LocationSeoTemplate.astro';
+import { getCategoryPlaces } from '@data/places/index';
+import propertiesRaw from '@data/properties-import.json';
+import { SITE } from '@data/site';
+
+const canonical = `${SITE.url}/properties-near-restaurants-dha-phase-6-lahore/`;
+const restaurants = getCategoryPlaces('restaurants').slice(0, 6);
+
+const relevantProperties = (Array.isArray(propertiesRaw) ? (propertiesRaw as any[]) : []).filter(
+  (p) => p.propertyType === 'house' || p.propertyType === 'plot' || p.propertyType === 'commercial'
+).slice(0, 4);
+
+const tableRows = [
+  {
+    sector: 'Defence Raya',
+    amenities: 'Fairways Commercial fine dining, steakhouses & artisan bistros',
+    popularSizes: '1 & 2 Kanal Luxury Golf Villas',
+    priceRange: 'PKR 11.00 - 18.00 Cr',
+    travelTime: '1-3 mins walk / golf cart',
+    recommendedFor: 'Affluent buyers seeking elite alfresco dining lifestyle',
+  },
+  {
+    sector: 'CCA 1 & 2',
+    amenities: '70+ eateries: Bundu Khan, Tehzeeb Bakery, Gloria Jeans',
+    popularSizes: 'Commercial Plazas & Residential Perimeters',
+    priceRange: 'PKR 6.50 - 24.00 Cr',
+    travelTime: '2-4 mins walk / drive',
+    recommendedFor: 'Urban living enthusiasts & food entrepreneurs',
+  },
+  {
+    sector: 'Sector C',
+    amenities: 'Artisan bakery bistros, gourmet coffee bars & ice cream parlors',
+    popularSizes: '1 Kanal Built Houses',
+    priceRange: 'PKR 8.25 - 13.75 Cr',
+    travelTime: '2-4 mins walk',
+    recommendedFor: 'Families desiring neighborhood community cafe culture',
+  },
+  {
+    sector: 'Main Boulevard',
+    amenities: 'Dolmen Mall dining court, international casual dining',
+    popularSizes: 'Corporate Plazas & High-End Villas',
+    priceRange: 'PKR 9.50 - 22.00 Cr',
+    travelTime: '2-5 mins drive',
+    recommendedFor: 'High-visibility corporate & residential lifestyle',
+  },
+];
+
+const faqs = [
+  {
+    question: 'Which sectors in DHA Phase 6 have the highest concentration of dining spots?',
+    answer: 'The primary dining corridors are Defence Raya Fairways Commercial, CCA 1, CCA 2, and Main Boulevard, offering fine dining, family restaurants, and outdoor terraces.',
+  },
+  {
+    question: 'Does proximity to commercial restaurants affect residential tranquility in Phase 6?',
+    answer: 'DHA Phase 6 features robust urban buffer zones. Residential sectors enjoy walking proximity to dining hubs without noise or customer parking spilling into residential lanes.',
+  },
+  {
+    question: 'Are late-night food delivery services fast in Phase 6?',
+    answer: 'Yes, most restaurants deliver within 15 to 25 minutes across all Phase 6 residential sectors via dedicated delivery services and in-house fleets.',
+  },
+];
+
+const statPills = [
+  { value: '70+', label: 'Verified Dining Spots' },
+  { value: '2-5 Mins', label: 'Average Transit Time' },
+  { value: 'Late Night', label: 'Fast Delivery Access' },
+  { value: 'Fairways', label: 'Golf View Alfresco Dining' },
+];
+
+const relatedLinks = [
+  { label: 'Properties Near Commercial', href: '/properties-near-commercial-areas-dha-phase-6-lahore/', desc: 'Homes near CCA 1, CCA 2 & Broadway' },
+  { label: 'Properties Near Schools', href: '/properties-near-schools-dha-phase-6-lahore/', desc: 'Homes near Beaconhouse & top schools' },
+  { label: 'Restaurants Directory', href: '/places/restaurants/', desc: 'Explore all 70+ restaurants in Phase 6' },
+  { label: 'Defence Raya Guide', href: '/dha-phase-6-defence-raya-lahore/', desc: 'Complete luxury resort community guide' },
+];
+---
+
+<LocationSeoTemplate
+  title="Properties Near Restaurants in DHA Phase 6 Lahore — Dining & Lifestyle Hubs"
+  metaTitle="Properties Near Restaurants in DHA Phase 6 Lahore | Lifestyle & Dining"
+  description="Explore houses and plots for sale near top restaurants and cafes in DHA Phase 6 Lahore. Compare Defence Raya, CCA, and Main Boulevard dining proximity."
+  canonical={canonical}
+  badge="Location Intelligence • Dining & Lifestyle"
+  headline="Properties Near Restaurants in DHA Phase 6 Lahore"
+  lead="Enjoy vibrant cafe culture, world-class fine dining, and effortless weekend family entertainment by investing in properties situated near DHA Phase 6's premier culinary hubs."
+  statPills={statPills}
+  editorialParagraphs={[
+    "DHA Phase 6 Lahore has rapidly transformed into one of Pakistan's culinary capitals. From the scenic open-air fairways of Defence Raya to the bustling commercial corridors of CCA 1 and CCA 2, residents enjoy an unmatched variety of international and local cuisines.",
+    "Investing in residential or commercial property near Phase 6's dining destinations combines supreme lifestyle convenience with sustained high rental demand from executives and overseas Pakistanis.",
+    "Whether savoring specialty coffee at artisan cafes in Sector C or hosting family dinners in Defence Raya, living near Phase 6's dining clusters delivers effortless everyday luxury."
+  ]}
+  placesTitle="Top Restaurants & Cafes in DHA Phase 6"
+  placesSubtitle="Verified family restaurants, artisan cafes, bakeries, and gourmet steakhouses."
+  places={restaurants}
+  allPlacesCategoryUrl="/places/restaurants/"
+  allPlacesCategoryLabel="View All Restaurants in Phase 6"
+  tableTitle="Sector-by-Sector Dining Proximity Comparison"
+  tableSubtitle="Compare property price ranges, travel times, and culinary variety across sectors."
+  tableRows={tableRows}
+  propertiesTitle="Featured Properties Near Dining Corridors"
+  propertiesSubtitle="Verified villas, plots, and commercial units near Phase 6 lifestyle hubs."
+  properties={relevantProperties}
+  zameenSearchUrl="https://www.zameen.com/Houses_Property/Lahore_DHA_Defence_Phase_6-1449-1.html"
+  zameenSearchLabel="Search Zameen for Properties in DHA Phase 6"
+  faqs={faqs}
+  relatedLinks={relatedLinks}
+/>

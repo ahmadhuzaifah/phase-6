@@ -1,0 +1,160 @@
+---
+/**
+ * Route: /plots-near-schools-dha-phase-6-lahore/
+ * Location Intelligence & SEO Guide for Residential Plots Near Schools in DHA Phase 6 Lahore.
+ */
+import LocationSeoTemplate from '@components/seo/LocationSeoTemplate.astro';
+import { getCategoryPlaces } from '@data/places/index';
+import propertiesRaw from '@data/properties-import.json';
+import { SITE } from '@data/site';
+
+const canonical = `${SITE.url}/plots-near-schools-dha-phase-6-lahore/`;
+const schools = getCategoryPlaces('schools').slice(0, 6);
+
+const plotProperties = (propertiesRaw as any[]).filter(
+  (p) => p.propertyType === 'residential-plot'
+).slice(0, 3);
+
+const tableRows = [
+  {
+    sector: 'Sector J',
+    amenities: 'Near LGS & Beaconhouse Campuses',
+    popularSizes: '10 Marla, 1 Kanal Plots',
+    priceRange: 'PKR 2.40 - 5.50 Cr',
+    travelTime: '2-4 mins walk',
+    recommendedFor: 'Custom home builders wanting 10 Marla school proximity',
+  },
+  {
+    sector: 'Sector D',
+    amenities: 'Central Phase 6, SICAS Proximity',
+    popularSizes: '1 Kanal Plots',
+    priceRange: 'PKR 4.80 - 6.50 Cr',
+    travelTime: '3-5 mins drive',
+    recommendedFor: 'Prime 1 Kanal residential construction',
+  },
+  {
+    sector: 'Sector C',
+    amenities: 'Roots IVY International, Central Boulevard',
+    popularSizes: '1 Kanal Plots',
+    priceRange: 'PKR 5.50 - 7.80 Cr',
+    travelTime: '3-5 mins drive',
+    recommendedFor: 'High-net-worth investors seeking central location premiums',
+  },
+  {
+    sector: 'Sector A',
+    amenities: 'Roots Millennium, Bedian Road Approaching Network',
+    popularSizes: '1 Kanal, 2 Kanal Plots',
+    priceRange: 'PKR 5.20 - 14.00 Cr',
+    travelTime: '3-6 mins drive',
+    recommendedFor: 'Spacious 2 Kanal luxury villas near western corridors',
+  },
+  {
+    sector: 'Sector H',
+    amenities: 'Eastern Educational Corridor & Academies',
+    popularSizes: '10 Marla, 1 Kanal Plots',
+    priceRange: 'PKR 2.50 - 5.20 Cr',
+    travelTime: '2-5 mins drive',
+    recommendedFor: 'Value investors targeting 10 Marla resale liquidity',
+  },
+  {
+    sector: 'Sector N',
+    amenities: 'Barki Road Educational Hubs Nearby',
+    popularSizes: '1 Kanal Plots',
+    priceRange: 'PKR 5.50 - 7.00 Cr',
+    travelTime: '4-7 mins drive',
+    recommendedFor: 'Active market inventory seekers near northern arterial links',
+  },
+];
+
+const faqs = [
+  {
+    question: 'Why are residential plots near schools in DHA Phase 6 in such high demand?',
+    answer: 'Plots near reputable schools enjoy the strongest end-user demand when constructed into houses. Home builders prioritize these sectors to guarantee convenience for their own children, while investors know that houses built near school clusters lease at top rental rates with near-zero vacancy.',
+  },
+  {
+    question: 'What are the typical plot sizes available near schools in Phase 6?',
+    answer: 'Phase 6 offers 10 Marla (approx. 225 sq yards / 250 sq yards) and 1 Kanal (approx. 4,500 sq ft / 500 sq yards) as the primary residential sizes. Sectors J and H specialize in 10 Marla, while Sectors D, C, A, and N are predominantly 1 Kanal.',
+  },
+  {
+    question: 'Are DHA Phase 6 plots possession-ready with full utility connections?',
+    answer: 'Yes. All sectors in DHA Phase 6 are fully developed with underground electricity, sewerage, water supply, and paved asphalt road networks. Buyers can apply for DHA building plan approval immediately following property transfer.',
+  },
+  {
+    question: 'What is the construction timeline permitted by DHA Lahore after purchasing a plot?',
+    answer: 'DHA Lahore regulations provide standard timeframes to submit building plans and commence construction without non-construction penalty fees. Consult the latest DHA Lahore building bylaws for exact sector possession dates and transfer guidelines.',
+  },
+  {
+    question: 'How can I ensure there are no legal disputes or outstanding dues on a plot?',
+    answer: 'Before signing a binding agreement, verify the original allotment letter, obtain a formal No Demand Certificate (NDC) from DHA Lahore, verify that all development charges are paid, and execute the transaction exclusively through authorized DHA transfer channels.',
+  },
+];
+
+const relatedLinks = [
+  {
+    label: 'DHA Phase 6 Schools Directory',
+    href: '/places/schools/',
+    desc: 'Complete directory of verified schools, colleges, and preschools.',
+  },
+  {
+    label: 'Sector D Property Guide',
+    href: '/sectors/sector-d/places/',
+    desc: 'Explore 1 Kanal plots and central facilities in Sector D.',
+  },
+  {
+    label: 'DHA Phase 6 Map PDF',
+    href: '/dha-phase-6-lahore-map/',
+    desc: 'Download the high-resolution official Phase 6 sector layout map.',
+  },
+  {
+    label: 'Browse Plot Market Snapshots',
+    href: '/properties/',
+    desc: 'View 10 Marla and 1 Kanal plot market snapshots and demands.',
+  },
+];
+---
+
+<LocationSeoTemplate
+  title="Plots Near Schools in DHA Phase 6 Lahore"
+  metaTitle="Plots Near Schools in DHA Phase 6 Lahore | 10 Marla & 1 Kanal Land"
+  description="Explore residential plots for sale near premier schools in DHA Phase 6 Lahore. Compare 10 Marla and 1 Kanal plot prices in Sectors J, D, C, and A for home construction."
+  canonical={canonical}
+  badge="Land & Development Intelligence"
+  headline="Residential Plots Near Top Schools in DHA Phase 6 Lahore"
+  lead="An analytical guide for home builders and land investors seeking 10 Marla and 1 Kanal plots within minutes of Lahore Grammar School, Beaconhouse, and Roots IVY in Phase 6."
+  statPills={[
+    { value: '10M & 1K', label: 'Primary Plot Sizes' },
+    { value: '100% Ready', label: 'Possession & Underground Utilities' },
+    { value: 'Sectors J & D', label: 'Top School Proximity' },
+    { value: 'High Growth', label: 'End-User Capital Appreciation' },
+  ]}
+  editorialParagraphs={[
+    'Building a custom-designed family residence in DHA Phase 6 Lahore begins with securing the right plot in a sector that aligns with long-term lifestyle needs. For growing families, acquiring land within walking distance or a two-minute drive of leading schools is the ultimate strategic investment.',
+    'Sectors J, D, C, and A are recognized as prime residential land choices for education-focused buyers. Sector J offers exceptional value in 10 Marla plot configurations, providing an attainable entry point into DHA Phase 6 without sacrificing immediate access to institutions like Lahore Grammar School.',
+    'For buyers seeking expansive 1 Kanal and 2 Kanal custom builds, Sector D, Sector C, and Sector A provide wide 50-foot and 60-foot residential streets, underground utility cabling, and proximity to Beaconhouse and Roots IVY. These sectors feature established construction density, meaning new home builders avoid living in empty, isolated blocks.',
+    'From an investment perspective, residential plots near education hubs enjoy remarkable price resilience. When ready to sell or lease, a finished house on a plot close to a major school consistently out-competes comparable homes located in remote outer sectors.',
+  ]}
+  placesTitle="Top Schools Surrounding Residential Plots"
+  placesSubtitle="Verified educational campuses in Phase 6 with parent ratings, addresses, and navigation links."
+  places={schools}
+  allPlacesCategoryUrl="/places/schools/"
+  allPlacesCategoryLabel="Explore All 37+ Schools & Academies"
+  tableTitle="Sector-by-Sector Plot Availability & Education Matrix"
+  tableSubtitle="Compare plot formats, indicative price bands, and school proximity across prime residential blocks."
+  tableRows={tableRows}
+  propertiesTitle="Featured Plot Market Snapshots"
+  propertiesSubtitle="Representative asking-price snapshots for residential plots in DHA Phase 6."
+  properties={plotProperties}
+  zameenSearchUrl="https://www.zameen.com/Plots/Lahore_Defence__DHA__Phase_6-1448-1.html"
+  zameenSearchLabel="Search Live Plots on Zameen.com ↗"
+  checklistTitle="Land Acquisition & Plot Due Diligence Checklist"
+  checklistBullets={[
+    'Map Plot Verification: Match the exact plot number on the physical ground with the official DHA Lahore Phase VI master map before negotiating.',
+    'Street Level & Fill Depth: Inspect the plot topography and compare it with the road crown to estimate foundation excavation and earth-filling costs.',
+    'Surrounding Construction Status: Observe whether neighboring plots on either side are already built or under construction to assess structural shared walls.',
+    'Utility Connection Verification: Confirm that underground electricity conduits, water mains, and sewerage connections are fully capped at the plot boundary.',
+    'DHA NDC & Transfer Clearance: Insist that the seller delivers a clean, verified No Demand Certificate (NDC) and original allocation letter at transfer.',
+    'Corner & Boulevard Premiums: Evaluate whether paying a 10% to 15% location surcharge for a corner or wide-road plot aligns with your total construction budget.',
+  ]}
+  faqs={faqs}
+  relatedLinks={relatedLinks}
+/>

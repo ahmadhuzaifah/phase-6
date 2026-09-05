@@ -1,0 +1,1174 @@
+---
+/**
+ * DHA Phase 6 Lahore — Sector Category Dedicated SEO Landing Pages (Phase 10.14 Task 5)
+ * Route: /sectors/[sector]/[category]/
+ * Example: /sectors/sector-a/restaurants/, /sectors/sector-a/mosques/, /sectors/cca/banks/
+ * Rule: Only generated for sector-category pairs with at least 3 verified places.
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import PlaceImage from '@components/places/PlaceImage.astro';
+import propertiesRaw from '@data/properties-import.json';
+import {
+  SECTORS_DIRECTORY,
+  getSectorPlaces,
+  getPlaceImage,
+  type PlaceRecord,
+  type SectorMeta,
+} from '@data/places/index';
+import { SITE } from '@data/site';
+
+export function getStaticPaths() {
+  const CATEGORY_NAMES: Record<string, string> = {
+    restaurants: 'Restaurants',
+    mosque: 'Mosques',
+    mosques: 'Mosques',
+    schools: 'Schools',
+    school: 'Schools',
+    banks: 'Banks & ATMs',
+    bank: 'Banks & ATMs',
+    supermarkets: 'Supermarkets',
+    supermarket: 'Supermarkets',
+    cafes: 'Cafes & Coffee Shops',
+    cafe: 'Cafes & Coffee Shops',
+    bakery: 'Bakeries',
+    'beauty-salons': 'Beauty Salons & Spas',
+    'fast-food': 'Fast Food & Dining',
+    shopping: 'Shopping & Retail',
+    club: 'Sports & Social Clubs',
+    services: 'Services & Corporate',
+    hospital: 'Hospitals & Clinics',
+    hospitals: 'Hospitals & Clinics',
+  };
+
+  const ALIAS_MAP: Record<string, string> = {
+    mosques: 'mosque',
+    schools: 'school',
+    banks: 'bank',
+    supermarkets: 'supermarket',
+    cafes: 'cafe',
+    hospitals: 'hospital',
+    restaurants: 'restaurant',
+  };
+
+  // Reverse alias map for canonical plural routing
+  const REVERSE_ALIAS: Record<string, string> = {
+    mosque: 'mosques',
+    school: 'schools',
+    bank: 'banks',
+    supermarket: 'supermarkets',
+    cafe: 'cafes',
+    hospital: 'hospitals',
+    restaurant: 'restaurants',
+  };
+
+  const paths: any[] = [];
+  const handledPairs = new Set<string>();
+
+  for (const sector of SECTORS_DIRECTORY) {
+    const sectorPlaces = getSectorPlaces(sector.key);
+    // Group places by category
+    const catMap = new Map<string, PlaceRecord[]>();
+    for (const p of sectorPlaces) {
+      const list = catMap.get(p.category) || [];
+      list.push(p);
+      catMap.set(p.category, list);
+    }
+
+    for (const [rawCategory, places] of catMap.entries()) {
+      if (places.length < 3) continue; // Must have at least 3 places
+
+      const label = CATEGORY_NAMES[rawCategory] || rawCategory.charAt(0).toUpperCase() + rawCategory.slice(1);
+      const pairKey = `${sector.key}/${rawCategory}`;
+
+      if (!handledPairs.has(pairKey)) {
+        handledPairs.add(pairKey);
+        paths.push({
+          params: { sector: sector.key, category: rawCategory },
+          props: {
+            sectorMeta: sector,
+            categoryKey: rawCategory,
+            categoryLabel: label,
+            places,
+          },
+        });
+      }
+
+      // If category has a plural/singular alternate, add route alias as well
+      const altKey = REVERSE_ALIAS[rawCategory] || ALIAS_MAP[rawCategory];
+      if (altKey && altKey !== rawCategory && altKey !== 'places' && altKey !== 'properties') {
+        const altPairKey = `${sector.key}/${altKey}`;
+        if (!handledPairs.has(altPairKey)) {
+          handledPairs.add(altPairKey);
+          paths.push({
+            params: { sector: sector.key, category: altKey },
+            props: {
+              sectorMeta: sector,
+              categoryKey: rawCategory,
+              categoryLabel: CATEGORY_NAMES[altKey] || label,
+              places,
+            },
+          });
+        }
+      }
+    }
+  }
+
+  return paths;
+}
+
+interface Props {
+  sectorMeta: SectorMeta;
+  categoryKey: string;
+  categoryLabel: string;
+  places: PlaceRecord[];
+}
+
+const { sectorMeta, categoryKey, categoryLabel, places } = Astro.props as Props;
+
+const canonical = `${SITE.url}/sectors/${sectorMeta.key}/${categoryKey}/`;
+const pageTitle = `Best ${categoryLabel} in ${sectorMeta.label} DHA Phase 6 Lahore | Top Rated Guide`;
+const metaDesc = `Comprehensive guide to verified ${categoryLabel.toLowerCase()} in ${sectorMeta.label}, DHA Phase 6 Lahore. View Google ratings, customer reviews, exact addresses, and direct Google Maps navigation.`;
+
+// Editorial overview generator
+const sectorCategoryDescriptions: Record<string, string> = {
+  restaurants: `${sectorMeta.label} in DHA Phase 6 Lahore hosts a vibrant dining scene featuring popular family eateries, cafes, and gourmet dining. Conveniently situated along wide avenues with accessible parking, residents enjoy convenient dine-in, takeaway, and fast home delivery.`,
+  mosques: `Spiritual life in ${sectorMeta.label} is centered around its beautifully designed Jamia Mosque and prayer facilities. Featuring climate-controlled prayer halls, landscaped wudhu courtyards, and dedicated female prayer sections, residents enjoy tranquil daily prayers and Friday congregations.`,
+  schools: `Families living in ${sectorMeta.label}, DHA Phase 6 Lahore benefit from proximity to premier private schools, early learning academies, and montessoris. Situated within secure, calm residential surroundings, these institutions offer international curricula and modern sports facilities.`,
+  banks: `Banking and financial transactions in ${sectorMeta.label} are effortless with major commercial and Islamic banks operating modern branches and 24/7 ATM lobbies equipped with cash deposit machines and round-the-clock security.`,
+  supermarkets: `Daily grocery and household shopping in ${sectorMeta.label} is serviced by well-stocked department stores, marts, and convenience stores offering fresh produce, dairy, bakery items, and imported goods.`,
+  hospital: `Healthcare infrastructure serving ${sectorMeta.label} provides residents with prompt medical attention, emergency diagnostics, and specialized consultation clinics within minutes of home.`,
+};
+
+const overviewText =
+  sectorCategoryDescriptions[categoryKey] ||
+  `Explore verified ${categoryLabel.toLowerCase()} in ${sectorMeta.label}, DHA Phase 6 Lahore. This curated directory features verified addresses, customer reviews, direct phone contacts, and Google Maps directions for residents and visitors.`;
+
+// Properties in this sector
+interface PropertyItem {
+  id: string;
+  slug: string;
+  title: string;
+  price?: number;
+  propertyType: string;
+  size?: string;
+  images?: any[];
+  block?: string;
+  location?: { address?: string; block?: string };
+}
+const allProperties = (Array.isArray(propertiesRaw) ? (propertiesRaw as any[]) : []) as PropertyItem[];
+const sectorDirectProperties = allProperties.filter((prop) => {
+  const blockLower = (prop.block || '').toLowerCase();
+  const addressLower = (prop.location?.address || '').toLowerCase();
+  const sectorLabelLower = sectorMeta.label.toLowerCase();
+  const cleanKey = sectorMeta.key.replace(/^sector-/, '').toLowerCase();
+  return (
+    blockLower.includes(cleanKey) ||
+    blockLower.includes(sectorLabelLower) ||
+    addressLower.includes(cleanKey) ||
+    addressLower.includes(sectorLabelLower)
+  );
+});
+
+const otherProperties = allProperties.filter((p) => !sectorDirectProperties.some((dp) => dp.id === p.id));
+const displayedProperties = [...sectorDirectProperties, ...otherProperties].slice(0, 4);
+
+function formatPrice(val: number | undefined): string {
+  if (!val) return 'Call for Price';
+  const cr = val / 10000000;
+  if (cr >= 1) return `PKR ${cr.toFixed(2)} Cr`;
+  const lac = val / 100000;
+  return `PKR ${lac.toFixed(1)} Lac`;
+}
+
+// FAQs tailored to this sector and category
+const faqs = [
+  {
+    q: `What are the top-rated ${categoryLabel.toLowerCase()} in ${sectorMeta.label}, DHA Phase 6?`,
+    a: `Top-rated listings in ${sectorMeta.label} include ${places.slice(0, 2).map((p: PlaceRecord) => p.name).join(' and ')}, based on verified Google ratings and local customer feedback.`,
+  },
+  {
+    q: `Are ${categoryLabel.toLowerCase()} in ${sectorMeta.label} easily accessible with car parking?`,
+    a: `Yes, ${sectorMeta.label} features wide avenues, dedicated commercial parking bays, and secure street parking directly in front of businesses and community facilities.`,
+  },
+  {
+    q: `How do I navigate to ${places[0]?.name || categoryLabel} in ${sectorMeta.label}?`,
+    a: `You can use the 'Open in Google Maps' button on any place card above to get real-time GPS turn-by-turn driving directions directly to ${sectorMeta.label}, DHA Phase 6 Lahore.`,
+  },
+  {
+    q: `Are there residential or commercial properties available near these ${categoryLabel.toLowerCase()} in ${sectorMeta.label}?`,
+    a: `Yes, ${sectorMeta.label} offers premium 10 Marla, 1 Kanal, and 2 Kanal houses and residential plots, alongside commercial plots in and around local commercial hubs. Check our property listings below.`,
+  },
+];
+
+// JSON-LD Structured Data
+const structuredData: { '@context': string; '@graph': any[] } = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'CollectionPage',
+      '@id': canonical,
+      url: canonical,
+      name: pageTitle,
+      description: metaDesc,
+      inLanguage: 'en-PK',
+      isPartOf: { '@type': 'WebSite', '@id': `${SITE.url}/#website`, name: SITE.name, url: SITE.url },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${canonical}#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url },
+        { '@type': 'ListItem', position: 2, name: 'Sectors', item: `${SITE.url}/sectors/` },
+        { '@type': 'ListItem', position: 3, name: sectorMeta.label, item: `${SITE.url}/sectors/${sectorMeta.key}/` },
+        { '@type': 'ListItem', position: 4, name: categoryLabel, item: canonical },
+      ],
+    },
+    {
+      '@type': 'ItemList',
+      '@id': `${canonical}#directory`,
+      name: pageTitle,
+      numberOfItems: places.length,
+      itemListElement: places.map((place: PlaceRecord, idx: number) => ({
+        '@type': 'ListItem',
+        position: idx + 1,
+        item: {
+          '@type': 'LocalBusiness',
+          name: place.name,
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: place.address,
+            addressLocality: 'Lahore',
+            addressRegion: 'Punjab',
+            postalCode: '54792',
+            addressCountry: 'PK',
+          },
+          ...(place.rating
+            ? {
+                aggregateRating: {
+                  '@type': 'AggregateRating',
+                  ratingValue: place.rating,
+                  reviewCount: place.reviewCount || 1,
+                },
+              }
+            : {}),
+          ...(place.phone ? { telephone: place.phone } : {}),
+          image: getPlaceImage(place).src,
+          url: `${SITE.url}/places/${place.category}/${place.slug}/`,
+        },
+      })),
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${canonical}#faq`,
+      mainEntity: faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.q,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.a,
+        },
+      })),
+    },
+  ],
+};
+---
+
+<PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+
+  <header class="sector-cat-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span>/</span>
+        <a href="/sectors/">Sectors</a>
+        <span>/</span>
+        <a href={`/sectors/${sectorMeta.key}/`}>{sectorMeta.label}</a>
+        <span>/</span>
+        <span aria-current="page">{categoryLabel}</span>
+      </nav>
+
+      <div class="hero-badges">
+        <span class="badge-sector">{sectorMeta.label}</span>
+        <span class="badge-cat">{categoryLabel}</span>
+        <span class="badge-count">{places.length} Verified Places</span>
+      </div>
+
+      <h1>Best {categoryLabel} in {sectorMeta.label} DHA Phase 6 Lahore</h1>
+      <p class="hero-desc">{overviewText}</p>
+
+      <div class="hero-links">
+        <a href={`/sectors/${sectorMeta.key}/places/`} class="hero-btn-primary">
+          All {sectorMeta.label} Facilities Guide →
+        </a>
+        <a href={`/places/${categoryKey}/`} class="hero-btn-secondary">
+          Browse All {categoryLabel} in Phase 6 →
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="sector-cat-main">
+    <div class="container">
+      <!-- Places Grid (Task 5) -->
+      <section class="places-list-section">
+        <div class="section-header">
+          <div>
+            <p class="section-kicker"><span></span> Verified Directory</p>
+            <h2>Verified {categoryLabel} in {sectorMeta.label}</h2>
+            <p>Direct contact details, ratings, reviews, and Google Maps directions for every location.</p>
+          </div>
+        </div>
+
+        <div class="sector-places-grid">
+          {places.map((place: PlaceRecord) => (
+            <article class="sector-place-card">
+              <a class="place-card-img" href={`/places/${place.category}/${place.slug}/`}>
+                <PlaceImage place={place} />
+                <span class="place-type-tag">{place.categoryLabel}</span>
+              </a>
+
+              <div class="place-card-body">
+                <div class="place-card-badges">
+                  <span class="sector-pill">{place.sectorLabel}</span>
+                  {place.rating && (
+                    <div class="rating-badge">
+                      <span class="star">★</span>
+                      <strong>{place.rating.toFixed(1)}</strong>
+                      <small>({place.reviewCount})</small>
+                    </div>
+                  )}
+                </div>
+
+                <h3>
+                  <a href={`/places/${place.category}/${place.slug}/`}>{place.name}</a>
+                </h3>
+
+                <address class="place-address">{place.address}</address>
+
+                <div class="place-card-actions">
+                  {place.phone ? (
+                    <a class="btn-phone" href={`tel:${place.phone.replace(/\s+/g, '')}`} title={`Call ${place.name}`}>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                      <span>Call</span>
+                    </a>
+                  ) : (
+                    <span class="btn-phone disabled">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                      <span>No Phone</span>
+                    </span>
+                  )}
+
+                  <a class="btn-maps" href={place.googleMapsUrl} target="_blank" rel="noopener" title={`Open ${place.name} in Google Maps`}>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+                    <span>Google Maps ↗</span>
+                  </a>
+
+                  <a class="btn-details" href={`/places/${place.category}/${place.slug}/`}>
+                    <span>Details</span>
+                  </a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <!-- Sector Location Map & Guide Banner (Task 5) -->
+      <section class="sector-map-section">
+        <div class="map-card-wrapper">
+          <div class="map-card-info">
+            <span class="section-kicker"><span></span> Location & Navigation</span>
+            <h2>Locate {categoryLabel} in {sectorMeta.label}</h2>
+            <p>
+              {sectorMeta.label} occupies an advantageous location within DHA Phase 6 Lahore, offering rapid connectivity to Main Boulevard, Bedian Road, and Ring Road Barki Interchange.
+            </p>
+            <div class="sector-features-list">
+              <div class="feat-item">
+                <span class="feat-bullet">✓</span>
+                <span>Wide avenue grid network with dedicated commercial parking</span>
+              </div>
+              <div class="feat-item">
+                <span class="feat-bullet">✓</span>
+                <span>24/7 DHA Lahore mobile security patrol & CCTV monitoring</span>
+              </div>
+              <div class="feat-item">
+                <span class="feat-bullet">✓</span>
+                <span>Direct pedestrian access from residential residential streets</span>
+              </div>
+            </div>
+            <div class="map-actions">
+              <a
+                class="btn-maps-search"
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${categoryLabel} in ${sectorMeta.label} DHA Phase 6 Lahore`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Search all {categoryLabel} on Google Maps ↗
+              </a>
+              <a class="btn-sector-guide" href={`/sectors/${sectorMeta.key}/`}>
+                View {sectorMeta.label} Master Plan & Guide →
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Nearby Properties in this Sector (Task 5) -->
+      {displayedProperties.length > 0 && (
+        <section class="sector-props-section">
+          <div class="section-header">
+            <div>
+              <p class="section-kicker"><span></span> Real Estate & Living</p>
+              <h2>Properties Available in {sectorMeta.label}</h2>
+              <p>Explore verified houses, plots, and commercial opportunities located near these {categoryLabel.toLowerCase()}.</p>
+            </div>
+            <a class="view-all-link" href={`/sectors/${sectorMeta.key}/properties/`}>
+              All {sectorMeta.label} Properties →
+            </a>
+          </div>
+
+          <div class="mini-props-grid">
+            {displayedProperties.map((prop) => (
+              <article class="mini-prop-card">
+                <a class="mini-prop-img-link" href={`/properties/${prop.slug}/`}>
+                  <img
+                    src={prop.images && prop.images[0] ? prop.images[0] : '/images/placeholders/commercial.webp'}
+                    alt={prop.title}
+                    loading="lazy"
+                  />
+                  <span class="mini-prop-type-badge">{prop.propertyType}</span>
+                </a>
+                <div class="mini-prop-body">
+                  <div class="mini-prop-meta">
+                    <span class="mini-prop-price">{formatPrice(prop.price)}</span>
+                    <span class="mini-prop-size">{prop.size}</span>
+                  </div>
+                  <h3 class="mini-prop-title">
+                    <a href={`/properties/${prop.slug}/`}>{prop.title}</a>
+                  </h3>
+                  <div class="mini-prop-loc">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    <span>{prop.location?.address || prop.location?.block || sectorMeta.label}</span>
+                  </div>
+                  <div class="mini-prop-footer">
+                    <span class="mini-prop-status">Verified Available</span>
+                    <a class="mini-prop-btn" href={`/properties/${prop.slug}/`}>View Property →</a>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- Sector FAQ Section (Task 5) -->
+      <section class="sector-faqs-section">
+        <div class="section-header">
+          <p class="section-kicker"><span></span> Resident Inquiries</p>
+          <h2>Frequently Asked Questions About {categoryLabel} in {sectorMeta.label}</h2>
+        </div>
+        <div class="faqs-list">
+          {faqs.map((faq) => (
+            <details class="faq-item" open>
+              <summary class="faq-question">
+                <span>{faq.q}</span>
+                <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </summary>
+              <div class="faq-answer">
+                <p>{faq.a}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <!-- Bottom Navigation Trail -->
+      <section class="bottom-nav-trail">
+        <h2>Explore More of DHA Phase 6 Lahore</h2>
+        <div class="nav-pills">
+          <a href={`/sectors/${sectorMeta.key}/`}>{sectorMeta.label} Sector Guide</a>
+          <a href={`/sectors/${sectorMeta.key}/places/`}>{sectorMeta.label} All Facilities</a>
+          <a href={`/sectors/${sectorMeta.key}/properties/`}>{sectorMeta.label} Real Estate</a>
+          <a href={`/places/${categoryKey}/`}>All Phase 6 {categoryLabel}</a>
+          <a href="/places/">DHA Phase 6 Places Directory</a>
+          <a href="/properties/">All Phase 6 Properties</a>
+        </div>
+      </section>
+    </div>
+  </main>
+</PageLayout>
+
+<style>
+  :root {
+    --sec-bg: #080818;
+    --sec-surface: #111125;
+    --sec-surface-2: #15152d;
+    --sec-gold: #10b981;
+    --sec-gold-light: #34d399;
+    --sec-text: #f0f0f5;
+    --sec-muted: #9292ad;
+    --sec-dim: #64647f;
+    --sec-line: rgba(255, 255, 255, 0.09);
+  }
+
+  .sector-cat-hero {
+    padding: 70px 0 50px;
+    background: linear-gradient(180deg, #101024 0%, #0c0c1e 100%);
+    border-bottom: 1px solid var(--sec-line);
+    text-align: center;
+  }
+  .breadcrumb {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+    color: var(--sec-dim);
+    margin-bottom: 1.25rem;
+  }
+  .breadcrumb a {
+    color: var(--sec-muted);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    color: var(--sec-gold-light);
+  }
+  .hero-badges {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  .badge-sector {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--sec-gold-light);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 0.2rem 0.65rem;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+  .badge-cat {
+    background: rgba(52, 152, 219, 0.15);
+    color: #60a5fa;
+    border: 1px solid rgba(52, 152, 219, 0.3);
+    padding: 0.2rem 0.65rem;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+  .badge-count {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--sec-muted);
+    border: 1px solid var(--sec-line);
+    padding: 0.2rem 0.65rem;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+  .sector-cat-hero h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--sec-text);
+    margin: 0.4rem 0 1rem;
+    line-height: 1.2;
+  }
+  .hero-desc {
+    max-width: 780px;
+    margin: 0 auto 1.75rem;
+    color: var(--sec-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .hero-links {
+    display: flex;
+    justify-content: center;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+  }
+  .hero-btn-primary {
+    background: linear-gradient(135deg, var(--sec-gold), var(--sec-gold-light));
+    color: #080818;
+    font-size: 0.82rem;
+    font-weight: 800;
+    padding: 0.65rem 1.25rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .hero-btn-primary:hover {
+    transform: translateY(-2px);
+    opacity: 0.92;
+  }
+  .hero-btn-secondary {
+    background: var(--sec-surface);
+    color: var(--sec-text);
+    border: 1px solid var(--sec-line);
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 0.65rem 1.25rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: border-color 0.2s ease;
+  }
+  .hero-btn-secondary:hover {
+    border-color: var(--sec-gold);
+    color: var(--sec-gold-light);
+  }
+
+  .sector-cat-main {
+    padding: 50px 0 80px;
+    background: var(--sec-bg);
+  }
+  .section-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--sec-gold-light);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.4rem;
+  }
+  .section-kicker span {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--sec-gold);
+  }
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 1.75rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .section-header h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--sec-text);
+    margin: 0.3rem 0 0.4rem;
+  }
+  .section-header p {
+    color: var(--sec-muted);
+    font-size: 0.85rem;
+    margin: 0;
+  }
+
+  /* Places Grid */
+  .places-list-section {
+    margin-bottom: 3.5rem;
+  }
+  .sector-places-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .sector-place-card {
+    background: var(--sec-surface);
+    border: 1px solid var(--sec-line);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .sector-place-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(16, 185, 129, 0.4);
+  }
+  .place-card-img {
+    position: relative;
+    height: 170px;
+    overflow: hidden;
+    display: block;
+    background: #090918;
+  }
+  .place-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  .sector-place-card:hover .place-card-img img {
+    transform: scale(1.04);
+  }
+  .place-type-tag {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(10, 10, 25, 0.85);
+    color: var(--sec-text);
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    border: 1px solid var(--sec-line);
+    backdrop-filter: blur(4px);
+  }
+  .place-card-body {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .place-card-badges {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.6rem;
+  }
+  .sector-pill {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--sec-gold-light);
+    background: rgba(16, 185, 129, 0.1);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+  }
+  .rating-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+  }
+  .rating-badge .star {
+    color: #f59e0b;
+  }
+  .rating-badge strong {
+    color: var(--sec-text);
+    font-weight: 700;
+  }
+  .rating-badge small {
+    color: var(--sec-dim);
+  }
+  .place-card-body h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--sec-text);
+    margin: 0 0 0.5rem;
+    line-height: 1.35;
+  }
+  .place-card-body h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .place-card-body h3 a:hover {
+    color: var(--sec-gold-light);
+  }
+  .place-address {
+    font-style: normal;
+    font-size: 0.78rem;
+    color: var(--sec-muted);
+    line-height: 1.45;
+    margin-bottom: 1.25rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .place-card-actions {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--sec-line);
+  }
+  .btn-phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.45rem 0.7rem;
+    border-radius: 5px;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: var(--sec-gold-light);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .btn-phone:hover {
+    background: rgba(16, 185, 129, 0.2);
+  }
+  .btn-phone.disabled {
+    opacity: 0.4;
+    cursor: default;
+    background: rgba(255, 255, 255, 0.04);
+    border-color: var(--sec-line);
+    color: var(--sec-dim);
+  }
+  .btn-maps {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.45rem 0.75rem;
+    border-radius: 5px;
+    background: rgba(52, 152, 219, 0.12);
+    border: 1px solid rgba(52, 152, 219, 0.3);
+    color: #60a5fa;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .btn-maps:hover {
+    background: rgba(52, 152, 219, 0.25);
+  }
+  .btn-details {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.45rem 0.85rem;
+    border-radius: 5px;
+    background: linear-gradient(135deg, var(--sec-gold), var(--sec-gold-light));
+    color: #06111e;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+  .btn-details:hover {
+    opacity: 0.9;
+  }
+
+  /* Location Map Section */
+  .sector-map-section {
+    margin-bottom: 3.5rem;
+  }
+  .map-card-wrapper {
+    background: linear-gradient(180deg, rgba(21, 21, 45, 0.7) 0%, rgba(17, 17, 37, 0.4) 100%);
+    border: 1px solid var(--sec-line);
+    border-radius: 12px;
+    padding: 2.25rem;
+  }
+  .map-card-info h2 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--sec-text);
+    margin: 0.4rem 0 0.75rem;
+  }
+  .map-card-info p {
+    color: var(--sec-muted);
+    font-size: 0.88rem;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 0 1.25rem;
+  }
+  .sector-features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    margin-bottom: 1.75rem;
+  }
+  .feat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.82rem;
+    color: var(--sec-text);
+  }
+  .feat-bullet {
+    color: var(--sec-gold-light);
+    font-weight: 800;
+  }
+  .map-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .btn-maps-search {
+    background: rgba(52, 152, 219, 0.15);
+    border: 1px solid rgba(52, 152, 219, 0.35);
+    color: #60a5fa;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.65rem 1.1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .btn-maps-search:hover {
+    background: rgba(52, 152, 219, 0.25);
+    color: #93c5fd;
+  }
+  .btn-sector-guide {
+    background: var(--sec-surface);
+    border: 1px solid var(--sec-line);
+    color: var(--sec-text);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.65rem 1.1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: border-color 0.2s ease;
+  }
+  .btn-sector-guide:hover {
+    border-color: var(--sec-gold);
+    color: var(--sec-gold-light);
+  }
+
+  /* Properties Grid */
+  .sector-props-section {
+    margin-bottom: 3.5rem;
+    padding: 2rem;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #111125 0%, #0d0d21 100%);
+    border: 1px solid var(--sec-line);
+  }
+  .view-all-link {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--sec-gold-light);
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(52, 211, 153, 0.4);
+    padding-bottom: 2px;
+  }
+  .view-all-link:hover {
+    color: #ffffff;
+    border-color: #ffffff;
+  }
+  .mini-props-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+  .mini-prop-card {
+    background: #0a0a19;
+    border: 1px solid var(--sec-line);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .mini-prop-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(16, 185, 129, 0.4);
+  }
+  .mini-prop-img-link {
+    position: relative;
+    height: 135px;
+    overflow: hidden;
+    display: block;
+    background: #050510;
+  }
+  .mini-prop-img-link img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  .mini-prop-card:hover .mini-prop-img-link img {
+    transform: scale(1.05);
+  }
+  .mini-prop-type-badge {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    background: rgba(9, 9, 24, 0.85);
+    color: var(--sec-text);
+    font-size: 0.6rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--sec-line);
+  }
+  .mini-prop-body {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .mini-prop-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.4rem;
+  }
+  .mini-prop-price {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--sec-gold-light);
+  }
+  .mini-prop-size {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--sec-muted);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.15rem 0.45rem;
+    border-radius: 3px;
+  }
+  .mini-prop-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin: 0 0 0.5rem;
+  }
+  .mini-prop-title a {
+    color: var(--sec-text);
+    text-decoration: none;
+  }
+  .mini-prop-title a:hover {
+    color: var(--sec-gold-light);
+  }
+  .mini-prop-loc {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.7rem;
+    color: var(--sec-dim);
+    margin-bottom: 0.75rem;
+  }
+  .mini-prop-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 0.65rem;
+    border-top: 1px solid var(--sec-line);
+  }
+  .mini-prop-status {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #10b981;
+  }
+  .mini-prop-btn {
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: var(--sec-gold);
+    text-decoration: none;
+  }
+  .mini-prop-btn:hover {
+    color: #ffffff;
+  }
+
+  /* FAQs */
+  .sector-faqs-section {
+    margin-bottom: 3.5rem;
+    padding: 2rem;
+    border-radius: 12px;
+    background: var(--sec-surface);
+    border: 1px solid var(--sec-line);
+  }
+  .faqs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .faq-item {
+    background: #0c0c20;
+    border: 1px solid var(--sec-line);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+  }
+  .faq-item[open] {
+    border-color: rgba(16, 185, 129, 0.35);
+  }
+  .faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.2rem;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--sec-text);
+  }
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+  .faq-chevron {
+    color: var(--sec-gold-light);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+  .faq-item[open] .faq-chevron {
+    transform: rotate(180deg);
+  }
+  .faq-answer {
+    padding: 0 1.2rem 1rem;
+    color: var(--sec-muted);
+    font-size: 0.82rem;
+    line-height: 1.6;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    padding-top: 0.8rem;
+  }
+  .faq-answer p {
+    margin: 0;
+  }
+
+  /* Bottom Navigation Trail */
+  .bottom-nav-trail {
+    padding: 2rem;
+    border-radius: 12px;
+    background: #0d0d21;
+    border: 1px solid var(--sec-line);
+    text-align: center;
+  }
+  .bottom-nav-trail h2 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--sec-text);
+    margin: 0 0 1.25rem;
+  }
+  .nav-pills {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .nav-pills a {
+    padding: 0.5rem 0.85rem;
+    border: 1px solid var(--sec-line);
+    border-radius: 6px;
+    background: var(--sec-surface);
+    color: var(--sec-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .nav-pills a:hover {
+    border-color: var(--sec-gold);
+    color: var(--sec-gold-light);
+    background: rgba(16, 185, 129, 0.08);
+  }
+
+  @media (max-width: 1024px) {
+    .sector-places-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .mini-props-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 640px) {
+    .sector-cat-hero {
+      padding: 48px 0 36px;
+    }
+    .sector-cat-hero h1 {
+      font-size: 1.6rem;
+    }
+    .sector-places-grid,
+    .mini-props-grid {
+      grid-template-columns: 1fr;
+    }
+    .place-card-actions {
+      grid-template-columns: 1fr;
+    }
+    .map-actions {
+      flex-direction: column;
+    }
+  }
+</style>

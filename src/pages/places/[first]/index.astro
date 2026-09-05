@@ -7,6 +7,7 @@
  */
 import PageLayout from '@layouts/PageLayout.astro';
 import PlaceImage from '@components/places/PlaceImage.astro';
+import propertiesRaw from '@data/properties-import.json';
 import {
   SECTORS_DIRECTORY,
   PLACE_CATEGORIES,
@@ -81,27 +82,197 @@ interface Props {
   places: PlaceRecord[];
 }
 
-const { type, sectorMeta, categoryMeta, places } = Astro.props;
+const { type, sectorMeta, categoryMeta, places } = Astro.props as Props;
 
 // Page titles and meta descriptions
 const pageTitle =
   type === 'sector' && sectorMeta
     ? `${sectorMeta.label} Places, Facilities & Amenities | DHA Phase 6 Lahore`
     : categoryMeta
-      ? `${categoryMeta.label} in DHA Phase 6 Lahore | Verified Directory`
+      ? `Best ${categoryMeta.label} in DHA Phase 6 Lahore | Top Rated Directory`
       : 'Places & Facilities in DHA Phase 6 Lahore';
 
 const metaDesc =
   type === 'sector' && sectorMeta
     ? `Explore verified schools, clinics, restaurants, mosques, banks, and recreation in ${sectorMeta.label}, DHA Phase 6 Lahore with exact addresses, ratings, and maps.`
     : categoryMeta
-      ? `Find verified ${categoryMeta.label} across all sectors of DHA Phase 6 Lahore with addresses, Google ratings, reviews, and direct Google Maps navigation.`
+      ? `Discover the best verified ${categoryMeta.label.toLowerCase()} in DHA Phase 6 Lahore with verified locations, customer ratings, reviews, contact details, and Google Maps navigation.`
       : 'Comprehensive directory of verified local businesses, amenities, and essential services across DHA Phase 6 Lahore.';
 
 const canonical = `${SITE.url}/places/${type === 'sector' ? sectorMeta?.key : categoryMeta?.key}/`;
 
+// Category Intros
+const categoryIntros: Record<string, string> = {
+  restaurants:
+    "DHA Phase 6 Lahore has developed into one of the city's premier dining corridors, centered around CCA, Raya Commercial Fairways, and Main Boulevard. From upscale fine dining and artisanal steakhouses to family bistros, fast-casual eateries, and late-night cafes, residents enjoy unparalleled culinary variety right within the community.",
+  cafes:
+    "Coffee culture and social workspaces thrive across DHA Phase 6 Lahore. Featuring high-end espresso bars, bakery bistros, and outdoor patios in Defence Raya Commercial and Sector CCA, the neighbourhood offers vibrant meeting spots for professionals and families alike.",
+  mosque:
+    "Spiritual life in DHA Phase 6 Lahore is anchored by architecturally distinguished Jamia mosques thoughtfully located within each sector. Equipped with climate-controlled prayer halls, landscaped courtyards, dedicated ladies' prayer galleries, and spacious wudhu facilities, every sector provides accessible worship within minutes of home.",
+  school:
+    "Education in DHA Phase 6 Lahore is characterized by world-class academic institutions, international preschools, and top-tier grammar schools. Families benefit from premier schools situated within secure, wide-avenue residential blocks and dedicated institutional zones.",
+  hospital:
+    "Healthcare infrastructure in DHA Phase 6 Lahore features modern hospitals, multi-specialty medical complexes, 24/7 urgent care clinics, and specialized diagnostics. Residents have rapid emergency access and comprehensive outpatient care without leaving Phase 6.",
+  clinic:
+    "Primary and specialized outpatient clinics across DHA Phase 6 Lahore provide family medicine, pediatric checkups, dental surgeries, physiotherapy, and dermatology. Situated primarily in commercial hubs like CCA, clinics offer rapid, reliable healthcare.",
+  bank:
+    "Financial services in DHA Phase 6 Lahore are comprehensive, with major commercial and Islamic banks operating flagship branches and 24/7 digital ATM lobbies across Commercial Broadway, CCA 1, CCA 2, and Main Boulevard.",
+  supermarket:
+    "Everyday convenience and luxury grocery shopping in DHA Phase 6 Lahore are supported by expansive department stores, high-end marts, and round-the-clock express stores across CCA, Raya, and residential sectors.",
+  park:
+    "Green living and recreation are central to DHA Phase 6's master planning. Featuring lush family parks, jogging tracks, children's play zones, and manicured green belts in every residential sector from Sector A to Sector N.",
+  bakery:
+    "Freshly baked artisan breads, customized gourmet cakes, traditional sweets, and patisserie delights are well catered for across DHA Phase 6's commercial sectors.",
+  pharmacy:
+    "Around-the-clock pharmacies and healthcare dispensaries operate throughout DHA Phase 6 Lahore, ensuring immediate access to prescription medicines, infant care, and medical supplies.",
+  gym:
+    "Phase 6 boasts state-of-the-art fitness centers, boutique CrossFit studios, women-only workout clubs, and wellness spas.",
+  shopping:
+    "Retail destinations in DHA Phase 6 Lahore range from luxury brand outlets in Defence Raya to multi-story retail plazas in CCA and Commercial Broadway.",
+};
+
+const categoryIntro = categoryMeta
+  ? categoryIntros[categoryMeta.key] ||
+    `Explore verified ${categoryMeta.label.toLowerCase()} across DHA Phase 6 Lahore with verified locations, contact numbers, direct Google Maps navigation, and community ratings.`
+  : '';
+
+// Popular / Top Places Showcase (Task 4)
+const topPlaces = places
+  .slice()
+  .sort((a, b) => {
+    const rA = a.rating || 0;
+    const rB = b.rating || 0;
+    if (rB !== rA) return rB - rA;
+    return (b.reviewCount || 0) - (a.reviewCount || 0);
+  })
+  .slice(0, 4);
+
+// Sector-wise Breakdown (Task 4)
+const sectorDistribution =
+  type === 'category'
+    ? SECTORS_DIRECTORY.map((sec) => {
+        const secPlaces = places.filter((p) => p.sector === sec.key);
+        return {
+          sector: sec,
+          count: secPlaces.length,
+        };
+      })
+        .filter((item) => item.count > 0)
+        .sort((a, b) => b.count - a.count)
+    : [];
+
+// Category FAQs (Task 4)
+const categoryFaqsMap: Record<string, Array<{ q: string; a: string }>> = {
+  restaurants: [
+    {
+      q: 'Where are the best restaurants located in DHA Phase 6 Lahore?',
+      a: 'The primary dining clusters in DHA Phase 6 are Defence Raya Fairways Commercial, CCA 1, CCA 2, and the Main Boulevard Commercial strip, featuring both local Pakistani cuisine and international culinary brands.',
+    },
+    {
+      q: 'Are family-friendly restaurants with outdoor seating available in DHA Phase 6?',
+      a: 'Yes, venues like Defence Raya Golf Resort restaurants, Broadway eateries, and cafes across CCA feature open-air patios, family dining halls, and dedicated valet parking.',
+    },
+    {
+      q: 'What dining hours are typical in DHA Phase 6?',
+      a: 'Most restaurants open for lunch around 12:00 PM and operate until 1:00 AM on weekdays, extending up to 2:00 AM on weekends, with fast-casual spots offering late-night delivery.',
+    },
+  ],
+  mosque: [
+    {
+      q: 'Are there Jamia mosques in every sector of DHA Phase 6?',
+      a: "Yes, DHA Lahore's master plan includes dedicated Sector Jamia Mosques in Sectors A through N, ensuring prayer facilities are within walking distance for all residents.",
+    },
+    {
+      q: "Do mosques in DHA Phase 6 have parking and ladies' prayer sections?",
+      a: "Most central sector Jamia mosques (such as Jamia Mosque Sector C, E, and K) offer expansive paved parking lots and dedicated, air-conditioned female prayer halls.",
+    },
+  ],
+  school: [
+    {
+      q: 'What top schools operate in or near DHA Phase 6 Lahore?',
+      a: 'DHA Phase 6 hosts premier institutions including Beaconhouse, The City School, Roots Millennium, and DHA Junior School, alongside specialized early learning academies.',
+    },
+    {
+      q: 'Are preschools and daycares available in residential sectors of Phase 6?',
+      a: 'Yes, Montessori and early learning centers are situated in sectors like Sector A, C, and D, providing secure drop-off zones and accredited curricula.',
+    },
+  ],
+  hospital: [
+    {
+      q: 'What emergency medical facilities and hospitals serve DHA Phase 6?',
+      a: 'DHA Phase 6 is served by major medical facilities such as PKLI (Pakistan Kidney and Liver Institute) on Park Road, nearby National Hospital, and multi-specialty emergency clinics in CCA.',
+    },
+    {
+      q: 'Are 24-hour pharmacies available near hospitals and clinics in Phase 6?',
+      a: "Yes, Servaid, Fazal Din's, and Clinix operate 24/7 pharmacies in CCA 1, CCA 2, and along Main Boulevard.",
+    },
+  ],
+  bank: [
+    {
+      q: 'Which commercial banks have branches in DHA Phase 6 Lahore?',
+      a: 'Leading banks—including Meezan Bank, HBL, MCB, Allied Bank, Bank Alfalah, and Faysal Bank—maintain full-service branches with cash deposit machines and ATM lobbies in Phase 6 CCA and Main Boulevard.',
+    },
+  ],
+  supermarket: [
+    {
+      q: 'Where can residents do grocery and daily shopping in DHA Phase 6?',
+      a: 'Major supermarkets such as Jalal Sons, Al-Fatah, Euro Store, and Greenvalley Express are located in CCA and Raya Commercial, alongside local mini-marts in each residential sector.',
+    },
+  ],
+  park: [
+    {
+      q: 'Are the parks in DHA Phase 6 secure and family-friendly?',
+      a: "Yes, all sector parks in DHA Phase 6 are maintained by DHA's horticulture and security departments, featuring perimeter fencing, walking/jogging tracks, children's swings, and illuminated pathways.",
+    },
+  ],
+};
+
+const categoryFaqs = categoryMeta
+  ? categoryFaqsMap[categoryMeta.key] || [
+      {
+        q: `How many verified ${categoryMeta.label} exist in DHA Phase 6 Lahore?`,
+        a: `Currently, our directory tracks ${places.length} verified ${categoryMeta.label.toLowerCase()} across DHA Phase 6, complete with addresses, ratings, and Google Maps links.`,
+      },
+      {
+        q: `Which sectors have the highest concentration of ${categoryMeta.label.toLowerCase()}?`,
+        a: `Most commercial and lifestyle amenities are concentrated in CCA 1, CCA 2, Defence Raya, and along Main Boulevard, with essential facilities distributed across residential sectors.`,
+      },
+    ]
+  : [];
+
+// Properties in Sectors with these places (Task 4)
+interface PropertyItem {
+  id: string;
+  slug: string;
+  title: string;
+  price?: number;
+  propertyType: string;
+  size?: string;
+  images?: any[];
+  block?: string;
+  location?: { address?: string; block?: string };
+}
+const allProperties = (Array.isArray(propertiesRaw) ? (propertiesRaw as any[]) : []) as PropertyItem[];
+const categorySectorKeys = new Set(places.map((p) => p.sector));
+const categoryProps = allProperties.filter((prop) => {
+  const blockLower = (prop.block || '').toLowerCase();
+  return Array.from(categorySectorKeys).some((secKey) => {
+    const cleanKey = secKey.replace(/^sector-/, '').toLowerCase();
+    return blockLower.includes(cleanKey);
+  });
+});
+const relatedProps = (categoryProps.length > 0 ? categoryProps : allProperties).slice(0, 4);
+
+function formatPrice(val: number | undefined): string {
+  if (!val) return 'Call for Price';
+  const cr = val / 10000000;
+  if (cr >= 1) return `PKR ${cr.toFixed(2)} Cr`;
+  const lac = val / 100000;
+  return `PKR ${lac.toFixed(1)} Lac`;
+}
+
 // JSON-LD Structured Data
-const structuredData = {
+const structuredData: { '@context': string; '@graph': any[] } = {
   '@context': 'https://schema.org',
   '@graph': [
     {
@@ -161,6 +332,22 @@ const structuredData = {
     },
   ],
 };
+
+if (type === 'category' && categoryFaqs.length > 0) {
+  structuredData['@graph'].push({
+    '@type': 'FAQPage',
+    '@id': `${canonical}#faq`,
+    mainEntity: categoryFaqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.a,
+      },
+    })),
+  });
+}
+
 const publishedDate = places[0]?.retrievedAt || '2026-09-03';
 const formattedDate = new Intl.DateTimeFormat('en-PK', { dateStyle: 'long' }).format(new Date(`${publishedDate}T12:00:00`));
 
@@ -198,26 +385,70 @@ const relatedCategories =
         {type === 'sector' && sectorMeta ? (
           `Facilities & Places in ${sectorMeta.label} DHA Phase 6 Lahore`
         ) : (
-          `${categoryMeta?.label} in DHA Phase 6 Lahore`
+          `Best ${categoryMeta?.label} in DHA Phase 6 Lahore`
         )}
       </h1>
       <p>
         {type === 'sector' && sectorMeta
           ? `A focused local guide to businesses, amenities, and community services in ${sectorMeta.label}, DHA Phase 6 Lahore.`
-          : `A focused local guide to ${categoryMeta?.label?.toLowerCase()} across DHA Phase 6 Lahore.`}
+          : categoryIntro}
       </p>
     </div>
   </header>
 
   <section class="directory-section">
     <div class="container">
+      {type === 'category' && topPlaces.length > 0 && (
+        <section class="category-showcase-section">
+          <div class="section-kicker"><span></span> Featured & Top Rated</div>
+          <h2 class="showcase-title">Popular {categoryMeta?.label} in DHA Phase 6</h2>
+          <p class="showcase-desc">Highly rated by residents and visitors for service excellence, reliability, and community standing.</p>
+          <div class="top-showcase-grid">
+            {topPlaces.map((tp, idx) => (
+              <a href={`/places/${tp.category}/${tp.slug}/`} class="top-showcase-card">
+                <div class="top-rank-badge">#{idx + 1} Rated</div>
+                <div class="top-showcase-img">
+                  <PlaceImage place={tp} />
+                </div>
+                <div class="top-showcase-content">
+                  <span class="top-sector-pill">{tp.sectorLabel}</span>
+                  <h3>{tp.name}</h3>
+                  <div class="top-rating-row">
+                    <span class="star">★</span>
+                    <strong>{tp.rating ? tp.rating.toFixed(1) : '5.0'}</strong>
+                    <small>({tp.reviewCount > 0 ? `${tp.reviewCount.toLocaleString('en-PK')} reviews` : 'Verified'})</small>
+                  </div>
+                  <address>{tp.address}</address>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {type === 'category' && sectorDistribution.length > 0 && (
+        <section class="sector-breakdown-section">
+          <div class="section-kicker"><span></span> Sector-Wise Breakdown</div>
+          <h2>{categoryMeta?.label} by Sector in DHA Phase 6</h2>
+          <p class="sector-breakdown-desc">Explore where {categoryMeta?.label?.toLowerCase()} are concentrated across DHA Phase 6 sectors and commercial centers:</p>
+          <div class="sector-dist-pills">
+            {sectorDistribution.map((item) => (
+              <a href={`/sectors/${item.sector.key}/${categoryMeta?.key}/`} class="sector-dist-pill">
+                <span class="sector-pill-name">{item.sector.label}</span>
+                <span class="sector-pill-count">{item.count} {item.count === 1 ? 'place' : 'places'}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
       <div class="directory-toolbar">
         <div>
           <p class="section-kicker"><span></span> Local directory</p>
           <h2>
             {type === 'sector' && sectorMeta
               ? `Facilities in ${sectorMeta.label}`
-              : `${categoryMeta?.label} Directory`}
+              : `All Verified ${categoryMeta?.label}`}
           </h2>
           <p>
             <strong id="result-count">{places.length}</strong> {places.length === 1 ? 'business' : 'businesses'} in DHA Phase 6 Lahore
@@ -295,9 +526,9 @@ const relatedCategories =
                       <span>No Phone</span>
                     </span>
                   )}
-                  <a class="business-btn-maps" href={place.googleMapsUrl} target="_blank" rel="noopener noreferrer" title="View on Google Maps" aria-label={`View ${place.name} on Google Maps`}>
+                  <a class="business-btn-maps" href={place.googleMapsUrl} target="_blank" rel="noopener" title={`Open ${place.name} in Google Maps`} aria-label={`Open ${place.name} in Google Maps`}>
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
-                    <span>Maps ↗</span>
+                    <span>Open in Google Maps</span>
                   </a>
                   <a class="business-btn-detail" href={`/places/${place.category}/${place.slug}/`} aria-label={`View details for ${place.name}`}>
                     <span>Details</span>
@@ -325,6 +556,73 @@ const relatedCategories =
       )}
 
       <p class="no-results" id="no-results" hidden>No businesses match your search.</p>
+
+      {/* Properties in Sectors with Category Places (Task 4) */}
+      {type === 'category' && relatedProps.length > 0 && (
+        <section class="category-properties-section">
+          <div class="properties-near-header">
+            <div>
+              <p class="section-kicker"><span></span> Real Estate & Living</p>
+              <h2>Properties Available in Sectors with {categoryMeta?.label}</h2>
+              <p>Explore houses, plots, and commercial opportunities located in sectors featuring top {categoryMeta?.label?.toLowerCase()}.</p>
+            </div>
+            <a class="view-all-props-link" href="/properties/">Browse All DHA Properties →</a>
+          </div>
+
+          <div class="mini-props-grid">
+            {relatedProps.map((prop) => (
+              <article class="mini-prop-card">
+                <a class="mini-prop-img-link" href={`/properties/${prop.slug}/`}>
+                  <img
+                    src={prop.images && prop.images[0] ? prop.images[0] : '/images/placeholders/commercial.webp'}
+                    alt={prop.title}
+                    loading="lazy"
+                  />
+                  <span class="mini-prop-type-badge">{prop.propertyType}</span>
+                </a>
+                <div class="mini-prop-body">
+                  <div class="mini-prop-meta">
+                    <span class="mini-prop-price">{formatPrice(prop.price)}</span>
+                    <span class="mini-prop-size">{prop.size}</span>
+                  </div>
+                  <h3 class="mini-prop-title">
+                    <a href={`/properties/${prop.slug}/`}>{prop.title}</a>
+                  </h3>
+                  <div class="mini-prop-loc">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    <span>{prop.location?.address || prop.location?.block || 'DHA Phase 6 Lahore'}</span>
+                  </div>
+                  <div class="mini-prop-footer">
+                    <span class="mini-prop-status">Verified Available</span>
+                    <a class="mini-prop-btn" href={`/properties/${prop.slug}/`}>View Property →</a>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Category FAQs (Task 4) */}
+      {type === 'category' && categoryFaqs.length > 0 && (
+        <section class="category-faqs-section">
+          <p class="section-kicker"><span></span> Common Inquiries</p>
+          <h2>Frequently Asked Questions About {categoryMeta?.label} in DHA Phase 6</h2>
+          <div class="category-faqs-list">
+            {categoryFaqs.map((faq) => (
+              <details class="faq-item" open>
+                <summary class="faq-question">
+                  <span>{faq.q}</span>
+                  <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </summary>
+                <div class="faq-answer">
+                  <p>{faq.a}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+      )}
 
       <!-- Sector Callout (matches screenshot) -->
       <section class="sector-callout">
@@ -358,7 +656,6 @@ const relatedCategories =
           )}
         </div>
       </section>
-
 
       <!-- Also search nearby sectors (matches screenshot) -->
       {nearbySectors.length > 0 && (
@@ -653,17 +950,16 @@ const relatedCategories =
   .business-chips {
     margin: 0.75rem 0;
   }
-  .business-chips span {
-    border-color: var(--dir-line);
-    color: var(--dir-dim);
-  }
   .business-actions {
     display: grid;
-    grid-template-columns: 1fr 1.15fr 0.95fr;
-    gap: 0.4rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.45rem;
     margin-top: 0.85rem;
     padding-top: 0.75rem;
     border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .business-btn-maps {
+    grid-column: span 2;
   }
   .business-btn-phone,
   .business-btn-maps,
@@ -813,12 +1109,414 @@ const relatedCategories =
     flex-wrap: wrap;
   }
 
+  /* ── Category Showcase & Top Rated ── */
+  .category-showcase-section {
+    margin-bottom: 3rem;
+    padding: 2rem;
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(21, 21, 45, 0.7) 0%, rgba(17, 17, 37, 0.4) 100%);
+    border: 1px solid var(--dir-line);
+  }
+  .showcase-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--dir-text);
+    margin: 0.5rem 0 0.4rem;
+  }
+  .showcase-desc {
+    color: var(--dir-muted);
+    font-size: 0.85rem;
+    margin: 0 0 1.5rem;
+  }
+  .top-showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+  .top-showcase-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--dir-surface);
+    border: 1px solid var(--dir-line);
+    border-radius: 10px;
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .top-showcase-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--dir-gold);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  }
+  .top-rank-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+    background: rgba(16, 185, 129, 0.9);
+    color: #06111e;
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+    backdrop-filter: blur(4px);
+  }
+  .top-showcase-img {
+    height: 140px;
+    overflow: hidden;
+    background: #090918;
+  }
+  .top-showcase-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  .top-showcase-card:hover .top-showcase-img img {
+    transform: scale(1.05);
+  }
+  .top-showcase-content {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .top-sector-pill {
+    display: inline-block;
+    align-self: flex-start;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--dir-gold-light);
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    margin-bottom: 0.45rem;
+  }
+  .top-showcase-content h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--dir-text);
+    margin: 0 0 0.4rem;
+    line-height: 1.3;
+  }
+  .top-rating-row {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    margin-bottom: 0.45rem;
+  }
+  .top-rating-row .star {
+    color: #f59e0b;
+    font-size: 0.85rem;
+  }
+  .top-rating-row strong {
+    color: var(--dir-text);
+    font-weight: 700;
+  }
+  .top-rating-row small {
+    color: var(--dir-dim);
+  }
+  .top-showcase-content address {
+    font-style: normal;
+    font-size: 0.7rem;
+    color: var(--dir-muted);
+    line-height: 1.35;
+    margin-top: auto;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* ── Sector-Wise Breakdown Pills ── */
+  .sector-breakdown-section {
+    margin-bottom: 3rem;
+    padding: 2rem;
+    border-radius: 12px;
+    background: var(--dir-surface);
+    border: 1px solid var(--dir-line);
+  }
+  .sector-breakdown-section h2 {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--dir-text);
+    margin: 0.5rem 0 0.3rem;
+  }
+  .sector-breakdown-desc {
+    color: var(--dir-muted);
+    font-size: 0.82rem;
+    margin: 0 0 1.25rem;
+  }
+  .sector-dist-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+  .sector-dist-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.85rem;
+    background: #0d0d21;
+    border: 1px solid var(--dir-line);
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .sector-dist-pill:hover {
+    border-color: var(--dir-gold);
+    background: rgba(16, 185, 129, 0.08);
+    transform: translateY(-1px);
+  }
+  .sector-pill-name {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--dir-text);
+  }
+  .sector-pill-count {
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: var(--dir-gold-light);
+    background: rgba(16, 185, 129, 0.15);
+    padding: 0.1rem 0.45rem;
+    border-radius: 12px;
+  }
+
+  /* ── Properties in Category Sectors ── */
+  .category-properties-section {
+    margin-top: 3.5rem;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #111125 0%, #0d0d21 100%);
+    border: 1px solid var(--dir-line);
+  }
+  .properties-near-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .properties-near-header h2 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--dir-text);
+    margin: 0.4rem 0 0.3rem;
+  }
+  .properties-near-header p {
+    color: var(--dir-muted);
+    font-size: 0.82rem;
+    margin: 0;
+  }
+  .view-all-props-link {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--dir-gold-light);
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(52, 211, 153, 0.4);
+    padding-bottom: 2px;
+  }
+  .view-all-props-link:hover {
+    color: #ffffff;
+    border-color: #ffffff;
+  }
+  .mini-props-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+  .mini-prop-card {
+    background: #0a0a19;
+    border: 1px solid var(--dir-line);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .mini-prop-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(16, 185, 129, 0.4);
+  }
+  .mini-prop-img-link {
+    position: relative;
+    height: 135px;
+    overflow: hidden;
+    display: block;
+    background: #050510;
+  }
+  .mini-prop-img-link img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  .mini-prop-card:hover .mini-prop-img-link img {
+    transform: scale(1.05);
+  }
+  .mini-prop-type-badge {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    background: rgba(9, 9, 24, 0.85);
+    color: var(--dir-text);
+    font-size: 0.6rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--dir-line);
+  }
+  .mini-prop-body {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .mini-prop-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.4rem;
+  }
+  .mini-prop-price {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--dir-gold-light);
+  }
+  .mini-prop-size {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--dir-muted);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.15rem 0.45rem;
+    border-radius: 3px;
+  }
+  .mini-prop-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin: 0 0 0.5rem;
+  }
+  .mini-prop-title a {
+    color: var(--dir-text);
+    text-decoration: none;
+  }
+  .mini-prop-title a:hover {
+    color: var(--dir-gold-light);
+  }
+  .mini-prop-loc {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.7rem;
+    color: var(--dir-dim);
+    margin-bottom: 0.75rem;
+  }
+  .mini-prop-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 0.65rem;
+    border-top: 1px solid var(--dir-line);
+  }
+  .mini-prop-status {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #10b981;
+  }
+  .mini-prop-btn {
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: var(--dir-gold);
+    text-decoration: none;
+  }
+  .mini-prop-btn:hover {
+    color: #ffffff;
+  }
+
+  /* ── Category FAQs ── */
+  .category-faqs-section {
+    margin-top: 3rem;
+    padding: 2rem;
+    border-radius: 12px;
+    background: var(--dir-surface);
+    border: 1px solid var(--dir-line);
+  }
+  .category-faqs-section h2 {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--dir-text);
+    margin: 0.5rem 0 1.25rem;
+  }
+  .category-faqs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .faq-item {
+    background: #0c0c20;
+    border: 1px solid var(--dir-line);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+  }
+  .faq-item[open] {
+    border-color: rgba(16, 185, 129, 0.35);
+  }
+  .faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.2rem;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--dir-text);
+  }
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+  .faq-chevron {
+    color: var(--dir-gold-light);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+  .faq-item[open] .faq-chevron {
+    transform: rotate(180deg);
+  }
+  .faq-answer {
+    padding: 0 1.2rem 1rem;
+    color: var(--dir-muted);
+    font-size: 0.82rem;
+    line-height: 1.6;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    padding-top: 0.8rem;
+  }
+  .faq-answer p {
+    margin: 0;
+  }
+
   @media (max-width: 900px) {
     .directory-toolbar {
       grid-template-columns: 1fr;
     }
     .business-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .top-showcase-grid,
+    .mini-props-grid {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
   @media (max-width: 620px) {
@@ -829,7 +1527,9 @@ const relatedCategories =
       padding: 40px 0 60px;
     }
     .directory-controls,
-    .business-grid {
+    .business-grid,
+    .top-showcase-grid,
+    .mini-props-grid {
       grid-template-columns: 1fr;
     }
     .publication .container {

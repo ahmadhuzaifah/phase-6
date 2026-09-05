@@ -1,0 +1,434 @@
+---
+/**
+ * Best Place to Live in DHA Phase 6 Lahore — Family Living & Lifestyle Guide
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+
+const title = "Best Place to Live in DHA Phase 6 Lahore — Top Residential Sectors for Families";
+const description = "Discover the best sectors to live in DHA Phase 6 Lahore. Compare Sectors A to N for family safety, school commute, park proximity, tranquility, and everyday amenities.";
+const canonical = `${SITE.url}/best-place-to-live-in-dha-phase-6-lahore/`;
+
+const livingScorecard = [
+  { rank: '1', sector: 'Sector C', score: '9.9/10', bestFor: 'Quiet Family Luxury', highlights: 'Grand Jamia Masjid, central recreation park, zero commercial cut-through.' },
+  { rank: '2', sector: 'Defence Raya (M & N)', score: '9.8/10', bestFor: 'Resort & Golf Living', highlights: 'Private security gate, 18-hole golf fairways, luxury country club.' },
+  { rank: '3', sector: 'Sector J', score: '9.6/10', bestFor: '10 Marla Family Homes', highlights: 'Beaconhouse on doorstep, active community parks, walkable groceries.' },
+  { rank: '4', sector: 'Sector D', score: '9.5/10', bestFor: 'Walkable Convenience', highlights: '3-minute stroll to CCA 1 dining, banks, supermarkets, and clinics.' },
+  { rank: '5', sector: 'Sector B', score: '9.4/10', bestFor: 'Academics & Schools', highlights: 'Roots Millennium School, peaceful lanes, established corporate neighbors.' },
+  { rank: '6', sector: 'Sector E', score: '9.2/10', bestFor: 'Senior Citizens & Health', highlights: 'DHA Medical Complex, sector sports courts, swift hospital access.' },
+  { rank: '7', sector: 'Sector F & G', score: '9.1/10', bestFor: 'Commuters & Serenity', highlights: 'Direct Ring Road connection, broad 50-foot streets, low traffic.' }
+];
+
+const faqs = [
+  {
+    question: "What is the best residential sector to raise children in DHA Phase 6?",
+    answer: "Sectors J, C, and B are regarded as the best sectors for families with children. Sector J houses the Beaconhouse campus and family parks, Sector C offers the central sports and recreation grounds, and Sector B is home to Roots Millennium School."
+  },
+  {
+    question: "Which sector is the quietest with minimal through-traffic?",
+    answer: "Sector C and Sector F are exceptionally quiet because their internal residential avenues do not serve as cut-through thoroughfares between external gates or commercial squares."
+  },
+  {
+    question: "Are parks and green areas easily accessible across all sectors?",
+    answer: "Yes, DHA Phase 6 master planning mandates at least one dedicated landscaped botanical park or playground in every residential sector, with larger central community parks located in Sectors C, E, and J."
+  },
+  {
+    question: "How safe is DHA Phase 6 for evening family walks?",
+    answer: "DHA Phase 6 maintains Pakistan's highest residential safety rating. It features 24/7 motorized security patrols, ANPR cameras at all entry gates, brightly illuminated streetlights, and rapid emergency security dispatch."
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": `${canonical}#article`,
+      "isPartOf": { "@type": "WebSite", "@id": `${SITE.url}/#website` },
+      "headline": title,
+      "description": description,
+      "url": canonical,
+      "inLanguage": "en-PK",
+      "mainEntityOfPage": canonical,
+      "datePublished": "2026-02-20T08:00:00+05:00",
+      "dateModified": "2026-09-05T12:00:00+05:00",
+      "publisher": { "@type": "Organization", "name": SITE.name, "url": SITE.url },
+      "author": { "@type": "Organization", "name": "Research & Editorial Desk, DHA Phase 6 Guide" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonical}#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE.url },
+        { "@type": "ListItem", "position": 2, "name": "Best Guides", "item": `${SITE.url}/guides/` },
+        { "@type": "ListItem", "position": 3, "name": "Best Place to Live", "item": canonical }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${canonical}#faq`,
+      "mainEntity": faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": { "@type": "Answer", "text": faq.answer }
+      }))
+    }
+  ]
+};
+---
+
+<PageLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+
+  <header class="comp-hero">
+    <div class="container">
+      <div class="hero-badges">
+        <span class="badge-pill gold-pill">Family Living & Lifestyle Guide</span>
+        <span class="badge-pill">Residential Ranking 2026</span>
+      </div>
+      <h1 class="hero-headline">
+        Best Place to Live in DHA Phase 6 Lahore: <span class="text-gradient">Top Sectors for Families</span>
+      </h1>
+      <p class="hero-lead">
+        A dedicated end-user living analysis comparing noise levels, park access, school commutes, grocery walkability, and neighborhood community atmosphere across Phase 6.
+      </p>
+    </div>
+  </header>
+
+  <main class="container comp-content">
+
+    <section class="verdict-banner">
+      <h2>Top Recommendation for Homeowners</h2>
+      <p>
+        If your primary goal is <strong>everyday family peace and prestige</strong>, <strong>Sector C</strong> takes the top overall ranking for 1 Kanal and 2 Kanal luxury homes due to its central location, beautiful Jamia Masjid, and low noise index.
+      </p>
+      <p>
+        For families planning to construct a <strong>10 Marla residence</strong>, <strong>Sector J</strong> is unmatched thanks to its proximity to Beaconhouse School, its own neighborhood commercial market, and exceptional neighborly vibrancy.
+      </p>
+    </section>
+
+    <!-- SCORECARD TABLE -->
+    <section class="comp-section">
+      <h2>Family Living Scorecard by Sector</h2>
+      <div class="table-responsive">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Sector</th>
+              <th>Living Score</th>
+              <th>Primary Best-Fit</th>
+              <th>Distinctive Lifestyle Features</th>
+            </tr>
+          </thead>
+          <tbody>
+            {livingScorecard.map((item) => (
+              <tr>
+                <td><span class="rank-badge">#{item.rank}</span></td>
+                <td><strong>{item.sector}</strong></td>
+                <td><strong>{item.score}</strong></td>
+                <td><span class="tag-win">{item.bestFor}</span></td>
+                <td>{item.highlights}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- DETAILED LIVING PROFILES -->
+    <section class="comp-section">
+      <h2>Detailed Sector Living Profiles</h2>
+
+      <div class="profile-box">
+        <h3>1. Sector C: The Pinnacle of Peaceful Family Living</h3>
+        <p>
+          Sector C consistently earns the top recommendation for end-user homebuyers. Positioned in the interior heart of Phase 6, it is insulated from the high-speed traffic of Ring Road and Bedian Road. The sector features the landmark Grand Jamia Mosque, children's playgrounds with jogging tracks, and 50-foot residential avenues that offer a safe environment for cycling and evening walks.
+        </p>
+      </div>
+
+      <div class="profile-box">
+        <h3>2. Defence Raya (Sectors M & N): Gated Golf Haven</h3>
+        <p>
+          For buyers who demand resort luxury, Defence Raya offers an exclusive gated environment within Phase 6. With private security checkpoints, manicured fairway lawns, a 5-star clubhouse featuring heated pools, tennis courts, and high-end dining at Fairways Commercial, it delivers Lahore’s most exclusive address.
+        </p>
+      </div>
+
+      <div class="profile-box">
+        <h3>3. Sector J: The Ultimate 10 Marla Community</h3>
+        <p>
+          Sector J is the beating heart of active family life. Morning school drop-offs are effortless with Beaconhouse located inside the sector. The sector has its own active retail market with bakeries, pharmacies, and stationery shops, allowing children and elders to access daily needs without crossing major boulevards.
+        </p>
+      </div>
+
+      <div class="profile-box">
+        <h3>4. Sector D: Complete Walkable Convenience</h3>
+        <p>
+          If you dislike driving for every minor errand, Sector D is ideal. Directly flanking CCA 1, homeowners enjoy walking distance to Naheed Supermarket, all major commercial banks, specialty dessert parlors, and medical pharmacies while keeping residential streets strictly private.
+        </p>
+      </div>
+    </section>
+
+    <!-- FAQS -->
+    <section class="comp-section">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-accordion">
+        {faqs.map((faq, index) => (
+          <details class="faq-item" id={`faq-${index + 1}`}>
+            <summary class="faq-question">
+              <span>{faq.question}</span>
+              <span class="faq-chevron">▼</span>
+            </summary>
+            <div class="faq-answer">
+              <p>{faq.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- RELATED GUIDES -->
+    <section class="related-guides-hub">
+      <h2>Explore Related Living Guides</h2>
+      <div class="links-grid">
+        <a href="/best-sector-in-dha-phase-6-lahore/" class="guide-nav-card">
+          <strong>Best Sector Analysis</strong>
+          <p>Sector-by-sector breakdown across A to N.</p>
+        </a>
+        <a href="/properties-near-schools-dha-phase-6-lahore/" class="guide-nav-card">
+          <strong>Properties Near Schools</strong>
+          <p>Explore homes near Beaconhouse, LGS & SICAS.</p>
+        </a>
+        <a href="/houses-for-sale-in-dha-phase-6-lahore/" class="guide-nav-card">
+          <strong>Houses for Sale</strong>
+          <p>Browse verified family villas and designer houses.</p>
+        </a>
+        <a href="/dha-phase-6-lahore-guide/" class="guide-nav-card">
+          <strong>Complete Master Hub</strong>
+          <p>Read the 3,000+ word authority knowledge hub.</p>
+        </a>
+      </div>
+    </section>
+
+  </main>
+</PageLayout>
+
+<style>
+  .comp-hero {
+    background: linear-gradient(165deg, #090919 0%, #12122b 55%, #0c0c1e 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 72px 0 48px;
+  }
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .badge-pill {
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.06);
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .gold-pill {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border-color: rgba(16, 185, 129, 0.3);
+  }
+  .hero-headline {
+    font-size: clamp(2.2rem, 4.2vw, 3.2rem);
+    color: #ffffff;
+    font-weight: 800;
+    margin-bottom: 18px;
+    max-width: 920px;
+    line-height: 1.2;
+  }
+  .text-gradient {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #10b981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-lead {
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    color: #94a3b8;
+    line-height: 1.65;
+    max-width: 820px;
+  }
+  .comp-content {
+    padding: 56px 20px 80px;
+    max-width: 1080px;
+  }
+  .verdict-banner {
+    background: #111129;
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 48px;
+  }
+  .verdict-banner h2 {
+    color: #34d399;
+    font-size: 1.4rem;
+    margin-bottom: 14px;
+  }
+  .verdict-banner p {
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    margin-bottom: 12px;
+  }
+  .comp-section {
+    margin-bottom: 56px;
+  }
+  .comp-section h2 {
+    font-size: 1.8rem;
+    color: #f8fafc;
+    margin-bottom: 20px;
+    font-weight: 800;
+  }
+  .table-responsive {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    margin: 24px 0;
+  }
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    background: #0f0f23;
+  }
+  .comparison-table th {
+    background: #171736;
+    color: #f8fafc;
+    padding: 14px 18px;
+    text-align: left;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .comparison-table td {
+    padding: 14px 18px;
+    color: #cbd5e1;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .rank-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 800;
+    background: rgba(251, 191, 36, 0.2);
+    color: #fbbf24;
+  }
+  .tag-win {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+  }
+  .profile-box {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .profile-box h3 {
+    font-size: 1.2rem;
+    color: #f1f5f9;
+    margin-bottom: 10px;
+  }
+  .profile-box p {
+    color: #94a3b8;
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 0;
+  }
+  .faq-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .faq-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .faq-question {
+    padding: 18px 20px;
+    cursor: pointer;
+    font-weight: 700;
+    color: #f1f5f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+  }
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+  .faq-chevron {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    transition: transform 0.2s ease;
+  }
+  .faq-item[open] .faq-chevron {
+    transform: rotate(180deg);
+  }
+  .faq-answer {
+    padding: 0 20px 20px;
+    color: #94a3b8;
+    font-size: 0.98rem;
+    line-height: 1.7;
+  }
+  .related-guides-hub {
+    margin-top: 56px;
+    padding: 32px;
+    background: #0f0f23;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+  }
+  .related-guides-hub h2 {
+    font-size: 1.4rem;
+    color: #f8fafc;
+    margin-bottom: 20px;
+  }
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .guide-nav-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 18px;
+    text-decoration: none;
+    transition: border-color 0.2s ease;
+  }
+  .guide-nav-card:hover {
+    border-color: rgba(16, 185, 129, 0.4);
+  }
+  .guide-nav-card strong {
+    display: block;
+    color: #f1f5f9;
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+  .guide-nav-card p {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    margin-bottom: 0;
+  }
+</style>

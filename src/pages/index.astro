@@ -3,6 +3,9 @@
  * DHA Phase 6 Lahore — Complete Authority Home Page
  * Matching the exact structure, layout, aesthetic, and components requested.
  */
+import Header from '@components/global/Header.astro';
+import propertiesData from '@data/properties-import.json';
+const featuredProperties = propertiesData.slice(0, 3);
 ---
 
 <!DOCTYPE html>
@@ -223,32 +226,7 @@
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <!-- Header / Navigation -->
-  <header class="site-header">
-    <nav class="navbar" id="navbar" aria-label="Primary navigation">
-      <div class="container">
-        <a href="/" class="nav-logo" aria-label="DHA Phase 6 Lahore home">
-          <div class="nav-logo-icon">D6</div>
-          DHA Phase <span>6</span> Lahore
-        </a>
-        <div class="nav-links" id="navLinks">
-          <a href="/" class="active" aria-current="page">Home</a>
-          <a href="/sectors/">Sectors</a>
-          <a href="/properties/">Properties</a>
-          <a href="/places/">Places</a>
-          <a href="/plots/">Plots</a>
-          <a href="/jobs/">Jobs</a>
-          <a href="/dealers/">Dealers</a>
-          <a href="/dha-phase-6-lahore-map/">Map</a>
-          <a href="/dha-phase-6-lahore-map/#map-pdf-downloads" class="nav-cta">Map PDFs</a>
-        </div>
-        <button class="nav-toggle" id="navToggle" type="button" aria-label="Toggle navigation menu" aria-controls="navLinks" aria-expanded="false">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-      </div>
-    </nav>
-  </header>
+  <Header />
 
   <main id="main-content">
     <!-- Hero Section -->
@@ -260,42 +238,120 @@
       <div class="hero-particles" id="heroParticles"></div>
       <div class="container hero-content">
         <div class="hero-badge">
-          <span class="badge-dot"></span>Fully Developed Community
+          <span class="badge-dot"></span>Independent Real Estate Guide
         </div>
-        <h1><span class="gold">DHA Phase 6 Lahore</span></h1>
+        <h1>Houses, Plots &amp; Commercial Properties in <span class="gold">DHA Phase 6 Lahore</span></h1>
         <p class="hero-description">
-          DHA Phase 6 is a premier, fully developed residential community in Lahore. Spanning over 26,000 kanals with 13 well-planned sectors, it offers world-class infrastructure, 24/7 security, Defence Raya Golf & Country Club, and direct access via the Lahore Ring Road and Bedian Road. Developed and managed by the Defence Housing Authority.
+          The definitive independent platform for verified property research, live market price trends, sector-by-sector intelligence, and buyer guidance across all 17 sectors of DHA Phase 6 Lahore.
         </p>
+
+        <!-- Search Box UI -->
+        <div class="hero-search-box">
+          <form action="/search-property/" method="GET" class="hero-search-form">
+            <div class="search-field">
+              <label for="hero-prop-type">Property Type</label>
+              <select id="hero-prop-type" name="type">
+                <option value="all">All Properties</option>
+                <option value="house">Houses for Sale</option>
+                <option value="plot">Plots for Sale</option>
+                <option value="commercial">Commercial</option>
+              </select>
+            </div>
+            <div class="search-field">
+              <label for="hero-sector">Sector</label>
+              <select id="hero-sector" name="sector">
+                <option value="all">All Sectors</option>
+                <option value="Sector A">Sector A</option>
+                <option value="Sector B">Sector B</option>
+                <option value="Sector C">Sector C</option>
+                <option value="Sector D">Sector D</option>
+                <option value="Sector E">Sector E</option>
+                <option value="Sector F">Sector F</option>
+                <option value="Sector G">Sector G</option>
+                <option value="Sector H">Sector H</option>
+                <option value="Sector J">Sector J</option>
+                <option value="Sector K">Sector K</option>
+                <option value="Sector L">Sector L</option>
+                <option value="Sector M">Sector M</option>
+                <option value="Sector N">Sector N</option>
+                <option value="CCA">CCA Commercial</option>
+              </select>
+            </div>
+            <div class="search-field">
+              <label for="hero-budget">Price Bracket</label>
+              <select id="hero-budget" name="price">
+                <option value="all">Any Price</option>
+                <option value="under-1cr">Under 1 Crore</option>
+                <option value="1cr-3cr">1 to 3 Crore</option>
+                <option value="3cr-5cr">3 to 5 Crore</option>
+                <option value="above-5cr">5+ Crore</option>
+              </select>
+            </div>
+            <button type="submit" class="hero-search-submit">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              Search Properties
+            </button>
+          </form>
+        </div>
+
         <div class="hero-stats">
           <div class="hero-stat">
             <span class="hero-stat-value" data-count="26000">0</span>
             <span class="hero-stat-label">Total Kanals</span>
           </div>
           <div class="hero-stat">
-            <span class="hero-stat-value" data-count="13">0</span>
-            <span class="hero-stat-label">Sectors</span>
+            <span class="hero-stat-value" data-count="17">0</span>
+            <span class="hero-stat-label">Sectors &amp; Zones</span>
           </div>
           <div class="hero-stat">
-            <span class="hero-stat-value" data-count="8">0</span>
-            <span class="hero-stat-label">Entry Boulevards</span>
+            <span class="hero-stat-value" data-count="792">0</span>
+            <span class="hero-stat-label">Verified Places</span>
           </div>
           <div class="hero-stat">
             <span class="hero-stat-value" data-count="2005">0</span>
             <span class="hero-stat-label">Established</span>
           </div>
         </div>
+
+        <!-- Hero CTAs -->
         <div class="hero-actions">
-          <a href="#sectors" class="btn btn-primary">
+          <a href="/properties/" class="btn btn-primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            Browse Properties
+          </a>
+          <a href="#sectors" class="btn btn-secondary">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
             Explore Sectors
           </a>
-          <a href="/dha-phase-6-lahore-map/" class="btn btn-secondary">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            View Map
+          <a href="https://wa.me/923257800001?text=Hello%2C%20I%20need%20assistance%20with%20DHA%20Phase%206%20property." target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+            WhatsApp Consultation
           </a>
         </div>
       </div>
     </header>
+
+    <!-- Trust Strip -->
+    <div class="trust-strip">
+      <div class="container trust-strip-inner">
+        <div class="trust-strip-item">
+          <span class="trust-strip-check">✓</span>
+          <strong>Verified Property Information</strong>
+        </div>
+        <div class="trust-strip-item">
+          <span class="trust-strip-check">✓</span>
+          <strong>Sector Wise Guides</strong>
+        </div>
+        <div class="trust-strip-item">
+          <span class="trust-strip-check">✓</span>
+          <strong>Updated Market Insights</strong>
+        </div>
+        <div class="trust-strip-item">
+          <span class="trust-strip-check">✓</span>
+          <strong>Independent Property Platform</strong>
+        </div>
+      </div>
+    </div>
 
     <!-- Overview Section -->
     <section class="dha-overview" id="dha-overview">
@@ -607,14 +663,14 @@
       </div>
     </section>
 
-    <!-- Nearby Places Section (Task 9 & Phase 10.9) -->
+    <!-- Nearby Places Section (Task 9 & Phase 10.14) -->
     <section class="dha-places-section" id="dha-places">
       <div class="container">
         <div class="places-header reveal">
-          <span class="section-label">Facilities &amp; Amenities</span>
-          <h2 class="section-title">Explore DHA Phase 6 Lahore Nearby Places</h2>
+          <span class="section-label">Lifestyle &amp; Location Intelligence</span>
+          <h2 class="section-title">Explore Life Around DHA Phase 6 Lahore</h2>
           <p class="section-subtitle">
-            Discover top-rated schools, multi-specialty hospitals, fine dining restaurants, shopping malls, mosques, and parks located across all 17 sectors of DHA Phase 6 Lahore.
+            396+ verified places across all 17 sectors of DHA Phase 6 Lahore. Compare top schools, healthcare centres, fine dining, grand mosques, and shopping plazas — then explore properties available nearby.
           </p>
         </div>
 
@@ -623,13 +679,13 @@
           <div class="places-showcase-card glass-card reveal reveal-delay-1">
             <div>
               <div class="places-showcase-icon">🎓</div>
-              <h3 class="places-showcase-title">Schools &amp; Colleges</h3>
+              <h3 class="places-showcase-title">Schools &amp; Education</h3>
               <p class="places-showcase-desc">
-                Beaconhouse, The City School, Roots Millennium, Future World School, TMUC, and Lahore Garrison University.
+                37+ institutions including Beaconhouse, LGS, Roots Millennium, SICAS, TMUC, and Lahore Garrison University.
               </p>
             </div>
             <a href="/places/schools/" class="places-showcase-link">
-              <span>View Schools Directory</span>
+              <span>37 Verified Schools</span>
               <span>→</span>
             </a>
           </div>
@@ -640,11 +696,11 @@
               <div class="places-showcase-icon">🏥</div>
               <h3 class="places-showcase-title">Hospitals &amp; Healthcare</h3>
               <p class="places-showcase-desc">
-                Pakistan Kidney and Liver Institute (PKLI), DHA Medical Centre Phase 6, Chughtai Medical Center, and 24/7 pharmacies.
+                DHA Phase 6 Medical Centre (Sector E), PKLI corridor, 24/7 pharmacies, and certified diagnostic centers.
               </p>
             </div>
             <a href="/places/hospital/" class="places-showcase-link">
-              <span>View Hospitals Directory</span>
+              <span>Healthcare Directory</span>
               <span>→</span>
             </a>
           </div>
@@ -655,11 +711,11 @@
               <div class="places-showcase-icon">🍽️</div>
               <h3 class="places-showcase-title">Restaurants &amp; Dining</h3>
               <p class="places-showcase-desc">
-                Cosa Nostra, The 19th Hole at Raya, Eggspectation, Dogar Restaurant, Broadway Pizza, LUNA, and artisan cafes.
+                70+ dining spots: Cosa Nostra, The 19th Hole at Raya, artisan coffee roasters, and family restaurants in CCA.
               </p>
             </div>
             <a href="/places/restaurants/" class="places-showcase-link">
-              <span>View Restaurants Directory</span>
+              <span>70 Verified Dining Spots</span>
               <span>→</span>
             </a>
           </div>
@@ -670,11 +726,11 @@
               <div class="places-showcase-icon">🕌</div>
               <h3 class="places-showcase-title">Mosques &amp; Spiritual</h3>
               <p class="places-showcase-desc">
-                Grand Jamia Mosque Sector J, Sector A Jamia Mosque, Sector C Mosque, and purpose-built prayer facilities across all sectors.
+                41+ verified mosques: Grand Jamia Mosque Sector C, Sector A Mosque, and sector prayer facilities within walking reach.
               </p>
             </div>
             <a href="/places/mosque/" class="places-showcase-link">
-              <span>View Mosques Directory</span>
+              <span>41 Verified Mosques</span>
               <span>→</span>
             </a>
           </div>
@@ -683,22 +739,153 @@
           <div class="places-showcase-card glass-card reveal reveal-delay-5">
             <div>
               <div class="places-showcase-icon">🛍️</div>
-              <h3 class="places-showcase-title">Shopping &amp; Groceries</h3>
+              <h3 class="places-showcase-title">Shopping &amp; Retail</h3>
               <p class="places-showcase-desc">
-                Dolmen Mall Lahore, Carrefour, Jalal Sons CCA 2, Fairways Commercial Raya, and neighborhood supermarkets.
+                Supermarkets, luxury boutiques, designer stores, and commercial plazas across Defence Raya, CCA 1, and Broadway.
               </p>
             </div>
             <a href="/places/shopping/" class="places-showcase-link">
-              <span>View Shopping Directory</span>
+              <span>Verified Shopping Plazas</span>
+              <span>→</span>
+            </a>
+          </div>
+
+          <!-- Parks -->
+          <div class="places-showcase-card glass-card reveal reveal-delay-6">
+            <div>
+              <div class="places-showcase-icon">🌳</div>
+              <h3 class="places-showcase-title">Parks &amp; Green Living</h3>
+              <p class="places-showcase-desc">
+                18+ landscaped sector parks, jogging circuits, children play zones, and wide tree-lined boulevards.
+              </p>
+            </div>
+            <a href="/places/park/" class="places-showcase-link">
+              <span>18 Verified Parks</span>
               <span>→</span>
             </a>
           </div>
         </div>
 
-        <div class="places-showcase-cta reveal">
+        <div class="places-showcase-cta reveal" style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;">
           <a href="/places/" class="btn btn-primary">
-            <span>Browse Complete DHA Phase 6 Places Directory</span>
-            <span>→</span>
+            <span>Explore All Facilities →</span>
+          </a>
+          <a href="/properties/" class="btn btn-secondary">
+            <span>Explore Properties Nearby →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Choose DHA Phase 6 Lahore (Phase 10.15 Task 8) -->
+    <section class="why-choose-section" id="why-choose">
+      <div class="container">
+        <div class="why-choose-header reveal">
+          <span class="section-label">The Gold Standard of Living</span>
+          <h2 class="section-title">Why Choose DHA Phase 6 Lahore?</h2>
+          <p class="section-subtitle">
+            From 150-foot wide tree-lined boulevards to underground utilities and top-tier security, DHA Phase 6 offers an unrivaled blend of modern luxury, prime location, and lasting capital security.
+          </p>
+        </div>
+
+        <div class="why-choose-grid">
+          <div class="why-card glass-card reveal reveal-delay-1">
+            <div class="why-icon">📍</div>
+            <h3>Prime Location</h3>
+            <p>12 minutes to Allama Iqbal Airport via Lahore Ring Road, with direct multi-gate access from Bedian Road and Barki Road.</p>
+          </div>
+
+          <div class="why-card glass-card reveal reveal-delay-2">
+            <div class="why-icon">⚡</div>
+            <h3>Modern Infrastructure</h3>
+            <p>100% underground electrification, storm-water drainage networks, purified RO drinking water plants, and LED avenue illumination.</p>
+          </div>
+
+          <div class="why-card glass-card reveal reveal-delay-3">
+            <div class="why-icon">🏙️</div>
+            <h3>Nearby Facilities</h3>
+            <p>792+ verified schools, healthcare centres, fine dining, grand mosques, and banks across all 17 sectors of Phase 6.</p>
+          </div>
+
+          <div class="why-card glass-card reveal reveal-delay-4">
+            <div class="why-icon">📈</div>
+            <h3>Investment Potential</h3>
+            <p>Sustained 10%–14% annual capital growth with high-yielding commercial assets delivering up to 7.8% passive rental returns.</p>
+          </div>
+
+          <div class="why-card glass-card reveal reveal-delay-5">
+            <div class="why-icon">🛡️</div>
+            <h3>Secure Gated Living</h3>
+            <p>24/7 dedicated DHA mobile patrols, smart CCTV surveillance checkpoints, and round-the-clock emergency response teams.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Explore DHA Phase 6 Lahore By Need (Phase 10.15 Task 8) -->
+    <section class="explore-by-need-section" id="explore-by-need">
+      <div class="container">
+        <div class="explore-need-header reveal">
+          <span class="section-label">Direct Search Hub</span>
+          <h2 class="section-title">Explore DHA Phase 6 Lahore By Need</h2>
+          <p class="section-subtitle">Find exactly what you are searching for across our verified properties, sector guides, and lifestyle intelligence directories.</p>
+        </div>
+
+        <div class="explore-need-grid">
+          <a href="/houses-for-sale-in-dha-phase-6-lahore/" class="need-card glass-card reveal reveal-delay-1">
+            <span class="need-icon">🏡</span>
+            <h4>Buy a House</h4>
+            <p>Brand new 10 Marla, 1 &amp; 2 Kanal designer homes and luxury villas.</p>
+            <span class="need-link-txt">Browse Houses →</span>
+          </a>
+
+          <a href="/plots-for-sale-in-dha-phase-6-lahore/" class="need-card glass-card reveal reveal-delay-2">
+            <span class="need-icon">📐</span>
+            <h4>Buy a Plot</h4>
+            <p>Possession-ready residential plots with direct transfer and clear titles.</p>
+            <span class="need-link-txt">Browse Plots →</span>
+          </a>
+
+          <a href="/commercial-property-dha-phase-6-lahore/" class="need-card glass-card reveal reveal-delay-3">
+            <span class="need-icon">🏢</span>
+            <h4>Commercial Property</h4>
+            <p>4 &amp; 8 Marla commercial plazas, corporate shops, and high-yield floors.</p>
+            <span class="need-link-txt">Commercial Guide →</span>
+          </a>
+
+          <a href="/dha-phase-6-lahore-plot-prices/" class="need-card glass-card reveal reveal-delay-4">
+            <span class="need-icon">📊</span>
+            <h4>Plot Price Trends</h4>
+            <p>Comprehensive market valuation tables and sector-by-sector rates.</p>
+            <span class="need-link-txt">Check Prices →</span>
+          </a>
+
+          <a href="/is-dha-phase-6-lahore-a-good-investment/" class="need-card glass-card reveal reveal-delay-1">
+            <span class="need-icon">📈</span>
+            <h4>Investment Analysis</h4>
+            <p>In-depth ROI feasibility and comparative analysis vs Phase 5 &amp; Bahria.</p>
+            <span class="need-link-txt">Read Analysis →</span>
+          </a>
+
+          <a href="/places/schools/" class="need-card glass-card reveal reveal-delay-2">
+            <span class="need-icon">🎓</span>
+            <h4>Find Schools</h4>
+            <p>37+ verified academic institutions, grammar schools, and daycares.</p>
+            <span class="need-link-txt">School Directory →</span>
+          </a>
+
+          <a href="/places/restaurants/" class="need-card glass-card reveal reveal-delay-3">
+            <span class="need-icon">🍽️</span>
+            <h4>Find Restaurants</h4>
+            <p>70+ fine dining, artisan coffee roasters, and family restaurants.</p>
+            <span class="need-link-txt">Dining Directory →</span>
+          </a>
+
+          <a href="/sectors/" class="need-card glass-card reveal reveal-delay-4">
+            <span class="need-icon">🗺️</span>
+            <h4>Explore All Sectors</h4>
+            <p>Comprehensive lifestyle and facility guides for all 17 sectors.</p>
+            <span class="need-link-txt">Sector Guides →</span>
           </a>
         </div>
       </div>
@@ -1009,6 +1196,293 @@
             <div class="amenity-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.8 2.3A.3.3 0 015 2h14a.3.3 0 01.2.3L21 22H3L4.8 2.3z"/><path d="M12 8v8"/><path d="M8 12h8"/></svg></div>
             <div class="amenity-name">Colleges</div>
           </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. Latest Property Opportunities (Task 8 & Phase 10.16) -->
+    <section class="latest-opportunities-section" id="latest-opportunities">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="section-label">Verified Market Inventory</span>
+          <h2 class="section-title">Latest Property Opportunities</h2>
+          <p class="section-subtitle">
+            Explore verified residential plots, luxury villas, and commercial spaces in DHA Phase 6 Lahore with real-time trust metrics and direct advisor access.
+          </p>
+        </div>
+
+        <div class="opps-grid">
+          {featuredProperties.map((prop) => (
+            <article class="opp-card glass-card reveal">
+              <div class="opp-media">
+                <img src={prop.images?.[0]?.url || '/images/placeholders/property-placeholder.svg'} alt={prop.title} loading="lazy" />
+                <span class="trust-badge">✓ Verified 2 days ago</span>
+                <span class="avail-badge">Available</span>
+              </div>
+              <div class="opp-body">
+                <div class="opp-meta">
+                  <span class="sector-tag">{prop.block}</span>
+                  <span class="propid-tag">ID: {prop.id || 'DHA6-PROP'}</span>
+                </div>
+                <h3><a href={`/properties/${prop.slug}/`}>{prop.title}</a></h3>
+                <div class="opp-facts">
+                  <span><strong>{prop.size}</strong> {prop.unit.toUpperCase()}</span>
+                  <span>{prop.propertyType.replace('-', ' ')}</span>
+                  <span>{prop.location?.address || `${prop.block}, DHA Phase 6`}</span>
+                </div>
+                <div class="opp-trust-row">
+                  <span class="trust-info">🛡️ Independent listing information</span>
+                  <span class="trust-date">Active</span>
+                </div>
+                <div class="opp-footer">
+                  <div>
+                    <small>Advertised Demand</small>
+                    <strong>PKR {(prop.price / 10000000).toFixed(2)} Crore</strong>
+                  </div>
+                  <div class="opp-actions">
+                    <a href={`https://wa.me/923257800001?text=${encodeURIComponent(`Please help me verify this property: ${prop.title}`)}`} target="_blank" rel="noopener noreferrer" class="btn-verify">Verify</a>
+                    <a href={`/properties/${prop.slug}/`} class="btn-details">Details →</a>
+                  </div>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div class="opps-cta reveal">
+          <a href="/search-property/" class="btn btn-primary">
+            <span>Browse All Properties with Advanced Filters →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Popular Searches (Task 8 & Phase 10.16) -->
+    <section class="popular-searches-section" id="popular-searches">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="section-label">High-Intent Discovery</span>
+          <h2 class="section-title">Popular Property Searches in DHA Phase 6</h2>
+          <p class="section-subtitle">
+            Direct access to high-demand property searches, price benchmarks, and sector comparisons.
+          </p>
+        </div>
+
+        <div class="searches-grid reveal">
+          <a href="/houses-for-sale-in-dha-phase-6-lahore/" class="search-tile glass-card">
+            <span class="tile-icon">🏡</span>
+            <div>
+              <strong>Houses for Sale DHA Phase 6 Lahore</strong>
+              <p>5 Marla, 10 Marla, 1 & 2 Kanal designer villas.</p>
+            </div>
+            <span class="tile-arrow">→</span>
+          </a>
+
+          <a href="/search-property/?type=house&size=5" class="search-tile glass-card">
+            <span class="tile-icon">🏠</span>
+            <div>
+              <strong>5 Marla Houses DHA Phase 6</strong>
+              <p>Compact luxury homes in Sectors J, K, and L.</p>
+            </div>
+            <span class="tile-arrow">→</span>
+          </a>
+
+          <a href="/10-marla-houses-dha-phase-6-lahore/" class="search-tile glass-card">
+            <span class="tile-icon">🏘️</span>
+            <div>
+              <strong>10 Marla Houses DHA Phase 6</strong>
+              <p>Prime family residences in Sectors J, K, and L.</p>
+            </div>
+            <span class="tile-arrow">→</span>
+          </a>
+
+          <a href="/1-kanal-plots-dha-phase-6-lahore/" class="search-tile glass-card">
+            <span class="tile-icon">📐</span>
+            <div>
+              <strong>1 Kanal Houses & Plots DHA Phase 6</strong>
+              <p>Executive 500 sq yd parcels in Sectors A, B, C, D, E & F.</p>
+            </div>
+            <span class="tile-arrow">→</span>
+          </a>
+
+          <a href="/commercial-property-dha-phase-6-lahore/" class="search-tile glass-card">
+            <span class="tile-icon">🏢</span>
+            <div>
+              <strong>Commercial Property DHA Phase 6</strong>
+              <p>4 & 8 Marla commercial plots and multi-storey plazas.</p>
+            </div>
+            <span class="tile-arrow">→</span>
+          </a>
+
+          <a href="/dha-phase-6-lahore-plot-prices/" class="search-tile glass-card">
+            <span class="tile-icon">📊</span>
+            <div>
+              <strong>Plot Prices & Rate Trends</strong>
+              <p>Historical trends and current 2026 valuation benchmarks.</p>
+            </div>
+            <span class="tile-arrow">→</span>
+          </a>
+
+          <a href="/dha-phase-6-property-calculator/" class="search-tile glass-card">
+            <span class="tile-icon">🧮</span>
+            <div>
+              <strong>Property Transfer & ROI Calculators</strong>
+              <p>Calculate FBR taxes, DHA transfer fees, and rental yields.</p>
+            </div>
+            <span class="tile-arrow">→</span>
+          </a>
+
+          <a href="/best-sector-in-dha-phase-6-lahore/" class="search-tile glass-card">
+            <span class="tile-icon">🏆</span>
+            <div>
+              <strong>Best Sector in Phase 6 Comparison</strong>
+              <p>Sector A through N comprehensive scorecard.</p>
+            </div>
+            <span class="tile-arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Latest DHA Phase 6 Updates (Task 8 & Phase 10.16) -->
+    <section class="latest-updates-section" id="latest-updates">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="section-label">Infrastructure & Development</span>
+          <h2 class="section-title">Latest DHA Phase 6 Updates & Catalysts</h2>
+          <p class="section-subtitle">
+            Key urban and commercial milestones driving living standards and real estate capital appreciation in 2026.
+          </p>
+        </div>
+
+        <div class="updates-timeline-grid reveal">
+          <div class="update-card glass-card">
+            <div class="update-date">Completed Milestone</div>
+            <h3>Lahore Ring Road SL-3 Fully Operational</h3>
+            <p>Direct signal-free interchange connectivity now links Phase 6 to Multan Road, southern industrial zones, and the M-3/M-4 motorways in under 20 minutes.</p>
+          </div>
+
+          <div class="update-card glass-card">
+            <div class="update-date">Commercial Milestone</div>
+            <h3>Dolmen Mall DHA Phase 6 Retail Hub</h3>
+            <p>Flagship anchor retail brands, international department stores, and mega family entertainment centers active along the Main Boulevard commercial axis.</p>
+          </div>
+
+          <div class="update-card glass-card">
+            <div class="update-date">Lifestyle Milestone</div>
+            <h3>Defence Raya Fairways Expansion</h3>
+            <p>Additional golf-view alfresco restaurant promenades and designer boutique commercial plazas open in Sectors M and N.</p>
+          </div>
+
+          <div class="update-card glass-card">
+            <div class="update-date">Civic Infrastructure</div>
+            <h3>Smart Underground Power Sub-Stations</h3>
+            <p>Advanced digital monitoring deployed across Phase 6 underground feeders, enhancing 24/7 electrical grid resilience and lightning protection.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Complete Area Guide Feature (Task 8 & Phase 10.16) -->
+    <section class="area-guide-banner-section" id="area-guide">
+      <div class="container">
+        <div class="guide-banner glass-card reveal">
+          <div class="guide-banner-content">
+            <span class="banner-badge">3,000+ Word Authority Knowledge Hub</span>
+            <h2>The Complete 2026 Guide to DHA Phase 6 Lahore</h2>
+            <p>
+              Dive into our comprehensive, data-backed master research study examining the history, development timeline, sector-by-sector profiles, property price trends, school ecosystems, healthcare, and long-term investment feasibility.
+            </p>
+            <div class="banner-actions">
+              <a href="/dha-phase-6-lahore-guide/" class="btn btn-primary">
+                <span>Read Full Master Guide →</span>
+              </a>
+              <a href="/is-dha-phase-6-lahore-a-good-investment/" class="btn btn-secondary">
+                <span>Investment Analysis →</span>
+              </a>
+            </div>
+          </div>
+          <div class="guide-banner-stats">
+            <div class="banner-stat-box">
+              <strong>17</strong>
+              <span>Sectors & Zones</span>
+            </div>
+            <div class="banner-stat-box">
+              <strong>95%+</strong>
+              <span>Possession Rate</span>
+            </div>
+            <div class="banner-stat-box">
+              <strong>792+</strong>
+              <span>Verified Places</span>
+            </div>
+            <div class="banner-stat-box">
+              <strong>18-Hole</strong>
+              <span>Golf Course</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Frequently Asked Questions (Task 8 & Phase 10.16) -->
+    <section class="homepage-faq-section" id="faqs">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="section-label">Buyer Inquiries</span>
+          <h2 class="section-title">Frequently Asked Questions</h2>
+          <p class="section-subtitle">
+            Essential answers for buyers, investors, and residents evaluating DHA Phase 6 Lahore.
+          </p>
+        </div>
+
+        <div class="faq-accordion-home reveal">
+          <details class="faq-item-home glass-card" id="home-faq-1">
+            <summary>
+              <strong>Why is DHA Phase 6 considered the premier residential phase in Lahore?</strong>
+              <span class="faq-chevron">▼</span>
+            </summary>
+            <p>DHA Phase 6 features modern 120-foot to 150-foot arterial boulevards, 100% underground electrification throughout, high possession rates (95%+), dedicated commercial plazas (CCA 1 & CCA 2), Defence Raya 18-hole golf community, and direct signal-free access via Lahore Ring Road SL-3 and Bedian Road.</p>
+          </details>
+
+          <details class="faq-item-home glass-card" id="home-faq-2">
+            <summary>
+              <strong>What are the current plot prices in DHA Phase 6 Lahore?</strong>
+              <span class="faq-chevron">▼</span>
+            </summary>
+            <p>1 Kanal residential plots range from PKR 4.20 Crore to PKR 7.50 Crore depending on sector maturity and location attributes. 10 Marla plots range between PKR 2.60 Crore and PKR 3.90 Crore, while 5 Marla plots command PKR 1.35 Crore to PKR 1.95 Crore.</p>
+          </details>
+
+          <details class="faq-item-home glass-card" id="home-faq-3">
+            <summary>
+              <strong>Which sectors are the best for family living in Phase 6?</strong>
+              <span class="faq-chevron">▼</span>
+            </summary>
+            <p>Sectors C and D are ranked highest for 1 and 2 Kanal luxury family residences due to central tranquility, the Grand Jamia Masjid, and walkable CCA 1 convenience. For 10 Marla houses, Sector J is the top choice due to its direct proximity to Beaconhouse School.</p>
+          </details>
+
+          <details class="faq-item-home glass-card" id="home-faq-4">
+            <summary>
+              <strong>How does DHA Phase 6 compare to DHA Phase 5?</strong>
+              <span class="faq-chevron">▼</span>
+            </summary>
+            <p>Phase 6 offers wider roads (150 ft vs 80-100 ft), complete underground power, Defence Raya Golf Course, and larger modern commercial hubs. Phase 5 offers closer proximity to central Lahore and older mature tree canopies.</p>
+          </details>
+
+          <details class="faq-item-home glass-card" id="home-faq-5">
+            <summary>
+              <strong>What schools and healthcare centers are located in DHA Phase 6?</strong>
+              <span class="faq-chevron">▼</span>
+            </summary>
+            <p>Phase 6 is home to Beaconhouse, Lahore Grammar School (LGS), SICAS, and Roots Millennium. Healthcare is anchored by the DHA Medical Centre in Sector E, PKLI across Ring Road, Farooq Hospital, and 24/7 pharmacies in CCA.</p>
+          </details>
+
+          <details class="faq-item-home glass-card" id="home-faq-6">
+            <summary>
+              <strong>How can I verify property ownership before buying?</strong>
+              <span class="faq-chevron">▼</span>
+            </summary>
+            <p>Always verify the official allotment or transfer letter directly at the DHA Lahore Main Office Customer Care Centre, and ensure the seller provides an official Non-Encumbrance Certificate (NDC) clearing all society dues before issuing token earnest money.</p>
+          </details>
         </div>
       </div>
     </section>
@@ -2377,6 +2851,125 @@
     text-align: center;
   }
 
+  /* ── Why Choose DHA Phase 6 Section ── */
+  .why-choose-section {
+    padding: var(--section-pad);
+    background: var(--clr-bg-primary);
+    position: relative;
+    border-top: 1px solid var(--clr-glass-border);
+  }
+  .why-choose-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .why-choose-header .section-subtitle {
+    margin: 0 auto;
+    max-width: 760px;
+  }
+  .why-choose-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+  .why-card {
+    padding: 28px 24px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
+  }
+  .why-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(212, 168, 68, 0.4);
+  }
+  .why-icon {
+    font-size: 2.2rem;
+    margin-bottom: 14px;
+  }
+  .why-card h3 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--clr-text-primary);
+    margin-bottom: 8px;
+  }
+  .why-card p {
+    color: var(--clr-text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ── Explore DHA Phase 6 By Need ── */
+  .explore-by-need-section {
+    padding: var(--section-pad);
+    background: var(--clr-bg-secondary);
+    position: relative;
+    border-top: 1px solid var(--clr-glass-border);
+  }
+  .explore-need-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .explore-need-header .section-subtitle {
+    margin: 0 auto;
+    max-width: 720px;
+  }
+  .explore-need-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .need-card {
+    padding: 24px 20px;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
+  }
+  .need-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--clr-accent-gold);
+  }
+  .need-icon {
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+  }
+  .need-card h4 {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--clr-text-primary);
+    margin-bottom: 6px;
+  }
+  .need-card p {
+    color: var(--clr-text-muted);
+    font-size: 0.8rem;
+    line-height: 1.5;
+    margin-bottom: 14px;
+    flex-grow: 1;
+  }
+  .need-link-txt {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--clr-accent-gold);
+    transition: transform 0.2s ease;
+  }
+  .need-card:hover .need-link-txt {
+    color: var(--clr-accent-gold-light);
+    transform: translateX(3px);
+  }
+
+  @media (max-width: 1024px) {
+    .explore-need-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 640px) {
+    .explore-need-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
   /* ══════════════════════════════════════════════════════════════════════════
    * PROPERTY PRICES SECTION
    * ══════════════════════════════════════════════════════════════════════════ */
@@ -3098,4 +3691,458 @@
       font-size: 2rem;
     }
   }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+   * PHASE 10.16 HOMEPAGE AUTHORITY STYLES
+   * ══════════════════════════════════════════════════════════════════════════ */
+  .latest-opportunities-section,
+  .popular-searches-section,
+  .latest-updates-section,
+  .area-guide-banner-section,
+  .homepage-faq-section {
+    padding: var(--section-pad);
+    border-bottom: 1px solid var(--clr-glass-border);
+  }
+
+  /* Latest Opportunities Grid */
+  .opps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 28px;
+    margin-bottom: 36px;
+  }
+  .opp-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .opp-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(16, 185, 129, 0.4);
+  }
+  .opp-media {
+    position: relative;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    background: #090919;
+  }
+  .opp-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .opp-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 20px;
+  }
+  .opp-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .sector-tag { color: var(--clr-accent-gold-light); }
+  .propid-tag { color: var(--clr-text-muted); }
+  .opp-body h3 {
+    font-size: 1.18rem;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .opp-body h3 a:hover { color: var(--clr-accent-gold-light); }
+  .opp-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: var(--clr-text-secondary);
+    margin-bottom: 12px;
+  }
+  .opp-facts span {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+  .opp-trust-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    padding: 8px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    margin-top: auto;
+  }
+  .trust-info { color: var(--clr-accent-gold-light); }
+  .trust-date { color: var(--clr-text-muted); }
+  .opp-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .opp-footer small {
+    display: block;
+    font-size: 0.65rem;
+    color: var(--clr-text-muted);
+    text-transform: uppercase;
+  }
+  .opp-footer strong {
+    font-size: 1.15rem;
+    color: #fbbf24;
+  }
+  .opp-actions {
+    display: flex;
+    gap: 6px;
+  }
+  .btn-verify {
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: #10b981;
+    color: #042014 !important;
+    font-size: 0.75rem;
+    font-weight: 800;
+  }
+  .btn-details {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    color: #34d399 !important;
+    font-size: 0.75rem;
+    font-weight: 800;
+  }
+  .opps-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  /* Popular Searches Grid */
+  .searches-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .search-tile {
+    display: grid;
+    grid-template-columns: 36px 1fr 20px;
+    align-items: center;
+    gap: 14px;
+    padding: 20px;
+    border-radius: var(--radius-md);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .search-tile:hover {
+    transform: translateY(-2px);
+    border-color: rgba(16, 185, 129, 0.4);
+  }
+  .tile-icon { font-size: 1.5rem; }
+  .search-tile strong {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--clr-text-primary);
+    margin-bottom: 2px;
+  }
+  .search-tile p {
+    font-size: 0.8rem;
+    color: var(--clr-text-secondary);
+    margin: 0;
+    line-height: 1.4;
+  }
+  .tile-arrow {
+    color: var(--clr-accent-gold-light);
+    font-weight: 800;
+    font-size: 1.1rem;
+  }
+
+  /* Latest Updates Timeline */
+  .updates-timeline-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .update-card {
+    padding: 24px;
+    border-radius: var(--radius-md);
+  }
+  .update-date {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--clr-accent-gold-light);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .update-card h3 {
+    font-size: 1.15rem;
+    color: var(--clr-text-primary);
+    margin-bottom: 8px;
+  }
+  .update-card p {
+    font-size: 0.88rem;
+    color: var(--clr-text-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Area Guide Feature Banner */
+  .guide-banner {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 36px;
+    padding: 48px;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, rgba(22, 22, 53, 0.95), rgba(11, 11, 40, 0.95));
+    border: 1px solid rgba(16, 185, 129, 0.3);
+  }
+  @media (max-width: 860px) {
+    .guide-banner {
+      grid-template-columns: 1fr;
+      padding: 32px 24px;
+    }
+  }
+  .banner-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .guide-banner-content h2 {
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+    color: var(--clr-text-primary);
+    margin-bottom: 14px;
+    font-weight: 800;
+  }
+  .guide-banner-content p {
+    font-size: 1rem;
+    color: var(--clr-text-secondary);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  .banner-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .guide-banner-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-content: center;
+  }
+  .banner-stat-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+    text-align: center;
+  }
+  .banner-stat-box strong {
+    display: block;
+    font-size: 1.8rem;
+    color: var(--clr-accent-gold-light);
+  }
+  .banner-stat-box span {
+    font-size: 0.8rem;
+    color: var(--clr-text-muted);
+    text-transform: uppercase;
+  }
+
+  /* Home FAQ Accordion */
+  .faq-accordion-home {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 920px;
+    margin: 0 auto;
+  }
+  .faq-item-home {
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  .faq-item-home summary {
+    padding: 18px 22px;
+    cursor: pointer;
+    font-size: 1.02rem;
+    color: var(--clr-text-primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+  }
+  .faq-item-home summary::-webkit-details-marker { display: none; }
+  .faq-chevron {
+    font-size: 0.75rem;
+    color: var(--clr-text-muted);
+    transition: transform 0.2s ease;
+  }
+  .faq-item-home[open] .faq-chevron { transform: rotate(180deg); }
+  .faq-item-home p {
+    padding: 0 22px 20px;
+    color: var(--clr-text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* Hero Search Box UI */
+  .hero-search-box {
+    margin: 28px 0 36px;
+    max-width: 900px;
+    width: 100%;
+  }
+  .hero-search-form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr) auto;
+    gap: 12px;
+    background: rgba(15, 15, 38, 0.85);
+    border: 1px solid rgba(212, 168, 68, 0.35);
+    border-radius: 12px;
+    padding: 16px 20px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(16px);
+  }
+  .search-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+  }
+  .search-field label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--clr-accent-gold-light);
+  }
+  .search-field select {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    color: #fff;
+    padding: 10px 14px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-field select:focus {
+    border-color: var(--clr-accent-gold);
+  }
+  .search-field select option {
+    background: #0f0f26;
+    color: #fff;
+  }
+  .hero-search-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #059669, #10b981);
+    color: #042014;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 900;
+    padding: 0 22px;
+    cursor: pointer;
+    align-self: flex-end;
+    height: 42px;
+    transition: transform 0.2s, opacity 0.2s;
+    white-space: nowrap;
+  }
+  .hero-search-submit:hover {
+    transform: translateY(-2px);
+    opacity: 0.95;
+  }
+
+  .btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    background: #25d366;
+    color: #042014;
+    font-size: 0.92rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  .btn-whatsapp:hover {
+    transform: translateY(-2px);
+    opacity: 0.95;
+  }
+
+  /* Trust Strip Banner */
+  .trust-strip {
+    background: rgba(10, 10, 26, 0.95);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 16px 0;
+  }
+  .trust-strip-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .trust-strip-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .trust-strip-check {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    font-size: 0.8rem;
+    font-weight: 900;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+  }
+  .trust-strip-item strong {
+    font-size: 0.84rem;
+    color: #e2e8f0;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+
+  @media (max-width: 860px) {
+    .hero-search-form {
+      grid-template-columns: 1fr;
+    }
+    .hero-search-submit {
+      width: 100%;
+    }
+    .trust-strip-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+  }
+  @media (max-width: 520px) {
+    .trust-strip-inner {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>
+

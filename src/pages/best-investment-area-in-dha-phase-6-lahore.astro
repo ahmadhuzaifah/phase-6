@@ -1,0 +1,435 @@
+---
+/**
+ * Best Investment Area in DHA Phase 6 Lahore — Capital Appreciation & Yield Guide
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+
+const title = "Best Investment Area in DHA Phase 6 Lahore — High ROI & Yield Sectors";
+const description = "Discover the best sectors for real estate investment in DHA Phase 6 Lahore. Compare commercial plazas, residential plots, rental yields, and 5-year capital growth forecasts.";
+const canonical = `${SITE.url}/best-investment-area-in-dha-phase-6-lahore/`;
+
+const investmentLeaderboard = [
+  { rank: '1', area: 'CCA 1 & CCA 2 Plazas', type: 'Commercial', yield: '6.5% – 7.8%', growth: 'High', verdict: 'Best for maximum recurring monthly cash flow from corporate and bank leases.' },
+  { rank: '2', area: 'Sector K & L Infill Plots', type: '10M & 1 Kanal Plot', yield: '4.5% – 5.0%', growth: 'Very High', verdict: 'Highest capital appreciation runway due to lower baseline entry costs.' },
+  { rank: '3', area: 'Main Boulevard Commercial', type: 'Commercial Plaza / Plot', yield: '7.0% – 8.5%', growth: 'High', verdict: 'Premier visibility and flagship corporate appeal along 150-ft arterial road.' },
+  { rank: '4', area: 'Sector G & H Plots', type: '1 Kanal Plot', yield: '4.2% – 4.8%', growth: 'High', verdict: 'Major beneficiary of Ring Road SL-3 opening and southern transit expansion.' },
+  { rank: '5', area: 'Defence Raya Fairways', type: 'Luxury Commercial & Villa', yield: '5.5% – 6.5%', growth: 'Steady', verdict: 'Elite wealth preservation asset with golf fairway frontage and high international tenant demand.' },
+  { rank: '6', area: 'Sector J (10 Marla)', type: '10 Marla House', yield: '5.0% – 5.4%', growth: 'Moderate', verdict: 'Fastest rental occupancy turnaround; high tenant liquidity from school families.' }
+];
+
+const faqs = [
+  {
+    question: "Should I invest in a residential plot or a commercial plaza in Phase 6?",
+    answer: "If your goal is immediate monthly rental income, a 4 Marla commercial plaza in CCA 1 or CCA 2 generates 6.5% to 7.8% net annual yield. If your goal is long-term capital appreciation with lower maintenance overhead, a residential 10 Marla or 1 Kanal plot in Sectors K, L, or G offers lower entry costs and strong percentage upside."
+  },
+  {
+    question: "Which sector has the highest projected plot price growth over the next 3 to 5 years?",
+    answer: "Sectors K, L, and G offer the greatest percentage appreciation potential because their plot prices are approximately 15% to 25% below the mature central blocks (A, B, C), and their proximity to the Ring Road interchange attracts active new home construction."
+  },
+  {
+    question: "What is the typical rental yield for built houses in DHA Phase 6?",
+    answer: "A brand-new 1 Kanal designer villa in DHA Phase 6 generates an annual rental yield between 4.2% and 5.2%, with monthly rents ranging from PKR 3.20 Lakh to PKR 5.50 Lakh, backed by multinational corporate and overseas Pakistani executive tenants."
+  },
+  {
+    question: "How has the Lahore Ring Road SL-3 impacted DHA Phase 6 investments?",
+    answer: "The completion of Ring Road SL-3 has directly connected DHA Phase 6 to southern Lahore, Multan Road, and the M-3/M-4 motorways, substantially cutting travel times and cementing Phase 6 as Lahore's central interchange hub for eastern and southern commerce."
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": `${canonical}#article`,
+      "isPartOf": { "@type": "WebSite", "@id": `${SITE.url}/#website` },
+      "headline": title,
+      "description": description,
+      "url": canonical,
+      "inLanguage": "en-PK",
+      "mainEntityOfPage": canonical,
+      "datePublished": "2026-02-22T08:00:00+05:00",
+      "dateModified": "2026-09-05T12:00:00+05:00",
+      "publisher": { "@type": "Organization", "name": SITE.name, "url": SITE.url },
+      "author": { "@type": "Organization", "name": "Research & Editorial Desk, DHA Phase 6 Guide" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonical}#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE.url },
+        { "@type": "ListItem", "position": 2, "name": "Best Guides", "item": `${SITE.url}/guides/` },
+        { "@type": "ListItem", "position": 3, "name": "Best Investment Areas", "item": canonical }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${canonical}#faq`,
+      "mainEntity": faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": { "@type": "Answer", "text": faq.answer }
+      }))
+    }
+  ]
+};
+---
+
+<PageLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+
+  <header class="comp-hero">
+    <div class="container">
+      <div class="hero-badges">
+        <span class="badge-pill gold-pill">Real Estate ROI Intelligence</span>
+        <span class="badge-pill">Investor Blueprint 2026</span>
+      </div>
+      <h1 class="hero-headline">
+        Best Investment Area in DHA Phase 6 Lahore: <span class="text-gradient">Maximizing Yield & Capital Growth</span>
+      </h1>
+      <p class="hero-lead">
+        A financial feasibility study identifying the top sectors for commercial rental yield, residential plot appreciation, and corporate tenant stability across DHA Phase 6.
+      </p>
+    </div>
+  </header>
+
+  <main class="container comp-content">
+
+    <section class="verdict-banner">
+      <h2>Investment Summary: Cash Flow vs Capital Growth</h2>
+      <p>
+        <strong>For Steady High-Yield Cash Flow:</strong> Allocate capital into 4 Marla or 8 Marla commercial plazas in <strong>CCA 1 or CCA 2</strong>. Triple-net commercial leases to corporate banks, dental networks, and retail brands generate annual yields between <strong>6.5% and 7.8%</strong> with annual rent escalations.
+      </p>
+      <p>
+        <strong>For Maximum 3-to-5 Year Capital Upside:</strong> Acquire 10 Marla or 1 Kanal residential plots in <strong>Sectors K, L, and G</strong>. Lower purchase price baselines combined with accelerating infill construction position these sectors for superior percentage appreciation.
+      </p>
+    </section>
+
+    <!-- LEADERBOARD TABLE -->
+    <section class="comp-section">
+      <h2>Investment Leaderboard by Asset Class</h2>
+      <div class="table-responsive">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Sector / Asset</th>
+              <th>Asset Type</th>
+              <th>Net Rental Yield</th>
+              <th>Capital Growth Rating</th>
+              <th>Strategic Investment Verdict</th>
+            </tr>
+          </thead>
+          <tbody>
+            {investmentLeaderboard.map((item) => (
+              <tr>
+                <td><span class="rank-badge">#{item.rank}</span></td>
+                <td><strong>{item.area}</strong></td>
+                <td>{item.type}</td>
+                <td><strong>{item.yield}</strong></td>
+                <td><span class="tag-win">{item.growth}</span></td>
+                <td>{item.verdict}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- IN-DEPTH INVESTMENT SECTOR AUDIT -->
+    <section class="comp-section">
+      <h2>Detailed Sector Investment Opportunities</h2>
+
+      <div class="profile-box">
+        <h3>1. CCA 1 & CCA 2 Commercial Plazas — The Cash Flow King</h3>
+        <p>
+          Commercial property in DHA Phase 6 represents one of Pakistan’s most resilient real estate investments. Unlike fragmented retail areas, CCA 1 and CCA 2 are planned with dedicated parking corridors and clear building bylaws. A 4 Marla commercial building (Basement + Ground + Mezzanine + 3 Floors) generates predictable monthly rents of PKR 6.5 to 14.0 Lakh from institutional tenants.
+        </p>
+      </div>
+
+      <div class="profile-box">
+        <h3>2. Sector K & L Residential Infill — High Capital Growth</h3>
+        <p>
+          While established sectors like A, B, and C have already realized the bulk of their early growth, Sectors K and L are currently in their high-velocity development cycle. 10 Marla and 1 Kanal plots here are competitively priced, making them ideal for speculative holding or building modern spec homes for profitable resale.
+        </p>
+      </div>
+
+      <div class="profile-box">
+        <h3>3. Main Boulevard & Broadway Commercial — Flagship Prestige</h3>
+        <p>
+          The 150-foot Main Boulevard is the commercial showpiece of DHA Phase 6. Hosting corporate headquarters, mega automobile showrooms, and Dolmen Mall, plots and plazas along this strip command premium capital values with steady appreciation guaranteed by finite commercial frontage.
+        </p>
+      </div>
+
+      <div class="profile-box">
+        <h3>4. Sector J Residential Houses — High Rental Liquidity</h3>
+        <p>
+          Constructing or purchasing a 10 Marla house in Sector J provides superior rental turnover. Because of the walking-distance Beaconhouse campus and active local commercial market, vacant properties in Sector J are typically leased within 2 to 3 weeks of hitting the market.
+        </p>
+      </div>
+    </section>
+
+    <!-- FAQS -->
+    <section class="comp-section">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-accordion">
+        {faqs.map((faq, index) => (
+          <details class="faq-item" id={`faq-${index + 1}`}>
+            <summary class="faq-question">
+              <span>{faq.question}</span>
+              <span class="faq-chevron">▼</span>
+            </summary>
+            <div class="faq-answer">
+              <p>{faq.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- RELATED GUIDES -->
+    <section class="related-guides-hub">
+      <h2>Explore Related Investment Tools & Guides</h2>
+      <div class="links-grid">
+        <a href="/dha-phase-6-property-calculator/" class="guide-nav-card">
+          <strong>Real Estate Calculators</strong>
+          <p>Calculate rental yields, transfer taxes, and ROI.</p>
+        </a>
+        <a href="/is-dha-phase-6-lahore-a-good-investment/" class="guide-nav-card">
+          <strong>Investment Feasibility Study</strong>
+          <p>Complete macro analysis and regional benchmarks.</p>
+        </a>
+        <a href="/commercial-property-dha-phase-6-lahore/" class="guide-nav-card">
+          <strong>Commercial Property Guide</strong>
+          <p>Explore 4 & 8 Marla commercial plots and plazas.</p>
+        </a>
+        <a href="/dha-phase-6-lahore-guide/" class="guide-nav-card">
+          <strong>Complete Master Hub</strong>
+          <p>Read the 3,000+ word authority knowledge hub.</p>
+        </a>
+      </div>
+    </section>
+
+  </main>
+</PageLayout>
+
+<style>
+  .comp-hero {
+    background: linear-gradient(165deg, #090919 0%, #12122b 55%, #0c0c1e 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 72px 0 48px;
+  }
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .badge-pill {
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.06);
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .gold-pill {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border-color: rgba(16, 185, 129, 0.3);
+  }
+  .hero-headline {
+    font-size: clamp(2.2rem, 4.2vw, 3.2rem);
+    color: #ffffff;
+    font-weight: 800;
+    margin-bottom: 18px;
+    max-width: 920px;
+    line-height: 1.2;
+  }
+  .text-gradient {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #10b981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-lead {
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    color: #94a3b8;
+    line-height: 1.65;
+    max-width: 820px;
+  }
+  .comp-content {
+    padding: 56px 20px 80px;
+    max-width: 1080px;
+  }
+  .verdict-banner {
+    background: #111129;
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 48px;
+  }
+  .verdict-banner h2 {
+    color: #34d399;
+    font-size: 1.4rem;
+    margin-bottom: 14px;
+  }
+  .verdict-banner p {
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    margin-bottom: 12px;
+  }
+  .comp-section {
+    margin-bottom: 56px;
+  }
+  .comp-section h2 {
+    font-size: 1.8rem;
+    color: #f8fafc;
+    margin-bottom: 20px;
+    font-weight: 800;
+  }
+  .table-responsive {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    margin: 24px 0;
+  }
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    background: #0f0f23;
+  }
+  .comparison-table th {
+    background: #171736;
+    color: #f8fafc;
+    padding: 14px 18px;
+    text-align: left;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .comparison-table td {
+    padding: 14px 18px;
+    color: #cbd5e1;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .rank-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 800;
+    background: rgba(251, 191, 36, 0.2);
+    color: #fbbf24;
+  }
+  .tag-win {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+  }
+  .profile-box {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .profile-box h3 {
+    font-size: 1.2rem;
+    color: #f1f5f9;
+    margin-bottom: 10px;
+  }
+  .profile-box p {
+    color: #94a3b8;
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 0;
+  }
+  .faq-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .faq-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .faq-question {
+    padding: 18px 20px;
+    cursor: pointer;
+    font-weight: 700;
+    color: #f1f5f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+  }
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+  .faq-chevron {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    transition: transform 0.2s ease;
+  }
+  .faq-item[open] .faq-chevron {
+    transform: rotate(180deg);
+  }
+  .faq-answer {
+    padding: 0 20px 20px;
+    color: #94a3b8;
+    font-size: 0.98rem;
+    line-height: 1.7;
+  }
+  .related-guides-hub {
+    margin-top: 56px;
+    padding: 32px;
+    background: #0f0f23;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+  }
+  .related-guides-hub h2 {
+    font-size: 1.4rem;
+    color: #f8fafc;
+    margin-bottom: 20px;
+  }
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .guide-nav-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 18px;
+    text-decoration: none;
+    transition: border-color 0.2s ease;
+  }
+  .guide-nav-card:hover {
+    border-color: rgba(16, 185, 129, 0.4);
+  }
+  .guide-nav-card strong {
+    display: block;
+    color: #f1f5f9;
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+  .guide-nav-card p {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    margin-bottom: 0;
+  }
+</style>

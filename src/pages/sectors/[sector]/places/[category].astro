@@ -165,8 +165,8 @@ const structuredData = {
                 <address>{place.address}</address>
                 <div class="business-chips"><span>{categoryMeta.label}</span>{place.phone && <span>{place.phone}</span>}</div>
                 <div class="business-actions">
-                  <a class="business-primary" href={`/places/${place.category}/${place.slug}/`}>View business</a>
-                  <a class="business-directions" href={place.googleMapsUrl} target="_blank" rel="noopener noreferrer">Directions ↗</a>
+                  <a class="business-primary" href={`/places/${place.category}/${place.slug}/`}>View Details</a>
+                  <a class="business-directions" href={place.googleMapsUrl} target="_blank" rel="noopener" aria-label={`Open ${place.name} in Google Maps`}>Open in Google Maps ↗</a>
                 </div>
               </div>
             </article>
@@ -306,10 +306,10 @@ const structuredData = {
   .business-rating small { color: var(--dir-dim); }
   .business-card address { min-height: 2.6em; margin: .55rem 0; color: var(--dir-muted); font-size: .68rem; font-style: normal; line-height: 1.5; }
   .business-chips { margin: .75rem 0; }
-  .business-chips span { border-color: var(--dir-line); color: var(--dir-dim); }
-  .business-actions { display: flex; align-items: center; justify-content: space-between; gap: .65rem; margin-top: .9rem; }
-  .business-primary, .gold-button { padding: .6rem .85rem; border-radius: 5px; background: linear-gradient(135deg, var(--dir-gold), var(--dir-gold-light)); color: #090918; font-size: .64rem; font-weight: 800; text-decoration: none; }
-  .business-directions { color: #2ecc71; font-size: .64rem; font-weight: 800; text-decoration: none; }
+  .business-actions { display: grid; grid-template-columns: 1fr 1.35fr; gap: .5rem; margin-top: .9rem; padding-top: .75rem; border-top: 1px solid rgba(255, 255, 255, 0.06); }
+  .business-primary, .gold-button { display: inline-flex; align-items: center; justify-content: center; padding: .52rem .55rem; border-radius: 5px; background: linear-gradient(135deg, var(--dir-gold), var(--dir-gold-light)); color: #090918; font-size: .63rem; font-weight: 800; text-decoration: none; text-align: center; white-space: nowrap; }
+  .business-directions { display: inline-flex; align-items: center; justify-content: center; padding: .52rem .55rem; border-radius: 5px; background: rgba(52, 152, 219, 0.12); border: 1px solid rgba(52, 152, 219, 0.3); color: #3498db; font-size: .63rem; font-weight: 800; text-decoration: none; text-align: center; white-space: nowrap; }
+  .business-directions:hover { background: rgba(52, 152, 219, 0.25); border-color: #3498db; }
 
   .empty-state, .no-results { padding: 2.5rem; border: 1px solid var(--dir-line); border-radius: 10px; background: var(--dir-surface); text-align: center; }
   .empty-state p, .no-results { color: var(--dir-muted); font-size: .9rem; margin: 0 0 1rem; }

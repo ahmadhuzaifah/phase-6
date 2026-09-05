@@ -1,0 +1,548 @@
+---
+/**
+ * DHA Phase 6 vs DHA Phase 5 Lahore — Head-to-Head Comparison Guide
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+
+const title = "DHA Phase 6 vs Phase 5 Lahore — Complete Real Estate & Living Comparison";
+const description = "Comprehensive head-to-head comparison between DHA Phase 6 and DHA Phase 5 Lahore. Compare plot prices, house rates, Ring Road connectivity, schools, and investment ROI.";
+const canonical = `${SITE.url}/dha-phase-6-vs-phase-5-lahore/`;
+
+const faqs = [
+  {
+    question: "Is DHA Phase 6 better than DHA Phase 5 for living?",
+    answer: "Both phases offer elite living standards, but Phase 6 provides significantly wider boulevards (120–150 ft vs 80–100 ft in Phase 5), 100% underground electrification throughout, modern master planning, and the Defence Raya 18-hole golf community. Phase 5 offers closer proximity to central Lahore and older established community mature greenery."
+  },
+  {
+    question: "How do house prices compare between DHA Phase 6 and Phase 5?",
+    answer: "As of 2025/2026, 1 Kanal brand-new designer houses in Phase 6 range between PKR 8.50 Cr and PKR 13.50 Cr, whereas brand-new houses in Phase 5 range from PKR 9.0 Cr to PKR 15.0 Cr due to land scarcity. However, Phase 6 provides superior contemporary architectural layouts and larger covered areas."
+  },
+  {
+    question: "Which phase offers better rental yields?",
+    answer: "Phase 6 generally yields slightly higher residential returns (4.5%–5.2%) compared to Phase 5 (3.8%–4.5%) because corporate tenants and overseas Pakistani executives favor the modern underground infrastructure, larger commercial hubs (CCA 1 & CCA 2), and lower traffic density."
+  },
+  {
+    question: "Which phase has better school access?",
+    answer: "Both have exceptional school options. Phase 5 hosts Lahore Grammar School (LGS) and Beaconhouse Defence Campus, while Phase 6 features expansive, newer purpose-built campuses for Beaconhouse, LGS, SICAS, Roots Millennium, and DHA Junior Schools."
+  },
+  {
+    question: "Which phase has greater future investment capital upside?",
+    answer: "DHA Phase 6 offers greater capital appreciation runway because it is still maturing with active construction, Ring Road SL-3 connectivity benefits, and mega retail developments like Dolmen Mall, whereas Phase 5 is almost 100% built out and behaves as a mature wealth-preservation market."
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": `${canonical}#article`,
+      "isPartOf": { "@type": "WebSite", "@id": `${SITE.url}/#website` },
+      "headline": title,
+      "description": description,
+      "url": canonical,
+      "inLanguage": "en-PK",
+      "mainEntityOfPage": canonical,
+      "datePublished": "2026-02-01T08:00:00+05:00",
+      "dateModified": "2026-09-05T12:00:00+05:00",
+      "publisher": { "@type": "Organization", "name": SITE.name, "url": SITE.url },
+      "author": { "@type": "Organization", "name": "Research & Editorial Desk, DHA Phase 6 Guide" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonical}#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE.url },
+        { "@type": "ListItem", "position": 2, "name": "Comparisons", "item": `${SITE.url}/guides/` },
+        { "@type": "ListItem", "position": 3, "name": "Phase 6 vs Phase 5", "item": canonical }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${canonical}#faq`,
+      "mainEntity": faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": { "@type": "Answer", "text": faq.answer }
+      }))
+    }
+  ]
+};
+---
+
+<PageLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+
+  <header class="comp-hero">
+    <div class="container">
+      <div class="hero-badges">
+        <span class="badge-pill gold-pill">Comparative Real Estate Analysis</span>
+        <span class="badge-pill">DHA Lahore Face-Off</span>
+      </div>
+      <h1 class="hero-headline">
+        DHA Phase 6 vs DHA Phase 5 Lahore: <span class="text-gradient">Which is Better in 2026?</span>
+      </h1>
+      <p class="hero-lead">
+        A detailed, data-driven comparison analyzing master planning, road networks, property price dynamics, school ecosystems, rental yields, and long-term capital appreciation.
+      </p>
+    </div>
+  </header>
+
+  <main class="container comp-content">
+
+    <!-- EXECUTIVE VERDICT SUMMARY -->
+    <section class="verdict-banner">
+      <h2>Executive Summary: The Core Difference</h2>
+      <p>
+        <strong>DHA Phase 5</strong> represents Lahore’s mature, established luxury benchmark. It offers closer proximity to central Lahore, fully developed tree-lined avenues, and zero ongoing structural infrastructure disruption.
+      </p>
+      <p>
+        <strong>DHA Phase 6</strong> represents the modern evolution of DHA master planning. With 150-foot arterial boulevards, 100% underground electrical cabling, two expansive Central Commercial Areas (CCA 1 & CCA 2), the signature Defence Raya 18-hole Golf & Country Club, and greater price-growth momentum, Phase 6 is the preferred choice for forward-looking homeowners and active capital investors.
+      </p>
+    </section>
+
+    <!-- HEAD-TO-HEAD COMPARISON TABLE -->
+    <section class="comp-section">
+      <h2>Head-to-Head Comparison Matrix</h2>
+      <div class="table-responsive">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Feature / Metric</th>
+              <th>DHA Phase 6 Lahore</th>
+              <th>DHA Phase 5 Lahore</th>
+              <th>Advantage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Primary Boulevards</strong></td>
+              <td>120 ft – 150 ft wide dual-carriageways</td>
+              <td>80 ft – 100 ft dual-carriageways</td>
+              <td><span class="tag-win">Phase 6</span></td>
+            </tr>
+            <tr>
+              <td><strong>Electrical Wiring</strong></td>
+              <td>100% underground across all sectors</td>
+              <td>Partial underground / hybrid overhead</td>
+              <td><span class="tag-win">Phase 6</span></td>
+            </tr>
+            <tr>
+              <td><strong>1 Kanal Plot Price Range</strong></td>
+              <td>PKR 4.20 Cr – 7.50 Cr</td>
+              <td>PKR 5.50 Cr – 9.00 Cr</td>
+              <td><span class="tag-win">Phase 6 (Affordability)</span></td>
+            </tr>
+            <tr>
+              <td><strong>1 Kanal Brand-New House</strong></td>
+              <td>PKR 8.50 Cr – 13.50 Cr</td>
+              <td>PKR 9.00 Cr – 15.00 Cr</td>
+              <td><span class="tag-neutral">Equal Value</span></td>
+            </tr>
+            <tr>
+              <td><strong>Possession & Maturity</strong></td>
+              <td>95%+ Built (Dynamic active growth)</td>
+              <td>99%+ Built (Fully mature)</td>
+              <td><span class="tag-win">Phase 5 (Settled)</span></td>
+            </tr>
+            <tr>
+              <td><strong>Golf & Resort Living</strong></td>
+              <td>Defence Raya 18-hole championship club</td>
+              <td>Community sports clubs / Defence Club</td>
+              <td><span class="tag-win">Phase 6</span></td>
+            </tr>
+            <tr>
+              <td><strong>Proximity to City Center</strong></td>
+              <td>15–20 mins to Gulberg via Ring Road</td>
+              <td>10–12 mins to Gulberg via Ring Road/Barki</td>
+              <td><span class="tag-win">Phase 5</span></td>
+            </tr>
+            <tr>
+              <td><strong>Commercial Hubs</strong></td>
+              <td>CCA 1, CCA 2, Raya Fairways, Dolmen Mall</td>
+              <td>CCA 5, Civic Commercial, Jalal Sons Hub</td>
+              <td><span class="tag-win">Phase 6 (Scale)</span></td>
+            </tr>
+            <tr>
+              <td><strong>Average Rental Yield</strong></td>
+              <td>4.5% – 5.2% annually</td>
+              <td>3.8% – 4.5% annually</td>
+              <td><span class="tag-win">Phase 6</span></td>
+            </tr>
+            <tr>
+              <td><strong>Future Appreciation Potential</strong></td>
+              <td>High (Ring Road SL-3 & retail expansion)</td>
+              <td>Moderate (Wealth preservation ceiling)</td>
+              <td><span class="tag-win">Phase 6</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 1: INFRASTRUCTURE & URBAN PLANNING -->
+    <section class="comp-section">
+      <h2>1. Urban Planning & Infrastructure Comparison</h2>
+      <p>
+        When DHA Lahore designed Phase 6, civil engineers rectified the urban bottlenecks observed in Phases 1 through 5. In Phase 5, peak afternoon school hours often create congestion around the Bedian and Ring Road intersections. By contrast, Phase 6 incorporates 120-foot to 150-foot internal arterial roads with dedicated service lanes and multi-tier roundabouts that distribute vehicular movement without gridlock.
+      </p>
+      <p>
+        Furthermore, Phase 6 is engineered with complete subterranean utility lines: power, natural gas, drainage, and high-speed fiber optics are entirely concealed beneath ground level. In contrast, older blocks of Phase 5 still display overhead power cables that affect street aesthetics.
+      </p>
+    </section>
+
+    <!-- SECTION 2: PROPERTY PRICING & AFFORDABILITY -->
+    <section class="comp-section">
+      <h2>2. Property Price Dynamics & Affordability</h2>
+      <p>
+        Due to Phase 5's maturity and near-total absence of vacant land parcels, 1 Kanal residential plots command a scarcity premium between PKR 5.50 Crore and PKR 9.0 Crore. In Phase 6, residential 1 Kanal plots in Sectors D, F, G, H, K, and L range between PKR 4.20 Crore and PKR 7.50 Crore, offering investors a more accessible entry barrier with greater headroom for capital expansion.
+      </p>
+      <p>
+        For built homes, Phase 6 provides brand-new contemporary architecture featuring modern automation, double-glazed floor-to-ceiling windows, and luxury imported finishes at competitive rates compared to aging 10-to-15-year-old structures in Phase 5 requiring substantial modernization costs.
+      </p>
+    </section>
+
+    <!-- SECTION 3: COMMERCIAL & LIFESTYLE ECOSYSTEM -->
+    <section class="comp-section">
+      <h2>3. Commercial & Lifestyle Comparison</h2>
+      <p>
+        While Phase 5's commercial district along CCA 5 is renowned for high-end supermarkets and boutiques, Phase 6 operates on a much grander scale. It features dual Central Commercial Areas:
+      </p>
+      <ul>
+        <li><strong>CCA 1:</strong> Hosts flagship branches of all major commercial banks, hypermarkets, international restaurants, and boutique diagnostic centers.</li>
+        <li><strong>CCA 2:</strong> Provides modern multi-storey commercial plazas and corporate office spaces.</li>
+        <li><strong>Defence Raya Fairways:</strong> Offers open-air pedestrian promenades, rooftop cafes overlooking the golf course, and exclusive banquet facilities.</li>
+      </ul>
+    </section>
+
+    <!-- BUYER PERSONA RECOMMENDATION -->
+    <section class="comp-section recommendation-box">
+      <h2>The Decision Matrix: Which Should You Choose?</h2>
+      <div class="decision-grid">
+        <div class="decision-card">
+          <h3>Choose DHA Phase 5 if:</h3>
+          <ul>
+            <li>You prioritize being 5 minutes closer to central Lahore and Gulberg.</li>
+            <li>You prefer a 100% settled neighborhood with zero nearby residential construction.</li>
+            <li>Your daily routine is tied to older established institutions in DHA Phases 1–4.</li>
+            <li>You seek pure wealth preservation rather than high-growth capital speculation.</li>
+          </ul>
+        </div>
+        <div class="decision-card highlight-card">
+          <h3>Choose DHA Phase 6 if:</h3>
+          <ul>
+            <li>You value modern 150-foot avenues and 100% underground electrification.</li>
+            <li>You want access to the Defence Raya Golf Resort, country club, and premier lifestyle.</li>
+            <li>You seek a brand-new contemporary house with larger covered areas and modern floor plans.</li>
+            <li>You want higher annual rental yields (4.5%–5.2%) and greater 3-to-5 year capital growth.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQS -->
+    <section class="comp-section">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-accordion">
+        {faqs.map((faq, index) => (
+          <details class="faq-item" id={`faq-${index + 1}`}>
+            <summary class="faq-question">
+              <span>{faq.question}</span>
+              <span class="faq-chevron">▼</span>
+            </summary>
+            <div class="faq-answer">
+              <p>{faq.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- RELATED GUIDES -->
+    <section class="related-guides-hub">
+      <h2>Explore More Comparisons & Guides</h2>
+      <div class="links-grid">
+        <a href="/dha-phase-6-vs-phase-7-lahore/" class="guide-nav-card">
+          <strong>Phase 6 vs Phase 7 Comparison</strong>
+          <p>Analyze differences between Phase 6 luxury and Phase 7 growth runway.</p>
+        </a>
+        <a href="/dha-phase-6-vs-bahria-town-lahore/" class="guide-nav-card">
+          <strong>Phase 6 vs Bahria Town Lahore</strong>
+          <p>Compare DHA security and governance against private developer luxury.</p>
+        </a>
+        <a href="/dha-phase-6-lahore-guide/" class="guide-nav-card">
+          <strong>DHA Phase 6 Master Guide</strong>
+          <p>Read the definitive 3,000+ word knowledge hub.</p>
+        </a>
+        <a href="/dha-phase-6-lahore-house-prices/" class="guide-nav-card">
+          <strong>House Prices Breakdown</strong>
+          <p>Explore current market rates for 5 Marla, 10 Marla, 1 & 2 Kanal houses.</p>
+        </a>
+      </div>
+    </section>
+
+  </main>
+</PageLayout>
+
+<style>
+  .comp-hero {
+    background: linear-gradient(165deg, #090919 0%, #12122b 55%, #0c0c1e 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 72px 0 48px;
+  }
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .badge-pill {
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.06);
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .gold-pill {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border-color: rgba(16, 185, 129, 0.3);
+  }
+  .hero-headline {
+    font-size: clamp(2.2rem, 4.2vw, 3.2rem);
+    color: #ffffff;
+    font-weight: 800;
+    margin-bottom: 18px;
+    max-width: 920px;
+    line-height: 1.2;
+  }
+  .text-gradient {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #10b981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-lead {
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    color: #94a3b8;
+    line-height: 1.65;
+    max-width: 820px;
+  }
+  .comp-content {
+    padding: 56px 20px 80px;
+    max-width: 1080px;
+  }
+  .verdict-banner {
+    background: #111129;
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 48px;
+  }
+  .verdict-banner h2 {
+    color: #34d399;
+    font-size: 1.4rem;
+    margin-bottom: 14px;
+  }
+  .verdict-banner p {
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    margin-bottom: 12px;
+  }
+  .comp-section {
+    margin-bottom: 56px;
+  }
+  .comp-section h2 {
+    font-size: 1.8rem;
+    color: #f8fafc;
+    margin-bottom: 20px;
+    font-weight: 800;
+  }
+  .comp-section p {
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+  .comp-section ul {
+    color: #cbd5e1;
+    line-height: 1.8;
+    padding-left: 24px;
+    margin-bottom: 20px;
+  }
+  .table-responsive {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    margin: 24px 0;
+  }
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    background: #0f0f23;
+  }
+  .comparison-table th {
+    background: #171736;
+    color: #f8fafc;
+    padding: 14px 18px;
+    text-align: left;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .comparison-table td {
+    padding: 14px 18px;
+    color: #cbd5e1;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .comparison-table tr:hover td {
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .tag-win {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+  }
+  .tag-neutral {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.08);
+    color: #94a3b8;
+  }
+  .decision-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+  }
+  .decision-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 26px;
+  }
+  .highlight-card {
+    background: #111129;
+    border-color: rgba(16, 185, 129, 0.4);
+  }
+  .decision-card h3 {
+    font-size: 1.25rem;
+    color: #f1f5f9;
+    margin-bottom: 16px;
+  }
+  .highlight-card h3 {
+    color: #34d399;
+  }
+  .decision-card ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+  }
+  .decision-card li {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 12px;
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .decision-card li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #34d399;
+    font-weight: 800;
+  }
+  .faq-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .faq-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .faq-question {
+    padding: 18px 20px;
+    cursor: pointer;
+    font-weight: 700;
+    color: #f1f5f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+  }
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+  .faq-chevron {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    transition: transform 0.2s ease;
+  }
+  .faq-item[open] .faq-chevron {
+    transform: rotate(180deg);
+  }
+  .faq-answer {
+    padding: 0 20px 20px;
+    color: #94a3b8;
+    font-size: 0.98rem;
+    line-height: 1.7;
+  }
+  .related-guides-hub {
+    margin-top: 56px;
+    padding: 32px;
+    background: #0f0f23;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+  }
+  .related-guides-hub h2 {
+    font-size: 1.4rem;
+    color: #f8fafc;
+    margin-bottom: 20px;
+  }
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .guide-nav-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 18px;
+    text-decoration: none;
+    transition: border-color 0.2s ease;
+  }
+  .guide-nav-card:hover {
+    border-color: rgba(16, 185, 129, 0.4);
+  }
+  .guide-nav-card strong {
+    display: block;
+    color: #f1f5f9;
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+  .guide-nav-card p {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    margin-bottom: 0;
+  }
+</style>

@@ -1,0 +1,695 @@
+---
+/**
+ * Interactive Property Search Portal — DHA Phase 6 Lahore
+ * Advanced client-side filtering by property type, plot/house size, sector, price range, and dynamic sorting.
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+import propertiesData from '@data/properties-import.json';
+
+const title = "Search Properties in DHA Phase 6 Lahore — Advanced Filter & Price Sort";
+const description = "Search verified houses, residential plots, and commercial properties in DHA Phase 6 Lahore. Filter by sector, Marla/Kanal size, price range, and availability status.";
+const canonical = `${SITE.url}/search-property/`;
+
+const initialCount = propertiesData.length;
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${canonical}#webpage`,
+      "url": canonical,
+      "name": title,
+      "description": description,
+      "isPartOf": { "@type": "WebSite", "@id": `${SITE.url}/#website` }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonical}#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE.url },
+        { "@type": "ListItem", "position": 2, "name": "Properties", "item": `${SITE.url}/properties/` },
+        { "@type": "ListItem", "position": 3, "name": "Search Portal", "item": canonical }
+      ]
+    }
+  ]
+};
+---
+
+<PageLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+
+  <header class="search-hero">
+    <div class="container">
+      <div class="hero-badges">
+        <span class="badge-pill gold-pill">Verified Real Estate Inventory</span>
+        <span class="badge-pill">Interactive Property Finder</span>
+      </div>
+      <h1 class="hero-headline">
+        Search Properties in <span class="text-gradient">DHA Phase 6 Lahore</span>
+      </h1>
+      <p class="hero-lead">
+        Explore verified residential plots, luxury family houses, and prime commercial plazas. Filter by sector, size, price bracket, and availability.
+      </p>
+    </div>
+  </header>
+
+  <main class="container search-workspace">
+    
+    <!-- SEARCH & FILTER TOOLBAR -->
+    <section class="filter-toolbar" aria-label="Property Search Filters">
+      <div class="filter-grid">
+        
+        <!-- Keyword Search -->
+        <div class="filter-group keyword-group">
+          <label for="searchInput">Search Keyword</label>
+          <div class="input-wrapper">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Search title, sector, street, or ID..." />
+          </div>
+        </div>
+
+        <!-- Property Type -->
+        <div class="filter-group">
+          <label for="typeFilter">Property Type</label>
+          <select id="typeFilter">
+            <option value="all">All Types</option>
+            <option value="house">Houses for Sale</option>
+            <option value="plot">Residential Plots</option>
+            <option value="commercial">Commercial Property</option>
+          </select>
+        </div>
+
+        <!-- Size Filter -->
+        <div class="filter-group">
+          <label for="sizeFilter">Size</label>
+          <select id="sizeFilter">
+            <option value="all">All Sizes</option>
+            <option value="5">5 Marla</option>
+            <option value="10">10 Marla</option>
+            <option value="1">1 Kanal</option>
+            <option value="2">2 Kanal</option>
+            <option value="4">4 Marla Commercial</option>
+            <option value="8">8 Marla Commercial</option>
+          </select>
+        </div>
+
+        <!-- Sector Filter -->
+        <div class="filter-group">
+          <label for="sectorFilter">Sector / Zone</label>
+          <select id="sectorFilter">
+            <option value="all">All Sectors</option>
+            <option value="Sector A">Sector A</option>
+            <option value="Sector B">Sector B</option>
+            <option value="Sector C">Sector C</option>
+            <option value="Sector D">Sector D</option>
+            <option value="Sector E">Sector E</option>
+            <option value="Sector F">Sector F</option>
+            <option value="Sector G">Sector G</option>
+            <option value="Sector H">Sector H</option>
+            <option value="Sector J">Sector J</option>
+            <option value="Sector K">Sector K</option>
+            <option value="Sector L">Sector L</option>
+            <option value="Sector M">Sector M</option>
+            <option value="Sector N">Sector N</option>
+            <option value="CCA">Central Commercial (CCA)</option>
+            <option value="Defence Raya">Defence Raya</option>
+          </select>
+        </div>
+
+        <!-- Price Range -->
+        <div class="filter-group">
+          <label for="priceFilter">Price Bracket</label>
+          <select id="priceFilter">
+            <option value="all">Any Price</option>
+            <option value="under-3cr">Under PKR 3.0 Crore</option>
+            <option value="3cr-6cr">PKR 3.0 Cr – 6.0 Crore</option>
+            <option value="6cr-10cr">PKR 6.0 Cr – 10.0 Crore</option>
+            <option value="10cr-15cr">PKR 10.0 Cr – 15.0 Crore</option>
+            <option value="above-15cr">Above PKR 15.0 Crore</option>
+          </select>
+        </div>
+
+        <!-- Sort By -->
+        <div class="filter-group">
+          <label for="sortFilter">Sort Order</label>
+          <select id="sortFilter">
+            <option value="featured">Featured First</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="size-asc">Size: Smallest First</option>
+            <option value="size-desc">Size: Largest First</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- STATUS BAR & ACTIVE FILTERS -->
+      <div class="filter-status-bar">
+        <div class="result-count">
+          Showing <strong id="visibleCount">{initialCount}</strong> verified properties
+        </div>
+        <button id="resetFiltersBtn" class="btn-reset" type="button">Reset All Filters ↺</button>
+      </div>
+    </section>
+
+    <!-- PROPERTIES RESULTS GRID -->
+    <section class="results-container">
+      <div id="propertiesGrid" class="properties-results-grid">
+        <!-- Rendered dynamically by client-side script -->
+      </div>
+      <div id="noResultsBox" class="no-results-box" style="display: none;">
+        <div class="no-results-icon">🔍</div>
+        <h3>No properties match your current filters</h3>
+        <p>Try widening your price range, selecting "All Sectors", or clearing your keyword filter.</p>
+        <button id="clearAllBtn" class="btn-gold">Reset Filters</button>
+      </div>
+    </section>
+
+  </main>
+</PageLayout>
+
+<!-- EMBEDDED PROPERTIES DATASET FOR INSTANT CLIENT FILTERING -->
+<script id="propertiesDataset" type="application/json" is:inline set:html={JSON.stringify(propertiesData)}></script>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const rawDataEl = document.getElementById('propertiesDataset');
+    if (!rawDataEl) return;
+
+    let properties = [];
+    try {
+      properties = JSON.parse(rawDataEl.textContent || '[]');
+    } catch (e) {
+      console.error('Failed to parse properties dataset', e);
+      return;
+    }
+
+    const searchInput = document.getElementById('searchInput');
+    const typeFilter = document.getElementById('typeFilter');
+    const sizeFilter = document.getElementById('sizeFilter');
+    const sectorFilter = document.getElementById('sectorFilter');
+    const priceFilter = document.getElementById('priceFilter');
+    const sortFilter = document.getElementById('sortFilter');
+    const resetBtn = document.getElementById('resetFiltersBtn');
+    const clearAllBtn = document.getElementById('clearAllBtn');
+    const grid = document.getElementById('propertiesGrid');
+    const visibleCountEl = document.getElementById('visibleCount');
+    const noResultsBox = document.getElementById('noResultsBox');
+
+    function formatPrice(value) {
+      if (value >= 10000000) return `PKR ${(value / 10000000).toFixed(2)} Crore`;
+      if (value >= 100000) return `PKR ${(value / 100000).toFixed(2)} Lakh`;
+      return `PKR ${new Intl.NumberFormat('en-PK').format(value)}`;
+    }
+
+    function renderProperties(list) {
+      grid.innerHTML = '';
+      visibleCountEl.textContent = list.length;
+
+      if (list.length === 0) {
+        grid.style.display = 'none';
+        noResultsBox.style.display = 'block';
+        return;
+      }
+
+      grid.style.display = 'grid';
+      noResultsBox.style.display = 'none';
+
+      const html = list.map(prop => {
+        const propId = prop.id || `DHA6-${prop.slug.substring(0, 10).toUpperCase()}`;
+        const img = prop.images?.[0]?.url || '/images/placeholders/property-placeholder.svg';
+        const typeLabel = (prop.propertyType || '').replace('-', ' ');
+        const waText = encodeURIComponent(`Please help me verify this DHA Phase 6 listing (${propId}): ${prop.title}`);
+        const waLink = `https://wa.me/923257800001?text=${waText}`;
+
+        return `
+          <article class="search-prop-card">
+            <div class="search-prop-media">
+              <img src="${img}" alt="${prop.title}" loading="lazy" />
+              <span class="trust-badge">✓ Verified 2 days ago</span>
+              <span class="avail-badge">Available</span>
+            </div>
+            <div class="search-prop-body">
+              <div class="search-prop-meta">
+                <span class="sector-tag">${prop.block}</span>
+                <span class="prop-id-tag">ID: ${propId}</span>
+              </div>
+              <h3><a href="/properties/${prop.slug}/">${prop.title}</a></h3>
+              <div class="search-prop-facts">
+                <span><strong>${prop.size}</strong> ${(prop.unit || 'marla').toUpperCase()}</span>
+                <span class="type-caps">${typeLabel}</span>
+                <span>${prop.possessionStatus || 'Developed'}</span>
+              </div>
+              <div class="search-prop-trust-row">
+                <span class="trust-source">🛡️ Independent listing information</span>
+                <span class="trust-date">Status: Active</span>
+              </div>
+              <div class="search-prop-footer">
+                <div>
+                  <small>Demand</small>
+                  <strong>${formatPrice(prop.price)}</strong>
+                </div>
+                <div class="search-prop-actions">
+                  <a href="${waLink}" target="_blank" rel="noopener noreferrer" class="btn-verify">Verify</a>
+                  <a href="/properties/${prop.slug}/" class="btn-details">Details →</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      grid.innerHTML = html;
+    }
+
+    function applyFilters() {
+      const q = (searchInput.value || '').trim().toLowerCase();
+      const type = typeFilter.value;
+      const size = sizeFilter.value;
+      const sector = sectorFilter.value;
+      const price = priceFilter.value;
+      const sort = sortFilter.value;
+
+      let filtered = properties.filter(item => {
+        // Keyword
+        if (q) {
+          const matchTitle = (item.title || '').toLowerCase().includes(q);
+          const matchBlock = (item.block || '').toLowerCase().includes(q);
+          const matchDesc = (item.description || '').toLowerCase().includes(q);
+          const matchId = (item.id || '').toLowerCase().includes(q);
+          if (!matchTitle && !matchBlock && !matchDesc && !matchId) return false;
+        }
+
+        // Type
+        if (type !== 'all') {
+          const pType = (item.propertyType || '').toLowerCase();
+          if (type === 'house' && !pType.includes('house')) return false;
+          if (type === 'plot' && !pType.includes('plot')) return false;
+          if (type === 'commercial' && !pType.includes('commercial')) return false;
+        }
+
+        // Size
+        if (size !== 'all') {
+          const s = String(item.size);
+          if (s !== size) return false;
+        }
+
+        // Sector
+        if (sector !== 'all') {
+          if (item.block !== sector && !item.block?.includes(sector)) return false;
+        }
+
+        // Price
+        if (price !== 'all') {
+          const p = item.price;
+          if (price === 'under-3cr' && p >= 30000000) return false;
+          if (price === '3cr-6cr' && (p < 30000000 || p > 60000000)) return false;
+          if (price === '6cr-10cr' && (p < 60000000 || p > 100000000)) return false;
+          if (price === '10cr-15cr' && (p < 100000000 || p > 150000000)) return false;
+          if (price === 'above-15cr' && p <= 150000000) return false;
+        }
+
+        return true;
+      });
+
+      // Sorting
+      if (sort === 'price-asc') {
+        filtered.sort((a, b) => a.price - b.price);
+      } else if (sort === 'price-desc') {
+        filtered.sort((a, b) => b.price - a.price);
+      } else if (sort === 'size-asc') {
+        filtered.sort((a, b) => parseFloat(a.size || 0) - parseFloat(b.size || 0));
+      } else if (sort === 'size-desc') {
+        filtered.sort((a, b) => parseFloat(b.size || 0) - parseFloat(a.size || 0));
+      } else if (sort === 'featured') {
+        filtered.sort((a, b) => (b.isFeatured ? 1 : 0) - (a.isFeatured ? 1 : 0));
+      }
+
+      renderProperties(filtered);
+    }
+
+    function resetFilters() {
+      searchInput.value = '';
+      typeFilter.value = 'all';
+      sizeFilter.value = 'all';
+      sectorFilter.value = 'all';
+      priceFilter.value = 'all';
+      sortFilter.value = 'featured';
+      applyFilters();
+    }
+
+    searchInput.addEventListener('input', applyFilters);
+    typeFilter.addEventListener('change', applyFilters);
+    sizeFilter.addEventListener('change', applyFilters);
+    sectorFilter.addEventListener('change', applyFilters);
+    priceFilter.addEventListener('change', applyFilters);
+    sortFilter.addEventListener('change', applyFilters);
+    resetBtn.addEventListener('click', resetFilters);
+    if (clearAllBtn) clearAllBtn.addEventListener('click', resetFilters);
+
+    // Initial render
+    applyFilters();
+  });
+</script>
+
+<style>
+  .search-hero {
+    background: linear-gradient(165deg, #090919 0%, #12122b 55%, #0c0c1e 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 64px 0 40px;
+  }
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .badge-pill {
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.06);
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .gold-pill {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border-color: rgba(16, 185, 129, 0.3);
+  }
+  .hero-headline {
+    font-size: clamp(2rem, 3.8vw, 2.8rem);
+    color: #ffffff;
+    font-weight: 800;
+    margin-bottom: 14px;
+  }
+  .text-gradient {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #10b981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-lead {
+    font-size: 1.05rem;
+    color: #94a3b8;
+    max-width: 780px;
+    line-height: 1.6;
+  }
+  .search-workspace {
+    padding: 40px 20px 80px;
+  }
+  .filter-toolbar {
+    background: #111129;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 32px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  }
+  .filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .keyword-group {
+    grid-column: span 2;
+  }
+  @media (max-width: 768px) {
+    .keyword-group {
+      grid-column: span 1;
+    }
+  }
+  .filter-group label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+  .input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .search-icon {
+    position: absolute;
+    left: 12px;
+    color: #64748b;
+    pointer-events: none;
+  }
+  .input-wrapper input {
+    width: 100%;
+    padding: 10px 12px 10px 38px;
+    border-radius: 8px;
+    background: rgba(15, 15, 35, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #f8fafc;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+  .input-wrapper input:focus {
+    border-color: #34d399;
+  }
+  .filter-group select {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: rgba(15, 15, 35, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #f8fafc;
+    font-size: 0.9rem;
+    outline: none;
+    cursor: pointer;
+  }
+  .filter-group select:focus {
+    border-color: #34d399;
+  }
+  .filter-status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .result-count {
+    color: #94a3b8;
+    font-size: 0.95rem;
+  }
+  .result-count strong {
+    color: #34d399;
+  }
+  .btn-reset {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #94a3b8;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .btn-reset:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: #f8fafc;
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+  .properties-results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  :global(.search-prop-card) {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(145deg, #151532, #101026);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 16px 36px -20px #000;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+  :global(.search-prop-card:hover) {
+    transform: translateY(-4px);
+    border-color: rgba(16, 185, 129, 0.4);
+  }
+  :global(.search-prop-media) {
+    position: relative;
+    aspect-ratio: 4/3;
+    background: #090919;
+    overflow: hidden;
+  }
+  :global(.search-prop-media img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  :global(.trust-badge) {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #059669, #10b981);
+    color: #042014;
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+  :global(.avail-badge) {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(15, 15, 35, 0.85);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #34d399;
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+  :global(.search-prop-body) {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 18px;
+  }
+  :global(.search-prop-meta) {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+  :global(.sector-tag) {
+    color: #10b981;
+  }
+  :global(.prop-id-tag) {
+    color: #64748b;
+  }
+  :global(.search-prop-body h3) {
+    font-size: 1.15rem;
+    line-height: 1.3;
+    margin-bottom: 10px;
+    color: #f1f5f9;
+  }
+  :global(.search-prop-body h3 a) {
+    color: inherit;
+    text-decoration: none;
+  }
+  :global(.search-prop-facts) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    margin-bottom: 12px;
+  }
+  :global(.search-prop-facts span) {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+  :global(.type-caps) {
+    text-transform: capitalize;
+  }
+  :global(.search-prop-trust-row) {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.68rem;
+    padding: 8px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    margin-top: auto;
+  }
+  :global(.trust-source) {
+    color: #34d399;
+  }
+  :global(.trust-date) {
+    color: #64748b;
+  }
+  :global(.search-prop-footer) {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  :global(.search-prop-footer small) {
+    display: block;
+    font-size: 0.65rem;
+    color: #64748b;
+    text-transform: uppercase;
+  }
+  :global(.search-prop-footer strong) {
+    font-size: 1.15rem;
+    color: #fbbf24;
+  }
+  :global(.search-prop-actions) {
+    display: flex;
+    gap: 6px;
+  }
+  :global(.btn-verify) {
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: #10b981;
+    color: #042014;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-decoration: none;
+  }
+  :global(.btn-details) {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    color: #34d399;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-decoration: none;
+  }
+  .no-results-box {
+    text-align: center;
+    padding: 64px 20px;
+    background: #111129;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+  }
+  .no-results-icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
+  }
+  .no-results-box h3 {
+    font-size: 1.4rem;
+    color: #f8fafc;
+    margin-bottom: 8px;
+  }
+  .no-results-box p {
+    color: #94a3b8;
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+  .btn-gold {
+    display: inline-block;
+    padding: 10px 22px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #0a0a1a;
+    font-weight: 800;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+  }
+</style>

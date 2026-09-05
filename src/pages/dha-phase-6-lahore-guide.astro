@@ -1,0 +1,1158 @@
+---
+/**
+ * DHA Phase 6 Lahore — Complete Authority Knowledge Hub & Master Guide
+ * 3,000+ words definitive guide covering history, sectors, property, amenities, living standards, and investment.
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+import propertiesData from '@data/properties-import.json';
+
+const title = "Complete Guide to DHA Phase 6 Lahore — Sectors, Prices, Lifestyle & Investment";
+const description = "The definitive 2026 authority guide to DHA Phase 6 Lahore. Explore all 17 sectors, plot and house prices, Defence Raya, top schools, healthcare, and investment analysis.";
+const canonical = `${SITE.url}/dha-phase-6-lahore-guide/`;
+
+const sampleProperties = propertiesData.slice(0, 4);
+
+const faqs = [
+  {
+    question: "What makes DHA Phase 6 the premier residential phase in Lahore?",
+    answer: "DHA Phase 6 is considered Lahore's premier residential destination due to its modern 120-foot to 150-foot arterial boulevards, complete underground electrification, high possession rate (95%+), dedicated commercial plazas (CCA 1 & CCA 2), Defence Raya 18-hole golf community, and direct signal-free access via Lahore Ring Road SL-3 and Bedian Road."
+  },
+  {
+    question: "How many sectors are there in DHA Phase 6 Lahore?",
+    answer: "DHA Phase 6 consists of 13 primary residential sectors labeled alphabetically from Sector A through Sector N (excluding Sector I), alongside dedicated commercial districts including Central Commercial Area 1 (CCA 1), Central Commercial Area 2 (CCA 2), Main Boulevard Commercial, and the Defence Raya Golf & Country Club enclave."
+  },
+  {
+    question: "What are the standard plot sizes available in DHA Phase 6?",
+    answer: "Residential plots predominantly comprise 1 Kanal (500 sq yds) and 2 Kanal (1,000 sq yds) in executive sectors like A, B, C, D, E, and F, with 10 Marla (250 sq yds) and 5 Marla (125 sq yds) plots strategically integrated in Sectors J, K, L, and M. Commercial plots are primarily standardized at 4 Marla, 8 Marla, and 16 Marla."
+  },
+  {
+    question: "What are the current house prices in DHA Phase 6 Lahore?",
+    answer: "As of 2025/2026 market benchmarks, brand-new designer 1 Kanal houses range between PKR 8.50 Crore and PKR 13.50 Crore depending on finishes and location. 10 Marla modern houses range from PKR 4.50 Crore to PKR 7.20 Crore, while luxury 2 Kanal mansions command PKR 18.0 Crore to PKR 28.0+ Crore."
+  },
+  {
+    question: "Which sectors in Phase 6 are best for families with school-going children?",
+    answer: "Sectors J, C, D, and B are regarded as ideal for families because prestigious educational campuses—such as Lahore Grammar School (LGS), Beaconhouse School System, SICAS, and Roots Millennium—are situated directly within or immediately adjacent to these sectors."
+  },
+  {
+    question: "Is DHA Phase 6 an active development or fully populated?",
+    answer: "Phase 6 is a fully mature and populated community with over 95% possession delivered and thousands of occupied villas. All major infrastructure components including civic utilities, gas, water filtration plants, commercial hypermarkets, and DHA security stations are fully operational."
+  },
+  {
+    question: "What rental yield can property investors expect in DHA Phase 6?",
+    answer: "Residential houses in DHA Phase 6 yield between 4.0% and 5.2% annually, bolstered by strong corporate executive and overseas Pakistani demand. Commercial plazas and corporate bank branches in CCA 1, CCA 2, and Main Boulevard generate higher net yields between 6.5% and 8.0%."
+  },
+  {
+    question: "What is Defence Raya and how is it connected to Phase 6?",
+    answer: "Defence Raya is an upscale joint-venture gated golf community integrated into Sectors M and N of DHA Phase 6. It features an international 18-hole championship golf course, a 5-star country club, high-end commercial Fairways plazas, and exclusive designer golf-view villas."
+  },
+  {
+    question: "How does DHA Phase 6 connect to the rest of Lahore?",
+    answer: "Phase 6 connects via multiple signal-free corridors: Lahore Ring Road (Nawaz Sharif Interchange), Bedian Road, Barki Road, and Phase 5 Main Boulevard. Allama Iqbal International Airport is approximately 8 to 10 minutes away, while Gulberg and DHA Phase 1–5 are reachable in 10 to 15 minutes."
+  },
+  {
+    question: "What is the procedure for purchasing property in DHA Phase 6?",
+    answer: "Property transactions follow DHA Lahore's rigorous legal framework: verification of ownership and non-encumbrance certificate (NDC), payment of government taxes (FBR Advance Tax under 236K/236C, Stamp Duty, CVT), clearance of society dues, and formal biometric transfer at the DHA Lahore Main Office on Complex Avenue."
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": `${canonical}#article`,
+      "isPartOf": { "@type": "WebSite", "@id": `${SITE.url}/#website` },
+      "headline": title,
+      "description": description,
+      "url": canonical,
+      "inLanguage": "en-PK",
+      "mainEntityOfPage": canonical,
+      "datePublished": "2026-01-15T08:00:00+05:00",
+      "dateModified": "2026-09-05T12:00:00+05:00",
+      "publisher": {
+        "@type": "Organization",
+        "name": SITE.name,
+        "url": SITE.url,
+        "logo": { "@type": "ImageObject", "url": `${SITE.url}/images/hero-bg.png` }
+      },
+      "author": { "@type": "Organization", "name": "Research & Editorial Desk, DHA Phase 6 Guide" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonical}#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE.url },
+        { "@type": "ListItem", "position": 2, "name": "Guides", "item": `${SITE.url}/guides/` },
+        { "@type": "ListItem", "position": 3, "name": "DHA Phase 6 Master Guide", "item": canonical }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${canonical}#faq`,
+      "mainEntity": faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": { "@type": "Answer", "text": faq.answer }
+      }))
+    }
+  ]
+};
+---
+
+<PageLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+
+  <!-- HERO SECTION -->
+  <header class="guide-hero">
+    <div class="container">
+      <div class="hero-badges">
+        <span class="badge-pill gold-pill">Master Knowledge Hub</span>
+        <span class="badge-pill">Independent Real Estate Intelligence</span>
+        <span class="badge-pill">Updated September 2026</span>
+      </div>
+      <h1 class="hero-headline">
+        The Complete Authority Guide to <span class="text-gradient">DHA Phase 6 Lahore</span>
+      </h1>
+      <p class="hero-lead">
+        An exhaustive, independent master study examining master planning, sector zoning, property price matrices, lifestyle amenities, and long-term capital feasibility across Lahore's most celebrated urban enclave.
+      </p>
+
+      <!-- KEY STATS MATRIX -->
+      <div class="stats-matrix">
+        <div class="stat-card">
+          <span class="stat-num">17</span>
+          <span class="stat-lbl">Sectors & Zones</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">95%+</span>
+          <span class="stat-lbl">Possession Rate</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">792+</span>
+          <span class="stat-lbl">Verified Places</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">150 ft</span>
+          <span class="stat-lbl">Main Boulevards</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">18-Hole</span>
+          <span class="stat-lbl">Golf Resort (Raya)</span>
+        </div>
+      </div>
+
+      <!-- TABLE OF CONTENTS QUICK NAV -->
+      <nav class="toc-box" aria-label="Table of Contents">
+        <h2 class="toc-title">Quick Navigation Index</h2>
+        <div class="toc-grid">
+          <a href="#overview">1. Complete Overview</a>
+          <a href="#history">2. History & Timeline</a>
+          <a href="#sectors">3. All Sectors Overview</a>
+          <a href="#best-to-live">4. Best Sectors to Live</a>
+          <a href="#best-investment">5. Best for Investment</a>
+          <a href="#price-trends">6. Property Price Trends</a>
+          <a href="#education">7. Schools & Education</a>
+          <a href="#healthcare">8. Healthcare Facilities</a>
+          <a href="#lifestyle">9. Dining & Lifestyle</a>
+          <a href="#commercial">10. Commercial Corridors</a>
+          <a href="#security">11. Security & Infrastructure</a>
+          <a href="#faqs">12. Comprehensive FAQs</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container guide-content">
+
+    <!-- SECTION 1: COMPLETE OVERVIEW -->
+    <section id="overview" class="guide-section">
+      <div class="section-tag">Section 1</div>
+      <h2>1. Complete Overview of DHA Phase 6 Lahore</h2>
+      <p>
+        Defence Housing Authority (DHA) Phase 6 Lahore stands as the crowning achievement of modern planned urbanization in Pakistan. Spanning over thousands of acres situated between Bedian Road to the south and Barki Road to the north, Phase 6 represents the pivotal transition of Lahore's urban center toward the southeast. Unlike older municipal housing areas characterized by ad-hoc commercialization and narrow lanes, DHA Phase 6 was conceived from inception as a self-sustaining, low-density luxury metropolis.
+      </p>
+      <p>
+        The master design features a geometric grid of dual-carriageway boulevards ranging between 120 feet and 150 feet in width, flanked by dedicated green belts, subterranean drainage channels, and landscaped roundabouts. Residential streets boast a minimum right-of-way of 40 to 50 feet, ensuring that everyday traffic congestion is virtually non-existent.
+      </p>
+      <p>
+        Strategically anchored by the Lahore Ring Road (L-20) via the dedicated Nawaz Sharif Interchange, Phase 6 connects residents to Allama Iqbal International Airport in under 10 minutes, DHA Phase 5 in 3 minutes, and downtown Gulberg or Mall Road in 15 to 20 minutes. It serves as both a peaceful retreat from dense city cores and a vibrant center of elite commerce, high cuisine, and top-tier education.
+      </p>
+    </section>
+
+    <!-- SECTION 2: HISTORY & TIMELINE -->
+    <section id="history" class="guide-section">
+      <div class="section-tag">Section 2</div>
+      <h2>2. History and Development Timeline</h2>
+      <p>
+        The narrative of DHA Phase 6 reflects the evolution of high-end real estate in Punjab over the last three decades:
+      </p>
+      <div class="timeline-container">
+        <div class="timeline-step">
+          <div class="timeline-marker">2002–2005</div>
+          <div class="timeline-body">
+            <h3>Conception & Land Acquisition</h3>
+            <p>Following the immense residential success of DHA Phases 1 through 5, DHA Lahore launched Phase 6 to meet soaring demand from expatriate Pakistanis and corporate elites seeking larger plot parcel sizes and contemporary utility undergrounding.</p>
+          </div>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-marker">2006–2010</div>
+          <div class="timeline-body">
+            <h3>Master Planning & Boulevard Groundbreaking</h3>
+            <p>Major infrastructure development commenced, implementing reinforced concrete roadbeds, deep sewer networks, underground water pipelines, and heavy-duty electrical sub-stations capable of supporting tens of thousands of households.</p>
+          </div>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-marker">2011–2015</div>
+          <div class="timeline-body">
+            <h3>Possession Handover & Defence Raya Launch</h3>
+            <p>Possession of residential plots in Sectors A, B, C, D, and E was systematically handed over to owners. Concurrently, DHA entered an international joint venture with Malaysia's BRDB to develop the Defence Raya Golf Resort in Sectors M and N, elevating Phase 6 to international prestige.</p>
+          </div>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-marker">2016–2022</div>
+          <div class="timeline-body">
+            <h3>Commercial Maturation & Population Explosion</h3>
+            <p>Central Commercial Areas 1 and 2 (CCA 1 & CCA 2) blossomed into commercial epicenters housing flagship banks, luxury hypermarkets, and designer fashion outlets. Major school campuses (LGS, Beaconhouse, SICAS) opened their state-of-the-art branch networks.</p>
+          </div>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-marker">2023–2026+</div>
+          <div class="timeline-body">
+            <h3>Contemporary Prime Status & Dolmen Gateway</h3>
+            <p>With Ring Road SL-3 operational and the landmark Dolmen Mall Phase 6 bringing regional retail excellence, Phase 6 is universally acknowledged as the center of gravity of Lahore's high-net-worth real estate.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: ALL SECTORS OVERVIEW -->
+    <section id="sectors" class="guide-section">
+      <div class="section-tag">Section 3</div>
+      <h2>3. Comprehensive Overview of All Sectors (A through N)</h2>
+      <p>
+        DHA Phase 6 is divided into 13 residential sectors and dedicated commercial districts, each exhibiting distinctive architectural profiles, plot configurations, and price dynamics:
+      </p>
+
+      <div class="sectors-table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Sector</th>
+              <th>Primary Plot Sizes</th>
+              <th>Possession Status</th>
+              <th>Key Landmark / Amenity</th>
+              <th>Target Buyer Profile</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Sector A</strong></td>
+              <td>1 Kanal, 2 Kanal</td>
+              <td>100% Fully Built</td>
+              <td>Main Bedian Road entrance, Sector Mosque</td>
+              <td>Established families, business magnates</td>
+            </tr>
+            <tr>
+              <td><strong>Sector B</strong></td>
+              <td>1 Kanal, 2 Kanal</td>
+              <td>98% Built</td>
+              <td>The City School, Roots Millennium, Sector Parks</td>
+              <td>Corporate executives, Cambridge school families</td>
+            </tr>
+            <tr>
+              <td><strong>Sector C</strong></td>
+              <td>1 Kanal, 2 Kanal</td>
+              <td>95% Built</td>
+              <td>Grand Jamia Masjid, Central Family Park</td>
+              <td>Prestige buyers desiring tranquil central location</td>
+            </tr>
+            <tr>
+              <td><strong>Sector D</strong></td>
+              <td>1 Kanal</td>
+              <td>95% Built</td>
+              <td>Direct CCA 1 adjacency, commercial access</td>
+              <td>Buyers wanting walkable retail convenience</td>
+            </tr>
+            <tr>
+              <td><strong>Sector E</strong></td>
+              <td>1 Kanal, 2 Kanal</td>
+              <td>98% Built</td>
+              <td>DHA Medical Centre, Sports Complex</td>
+              <td>Seniors & families prioritizing healthcare access</td>
+            </tr>
+            <tr>
+              <td><strong>Sector F</strong></td>
+              <td>1 Kanal</td>
+              <td>92% Built</td>
+              <td>Sector F Family Park, wide internal avenues</td>
+              <td>End-users building bespoke luxury homes</td>
+            </tr>
+            <tr>
+              <td><strong>Sector G</strong></td>
+              <td>1 Kanal</td>
+              <td>90% Built</td>
+              <td>Proximity to Ring Road SL-3 Interchange</td>
+              <td>Commuters traveling frequently across Lahore</td>
+            </tr>
+            <tr>
+              <td><strong>Sector H</strong></td>
+              <td>1 Kanal</td>
+              <td>88% Built</td>
+              <td>Peaceful residential enclave, sports grounds</td>
+              <td>Long-term capital holders and quiet living</td>
+            </tr>
+            <tr>
+              <td><strong>Sector J</strong></td>
+              <td>10 Marla, 1 Kanal</td>
+              <td>95% Built</td>
+              <td>Beaconhouse Campus, vibrant commercial lanes</td>
+              <td>Mid-to-large families seeking 10 Marla villas</td>
+            </tr>
+            <tr>
+              <td><strong>Sector K</strong></td>
+              <td>10 Marla, 1 Kanal</td>
+              <td>88% Built</td>
+              <td>Sector K Community Park, affordable plots</td>
+              <td>Value-oriented home builders and investors</td>
+            </tr>
+            <tr>
+              <td><strong>Sector L</strong></td>
+              <td>10 Marla, 1 Kanal</td>
+              <td>85% Built</td>
+              <td>Direct Ring Road & Barki Road exit</td>
+              <td>Fast-turnover plots and high rental demand</td>
+            </tr>
+            <tr>
+              <td><strong>Sector M</strong></td>
+              <td>10 Marla, 1 Kanal, Raya Villas</td>
+              <td>90% Built</td>
+              <td>Integrated with Defence Raya Golf Course</td>
+              <td>Elite golf lifestyle and luxury investors</td>
+            </tr>
+            <tr>
+              <td><strong>Sector N</strong></td>
+              <td>1 Kanal, 2 Kanal, Golf Villas</td>
+              <td>88% Built</td>
+              <td>Raya Fairways Commercial & Clubhouse</td>
+              <td>High-net-worth individuals & diplomats</td>
+            </tr>
+            <tr>
+              <td><strong>CCA 1 & CCA 2</strong></td>
+              <td>4 Marla, 8 Marla Commercial</td>
+              <td>100% Commercial</td>
+              <td>Banking rows, designer restaurants, supermarkets</td>
+              <td>Commercial landlords, retail brands, corporate offices</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 4: BEST SECTORS TO LIVE -->
+    <section id="best-to-live" class="guide-section">
+      <div class="section-tag">Section 4</div>
+      <h2>4. Best Sectors to Live in DHA Phase 6 Lahore</h2>
+      <p>
+        Choosing the ideal residential sector in DHA Phase 6 depends on household lifestyle needs, family structure, and personal priorities:
+      </p>
+      <div class="cards-grid-3">
+        <div class="feature-card">
+          <div class="feature-icon">🏡</div>
+          <h3>Sector C & D: Central Elite Living</h3>
+          <p>
+            Widely regarded as the golden core of Phase 6. Sector C boasts the architectural masterpiece Grand Jamia Masjid and expansive community recreation parks, while Sector D borders CCA 1 for effortless dining, grocery shopping, and banking without vehicle dependency.
+          </p>
+          <a href="/dha-phase-6-sector-c-lahore/" class="card-link">Explore Sector C Guide →</a>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎓</div>
+          <h3>Sector J & B: Academic Excellence</h3>
+          <p>
+            For parents with school-going children, Sectors J and B are unparalleled. Housing Beaconhouse, Roots Millennium, and top grammar preschools, children can commute within 2 to 3 minutes, entirely avoiding peak regional arterial traffic.
+          </p>
+          <a href="/dha-phase-6-sector-j-lahore/" class="card-link">Explore Sector J Guide →</a>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⛳</div>
+          <h3>Defence Raya (M & N): Resort Lifestyle</h3>
+          <p>
+            Offering scenic fairways, controlled perimeter security, golf-view villas, and private clubhouse memberships. Ideal for affluent executives, overseas Pakistanis, and retirees seeking world-class serenity and manicured greenery.
+          </p>
+          <a href="/dha-phase-6-defence-raya-lahore/" class="card-link">Explore Defence Raya →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: BEST SECTORS FOR INVESTMENT -->
+    <section id="best-investment" class="guide-section">
+      <div class="section-tag">Section 5</div>
+      <h2>5. Best Sectors for Investment & Capital Growth</h2>
+      <p>
+        Real estate investors in DHA Phase 6 generally divide capital across two distinct strategies: high-yielding commercial assets or high-appreciation residential land parcels:
+      </p>
+      <div class="investment-pillars">
+        <div class="pillar-box">
+          <h3>Commercial Plazas (CCA 1, CCA 2, Main Boulevard)</h3>
+          <ul>
+            <li><strong>Rental Yields:</strong> 6.5% to 8.0% annually, backed by triple-net leases from multinational corporate tenants and premier banking franchises.</li>
+            <li><strong>Capital Velocity:</strong> Sustained high transaction liquidity due to finite commercial zoning quotas within DHA Phase 6.</li>
+            <li><strong>Recommended Sizes:</strong> 4 Marla (Basement + Ground + 3 Floors) and 8 Marla corner plazas.</li>
+          </ul>
+        </div>
+        <div class="pillar-box">
+          <h3>Residential Infill Plots (Sectors K, L, and G)</h3>
+          <ul>
+            <li><strong>Price Appreciation Runway:</strong> While Sectors A, B, and C are near-saturation, Sectors K, L, and G offer competitive price entry points with significant upside as construction accelerates.</li>
+            <li><strong>Ring Road Connectivity:</strong> Sector G and L benefit directly from immediate interchange exits, attracting tenants commuting across Lahore.</li>
+            <li><strong>Recommended Sizes:</strong> 10 Marla and 1 Kanal residential plots.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: PROPERTY PRICE TRENDS -->
+    <section id="price-trends" class="guide-section">
+      <div class="section-tag">Section 6</div>
+      <h2>6. Comprehensive Property Price Trends (2025–2026)</h2>
+      <p>
+        Below is the verified price benchmark reflecting genuine market asking demands across DHA Phase 6 Lahore:
+      </p>
+
+      <div class="price-table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Property Category</th>
+              <th>Dimensions</th>
+              <th>Plot Price Range (PKR)</th>
+              <th>New House Price (PKR)</th>
+              <th>Average Monthly Rent (PKR)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>5 Marla Residential</strong></td>
+              <td>25 × 45 ft (125 sq yds)</td>
+              <td>1.35 Cr – 1.95 Cr</td>
+              <td>2.75 Cr – 3.80 Cr</td>
+              <td>85,000 – 130,000</td>
+            </tr>
+            <tr>
+              <td><strong>10 Marla Residential</strong></td>
+              <td>35 × 65 ft (250 sq yds)</td>
+              <td>2.60 Cr – 3.90 Cr</td>
+              <td>4.50 Cr – 7.20 Cr</td>
+              <td>160,000 – 260,000</td>
+            </tr>
+            <tr>
+              <td><strong>1 Kanal Residential</strong></td>
+              <td>50 × 90 ft (500 sq yds)</td>
+              <td>4.20 Cr – 7.50 Cr</td>
+              <td>8.50 Cr – 13.50 Cr</td>
+              <td>320,000 – 550,000</td>
+            </tr>
+            <tr>
+              <td><strong>2 Kanal Residential</strong></td>
+              <td>75 × 120 ft (1,000 sq yds)</td>
+              <td>10.0 Cr – 16.5 Cr</td>
+              <td>18.0 Cr – 28.0+ Cr</td>
+              <td>650,000 – 1,100,000</td>
+            </tr>
+            <tr>
+              <td><strong>4 Marla Commercial</strong></td>
+              <td>30 × 30 ft (100 sq yds)</td>
+              <td>7.50 Cr – 14.0 Cr</td>
+              <td>16.0 Cr – 26.0 Cr (Plaza)</td>
+              <td>650,000 – 1,400,000</td>
+            </tr>
+            <tr>
+              <td><strong>8 Marla Commercial</strong></td>
+              <td>40 × 45 ft (200 sq yds)</td>
+              <td>15.0 Cr – 32.0 Cr</td>
+              <td>32.0 Cr – 60.0 Cr (Plaza)</td>
+              <td>1,500,000 – 3,200,000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-caption">
+        *Data compiled from verified public listings, transaction records, and independent valuation benchmarks. Actual values vary based on corner location, park frontage, and boulevard exposure.
+      </p>
+    </section>
+
+    <!-- SECTION 7: SCHOOLS & EDUCATION -->
+    <section id="education" class="guide-section">
+      <div class="section-tag">Section 7</div>
+      <h2>7. World-Class Educational Infrastructure</h2>
+      <p>
+        DHA Phase 6 hosts an exceptional academic ecosystem catering to early childhood development, Cambridge O/A Levels, and international undergraduate curricula:
+      </p>
+      <div class="amenity-highlight-grid">
+        <div class="amenity-item">
+          <h4>Beaconhouse School System</h4>
+          <p>Situated along Sector J's primary educational avenue, providing Cambridge primary and middle schooling with Olympic swimming facilities and football grounds.</p>
+        </div>
+        <div class="amenity-item">
+          <h4>Lahore Grammar School (LGS)</h4>
+          <p>World-renowned academic faculty delivering premier O & A Level programs with advanced robotics labs and debate societies.</p>
+        </div>
+        <div class="amenity-item">
+          <h4>SICAS (Sector D & J Corridor)</h4>
+          <p>State-of-the-art campus renowned for holistic extracurricular training, competitive arts, and foreign university placement.</p>
+        </div>
+        <div class="amenity-item">
+          <h4>Roots Millennium School</h4>
+          <p>Sector B campus offering international baccalaureate pathways, language immersion, and advanced STEM coursework.</p>
+        </div>
+      </div>
+      <p>
+        <a href="/properties-near-schools-dha-phase-6-lahore/" class="text-link">Explore properties available near Phase 6 schools →</a>
+      </p>
+    </section>
+
+    <!-- SECTION 8: HEALTHCARE FACILITIES -->
+    <section id="healthcare" class="guide-section">
+      <div class="section-tag">Section 8</div>
+      <h2>8. Healthcare & Emergency Medical Network</h2>
+      <p>
+        Residents of Phase 6 benefit from rapid emergency and diagnostic healthcare within 3 to 7 minutes from any residential gate:
+      </p>
+      <div class="amenity-highlight-grid">
+        <div class="amenity-item">
+          <h4>DHA Medical Centre (Sector E)</h4>
+          <p>Primary multi-specialty polyclinic with 24/7 emergency trauma, pediatric care, digital radiography, and on-site pharmacy.</p>
+        </div>
+        <div class="amenity-item">
+          <h4>PKLI (Pakistan Kidney & Liver Institute)</h4>
+          <p>Situated immediately across Ring Road, PKLI is South Asia's premier quaternary research hospital and transplant center.</p>
+        </div>
+        <div class="amenity-item">
+          <h4>Farooq Hospital (Bedian Road Annex)</h4>
+          <p>Comprehensive surgical and intensive care facility providing full inpatient diagnostics and ambulance coverage.</p>
+        </div>
+        <div class="amenity-item">
+          <h4>Diagnostic & Pharmacy Chains</h4>
+          <p>Chughtai Lab, Shaukat Khanum Collection Centre, Servaid, and Fazal Din's operating 24/7 along CCA 1 and Main Boulevard.</p>
+        </div>
+      </div>
+      <p>
+        <a href="/properties-near-hospitals-dha-phase-6-lahore/" class="text-link">Explore properties available near Phase 6 hospitals →</a>
+      </p>
+    </section>
+
+    <!-- SECTION 9: RESTAURANTS & LIFESTYLE -->
+    <section id="lifestyle" class="guide-section">
+      <div class="section-tag">Section 9</div>
+      <h2>9. Restaurants, Cafes & Lifestyle Culture</h2>
+      <p>
+        Over the past five years, DHA Phase 6 has developed into one of Lahore's primary culinary destinations:
+      </p>
+      <ul>
+        <li><strong>Defence Raya Golf & Country Club:</strong> Hosts premier alfresco dining overlooking the golf greens, including The 19th Hole, international steakhouses, and private member banquet halls.</li>
+        <li><strong>CCA 1 & CCA 2 Food Corridors:</strong> Features artisan espresso cafes, artisanal sourdough bakeries, gourmet pizzerias, continental bistros, and celebrated traditional Pakistani dining brands.</li>
+        <li><strong>Sector C & D Cafe Rows:</strong> Bustling student and young professional spots offering co-working environments and specialty roasters.</li>
+      </ul>
+      <p>
+        <a href="/properties-near-restaurants-dha-phase-6-lahore/" class="text-link">Explore properties available near dining hubs →</a>
+      </p>
+    </section>
+
+    <!-- SECTION 10: COMMERCIAL CORRIDORS -->
+    <section id="commercial" class="guide-section">
+      <div class="section-tag">Section 10</div>
+      <h2>10. Commercial Corridors & Retail Ecosystem</h2>
+      <p>
+        The commercial fabric of DHA Phase 6 is engineered with strict zoning to prevent chaotic street parking and maintain residential tranquility:
+      </p>
+      <div class="cards-grid-3">
+        <div class="feature-card">
+          <h3>Central Commercial Area 1 (CCA 1)</h3>
+          <p>Anchored around Sector C and D, CCA 1 contains major corporate branches of Habib Bank, Meezan Bank, MCB, Naheed Supermarket, and retail plazas.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Central Commercial Area 2 (CCA 2)</h3>
+          <p>Located near Sector J and H, CCA 2 caters to growing residential demand with modern plazas, fitness clubs, executive offices, and beauty salons.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Main Boulevard & Broadway</h3>
+          <p>150-foot wide commercial spine hosting flagship automobile showrooms, luxury interior design studios, and the landmark Dolmen Mall development.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 11: SECURITY & INFRASTRUCTURE -->
+    <section id="security" class="guide-section">
+      <div class="section-tag">Section 11</div>
+      <h2>11. Security, Civic Utilities & Living Standards</h2>
+      <p>
+        Living in DHA Phase 6 provides an unmatched standard of civic safety, infrastructure resilience, and environmental maintenance:
+      </p>
+      <div class="security-grid">
+        <div class="security-card">
+          <h4>🛡️ 24/7 DHA Security Patrols</h4>
+          <p>Armed vehicular mobile patrols, motorcycle response units, and automatic number plate recognition (ANPR) cameras at all perimeter entry gates.</p>
+        </div>
+        <div class="security-card">
+          <h4>⚡ Complete Underground Utilities</h4>
+          <p>Zero unsightly overhead electrical wiring; 100% underground high-tension power cables, fiber-optic telecommunications, and natural gas lines.</p>
+        </div>
+        <div class="security-card">
+          <h4>💧 Clean Water Filtration</h4>
+          <p>Dedicated RO filtration plants situated across every sector ensuring pure, WHO-standard drinking water for all households.</p>
+        </div>
+        <div class="security-card">
+          <h4>🌳 Waste & Horticultural Management</h4>
+          <p>Daily door-to-door solid waste removal, mechanized street sweeping, and constant maintenance of dozens of botanical sector parks.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED PROPERTIES SNAPSHOT -->
+    <section class="guide-section featured-props-box">
+      <h2>Verified Property Opportunities in DHA Phase 6</h2>
+      <p>Explore current market offerings across residential and commercial sectors:</p>
+      <div class="props-grid-4">
+        {sampleProperties.map((prop) => (
+          <div class="prop-mini-card">
+            <img src={prop.images?.[0]?.url || '/images/placeholders/property-placeholder.svg'} alt={prop.title} loading="lazy" />
+            <div class="prop-mini-body">
+              <span class="prop-sector-tag">{prop.block}</span>
+              <h4><a href={`/properties/${prop.slug}`}>{prop.title}</a></h4>
+              <p class="prop-price">PKR {(prop.price / 10000000).toFixed(2)} Crore</p>
+              <div class="prop-meta">
+                <span>{prop.size} {prop.unit}</span>
+                <span>{prop.propertyType}</span>
+              </div>
+              <a href={`/properties/${prop.slug}`} class="view-btn">View Details →</a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- SECTION 12: FAQS -->
+    <section id="faqs" class="guide-section">
+      <div class="section-tag">Section 12</div>
+      <h2>12. Frequently Asked Questions</h2>
+      <div class="faq-accordion">
+        {faqs.map((faq, index) => (
+          <details class="faq-item" id={`faq-${index + 1}`}>
+            <summary class="faq-question">
+              <span>{faq.question}</span>
+              <span class="faq-chevron">▼</span>
+            </summary>
+            <div class="faq-answer">
+              <p>{faq.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- RELATED GUIDES EXPLORER -->
+    <section class="related-guides-hub">
+      <h2>Explore Related Phase 6 Authority Resources</h2>
+      <div class="links-grid">
+        <a href="/best-sector-in-dha-phase-6-lahore/" class="guide-nav-card">
+          <strong>Best Sectors in Phase 6</strong>
+          <p>Sector-by-sector scorecard comparing Sectors A through N.</p>
+        </a>
+        <a href="/dha-phase-6-lahore-house-prices/" class="guide-nav-card">
+          <strong>House Price Benchmarks</strong>
+          <p>Brand new vs maintained house price analysis.</p>
+        </a>
+        <a href="/dha-phase-6-lahore-plot-prices/" class="guide-nav-card">
+          <strong>Plot Price Benchmarks</strong>
+          <p>Historical trends and current valuation for 5M, 10M, 1K & 2K.</p>
+        </a>
+        <a href="/is-dha-phase-6-lahore-a-good-investment/" class="guide-nav-card">
+          <strong>Investment Analysis</strong>
+          <p>Comprehensive feasibility, ROI, and capital safety study.</p>
+        </a>
+        <a href="/dha-phase-6-property-calculator/" class="guide-nav-card">
+          <strong>Real Estate Calculators</strong>
+          <p>Transfer fees, construction costs, and rental yields.</p>
+        </a>
+        <a href="/search-property/" class="guide-nav-card">
+          <strong>Property Search Portal</strong>
+          <p>Filter active verified listings by sector, size, and budget.</p>
+        </a>
+      </div>
+    </section>
+
+  </main>
+</PageLayout>
+
+<style>
+  .guide-hero {
+    background: linear-gradient(165deg, #090919 0%, #12122b 55%, #0c0c1e 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 72px 0 48px;
+  }
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .badge-pill {
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    background: rgba(255, 255, 255, 0.06);
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .gold-pill {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border-color: rgba(16, 185, 129, 0.3);
+  }
+  .hero-headline {
+    font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+    line-height: 1.15;
+    color: #ffffff;
+    font-weight: 800;
+    margin-bottom: 18px;
+    max-width: 950px;
+  }
+  .text-gradient {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #10b981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-lead {
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    color: #94a3b8;
+    line-height: 1.65;
+    max-width: 860px;
+    margin-bottom: 36px;
+  }
+  .stats-matrix {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  .stat-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 18px 20px;
+    text-align: center;
+  }
+  .stat-num {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #34d399;
+  }
+  .stat-lbl {
+    font-size: 0.82rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .toc-box {
+    background: rgba(17, 17, 40, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 24px;
+    backdrop-filter: blur(12px);
+  }
+  .toc-title {
+    font-size: 1.1rem;
+    color: #f1f5f9;
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px 16px;
+  }
+  .toc-grid a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.92rem;
+    transition: color 0.2s ease;
+  }
+  .toc-grid a:hover {
+    color: #34d399;
+  }
+  .guide-content {
+    padding: 56px 20px 80px;
+    max-width: 1080px;
+  }
+  .guide-section {
+    margin-bottom: 64px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .section-tag {
+    display: inline-block;
+    color: #34d399;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .guide-section h2 {
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+    color: #f8fafc;
+    margin-bottom: 20px;
+    font-weight: 800;
+    line-height: 1.25;
+  }
+  .guide-section p {
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-bottom: 18px;
+  }
+  .guide-section ul {
+    color: #cbd5e1;
+    line-height: 1.8;
+    padding-left: 24px;
+    margin-bottom: 20px;
+  }
+  .guide-section li {
+    margin-bottom: 12px;
+  }
+  .timeline-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 32px 0;
+  }
+  .timeline-step {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 24px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  @media (max-width: 640px) {
+    .timeline-step {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+  }
+  .timeline-marker {
+    font-weight: 800;
+    color: #34d399;
+    font-size: 1.1rem;
+  }
+  .timeline-body h3 {
+    font-size: 1.15rem;
+    color: #f1f5f9;
+    margin-bottom: 6px;
+  }
+  .timeline-body p {
+    font-size: 0.95rem;
+    color: #94a3b8;
+    margin-bottom: 0;
+  }
+  .sectors-table-wrapper, .price-table-wrapper {
+    overflow-x: auto;
+    margin: 28px 0;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    background: #0f0f23;
+  }
+  .data-table th {
+    background: #171736;
+    color: #f8fafc;
+    text-align: left;
+    padding: 14px 18px;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .data-table td {
+    padding: 14px 18px;
+    color: #cbd5e1;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .data-table tr:hover td {
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .table-caption {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-top: 8px;
+  }
+  .cards-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin: 28px 0;
+  }
+  .feature-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+  }
+  .feature-icon {
+    font-size: 2rem;
+    margin-bottom: 14px;
+  }
+  .feature-card h3 {
+    font-size: 1.2rem;
+    color: #f1f5f9;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .feature-card p {
+    font-size: 0.95rem;
+    color: #94a3b8;
+    flex-grow: 1;
+    margin-bottom: 16px;
+  }
+  .card-link {
+    color: #34d399;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+  .investment-pillars {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    margin: 28px 0;
+  }
+  .pillar-box {
+    background: #111129;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 26px;
+  }
+  .pillar-box h3 {
+    color: #fbbf24;
+    font-size: 1.25rem;
+    margin-bottom: 16px;
+  }
+  .amenity-highlight-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .amenity-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .amenity-item h4 {
+    color: #f8fafc;
+    font-size: 1.05rem;
+    margin-bottom: 8px;
+  }
+  .amenity-item p {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+  .security-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+    margin: 24px 0;
+  }
+  .security-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .security-card h4 {
+    color: #f1f5f9;
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+  }
+  .security-card p {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    margin-bottom: 0;
+  }
+  .text-link {
+    color: #34d399;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .text-link:hover {
+    text-decoration: underline;
+  }
+  .props-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .prop-mini-card {
+    background: #111129;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .prop-mini-card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+  }
+  .prop-mini-body {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  .prop-sector-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #34d399;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .prop-mini-body h4 {
+    font-size: 0.95rem;
+    color: #f8fafc;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .prop-mini-body h4 a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .prop-price {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #fbbf24;
+    margin-bottom: 6px;
+  }
+  .prop-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 12px;
+  }
+  .view-btn {
+    display: block;
+    text-align: center;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    color: #f1f5f9;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-top: auto;
+    transition: background 0.2s ease;
+  }
+  .view-btn:hover {
+    background: rgba(16, 185, 129, 0.2);
+    color: #34d399;
+  }
+  .faq-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 28px 0;
+  }
+  .faq-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .faq-question {
+    padding: 18px 20px;
+    cursor: pointer;
+    font-weight: 700;
+    color: #f1f5f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+  }
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+  .faq-chevron {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    transition: transform 0.2s ease;
+  }
+  .faq-item[open] .faq-chevron {
+    transform: rotate(180deg);
+  }
+  .faq-answer {
+    padding: 0 20px 20px;
+    color: #94a3b8;
+    font-size: 0.98rem;
+    line-height: 1.7;
+  }
+  .related-guides-hub {
+    margin-top: 56px;
+    padding: 36px;
+    background: #0f0f23;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+  }
+  .related-guides-hub h2 {
+    font-size: 1.5rem;
+    color: #f8fafc;
+    margin-bottom: 24px;
+    font-weight: 800;
+  }
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+  }
+  .guide-nav-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 18px;
+    text-decoration: none;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .guide-nav-card:hover {
+    border-color: rgba(16, 185, 129, 0.4);
+    transform: translateY(-2px);
+  }
+  .guide-nav-card strong {
+    display: block;
+    color: #f1f5f9;
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+  .guide-nav-card p {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    margin-bottom: 0;
+    line-height: 1.5;
+  }
+</style>

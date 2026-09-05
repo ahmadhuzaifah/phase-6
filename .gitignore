@@ -48,4 +48,8 @@ Thumbs.db
 *.ntvs*
 *.njsproj
 *.sln
+
+# Python
+__pycache__/
+*.py[cod]
 *.sw?

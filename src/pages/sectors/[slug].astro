@@ -69,6 +69,7 @@ const hasFacilities = placesCount > 0;
   ]}
   sources={[
     { label: 'Official DHA Lahore Phase VI map PDF', href: 'https://dhalahore.org/wp-content/uploads/2025/09/PHASE-VI.pdf' },
+    { label: `${block.name} Property & Investment Guide`, href: `/sectors/${sectorKey}/properties/` },
     { label: 'Browse property market snapshots', href: '/properties' },
     ...(hasFacilities ? [{ label: `${block.name} Facilities & Places Guide (${placesCount} verified places)`, href: `/sectors/${sectorKey}/places/` }] : []),
     { label: 'DHA Phase 6 Investment Guide', href: '/investment-guide/' },

@@ -1,0 +1,112 @@
+---
+/**
+ * Route: /properties-near-hospitals-dha-phase-6-lahore/
+ * Location Intelligence & SEO Guide for Properties Near Hospitals in DHA Phase 6 Lahore.
+ */
+import LocationSeoTemplate from '@components/seo/LocationSeoTemplate.astro';
+import { getCategoryPlaces } from '@data/places/index';
+import propertiesRaw from '@data/properties-import.json';
+import { SITE } from '@data/site';
+
+const canonical = `${SITE.url}/properties-near-hospitals-dha-phase-6-lahore/`;
+const hospitals = getCategoryPlaces('hospital').slice(0, 6);
+
+const relevantProperties = (Array.isArray(propertiesRaw) ? (propertiesRaw as any[]) : []).filter(
+  (p) => p.propertyType === 'house' || p.propertyType === 'plot'
+).slice(0, 4);
+
+const tableRows = [
+  {
+    sector: 'Sector E',
+    amenities: 'DHA Phase 6 Medical Centre & Community Dispensary',
+    popularSizes: '1 Kanal Houses & Plots',
+    priceRange: 'PKR 7.80 - 13.50 Cr',
+    travelTime: '1-3 mins walk / 1 min drive',
+    recommendedFor: 'Senior citizens & families prioritizing health access',
+  },
+  {
+    sector: 'Sector A',
+    amenities: 'Farooq Hospital DHA 6 Surgical Unit (Bedian Corridor)',
+    popularSizes: '1 Kanal, 2 Kanal Houses',
+    priceRange: 'PKR 8.50 - 15.50 Cr',
+    travelTime: '2-4 mins drive',
+    recommendedFor: 'Executive living with rapid multi-specialty emergency care',
+  },
+  {
+    sector: 'Sector N',
+    amenities: 'PKLI (Pakistan Kidney and Liver Institute) Corridor',
+    popularSizes: '1 Kanal Plots & Houses',
+    priceRange: 'PKR 3.80 - 10.50 Cr',
+    travelTime: '3-5 mins drive',
+    recommendedFor: 'Medical consultants & long-term capital investors',
+  },
+  {
+    sector: 'CCA 1 & 2',
+    amenities: 'Chughtai Lab, IDC, Shaukat Khanum & 24/7 Pharmacies',
+    popularSizes: 'Commercial Plazas & Nearby Houses',
+    priceRange: 'PKR 4.50 - 24.00 Cr',
+    travelTime: '2-4 mins drive',
+    recommendedFor: 'Immediate access to diagnostic labs and prescription medicines',
+  },
+];
+
+const faqs = [
+  {
+    question: 'What is the primary emergency hospital serving DHA Phase 6 Lahore?',
+    answer: 'DHA Phase 6 is served by the DHA Medical Centre in Sector E, Farooq Hospital Surgical Unit on Bedian Road, and the state-of-the-art PKLI medical complex on Park Road.',
+  },
+  {
+    question: 'Are there 24/7 pharmacies located inside DHA Phase 6?',
+    answer: 'Yes, leading pharmacy chains including Servaid, Clinix, and Fazal Din operate round-the-clock branches across CCA 1, CCA 2, and along Main Boulevard.',
+  },
+  {
+    question: 'Do emergency ambulances face traffic delays in Phase 6?',
+    answer: 'No, Phase 6 features wide 100-ft to 150-ft dual-carriage boulevards providing unobstructed emergency lanes connecting directly to Bedian Road and Ring Road.',
+  },
+];
+
+const statPills = [
+  { value: '24/7', label: 'Emergency Services' },
+  { value: '3-5 Mins', label: 'Average Hospital Transit' },
+  { value: 'PKLI', label: 'Regional Medical Flagship' },
+  { value: '100%', label: 'Pharmacy Delivery Coverage' },
+];
+
+const relatedLinks = [
+  { label: 'Properties Near Schools', href: '/properties-near-schools-dha-phase-6-lahore/', desc: 'Homes near Beaconhouse & top schools' },
+  { label: 'Properties Near Restaurants', href: '/properties-near-restaurants-dha-phase-6-lahore/', desc: 'Homes near CCA 1, CCA 2 & Raya dining' },
+  { label: 'Properties Near Commercial', href: '/properties-near-commercial-areas-dha-phase-6-lahore/', desc: 'Properties near CCA 1, CCA 2 & Raya' },
+  { label: 'Plot Price Trends', href: '/dha-phase-6-lahore-plot-prices/', desc: 'Current rate breakdown for residential and commercial plots' }
+];
+---
+
+<LocationSeoTemplate
+  title="Properties Near Hospitals in DHA Phase 6 Lahore — Healthcare Proximity"
+  metaTitle="Properties Near Hospitals in DHA Phase 6 Lahore | Emergency & Health Hubs"
+  description="Find houses and plots for sale near hospitals and medical centers in DHA Phase 6 Lahore. Compare Sector E Medical Centre, PKLI, and Farooq Hospital proximity."
+  canonical={canonical}
+  badge="Location Intelligence • Healthcare Hubs"
+  headline="Properties Near Hospitals in DHA Phase 6 Lahore"
+  lead="Ensure immediate emergency access, superior healthcare peace of mind, and lasting property value by investing in homes and plots located near DHA Phase 6's primary medical complexes."
+  statPills={statPills}
+  editorialParagraphs={[
+    "Healthcare security is an essential consideration for homeowners, especially senior citizens, multi-generational families, and overseas buyers returning to Lahore. Living within minutes of top emergency and diagnostic facilities provides irreplaceable peace of mind.",
+    "DHA Phase 6 Lahore is home to comprehensive healthcare infrastructure, anchored by the DHA Medical Centre in Sector E, specialized clinics in CCA, and world-class tertiary institutions like PKLI nearby.",
+    "Properties located in Sectors E, A, and N enjoy rapid medical transit corridors while maintaining tranquil residential separation from commercial hospital traffic."
+  ]}
+  placesTitle="Top Hospitals & Clinics in DHA Phase 6"
+  placesSubtitle="Verified multi-specialty hospitals, outpatient clinics, and 24/7 diagnostic centers."
+  places={hospitals}
+  allPlacesCategoryUrl="/places/hospital/"
+  allPlacesCategoryLabel="View Healthcare Directory in Phase 6"
+  tableTitle="Sector-by-Sector Healthcare Proximity Comparison"
+  tableSubtitle="Compare property price ranges, travel times, and medical facility density across sectors."
+  tableRows={tableRows}
+  propertiesTitle="Featured Properties Near Medical Centers"
+  propertiesSubtitle="Verified houses and plots situated near Phase 6 healthcare corridors."
+  properties={relevantProperties}
+  zameenSearchUrl="https://www.zameen.com/Houses_Property/Lahore_DHA_Defence_Phase_6-1449-1.html"
+  zameenSearchLabel="Search Zameen for Properties in DHA Phase 6"
+  faqs={faqs}
+  relatedLinks={relatedLinks}
+/>

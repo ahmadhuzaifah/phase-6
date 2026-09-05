@@ -1,0 +1,112 @@
+---
+/**
+ * Route: /properties-near-commercial-areas-dha-phase-6-lahore/
+ * Location Intelligence & SEO Guide for Properties Near Commercial Areas in DHA Phase 6 Lahore.
+ */
+import LocationSeoTemplate from '@components/seo/LocationSeoTemplate.astro';
+import { getCategoryPlaces } from '@data/places/index';
+import propertiesRaw from '@data/properties-import.json';
+import { SITE } from '@data/site';
+
+const canonical = `${SITE.url}/properties-near-commercial-areas-dha-phase-6-lahore/`;
+const commercialPlaces = getCategoryPlaces('supermarkets').slice(0, 6);
+
+const relevantProperties = (Array.isArray(propertiesRaw) ? (propertiesRaw as any[]) : []).filter(
+  (p) => p.propertyType === 'commercial' || p.propertyType === 'house' || p.propertyType === 'plot'
+).slice(0, 4);
+
+const tableRows = [
+  {
+    sector: 'CCA 1 & 2',
+    amenities: 'Banks, hypermarkets (Jalal Sons, Al-Fatah), corporate offices & dining',
+    popularSizes: '4 & 8 Marla Commercial Plazas, Nearby Houses',
+    priceRange: 'PKR 14.00 - 35.00 Cr',
+    travelTime: '1-3 mins walk',
+    recommendedFor: 'Commercial investors & businesses needing high footfall',
+  },
+  {
+    sector: 'Main Boulevard',
+    amenities: 'Dolmen Mall Phase 6, retail flagships & multi-lane avenue frontage',
+    popularSizes: 'Corporate Plazas & Premium 1 Kanal Villas',
+    priceRange: 'PKR 9.50 - 24.00 Cr',
+    travelTime: 'Direct frontage / 2 mins drive',
+    recommendedFor: 'High-visibility corporate headquarters & executive residences',
+  },
+  {
+    sector: 'Defence Raya Commercial',
+    amenities: 'Fairways Commercial, upscale boutiques, golf club & bistros',
+    popularSizes: 'Boutique Commercial Plazas & Golf Villas',
+    priceRange: 'PKR 18.00 - 42.00 Cr',
+    travelTime: '1-3 mins walk / golf buggy',
+    recommendedFor: 'Prestige commercial retail & luxury lifestyle living',
+  },
+  {
+    sector: 'Sector A & C Markets',
+    amenities: 'Neighborhood supermarkets, pharmacies, bakeries & salons',
+    popularSizes: '1 Kanal Residential Houses & Sector Shops',
+    priceRange: 'PKR 8.25 - 14.50 Cr',
+    travelTime: '2-4 mins walk',
+    recommendedFor: 'Quiet family living with daily convenience on doorstep',
+  },
+];
+
+const faqs = [
+  {
+    question: 'What are the main commercial areas in DHA Phase 6 Lahore?',
+    answer: 'The primary commercial hubs are Central Commercial Area (CCA 1 and CCA 2), Commercial Broadway, Main Boulevard Commercial corridor, and Defence Raya Fairways Commercial.',
+  },
+  {
+    question: 'Are residential houses located near commercial areas in Phase 6 noisy?',
+    answer: 'No. DHA Lahore zoning enforces wide green buffer belts and dedicated commercial parking zones, ensuring houses adjacent to commercial areas enjoy walking convenience without commercial noise.',
+  },
+  {
+    question: 'What is the commercial rental yield in Phase 6?',
+    answer: 'Commercial properties in CCA 1, CCA 2, and Broadway generate high rental yields ranging between 6.0% and 7.8% annually, backed by corporate multi-year leases.',
+  },
+];
+
+const statPills = [
+  { value: '4 Major', label: 'Commercial Corridors' },
+  { value: '6.5% – 7.8%', label: 'Commercial Rental Yield' },
+  { value: '1-3 Mins', label: 'Proximity from Sectors' },
+  { value: 'Dolmen Mall', label: 'Regional Retail Mega-Hub' },
+];
+
+const relatedLinks = [
+  { label: 'Commercial Property Guide', href: '/commercial-property-dha-phase-6-lahore/', desc: 'Plazas, shops and commercial plots' },
+  { label: 'Properties Near Restaurants', href: '/properties-near-restaurants-dha-phase-6-lahore/', desc: 'Homes near Raya & CCA dining' },
+  { label: 'DHA Phase 6 CCA Guide', href: '/dha-phase-6-cca-lahore/', desc: 'Complete Central Commercial Area guide' },
+  { label: 'Investment Analysis', href: '/is-dha-phase-6-lahore-a-good-investment/', desc: 'Comprehensive financial feasibility' },
+];
+---
+
+<LocationSeoTemplate
+  title="Properties Near Commercial Areas in DHA Phase 6 Lahore — Retail & Business Hubs"
+  metaTitle="Properties Near Commercial Areas in DHA Phase 6 Lahore | CCA & Retail"
+  description="Explore houses, plots, and plazas for sale near commercial areas in DHA Phase 6 Lahore. Compare CCA 1, CCA 2, Main Boulevard, and Defence Raya proximity."
+  canonical={canonical}
+  badge="Location Intelligence • Commercial Corridors"
+  headline="Properties Near Commercial Areas in DHA Phase 6 Lahore"
+  lead="Benefit from maximum daily convenience, walkability to supermarkets and banking centers, and superior commercial rental yields by choosing properties near Phase 6's primary business nodes."
+  statPills={statPills}
+  editorialParagraphs={[
+    "Proximity to vibrant commercial hubs is one of the hallmarks of prime real estate in DHA Phase 6 Lahore. Residents benefit from having hypermarkets, top commercial banks, pharmacies, and specialty retail plazas within minutes of their front gates.",
+    "Unlike disorganized municipal areas, DHA's thoughtful urban zoning ensures commercial traffic is channeled along multi-lane avenues and dedicated parking boulevards, preserving the quiet peace of adjacent residential sectors.",
+    "For property investors, plots, houses, and commercial plazas located near CCA 1, CCA 2, and Main Boulevard represent high-liquidity assets commanding strong capital gains and prompt tenant occupancy."
+  ]}
+  placesTitle="Top Commercial Plazas & Supermarkets in DHA Phase 6"
+  placesSubtitle="Verified hypermarkets, department stores, banks, and corporate retail plazas."
+  places={commercialPlaces}
+  allPlacesCategoryUrl="/places/supermarkets/"
+  allPlacesCategoryLabel="View Supermarkets & Retail Directory"
+  tableTitle="Sector-by-Sector Commercial Proximity Comparison"
+  tableSubtitle="Compare property values, rental yields, and footfall across major commercial zones."
+  tableRows={tableRows}
+  propertiesTitle="Featured Properties Near Commercial Centers"
+  propertiesSubtitle="Verified commercial plazas, executive shops, and adjacent residential properties."
+  properties={relevantProperties}
+  zameenSearchUrl="https://www.zameen.com/Commercial_Property/Lahore_DHA_Defence_Phase_6-1449-1.html"
+  zameenSearchLabel="Search Zameen for Commercial in DHA Phase 6"
+  faqs={faqs}
+  relatedLinks={relatedLinks}
+/>

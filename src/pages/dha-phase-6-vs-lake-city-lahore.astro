@@ -1,0 +1,532 @@
+---
+/**
+ * DHA Phase 6 vs Lake City Lahore — Golf Communities & Real Estate Comparison
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+
+const title = "DHA Phase 6 vs Lake City Lahore — Golf Communities & Investment Comparison";
+const description = "Comprehensive comparison between DHA Phase 6 and Lake City Lahore. Compare golf course communities, property price brackets, Ring Road connectivity, and rental demand.";
+const canonical = `${SITE.url}/dha-phase-6-vs-lake-city-lahore/`;
+
+const faqs = [
+  {
+    question: "How do the golf communities compare: Defence Raya vs Lake City Golf Club?",
+    answer: "Both developments feature 18-hole championship golf resorts. Defence Raya in DHA Phase 6 is an international joint-venture with BRDB Malaysia, offering golf-view fairways, luxury country club facilities, and pedestrian alfresco dining. Lake City Golf Club on Raiwind Road features an impressive PGA-standard course designed by Phil Ryan, surrounded by Spanish and Mediterranean-style villas."
+  },
+  {
+    question: "How do property prices compare between DHA Phase 6 and Lake City?",
+    answer: "DHA Phase 6 commands higher valuations due to its statutory DHA title, prime southeastern location, and corporate liquidity. 1 Kanal residential plots in Phase 6 range from PKR 4.20 Cr to PKR 7.50 Cr, while 1 Kanal plots in Lake City range from PKR 2.50 Cr to PKR 4.80 Cr."
+  },
+  {
+    question: "Which location has better connectivity across Lahore?",
+    answer: "DHA Phase 6 provides superior access to eastern Lahore, Cantonment, and Allama Iqbal International Airport (8 to 10 minutes). Lake City provides excellent access to southern Lahore, Raiwind Road, and Thokar Niaz Baig via the Southern Ring Road, but is approximately 25 to 30 minutes from the airport."
+  },
+  {
+    question: "Which community is better for long-term rental income?",
+    answer: "DHA Phase 6 produces higher absolute monthly rental cash flows and attracts a broader pool of multinational corporate executives, diplomats, and overseas Pakistanis, with 1 Kanal homes yielding PKR 3.20 to 5.50 Lakh per month compared to PKR 1.80 to 3.00 Lakh in Lake City."
+  },
+  {
+    question: "Is Lake City fully developed with schools and shopping?",
+    answer: "Yes, Lake City is well-developed with Lake City Mall, Cinepax, Froebel's International School, and local hypermarkets. However, DHA Phase 6 operates on a substantially larger scale with two Central Commercial Areas (CCA 1 & 2), over 70 restaurants, and 37 verified educational institutions."
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": `${canonical}#article`,
+      "isPartOf": { "@type": "WebSite", "@id": `${SITE.url}/#website` },
+      "headline": title,
+      "description": description,
+      "url": canonical,
+      "inLanguage": "en-PK",
+      "mainEntityOfPage": canonical,
+      "datePublished": "2026-02-15T08:00:00+05:00",
+      "dateModified": "2026-09-05T12:00:00+05:00",
+      "publisher": { "@type": "Organization", "name": SITE.name, "url": SITE.url },
+      "author": { "@type": "Organization", "name": "Research & Editorial Desk, DHA Phase 6 Guide" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonical}#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE.url },
+        { "@type": "ListItem", "position": 2, "name": "Comparisons", "item": `${SITE.url}/guides/` },
+        { "@type": "ListItem", "position": 3, "name": "Phase 6 vs Lake City", "item": canonical }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${canonical}#faq`,
+      "mainEntity": faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": { "@type": "Answer", "text": faq.answer }
+      }))
+    }
+  ]
+};
+---
+
+<PageLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+
+  <header class="comp-hero">
+    <div class="container">
+      <div class="hero-badges">
+        <span class="badge-pill gold-pill">Golf Resort Community Comparison</span>
+        <span class="badge-pill">Lahore Luxury Real Estate</span>
+      </div>
+      <h1 class="hero-headline">
+        DHA Phase 6 vs Lake City Lahore: <span class="text-gradient">Golf Living & Investment Compared</span>
+      </h1>
+      <p class="hero-lead">
+        Evaluating Lahore's two premier golf resort residential enclaves: Defence Raya in DHA Phase 6 versus the Mediterranean-inspired Lake City Golf & Country Club.
+      </p>
+    </div>
+  </header>
+
+  <main class="container comp-content">
+
+    <section class="verdict-banner">
+      <h2>Executive Summary: Golf Lifestyle & Regional Positioning</h2>
+      <p>
+        Both <strong>DHA Phase 6</strong> and <strong>Lake City Lahore</strong> cater to homeowners seeking scenic fairway views, quiet landscaped enclaves, and active country club leisure.
+      </p>
+      <p>
+        <strong>DHA Phase 6</strong> offers the combined power of DHA Lahore’s statutory governance, eastern Ring Road access (10 minutes to the airport), massive commercial infrastructure (CCA 1 & 2), and superior international corporate liquidity. <strong>Lake City</strong> delivers a picturesque suburban haven along Raiwind Road with an established private golf club and modern community mall at a 30% to 40% price advantage for residential land.
+      </p>
+    </section>
+
+    <!-- COMPARISON TABLE -->
+    <section class="comp-section">
+      <h2>Detailed Feature Comparison Matrix</h2>
+      <div class="table-responsive">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Evaluation Parameter</th>
+              <th>DHA Phase 6 Lahore</th>
+              <th>Lake City Lahore</th>
+              <th>Strategic Advantage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Golf Community</strong></td>
+              <td>Defence Raya Golf & Country Club</td>
+              <td>Lake City Golf & Country Club</td>
+              <td><span class="tag-neutral">Both 18-Hole Championship</span></td>
+            </tr>
+            <tr>
+              <td><strong>Geographic Corridor</strong></td>
+              <td>Southeastern (Bedian / Barki / Ring Road)</td>
+              <td>Southwestern (Raiwind Road / Ring Road)</td>
+              <td><span class="tag-win">Phase 6 (Airport Proximity)</span></td>
+            </tr>
+            <tr>
+              <td><strong>1 Kanal Plot Price</strong></td>
+              <td>PKR 4.20 Cr – 7.50 Cr</td>
+              <td>PKR 2.50 Cr – 4.80 Cr</td>
+              <td><span class="tag-win">Lake City (Budget)</span></td>
+            </tr>
+            <tr>
+              <td><strong>1 Kanal House Price</strong></td>
+              <td>PKR 8.50 Cr – 13.50 Cr</td>
+              <td>PKR 5.50 Cr – 9.20 Cr</td>
+              <td><span class="tag-win">Lake City (Entry Cost)</span></td>
+            </tr>
+            <tr>
+              <td><strong>Commute to Airport</strong></td>
+              <td>8 – 10 minutes via Ring Road</td>
+              <td>25 – 30 minutes via Ring Road</td>
+              <td><span class="tag-win">Phase 6</span></td>
+            </tr>
+            <tr>
+              <td><strong>Institutional Governance</strong></td>
+              <td>Statutory DHA Authority (Military-backed)</td>
+              <td>Private Developer (Lake City Holdings)</td>
+              <td><span class="tag-win">Phase 6</span></td>
+            </tr>
+            <tr>
+              <td><strong>Underground Electrification</strong></td>
+              <td>100% across all sectors</td>
+              <td>100% across golf & modern sectors</td>
+              <td><span class="tag-neutral">Comparable</span></td>
+            </tr>
+            <tr>
+              <td><strong>Commercial & Retail Scale</strong></td>
+              <td>Over 70 restaurants, 2 CCAs, Dolmen Mall</td>
+              <td>Lake City Mall, Cinepax, Froebel's row</td>
+              <td><span class="tag-win">Phase 6</span></td>
+            </tr>
+            <tr>
+              <td><strong>Average Rental Yield</strong></td>
+              <td>4.5% – 5.2% (Corporate tenants)</td>
+              <td>3.8% – 4.5% (Domestic families)</td>
+              <td><span class="tag-win">Phase 6</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 1: GOLF COMMUNITIES COMPARED -->
+    <section class="comp-section">
+      <h2>1. The Golf Experience: Defence Raya vs Lake City</h2>
+      <p>
+        Golf and country club leisure represent the crown jewel of both developments:
+      </p>
+      <ul>
+        <li><strong>Defence Raya (DHA Phase 6):</strong> Developed across Sectors M and N in collaboration with BRDB Malaysia. Features an 18-hole international championship golf course, squash and tennis courts, indoor heated swimming pools, luxury wellness spas, and the Fairways pedestrian commercial boulevard with panoramic golf-view dining.</li>
+        <li><strong>Lake City Golf Club:</strong> Designed by renowned Australian golf architect Phil Ryan, this 18-hole par 72 golf course winds through scenic residential sectors. It hosts major national tournaments, offers floodlit driving ranges, and features a vibrant clubhouse restaurant with private family dining.</li>
+      </ul>
+    </section>
+
+    <!-- SECTION 2: ACCESS & URBAN CORRIDORS -->
+    <section class="comp-section">
+      <h2>2. Location & Travel Patterns</h2>
+      <p>
+        Your daily commute route across Lahore should guide your decision:
+      </p>
+      <p>
+        <strong>DHA Phase 6</strong> is ideally suited for residents whose professional or family life revolves around Cantonment, Gulberg, DHA Phases 1–5, and Allama Iqbal International Airport. Direct access via the Nawaz Sharif Interchange eliminates traffic congestion entirely.
+      </p>
+      <p>
+        <strong>Lake City</strong> is positioned along Raiwind Road. It is ideal for executives working in southern manufacturing corridors, Sundar Industrial Estate, or educational institutions along Raiwind Road. With the Southern Ring Road, commuting to Bahria Town, Valencia, and Wapda Town is effortless.
+      </p>
+    </section>
+
+    <!-- BUYER DECISION -->
+    <section class="comp-section recommendation-box">
+      <h2>Decision Matrix: Where Should You Invest?</h2>
+      <div class="decision-grid">
+        <div class="decision-card highlight-card">
+          <h3>Choose DHA Phase 6 if:</h3>
+          <ul>
+            <li>You prioritize institutional security and the unmatched brand prestige of DHA Lahore.</li>
+            <li>You need to be within 10 minutes of Lahore Airport and 15 minutes of Gulberg.</li>
+            <li>You want maximum executive rental demand and global resale liquidity.</li>
+            <li>You desire immediate access to premier Cambridge schools (LGS, Beaconhouse, SICAS).</li>
+          </ul>
+        </div>
+        <div class="decision-card">
+          <h3>Choose Lake City Lahore if:</h3>
+          <ul>
+            <li>Your residential land acquisition budget is PKR 2.5 to 4.5 Crore for 1 Kanal.</li>
+            <li>You desire a peaceful, Mediterranean-style golf resort community away from urban traffic.</li>
+            <li>Your daily routine centers around Raiwind Road, Thokar Niaz Baig, or Southern Lahore.</li>
+            <li>You are looking for ready-built designer developer villas with flexible payment terms.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQS -->
+    <section class="comp-section">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-accordion">
+        {faqs.map((faq, index) => (
+          <details class="faq-item" id={`faq-${index + 1}`}>
+            <summary class="faq-question">
+              <span>{faq.question}</span>
+              <span class="faq-chevron">▼</span>
+            </summary>
+            <div class="faq-answer">
+              <p>{faq.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- RELATED GUIDES -->
+    <section class="related-guides-hub">
+      <h2>Explore Related Guides & Calculations</h2>
+      <div class="links-grid">
+        <a href="/dha-phase-6-vs-phase-5-lahore/" class="guide-nav-card">
+          <strong>Phase 6 vs Phase 5</strong>
+          <p>Examine DHA Lahore's top two residential phases.</p>
+        </a>
+        <a href="/dha-phase-6-vs-bahria-town-lahore/" class="guide-nav-card">
+          <strong>Phase 6 vs Bahria Town</strong>
+          <p>Compare statutory DHA living against private township scale.</p>
+        </a>
+        <a href="/dha-phase-6-property-calculator/" class="guide-nav-card">
+          <strong>Property Calculators</strong>
+          <p>Calculate transfer costs, construction rates, and rental yields.</p>
+        </a>
+        <a href="/dha-phase-6-lahore-guide/" class="guide-nav-card">
+          <strong>Complete Master Hub</strong>
+          <p>Read the 3,000+ word authority knowledge hub.</p>
+        </a>
+      </div>
+    </section>
+
+  </main>
+</PageLayout>
+
+<style>
+  .comp-hero {
+    background: linear-gradient(165deg, #090919 0%, #12122b 55%, #0c0c1e 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 72px 0 48px;
+  }
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .badge-pill {
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.06);
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .gold-pill {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border-color: rgba(16, 185, 129, 0.3);
+  }
+  .hero-headline {
+    font-size: clamp(2.2rem, 4.2vw, 3.2rem);
+    color: #ffffff;
+    font-weight: 800;
+    margin-bottom: 18px;
+    max-width: 920px;
+    line-height: 1.2;
+  }
+  .text-gradient {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #10b981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-lead {
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    color: #94a3b8;
+    line-height: 1.65;
+    max-width: 820px;
+  }
+  .comp-content {
+    padding: 56px 20px 80px;
+    max-width: 1080px;
+  }
+  .verdict-banner {
+    background: #111129;
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 48px;
+  }
+  .verdict-banner h2 {
+    color: #34d399;
+    font-size: 1.4rem;
+    margin-bottom: 14px;
+  }
+  .verdict-banner p {
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    margin-bottom: 12px;
+  }
+  .comp-section {
+    margin-bottom: 56px;
+  }
+  .comp-section h2 {
+    font-size: 1.8rem;
+    color: #f8fafc;
+    margin-bottom: 20px;
+    font-weight: 800;
+  }
+  .comp-section p {
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+  .comp-section ul {
+    color: #cbd5e1;
+    line-height: 1.8;
+    padding-left: 24px;
+    margin-bottom: 20px;
+  }
+  .table-responsive {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    margin: 24px 0;
+  }
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    background: #0f0f23;
+  }
+  .comparison-table th {
+    background: #171736;
+    color: #f8fafc;
+    padding: 14px 18px;
+    text-align: left;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .comparison-table td {
+    padding: 14px 18px;
+    color: #cbd5e1;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .comparison-table tr:hover td {
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .tag-win {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+  }
+  .tag-neutral {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.08);
+    color: #94a3b8;
+  }
+  .decision-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+  }
+  .decision-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 26px;
+  }
+  .highlight-card {
+    background: #111129;
+    border-color: rgba(16, 185, 129, 0.4);
+  }
+  .decision-card h3 {
+    font-size: 1.25rem;
+    color: #f1f5f9;
+    margin-bottom: 16px;
+  }
+  .highlight-card h3 {
+    color: #34d399;
+  }
+  .decision-card ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+  }
+  .decision-card li {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 12px;
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .decision-card li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #34d399;
+    font-weight: 800;
+  }
+  .faq-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .faq-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .faq-question {
+    padding: 18px 20px;
+    cursor: pointer;
+    font-weight: 700;
+    color: #f1f5f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+  }
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+  .faq-chevron {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    transition: transform 0.2s ease;
+  }
+  .faq-item[open] .faq-chevron {
+    transform: rotate(180deg);
+  }
+  .faq-answer {
+    padding: 0 20px 20px;
+    color: #94a3b8;
+    font-size: 0.98rem;
+    line-height: 1.7;
+  }
+  .related-guides-hub {
+    margin-top: 56px;
+    padding: 32px;
+    background: #0f0f23;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+  }
+  .related-guides-hub h2 {
+    font-size: 1.4rem;
+    color: #f8fafc;
+    margin-bottom: 20px;
+  }
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .guide-nav-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 18px;
+    text-decoration: none;
+    transition: border-color 0.2s ease;
+  }
+  .guide-nav-card:hover {
+    border-color: rgba(16, 185, 129, 0.4);
+  }
+  .guide-nav-card strong {
+    display: block;
+    color: #f1f5f9;
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+  .guide-nav-card p {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    margin-bottom: 0;
+  }
+</style>

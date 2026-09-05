@@ -1,0 +1,824 @@
+---
+/**
+ * DHA Phase 6 Real Estate Calculators
+ * Transfer Cost Calculator, Construction Cost Calculator, Rental Yield Calculator, and ROI Calculator.
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+
+const title = "DHA Phase 6 Property Calculator — Transfer Costs, Construction, Yield & ROI";
+const description = "Free real estate financial calculators for DHA Phase 6 Lahore. Calculate DHA transfer fees, FBR filer/non-filer taxes, construction cost per sq ft, rental yields, and investment ROI.";
+const canonical = `${SITE.url}/dha-phase-6-property-calculator/`;
+
+const faqs = [
+  {
+    question: "What are the government taxes when purchasing property in DHA Phase 6?",
+    answer: "Buyers pay FBR Advance Tax under Section 236K: 3% for active tax filers, or 6% to 10% for non-filers depending on recorded FBR property valuation tiers. Additionally, provincial Stamp Duty (typically 1%) and Cantonment / TMA transfer charges apply."
+  },
+  {
+    question: "How much does it cost to construct a 1 Kanal house in DHA Phase 6?",
+    answer: "A standard 1 Kanal house has approximately 5,000 to 5,500 square feet of covered area. As of 2025/2026, grey structure construction costs PKR 3,200 to PKR 3,800 per sq ft (approx PKR 1.70 to 2.10 Crore). Complete A+ luxury turnkey construction with imported tiles, sanitary fittings, and woodwork ranges between PKR 6,500 and PKR 8,500 per sq ft (total construction budget: PKR 3.50 to 4.70 Crore)."
+  },
+  {
+    question: "What is considered a good rental yield in DHA Phase 6 Lahore?",
+    answer: "For residential houses, a gross rental yield between 4.2% and 5.2% is healthy and competitive, given the low vacancy rate and strong capital appreciation. For commercial plazas in CCA 1 and CCA 2, investors expect gross yields of 6.5% to 8.0%."
+  },
+  {
+    question: "How is the DHA Lahore transfer fee calculated?",
+    answer: "DHA Lahore charges a fixed transfer fee based on plot size and property type (residential vs commercial). For example, 1 Kanal residential transfer fee is approximately PKR 120,000 to PKR 150,000, while 10 Marla is approximately PKR 80,000 to PKR 100,000, plus membership and urgent processing dues if applicable."
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": `${canonical}#app`,
+      "name": "DHA Phase 6 Real Estate Calculator Suite",
+      "applicationCategory": "RealEstateApplication",
+      "operatingSystem": "All",
+      "url": canonical,
+      "description": description
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonical}#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE.url },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": `${SITE.url}/guides/` },
+        { "@type": "ListItem", "position": 3, "name": "Property Calculator", "item": canonical }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${canonical}#faq`,
+      "mainEntity": faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": { "@type": "Answer", "text": faq.answer }
+      }))
+    }
+  ]
+};
+---
+
+<PageLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+
+  <header class="calc-hero">
+    <div class="container">
+      <div class="hero-badges">
+        <span class="badge-pill gold-pill">Real Estate Financial Suite</span>
+        <span class="badge-pill">FBR Tax Slabs 2025/2026</span>
+      </div>
+      <h1 class="hero-headline">
+        DHA Phase 6 <span class="text-gradient">Property Calculator</span>
+      </h1>
+      <p class="hero-lead">
+        Accurately estimate property transfer expenses, construction costs per square foot, rental yields, and multi-year investment returns across DHA Phase 6 Lahore.
+      </p>
+    </div>
+  </header>
+
+  <main class="container calc-workspace">
+
+    <!-- TOOL SWITCHER TABS -->
+    <div class="tab-switcher" role="tablist">
+      <button class="tab-btn active" data-tab="transfer" role="tab" aria-selected="true">
+        📋 Transfer Cost
+      </button>
+      <button class="tab-btn" data-tab="construction" role="tab" aria-selected="false">
+        🏗️ Construction Cost
+      </button>
+      <button class="tab-btn" data-tab="yield" role="tab" aria-selected="false">
+        📈 Rental Yield
+      </button>
+      <button class="tab-btn" data-tab="roi" role="tab" aria-selected="false">
+        💰 Investment ROI
+      </button>
+    </div>
+
+    <!-- 1. TRANSFER COST CALCULATOR -->
+    <section id="transferTab" class="calc-card tab-panel active">
+      <div class="calc-head">
+        <h2>Property Transfer Cost Calculator</h2>
+        <p>Calculate official DHA Lahore transfer charges, FBR Advance Tax (236K), Stamp Duty, and provincial levies.</p>
+      </div>
+
+      <div class="calc-grid">
+        <div class="calc-inputs">
+          <div class="input-field">
+            <label for="taxFilerStatus">Tax Payer Status (FBR)</label>
+            <select id="taxFilerStatus">
+              <option value="filer" selected>Active Tax Filer (3% FBR Tax)</option>
+              <option value="nonfiler">Non-Filer / Inactive (7% FBR Tax)</option>
+            </select>
+          </div>
+
+          <div class="input-field">
+            <label for="calcPlotSize">Property Size / Category</label>
+            <select id="calcPlotSize">
+              <option value="5m">5 Marla Residential</option>
+              <option value="10m">10 Marla Residential</option>
+              <option value="1k" selected>1 Kanal Residential</option>
+              <option value="2k">2 Kanal Residential</option>
+              <option value="4m-comm">4 Marla Commercial</option>
+              <option value="8m-comm">8 Marla Commercial</option>
+            </select>
+          </div>
+
+          <div class="input-field">
+            <label for="calcPropValue">Declared Property Value (PKR)</label>
+            <input type="number" id="calcPropValue" value="55000000" step="500000" />
+            <span class="input-hint">Default: PKR 5.50 Crore (Typical 1 Kanal plot demand)</span>
+          </div>
+
+          <div class="input-field">
+            <label for="transferSpeed">Transfer Processing Speed</label>
+            <select id="transferSpeed">
+              <option value="regular" selected>Regular Transfer (5–7 Working Days)</option>
+              <option value="urgent">Urgent Transfer (24–48 Hours)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="calc-results">
+          <h3>Estimated Breakdown</h3>
+          <div class="result-row">
+            <span>DHA Lahore Transfer Fee:</span>
+            <strong id="resDhaFee">PKR 135,000</strong>
+          </div>
+          <div class="result-row">
+            <span>FBR Advance Tax (Sec 236K):</span>
+            <strong id="resFbrTax">PKR 1,650,000</strong>
+          </div>
+          <div class="result-row">
+            <span>Stamp Duty & CVT (Est. 1%):</span>
+            <strong id="resStampDuty">PKR 550,000</strong>
+          </div>
+          <div class="result-row">
+            <span>Cantt Board / TMA Dues:</span>
+            <strong id="resCanttDues">PKR 45,000</strong>
+          </div>
+          <div class="result-total">
+            <span>Total Estimated Transfer Expenses:</span>
+            <strong id="resTotalTransfer">PKR 2,380,000</strong>
+          </div>
+          <p class="calc-disclaimer">
+            *Estimates based on current 2025/2026 FBR active filer rate schedule and standard DHA Lahore transfer tariffs. Verification with DHA Transfer Office is recommended before closing.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. CONSTRUCTION COST CALCULATOR -->
+    <section id="constructionTab" class="calc-card tab-panel" style="display: none;">
+      <div class="calc-head">
+        <h2>House Construction Cost Calculator</h2>
+        <p>Estimate structural grey and complete luxury turnkey finishing costs according to covered area.</p>
+      </div>
+
+      <div class="calc-grid">
+        <div class="calc-inputs">
+          <div class="input-field">
+            <label for="constPlotSize">Plot Size</label>
+            <select id="constPlotSize">
+              <option value="2200">5 Marla (~2,200 sq ft covered area)</option>
+              <option value="3300">10 Marla (~3,300 sq ft covered area)</option>
+              <option value="5500" selected>1 Kanal (~5,500 sq ft covered area)</option>
+              <option value="10000">2 Kanal (~10,000 sq ft covered area)</option>
+            </select>
+          </div>
+
+          <div class="input-field">
+            <label for="constFinishQuality">Finishing Quality Standard</label>
+            <select id="constFinishQuality">
+              <option value="grey">Grey Structure Only (Bricks, Cement, Steel, Electrical Conduits)</option>
+              <option value="standard">Standard Modern Finishing (Local Porcelain Tiles, Solid Wood Doors)</option>
+              <option value="luxury" selected>A+ Luxury Finishing (Imported Spanish Tiles, Grohe, Smart Automation)</option>
+            </select>
+          </div>
+
+          <div class="input-field">
+            <label for="customCoveredArea">Custom Covered Area (sq ft)</label>
+            <input type="number" id="customCoveredArea" value="5500" step="100" />
+          </div>
+        </div>
+
+        <div class="calc-results">
+          <h3>Construction Cost Estimates</h3>
+          <div class="result-row">
+            <span>Covered Area:</span>
+            <strong id="resArea">5,500 sq ft</strong>
+          </div>
+          <div class="result-row">
+            <span>Estimated Cost Per Sq Ft:</span>
+            <strong id="resRatePerSqFt">PKR 7,500 / sq ft</strong>
+          </div>
+          <div class="result-row">
+            <span>Grey Structure Component:</span>
+            <strong id="resGreyTotal">PKR 19,250,000</strong>
+          </div>
+          <div class="result-row">
+            <span>Finishing Component:</span>
+            <strong id="resFinishTotal">PKR 22,000,000</strong>
+          </div>
+          <div class="result-total">
+            <span>Total Estimated Construction Cost:</span>
+            <strong id="resTotalConst">PKR 41,250,000</strong>
+          </div>
+          <div class="result-row">
+            <span>Estimated Timeline:</span>
+            <strong id="resTimeline">10 – 14 Months</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. RENTAL YIELD CALCULATOR -->
+    <section id="yieldTab" class="calc-card tab-panel" style="display: none;">
+      <div class="calc-head">
+        <h2>Rental Yield & Cash Flow Calculator</h2>
+        <p>Determine annual gross and net yields to evaluate rental cash flow returns.</p>
+      </div>
+
+      <div class="calc-grid">
+        <div class="calc-inputs">
+          <div class="input-field">
+            <label for="yieldPropPrice">Property Purchase / Market Value (PKR)</label>
+            <input type="number" id="yieldPropPrice" value="105000000" step="1000000" />
+            <span class="input-hint">Default: PKR 10.50 Crore (Brand-new 1 Kanal House)</span>
+          </div>
+
+          <div class="input-field">
+            <label for="yieldMonthlyRent">Expected Monthly Rental Income (PKR)</label>
+            <input type="number" id="yieldMonthlyRent" value="450000" step="10000" />
+            <span class="input-hint">Default: PKR 450,000 / month</span>
+          </div>
+
+          <div class="input-field">
+            <label for="yieldAnnualMaint">Annual Maintenance / Vacancy Buffer (PKR)</label>
+            <input type="number" id="yieldAnnualMaint" value="450000" step="25000" />
+            <span class="input-hint">Typically 1 month rent allowance</span>
+          </div>
+        </div>
+
+        <div class="calc-results">
+          <h3>Rental Return Analysis</h3>
+          <div class="result-row">
+            <span>Annual Gross Rental Income:</span>
+            <strong id="resAnnualGross">PKR 5,400,000</strong>
+          </div>
+          <div class="result-row">
+            <span>Annual Net Rental Income:</span>
+            <strong id="resAnnualNet">PKR 4,950,000</strong>
+          </div>
+          <div class="result-row">
+            <span>Gross Annual Rental Yield:</span>
+            <strong id="resGrossYield">5.14%</strong>
+          </div>
+          <div class="result-total">
+            <span>Net Annual Rental Yield:</span>
+            <strong id="resNetYield">4.71%</strong>
+          </div>
+          <div class="result-row">
+            <span>Estimated Payback Horizon:</span>
+            <strong id="resPayback">21.2 Years</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. INVESTMENT ROI CALCULATOR -->
+    <section id="roiTab" class="calc-card tab-panel" style="display: none;">
+      <div class="calc-head">
+        <h2>Investment Return (ROI) & Capital Growth</h2>
+        <p>Project long-term wealth accumulation combining capital appreciation and rental dividends.</p>
+      </div>
+
+      <div class="calc-grid">
+        <div class="calc-inputs">
+          <div class="input-field">
+            <label for="roiInitialValue">Initial Acquisition Cost (PKR)</label>
+            <input type="number" id="roiInitialValue" value="60000000" step="1000000" />
+          </div>
+
+          <div class="input-field">
+            <label for="roiHoldingYears">Holding Period (Years)</label>
+            <select id="roiHoldingYears">
+              <option value="1">1 Year</option>
+              <option value="3">3 Years</option>
+              <option value="5" selected>5 Years</option>
+              <option value="7">7 Years</option>
+              <option value="10">10 Years</option>
+            </select>
+          </div>
+
+          <div class="input-field">
+            <label for="roiAppreciationRate">Expected Annual Capital Growth (%)</label>
+            <select id="roiAppreciationRate">
+              <option value="8">Conservative (8% per annum)</option>
+              <option value="12" selected>Moderate (12% per annum)</option>
+              <option value="16">Aggressive / High Growth (16% per annum)</option>
+            </select>
+          </div>
+
+          <div class="input-field">
+            <label for="roiIncludeRent">Include Rental Income?</label>
+            <select id="roiIncludeRent">
+              <option value="yes" selected>Yes (4.5% annual net rental)</option>
+              <option value="no">No (Pure vacant plot appreciation)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="calc-results">
+          <h3>Projected Investment Value</h3>
+          <div class="result-row">
+            <span>Projected Future Property Value:</span>
+            <strong id="resFutureVal">PKR 105,740,000</strong>
+          </div>
+          <div class="result-row">
+            <span>Capital Gain Profit:</span>
+            <strong id="resCapGain">PKR 45,740,000</strong>
+          </div>
+          <div class="result-row">
+            <span>Cumulative Rental Dividends:</span>
+            <strong id="resTotalRent">PKR 16,870,000</strong>
+          </div>
+          <div class="result-total">
+            <span>Total Combined Return (Net Profit):</span>
+            <strong id="resTotalReturn">PKR 62,610,000</strong>
+          </div>
+          <div class="result-row">
+            <span>Total Cumulative ROI:</span>
+            <strong id="resTotalRoi">104.35%</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQS SECTION -->
+    <section class="calc-faqs">
+      <h2>Frequently Asked Questions About Property Calculations</h2>
+      <div class="faq-accordion">
+        {faqs.map((faq, index) => (
+          <details class="faq-item" id={`faq-${index + 1}`}>
+            <summary class="faq-question">
+              <span>{faq.question}</span>
+              <span class="faq-chevron">▼</span>
+            </summary>
+            <div class="faq-answer">
+              <p>{faq.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+  </main>
+</PageLayout>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    // 1. Tab Switching Logic
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        tabPanels.forEach(p => {
+          p.classList.remove('active');
+          p.style.display = 'none';
+        });
+
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        const targetId = `${btn.dataset.tab}Tab`;
+        const targetPanel = document.getElementById(targetId);
+        if (targetPanel) {
+          targetPanel.classList.add('active');
+          targetPanel.style.display = 'block';
+        }
+      });
+    });
+
+    function formatPKR(val) {
+      return `PKR ${new Intl.NumberFormat('en-PK').format(Math.round(val))}`;
+    }
+
+    // 2. Transfer Calculator
+    const taxFiler = document.getElementById('taxFilerStatus');
+    const plotSize = document.getElementById('calcPlotSize');
+    const propVal = document.getElementById('calcPropValue');
+    const transSpeed = document.getElementById('transferSpeed');
+
+    const resDhaFee = document.getElementById('resDhaFee');
+    const resFbrTax = document.getElementById('resFbrTax');
+    const resStampDuty = document.getElementById('resStampDuty');
+    const resCanttDues = document.getElementById('resCanttDues');
+    const resTotalTransfer = document.getElementById('resTotalTransfer');
+
+    function calculateTransfer() {
+      const val = parseFloat(propVal.value || 0);
+      const isFiler = taxFiler.value === 'filer';
+      const isUrgent = transSpeed.value === 'urgent';
+      const size = plotSize.value;
+
+      let baseDhaFee = 135000;
+      if (size === '5m') baseDhaFee = 65000;
+      if (size === '10m') baseDhaFee = 95000;
+      if (size === '2k') baseDhaFee = 250000;
+      if (size === '4m-comm') baseDhaFee = 220000;
+      if (size === '8m-comm') baseDhaFee = 380000;
+
+      if (isUrgent) baseDhaFee += 50000;
+
+      const fbrRate = isFiler ? 0.03 : 0.07;
+      const fbrTax = val * fbrRate;
+      const stampDuty = val * 0.01;
+      const canttDues = 45000;
+
+      const total = baseDhaFee + fbrTax + stampDuty + canttDues;
+
+      resDhaFee.textContent = formatPKR(baseDhaFee);
+      resFbrTax.textContent = formatPKR(fbrTax);
+      resStampDuty.textContent = formatPKR(stampDuty);
+      resCanttDues.textContent = formatPKR(canttDues);
+      resTotalTransfer.textContent = formatPKR(total);
+    }
+
+    taxFiler.addEventListener('change', calculateTransfer);
+    plotSize.addEventListener('change', calculateTransfer);
+    propVal.addEventListener('input', calculateTransfer);
+    transSpeed.addEventListener('change', calculateTransfer);
+    calculateTransfer();
+
+    // 3. Construction Calculator
+    const constPlotSize = document.getElementById('constPlotSize');
+    const constFinishQuality = document.getElementById('constFinishQuality');
+    const customCoveredArea = document.getElementById('customCoveredArea');
+
+    const resArea = document.getElementById('resArea');
+    const resRatePerSqFt = document.getElementById('resRatePerSqFt');
+    const resGreyTotal = document.getElementById('resGreyTotal');
+    const resFinishTotal = document.getElementById('resFinishTotal');
+    const resTotalConst = document.getElementById('resTotalConst');
+    const resTimeline = document.getElementById('resTimeline');
+
+    function calculateConstruction() {
+      const area = parseFloat(customCoveredArea.value || 0);
+      const quality = constFinishQuality.value;
+
+      let greyRate = 3500;
+      let finishRate = 4000;
+      let timeline = '10 – 14 Months';
+
+      if (quality === 'grey') {
+        finishRate = 0;
+        timeline = '5 – 7 Months';
+      } else if (quality === 'standard') {
+        finishRate = 3000;
+        timeline = '8 – 11 Months';
+      } else if (quality === 'luxury') {
+        finishRate = 4200;
+        timeline = '12 – 16 Months';
+      }
+
+      const totalRate = greyRate + finishRate;
+      const greyCost = area * greyRate;
+      const finishCost = area * finishRate;
+      const totalCost = area * totalRate;
+
+      resArea.textContent = `${new Intl.NumberFormat('en-PK').format(area)} sq ft`;
+      resRatePerSqFt.textContent = `PKR ${new Intl.NumberFormat('en-PK').format(totalRate)} / sq ft`;
+      resGreyTotal.textContent = formatPKR(greyCost);
+      resFinishTotal.textContent = formatPKR(finishCost);
+      resTotalConst.textContent = formatPKR(totalCost);
+      resTimeline.textContent = timeline;
+    }
+
+    constPlotSize.addEventListener('change', () => {
+      customCoveredArea.value = constPlotSize.value;
+      calculateConstruction();
+    });
+    constFinishQuality.addEventListener('change', calculateConstruction);
+    customCoveredArea.addEventListener('input', calculateConstruction);
+    calculateConstruction();
+
+    // 4. Yield Calculator
+    const yieldPropPrice = document.getElementById('yieldPropPrice');
+    const yieldMonthlyRent = document.getElementById('yieldMonthlyRent');
+    const yieldAnnualMaint = document.getElementById('yieldAnnualMaint');
+
+    const resAnnualGross = document.getElementById('resAnnualGross');
+    const resAnnualNet = document.getElementById('resAnnualNet');
+    const resGrossYield = document.getElementById('resGrossYield');
+    const resNetYield = document.getElementById('resNetYield');
+    const resPayback = document.getElementById('resPayback');
+
+    function calculateYield() {
+      const price = parseFloat(yieldPropPrice.value || 1);
+      const monthly = parseFloat(yieldMonthlyRent.value || 0);
+      const maint = parseFloat(yieldAnnualMaint.value || 0);
+
+      const annualGross = monthly * 12;
+      const annualNet = Math.max(0, annualGross - maint);
+
+      const grossYield = (annualGross / price) * 100;
+      const netYield = (annualNet / price) * 100;
+      const payback = annualNet > 0 ? (price / annualNet).toFixed(1) : 'N/A';
+
+      resAnnualGross.textContent = formatPKR(annualGross);
+      resAnnualNet.textContent = formatPKR(annualNet);
+      resGrossYield.textContent = `${grossYield.toFixed(2)}%`;
+      resNetYield.textContent = `${netYield.toFixed(2)}%`;
+      resPayback.textContent = `${payback} Years`;
+    }
+
+    yieldPropPrice.addEventListener('input', calculateYield);
+    yieldMonthlyRent.addEventListener('input', calculateYield);
+    yieldAnnualMaint.addEventListener('input', calculateYield);
+    calculateYield();
+
+    // 5. ROI Calculator
+    const roiInitialValue = document.getElementById('roiInitialValue');
+    const roiHoldingYears = document.getElementById('roiHoldingYears');
+    const roiAppreciationRate = document.getElementById('roiAppreciationRate');
+    const roiIncludeRent = document.getElementById('roiIncludeRent');
+
+    const resFutureVal = document.getElementById('resFutureVal');
+    const resCapGain = document.getElementById('resCapGain');
+    const resTotalRent = document.getElementById('resTotalRent');
+    const resTotalReturn = document.getElementById('resTotalReturn');
+    const resTotalRoi = document.getElementById('resTotalRoi');
+
+    function calculateROI() {
+      const initial = parseFloat(roiInitialValue.value || 0);
+      const years = parseInt(roiHoldingYears.value, 10);
+      const rate = parseFloat(roiAppreciationRate.value) / 100;
+      const includeRent = roiIncludeRent.value === 'yes';
+
+      // Compound appreciation
+      const futureValue = initial * Math.pow(1 + rate, years);
+      const capGain = futureValue - initial;
+
+      // Estimated rental dividends (avg 4.5% annual on appreciating baseline)
+      let cumulativeRent = 0;
+      if (includeRent) {
+        let runningVal = initial;
+        for (let y = 1; y <= years; y++) {
+          cumulativeRent += runningVal * 0.045;
+          runningVal *= (1 + rate);
+        }
+      }
+
+      const totalReturn = capGain + cumulativeRent;
+      const totalRoiPct = initial > 0 ? (totalReturn / initial) * 100 : 0;
+
+      resFutureVal.textContent = formatPKR(futureValue);
+      resCapGain.textContent = formatPKR(capGain);
+      resTotalRent.textContent = formatPKR(cumulativeRent);
+      resTotalReturn.textContent = formatPKR(totalReturn);
+      resTotalRoi.textContent = `${totalRoiPct.toFixed(2)}%`;
+    }
+
+    roiInitialValue.addEventListener('input', calculateROI);
+    roiHoldingYears.addEventListener('change', calculateROI);
+    roiAppreciationRate.addEventListener('change', calculateROI);
+    roiIncludeRent.addEventListener('change', calculateROI);
+    calculateROI();
+  });
+</script>
+
+<style>
+  .calc-hero {
+    background: linear-gradient(165deg, #090919 0%, #12122b 55%, #0c0c1e 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 64px 0 40px;
+  }
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .badge-pill {
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.06);
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .gold-pill {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border-color: rgba(16, 185, 129, 0.3);
+  }
+  .hero-headline {
+    font-size: clamp(2rem, 3.8vw, 2.8rem);
+    color: #ffffff;
+    font-weight: 800;
+    margin-bottom: 14px;
+  }
+  .text-gradient {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #10b981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-lead {
+    font-size: 1.05rem;
+    color: #94a3b8;
+    max-width: 780px;
+    line-height: 1.6;
+  }
+  .calc-workspace {
+    padding: 40px 20px 80px;
+    max-width: 1020px;
+  }
+  .tab-switcher {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  .tab-btn {
+    padding: 12px 20px;
+    border-radius: 10px;
+    background: #111129;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #94a3b8;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .tab-btn:hover {
+    color: #f1f5f9;
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .tab-btn.active {
+    background: linear-gradient(135deg, #059669, #10b981);
+    color: #042014;
+    border-color: transparent;
+  }
+  .calc-card {
+    background: #111129;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+    margin-bottom: 48px;
+  }
+  .calc-head h2 {
+    font-size: 1.5rem;
+    color: #f8fafc;
+    margin-bottom: 8px;
+  }
+  .calc-head p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    margin-bottom: 28px;
+  }
+  .calc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
+  }
+  .calc-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .input-field label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #cbd5e1;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+  }
+  .input-field select, .input-field input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 8px;
+    background: rgba(15, 15, 35, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #f8fafc;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+  .input-field select:focus, .input-field input:focus {
+    border-color: #34d399;
+  }
+  .input-hint {
+    display: block;
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 4px;
+  }
+  .calc-results {
+    background: rgba(15, 15, 35, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .calc-results h3 {
+    font-size: 1.1rem;
+    color: #34d399;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 10px;
+    margin-bottom: 6px;
+  }
+  .result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.92rem;
+    color: #cbd5e1;
+  }
+  .result-row strong {
+    color: #f8fafc;
+  }
+  .result-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    margin-top: 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fbbf24;
+  }
+  .result-total strong {
+    font-size: 1.3rem;
+    color: #fbbf24;
+  }
+  .calc-disclaimer {
+    font-size: 0.72rem;
+    color: #64748b;
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+  .calc-faqs h2 {
+    font-size: 1.5rem;
+    color: #f8fafc;
+    margin-bottom: 20px;
+  }
+  .faq-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .faq-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .faq-question {
+    padding: 18px 20px;
+    cursor: pointer;
+    font-weight: 700;
+    color: #f1f5f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+  }
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+  .faq-chevron {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    transition: transform 0.2s ease;
+  }
+  .faq-item[open] .faq-chevron {
+    transform: rotate(180deg);
+  }
+  .faq-answer {
+    padding: 0 20px 20px;
+    color: #94a3b8;
+    font-size: 0.98rem;
+    line-height: 1.7;
+  }
+</style>

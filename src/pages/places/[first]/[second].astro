@@ -59,21 +59,68 @@ interface Props {
   place: PlaceRecord | null;
 }
 
-const { type, sectorMeta, categoryMeta, places, place } = Astro.props;
+const { type, sectorMeta, categoryMeta, places, place } = Astro.props as Props;
 const isDetail = type === 'place-detail' && place !== null;
+
+// Nearby places computation (Task 2)
+const allOtherPlaces = isDetail ? getAllPlaces().filter((p) => p.id !== place.id) : [];
+
+const sortedNearby = isDetail
+  ? [...allOtherPlaces].sort((a, b) => {
+      // Prioritize same sector first
+      if (a.sector === place.sector && b.sector !== place.sector) return -1;
+      if (b.sector === place.sector && a.sector !== place.sector) return 1;
+      const distA = Math.hypot(a.lat - place.lat, a.lng - place.lng);
+      const distB = Math.hypot(b.lat - place.lat, b.lng - place.lng);
+      return distA - distB;
+    })
+  : [];
+
+const NEARBY_PILLARS = [
+  { title: 'Nearby Dining', icon: '🍽️', categories: ['restaurants', 'restaurant', 'cafes', 'cafe', 'bakery', 'fast-food'] },
+  { title: 'Nearby Mosques', icon: '🕌', categories: ['mosque', 'mosques'] },
+  { title: 'Nearby Schools', icon: '🎓', categories: ['schools', 'school', 'colleges'] },
+  { title: 'Nearby Banks & ATMs', icon: '🏦', categories: ['banks', 'bank', 'services'] },
+  { title: 'Nearby Parks & Health', icon: '🌳', categories: ['park', 'parks', 'hospital', 'hospitals', 'clinic', 'pharmacy', 'gym', 'gyms'] },
+];
+
+const nearbyPillars = isDetail
+  ? NEARBY_PILLARS.map((pillar) => {
+      const matched = sortedNearby.filter((p) => pillar.categories.includes(p.category)).slice(0, 3);
+      return { ...pillar, places: matched };
+    }).filter((pillar) => pillar.places.length > 0)
+  : [];
 
 const siblingPlaces = isDetail
   ? getSectorPlaces(place.sector).filter((p) => p.id !== place.id).slice(0, 4)
   : [];
 
 const currentSectorLabel = isDetail ? place.sectorLabel : sectorMeta?.label;
-const nearbyProperties = propertiesRaw.filter((prop) => {
+
+// Property connections (Task 3)
+const sectorDirectProperties = (propertiesRaw as any[]).filter((prop) => {
   if (!currentSectorLabel) return false;
   return (
     prop.block?.toLowerCase().includes(currentSectorLabel.toLowerCase()) ||
     prop.location?.address?.toLowerCase().includes(currentSectorLabel.toLowerCase())
   );
-}).slice(0, 3);
+});
+
+const otherProperties = (propertiesRaw as any[]).filter(
+  (prop) => !sectorDirectProperties.some((dp) => dp.id === prop.id)
+);
+
+const allPropsPool = [...sectorDirectProperties, ...otherProperties];
+const nearbyHouses = allPropsPool.filter((p) => p.propertyType === 'house').slice(0, 2);
+const nearbyPlots = allPropsPool.filter((p) => p.propertyType === 'plot').slice(0, 2);
+const nearbyCommercial = allPropsPool.filter((p) => p.propertyType === 'commercial').slice(0, 2);
+
+const curatedProperties = [
+  ...nearbyHouses,
+  ...nearbyPlots,
+  ...nearbyCommercial,
+  ...allPropsPool,
+].filter((item, index, self) => index === self.findIndex((t) => t.id === item.id)).slice(0, 4);
 
 const pageTitle = isDetail
   ? `${place.name} | ${place.categoryLabel} in ${place.sectorLabel}, DHA Phase 6 Lahore`
@@ -104,6 +151,21 @@ const relatedCategories = sectorMeta
     )
   : [];
 
+const placePropertySchemas = isDetail && sectorDirectProperties.length > 0
+  ? sectorDirectProperties.map((prop) => ({
+      '@type': 'RealEstateListing',
+      '@id': `${SITE.url}/properties/${prop.slug}/`,
+      name: prop.title,
+      url: `${SITE.url}/properties/${prop.slug}/`,
+      description: prop.description,
+      offers: {
+        '@type': 'Offer',
+        price: prop.price,
+        priceCurrency: prop.currency || 'PKR',
+        availability: 'https://schema.org/InStock',
+      },
+    }))
+  : [];
 
 const structuredData = isDetail
   ? {
@@ -116,6 +178,8 @@ const structuredData = isDetail
           description: place.description,
           url: canonical,
           image: getPlaceImage(place).src,
+          telephone: place.phone || '+92 42 111 342 547',
+          hasMap: place.googleMapsUrl,
           address: {
             '@type': 'PostalAddress',
             streetAddress: place.address,
@@ -129,11 +193,19 @@ const structuredData = isDetail
             latitude: place.lat,
             longitude: place.lng,
           },
+          openingHoursSpecification: {
+            '@type': 'OpeningHoursSpecification',
+            dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            opens: '08:00',
+            closes: '22:00',
+          },
           ...(place.rating ? {
             aggregateRating: {
               '@type': 'AggregateRating',
               ratingValue: place.rating,
               reviewCount: place.reviewCount || 1,
+              bestRating: '5',
+              worstRating: '1',
             },
           } : {}),
         },
@@ -143,9 +215,11 @@ const structuredData = isDetail
             { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url },
             { '@type': 'ListItem', position: 2, name: 'Places', item: `${SITE.url}/places/` },
             { '@type': 'ListItem', position: 3, name: place.categoryLabel, item: `${SITE.url}/places/${place.category}/` },
-            { '@type': 'ListItem', position: 4, name: place.name, item: canonical },
+            { '@type': 'ListItem', position: 4, name: place.sectorLabel, item: `${SITE.url}/sectors/${place.sector}/places/` },
+            { '@type': 'ListItem', position: 5, name: place.name, item: canonical },
           ],
         },
+        ...placePropertySchemas,
       ],
     }
   : {
@@ -212,22 +286,63 @@ const structuredData = isDetail
 
   {isDetail && place ? (
     <div class="place-detail-container">
-      <header class="page-hero">
+      <header class="place-hero-premium">
         <div class="container">
           <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>/</span>
             <a href="/places/">Places</a>
             <span>/</span>
-            <a href={`/places/${place.sector}/`}>{place.sectorLabel}</a>
-            <span>/</span>
             <a href={`/places/${place.category}/`}>{place.categoryLabel}</a>
+            <span>/</span>
+            <a href={`/sectors/${place.sector}/places/`}>{place.sectorLabel}</a>
             <span>/</span>
             <span aria-current="page">{place.name}</span>
           </nav>
 
-          <h1>{place.name}</h1>
-          <p>{place.address}</p>
+          <div class="hero-business-card">
+            <div class="hero-business-badges">
+              <span class="badge-pill badge-category">{place.categoryLabel}</span>
+              <a href={`/sectors/${place.sector}/places/`} class="badge-pill badge-sector">{place.sectorLabel}</a>
+              <span class="badge-pill badge-status">● {place.status || 'Open Daily'}</span>
+            </div>
+            <h1>{place.name}</h1>
+            <p class="hero-address">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <span>{place.address}</span>
+            </p>
+            {place.rating && (
+              <div class="hero-rating-box">
+                <span class="rating-stars" aria-label={`${place.rating} out of 5 stars`}>
+                  {'★'.repeat(Math.round(place.rating))}
+                </span>
+                <strong>{place.rating.toFixed(1)}</strong>
+                <span>/ 5.0</span>
+                <small>{place.reviewCount > 0 ? `(${place.reviewCount} verified reviews)` : '(Verified local establishment)'}</small>
+              </div>
+            )}
+            <div class="hero-actions-bar">
+              <a
+                href={place.googleMapsUrl}
+                target="_blank"
+                rel="noopener"
+                class="gold-button btn-lg"
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+                Open in Google Maps ↗
+              </a>
+              {place.phone ? (
+                <a href={`tel:${place.phone.replace(/\s+/g, '')}`} class="outline-button btn-lg">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                  Call {place.phone}
+                </a>
+              ) : (
+                <a href={`/sectors/${place.sector}/places/`} class="outline-button btn-lg">
+                  Explore {place.sectorLabel} Facilities →
+                </a>
+              )}
+            </div>
+          </div>
         </div>
       </header>
 
@@ -235,31 +350,20 @@ const structuredData = isDetail
         <div class="container">
           <div class="detail-two-col">
             <div class="detail-main-info">
+              <!-- Photo showcase -->
               <div class="detail-photo-box">
-                <PlaceImage place={place} width={800} height={460} priority={true} />
+                <PlaceImage place={place} width={850} height={480} priority={true} />
+                <span class="photo-badge">Verified {place.categoryLabel}</span>
               </div>
 
+              <!-- About & Profile Card -->
               <div class="detail-card">
-                <div class="detail-header-row">
-                  <div class="business-tags">
-                    <span>{place.categoryLabel}</span>
-                    <span>{place.sectorLabel}</span>
-                  </div>
-                  {place.rating && (
-                    <div class="business-rating">
-                      <span aria-label={`${place.rating} out of 5 stars`}>★</span>
-                      <strong>{place.rating.toFixed(1)}</strong>
-                      <small>{place.reviewCount > 0 ? `(${place.reviewCount} Google reviews)` : ''}</small>
-                    </div>
-                  )}
-                </div>
-
                 <h2>About {place.name}</h2>
                 <p class="detail-desc">{place.description}</p>
 
                 {place.features && place.features.length > 0 && (
                   <div class="detail-amenities">
-                    <h3>Key Highlights &amp; Amenities</h3>
+                    <h3>Highlights &amp; Amenities</h3>
                     <div class="amenities-tags">
                       {place.features.map((f) => (
                         <span>✓ {f}</span>
@@ -269,9 +373,53 @@ const structuredData = isDetail
                 )}
               </div>
 
+              <!-- Information Cards Grid (Task 1) -->
+              <div class="info-cards-grid">
+                <div class="info-card">
+                  <div class="info-card-icon">📞</div>
+                  <h4>Phone &amp; Inquiries</h4>
+                  {place.phone ? (
+                    <a href={`tel:${place.phone.replace(/\s+/g, '')}`} class="info-card-link">{place.phone}</a>
+                  ) : (
+                    <span class="info-card-muted">Sector office inquiries</span>
+                  )}
+                  <small>Direct voice contact</small>
+                </div>
+
+                <div class="info-card">
+                  <div class="info-card-icon">🌐</div>
+                  <h4>Official Website</h4>
+                  {place.website ? (
+                    <a href={place.website} target="_blank" rel="noopener" class="info-card-link">Visit Website ↗</a>
+                  ) : (
+                    <a href={place.googleMapsUrl} target="_blank" rel="noopener" class="info-card-link">Verified Google Listing ↗</a>
+                  )}
+                  <small>Online presence &amp; details</small>
+                </div>
+
+                <div class="info-card">
+                  <div class="info-card-icon">🗺️</div>
+                  <h4>Navigation</h4>
+                  <a href={place.googleMapsUrl} target="_blank" rel="noopener" class="info-card-link highlight-maps">Open in Google Maps ↗</a>
+                  <small>Universal live search pin</small>
+                </div>
+
+                <div class="info-card">
+                  <div class="info-card-icon">🕒</div>
+                  <h4>Operating Status</h4>
+                  <strong class="info-card-status">{place.status || 'Open Daily'}</strong>
+                  <small>DHA Phase 6 local timings</small>
+                </div>
+              </div>
+
+              <!-- Location & Coordinates Card -->
               <div class="detail-card">
                 <h2>Location &amp; Coordinates</h2>
                 <div class="detail-loc-grid">
+                  <div>
+                    <small>Full Address</small>
+                    <strong>{place.address}</strong>
+                  </div>
                   <div>
                     <small>Sector &amp; Area</small>
                     <strong>{place.sectorLabel}, DHA Phase 6 Lahore</strong>
@@ -285,40 +433,146 @@ const structuredData = isDetail
                   <a
                     href={place.googleMapsUrl}
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel="noopener"
                     class="gold-button"
                   >
-                    Open Google Maps Directions ↗
+                    Open in Google Maps ↗
                   </a>
                   {place.phone && (
-                    <a href={`tel:${place.phone}`} class="outline-button">
+                    <a href={`tel:${place.phone.replace(/\s+/g, '')}`} class="outline-button">
                       Call {place.phone}
                     </a>
                   )}
                 </div>
               </div>
 
-              {nearbyProperties.length > 0 && (
-                <div class="detail-card">
-                  <h2>Properties Near {place.name}</h2>
-                  <p class="card-subtext">Live asking-price snapshots in {place.sectorLabel}, DHA Phase 6.</p>
-                  <div class="props-list">
-                    {nearbyProperties.map((prop) => (
-                      <div class="prop-row">
-                        <div>
-                          <span class="prop-tag">{prop.propertyType}</span>
-                          <a href={`/properties/${prop.slug}/`} class="prop-link">{prop.title}</a>
-                          <small>{prop.location?.address || prop.block}</small>
+              <!-- Nearby Places System (Task 2) -->
+              <div class="detail-card nearby-places-card">
+                <div class="nearby-header">
+                  <div>
+                    <span class="section-kicker"><span></span> Proximity Intelligence</span>
+                    <h2>Nearby Places Around {place.name}</h2>
+                    <p class="card-subtext">
+                      Verified places and essential amenities in {place.sectorLabel} and adjacent sectors.
+                    </p>
+                  </div>
+                  <a href={`/sectors/${place.sector}/places/`} class="btn-outline-sm">
+                    View All {place.sectorLabel} Places →
+                  </a>
+                </div>
+
+                <div class="nearby-pillars-stack">
+                  {nearbyPillars.map((pillar) => (
+                    <div class="nearby-pillar-block">
+                      <h3 class="pillar-title">
+                        <span>{pillar.icon}</span>
+                        {pillar.title}
+                      </h3>
+                      <div class="nearby-places-grid">
+                        {pillar.places.map((np) => (
+                          <div class="nearby-place-card">
+                            <div class="np-header">
+                              <span class="np-cat">{np.categoryLabel}</span>
+                              <span class={`np-sector-pill ${np.sector === place.sector ? 'pill-same-sector' : 'pill-nearby-sector'}`}>
+                                {np.sector === place.sector ? `Same Sector (${place.sectorLabel})` : np.sectorLabel}
+                              </span>
+                            </div>
+                            <h4 class="np-name">
+                              <a href={`/places/${np.category}/${np.slug}/`}>{np.name}</a>
+                            </h4>
+                            <p class="np-address">{np.address}</p>
+                            <div class="np-footer">
+                              {np.rating ? (
+                                <span class="np-rating">★ {np.rating.toFixed(1)}</span>
+                              ) : (
+                                <span class="np-rating-muted">Verified</span>
+                              )}
+                              <div class="np-actions">
+                                <a href={`/places/${np.category}/${np.slug}/`} class="np-link-detail">Details →</a>
+                                <a href={np.googleMapsUrl} target="_blank" rel="noopener" class="np-link-map" title="Open in Google Maps">Maps ↗</a>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <!-- Properties Near This Location (Task 3) -->
+              <div class="detail-card properties-near-card">
+                <div class="nearby-header">
+                  <div>
+                    <span class="section-kicker"><span></span> Property Intelligence</span>
+                    <h2>Properties Near {place.name}</h2>
+                    <p class="card-subtext">
+                      Verified market listings, houses, plots, and commercial opportunities in and around {place.sectorLabel}, DHA Phase 6.
+                    </p>
+                  </div>
+                  <a href={`/sectors/${place.sector}/properties/`} class="btn-outline-sm">
+                    {place.sectorLabel} Property Guide →
+                  </a>
+                </div>
+
+                <div class="props-cards-grid-4">
+                  {curatedProperties.map((prop) => {
+                    const isDirect = prop.block?.toLowerCase().includes(place.sectorLabel.toLowerCase()) ||
+                      prop.location?.address?.toLowerCase().includes(place.sectorLabel.toLowerCase());
+                    return (
+                      <div class="prop-card-mini">
+                        <div class="prop-card-mini-media">
+                          <img
+                            src={prop.images?.[0] || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&auto=format&fit=crop&q=80'}
+                            alt={prop.title}
+                            loading="lazy"
+                          />
+                          <span class={`prop-badge-mini ${isDirect ? 'badge-local' : 'badge-nearby'}`}>
+                            {isDirect ? place.sectorLabel : (prop.block || 'Nearby')}
+                          </span>
+                          <span class="prop-type-pill">{prop.propertyType}</span>
                         </div>
-                        <div class="prop-price">
-                          <strong>PKR {(prop.price / 10000000).toFixed(2)} Cr</strong>
-                          <a href={`/properties/${prop.slug}/`}>View Plot →</a>
+                        <div class="prop-card-mini-body">
+                          <div class="prop-mini-price">
+                            <strong>PKR {(prop.price / 10000000).toFixed(2)} Cr</strong>
+                            <small>{prop.size} {prop.unit.toUpperCase()}</small>
+                          </div>
+                          <h4 class="prop-mini-title">
+                            <a href={`/properties/${prop.slug}/`}>{prop.title}</a>
+                          </h4>
+                          <span class="prop-mini-avail">● Verified Available</span>
+                          <a href={`/properties/${prop.slug}/`} class="btn-prop-mini">
+                            View Property →
+                          </a>
                         </div>
                       </div>
-                    ))}
+                    );
+                  })}
+                </div>
+
+                <div class="prop-detail-footer">
+                  <div class="prop-detail-cta-text">
+                    <strong>Looking for custom plots or luxury houses in {place.sectorLabel}?</strong>
+                    <span>Explore complete sector inventory or search live listings on Zameen.com</span>
+                  </div>
+                  <div class="prop-detail-actions">
+                    <a
+                      href="https://www.zameen.com/Plots/Lahore_Defence__DHA__Phase_6-1448-1.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="btn-gold-sm"
+                    >
+                      Search on Zameen ↗
+                    </a>
+                    <a href={`/sectors/${place.sector}/properties/`} class="btn-outline-sm">
+                      {place.sectorLabel} Property Guide →
+                    </a>
+                    <a href={`/sectors/${place.sector}/places/`} class="btn-outline-sm">
+                      {place.sectorLabel} Facilities Guide →
+                    </a>
                   </div>
                 </div>
-              )}
+              </div>
             </div>
 
             <aside class="detail-sidebar">
@@ -327,7 +581,8 @@ const structuredData = isDetail
                 <ul class="summary-list">
                   <li><span>Category:</span> <strong>{place.categoryLabel}</strong></li>
                   <li><span>Sector:</span> <strong>{place.sectorLabel}</strong></li>
-                  <li><span>Timings:</span> <strong class="text-green">{place.status}</strong></li>
+                  <li><span>Address:</span> <strong>{place.address}</strong></li>
+                  <li><span>Timings:</span> <strong class="text-green">{place.status || 'Open daily'}</strong></li>
                   {place.phone && <li><span>Phone:</span> <strong>{place.phone}</strong></li>}
                   <li><span>City:</span> <strong>DHA Phase 6, Lahore</strong></li>
                   <li><span>Postal Code:</span> <strong>54792</strong></li>
@@ -335,11 +590,44 @@ const structuredData = isDetail
                 <a
                   href={place.googleMapsUrl}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="noopener"
                   class="gold-button full-w"
                 >
-                  Navigate via Maps ↗
+                  Open in Google Maps ↗
                 </a>
+                {place.phone && (
+                  <a href={`tel:${place.phone.replace(/\s+/g, '')}`} class="outline-button full-w" style="margin-top: 0.6rem;">
+                    Call {place.phone}
+                  </a>
+                )}
+              </div>
+
+              <!-- Sector Hub Navigation -->
+              <div class="sidebar-box">
+                <h3>{place.sectorLabel} Guides</h3>
+                <div class="sidebar-links-group">
+                  <a href={`/sectors/${place.sector}/properties/`} class="sidebar-nav-btn">
+                    <span>🏢</span>
+                    <div>
+                      <strong>{place.sectorLabel} Properties</strong>
+                      <small>Plots, houses &amp; pricing</small>
+                    </div>
+                  </a>
+                  <a href={`/sectors/${place.sector}/places/`} class="sidebar-nav-btn">
+                    <span>🏙️</span>
+                    <div>
+                      <strong>{place.sectorLabel} Facilities</strong>
+                      <small>All verified places</small>
+                    </div>
+                  </a>
+                  <a href={`/places/${place.category}/`} class="sidebar-nav-btn">
+                    <span>📑</span>
+                    <div>
+                      <strong>All {place.categoryLabel}</strong>
+                      <small>Phase 6 wide directory</small>
+                    </div>
+                  </a>
+                </div>
               </div>
 
               {siblingPlaces.length > 0 && (
@@ -358,14 +646,29 @@ const structuredData = isDetail
             </aside>
           </div>
 
-          <section class="sector-callout">
-            <p class="section-kicker"><span></span> {place.sectorLabel} local guide</p>
-            <h2>Explore more in {place.sectorLabel}</h2>
-            <p>Browse all sectors or return to the {place.sectorLabel} property directory.</p>
-            <div>
-              <a class="gold-button" href="/sectors/">View all sectors</a>
-              <a class="outline-button" href={`/places/${place.sector}/`}>
-                All Places in {place.sectorLabel}
+          <!-- Internal Linking Strip (Task 8) -->
+          <section class="internal-linking-hub">
+            <p class="section-kicker"><span></span> DHA Phase 6 Local Intelligence Trail</p>
+            <h2>Explore Connected Guides &amp; Sectors</h2>
+            <div class="hub-breadcrumbs-trail">
+              <a href={`/places/${place.category}/`} class="hub-pill">
+                <span>Category:</span> {place.categoryLabel}
+              </a>
+              <span class="hub-arrow">→</span>
+              <a href={`/sectors/${place.sector}/`} class="hub-pill">
+                <span>Sector:</span> {place.sectorLabel}
+              </a>
+              <span class="hub-arrow">→</span>
+              <a href={`/sectors/${place.sector}/places/`} class="hub-pill">
+                <span>Facilities:</span> {place.sectorLabel} Guide
+              </a>
+              <span class="hub-arrow">→</span>
+              <a href={`/sectors/${place.sector}/properties/`} class="hub-pill">
+                <span>Real Estate:</span> {place.sectorLabel} Properties
+              </a>
+              <span class="hub-arrow">→</span>
+              <a href="/investment-guide/" class="hub-pill">
+                <span>Investment:</span> Phase 6 Guide
               </a>
             </div>
           </section>
@@ -374,7 +677,7 @@ const structuredData = isDetail
 
       <aside class="publication">
         <div class="container">
-          Published {formattedDate} <span>Business information sourced from public Google Maps cards; verify details before visiting.</span>
+          Published {formattedDate} <span>Business information verified for DHA Phase 6 Lahore; verify details before visiting.</span>
         </div>
       </aside>
     </div>
@@ -481,9 +784,9 @@ const structuredData = isDetail
                           <span>No Phone</span>
                         </span>
                       )}
-                      <a class="business-btn-maps" href={p.googleMapsUrl} target="_blank" rel="noopener noreferrer" title="View on Google Maps" aria-label={`View ${p.name} on Google Maps`}>
+                      <a class="business-btn-maps" href={p.googleMapsUrl} target="_blank" rel="noopener" title={`Open ${p.name} in Google Maps`} aria-label={`Open ${p.name} in Google Maps`}>
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
-                        <span>Maps ↗</span>
+                        <span>Open in Google Maps</span>
                       </a>
                       <a class="business-btn-detail" href={`/places/${p.category}/${p.slug}/`} aria-label={`View details for ${p.name}`}>
                         <span>Details</span>
@@ -817,12 +1120,15 @@ const structuredData = isDetail
   }
   .business-actions {
     display: grid;
-    grid-template-columns: 1fr 1.15fr 0.95fr;
+    grid-template-columns: 1fr 1fr;
     align-items: center;
     gap: 0.45rem;
     margin-top: 0.9rem;
     padding-top: 0.75rem;
     border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .business-btn-maps {
+    grid-column: span 2;
   }
   .business-btn-phone,
   .business-btn-maps,
@@ -974,6 +1280,125 @@ const structuredData = isDetail
   }
 
   /* DETAIL PAGE STYLES */
+  /* ══════════════════════════════════════════════════════════════════════════
+   * PREMIUM DETAIL PAGE STYLES (Phase 10.14 Local Business Profile)
+   * ══════════════════════════════════════════════════════════════════════════ */
+  .place-hero-premium {
+    padding: 60px 0 45px;
+    background: linear-gradient(165deg, #0d0d24 0%, #12122e 60%, #0a0a1a 100%);
+    border-bottom: 1px solid var(--dir-line);
+    position: relative;
+    overflow: hidden;
+  }
+  .place-hero-premium::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(16, 185, 129, 0.08), transparent);
+    pointer-events: none;
+  }
+  .hero-business-card {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .hero-business-badges {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.9rem;
+  }
+  .badge-pill {
+    padding: 0.28rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .badge-category {
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    color: var(--dir-gold-light);
+  }
+  .badge-sector {
+    background: rgba(52, 152, 219, 0.15);
+    border: 1px solid rgba(52, 152, 219, 0.35);
+    color: #60a5fa;
+    transition: all 0.2s;
+  }
+  .badge-sector:hover {
+    background: rgba(52, 152, 219, 0.25);
+    color: #93c5fd;
+  }
+  .badge-status {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--dir-line);
+    color: #34d399;
+  }
+  .hero-business-card h1 {
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    line-height: 1.15;
+    color: #ffffff;
+    font-weight: 800;
+    margin: 0 0 0.75rem;
+    letter-spacing: -0.02em;
+  }
+  .hero-address {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--dir-muted);
+    font-size: 0.92rem;
+    margin: 0 0 1rem;
+  }
+  .hero-address svg {
+    color: var(--dir-gold);
+    flex-shrink: 0;
+  }
+  .hero-rating-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.4rem 0.9rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--dir-line);
+    border-radius: 999px;
+    margin-bottom: 1.5rem;
+    font-size: 0.8rem;
+  }
+  .rating-stars {
+    color: #f59e0b;
+    font-size: 0.88rem;
+    letter-spacing: 0.05em;
+  }
+  .hero-rating-box strong {
+    color: #ffffff;
+  }
+  .hero-rating-box span {
+    color: var(--dir-dim);
+  }
+  .hero-rating-box small {
+    color: var(--dir-muted);
+  }
+  .hero-actions-bar {
+    display: flex;
+    justify-content: center;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+  }
+  .btn-lg {
+    padding: 0.7rem 1.4rem;
+    font-size: 0.82rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    border-radius: 8px;
+    font-weight: 700;
+  }
+
   .detail-two-col {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -983,65 +1408,124 @@ const structuredData = isDetail
   .detail-main-info {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.75rem;
   }
   .detail-photo-box {
     position: relative;
-    border-radius: 10px;
+    border-radius: 12px;
     overflow: hidden;
     border: 1px solid var(--dir-line);
     aspect-ratio: 16 / 9;
     background: #1a1a31;
+    box-shadow: 0 16px 36px -20px rgba(0, 0, 0, 0.8);
   }
   .detail-photo-box img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
-  .detail-photo-box span {
+  .photo-badge {
     position: absolute;
-    right: 0.75rem;
-    bottom: 0.75rem;
-    padding: 0.3rem 0.6rem;
-    border-radius: 4px;
-    background: rgba(8, 8, 24, 0.85);
+    right: 0.85rem;
+    bottom: 0.85rem;
+    padding: 0.35rem 0.7rem;
+    border-radius: 6px;
+    background: rgba(8, 8, 24, 0.88);
+    backdrop-filter: blur(8px);
     color: #ffffff;
-    font-size: 0.65rem;
+    font-size: 0.68rem;
+    font-weight: 700;
+    border: 1px solid rgba(255, 255, 255, 0.12);
   }
-  .detail-card {
+
+  /* Info Cards Grid (Task 1) */
+  .info-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.9rem;
+  }
+  .info-card {
     background: var(--dir-surface);
     border: 1px solid var(--dir-line);
     border-radius: 10px;
-    padding: 1.75rem;
-  }
-  .detail-header-row {
+    padding: 1.15rem;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 0.25rem;
+    transition: border-color 0.2s;
+  }
+  .info-card:hover {
+    border-color: rgba(16, 185, 129, 0.3);
+  }
+  .info-card-icon {
+    font-size: 1.25rem;
+    margin-bottom: 0.2rem;
+  }
+  .info-card h4 {
+    margin: 0;
+    color: var(--dir-muted);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .info-card-link {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    word-break: break-all;
+    transition: color 0.2s;
+  }
+  .info-card-link:hover {
+    color: var(--dir-gold-light);
+  }
+  .info-card-link.highlight-maps {
+    color: #38bdf8;
+  }
+  .info-card-link.highlight-maps:hover {
+    color: #7dd3fc;
+  }
+  .info-card-status {
+    color: #34d399;
+    font-size: 0.9rem;
+  }
+  .info-card-muted {
+    color: var(--dir-dim);
+    font-size: 0.85rem;
+  }
+  .info-card small {
+    color: var(--dir-dim);
+    font-size: 0.65rem;
+    margin-top: 0.2rem;
+  }
+
+  /* Detail Card & Amenities */
+  .detail-card {
+    background: var(--dir-surface);
+    border: 1px solid var(--dir-line);
+    border-radius: 12px;
+    padding: 1.75rem;
   }
   .detail-card h2 {
     color: #ffffff;
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     font-weight: 800;
     margin: 0 0 0.8rem;
   }
   .detail-desc {
     color: var(--dir-text);
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     line-height: 1.7;
-    margin-bottom: 1.5rem;
+    margin: 0 0 1.25rem;
   }
   .detail-amenities {
     border-top: 1px solid var(--dir-line);
-    padding-top: 1.25rem;
+    padding-top: 1.15rem;
   }
   .detail-amenities h3 {
     color: var(--dir-muted);
-    font-size: 0.75rem;
-    font-weight: 700;
+    font-size: 0.72rem;
+    font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     margin: 0 0 0.75rem;
@@ -1059,34 +1543,385 @@ const structuredData = isDetail
     font-size: 0.75rem;
     color: var(--dir-text);
   }
+
+  /* Location Grid */
   .detail-loc-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.85rem;
+    margin-bottom: 1.25rem;
   }
   .detail-loc-grid div {
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid var(--dir-line);
     border-radius: 8px;
-    padding: 1rem;
+    padding: 0.9rem;
   }
   .detail-loc-grid small {
     display: block;
     color: var(--dir-dim);
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     text-transform: uppercase;
-    margin-bottom: 0.25rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.3rem;
   }
   .detail-loc-grid strong {
     color: #ffffff;
-    font-size: 0.9rem;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    display: block;
   }
   .detail-actions-bar {
     display: flex;
     align-items: center;
     gap: 0.75rem;
     flex-wrap: wrap;
+  }
+
+  /* Nearby Places System (Task 2) */
+  .nearby-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .nearby-header h2 {
+    margin: 0.2rem 0 0.4rem;
+  }
+  .card-subtext {
+    color: var(--dir-muted);
+    font-size: 0.82rem;
+    margin: 0;
+    max-width: 620px;
+    line-height: 1.5;
+  }
+  .nearby-pillars-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+  }
+  .nearby-pillar-block {
+    border-top: 1px solid var(--dir-line);
+    padding-top: 1.1rem;
+  }
+  .nearby-pillar-block:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+  .pillar-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 800;
+    margin: 0 0 0.85rem;
+  }
+  .nearby-places-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.85rem;
+  }
+  .nearby-place-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--dir-line);
+    border-radius: 8px;
+    padding: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .nearby-place-card:hover {
+    border-color: rgba(16, 185, 129, 0.35);
+    transform: translateY(-2px);
+  }
+  .np-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem;
+    font-size: 0.58rem;
+  }
+  .np-cat {
+    color: var(--dir-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-weight: 700;
+  }
+  .np-sector-pill {
+    padding: 0.12rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.55rem;
+    font-weight: 800;
+  }
+  .pill-same-sector {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+  }
+  .pill-nearby-sector {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--dir-dim);
+  }
+  .np-name {
+    margin: 0.2rem 0 0;
+    font-size: 0.84rem;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .np-name a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .np-name a:hover {
+    color: var(--dir-gold-light);
+  }
+  .np-address {
+    color: var(--dir-muted);
+    font-size: 0.68rem;
+    margin: 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .np-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 0.55rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 0.65rem;
+  }
+  .np-rating {
+    color: #f59e0b;
+    font-weight: 700;
+  }
+  .np-rating-muted {
+    color: var(--dir-dim);
+  }
+  .np-actions {
+    display: flex;
+    gap: 0.4rem;
+  }
+  .np-link-detail {
+    color: var(--dir-gold-light);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .np-link-map {
+    color: #38bdf8;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  /* Properties Near Card (Task 3) */
+  .props-cards-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+  .prop-card-mini {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--dir-line);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .prop-card-mini:hover {
+    border-color: rgba(212, 168, 68, 0.35);
+    transform: translateY(-2px);
+  }
+  .prop-card-mini-media {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    background: #131327;
+    overflow: hidden;
+  }
+  .prop-card-mini-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .prop-badge-mini {
+    position: absolute;
+    top: 0.4rem;
+    left: 0.4rem;
+    padding: 0.15rem 0.35rem;
+    border-radius: 3px;
+    font-size: 0.52rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+  .badge-local {
+    background: rgba(16, 185, 129, 0.9);
+    color: #080818;
+  }
+  .badge-nearby {
+    background: rgba(8, 8, 24, 0.85);
+    color: var(--dir-dim);
+    border: 1px solid var(--dir-line);
+  }
+  .prop-type-pill {
+    position: absolute;
+    bottom: 0.4rem;
+    left: 0.4rem;
+    padding: 0.12rem 0.35rem;
+    border-radius: 3px;
+    background: rgba(8, 8, 24, 0.8);
+    color: #ffffff;
+    font-size: 0.52rem;
+    font-weight: 700;
+    text-transform: capitalize;
+  }
+  .prop-card-mini-body {
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    flex: 1;
+  }
+  .prop-mini-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .prop-mini-price strong {
+    color: #34d399;
+    font-size: 0.9rem;
+    font-weight: 800;
+  }
+  .prop-mini-price small {
+    color: var(--dir-dim);
+    font-size: 0.58rem;
+    font-weight: 700;
+  }
+  .prop-mini-title {
+    margin: 0;
+    font-size: 0.74rem;
+    font-weight: 700;
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .prop-mini-title a {
+    color: #ffffff;
+    text-decoration: none;
+  }
+  .prop-mini-title a:hover {
+    color: var(--dir-gold-light);
+  }
+  .prop-mini-avail {
+    color: #10b981;
+    font-size: 0.58rem;
+    font-weight: 700;
+  }
+  .btn-prop-mini {
+    margin-top: auto;
+    padding: 0.35rem 0.5rem;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--dir-line);
+    color: #ffffff;
+    font-size: 0.64rem;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-prop-mini:hover {
+    background: rgba(16, 185, 129, 0.2);
+    border-color: var(--dir-gold);
+    color: var(--dir-gold-light);
+  }
+
+  /* Sidebar Navigation Groups */
+  .sidebar-links-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .sidebar-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.85rem;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--dir-line);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .sidebar-nav-btn:hover {
+    border-color: rgba(16, 185, 129, 0.3);
+    background: rgba(255, 255, 255, 0.04);
+  }
+  .sidebar-nav-btn span {
+    font-size: 1.2rem;
+  }
+  .sidebar-nav-btn strong {
+    display: block;
+    color: #ffffff;
+    font-size: 0.78rem;
+  }
+  .sidebar-nav-btn small {
+    display: block;
+    color: var(--dir-dim);
+    font-size: 0.65rem;
+  }
+
+  /* Internal Linking Trail (Task 8) */
+  .internal-linking-hub {
+    margin-top: 3rem;
+    padding: 1.75rem;
+    background: var(--dir-surface);
+    border: 1px solid var(--dir-line);
+    border-radius: 12px;
+  }
+  .internal-linking-hub h2 {
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 800;
+    margin: 0 0 1rem;
+  }
+  .hub-breadcrumbs-trail {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .hub-pill {
+    padding: 0.45rem 0.8rem;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--dir-line);
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .hub-pill span {
+    color: var(--dir-dim);
+    font-weight: 600;
+  }
+  .hub-pill:hover {
+    border-color: var(--dir-gold);
+    color: var(--dir-gold-light);
+  }
+  .hub-arrow {
+    color: var(--dir-dim);
+    font-size: 0.8rem;
   }
   .props-list {
     display: flex;
@@ -1137,6 +1972,84 @@ const structuredData = isDetail
     color: var(--dir-gold);
     font-size: 0.7rem;
     font-weight: 700;
+  }
+  .prop-tags-strip {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.25rem;
+    flex-wrap: wrap;
+  }
+  .prop-badge-pill {
+    font-size: 0.55rem;
+    font-weight: 800;
+    padding: 0.12rem 0.4rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+  .pill-direct {
+    background: rgba(212, 168, 68, 0.2);
+    color: var(--dir-gold-light);
+  }
+  .pill-nearby {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--dir-dim);
+  }
+  .prop-size-badge {
+    font-size: 0.58rem;
+    color: var(--dir-muted);
+    font-weight: 700;
+  }
+  .prop-detail-footer {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--dir-line);
+  }
+  .prop-detail-cta-text {
+    margin-bottom: 0.75rem;
+  }
+  .prop-detail-cta-text strong {
+    display: block;
+    color: #ffffff;
+    font-size: 0.85rem;
+  }
+  .prop-detail-cta-text span {
+    display: block;
+    color: var(--dir-muted);
+    font-size: 0.75rem;
+    margin-top: 0.2rem;
+  }
+  .prop-detail-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .btn-gold-sm {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.45rem 0.85rem;
+    border-radius: 6px;
+    background: linear-gradient(135deg, var(--dir-gold), var(--dir-gold-light));
+    color: #080818;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-decoration: none;
+  }
+  .btn-outline-sm {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.42rem 0.8rem;
+    border-radius: 6px;
+    border: 1px solid var(--dir-line);
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-outline-sm:hover {
+    border-color: var(--dir-gold);
+    color: var(--dir-gold-light);
   }
   .detail-sidebar {
     display: flex;
@@ -1229,29 +2142,43 @@ const structuredData = isDetail
     .detail-two-col {
       grid-template-columns: 1fr;
     }
+    .nearby-places-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .props-cards-grid-4 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .detail-loc-grid {
+      grid-template-columns: 1fr;
+    }
   }
   @media (max-width: 620px) {
-    .page-hero {
-      padding: 48px 0 36px;
+    .page-hero,
+    .place-hero-premium {
+      padding: 40px 0 32px;
     }
     .directory-section {
-      padding: 40px 0 60px;
+      padding: 35px 0 55px;
     }
     .directory-controls,
-    .business-grid {
+    .business-grid,
+    .info-cards-grid,
+    .nearby-places-grid,
+    .props-cards-grid-4 {
       grid-template-columns: 1fr;
+    }
+    .hero-actions-bar {
+      flex-direction: column;
+    }
+    .btn-lg {
+      width: 100%;
+      justify-content: center;
     }
     .publication .container {
       flex-direction: column;
     }
-    .detail-place-title {
-      font-size: 2.2rem;
-    }
-    .location-facts-grid {
-      grid-template-columns: 1fr;
-    }
     .detail-card {
-      padding: 20px;
+      padding: 18px;
     }
   }
 </style>

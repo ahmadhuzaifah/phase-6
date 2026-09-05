@@ -1,34 +1,479 @@
 ---
+/**
+ * Market & Buying Guides (Blog) — DHA Phase 6 Lahore
+ * Categorized articles, search, reading times, and comprehensive knowledge repository.
+ */
 import PageLayout from '@layouts/PageLayout.astro';
 import Schema from '@components/seo/Schema.astro';
 import { SITE } from '@data/site';
 import { SEO_ARTICLES } from '@data/articles';
 
-const description = 'Independent market updates, buying guides, map explainers, and property verification resources for DHA Phase 6 Lahore.';
-const pageSchema = { name: `${SITE.name} Market & Buying Guides`, description, url: `${SITE.url}/blog` };
+const description = 'Independent market updates, investment guides, property prices explained, construction checklists, and buying tips for DHA Phase 6 Lahore.';
+const canonical = `${SITE.url}/blog/`;
+
+const categories = [
+  'All',
+  'Property Market Updates',
+  'Investment Guides',
+  'Buying Tips',
+  'Construction Guides'
+];
+
+const pageSchema = {
+  name: `${SITE.name} Market & Buying Guides`,
+  description,
+  url: canonical
+};
+
+const featuredArticle = SEO_ARTICLES[0];
 ---
 
-<PageLayout title={`Market & Buying Guides | ${SITE.name}`} description={description} canonical={`${SITE.url}/blog`}>
+<PageLayout
+  title={`Market & Buying Guides | ${SITE.name}`}
+  description={description}
+  canonical={canonical}
+>
   <Schema type="WebSite" data={pageSchema} />
-  <section class="blog-hero"><div class="container"><p class="eyebrow eyebrow--dark">Independent Research Desk</p><h1>Market notes for <span class="text-gradient-gold">better property decisions</span></h1><p class="lead">Practical guides covering prices, blocks, maps, due diligence, and investment research in DHA Phase 6 Lahore.</p></div></section>
-  <section class="section"><div class="container"><div class="article-grid">
-    {SEO_ARTICLES.map((article) => <article class="article-card"><img src={article.image} alt={article.imageAlt} width="1200" height="630" loading="lazy" /><div class="article-card__body"><span class="badge">{article.category}</span><p class="article-card__date">Updated {article.updatedDate}</p><h2><a href={`/blog/${article.slug}`}>{article.title}</a></h2><p>{article.description}</p><a class="btn btn--outline btn--sm" href={`/blog/${article.slug}`}>Read the guide</a></div></article>)}
-  </div></div></section>
+
+  <header class="blog-hero">
+    <div class="container">
+      <p class="eyebrow">Independent Real Estate Editorial Desk</p>
+      <h1>Market Notes & <span class="text-gradient">Buying Intelligence</span></h1>
+      <p class="lead">
+        Authoritative research guides covering prices, sectors, due diligence, tax calculations, and long-term investment strategy in DHA Phase 6 Lahore.
+      </p>
+
+      <!-- SEARCH BAR -->
+      <div class="blog-search-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="blogSearchInput" placeholder="Search guides by keyword, topic, or question..." />
+      </div>
+    </div>
+  </header>
+
+  <main class="container blog-workspace">
+    <!-- FEATURED ARTICLE HERO -->
+    {featuredArticle && (
+      <section class="featured-hero-card">
+        <div class="featured-badge">⭐ Featured In-Depth Guide</div>
+        <div class="featured-grid">
+          <div class="featured-media">
+            <img src={featuredArticle.image} alt={featuredArticle.imageAlt} width="800" height="450" loading="eager" />
+          </div>
+          <div class="featured-content">
+            <span class="featured-cat">{featuredArticle.category} · {featuredArticle.readTime || '8 min read'}</span>
+            <h2><a href={`/blog/${featuredArticle.slug}/`}>{featuredArticle.title}</a></h2>
+            <p>{featuredArticle.description}</p>
+            <a href={`/blog/${featuredArticle.slug}/`} class="btn-read-featured">Read Full Analysis →</a>
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- CATEGORY FILTER TABS -->
+    <nav class="category-tabs" aria-label="Blog categories">
+      {categories.map((cat, idx) => (
+        <button
+          class:list={['cat-tab-btn', { active: idx === 0 }]}
+          data-category={cat}
+          type="button"
+        >
+          {cat}
+        </button>
+      ))}
+    </nav>
+
+    <!-- ARTICLE GRID -->
+    <div id="articlesGrid" class="article-grid">
+      {SEO_ARTICLES.map((article) => (
+        <article class="article-card" data-category={article.category} data-title={article.title.toLowerCase()} data-desc={article.description.toLowerCase()}>
+          <div class="article-media">
+            <img src={article.image} alt={article.imageAlt} width="800" height="420" loading="lazy" />
+            <span class="category-pill">{article.category}</span>
+          </div>
+          <div class="article-card__body">
+            <div class="article-card__meta">
+              <span>Updated {article.updatedDate}</span>
+              {article.readTime && <span class="read-time">⏱️ {article.readTime}</span>}
+            </div>
+            <h2><a href={`/blog/${article.slug}/`}>{article.title}</a></h2>
+            <p>{article.description}</p>
+            <div class="card-footer">
+              <a class="read-more-link" href={`/blog/${article.slug}/`}>Read Full Guide →</a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- ZERO RESULTS MESSAGE -->
+    <div id="noArticlesBox" class="no-articles-box" style="display: none;">
+      <p>No guides found matching your search criteria.</p>
+      <button id="resetBlogFilterBtn" class="btn-reset">View All Guides</button>
+    </div>
+
+  </main>
 </PageLayout>
 
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('blogSearchInput');
+    const catButtons = document.querySelectorAll('.cat-tab-btn');
+    const articles = document.querySelectorAll('.article-card');
+    const noArticlesBox = document.getElementById('noArticlesBox');
+    const resetBtn = document.getElementById('resetBlogFilterBtn');
+
+    let activeCategory = 'All';
+
+    function filterArticles() {
+      const q = (searchInput?.value || '').trim().toLowerCase();
+      let visibleCount = 0;
+
+      articles.forEach(card => {
+        const cat = card.dataset.category || '';
+        const title = card.dataset.title || '';
+        const desc = card.dataset.desc || '';
+
+        const matchesCat = (activeCategory === 'All') || (cat === activeCategory);
+        const matchesQuery = !q || title.includes(q) || desc.includes(q);
+
+        if (matchesCat && matchesQuery) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (noArticlesBox) {
+        noArticlesBox.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+    }
+
+    catButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        catButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeCategory = btn.dataset.category || 'All';
+        filterArticles();
+      });
+    });
+
+    if (searchInput) {
+      searchInput.addEventListener('input', filterArticles);
+    }
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        if (searchInput) searchInput.value = '';
+        catButtons.forEach(b => b.classList.remove('active'));
+        catButtons[0]?.classList.add('active');
+        activeCategory = 'All';
+        filterArticles();
+      });
+    }
+  });
+</script>
+
 <style>
-  .blog-hero { padding: var(--space-16) 0 var(--space-12); background: radial-gradient(circle at 80% 15%, #25254D, #0A0A1A 72%); color: #fff; border-bottom: 1px solid rgba(16,185,129,.18); }
-  .blog-hero h1 { max-width: 18ch; color: #fff; margin: var(--space-3) 0; }
-  .blog-hero .lead { max-width: 60ch; color: var(--color-neutral-300); }
-  .section { padding: var(--space-16) 0; }
-  .article-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-6); }
-  .article-card { overflow: hidden; border: 1px solid var(--border-light); border-radius: var(--radius-xl); background: var(--bg-primary); box-shadow: var(--shadow-card); transition: transform var(--transition-fast), border-color var(--transition-fast); }
-  .article-card:hover { transform: translateY(-4px); border-color: var(--border-gold); }
-  .article-card img { display: block; width: 100%; aspect-ratio: 1.9; object-fit: cover; }
-  .article-card__body { padding: var(--space-5); }
-  .article-card__date { color: var(--text-muted); font-size: var(--text-xs); margin: var(--space-2) 0; }
-  .article-card h2 { font-size: var(--text-xl); margin: 0 0 var(--space-2); }
-  .article-card h2 a { color: var(--text-primary); text-decoration: none; }
-  .article-card h2 a:hover { color: var(--color-primary-700); }
-  .article-card p:not(.article-card__date) { color: var(--text-secondary); font-size: var(--text-sm); line-height: var(--leading-relaxed); }
+  .blog-hero {
+    padding: 72px 0 48px;
+    background: radial-gradient(circle at 80% 15%, #25254D, #0A0A1A 72%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .eyebrow {
+    color: #34d399;
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+  }
+  .blog-hero h1 {
+    font-size: clamp(2.2rem, 4.2vw, 3.2rem);
+    color: #ffffff;
+    font-weight: 800;
+    margin-bottom: 16px;
+    max-width: 820px;
+  }
+  .text-gradient {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #10b981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .lead {
+    font-size: 1.1rem;
+    color: #94a3b8;
+    max-width: 750px;
+    line-height: 1.65;
+    margin-bottom: 28px;
+  }
+  .blog-search-bar {
+    position: relative;
+    max-width: 600px;
+  }
+  .search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+    pointer-events: none;
+  }
+  .blog-search-bar input {
+    width: 100%;
+    padding: 14px 18px 14px 44px;
+    border-radius: 10px;
+    background: rgba(15, 15, 35, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #f8fafc;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+  .blog-search-bar input:focus {
+    border-color: #34d399;
+  }
+  .blog-workspace {
+    padding: 48px 20px 80px;
+    max-width: 1120px;
+  }
+
+  /* Featured Article Card */
+  .featured-hero-card {
+    position: relative;
+    background: linear-gradient(145deg, #131330, #0c0c22);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 40px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+  }
+  .featured-badge {
+    position: absolute;
+    top: -12px;
+    left: 24px;
+    background: linear-gradient(135deg, #059669, #10b981);
+    color: #042014;
+    font-size: 0.72rem;
+    font-weight: 900;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+  }
+  .featured-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: center;
+  }
+  .featured-media {
+    border-radius: 10px;
+    overflow: hidden;
+    aspect-ratio: 16/10;
+    background: #060614;
+  }
+  .featured-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .featured-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .featured-cat {
+    color: #34d399;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .featured-content h2 {
+    font-size: 1.55rem;
+    color: #fff;
+    line-height: 1.25;
+    margin: 0;
+  }
+  .featured-content h2 a {
+    color: #fff;
+    text-decoration: none;
+  }
+  .featured-content h2 a:hover {
+    color: #34d399;
+  }
+  .featured-content p {
+    color: #94a3b8;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .btn-read-featured {
+    display: inline-block;
+    align-self: flex-start;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #059669, #10b981);
+    color: #042014;
+    font-weight: 900;
+    font-size: 0.85rem;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-top: 6px;
+    transition: transform 0.2s;
+  }
+  .btn-read-featured:hover {
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 820px) {
+    .featured-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+
+  .category-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 36px;
+  }
+  .cat-tab-btn {
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: #111129;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #94a3b8;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .cat-tab-btn:hover {
+    color: #f1f5f9;
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .cat-tab-btn.active {
+    background: linear-gradient(135deg, #059669, #10b981);
+    color: #042014;
+    border-color: transparent;
+  }
+  .article-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 28px;
+  }
+  .article-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    background: #111129;
+    box-shadow: 0 16px 36px -20px #000;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+  .article-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(16, 185, 129, 0.4);
+  }
+  .article-media {
+    position: relative;
+    aspect-ratio: 16/9;
+    background: #0a0a1a;
+  }
+  .article-media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .category-pill {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: rgba(10, 10, 26, 0.85);
+    backdrop-filter: blur(4px);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+  .article-card__body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 22px;
+  }
+  .article-card__meta {
+    display: flex;
+    justify-content: space-between;
+    color: #64748b;
+    font-size: 0.78rem;
+    margin-bottom: 10px;
+  }
+  .read-time {
+    color: #94a3b8;
+  }
+  .article-card h2 {
+    font-size: 1.25rem;
+    line-height: 1.35;
+    margin: 0 0 12px;
+    font-weight: 800;
+  }
+  .article-card h2 a {
+    color: #f1f5f9;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .article-card h2 a:hover {
+    color: #34d399;
+  }
+  .article-card p {
+    color: #94a3b8;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    flex-grow: 1;
+  }
+  .card-footer {
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    margin-top: auto;
+  }
+  .read-more-link {
+    color: #34d399;
+    font-weight: 700;
+    font-size: 0.88rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .read-more-link:hover {
+    color: #fbbf24;
+  }
+  .no-articles-box {
+    text-align: center;
+    padding: 64px 20px;
+    background: #111129;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .no-articles-box p {
+    color: #94a3b8;
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+  }
+  .btn-reset {
+    background: #10b981;
+    color: #042014;
+    font-weight: 800;
+    padding: 8px 18px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+  }
 </style>

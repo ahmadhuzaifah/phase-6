@@ -1,33 +1,135 @@
 ---
-import { NAVIGATION } from '@data/site';
 import MobileMenu from './MobileMenu.astro';
 const currentPath = Astro.url.pathname;
+
+const SECTORS_LIST = [
+  { name: 'Sector A', href: '/dha-phase-6-sector-a-lahore/' },
+  { name: 'Sector B', href: '/dha-phase-6-sector-b-lahore/' },
+  { name: 'Sector C', href: '/dha-phase-6-sector-c-lahore/' },
+  { name: 'Sector D', href: '/dha-phase-6-sector-d-lahore/' },
+  { name: 'Sector E', href: '/dha-phase-6-sector-e-lahore/' },
+  { name: 'Sector F', href: '/dha-phase-6-sector-f-lahore/' },
+  { name: 'Sector G', href: '/dha-phase-6-sector-g-lahore/' },
+  { name: 'Sector H', href: '/dha-phase-6-sector-h-lahore/' },
+  { name: 'Sector J', href: '/dha-phase-6-sector-j-lahore/' },
+  { name: 'Sector K', href: '/dha-phase-6-sector-k-lahore/' },
+  { name: 'Sector L', href: '/dha-phase-6-sector-l-lahore/' },
+  { name: 'Sector M', href: '/dha-phase-6-sector-m-lahore/' },
+  { name: 'Sector N', href: '/dha-phase-6-sector-n-lahore/' },
+  { name: 'CCA 1', href: '/dha-phase-6-cca-lahore/' },
+  { name: 'CCA 2', href: '/sectors/cca-2/' },
+  { name: 'Defence Raya', href: '/dha-phase-6-defence-raya-lahore/' },
+];
 ---
 
 <header class="site-header">
-  <div class="container site-header__inner">
+  <div class="site-header__inner">
     <a class="brand" href="/" aria-label="DHA Phase 6 Lahore home">
       <span>D6</span>
       <strong>DHA Phase <span>6</span> Lahore</strong>
     </a>
-    <nav aria-label="Main navigation">
-      <ul>
-        {NAVIGATION.map((item) => (
-          <li>
-            <a
-              class:list={[
-                { active: currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href)) },
-                { 'map-link': item.label === 'Map PDFs' }
-              ]}
-              href={item.href}
-            >
-              {item.label}
-            </a>
-          </li>
-        ))}
+
+    <nav aria-label="Main navigation" class="desktop-nav">
+      <ul class="nav-list">
+        <li><a href="/" class:list={[{ active: currentPath === '/' }]}>Home</a></li>
+
+        <!-- Guide with Mega/Dropdown -->
+        <li class="has-dropdown">
+          <a href="/dha-phase-6-lahore-guide/" class:list={[{ active: currentPath.includes('/guide') || currentPath.includes('/map') }]}>
+            Guide <span class="arrow-down">▾</span>
+          </a>
+          <div class="dropdown-menu dropdown-guide">
+            <div class="dropdown-col">
+              <h4>Authority Guides</h4>
+              <a href="/dha-phase-6-lahore-guide/">Complete Knowledge Hub</a>
+              <a href="/dha-phase-6-lahore-map/">Master Plan Map</a>
+              <a href="/best-sector-in-dha-phase-6-lahore/">Best Sector Guide</a>
+              <a href="/best-place-to-live-in-dha-phase-6-lahore/">Best Place to Live</a>
+            </div>
+            <div class="dropdown-col">
+              <h4>Buyer Tools</h4>
+              <a href="/dha-phase-6-property-calculator/">Property Calculators</a>
+              <a href="/verification-and-transfer/">Transfer &amp; Verification</a>
+              <a href="/construction/">Construction Guide</a>
+              <a href="/dha-phase-6-vs-phase-5-lahore/">Phase 6 vs Phase 5</a>
+            </div>
+          </div>
+        </li>
+
+        <!-- Properties with Mega Menu -->
+        <li class="has-mega">
+          <a href="/properties/" class:list={[{ active: currentPath.startsWith('/properties') || currentPath.startsWith('/search-property') }]}>
+            Properties <span class="arrow-down">▾</span>
+          </a>
+          <div class="mega-menu mega-properties">
+            <div class="mega-col">
+              <h4>Browse Categories</h4>
+              <a href="/houses-for-sale-in-dha-phase-6-lahore/" class="mega-link-highlight">
+                <strong>Houses for Sale</strong>
+                <span>1 Kanal, 10 Marla &amp; 2 Kanal luxury villas</span>
+              </a>
+              <a href="/plots-for-sale-in-dha-phase-6-lahore/" class="mega-link-highlight">
+                <strong>Plots for Sale</strong>
+                <span>Ready possession residential plots</span>
+              </a>
+              <a href="/commercial-property-dha-phase-6-lahore/" class="mega-link-highlight">
+                <strong>Commercial Property</strong>
+                <span>Plazas, shops, and CCA plots</span>
+              </a>
+            </div>
+            <div class="mega-col">
+              <h4>Smart Property Search</h4>
+              <p class="mega-desc">Filter active market records by size, sector, and price bracket.</p>
+              <a href="/search-property/" class="mega-search-cta">⚡ Open Property Search Tool →</a>
+              <div class="quick-links">
+                <span>Popular:</span>
+                <a href="/houses/">Houses</a>
+                <a href="/plots/">Plots</a>
+                <a href="/commercial/">Commercial</a>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li><a href="/houses/" class:list={[{ active: currentPath.startsWith('/houses') }]}>Houses</a></li>
+        <li><a href="/plots/" class:list={[{ active: currentPath.startsWith('/plots') }]}>Plots</a></li>
+        <li><a href="/commercial/" class:list={[{ active: currentPath.startsWith('/commercial') }]}>Commercial</a></li>
+
+        <!-- Sectors with Mega Menu -->
+        <li class="has-mega">
+          <a href="/sectors/" class:list={[{ active: currentPath.startsWith('/sectors') || currentPath.includes('-sector-') }]}>
+            Sectors <span class="arrow-down">▾</span>
+          </a>
+          <div class="mega-menu mega-sectors">
+            <div class="mega-sectors-header">
+              <h4>DHA Phase 6 Residential &amp; Commercial Sectors</h4>
+              <a href="/sectors/">View All Sectors Directory →</a>
+            </div>
+            <div class="sectors-grid">
+              {SECTORS_LIST.map(sector => (
+                <a href={sector.href} class="sector-pill">
+                  {sector.name}
+                </a>
+              ))}
+            </div>
+          </div>
+        </li>
+
+        <li><a href="/places/" class:list={[{ active: currentPath.startsWith('/places') }]}>Places</a></li>
+        <li><a href="/dha-phase-6-lahore-prices/" class:list={[{ active: currentPath.includes('/prices') }]}>Prices</a></li>
+        <li><a href="/best-investment-area-in-dha-phase-6-lahore/" class:list={[{ active: currentPath.includes('/best-investment') || currentPath.includes('investment') }]}>Investment</a></li>
+        <li><a href="/blog/" class:list={[{ active: currentPath.startsWith('/blog') }]}>Blog</a></li>
+        <li><a href="/contact/" class:list={[{ active: currentPath.startsWith('/contact') }]}>Contact</a></li>
       </ul>
     </nav>
+
     <div class="actions">
+      <a href="/search-property/" class="search-btn-icon" aria-label="Search properties">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </a>
+      <a href="https://wa.me/923257800001?text=Hello%2C%20I%20need%20assistance%20with%20DHA%20Phase%206%20property." target="_blank" rel="noopener noreferrer" class="whatsapp-nav-btn">
+        WhatsApp Desk
+      </a>
       <button id="mobile-menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-menu">
         <span></span><span></span><span></span>
       </button>
@@ -37,12 +139,325 @@ const currentPath = Astro.url.pathname;
 </header>
 
 <style>
-  .site-header{position:sticky;top:0;z-index:100;background:rgba(10,10,26,.97);border-bottom:1px solid rgba(255,255,255,.08);box-shadow:0 8px 28px rgba(0,0,0,.22);backdrop-filter:blur(16px)}
-  .site-header__inner{display:flex;height:72px;align-items:center;justify-content:space-between;gap:1rem}
-  .brand{display:flex;align-items:center;gap:.7rem;color:#fff;text-decoration:none;white-space:nowrap}.brand>span{display:grid;width:38px;height:38px;place-items:center;border-radius:.3rem;background:linear-gradient(135deg,#059669,#10b981);color:#042014;font-weight:950}.brand strong{font-size:1rem}.brand span{color:#10b981}
-  nav{display:none;flex:1}nav ul{display:flex;justify-content:center;gap:.05rem;margin:0;padding:0;list-style:none}nav a{display:block;padding:.72rem .46rem;color:#9a9ab5;text-decoration:none;font-size:.72rem;font-weight:750;white-space:nowrap}nav a:hover,nav a.active{color:#fff}nav a.active{box-shadow:inset 0 -2px #10b981}
-  .actions{display:flex;align-items:center;gap:.65rem}.map-link{padding:.65rem .85rem !important;background:linear-gradient(135deg,#059669,#10b981) !important;color:#042014 !important;text-decoration:none;font-size:.72rem;font-weight:900;border-radius:4px}
-  button{display:flex;width:40px;height:40px;flex-direction:column;justify-content:center;gap:5px;padding:9px;border:1px solid rgba(255,255,255,.18);background:transparent}button span{display:block;height:2px;background:#fff}
-  @media(min-width:1200px){nav{display:block}button{display:none}.brand strong{font-size:.92rem}.site-header__inner{max-width:1480px}}
-  @media(max-width:480px){.brand strong{font-size:.78rem}.map-link{display:none}}
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(10, 10, 26, 0.98);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(18px);
+  }
+  .site-header__inner {
+    display: flex;
+    height: 72px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    max-width: 1540px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: #fff;
+    text-decoration: none;
+    white-space: nowrap;
+    font-weight: 800;
+  }
+  .brand > span {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border-radius: 0.35rem;
+    background: linear-gradient(135deg, #059669, #10b981);
+    color: #042014;
+    font-weight: 950;
+    font-size: 0.95rem;
+  }
+  .brand strong {
+    font-size: 1rem;
+    letter-spacing: -0.01em;
+  }
+  .brand span {
+    color: #10b981;
+  }
+
+  .desktop-nav {
+    display: none;
+    flex: 1;
+  }
+  .nav-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .nav-list > li {
+    position: relative;
+  }
+  .nav-list a {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.7rem 0.52rem;
+    color: #9a9ab5;
+    text-decoration: none;
+    font-size: 0.76rem;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: color 0.18s ease;
+  }
+  .nav-list a:hover,
+  .nav-list a.active {
+    color: #fff;
+  }
+  .nav-list a.active {
+    color: #34d399;
+  }
+  .arrow-down {
+    font-size: 0.65rem;
+    opacity: 0.7;
+    transition: transform 0.2s ease;
+  }
+  .has-dropdown:hover .arrow-down,
+  .has-mega:hover .arrow-down {
+    transform: rotate(180deg);
+  }
+
+  /* DROPDOWN & MEGA MENU STYLES */
+  .dropdown-menu,
+  .mega-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: none;
+    background: #0f0f26;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 0.75rem;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55);
+    padding: 1.25rem;
+    z-index: 1100;
+  }
+  .has-dropdown:hover .dropdown-menu,
+  .has-mega:hover .mega-menu {
+    display: flex;
+    animation: menuFadeIn 0.2s ease forwards;
+  }
+  @keyframes menuFadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .dropdown-guide {
+    width: 440px;
+    gap: 1.5rem;
+  }
+  .dropdown-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .dropdown-col h4,
+  .mega-col h4,
+  .mega-sectors-header h4 {
+    margin: 0 0 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #10b981;
+  }
+  .dropdown-col a {
+    padding: 0.35rem 0;
+    color: #cbd5e1;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .dropdown-col a:hover {
+    color: #34d399;
+    padding-left: 4px;
+  }
+
+  .mega-properties {
+    width: 580px;
+    gap: 1.75rem;
+  }
+  .mega-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+  .mega-link-highlight {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.15rem;
+    padding: 0.6rem 0.75rem !important;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: all 0.2s ease;
+  }
+  .mega-link-highlight:hover {
+    background: rgba(16, 185, 129, 0.1) !important;
+    border-color: rgba(16, 185, 129, 0.3) !important;
+  }
+  .mega-link-highlight strong {
+    color: #f8fafc;
+    font-size: 0.82rem;
+  }
+  .mega-link-highlight span {
+    color: #94a3b8;
+    font-size: 0.72rem;
+    font-weight: normal;
+  }
+  .mega-desc {
+    color: #94a3b8;
+    font-size: 0.76rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .mega-search-cta {
+    display: inline-block !important;
+    padding: 0.65rem 0.9rem !important;
+    background: linear-gradient(135deg, #059669, #10b981) !important;
+    color: #042014 !important;
+    font-weight: 900 !important;
+    border-radius: 0.5rem;
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+  .quick-links {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+    font-size: 0.72rem;
+  }
+  .quick-links span {
+    color: #64748b;
+  }
+  .quick-links a {
+    padding: 0.2rem 0.4rem !important;
+    color: #34d399 !important;
+    text-decoration: underline;
+  }
+
+  .mega-sectors {
+    width: 620px;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .mega-sectors-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .mega-sectors-header a {
+    color: #34d399;
+    font-size: 0.74rem;
+    font-weight: 700;
+    padding: 0 !important;
+  }
+  .sectors-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.45rem;
+  }
+  .sector-pill {
+    padding: 0.45rem 0.6rem !important;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 0.4rem;
+    color: #e2e8f0 !important;
+    font-size: 0.74rem !important;
+    text-align: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+  }
+  .sector-pill:hover {
+    background: rgba(16, 185, 129, 0.15) !important;
+    border-color: rgba(16, 185, 129, 0.4) !important;
+    color: #34d399 !important;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .search-btn-icon {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #cbd5e1;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .search-btn-icon:hover {
+    color: #34d399;
+    border-color: rgba(16, 185, 129, 0.4);
+    background: rgba(16, 185, 129, 0.1);
+  }
+  .whatsapp-nav-btn {
+    padding: 0.55rem 0.9rem;
+    background: linear-gradient(135deg, #059669, #10b981);
+    color: #042014;
+    text-decoration: none;
+    font-size: 0.74rem;
+    font-weight: 900;
+    border-radius: 0.4rem;
+    white-space: nowrap;
+    transition: opacity 0.2s ease;
+  }
+  .whatsapp-nav-btn:hover {
+    opacity: 0.9;
+  }
+
+  button#mobile-menu-toggle {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    padding: 9px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: transparent;
+    border-radius: 0.4rem;
+    cursor: pointer;
+  }
+  button#mobile-menu-toggle span {
+    display: block;
+    height: 2px;
+    background: #fff;
+  }
+
+  @media (min-width: 1220px) {
+    .desktop-nav {
+      display: block;
+    }
+    button#mobile-menu-toggle {
+      display: none;
+    }
+  }
+  @media (max-width: 640px) {
+    .whatsapp-nav-btn {
+      display: none;
+    }
+  }
 </style>

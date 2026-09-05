@@ -1,0 +1,530 @@
+---
+/**
+ * DHA Phase 6 vs Bahria Town Lahore — Real Estate & Lifestyle Face-Off
+ */
+import PageLayout from '@layouts/PageLayout.astro';
+import { SITE } from '@data/site';
+
+const title = "DHA Phase 6 vs Bahria Town Lahore — Living Standards & Investment Comparison";
+const description = "Comprehensive comparison between DHA Phase 6 and Bahria Town Lahore. Evaluate location advantages, legal security, property prices, lifestyle amenities, and rental returns.";
+const canonical = `${SITE.url}/dha-phase-6-vs-bahria-town-lahore/`;
+
+const faqs = [
+  {
+    question: "Which location is more accessible: DHA Phase 6 or Bahria Town Lahore?",
+    answer: "DHA Phase 6 offers superior geographic accessibility. Situated along the Lahore Ring Road (Nawaz Sharif Interchange), Allama Iqbal International Airport is only 8 to 10 minutes away, and Gulberg is 15 minutes away. Bahria Town is situated in southwestern Lahore along Canal Road and Multan Road, which requires a 35 to 50-minute commute to the airport and central Lahore during peak hours."
+  },
+  {
+    question: "How do property prices compare between DHA Phase 6 and Bahria Town?",
+    answer: "Bahria Town Lahore offers a lower price entry point. A 1 Kanal plot in Bahria Town typically ranges between PKR 2.0 Crore and PKR 3.8 Crore, whereas 1 Kanal in DHA Phase 6 ranges from PKR 4.20 Crore to PKR 7.50 Crore. However, DHA Phase 6 houses and plots command far higher capital liquidity and resale velocity among institutional and overseas buyers."
+  },
+  {
+    question: "Which community offers better legal title and transfer security?",
+    answer: "DHA Phase 6 operates under the statutory authority of DHA Lahore, providing complete legal immunity against municipal disputes, transparent computerized file transfers, and guaranteed non-encumbrance verification (NDC). Bahria Town operates as a private corporate developer and has historically faced periodic litigation or delayed possession in certain peripheral sectors."
+  },
+  {
+    question: "What lifestyle amenities distinguish Bahria Town from DHA Phase 6?",
+    answer: "Bahria Town features themed entertainment attractions including replicas of the Eiffel Tower, the Grand Jamia Mosque, family theme parks, and in-house cinemas. DHA Phase 6 emphasizes elite understated luxury, 150-foot arterial boulevards, complete underground electrification, the Defence Raya 18-hole championship golf resort, and top private Cambridge academic networks."
+  },
+  {
+    question: "Which community attracts higher rental yields from corporate executives?",
+    answer: "DHA Phase 6 generates significantly stronger rental demand from multinational corporate executives, foreign diplomats, and overseas Pakistanis, commanding monthly rents of PKR 3.20 to 5.50 Lakh for 1 Kanal villas, compared to PKR 1.60 to 2.80 Lakh in Bahria Town."
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": `${canonical}#article`,
+      "isPartOf": { "@type": "WebSite", "@id": `${SITE.url}/#website` },
+      "headline": title,
+      "description": description,
+      "url": canonical,
+      "inLanguage": "en-PK",
+      "mainEntityOfPage": canonical,
+      "datePublished": "2026-02-10T08:00:00+05:00",
+      "dateModified": "2026-09-05T12:00:00+05:00",
+      "publisher": { "@type": "Organization", "name": SITE.name, "url": SITE.url },
+      "author": { "@type": "Organization", "name": "Research & Editorial Desk, DHA Phase 6 Guide" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonical}#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE.url },
+        { "@type": "ListItem", "position": 2, "name": "Comparisons", "item": `${SITE.url}/guides/` },
+        { "@type": "ListItem", "position": 3, "name": "Phase 6 vs Bahria Town", "item": canonical }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${canonical}#faq`,
+      "mainEntity": faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": { "@type": "Answer", "text": faq.answer }
+      }))
+    }
+  ]
+};
+---
+
+<PageLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+
+  <header class="comp-hero">
+    <div class="container">
+      <div class="hero-badges">
+        <span class="badge-pill gold-pill">Master Developer Comparison</span>
+        <span class="badge-pill">DHA vs Private Developer</span>
+      </div>
+      <h1 class="hero-headline">
+        DHA Phase 6 vs Bahria Town Lahore: <span class="text-gradient">The Ultimate Living & Investment Guide</span>
+      </h1>
+      <p class="hero-lead">
+        Comparing Lahore's two most renowned planned communities: DHA Phase 6's statutory governance and prime connectivity versus Bahria Town's self-contained themed attractions.
+      </p>
+    </div>
+  </header>
+
+  <main class="container comp-content">
+
+    <section class="verdict-banner">
+      <h2>Executive Summary: Governance, Location & Social Profile</h2>
+      <p>
+        The contrast between <strong>DHA Phase 6</strong> and <strong>Bahria Town Lahore</strong> represents two fundamentally different visions of master-planned community living in Pakistan.
+      </p>
+      <p>
+        <strong>DHA Phase 6</strong> delivers institutional legal stability, prime southeastern connectivity along Ring Road (10 minutes to the airport), high executive tenant liquidity, and the prestigious Defence Raya Golf resort. <strong>Bahria Town Lahore</strong> provides a self-sufficient private city with independent commercial facilities, family attractions, and lower per-marla property entry costs, but carries greater transit distance from central Lahore's economic core.
+      </p>
+    </section>
+
+    <!-- COMPARISON TABLE -->
+    <section class="comp-section">
+      <h2>Side-by-Side Comparison Matrix</h2>
+      <div class="table-responsive">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Comparison Parameter</th>
+              <th>DHA Phase 6 Lahore</th>
+              <th>Bahria Town Lahore</th>
+              <th>Strategic Advantage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Geographic Location</strong></td>
+              <td>Southeastern Lahore (Bedian / Barki / Ring Road)</td>
+              <td>Southwestern Lahore (Canal Bank / Multan Road)</td>
+              <td><span class="tag-win">Phase 6 (Airport & Core)</span></td>
+            </tr>
+            <tr>
+              <td><strong>Commute to Airport</strong></td>
+              <td>8 – 10 minutes via Ring Road</td>
+              <td>35 – 50 minutes via Canal / Ring Road</td>
+              <td><span class="tag-win">Phase 6</span></td>
+            </tr>
+            <tr>
+              <td><strong>1 Kanal Plot Price Range</strong></td>
+              <td>PKR 4.20 Cr – 7.50 Cr</td>
+              <td>PKR 2.00 Cr – 3.80 Cr</td>
+              <td><span class="tag-win">Bahria Town (Budget)</span></td>
+            </tr>
+            <tr>
+              <td><strong>1 Kanal House Price Range</strong></td>
+              <td>PKR 8.50 Cr – 13.50 Cr</td>
+              <td>PKR 4.80 Cr – 8.50 Cr</td>
+              <td><span class="tag-win">Bahria Town (Entry Price)</span></td>
+            </tr>
+            <tr>
+              <td><strong>Title & Governance Authority</strong></td>
+              <td>Statutory DHA Authority (Guaranteed clean title)</td>
+              <td>Private corporate entity (Bahria Town Ltd)</td>
+              <td><span class="tag-win">Phase 6</span></td>
+            </tr>
+            <tr>
+              <td><strong>1 Kanal Monthly Rent</strong></td>
+              <td>PKR 320,000 – 550,000</td>
+              <td>PKR 160,000 – 280,000</td>
+              <td><span class="tag-win">Phase 6 (Rental Income)</span></td>
+            </tr>
+            <tr>
+              <td><strong>Utility Infrastructure</strong></td>
+              <td>100% underground power, LESCO grid, RO water</td>
+              <td>Private grid (Bahria electric), underground power</td>
+              <td><span class="tag-neutral">Comparable</span></td>
+            </tr>
+            <tr>
+              <td><strong>Leisure & Sports</strong></td>
+              <td>Defence Raya 18-Hole Championship Golf Course</td>
+              <td>Theme parks, Eiffel Tower, Safari Zoo, Cinema</td>
+              <td><span class="tag-neutral">Differing Appeals</span></td>
+            </tr>
+            <tr>
+              <td><strong>Secondary Market Liquidity</strong></td>
+              <td>Very High (Global expatriate & institutional pool)</td>
+              <td>Moderate (Largely domestic end-user demand)</td>
+              <td><span class="tag-win">Phase 6</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 1: LOCATION -->
+    <section class="comp-section">
+      <h2>1. Location & Daily Commute Reality</h2>
+      <p>
+        Geographic positioning represents the most critical practical differentiator between these two destinations:
+      </p>
+      <ul>
+        <li><strong>DHA Phase 6:</strong> Connected directly to the Ring Road via the Nawaz Sharif Interchange. Reaching Gulberg, Cantonment, Phase 1–5, and Allama Iqbal International Airport requires 8 to 15 minutes of signal-free driving. This makes Phase 6 ideal for frequent business flyers, corporate executives, and healthcare professionals.</li>
+        <li><strong>Bahria Town Lahore:</strong> Located 25 kilometers southwest along Canal Bank Road. While the Southern Ring Road expansion has improved access, daily commuters face bottleneck traffic during peak morning and evening school and office transit hours.</li>
+      </ul>
+    </section>
+
+    <!-- SECTION 2: TITLE SECURITY -->
+    <section class="comp-section">
+      <h2>2. Legal Security & Institutional Transparency</h2>
+      <p>
+        For expatriate Pakistanis and institutional real estate investors, legal certainty is non-negotiable. DHA Phase 6 operates under the statutory regulatory umbrella of DHA Lahore. Every plot undergoes rigorous computerized verification, automated NDC (Non-Encumbrance Certificate) processing, and formal biometric deed transfer. The probability of boundary disputes, unauthorized possession, or developer default is practically zero.
+      </p>
+      <p>
+        While Bahria Town maintains an efficient in-house transfer system, it remains a private corporation subject to broader corporate regulatory scrutiny, occasional master plan adjustments, and regional land acquisition challenges.
+      </p>
+    </section>
+
+    <!-- BUYER DECISION -->
+    <section class="comp-section recommendation-box">
+      <h2>Buyer Advisory: Making the Right Choice</h2>
+      <div class="decision-grid">
+        <div class="decision-card highlight-card">
+          <h3>Choose DHA Phase 6 if:</h3>
+          <ul>
+            <li>You prioritize rapid transit to the airport (8–10 min) and central business districts.</li>
+            <li>You demand total legal certainty and guaranteed institutional governance.</li>
+            <li>You desire elite, low-density golf resort living (Defence Raya).</li>
+            <li>You require top international schools (Beaconhouse, LGS, SICAS) within 2 minutes.</li>
+            <li>You want maximum secondary market resale liquidity in foreign currency or PKR.</li>
+          </ul>
+        </div>
+        <div class="decision-card">
+          <h3>Choose Bahria Town Lahore if:</h3>
+          <ul>
+            <li>Your overall budget is PKR 2.0 to 4.0 Crore for 1 Kanal land.</li>
+            <li>You prioritize self-contained family attractions (theme parks, replica monuments, cinemas).</li>
+            <li>Your business or daily activities are concentrated along southwestern Lahore.</li>
+            <li>You prefer an all-inclusive private township with in-house private electricity supply.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQS -->
+    <section class="comp-section">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-accordion">
+        {faqs.map((faq, index) => (
+          <details class="faq-item" id={`faq-${index + 1}`}>
+            <summary class="faq-question">
+              <span>{faq.question}</span>
+              <span class="faq-chevron">▼</span>
+            </summary>
+            <div class="faq-answer">
+              <p>{faq.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- RELATED GUIDES -->
+    <section class="related-guides-hub">
+      <h2>Explore Related Phase 6 Resources</h2>
+      <div class="links-grid">
+        <a href="/dha-phase-6-vs-phase-5-lahore/" class="guide-nav-card">
+          <strong>Phase 6 vs Phase 5</strong>
+          <p>Compare luxury benchmarks in DHA Lahore.</p>
+        </a>
+        <a href="/dha-phase-6-vs-lake-city-lahore/" class="guide-nav-card">
+          <strong>Phase 6 vs Lake City</strong>
+          <p>Analyze golf-lifestyle options across Lahore.</p>
+        </a>
+        <a href="/is-dha-phase-6-lahore-a-good-investment/" class="guide-nav-card">
+          <strong>Investment Guide</strong>
+          <p>Examine capital ROI and rental yields in Phase 6.</p>
+        </a>
+        <a href="/dha-phase-6-lahore-guide/" class="guide-nav-card">
+          <strong>Complete Master Guide</strong>
+          <p>Read the 3,000+ word authority knowledge hub.</p>
+        </a>
+      </div>
+    </section>
+
+  </main>
+</PageLayout>
+
+<style>
+  .comp-hero {
+    background: linear-gradient(165deg, #090919 0%, #12122b 55%, #0c0c1e 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 72px 0 48px;
+  }
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .badge-pill {
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.06);
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .gold-pill {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border-color: rgba(16, 185, 129, 0.3);
+  }
+  .hero-headline {
+    font-size: clamp(2.2rem, 4.2vw, 3.2rem);
+    color: #ffffff;
+    font-weight: 800;
+    margin-bottom: 18px;
+    max-width: 920px;
+    line-height: 1.2;
+  }
+  .text-gradient {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #10b981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-lead {
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    color: #94a3b8;
+    line-height: 1.65;
+    max-width: 820px;
+  }
+  .comp-content {
+    padding: 56px 20px 80px;
+    max-width: 1080px;
+  }
+  .verdict-banner {
+    background: #111129;
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 48px;
+  }
+  .verdict-banner h2 {
+    color: #34d399;
+    font-size: 1.4rem;
+    margin-bottom: 14px;
+  }
+  .verdict-banner p {
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    margin-bottom: 12px;
+  }
+  .comp-section {
+    margin-bottom: 56px;
+  }
+  .comp-section h2 {
+    font-size: 1.8rem;
+    color: #f8fafc;
+    margin-bottom: 20px;
+    font-weight: 800;
+  }
+  .comp-section p {
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+  .comp-section ul {
+    color: #cbd5e1;
+    line-height: 1.8;
+    padding-left: 24px;
+    margin-bottom: 20px;
+  }
+  .table-responsive {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    margin: 24px 0;
+  }
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    background: #0f0f23;
+  }
+  .comparison-table th {
+    background: #171736;
+    color: #f8fafc;
+    padding: 14px 18px;
+    text-align: left;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .comparison-table td {
+    padding: 14px 18px;
+    color: #cbd5e1;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .comparison-table tr:hover td {
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .tag-win {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+  }
+  .tag-neutral {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.08);
+    color: #94a3b8;
+  }
+  .decision-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+  }
+  .decision-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 26px;
+  }
+  .highlight-card {
+    background: #111129;
+    border-color: rgba(16, 185, 129, 0.4);
+  }
+  .decision-card h3 {
+    font-size: 1.25rem;
+    color: #f1f5f9;
+    margin-bottom: 16px;
+  }
+  .highlight-card h3 {
+    color: #34d399;
+  }
+  .decision-card ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+  }
+  .decision-card li {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 12px;
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .decision-card li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #34d399;
+    font-weight: 800;
+  }
+  .faq-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .faq-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .faq-question {
+    padding: 18px 20px;
+    cursor: pointer;
+    font-weight: 700;
+    color: #f1f5f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+  }
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+  .faq-chevron {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    transition: transform 0.2s ease;
+  }
+  .faq-item[open] .faq-chevron {
+    transform: rotate(180deg);
+  }
+  .faq-answer {
+    padding: 0 20px 20px;
+    color: #94a3b8;
+    font-size: 0.98rem;
+    line-height: 1.7;
+  }
+  .related-guides-hub {
+    margin-top: 56px;
+    padding: 32px;
+    background: #0f0f23;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+  }
+  .related-guides-hub h2 {
+    font-size: 1.4rem;
+    color: #f8fafc;
+    margin-bottom: 20px;
+  }
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .guide-nav-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 18px;
+    text-decoration: none;
+    transition: border-color 0.2s ease;
+  }
+  .guide-nav-card:hover {
+    border-color: rgba(16, 185, 129, 0.4);
+  }
+  .guide-nav-card strong {
+    display: block;
+    color: #f1f5f9;
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+  .guide-nav-card p {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    margin-bottom: 0;
+  }
+</style>
