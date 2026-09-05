@@ -8,6 +8,7 @@ import {
   getPopulatedCategories,
   getSectorCategorySummary,
   getCategorySectors,
+  hasSectorCategoryPage,
 } from '@data/places/index';
 
 const populatedCategories = getPopulatedCategories();
@@ -347,11 +348,14 @@ const populatedCategories = getPopulatedCategories();
                   >
                     View All ({totalInCat})
                   </a>
-                  {sectorsWithPlaces.map(({ sector, count }) => (
-                    <a href={`/places/${sector.key}/${cat.key}/`}>
-                      {sector.label} ({count})
-                    </a>
-                  ))}
+                  {sectorsWithPlaces.map(({ sector, count }) => {
+                    const hasSubpage = hasSectorCategoryPage(sector.key, cat.key);
+                    return (
+                      <a href={hasSubpage ? `/places/${sector.key}/${cat.key}/` : `/places/${sector.key}/`}>
+                        {sector.label} ({count})
+                      </a>
+                    );
+                  })}
                 </div>
               </article>
             );

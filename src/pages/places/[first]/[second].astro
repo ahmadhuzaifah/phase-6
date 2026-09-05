@@ -77,11 +77,11 @@ const nearbyProperties = propertiesRaw.filter((prop) => {
 
 const pageTitle = isDetail
   ? `${place.name} | ${place.categoryLabel} in ${place.sectorLabel}, DHA Phase 6 Lahore`
-  : `${categoryMeta?.label} in ${sectorMeta?.label} | DHA Phase 6 Lahore Directory`;
+  : `Best ${categoryMeta?.label} in DHA Phase 6 Lahore ${sectorMeta?.label}`;
 
 const metaDesc = isDetail
   ? `${place.name} located at ${place.address}. Verified rating: ${place.rating ? `${place.rating}★ (${place.reviewCount} reviews)` : 'Verified'}. Contact, operating status, and direct Google Maps directions.`
-  : `Explore verified ${categoryMeta?.label?.toLowerCase()} in ${sectorMeta?.label}, DHA Phase 6 Lahore with exact addresses, ratings, and maps.`;
+  : `Discover the best verified ${categoryMeta?.label?.toLowerCase()} in ${sectorMeta?.label}, DHA Phase 6 Lahore. Complete directory with phone numbers, Google Maps directions, ratings, and addresses.`;
 
 const canonical = isDetail
   ? `${SITE.url}/places/${place.category}/${place.slug}/`
@@ -157,6 +157,42 @@ const structuredData = isDetail
           name: pageTitle,
           description: metaDesc,
           url: canonical,
+        },
+        {
+          '@type': 'ItemList',
+          name: pageTitle,
+          description: metaDesc,
+          itemListOrder: 'https://schema.org/ItemListOrderDescending',
+          numberOfItems: places.length,
+          itemListElement: places.map((p, idx) => ({
+            '@type': 'ListItem',
+            position: idx + 1,
+            item: {
+              '@type': 'LocalBusiness',
+              name: p.name,
+              description: p.description,
+              url: `${SITE.url}/places/${p.category}/${p.slug}/`,
+              image: getPlaceImage(p).src,
+              address: {
+                '@type': 'PostalAddress',
+                streetAddress: p.address,
+                addressLocality: 'Lahore',
+                addressRegion: 'Punjab',
+                postalCode: '54792',
+                addressCountry: 'PK',
+              },
+              ...(p.phone ? { telephone: p.phone } : {}),
+              ...(p.rating
+                ? {
+                    aggregateRating: {
+                      '@type': 'AggregateRating',
+                      ratingValue: p.rating,
+                      reviewCount: p.reviewCount || 1,
+                    },
+                  }
+                : {}),
+            },
+          })),
         },
         {
           '@type': 'BreadcrumbList',
@@ -434,11 +470,23 @@ const structuredData = isDetail
                     </div>
 
                     <div class="business-actions">
-                      <a class="business-primary" href={`/places/${p.category}/${p.slug}/`}>
-                        View business
+                      {p.phone ? (
+                        <a class="business-btn-phone" href={`tel:${p.phone.replace(/\s+/g, '')}`} title={`Call ${p.name}`} aria-label={`Call ${p.name}`}>
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                          <span>Call</span>
+                        </a>
+                      ) : (
+                        <span class="business-btn-phone disabled" title="Phone not listed">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                          <span>No Phone</span>
+                        </span>
+                      )}
+                      <a class="business-btn-maps" href={p.googleMapsUrl} target="_blank" rel="noopener noreferrer" title="View on Google Maps" aria-label={`View ${p.name} on Google Maps`}>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+                        <span>Maps ↗</span>
                       </a>
-                      <a class="business-directions" href={p.googleMapsUrl} target="_blank" rel="noopener noreferrer">
-                        Directions ↗
+                      <a class="business-btn-detail" href={`/places/${p.category}/${p.slug}/`} aria-label={`View details for ${p.name}`}>
+                        <span>Details</span>
                       </a>
                     </div>
                   </div>
@@ -768,39 +816,68 @@ const structuredData = isDetail
     color: var(--dir-dim);
   }
   .business-actions {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1.15fr 0.95fr;
     align-items: center;
-    justify-content: space-between;
-    gap: 0.65rem;
+    gap: 0.45rem;
     margin-top: 0.9rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
   }
-  .business-primary,
-  .gold-button {
-    padding: 0.6rem 0.85rem;
-    border-radius: 5px;
-    background: linear-gradient(135deg, var(--dir-gold), var(--dir-gold-light));
-    color: #090918;
-    font-size: 0.64rem;
-    font-weight: 800;
-    text-decoration: none;
+  .business-btn-phone,
+  .business-btn-maps,
+  .business-btn-detail {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: opacity 0.2s ease;
+    gap: 0.3rem;
+    padding: 0.45rem 0.45rem;
+    border-radius: 6px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    text-align: center;
+    white-space: nowrap;
   }
-  .business-primary:hover,
-  .gold-button:hover {
-    opacity: 0.9;
-  }
-  .business-directions {
+  .business-btn-phone {
+    background: rgba(46, 204, 113, 0.12);
+    border: 1px solid rgba(46, 204, 113, 0.3);
     color: #2ecc71;
-    font-size: 0.64rem;
+  }
+  .business-btn-phone:hover:not(.disabled) {
+    background: rgba(46, 204, 113, 0.25);
+    border-color: #2ecc71;
+  }
+  .business-btn-phone.disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--dir-muted);
+    background: rgba(255, 255, 255, 0.03);
+  }
+  .business-btn-maps {
+    background: rgba(52, 152, 219, 0.12);
+    border: 1px solid rgba(52, 152, 219, 0.3);
+    color: #3498db;
+  }
+  .business-btn-maps:hover {
+    background: rgba(52, 152, 219, 0.25);
+    border-color: #3498db;
+  }
+  .business-btn-detail,
+  .gold-button {
+    padding: 0.45rem 0.65rem;
+    background: linear-gradient(135deg, var(--dir-gold), var(--dir-gold-light));
+    color: #090918;
+    border: 1px solid var(--dir-gold);
     font-weight: 800;
     text-decoration: none;
-    transition: opacity 0.2s ease;
   }
-  .business-directions:hover {
-    opacity: 0.8;
+  .business-btn-detail:hover,
+  .gold-button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
   }
 
   .empty-state,

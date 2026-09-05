@@ -284,11 +284,23 @@ const relatedCategories =
                 </div>
 
                 <div class="business-actions">
-                  <a class="business-primary" href={`/places/${place.category}/${place.slug}/`}>
-                    View business
+                  {place.phone ? (
+                    <a class="business-btn-phone" href={`tel:${place.phone.replace(/\s+/g, '')}`} title={`Call ${place.name}`} aria-label={`Call ${place.name}`}>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                      <span>Call</span>
+                    </a>
+                  ) : (
+                    <span class="business-btn-phone disabled" title="Phone not listed">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                      <span>No Phone</span>
+                    </span>
+                  )}
+                  <a class="business-btn-maps" href={place.googleMapsUrl} target="_blank" rel="noopener noreferrer" title="View on Google Maps" aria-label={`View ${place.name} on Google Maps`}>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+                    <span>Maps ↗</span>
                   </a>
-                  <a class="business-directions" href={place.googleMapsUrl} target="_blank" rel="noopener noreferrer">
-                    Directions ↗
+                  <a class="business-btn-detail" href={`/places/${place.category}/${place.slug}/`} aria-label={`View details for ${place.name}`}>
+                    <span>Details</span>
                   </a>
                 </div>
               </div>
@@ -339,8 +351,14 @@ const relatedCategories =
               ? `View ${sectorMeta.label} property directory`
               : 'View Phase 6 property directory'}
           </a>
+          {type === 'sector' && sectorMeta && (
+            <a class="outline-button" href={`/sectors/${sectorMeta.key}/places/`}>
+              {sectorMeta.label} Facilities Guide →
+            </a>
+          )}
         </div>
       </section>
+
 
       <!-- Also search nearby sectors (matches screenshot) -->
       {nearbySectors.length > 0 && (
@@ -640,39 +658,66 @@ const relatedCategories =
     color: var(--dir-dim);
   }
   .business-actions {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.65rem;
-    margin-top: 0.9rem;
+    display: grid;
+    grid-template-columns: 1fr 1.15fr 0.95fr;
+    gap: 0.4rem;
+    margin-top: 0.85rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
   }
-  .business-primary,
-  .gold-button {
-    padding: 0.6rem 0.85rem;
-    border-radius: 5px;
-    background: linear-gradient(135deg, var(--dir-gold), var(--dir-gold-light));
-    color: #090918;
-    font-size: 0.64rem;
-    font-weight: 800;
-    text-decoration: none;
+  .business-btn-phone,
+  .business-btn-maps,
+  .business-btn-detail {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: opacity 0.2s ease;
+    gap: 0.3rem;
+    padding: 0.45rem 0.45rem;
+    border-radius: 6px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    text-align: center;
+    white-space: nowrap;
   }
-  .business-primary:hover,
-  .gold-button:hover {
-    opacity: 0.9;
-  }
-  .business-directions {
+  .business-btn-phone {
+    background: rgba(46, 204, 113, 0.12);
+    border: 1px solid rgba(46, 204, 113, 0.3);
     color: #2ecc71;
-    font-size: 0.64rem;
+  }
+  .business-btn-phone:hover:not(.disabled) {
+    background: rgba(46, 204, 113, 0.25);
+    border-color: #2ecc71;
+  }
+  .business-btn-phone.disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--dir-muted);
+    background: rgba(255, 255, 255, 0.03);
+  }
+  .business-btn-maps {
+    background: rgba(52, 152, 219, 0.12);
+    border: 1px solid rgba(52, 152, 219, 0.3);
+    color: #3498db;
+  }
+  .business-btn-maps:hover {
+    background: rgba(52, 152, 219, 0.25);
+    border-color: #3498db;
+  }
+  .business-btn-detail,
+  .gold-button {
+    background: linear-gradient(135deg, var(--dir-gold), var(--dir-gold-light));
+    color: #090918;
+    border: 1px solid var(--dir-gold);
     font-weight: 800;
     text-decoration: none;
-    transition: opacity 0.2s ease;
   }
-  .business-directions:hover {
-    opacity: 0.8;
+  .business-btn-detail:hover,
+  .gold-button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
   }
 
   .empty-state,

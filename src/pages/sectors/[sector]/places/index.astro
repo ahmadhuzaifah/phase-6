@@ -1,0 +1,790 @@
+---
+/**
+ * DHA Phase 6 Lahore — Sector Facilities & Places Landing Page
+ * Route: /sectors/[sector]/places/
+ * Generates a comprehensive Facilities Guide for every sector.
+ */
+import {
+  SECTORS_DIRECTORY,
+  PLACE_CATEGORIES,
+  getSectorPlaces,
+  getSectorCategoryPlaces,
+  getPlaceImage,
+  type SectorMeta,
+} from '@data/places/index';
+
+import PlaceImage from '@components/places/PlaceImage.astro';
+import { SITE } from '@data/site';
+
+export function getStaticPaths() {
+  return SECTORS_DIRECTORY.map((sector) => ({
+    params: { sector: sector.key },
+    props: { sectorMeta: sector },
+  }));
+}
+
+interface Props { sectorMeta: SectorMeta; }
+const { sectorMeta } = Astro.props as Props;
+
+const allPlaces = getSectorPlaces(sectorMeta.key);
+const canonical = `${SITE.url}/sectors/${sectorMeta.key}/places/`;
+const pageTitle = `${sectorMeta.label} Facilities Guide — DHA Phase 6 Lahore`;
+const metaTitle = `${sectorMeta.label} Places & Facilities | DHA Phase 6 Lahore`;
+const description = `Complete facilities guide for ${sectorMeta.label}, DHA Phase 6 Lahore. Browse verified schools, hospitals, restaurants, mosques, banks, supermarkets, gyms, parks and more.`;
+
+// Category groups for display
+const FACILITY_GROUPS = [
+  { key: 'all', label: 'All Facilities', icon: '🏙️', categories: null },
+  { key: 'education', label: 'Education', icon: '🎓', categories: ['schools', 'colleges', 'school', 'college'] },
+  { key: 'healthcare', label: 'Healthcare', icon: '🏥', categories: ['hospital', 'hospitals', 'clinic', 'pharmacy', 'idc'] },
+  { key: 'food', label: 'Dining', icon: '🍽️', categories: ['restaurants', 'cafes', 'bakery', 'fast-food'] },
+  { key: 'religion', label: 'Mosques', icon: '🕌', categories: ['mosque', 'mosques'] },
+  { key: 'shopping', label: 'Shopping', icon: '🛍️', categories: ['supermarkets', 'shopping', 'beauty-salons'] },
+  { key: 'services', label: 'Services', icon: '🏦', categories: ['banks', 'services', 'courier-services', 'internet-providers'] },
+  { key: 'lifestyle', label: 'Lifestyle', icon: '💪', categories: ['gym', 'gyms', 'park', 'parks', 'club'] },
+];
+
+// Stats per group
+function getGroupCount(groupKey: string): number {
+  const g = FACILITY_GROUPS.find(x => x.key === groupKey);
+  if (!g || !g.categories) return allPlaces.length;
+  return allPlaces.filter(p => g.categories!.includes(p.category)).length;
+}
+
+// Build category summary cards (categories with ≥1 place in this sector)
+const categorySummary = PLACE_CATEGORIES
+  .map(cat => ({ cat, count: getSectorCategoryPlaces(sectorMeta.key, cat.key).length }))
+  .filter(x => x.count > 0)
+  .sort((a, b) => b.count - a.count);
+
+const topCats = categorySummary.slice(0, 8);
+
+// Nearby sectors (all residential, excluding self)
+const nearbySectors = SECTORS_DIRECTORY
+  .filter(s => s.key !== sectorMeta.key && s.type === 'residential')
+  .slice(0, 6);
+
+// FAQs
+const faqs = [
+  {
+    q: `How many verified places are listed in ${sectorMeta.label}?`,
+    a: `This guide currently lists ${allPlaces.length} verified places across ${categorySummary.length} categories in ${sectorMeta.label}, DHA Phase 6 Lahore. All business information is sourced from public records and Google Maps data.`,
+  },
+  {
+    q: `What types of facilities are available in ${sectorMeta.label}?`,
+    a: `${sectorMeta.label} has ${categorySummary.slice(0, 4).map(x => x.cat.label).join(', ')}, and more. Use the filter buttons above to browse by facility type.`,
+  },
+  {
+    q: `Where can I find schools in ${sectorMeta.label}?`,
+    a: `You can browse all schools and educational institutions in ${sectorMeta.label} using the Education filter. This includes private schools, academies, and colleges near ${sectorMeta.label}.`,
+  },
+  {
+    q: `Are there hospitals or clinics in ${sectorMeta.label}?`,
+    a: `Yes, ${sectorMeta.label} has healthcare facilities including clinics, pharmacies, and nearby hospitals. Use the Healthcare filter to view all verified medical services.`,
+  },
+  {
+    q: `Is this an official DHA Lahore directory?`,
+    a: `No. This is an independent information portal. Business listings are compiled from publicly available data including Google Maps. Always verify details directly before visiting.`,
+  },
+];
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'CollectionPage',
+      '@id': canonical,
+      url: canonical,
+      name: pageTitle,
+      description,
+      inLanguage: 'en-PK',
+      isPartOf: { '@type': 'WebSite', '@id': `${SITE.url}/#website`, name: SITE.name, url: SITE.url },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${canonical}#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url },
+        { '@type': 'ListItem', position: 2, name: 'Sectors', item: `${SITE.url}/sectors/` },
+        { '@type': 'ListItem', position: 3, name: sectorMeta.label, item: `${SITE.url}/sectors/${sectorMeta.key}/` },
+        { '@type': 'ListItem', position: 4, name: 'Places & Facilities', item: canonical },
+      ],
+    },
+    {
+      '@type': 'ItemList',
+      '@id': `${canonical}#facilities`,
+      name: `Verified places in ${sectorMeta.label} DHA Phase 6 Lahore`,
+      numberOfItems: allPlaces.length,
+      itemListElement: allPlaces.slice(0, 30).map((place, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        item: {
+          '@type': 'LocalBusiness',
+          '@id': `${SITE.url}/places/${place.category}/${place.slug}/`,
+          name: place.name,
+          url: `${SITE.url}/places/${place.category}/${place.slug}/`,
+          image: getPlaceImage(place).src,
+          ...(place.phone ? { telephone: place.phone } : {}),
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: place.address,
+            addressLocality: 'Lahore',
+            addressRegion: 'Punjab',
+            postalCode: '54792',
+            addressCountry: 'PK',
+          },
+        },
+      })),
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${canonical}#faq`,
+      mainEntity: faqs.map(faq => ({
+        '@type': 'Question',
+        name: faq.q,
+        acceptedAnswer: { '@type': 'Answer', text: faq.a },
+      })),
+    },
+  ],
+};
+---
+<!doctype html>
+<html lang="en-PK">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a0a1a" />
+    <title>{metaTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={metaTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={metaTitle} />
+    <meta name="twitter:description" content={description} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="site-header">
+      <nav class="navbar" aria-label="Primary navigation">
+        <div class="container nav-inner">
+          <a href="/" class="nav-logo" aria-label="DHA Phase 6 Lahore home">
+            <span>D6</span>
+            <strong>DHA Phase <b>6</b> Lahore</strong>
+          </a>
+          <div class="nav-links" id="nav-links">
+            <a href="/">Home</a>
+            <a href="/sectors/" class="active">Sectors</a>
+            <a href="/properties/">Properties</a>
+            <a href="/places/">Places</a>
+            <a href="/plots/">Plots</a>
+            <a href="/jobs/">Jobs</a>
+            <a href="/dealers/">Dealers</a>
+            <a href="/dha-phase-6-lahore-map/">Map</a>
+            <a href="/dha-phase-6-lahore-map/#map-pdf-downloads" class="nav-cta">Map PDFs</a>
+          </div>
+          <button class="nav-toggle" type="button" aria-controls="nav-links" aria-expanded="false" aria-label="Open navigation">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      <!-- Hero -->
+      <header class="page-hero">
+        <div class="container">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a><span>/</span>
+            <a href="/sectors/">Sectors</a><span>/</span>
+            <a href={`/sectors/${sectorMeta.key}/`}>{sectorMeta.label}</a><span>/</span>
+            <span aria-current="page">Places &amp; Facilities</span>
+          </nav>
+          <div class="hero-badge">Facilities Guide</div>
+          <h1>{sectorMeta.label} Facilities &amp; Places Guide</h1>
+          <p>{description}</p>
+          <!-- Stats strip -->
+          <div class="stats-strip">
+            <div class="stat-pill">
+              <strong>{allPlaces.length}</strong>
+              <span>Verified Places</span>
+            </div>
+            <div class="stat-pill">
+              <strong>{categorySummary.length}</strong>
+              <span>Categories</span>
+            </div>
+            <div class="stat-pill">
+              <strong>{getGroupCount('education')}</strong>
+              <span>Schools &amp; Colleges</span>
+            </div>
+            <div class="stat-pill">
+              <strong>{getGroupCount('healthcare')}</strong>
+              <span>Healthcare</span>
+            </div>
+            <div class="stat-pill">
+              <strong>{getGroupCount('food')}</strong>
+              <span>Dining</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Sector Overview -->
+      <section class="sector-overview-section">
+        <div class="container">
+          <div class="overview-grid">
+            <div class="overview-text">
+              <p class="section-kicker"><span></span> Local area guide</p>
+              <h2>About {sectorMeta.label}</h2>
+              <p>{sectorMeta.description}</p>
+              <p>Use the facility finder below to browse all verified businesses and services. For property information, visit the <a href={`/sectors/${sectorMeta.key}/`}>{sectorMeta.label} property directory</a>.</p>
+              <div class="overview-actions">
+                <a href={`/places/${sectorMeta.key}/`} class="btn-gold">Browse All Places</a>
+                <a href={`/sectors/${sectorMeta.key}/`} class="btn-outline">Property Directory</a>
+              </div>
+            </div>
+            <div class="cat-quick-grid">
+              {topCats.map(({ cat, count }) => (
+                <a href={`/places/${sectorMeta.key}/${cat.key}/`} class="cat-quick-card">
+                  <strong>{count}</strong>
+                  <span>{cat.label}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Facility Directory -->
+      <section class="directory-section" id="facilities">
+        <div class="container">
+          <div class="dir-header">
+            <p class="section-kicker"><span></span> Verified businesses</p>
+            <h2>{sectorMeta.label} Places Directory</h2>
+            <p class="dir-meta"><strong id="result-count">{allPlaces.length}</strong> verified places — filter by category or search by name</p>
+          </div>
+
+          <!-- Filter tabs -->
+          <div class="filter-tabs" role="tablist" aria-label="Filter by facility type">
+            {FACILITY_GROUPS.map((g, i) => (
+              <button
+                class={`filter-tab${i === 0 ? ' active' : ''}`}
+                data-filter={g.key}
+                data-cats={g.categories ? g.categories.join(',') : ''}
+                role="tab"
+                aria-selected={i === 0 ? 'true' : 'false'}
+                aria-controls="business-grid"
+                id={`tab-${g.key}`}
+              >
+                <span class="tab-icon">{g.icon}</span>
+                <span>{g.label}</span>
+                <span class="tab-count">{g.key === 'all' ? allPlaces.length : getGroupCount(g.key)}</span>
+              </button>
+            ))}
+          </div>
+
+          <!-- Search -->
+          <div class="search-bar-wrap">
+            <div class="search-bar">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input id="business-search" type="search" placeholder={`Search in ${sectorMeta.label}…`} aria-label="Search businesses" />
+            </div>
+            <label class="sort-label">
+              <span>Sort</span>
+              <select id="business-sort">
+                <option value="reviews">Most reviewed</option>
+                <option value="rating">Highest rated</option>
+                <option value="name">Name A–Z</option>
+              </select>
+            </label>
+          </div>
+
+          <!-- Grid -->
+          <div class="business-grid" id="business-grid">
+            {allPlaces.map((place) => {
+              const img = getPlaceImage(place);
+              return (
+                <article
+                  class="business-card"
+                  data-name={place.name.toLowerCase()}
+                  data-address={place.address.toLowerCase()}
+                  data-rating={place.rating || 0}
+                  data-reviews={place.reviewCount}
+                  data-category={place.category}
+                >
+                  <a class="business-photo" href={`/places/${place.category}/${place.slug}/`} aria-label={`View ${place.name}`}>
+                    <PlaceImage place={place} />
+                    {img.isOriginal && <span class="verified-badge">Verified</span>}
+                  </a>
+                  <div class="business-body">
+                    <div class="business-tags">
+                      <span>{place.categoryLabel}</span>
+                      <span>{sectorMeta.label}</span>
+                    </div>
+                    <h3><a href={`/places/${place.category}/${place.slug}/`}>{place.name}</a></h3>
+                    <div class="business-rating">
+                      {place.rating ? (
+                        <>
+                          <span aria-label={`${place.rating} out of 5 stars`}>★</span>
+                          <strong>{place.rating.toFixed(1)}</strong>
+                          <small>{place.reviewCount > 0 ? `${place.reviewCount.toLocaleString('en-PK')} reviews` : 'Rated'}</small>
+                        </>
+                      ) : <small>Rating not shown</small>}
+                    </div>
+                    <address>{place.address}</address>
+                    <div class="business-actions">
+                      {place.phone ? (
+                        <a class="btn-phone" href={`tel:${place.phone.replace(/\s+/g, '')}`} title={`Call ${place.name}`} aria-label={`Call ${place.name}`}>
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                          Call
+                        </a>
+                      ) : (
+                        <span class="btn-phone disabled">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                          No Phone
+                        </span>
+                      )}
+                      <a class="btn-maps" href={place.googleMapsUrl} target="_blank" rel="noopener noreferrer" aria-label={`${place.name} on Google Maps`}>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+                        Maps ↗
+                      </a>
+                      <a class="btn-detail" href={`/places/${place.category}/${place.slug}/`} aria-label={`View details for ${place.name}`}>Details</a>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+          <p class="no-results" id="no-results" hidden>No places match your search.</p>
+        </div>
+      </section>
+
+      <!-- Map Context -->
+      <section class="map-context-section">
+        <div class="container">
+          <div class="map-context-inner">
+            <div class="map-context-text">
+              <p class="section-kicker"><span></span> Location</p>
+              <h2>{sectorMeta.label} — Sector Map</h2>
+              <p>View the exact position and boundaries of {sectorMeta.label} within DHA Phase 6 Lahore on the official phase map.</p>
+              <div class="map-coords">
+                <span>Lat: {sectorMeta.lat.toFixed(4)}</span>
+                <span>Lng: {sectorMeta.lng.toFixed(4)}</span>
+              </div>
+              <div class="map-context-actions">
+                <a
+                  href={`https://www.google.com/maps/@${sectorMeta.lat},${sectorMeta.lng},17z`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-gold"
+                >Open in Google Maps ↗</a>
+                <a href="/dha-phase-6-lahore-map/" class="btn-outline">Official Phase 6 Map PDF</a>
+              </div>
+            </div>
+            <div class="map-embed-box">
+              <iframe
+                loading="lazy"
+                allowfullscreen
+                referrerpolicy="no-referrer-when-downgrade"
+                src={`https://www.google.com/maps/embed/v1/view?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&center=${sectorMeta.lat},${sectorMeta.lng}&zoom=16&maptype=roadmap`}
+                title={`Map showing ${sectorMeta.label} DHA Phase 6 Lahore`}
+                style="width:100%;height:100%;border:0;"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Nearby Sectors -->
+      {nearbySectors.length > 0 && (
+        <section class="nearby-section">
+          <div class="container">
+            <p class="section-kicker"><span></span> Compare sectors</p>
+            <h2>Explore Nearby Sectors</h2>
+            <div class="nearby-grid">
+              {nearbySectors.map((sector) => (
+                <a href={`/sectors/${sector.key}/places/`} class="nearby-card">
+                  <strong>{sector.label}</strong>
+                  <span>Facilities Guide →</span>
+                </a>
+              ))}
+            </div>
+            <div class="nearby-all">
+              <a href="/sectors/" class="btn-outline">View All Sectors Guide</a>
+              <a href="/places/" class="btn-outline">Complete Places Directory</a>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <!-- FAQ -->
+      <section class="faq-section" id="faq">
+        <div class="container">
+          <p class="section-kicker"><span></span> Common questions</p>
+          <h2>{sectorMeta.label} Facilities — FAQ</h2>
+          <div class="faq-list">
+            {faqs.map((faq, i) => (
+              <details class="faq-item" id={`faq-${i + 1}`}>
+                <summary>{faq.q}</summary>
+                <p>{faq.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- Internal Linking Hub -->
+      <section class="links-hub-section">
+        <div class="container">
+          <div class="links-hub-grid">
+            <div class="links-hub-card">
+              <h3>Property Directory</h3>
+              <p>View market snapshot prices and plot information for {sectorMeta.label}.</p>
+              <a href={`/sectors/${sectorMeta.key}/`} class="link-hub-btn">
+                {sectorMeta.label} Property Guide →
+              </a>
+            </div>
+            <div class="links-hub-card">
+              <h3>All Sectors Guide</h3>
+              <p>Compare all 13 residential sectors and 4 commercial zones of DHA Phase 6 Lahore.</p>
+              <a href="/sectors/" class="link-hub-btn">View All Sectors →</a>
+            </div>
+            <div class="links-hub-card">
+              <h3>Investment Guide</h3>
+              <p>Understand buying costs, possession checks, and due diligence steps before investing.</p>
+              <a href="/investment-guide/" class="link-hub-btn">Read Investment Guide →</a>
+            </div>
+            <div class="links-hub-card">
+              <h3>Complete Places Directory</h3>
+              <p>Browse 396+ verified places across all sectors and categories in DHA Phase 6.</p>
+              <a href="/places/" class="link-hub-btn">Browse All Places →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <aside class="publication">
+      <div class="container">
+        <span>Published September 2026</span>
+        <span>Business information sourced from public Google Maps records. Verify details before visiting.</span>
+      </div>
+    </aside>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div class="footer-brand">
+          <a href="/"><span>D6</span><strong>DHA Phase 6 Lahore</strong></a>
+          <p>An independent local guide to sectors, properties, maps, places, services and everyday life across DHA Phase 6 Lahore.</p>
+        </div>
+        <div>
+          <h2>Pages</h2>
+          <a href="/">Home</a><a href="/sectors/">Sectors</a>
+          <a href="/properties/">Property Listings</a><a href="/plots/">Plots</a>
+          <a href="/places/">Places &amp; Services</a><a href="/jobs/">Jobs</a>
+          <a href="/faq/">FAQ</a><a href="/sitemap/">Sitemap</a>
+        </div>
+        <div>
+          <h2>Sectors</h2>
+          {SECTORS_DIRECTORY.filter(s => s.type === 'residential').map(s => (
+            <a href={`/sectors/${s.key}/places/`}>{s.label} Places</a>
+          ))}
+        </div>
+        <div>
+          <h2>Useful links</h2>
+          <a href="/dha-phase-6-lahore-map/">Phase 6 Map</a>
+          <a href="/helplines/">Helplines</a>
+          <a href="/postal-code/">Postal Code</a>
+          <a href="/weather/">Weather</a>
+          <a href="/contact/">Contact</a>
+          <a href="/privacy-policy/">Privacy Policy</a>
+          <a href="/disclaimer/">Disclaimer</a>
+        </div>
+      </div>
+      <div class="container footer-bottom">© 2026 DHA Phase 6 Lahore Guide. All rights reserved.</div>
+    </footer>
+    <a class="back-top" href="#main-content" aria-label="Back to top">↑</a>
+
+    <script>
+      // Filter tabs
+      const tabs = document.querySelectorAll<HTMLButtonElement>('.filter-tab');
+      const cards = Array.from(document.querySelectorAll<HTMLElement>('.business-card'));
+      const countEl = document.querySelector<HTMLElement>('#result-count');
+      const emptyEl = document.querySelector<HTMLElement>('#no-results');
+      const searchEl = document.querySelector<HTMLInputElement>('#business-search');
+      const sortEl = document.querySelector<HTMLSelectElement>('#business-sort');
+
+      let activeFilter = 'all';
+      let activeQuery = '';
+
+      function applyFilters() {
+        let visible = cards.filter(card => {
+          const cat = card.dataset.category || '';
+          const name = card.dataset.name || '';
+          const addr = card.dataset.address || '';
+          const matchesCat = activeFilter === 'all' || (() => {
+            const activeTab = document.querySelector<HTMLButtonElement>(`[data-filter="${activeFilter}"]`);
+            const cats = activeTab?.dataset.cats?.split(',') || [];
+            return cats.includes(cat);
+          })();
+          const matchesQuery = !activeQuery || `${name} ${addr}`.includes(activeQuery);
+          return matchesCat && matchesQuery;
+        });
+        cards.forEach(c => { c.hidden = !visible.includes(c); });
+        // Sort
+        const grid = document.querySelector<HTMLElement>('#business-grid');
+        if (grid && sortEl) {
+          visible.sort((a, b) => {
+            if (sortEl.value === 'name') return (a.dataset.name || '').localeCompare(b.dataset.name || '');
+            const key = sortEl.value === 'rating' ? 'rating' : 'reviews';
+            return Number(b.dataset[key]) - Number(a.dataset[key]);
+          });
+          visible.forEach(c => grid.append(c));
+        }
+        if (countEl) countEl.textContent = String(visible.length);
+        if (emptyEl) emptyEl.hidden = visible.length > 0;
+      }
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+          tab.classList.add('active');
+          tab.setAttribute('aria-selected', 'true');
+          activeFilter = tab.dataset.filter || 'all';
+          applyFilters();
+        });
+      });
+      searchEl?.addEventListener('input', () => { activeQuery = searchEl.value.trim().toLowerCase(); applyFilters(); });
+      sortEl?.addEventListener('change', applyFilters);
+
+      // Nav toggle
+      const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
+      const navLinks = document.querySelector<HTMLElement>('#nav-links');
+      toggle?.addEventListener('click', () => {
+        const open = navLinks?.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --bg: #080818;
+    --surface: #111125;
+    --surface2: #15152d;
+    --gold: #d4a844;
+    --gold-l: #f0c857;
+    --green: #10b981;
+    --green-l: #34d399;
+    --text: #f0f0f5;
+    --muted: #9292ad;
+    --dim: #64647f;
+    --line: rgba(255,255,255,0.08);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
+
+  .skip-link{position:absolute;left:-999px;top:1rem;z-index:99;padding:.5rem 1rem;background:var(--gold);color:#000;font-weight:700;text-decoration:none;border-radius:4px;}
+  .skip-link:focus{left:1rem;}
+
+  /* NAV */
+  .site-header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(8,8,24,.9);border-bottom:1px solid var(--line);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:68px;}
+  .container{width:min(1200px,92%);margin-inline:auto;}
+  .nav-logo{display:inline-flex;align-items:center;gap:.6rem;color:#fff;text-decoration:none;font-size:1rem;}
+  .nav-logo span{width:34px;height:34px;border-radius:6px;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold),var(--gold-l));color:#080818;font-weight:800;font-size:.84rem;}
+  .nav-logo b{color:var(--gold-l);}
+  .nav-links{display:flex;align-items:center;gap:1.2rem;}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:.83rem;font-weight:600;transition:color .2s;}
+  .nav-links a:hover,.nav-links a.active{color:#fff;}
+  .nav-cta{padding:.42rem .8rem;border-radius:5px;background:linear-gradient(135deg,var(--gold),var(--gold-l))!important;color:#080818!important;font-weight:700!important;}
+  .nav-toggle{display:none;background:transparent;border:0;cursor:pointer;padding:.5rem;}
+  .nav-toggle span{display:block;width:22px;height:2px;background:#fff;margin:4px 0;border-radius:1px;}
+
+  /* HERO */
+  .page-hero{padding:80px 0 64px;background:linear-gradient(160deg,#0a0a22 0%,#10102a 60%,#0d0d1e 100%);border-bottom:1px solid var(--line);text-align:center;position:relative;overflow:hidden;}
+  .page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(212,168,68,.06),transparent);pointer-events:none;}
+  .breadcrumb{display:flex;flex-wrap:wrap;justify-content:center;gap:.45rem;margin-bottom:1.2rem;color:var(--dim);font-size:.7rem;}
+  .breadcrumb a{color:var(--dim);text-decoration:none;transition:color .2s;}
+  .breadcrumb a:hover{color:var(--gold-l);}
+  .hero-badge{display:inline-block;margin-bottom:1rem;padding:.3rem .9rem;border-radius:999px;background:rgba(212,168,68,.12);border:1px solid rgba(212,168,68,.28);color:var(--gold-l);font-size:.62rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;}
+  .page-hero h1{max-width:820px;margin:.25rem auto .75rem;color:#fff;font-size:clamp(1.9rem,4.5vw,3rem);line-height:1.12;letter-spacing:-.03em;font-weight:800;}
+  .page-hero>div>p{max-width:600px;margin:0 auto 1.75rem;color:var(--muted);font-size:.9rem;}
+  .stats-strip{display:flex;flex-wrap:wrap;justify-content:center;gap:.6rem;margin-top:1.75rem;}
+  .stat-pill{display:flex;flex-direction:column;align-items:center;padding:.6rem 1.1rem;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid var(--line);min-width:90px;}
+  .stat-pill strong{font-size:1.4rem;font-weight:800;color:var(--gold-l);line-height:1;}
+  .stat-pill span{font-size:.58rem;color:var(--muted);margin-top:.3rem;text-transform:uppercase;letter-spacing:.06em;}
+
+  /* SECTOR OVERVIEW */
+  .sector-overview-section{padding:72px 0 64px;background:var(--bg);}
+  .overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:start;}
+  .section-kicker{display:flex;align-items:center;gap:.55rem;margin:0 0 .75rem;color:var(--gold);font-size:.62rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;}
+  .section-kicker>span{width:24px;height:2px;background:var(--gold);border-radius:1px;}
+  .overview-text h2{margin:0 0 .85rem;color:#fff;font-size:1.6rem;font-weight:800;line-height:1.2;}
+  .overview-text p{color:var(--muted);font-size:.88rem;margin:0 0 .75rem;}
+  .overview-text a:not(.btn-gold):not(.btn-outline){color:var(--gold-l);text-decoration:none;}
+  .overview-actions{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.5rem;}
+  .btn-gold{display:inline-flex;align-items:center;gap:.35rem;padding:.55rem 1.1rem;border-radius:6px;background:linear-gradient(135deg,var(--gold),var(--gold-l));color:#090918;font-size:.7rem;font-weight:800;text-decoration:none;transition:opacity .2s;}
+  .btn-gold:hover{opacity:.88;}
+  .btn-outline{display:inline-flex;align-items:center;gap:.35rem;padding:.53rem 1rem;border-radius:6px;border:1px solid var(--line);color:#fff;font-size:.7rem;font-weight:700;text-decoration:none;transition:border-color .2s,color .2s;}
+  .btn-outline:hover{border-color:rgba(212,168,68,.4);color:var(--gold-l);}
+  .cat-quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;}
+  .cat-quick-card{display:flex;flex-direction:column;align-items:center;padding:.75rem .5rem;border-radius:8px;background:var(--surface);border:1px solid var(--line);text-decoration:none;transition:all .2s;text-align:center;}
+  .cat-quick-card:hover{border-color:rgba(212,168,68,.35);background:var(--surface2);}
+  .cat-quick-card strong{display:block;font-size:1.3rem;font-weight:800;color:var(--gold-l);}
+  .cat-quick-card span{display:block;font-size:.54rem;color:var(--muted);margin-top:.25rem;text-transform:uppercase;letter-spacing:.04em;}
+
+  /* DIRECTORY */
+  .directory-section{padding:72px 0 88px;background:linear-gradient(180deg,var(--bg) 0%,var(--surface) 100%);}
+  .dir-header{margin-bottom:1.75rem;}
+  .dir-header h2{margin:.3rem 0 .4rem;color:#fff;font-size:1.5rem;font-weight:800;}
+  .dir-meta{color:var(--muted);font-size:.78rem;margin:0;}
+  .dir-meta strong{color:var(--gold-l);}
+
+  /* Filter tabs */
+  .filter-tabs{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.25rem;}
+  .filter-tab{display:inline-flex;align-items:center;gap:.4rem;padding:.45rem .8rem;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--muted);font-size:.65rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;}
+  .filter-tab:hover{border-color:rgba(212,168,68,.3);color:#fff;}
+  .filter-tab.active{border-color:var(--gold);background:rgba(212,168,68,.1);color:var(--gold-l);}
+  .tab-icon{font-size:.85rem;}
+  .tab-count{padding:.1rem .35rem;border-radius:999px;background:rgba(255,255,255,.06);font-size:.55rem;font-weight:700;}
+  .filter-tab.active .tab-count{background:rgba(212,168,68,.18);}
+
+  /* Search bar */
+  .search-bar-wrap{display:flex;gap:.75rem;align-items:center;margin-bottom:1.5rem;}
+  .search-bar{flex:1;display:flex;align-items:center;gap:.6rem;padding:0 .9rem;height:44px;border:1px solid var(--line);border-radius:8px;background:var(--surface);}
+  .search-bar svg{color:var(--dim);flex-shrink:0;}
+  .search-bar input{flex:1;border:0;background:transparent;color:var(--text);font:inherit;font-size:.78rem;outline:none;}
+  .search-bar input::placeholder{color:var(--dim);}
+  .sort-label{display:flex;flex-direction:column;gap:.25rem;color:var(--dim);font-size:.57rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
+  .sort-label select{height:44px;padding:0 .75rem;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--text);font:inherit;font-size:.72rem;outline:none;cursor:pointer;}
+  .sort-label select:focus{border-color:var(--gold);}
+
+  /* Business grid & cards */
+  .business-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;align-items:start;}
+  .business-card{overflow:hidden;border:1px solid var(--line);border-radius:10px;background:var(--surface);box-shadow:0 16px 40px -30px #000;transition:transform .25s,border-color .25s;}
+  .business-card:hover{border-color:rgba(212,168,68,.3);transform:translateY(-2px);}
+  .business-card[hidden]{display:none;}
+  .business-photo{position:relative;display:block;aspect-ratio:16/10;overflow:hidden;background:#1a1a31;}
+  .business-photo img{width:100%;height:100%;object-fit:cover;transition:transform .35s;}
+  .business-card:hover .business-photo img{transform:scale(1.04);}
+  .verified-badge{position:absolute;right:.5rem;bottom:.5rem;padding:.2rem .42rem;border-radius:4px;background:rgba(8,8,24,.85);color:#34d399;font-size:.52rem;font-weight:700;}
+  .business-body{padding:1rem;}
+  .business-tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.5rem;}
+  .business-tags span{padding:.18rem .4rem;border:1px solid rgba(212,168,68,.2);border-radius:999px;color:var(--gold);font-size:.52rem;font-weight:600;}
+  .business-card h3{margin:.45rem 0 .3rem;font-size:.98rem;font-weight:700;line-height:1.3;}
+  .business-card h3 a{color:#fff;text-decoration:none;transition:color .2s;}
+  .business-card h3 a:hover{color:var(--gold-l);}
+  .business-rating{display:flex;align-items:center;gap:.28rem;font-size:.66rem;margin-bottom:.4rem;}
+  .business-rating>span{color:var(--gold);}
+  .business-rating strong{color:var(--text);}
+  .business-rating small{color:var(--dim);}
+  .business-card address{margin:.4rem 0 .65rem;color:var(--muted);font-size:.66rem;font-style:normal;line-height:1.4;}
+
+  /* Action buttons */
+  .business-actions{display:grid;grid-template-columns:1fr 1.15fr .95fr;gap:.4rem;padding-top:.7rem;border-top:1px solid rgba(255,255,255,.06);}
+  .btn-phone,.btn-maps,.btn-detail{display:inline-flex;align-items:center;justify-content:center;gap:.25rem;padding:.4rem .35rem;border-radius:6px;font-size:.62rem;font-weight:700;text-decoration:none;transition:all .2s;white-space:nowrap;}
+  .btn-phone{background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.28);color:#2ecc71;}
+  .btn-phone:hover:not(.disabled){background:rgba(46,204,113,.22);border-color:#2ecc71;}
+  .btn-phone.disabled{opacity:.4;cursor:not-allowed;border-color:rgba(255,255,255,.1);color:var(--muted);background:rgba(255,255,255,.03);}
+  .btn-maps{background:rgba(52,152,219,.1);border:1px solid rgba(52,152,219,.28);color:#3498db;}
+  .btn-maps:hover{background:rgba(52,152,219,.22);border-color:#3498db;}
+  .btn-detail{background:linear-gradient(135deg,var(--gold),var(--gold-l));border:1px solid var(--gold);color:#090918;font-weight:800;}
+  .btn-detail:hover{opacity:.88;transform:translateY(-1px);}
+
+  .no-results{padding:2.5rem;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-align:center;color:var(--muted);font-size:.88rem;margin:0;}
+
+  /* MAP CONTEXT */
+  .map-context-section{padding:72px 0;background:var(--bg);border-top:1px solid var(--line);}
+  .map-context-inner{display:grid;grid-template-columns:1fr 1.2fr;gap:3rem;align-items:center;}
+  .map-context-text h2{margin:.3rem 0 .8rem;color:#fff;font-size:1.4rem;font-weight:800;}
+  .map-context-text p{color:var(--muted);font-size:.86rem;margin:0 0 1rem;}
+  .map-coords{display:flex;gap:.75rem;margin-bottom:1.25rem;}
+  .map-coords span{padding:.3rem .65rem;border-radius:5px;background:var(--surface);border:1px solid var(--line);color:var(--dim);font-size:.65rem;font-family:monospace;}
+  .map-context-actions{display:flex;flex-wrap:wrap;gap:.6rem;}
+  .map-embed-box{border-radius:10px;overflow:hidden;border:1px solid var(--line);aspect-ratio:4/3;background:var(--surface);}
+
+  /* NEARBY */
+  .nearby-section{padding:64px 0;background:var(--surface);border-top:1px solid var(--line);}
+  .nearby-section h2{margin:.3rem 0 1.5rem;color:#fff;font-size:1.4rem;font-weight:800;}
+  .nearby-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-bottom:1.25rem;}
+  .nearby-card{display:flex;flex-direction:column;padding:1rem 1.1rem;border-radius:8px;background:var(--bg);border:1px solid var(--line);text-decoration:none;transition:all .2s;}
+  .nearby-card:hover{border-color:rgba(212,168,68,.35);}
+  .nearby-card strong{color:#fff;font-size:.95rem;font-weight:700;}
+  .nearby-card span{color:var(--gold-l);font-size:.66rem;margin-top:.3rem;}
+  .nearby-all{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem;}
+
+  /* FAQ */
+  .faq-section{padding:72px 0;background:var(--bg);border-top:1px solid var(--line);}
+  .faq-section h2{margin:.3rem 0 1.75rem;color:#fff;font-size:1.4rem;font-weight:800;}
+  .faq-list{display:flex;flex-direction:column;gap:.6rem;}
+  .faq-item{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface);}
+  .faq-item summary{padding:1rem 1.25rem;font-size:.88rem;font-weight:700;color:var(--text);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;}
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::after{content:'＋';color:var(--gold);font-size:.9rem;flex-shrink:0;transition:transform .25s;}
+  .faq-item[open] summary::after{transform:rotate(45deg);}
+  .faq-item[open] summary{color:var(--gold-l);}
+  .faq-item p{margin:0;padding:.6rem 1.25rem 1.1rem;color:var(--muted);font-size:.82rem;line-height:1.65;}
+
+  /* LINKS HUB */
+  .links-hub-section{padding:64px 0;background:var(--surface2);border-top:1px solid var(--line);}
+  .links-hub-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+  .links-hub-card{padding:1.5rem;border-radius:10px;background:var(--bg);border:1px solid var(--line);}
+  .links-hub-card h3{margin:0 0 .5rem;color:#fff;font-size:.95rem;font-weight:800;}
+  .links-hub-card p{margin:0 0 1rem;color:var(--muted);font-size:.76rem;line-height:1.5;}
+  .link-hub-btn{display:inline-block;color:var(--gold-l);font-size:.72rem;font-weight:700;text-decoration:none;transition:color .2s;}
+  .link-hub-btn:hover{color:#fff;}
+
+  /* FOOTER */
+  .publication{padding:.8rem 0;border-top:1px solid var(--line);background:#0d0d21;color:var(--dim);font-size:.58rem;}
+  .publication .container{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+  .site-footer{padding:48px 0 28px;background:#060613;border-top:1px solid var(--line);}
+  .footer-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:2rem;margin-bottom:2rem;}
+  .footer-brand a{display:inline-flex;align-items:center;gap:.6rem;color:#fff;text-decoration:none;font-size:1rem;margin-bottom:.75rem;}
+  .footer-brand a span{width:30px;height:30px;border-radius:5px;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold),var(--gold-l));color:#080818;font-weight:800;font-size:.8rem;}
+  .footer-brand p{color:var(--dim);font-size:.72rem;line-height:1.6;max-width:300px;}
+  .footer-grid h2{color:#fff;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;margin:0 0 .75rem;}
+  .footer-grid a{display:block;color:var(--muted);text-decoration:none;font-size:.7rem;margin-bottom:.4rem;}
+  .footer-grid a:hover{color:#fff;}
+  .footer-bottom{color:var(--dim);font-size:.62rem;border-top:1px solid var(--line);padding-top:1.2rem;}
+  .back-top{position:fixed;right:1.2rem;bottom:1.2rem;width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:var(--surface2);border:1px solid var(--line);color:#fff;text-decoration:none;font-size:.9rem;z-index:40;}
+
+  @media(max-width:1024px){
+    .links-hub-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media(max-width:900px){
+    .overview-grid,.map-context-inner{grid-template-columns:1fr;}
+    .cat-quick-grid{grid-template-columns:repeat(4,1fr);}
+    .nearby-grid{grid-template-columns:repeat(2,1fr);}
+    .business-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    .map-embed-box{aspect-ratio:16/9;}
+  }
+  @media(max-width:620px){
+    .page-hero{padding:56px 0 48px;}
+    .stats-strip{gap:.4rem;}
+    .stat-pill{min-width:74px;padding:.5rem .7rem;}
+    .cat-quick-grid{grid-template-columns:repeat(4,1fr);}
+    .nearby-grid,.business-grid,.footer-grid,.links-hub-grid{grid-template-columns:1fr;}
+    .filter-tabs{gap:.3rem;}
+    .filter-tab{font-size:.6rem;padding:.4rem .65rem;}
+    .nav-links{display:none;}
+    .nav-links.open{display:flex;flex-direction:column;position:absolute;top:68px;left:0;right:0;background:rgba(8,8,24,.97);padding:1rem;border-bottom:1px solid var(--line);}
+    .nav-toggle{display:block;}
+    .search-bar-wrap{flex-direction:column;align-items:stretch;}
+    .sort-label{flex-direction:row;align-items:center;}
+    .sort-label select{flex:1;height:40px;}
+    .publication .container{flex-direction:column;}
+  }
+</style>

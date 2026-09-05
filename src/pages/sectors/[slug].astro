@@ -1,6 +1,7 @@
 ---
 import GuidePage from '@components/content/GuidePage.astro';
 import { BLOCKS, type Block } from '@data/blocks';
+import { getSectorPlaces } from '@data/places/index';
 
 export function getStaticPaths() {
   return BLOCKS.map((block) => ({ params: { slug: block.slug }, props: { block } }));
@@ -9,6 +10,12 @@ export function getStaticPaths() {
 interface Props { block: Block }
 const { block } = Astro.props;
 const statusLabel = block.status === 'possession-ready' ? 'Established / possession context' : block.status.replace('-', ' ');
+
+// Get places count for this sector (residential sectors only)
+const sectorKey = block.slug; // e.g. "sector-a"
+const sectorPlaces = getSectorPlaces(sectorKey);
+const placesCount = sectorPlaces.length;
+const hasFacilities = placesCount > 0;
 ---
 
 <GuidePage
@@ -21,6 +28,7 @@ const statusLabel = block.status === 'possession-ready' ? 'Established / possess
     { label: 'General status', value: statusLabel },
     { label: 'Common sizes', value: block.plotSizes.join(', ') },
     { label: 'Map note', value: block.locationHighlight },
+    ...(hasFacilities ? [{ label: 'Verified local places', value: `${placesCount} verified businesses & services` }] : []),
   ]}
   sections={[
     {
@@ -35,6 +43,12 @@ const statusLabel = block.status === 'possession-ready' ? 'Established / possess
       paragraphs: [block.locationHighlight, 'Use the official Phase VI map first, then confirm the exact property number and physical street during a daylight visit.'],
       bullets: block.features,
     },
+    ...(hasFacilities ? [{
+      heading: `${block.name} Facilities & Local Places`,
+      paragraphs: [
+        `${block.name} has ${placesCount} verified local places including schools, clinics, restaurants, mosques, banks, supermarkets, parks, and gyms. Browse the complete ${block.name} facilities guide for contact details, ratings, and directions.`,
+      ],
+    }] : []),
     {
       heading: 'Property and investment checks',
       paragraphs: [
@@ -51,9 +65,13 @@ const statusLabel = block.status === 'possession-ready' ? 'Established / possess
   faqs={[
     { question: `Is ${block.name} fully verified by this portal?`, answer: 'No. This page provides general area context. Verify the exact property and current official requirements independently.' },
     { question: `Where can I find properties linked to ${block.name}?`, answer: 'Use the property directory and sector filter. Public-portal records remain source-referenced market snapshots, not verified inventory.' },
+    ...(hasFacilities ? [{ question: `What facilities and services are in ${block.name}?`, answer: `${block.name} has ${placesCount} verified local places including schools, healthcare clinics, restaurants, mosques, banks, supermarkets, parks and gyms. Use the ${block.name} Facilities Guide to browse all verified places with contact details and Google Maps directions.` }] : []),
   ]}
   sources={[
     { label: 'Official DHA Lahore Phase VI map PDF', href: 'https://dhalahore.org/wp-content/uploads/2025/09/PHASE-VI.pdf' },
     { label: 'Browse property market snapshots', href: '/properties' },
+    ...(hasFacilities ? [{ label: `${block.name} Facilities & Places Guide (${placesCount} verified places)`, href: `/sectors/${sectorKey}/places/` }] : []),
+    { label: 'DHA Phase 6 Investment Guide', href: '/investment-guide/' },
   ]}
 />
+

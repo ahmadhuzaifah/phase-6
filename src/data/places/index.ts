@@ -124,20 +124,21 @@ export function getCategoryMeta(categoryKey: string): PlaceCategoryMeta | undefi
 }
 
 /**
- * Returns only categories that have at least 1 verified place in DHA Phase 6.
- * Prevents generating empty category directory routes.
+ * Returns only categories that have at least 6 verified places in DHA Phase 6.
+ * Enforces Phase 10.11 / Task 7 requirement: eliminates thin category pages (0, 1, 2... <6 places).
  */
-export function getPopulatedCategories(): PlaceCategoryMeta[] {
-  return PLACE_CATEGORIES.filter((category) =>
-    ALL_SECTOR_PLACES.some((place) => place.category === category.key)
-  );
+export function getPopulatedCategories(minPlaces: number = 6): PlaceCategoryMeta[] {
+  return PLACE_CATEGORIES.filter((category) => {
+    const count = ALL_SECTOR_PLACES.filter((place) => place.category === category.key).length;
+    return count >= minPlaces;
+  });
 }
 
 /**
- * Returns only (sector, category) combinations that have at least 1 verified place.
- * Prevents generating 600+ empty thin pages.
+ * Returns only (sector, category) combinations that have at least 6 verified places.
+ * Enforces Phase 10.11 / Task 7 requirement: eliminates thin sector-category pages.
  */
-export function getPopulatedSectorCategoryPairs(): {
+export function getPopulatedSectorCategoryPairs(minPlaces: number = 6): {
   sector: SectorMeta;
   category: PlaceCategoryMeta;
   places: PlaceRecord[];
@@ -146,12 +147,19 @@ export function getPopulatedSectorCategoryPairs(): {
   for (const sector of SECTORS_DIRECTORY) {
     for (const category of PLACE_CATEGORIES) {
       const places = getSectorCategoryPlaces(sector.key, category.key);
-      if (places.length > 0) {
+      if (places.length >= minPlaces) {
         pairs.push({ sector, category, places });
       }
     }
   }
   return pairs;
+}
+
+/**
+ * Checks if a sector-category combination has enough verified places to generate a dedicated page.
+ */
+export function hasSectorCategoryPage(sectorKey: string, categoryKey: string, minPlaces: number = 6): boolean {
+  return getSectorCategoryPlaces(sectorKey, categoryKey).length >= minPlaces;
 }
 
 /**
