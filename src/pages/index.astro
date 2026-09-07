@@ -4,6 +4,15 @@
  * Matching the exact structure, layout, aesthetic, and components requested.
  */
 import Header from '@components/global/Header.astro';
+import HeroSection from '@components/home/HeroSection.astro';
+import SearchSection from '@components/home/SearchSection.astro';
+import TrustSection from '@components/home/TrustSection.astro';
+import FeaturedProperties from '@components/home/FeaturedProperties.astro';
+import SectorHighlights from '@components/home/SectorHighlights.astro';
+import PlacesShowcase from '@components/home/PlacesShowcase.astro';
+import MarketInsights from '@components/home/MarketInsights.astro';
+import FAQSection from '@components/home/FAQSection.astro';
+import CTASection from '@components/home/CTASection.astro';
 import propertiesData from '@data/properties-import.json';
 const featuredProperties = propertiesData.slice(0, 3);
 ---
@@ -230,6 +239,7 @@ const featuredProperties = propertiesData.slice(0, 3);
 
   <main id="main-content">
     <!-- Hero Section -->
+    <HeroSection>
     <header class="hero" id="hero">
       <div class="hero-bg">
         <img src="/images/hero-bg.png" alt="Aerial view of DHA Phase 6 Lahore residential community and Defence Raya" width="1920" height="1080" loading="eager" fetchpriority="high" decoding="async">
@@ -246,6 +256,7 @@ const featuredProperties = propertiesData.slice(0, 3);
         </p>
 
         <!-- Search Box UI -->
+        <SearchSection>
         <div class="hero-search-box">
           <form action="/search-property/" method="GET" class="hero-search-form">
             <div class="search-field">
@@ -293,6 +304,7 @@ const featuredProperties = propertiesData.slice(0, 3);
             </button>
           </form>
         </div>
+        </SearchSection>
 
         <div class="hero-stats">
           <div class="hero-stat">
@@ -330,8 +342,10 @@ const featuredProperties = propertiesData.slice(0, 3);
         </div>
       </div>
     </header>
+    </HeroSection>
 
     <!-- Trust Strip -->
+    <TrustSection>
     <div class="trust-strip">
       <div class="container trust-strip-inner">
         <div class="trust-strip-item">
@@ -352,6 +366,7 @@ const featuredProperties = propertiesData.slice(0, 3);
         </div>
       </div>
     </div>
+    </TrustSection>
 
     <!-- Overview Section -->
     <section class="dha-overview" id="dha-overview">
@@ -573,6 +588,7 @@ const featuredProperties = propertiesData.slice(0, 3);
     </section>
 
     <!-- Sectors Section -->
+    <SectorHighlights>
     <section class="sectors" id="sectors">
       <div class="container">
         <div class="sectors-header reveal">
@@ -662,8 +678,10 @@ const featuredProperties = propertiesData.slice(0, 3);
         </div>
       </div>
     </section>
+    </SectorHighlights>
 
     <!-- Nearby Places Section (Task 9 & Phase 10.14) -->
+    <PlacesShowcase>
     <section class="dha-places-section" id="dha-places">
       <div class="container">
         <div class="places-header reveal">
@@ -776,6 +794,7 @@ const featuredProperties = propertiesData.slice(0, 3);
         </div>
       </div>
     </section>
+    </PlacesShowcase>
 
     <!-- Why Choose DHA Phase 6 Lahore (Phase 10.15 Task 8) -->
     <section class="why-choose-section" id="why-choose">
@@ -892,6 +911,7 @@ const featuredProperties = propertiesData.slice(0, 3);
     </section>
 
     <!-- Property Prices Section -->
+    <MarketInsights>
     <section class="property-prices" id="property-prices">
       <div class="container">
         <div class="prices-header reveal">
@@ -1026,8 +1046,10 @@ const featuredProperties = propertiesData.slice(0, 3);
         <p class="price-disclaimer reveal">⚠️ Prices are approximate and based on market trends as of September 2026. Actual prices may vary by sector, street, and specific plot characteristics. Always verify with a registered dealer or official DHA office records.</p>
       </div>
     </section>
+    </MarketInsights>
 
     <!-- Amenities / Places Directory Section -->
+    <PlacesShowcase>
     <section class="amenities" id="amenities">
       <div class="container">
         <div class="amenities-header reveal">
@@ -1199,8 +1221,10 @@ const featuredProperties = propertiesData.slice(0, 3);
         </div>
       </div>
     </section>
+    </PlacesShowcase>
 
     <!-- 1. Latest Property Opportunities (Task 8 & Phase 10.16) -->
+    <FeaturedProperties>
     <section class="latest-opportunities-section" id="latest-opportunities">
       <div class="container">
         <div class="section-head reveal">
@@ -1215,7 +1239,7 @@ const featuredProperties = propertiesData.slice(0, 3);
           {featuredProperties.map((prop) => (
             <article class="opp-card glass-card reveal">
               <div class="opp-media">
-                <img src={prop.images?.[0]?.url || '/images/placeholders/property-placeholder.svg'} alt={prop.title} loading="lazy" />
+                <img src={prop.images?.[0]?.url || '/images/placeholders/property-placeholder.svg'} alt={prop.title} width="800" height="560" loading="lazy" decoding="async" />
                 <span class="trust-badge">✓ Verified 2 days ago</span>
                 <span class="avail-badge">Available</span>
               </div>
@@ -1256,6 +1280,7 @@ const featuredProperties = propertiesData.slice(0, 3);
         </div>
       </div>
     </section>
+    </FeaturedProperties>
 
     <!-- 2. Popular Searches (Task 8 & Phase 10.16) -->
     <section class="popular-searches-section" id="popular-searches">
@@ -1345,6 +1370,7 @@ const featuredProperties = propertiesData.slice(0, 3);
     </section>
 
     <!-- 3. Latest DHA Phase 6 Updates (Task 8 & Phase 10.16) -->
+    <MarketInsights>
     <section class="latest-updates-section" id="latest-updates">
       <div class="container">
         <div class="section-head reveal">
@@ -1382,8 +1408,10 @@ const featuredProperties = propertiesData.slice(0, 3);
         </div>
       </div>
     </section>
+    </MarketInsights>
 
     <!-- 4. Complete Area Guide Feature (Task 8 & Phase 10.16) -->
+    <CTASection>
     <section class="area-guide-banner-section" id="area-guide">
       <div class="container">
         <div class="guide-banner glass-card reveal">
@@ -1423,8 +1451,10 @@ const featuredProperties = propertiesData.slice(0, 3);
         </div>
       </div>
     </section>
+    </CTASection>
 
     <!-- 5. Frequently Asked Questions (Task 8 & Phase 10.16) -->
+    <FAQSection>
     <section class="homepage-faq-section" id="faqs">
       <div class="container">
         <div class="section-head reveal">
@@ -1486,6 +1516,7 @@ const featuredProperties = propertiesData.slice(0, 3);
         </div>
       </div>
     </section>
+    </FAQSection>
 
     <!-- Publication Meta -->
     <aside class="page-publication-meta" aria-label="Page publication information">
@@ -4145,4 +4176,3 @@ const featuredProperties = propertiesData.slice(0, 3);
     }
   }
 </style>
-

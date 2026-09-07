@@ -249,7 +249,7 @@ const structuredData = {
           return (
             <article class="prop-card">
               <div class="prop-media">
-                <img src={prop.images?.[0]?.url || '/images/placeholders/property-placeholder.svg'} alt={prop.title} loading="lazy" />
+                <img src={prop.images?.[0]?.url || '/images/placeholders/property-placeholder.svg'} alt={prop.title} width="800" height="560" loading="lazy" decoding="async" />
                 <span class={`prop-badge ${isDirect ? 'badge-direct' : 'badge-nearby'}`}>
                   {isDirect ? sectorMeta.label : (prop.block || 'Nearby')}
                 </span>

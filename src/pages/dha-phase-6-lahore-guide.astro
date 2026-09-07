@@ -619,7 +619,7 @@ const structuredData = {
       <div class="props-grid-4">
         {sampleProperties.map((prop) => (
           <div class="prop-mini-card">
-            <img src={prop.images?.[0]?.url || '/images/placeholders/property-placeholder.svg'} alt={prop.title} loading="lazy" />
+            <img src={prop.images?.[0]?.url || '/images/placeholders/property-placeholder.svg'} alt={prop.title} width="800" height="560" loading="lazy" decoding="async" />
             <div class="prop-mini-body">
               <span class="prop-sector-tag">{prop.block}</span>
               <h4><a href={`/properties/${prop.slug}`}>{prop.title}</a></h4>

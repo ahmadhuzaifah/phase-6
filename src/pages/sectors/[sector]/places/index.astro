@@ -286,7 +286,7 @@ const structuredData = {
             </div>
             <div class="cat-quick-grid">
               {topCats.map(({ cat, count }) => (
-                <a href={`/places/${sectorMeta.key}/${cat.key}/`} class="cat-quick-card">
+                <a href={`/sectors/${sectorMeta.key}/places/${cat.key}/`} class="cat-quick-card">
                   <strong>{count}</strong>
                   <span>{cat.label}</span>
                 </a>
@@ -416,7 +416,7 @@ const structuredData = {
               return (
                 <article class="prop-card">
                   <div class="prop-card-media">
-                    <img src={prop.images?.[0]?.url || '/images/placeholders/property-placeholder.svg'} alt={prop.title} loading="lazy" />
+                    <img src={prop.images?.[0]?.url || '/images/placeholders/property-placeholder.svg'} alt={prop.title} width="800" height="560" loading="lazy" decoding="async" />
                     <span class={`prop-badge ${isSameSector ? 'badge-local' : 'badge-nearby'}`}>
                       {isSameSector ? sectorMeta.label : (prop.block || 'Nearby')}
                     </span>

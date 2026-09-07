@@ -830,7 +830,7 @@ const structuredData = isDetail
               <h2>Also search nearby sectors</h2>
               <div>
                 {nearbySectors.map((sector) => (
-                  <a href={`/places/${sector.key}/${categoryMeta?.key}/`}>{sector.label}</a>
+                  <a href={`/sectors/${sector.key}/places/${categoryMeta?.key}/`}>{sector.label}</a>
                 ))}
               </div>
             </section>
@@ -841,7 +841,7 @@ const structuredData = isDetail
               <h2>Related places and services</h2>
               <div>
                 {relatedCategories.map((category) => (
-                  <a href={`/places/${sectorMeta?.key}/${category.key}/`}>{category.label}</a>
+                  <a href={`/sectors/${sectorMeta?.key}/places/${category.key}/`}>{category.label}</a>
                 ))}
               </div>
             </section>

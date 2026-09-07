@@ -1,0 +1,1146 @@
+# Internal Link Report
+
+Generated: 2026-09-07T16:24:46.920Z
+
+- Pages scanned: 781
+- Internal routes discovered: 781
+- Broken internal links: 951
+- Orphan pages: 70
+- Pages with fewer than two inbound links: 106
+
+## Broken Links
+
+- /places/cca/restaurants/ -> /sectors/sector-a/places/restaurants/
+- /places/cca/restaurants/ -> /sectors/sector-b/places/restaurants/
+- /places/cca/restaurants/ -> /sectors/sector-c/places/restaurants/
+- /places/cca/restaurants/ -> /sectors/sector-d/places/restaurants/
+- /places/cca/restaurants/ -> /sectors/sector-e/places/restaurants/
+- /places/cca/restaurants/ -> /sectors/sector-f/places/restaurants/
+- /places/cca/restaurants/ -> /sectors/sector-g/places/restaurants/
+- /places/cca/restaurants/ -> /sectors/sector-h/places/restaurants/
+- /places/cca/restaurants/ -> /sectors/sector-j/places/restaurants/
+- /places/cca/restaurants/ -> /sectors/sector-k/places/restaurants/
+- /places/cca/restaurants/ -> /sectors/sector-l/places/restaurants/
+- /places/cca/restaurants/ -> /sectors/sector-m/places/restaurants/
+- /places/cca/restaurants/ -> /sectors/sector-n/places/restaurants/
+- /places/cca/restaurants/ -> /sectors/main-boulevard-commercial/places/restaurants/
+- /places/cca/restaurants/ -> /sectors/raya-commercial/places/restaurants/
+- /places/cca/restaurants/ -> /sectors/cca/places/bakery/
+- /places/cca/restaurants/ -> /sectors/cca/places/banks/
+- /places/cca/restaurants/ -> /sectors/cca/places/beauty-salons/
+- /places/cca/restaurants/ -> /sectors/cca/places/cafes/
+- /places/cca/restaurants/ -> /sectors/cca/places/fast-food/
+- /places/cca/restaurants/ -> /sectors/cca/places/gym/
+- /places/cca/restaurants/ -> /sectors/cca/places/idc/
+- /places/cca/restaurants/ -> /sectors/cca/places/mosque/
+- /places/cca/restaurants/ -> /sectors/cca/places/pharmacy/
+- /places/cca/restaurants/ -> /sectors/cca/places/services/
+- /places/cca/restaurants/ -> /sectors/cca/places/supermarkets/
+- /places/cca/shopping/ -> /sectors/main-boulevard-commercial/places/shopping/
+- /places/cca/shopping/ -> /sectors/cca/places/bakery/
+- /places/cca/shopping/ -> /sectors/cca/places/banks/
+- /places/cca/shopping/ -> /sectors/cca/places/beauty-salons/
+- /places/cca/shopping/ -> /sectors/cca/places/cafes/
+- /places/cca/shopping/ -> /sectors/cca/places/fast-food/
+- /places/cca/shopping/ -> /sectors/cca/places/gym/
+- /places/cca/shopping/ -> /sectors/cca/places/idc/
+- /places/cca/shopping/ -> /sectors/cca/places/mosque/
+- /places/cca/shopping/ -> /sectors/cca/places/pharmacy/
+- /places/cca/shopping/ -> /sectors/cca/places/services/
+- /places/cca/shopping/ -> /sectors/cca/places/supermarkets/
+- /places/cca/ -> /sectors/cca/places/bakery/
+- /places/cca/ -> /sectors/cca/places/banks/
+- /places/cca/ -> /sectors/cca/places/beauty-salons/
+- /places/cca/ -> /sectors/cca/places/cafes/
+- /places/cca/ -> /sectors/cca/places/fast-food/
+- /places/cca/ -> /sectors/cca/places/gym/
+- /places/cca/ -> /sectors/cca/places/idc/
+- /places/cca/ -> /sectors/cca/places/mosque/
+- /places/cca/ -> /sectors/cca/places/pharmacy/
+- /places/cca/ -> /sectors/cca/places/services/
+- /places/cca/ -> /sectors/cca/places/supermarkets/
+- /places/mosque/ -> /sectors/cca/mosque/
+- /places/mosque/ -> /sectors/defence-raya/mosque/
+- /places/mosque/ -> /sectors/sector-a/places/mosque/
+- /places/mosque/ -> /sectors/sector-b/places/mosque/
+- /places/mosque/ -> /sectors/sector-c/places/mosque/
+- /places/mosque/ -> /sectors/sector-d/places/mosque/
+- /places/mosque/ -> /sectors/sector-e/places/mosque/
+- /places/mosque/ -> /sectors/sector-f/places/mosque/
+- /places/mosque/ -> /sectors/sector-g/places/mosque/
+- /places/mosque/ -> /sectors/sector-h/places/mosque/
+- /places/mosque/ -> /sectors/sector-j/places/mosque/
+- /places/mosque/ -> /sectors/sector-k/places/mosque/
+- /places/mosque/ -> /sectors/sector-l/places/mosque/
+- /places/mosque/ -> /sectors/sector-m/places/mosque/
+- /places/mosque/ -> /sectors/sector-n/places/mosque/
+- /places/mosque/ -> /sectors/cca/places/mosque/
+- /places/mosque/ -> /sectors/defence-raya/places/mosque/
+- /places/park/ -> /sectors/sector-c/park/
+- /places/park/ -> /sectors/sector-e/park/
+- /places/park/ -> /sectors/sector-g/park/
+- /places/park/ -> /sectors/sector-k/park/
+- /places/park/ -> /sectors/sector-a/park/
+- /places/park/ -> /sectors/sector-b/park/
+- /places/park/ -> /sectors/sector-d/park/
+- /places/park/ -> /sectors/sector-f/park/
+- /places/park/ -> /sectors/sector-h/park/
+- /places/park/ -> /sectors/sector-j/park/
+- /places/park/ -> /sectors/sector-l/park/
+- /places/park/ -> /sectors/sector-m/park/
+- /places/park/ -> /sectors/sector-n/park/
+- /places/park/ -> /sectors/main-boulevard-commercial/park/
+- /places/park/ -> /sectors/sector-a/places/park/
+- /places/park/ -> /sectors/sector-b/places/park/
+- /places/park/ -> /sectors/sector-c/places/park/
+- /places/park/ -> /sectors/sector-d/places/park/
+- /places/park/ -> /sectors/sector-e/places/park/
+- /places/park/ -> /sectors/sector-f/places/park/
+- /places/park/ -> /sectors/sector-g/places/park/
+- /places/park/ -> /sectors/sector-h/places/park/
+- /places/park/ -> /sectors/sector-j/places/park/
+- /places/park/ -> /sectors/sector-k/places/park/
+- /places/park/ -> /sectors/sector-l/places/park/
+- /places/park/ -> /sectors/sector-m/places/park/
+- /places/park/ -> /sectors/sector-n/places/park/
+- /places/park/ -> /sectors/main-boulevard-commercial/places/park/
+- /places/bakery/ -> /sectors/sector-c/bakery/
+- /places/bakery/ -> /sectors/sector-a/bakery/
+- /places/bakery/ -> /sectors/sector-b/bakery/
+- /places/bakery/ -> /sectors/sector-d/bakery/
+- /places/bakery/ -> /sectors/sector-e/bakery/
+- /places/bakery/ -> /sectors/sector-f/bakery/
+- /places/bakery/ -> /sectors/sector-g/bakery/
+- /places/bakery/ -> /sectors/sector-h/bakery/
+- /places/bakery/ -> /sectors/sector-j/bakery/
+- /places/bakery/ -> /sectors/sector-k/bakery/
+- /places/bakery/ -> /sectors/sector-l/bakery/
+- /places/bakery/ -> /sectors/sector-m/bakery/
+- /places/bakery/ -> /sectors/sector-n/bakery/
+- /places/bakery/ -> /sectors/sector-a/places/bakery/
+- /places/bakery/ -> /sectors/sector-b/places/bakery/
+- /places/bakery/ -> /sectors/sector-c/places/bakery/
+- /places/bakery/ -> /sectors/sector-d/places/bakery/
+- /places/bakery/ -> /sectors/sector-e/places/bakery/
+- /places/bakery/ -> /sectors/sector-f/places/bakery/
+- /places/bakery/ -> /sectors/sector-g/places/bakery/
+- /places/bakery/ -> /sectors/sector-h/places/bakery/
+- /places/bakery/ -> /sectors/sector-j/places/bakery/
+- /places/bakery/ -> /sectors/sector-k/places/bakery/
+- /places/bakery/ -> /sectors/sector-l/places/bakery/
+- /places/bakery/ -> /sectors/sector-m/places/bakery/
+- /places/bakery/ -> /sectors/sector-n/places/bakery/
+- /places/bakery/ -> /sectors/cca/places/bakery/
+- /places/banks/ -> /sectors/sector-b/banks/
+- /places/banks/ -> /sectors/sector-e/banks/
+- /places/banks/ -> /sectors/sector-a/places/banks/
+- /places/banks/ -> /sectors/sector-b/places/banks/
+- /places/banks/ -> /sectors/sector-c/places/banks/
+- /places/banks/ -> /sectors/sector-d/places/banks/
+- /places/banks/ -> /sectors/sector-e/places/banks/
+- /places/banks/ -> /sectors/sector-f/places/banks/
+- /places/banks/ -> /sectors/sector-g/places/banks/
+- /places/banks/ -> /sectors/sector-h/places/banks/
+- /places/banks/ -> /sectors/sector-j/places/banks/
+- /places/banks/ -> /sectors/sector-k/places/banks/
+- /places/banks/ -> /sectors/sector-l/places/banks/
+- /places/banks/ -> /sectors/sector-m/places/banks/
+- /places/banks/ -> /sectors/sector-n/places/banks/
+- /places/banks/ -> /sectors/cca/places/banks/
+- /places/fast-food/ -> /sectors/main-boulevard-commercial/fast-food/
+- /places/fast-food/ -> /sectors/sector-a/fast-food/
+- /places/fast-food/ -> /sectors/sector-f/fast-food/
+- /places/fast-food/ -> /sectors/sector-h/fast-food/
+- /places/fast-food/ -> /sectors/sector-j/fast-food/
+- /places/fast-food/ -> /sectors/sector-l/fast-food/
+- /places/fast-food/ -> /sectors/sector-a/places/fast-food/
+- /places/fast-food/ -> /sectors/sector-f/places/fast-food/
+- /places/fast-food/ -> /sectors/sector-h/places/fast-food/
+- /places/fast-food/ -> /sectors/sector-j/places/fast-food/
+- /places/fast-food/ -> /sectors/sector-l/places/fast-food/
+- /places/fast-food/ -> /sectors/cca/places/fast-food/
+- /places/fast-food/ -> /sectors/main-boulevard-commercial/places/fast-food/
+- /places/gym/ -> /sectors/sector-b/gym/
+- /places/gym/ -> /sectors/sector-c/gym/
+- /places/gym/ -> /sectors/sector-d/gym/
+- /places/gym/ -> /sectors/sector-e/gym/
+- /places/gym/ -> /sectors/sector-j/gym/
+- /places/gym/ -> /sectors/sector-m/gym/
+- /places/gym/ -> /sectors/sector-n/gym/
+- /places/gym/ -> /sectors/cca/gym/
+- /places/gym/ -> /sectors/sector-a/gym/
+- /places/gym/ -> /sectors/sector-f/gym/
+- /places/gym/ -> /sectors/sector-g/gym/
+- /places/gym/ -> /sectors/sector-h/gym/
+- /places/gym/ -> /sectors/sector-k/gym/
+- /places/gym/ -> /sectors/sector-l/gym/
+- /places/gym/ -> /sectors/sector-a/places/gym/
+- /places/gym/ -> /sectors/sector-b/places/gym/
+- /places/gym/ -> /sectors/sector-c/places/gym/
+- /places/gym/ -> /sectors/sector-d/places/gym/
+- /places/gym/ -> /sectors/sector-e/places/gym/
+- /places/gym/ -> /sectors/sector-f/places/gym/
+- /places/gym/ -> /sectors/sector-g/places/gym/
+- /places/gym/ -> /sectors/sector-h/places/gym/
+- /places/gym/ -> /sectors/sector-j/places/gym/
+- /places/gym/ -> /sectors/sector-k/places/gym/
+- /places/gym/ -> /sectors/sector-l/places/gym/
+- /places/gym/ -> /sectors/sector-m/places/gym/
+- /places/gym/ -> /sectors/sector-n/places/gym/
+- /places/gym/ -> /sectors/cca/places/gym/
+- /places/beauty-salons/ -> /sectors/sector-a/beauty-salons/
+- /places/beauty-salons/ -> /sectors/sector-b/beauty-salons/
+- /places/beauty-salons/ -> /sectors/sector-c/beauty-salons/
+- /places/beauty-salons/ -> /sectors/sector-d/beauty-salons/
+- /places/beauty-salons/ -> /sectors/sector-k/beauty-salons/
+- /places/beauty-salons/ -> /sectors/sector-a/places/beauty-salons/
+- /places/beauty-salons/ -> /sectors/sector-b/places/beauty-salons/
+- /places/beauty-salons/ -> /sectors/sector-c/places/beauty-salons/
+- /places/beauty-salons/ -> /sectors/sector-d/places/beauty-salons/
+- /places/beauty-salons/ -> /sectors/sector-k/places/beauty-salons/
+- /places/beauty-salons/ -> /sectors/cca/places/beauty-salons/
+- /places/pharmacy/ -> /sectors/sector-a/pharmacy/
+- /places/pharmacy/ -> /sectors/sector-b/pharmacy/
+- /places/pharmacy/ -> /sectors/sector-d/pharmacy/
+- /places/pharmacy/ -> /sectors/cca/pharmacy/
+- /places/pharmacy/ -> /sectors/sector-c/pharmacy/
+- /places/pharmacy/ -> /sectors/sector-e/pharmacy/
+- /places/pharmacy/ -> /sectors/sector-f/pharmacy/
+- /places/pharmacy/ -> /sectors/sector-g/pharmacy/
+- /places/pharmacy/ -> /sectors/sector-h/pharmacy/
+- /places/pharmacy/ -> /sectors/sector-j/pharmacy/
+- /places/pharmacy/ -> /sectors/sector-k/pharmacy/
+- /places/pharmacy/ -> /sectors/sector-l/pharmacy/
+- /places/pharmacy/ -> /sectors/sector-m/pharmacy/
+- /places/pharmacy/ -> /sectors/sector-n/pharmacy/
+- /places/pharmacy/ -> /sectors/sector-a/places/pharmacy/
+- /places/pharmacy/ -> /sectors/sector-b/places/pharmacy/
+- /places/pharmacy/ -> /sectors/sector-c/places/pharmacy/
+- /places/pharmacy/ -> /sectors/sector-d/places/pharmacy/
+- /places/pharmacy/ -> /sectors/sector-e/places/pharmacy/
+- /places/pharmacy/ -> /sectors/sector-f/places/pharmacy/
+- /places/pharmacy/ -> /sectors/sector-g/places/pharmacy/
+- /places/pharmacy/ -> /sectors/sector-h/places/pharmacy/
+- /places/pharmacy/ -> /sectors/sector-j/places/pharmacy/
+- /places/pharmacy/ -> /sectors/sector-k/places/pharmacy/
+- /places/pharmacy/ -> /sectors/sector-l/places/pharmacy/
+- /places/pharmacy/ -> /sectors/sector-m/places/pharmacy/
+- /places/pharmacy/ -> /sectors/sector-n/places/pharmacy/
+- /places/pharmacy/ -> /sectors/cca/places/pharmacy/
+- /places/schools/ -> /sectors/sector-a/schools/
+- /places/schools/ -> /sectors/sector-c/schools/
+- /places/schools/ -> /sectors/sector-f/schools/
+- /places/schools/ -> /sectors/sector-a/places/schools/
+- /places/schools/ -> /sectors/sector-b/places/schools/
+- /places/schools/ -> /sectors/sector-c/places/schools/
+- /places/schools/ -> /sectors/sector-d/places/schools/
+- /places/schools/ -> /sectors/sector-e/places/schools/
+- /places/schools/ -> /sectors/sector-f/places/schools/
+- /places/schools/ -> /sectors/sector-g/places/schools/
+- /places/schools/ -> /sectors/sector-h/places/schools/
+- /places/schools/ -> /sectors/sector-j/places/schools/
+- /places/schools/ -> /sectors/sector-k/places/schools/
+- /places/schools/ -> /sectors/sector-l/places/schools/
+- /places/schools/ -> /sectors/sector-m/places/schools/
+- /places/schools/ -> /sectors/sector-n/places/schools/
+- /places/hospital/ -> /sectors/sector-a/hospital/
+- /places/hospital/ -> /sectors/sector-c/hospital/
+- /places/hospital/ -> /sectors/sector-e/hospital/
+- /places/hospital/ -> /sectors/sector-g/hospital/
+- /places/hospital/ -> /sectors/sector-a/places/hospital/
+- /places/hospital/ -> /sectors/sector-c/places/hospital/
+- /places/hospital/ -> /sectors/sector-e/places/hospital/
+- /places/hospital/ -> /sectors/sector-g/places/hospital/
+- /places/hospital/ -> /sectors/sector-n/places/hospital/
+- /places/services/ -> /sectors/cca/services/
+- /places/services/ -> /sectors/main-boulevard-commercial/services/
+- /places/services/ -> /sectors/sector-a/services/
+- /places/services/ -> /sectors/sector-h/services/
+- /places/services/ -> /sectors/sector-a/places/services/
+- /places/services/ -> /sectors/sector-d/places/services/
+- /places/services/ -> /sectors/sector-h/places/services/
+- /places/services/ -> /sectors/cca/places/services/
+- /places/services/ -> /sectors/main-boulevard-commercial/places/services/
+- /places/clinic/ -> /sectors/sector-c/clinic/
+- /places/clinic/ -> /sectors/sector-e/clinic/
+- /places/clinic/ -> /sectors/sector-a/clinic/
+- /places/clinic/ -> /sectors/sector-b/clinic/
+- /places/clinic/ -> /sectors/sector-d/clinic/
+- /places/clinic/ -> /sectors/sector-f/clinic/
+- /places/clinic/ -> /sectors/sector-g/clinic/
+- /places/clinic/ -> /sectors/sector-h/clinic/
+- /places/clinic/ -> /sectors/sector-j/clinic/
+- /places/clinic/ -> /sectors/sector-k/clinic/
+- /places/clinic/ -> /sectors/sector-l/clinic/
+- /places/clinic/ -> /sectors/sector-m/clinic/
+- /places/clinic/ -> /sectors/sector-a/places/clinic/
+- /places/clinic/ -> /sectors/sector-b/places/clinic/
+- /places/clinic/ -> /sectors/sector-c/places/clinic/
+- /places/clinic/ -> /sectors/sector-d/places/clinic/
+- /places/clinic/ -> /sectors/sector-e/places/clinic/
+- /places/clinic/ -> /sectors/sector-f/places/clinic/
+- /places/clinic/ -> /sectors/sector-g/places/clinic/
+- /places/clinic/ -> /sectors/sector-h/places/clinic/
+- /places/clinic/ -> /sectors/sector-j/places/clinic/
+- /places/clinic/ -> /sectors/sector-k/places/clinic/
+- /places/clinic/ -> /sectors/sector-l/places/clinic/
+- /places/clinic/ -> /sectors/sector-m/places/clinic/
+- /places/restaurants/ -> /sectors/sector-h/restaurants/
+- /places/restaurants/ -> /sectors/main-boulevard-commercial/restaurants/
+- /places/restaurants/ -> /sectors/sector-a/places/restaurants/
+- /places/restaurants/ -> /sectors/sector-b/places/restaurants/
+- /places/restaurants/ -> /sectors/sector-c/places/restaurants/
+- /places/restaurants/ -> /sectors/sector-d/places/restaurants/
+- /places/restaurants/ -> /sectors/sector-e/places/restaurants/
+- /places/restaurants/ -> /sectors/sector-f/places/restaurants/
+- /places/restaurants/ -> /sectors/sector-g/places/restaurants/
+- /places/restaurants/ -> /sectors/sector-h/places/restaurants/
+- /places/restaurants/ -> /sectors/sector-j/places/restaurants/
+- /places/restaurants/ -> /sectors/sector-k/places/restaurants/
+- /places/restaurants/ -> /sectors/sector-l/places/restaurants/
+- /places/restaurants/ -> /sectors/sector-m/places/restaurants/
+- /places/restaurants/ -> /sectors/sector-n/places/restaurants/
+- /places/restaurants/ -> /sectors/main-boulevard-commercial/places/restaurants/
+- /places/restaurants/ -> /sectors/raya-commercial/places/restaurants/
+- /places/cafes/ -> /sectors/sector-a/cafes/
+- /places/cafes/ -> /sectors/sector-b/cafes/
+- /places/cafes/ -> /sectors/sector-d/cafes/
+- /places/cafes/ -> /sectors/sector-g/cafes/
+- /places/cafes/ -> /sectors/sector-k/cafes/
+- /places/cafes/ -> /sectors/sector-c/cafes/
+- /places/cafes/ -> /sectors/sector-e/cafes/
+- /places/cafes/ -> /sectors/sector-f/cafes/
+- /places/cafes/ -> /sectors/sector-h/cafes/
+- /places/cafes/ -> /sectors/sector-j/cafes/
+- /places/cafes/ -> /sectors/sector-l/cafes/
+- /places/cafes/ -> /sectors/sector-m/cafes/
+- /places/cafes/ -> /sectors/sector-n/cafes/
+- /places/cafes/ -> /sectors/cca/cafes/
+- /places/cafes/ -> /sectors/main-boulevard-commercial/cafes/
+- /places/cafes/ -> /sectors/sector-a/places/cafes/
+- /places/cafes/ -> /sectors/sector-b/places/cafes/
+- /places/cafes/ -> /sectors/sector-c/places/cafes/
+- /places/cafes/ -> /sectors/sector-d/places/cafes/
+- /places/cafes/ -> /sectors/sector-e/places/cafes/
+- /places/cafes/ -> /sectors/sector-f/places/cafes/
+- /places/cafes/ -> /sectors/sector-g/places/cafes/
+- /places/cafes/ -> /sectors/sector-h/places/cafes/
+- /places/cafes/ -> /sectors/sector-j/places/cafes/
+- /places/cafes/ -> /sectors/sector-k/places/cafes/
+- /places/cafes/ -> /sectors/sector-l/places/cafes/
+- /places/cafes/ -> /sectors/sector-m/places/cafes/
+- /places/cafes/ -> /sectors/sector-n/places/cafes/
+- /places/cafes/ -> /sectors/cca/places/cafes/
+- /places/cafes/ -> /sectors/main-boulevard-commercial/places/cafes/
+- /places/cafes/ -> /sectors/raya-commercial/places/cafes/
+- /places/supermarkets/ -> /sectors/sector-a/supermarkets/
+- /places/supermarkets/ -> /sectors/cca/supermarkets/
+- /places/supermarkets/ -> /sectors/sector-b/supermarkets/
+- /places/supermarkets/ -> /sectors/sector-d/supermarkets/
+- /places/supermarkets/ -> /sectors/sector-e/supermarkets/
+- /places/supermarkets/ -> /sectors/sector-g/supermarkets/
+- /places/supermarkets/ -> /sectors/sector-h/supermarkets/
+- /places/supermarkets/ -> /sectors/sector-k/supermarkets/
+- /places/supermarkets/ -> /sectors/sector-l/supermarkets/
+- /places/supermarkets/ -> /sectors/sector-m/supermarkets/
+- /places/supermarkets/ -> /sectors/sector-n/supermarkets/
+- /places/supermarkets/ -> /sectors/main-boulevard-commercial/supermarkets/
+- /places/supermarkets/ -> /sectors/sector-a/places/supermarkets/
+- /places/supermarkets/ -> /sectors/sector-b/places/supermarkets/
+- /places/supermarkets/ -> /sectors/sector-c/places/supermarkets/
+- /places/supermarkets/ -> /sectors/sector-d/places/supermarkets/
+- /places/supermarkets/ -> /sectors/sector-e/places/supermarkets/
+- /places/supermarkets/ -> /sectors/sector-f/places/supermarkets/
+- /places/supermarkets/ -> /sectors/sector-g/places/supermarkets/
+- /places/supermarkets/ -> /sectors/sector-h/places/supermarkets/
+- /places/supermarkets/ -> /sectors/sector-j/places/supermarkets/
+- /places/supermarkets/ -> /sectors/sector-k/places/supermarkets/
+- /places/supermarkets/ -> /sectors/sector-l/places/supermarkets/
+- /places/supermarkets/ -> /sectors/sector-m/places/supermarkets/
+- /places/supermarkets/ -> /sectors/sector-n/places/supermarkets/
+- /places/supermarkets/ -> /sectors/cca/places/supermarkets/
+- /places/supermarkets/ -> /sectors/main-boulevard-commercial/places/supermarkets/
+- /places/idc/chughtai-lab-sector-b-collection-centre/ -> /places/idc/
+- /places/idc/chughtai-lab-sector-b-collection-centre/ -> /places/idc/
+- /places/idc/chughtai-lab-sector-b-collection-centre/ -> /places/idc/
+- /places/idc/idc-islamabad-diagnostic-centre-cca-1/ -> /places/idc/
+- /places/idc/idc-islamabad-diagnostic-centre-cca-1/ -> /places/idc/
+- /places/idc/idc-islamabad-diagnostic-centre-cca-1/ -> /places/idc/
+- /places/police-station/defence-c-police-station/ -> /places/police-station/
+- /places/police-station/defence-c-police-station/ -> /places/police-station/
+- /places/police-station/defence-c-police-station/ -> /places/police-station/
+- /places/colleges/ -> /sectors/sector-j/colleges/
+- /places/colleges/ -> /sectors/sector-d/colleges/
+- /places/colleges/ -> /sectors/sector-f/colleges/
+- /places/colleges/ -> /sectors/sector-l/colleges/
+- /places/colleges/ -> /sectors/sector-m/colleges/
+- /places/colleges/ -> /sectors/sector-n/colleges/
+- /places/colleges/ -> /sectors/sector-d/places/colleges/
+- /places/colleges/ -> /sectors/sector-f/places/colleges/
+- /places/colleges/ -> /sectors/sector-j/places/colleges/
+- /places/colleges/ -> /sectors/sector-l/places/colleges/
+- /places/colleges/ -> /sectors/sector-m/places/colleges/
+- /places/colleges/ -> /sectors/sector-n/places/colleges/
+- /places/club/ -> /sectors/sector-f/club/
+- /places/club/ -> /sectors/sector-f/places/club/
+- /places/club/ -> /sectors/defence-raya/places/club/
+- /places/post-office/pakistan-post-office-phase-6/ -> /places/post-office/
+- /places/post-office/pakistan-post-office-phase-6/ -> /places/post-office/
+- /places/post-office/pakistan-post-office-phase-6/ -> /places/post-office/
+- /places/internet-providers/transworld-nayatel-fiber-support-hub/ -> /places/internet-providers/
+- /places/internet-providers/transworld-nayatel-fiber-support-hub/ -> /places/internet-providers/
+- /places/internet-providers/transworld-nayatel-fiber-support-hub/ -> /places/internet-providers/
+- /places/courier-services/tcs-express-center-barki-sector-m/ -> /places/courier-services/
+- /places/courier-services/tcs-express-center-barki-sector-m/ -> /places/courier-services/
+- /places/courier-services/tcs-express-center-barki-sector-m/ -> /places/courier-services/
+- /places/hotel/sector-n-executive-suites-guest-house/ -> /places/hotel/
+- /places/hotel/sector-n-executive-suites-guest-house/ -> /places/hotel/
+- /places/hotel/sector-n-executive-suites-guest-house/ -> /places/hotel/
+- /places/shopping/ -> /sectors/main-boulevard-commercial/places/shopping/
+- /places/sector-a/ -> /sectors/sector-a/places/bakery/
+- /places/sector-a/ -> /sectors/sector-a/places/banks/
+- /places/sector-a/ -> /sectors/sector-a/places/beauty-salons/
+- /places/sector-a/ -> /sectors/sector-a/places/cafes/
+- /places/sector-a/ -> /sectors/sector-a/places/clinic/
+- /places/sector-a/ -> /sectors/sector-a/places/fast-food/
+- /places/sector-a/ -> /sectors/sector-a/places/gym/
+- /places/sector-a/ -> /sectors/sector-a/places/hospital/
+- /places/sector-a/ -> /sectors/sector-a/places/mosque/
+- /places/sector-a/ -> /sectors/sector-a/places/park/
+- /places/sector-a/ -> /sectors/sector-a/places/pharmacy/
+- /places/sector-a/ -> /sectors/sector-a/places/restaurants/
+- /places/sector-a/ -> /sectors/sector-a/places/schools/
+- /places/sector-a/ -> /sectors/sector-a/places/services/
+- /places/sector-a/ -> /sectors/sector-a/places/supermarkets/
+- /places/sector-b/ -> /sectors/sector-b/places/bakery/
+- /places/sector-b/ -> /sectors/sector-b/places/banks/
+- /places/sector-b/ -> /sectors/sector-b/places/beauty-salons/
+- /places/sector-b/ -> /sectors/sector-b/places/cafes/
+- /places/sector-b/ -> /sectors/sector-b/places/clinic/
+- /places/sector-b/ -> /sectors/sector-b/places/gym/
+- /places/sector-b/ -> /sectors/sector-b/places/idc/
+- /places/sector-b/ -> /sectors/sector-b/places/mosque/
+- /places/sector-b/ -> /sectors/sector-b/places/park/
+- /places/sector-b/ -> /sectors/sector-b/places/pharmacy/
+- /places/sector-b/ -> /sectors/sector-b/places/restaurants/
+- /places/sector-b/ -> /sectors/sector-b/places/schools/
+- /places/sector-b/ -> /sectors/sector-b/places/supermarkets/
+- /places/sector-c/ -> /sectors/sector-c/places/bakery/
+- /places/sector-c/ -> /sectors/sector-c/places/banks/
+- /places/sector-c/ -> /sectors/sector-c/places/beauty-salons/
+- /places/sector-c/ -> /sectors/sector-c/places/cafes/
+- /places/sector-c/ -> /sectors/sector-c/places/clinic/
+- /places/sector-c/ -> /sectors/sector-c/places/gym/
+- /places/sector-c/ -> /sectors/sector-c/places/hospital/
+- /places/sector-c/ -> /sectors/sector-c/places/mosque/
+- /places/sector-c/ -> /sectors/sector-c/places/park/
+- /places/sector-c/ -> /sectors/sector-c/places/pharmacy/
+- /places/sector-c/ -> /sectors/sector-c/places/restaurants/
+- /places/sector-c/ -> /sectors/sector-c/places/schools/
+- /places/sector-c/ -> /sectors/sector-c/places/supermarkets/
+- /places/sector-d/ -> /sectors/sector-d/places/bakery/
+- /places/sector-d/ -> /sectors/sector-d/places/banks/
+- /places/sector-d/ -> /sectors/sector-d/places/beauty-salons/
+- /places/sector-d/ -> /sectors/sector-d/places/cafes/
+- /places/sector-d/ -> /sectors/sector-d/places/clinic/
+- /places/sector-d/ -> /sectors/sector-d/places/colleges/
+- /places/sector-d/ -> /sectors/sector-d/places/gym/
+- /places/sector-d/ -> /sectors/sector-d/places/mosque/
+- /places/sector-d/ -> /sectors/sector-d/places/park/
+- /places/sector-d/ -> /sectors/sector-d/places/pharmacy/
+- /places/sector-d/ -> /sectors/sector-d/places/police-station/
+- /places/sector-d/ -> /sectors/sector-d/places/restaurants/
+- /places/sector-d/ -> /sectors/sector-d/places/schools/
+- /places/sector-d/ -> /sectors/sector-d/places/services/
+- /places/sector-d/ -> /sectors/sector-d/places/supermarkets/
+- /places/sector-e/ -> /sectors/sector-e/places/bakery/
+- /places/sector-e/ -> /sectors/sector-e/places/banks/
+- /places/sector-e/ -> /sectors/sector-e/places/cafes/
+- /places/sector-e/ -> /sectors/sector-e/places/clinic/
+- /places/sector-e/ -> /sectors/sector-e/places/gym/
+- /places/sector-e/ -> /sectors/sector-e/places/hospital/
+- /places/sector-e/ -> /sectors/sector-e/places/mosque/
+- /places/sector-e/ -> /sectors/sector-e/places/park/
+- /places/sector-e/ -> /sectors/sector-e/places/pharmacy/
+- /places/sector-e/ -> /sectors/sector-e/places/restaurants/
+- /places/sector-e/ -> /sectors/sector-e/places/schools/
+- /places/sector-e/ -> /sectors/sector-e/places/supermarkets/
+- /places/sector-f/ -> /sectors/sector-f/places/bakery/
+- /places/sector-f/ -> /sectors/sector-f/places/banks/
+- /places/sector-f/ -> /sectors/sector-f/places/cafes/
+- /places/sector-f/ -> /sectors/sector-f/places/clinic/
+- /places/sector-f/ -> /sectors/sector-f/places/club/
+- /places/sector-f/ -> /sectors/sector-f/places/colleges/
+- /places/sector-f/ -> /sectors/sector-f/places/fast-food/
+- /places/sector-f/ -> /sectors/sector-f/places/gym/
+- /places/sector-f/ -> /sectors/sector-f/places/mosque/
+- /places/sector-f/ -> /sectors/sector-f/places/park/
+- /places/sector-f/ -> /sectors/sector-f/places/pharmacy/
+- /places/sector-f/ -> /sectors/sector-f/places/restaurants/
+- /places/sector-f/ -> /sectors/sector-f/places/schools/
+- /places/sector-f/ -> /sectors/sector-f/places/supermarkets/
+- /places/sector-g/ -> /sectors/sector-g/places/bakery/
+- /places/sector-g/ -> /sectors/sector-g/places/banks/
+- /places/sector-g/ -> /sectors/sector-g/places/cafes/
+- /places/sector-g/ -> /sectors/sector-g/places/clinic/
+- /places/sector-g/ -> /sectors/sector-g/places/gym/
+- /places/sector-g/ -> /sectors/sector-g/places/hospital/
+- /places/sector-g/ -> /sectors/sector-g/places/mosque/
+- /places/sector-g/ -> /sectors/sector-g/places/park/
+- /places/sector-g/ -> /sectors/sector-g/places/pharmacy/
+- /places/sector-g/ -> /sectors/sector-g/places/restaurants/
+- /places/sector-g/ -> /sectors/sector-g/places/schools/
+- /places/sector-g/ -> /sectors/sector-g/places/supermarkets/
+- /places/sector-h/ -> /sectors/sector-h/places/bakery/
+- /places/sector-h/ -> /sectors/sector-h/places/banks/
+- /places/sector-h/ -> /sectors/sector-h/places/cafes/
+- /places/sector-h/ -> /sectors/sector-h/places/clinic/
+- /places/sector-h/ -> /sectors/sector-h/places/fast-food/
+- /places/sector-h/ -> /sectors/sector-h/places/gym/
+- /places/sector-h/ -> /sectors/sector-h/places/mosque/
+- /places/sector-h/ -> /sectors/sector-h/places/park/
+- /places/sector-h/ -> /sectors/sector-h/places/pharmacy/
+- /places/sector-h/ -> /sectors/sector-h/places/restaurants/
+- /places/sector-h/ -> /sectors/sector-h/places/schools/
+- /places/sector-h/ -> /sectors/sector-h/places/services/
+- /places/sector-h/ -> /sectors/sector-h/places/supermarkets/
+- /places/sector-j/ -> /sectors/sector-j/places/bakery/
+- /places/sector-j/ -> /sectors/sector-j/places/banks/
+- /places/sector-j/ -> /sectors/sector-j/places/cafes/
+- /places/sector-j/ -> /sectors/sector-j/places/clinic/
+- /places/sector-j/ -> /sectors/sector-j/places/colleges/
+- /places/sector-j/ -> /sectors/sector-j/places/fast-food/
+- /places/sector-j/ -> /sectors/sector-j/places/gym/
+- /places/sector-j/ -> /sectors/sector-j/places/internet-providers/
+- /places/sector-j/ -> /sectors/sector-j/places/mosque/
+- /places/sector-j/ -> /sectors/sector-j/places/park/
+- /places/sector-j/ -> /sectors/sector-j/places/pharmacy/
+- /places/sector-j/ -> /sectors/sector-j/places/post-office/
+- /places/sector-j/ -> /sectors/sector-j/places/restaurants/
+- /places/sector-j/ -> /sectors/sector-j/places/schools/
+- /places/sector-j/ -> /sectors/sector-j/places/supermarkets/
+- /places/sector-k/ -> /sectors/sector-k/places/bakery/
+- /places/sector-k/ -> /sectors/sector-k/places/banks/
+- /places/sector-k/ -> /sectors/sector-k/places/beauty-salons/
+- /places/sector-k/ -> /sectors/sector-k/places/cafes/
+- /places/sector-k/ -> /sectors/sector-k/places/clinic/
+- /places/sector-k/ -> /sectors/sector-k/places/gym/
+- /places/sector-k/ -> /sectors/sector-k/places/mosque/
+- /places/sector-k/ -> /sectors/sector-k/places/park/
+- /places/sector-k/ -> /sectors/sector-k/places/pharmacy/
+- /places/sector-k/ -> /sectors/sector-k/places/restaurants/
+- /places/sector-k/ -> /sectors/sector-k/places/schools/
+- /places/sector-k/ -> /sectors/sector-k/places/supermarkets/
+- /places/sector-l/ -> /sectors/sector-l/places/bakery/
+- /places/sector-l/ -> /sectors/sector-l/places/banks/
+- /places/sector-l/ -> /sectors/sector-l/places/cafes/
+- /places/sector-l/ -> /sectors/sector-l/places/clinic/
+- /places/sector-l/ -> /sectors/sector-l/places/colleges/
+- /places/sector-l/ -> /sectors/sector-l/places/fast-food/
+- /places/sector-l/ -> /sectors/sector-l/places/gym/
+- /places/sector-l/ -> /sectors/sector-l/places/mosque/
+- /places/sector-l/ -> /sectors/sector-l/places/park/
+- /places/sector-l/ -> /sectors/sector-l/places/pharmacy/
+- /places/sector-l/ -> /sectors/sector-l/places/restaurants/
+- /places/sector-l/ -> /sectors/sector-l/places/schools/
+- /places/sector-l/ -> /sectors/sector-l/places/supermarkets/
+- /places/sector-m/ -> /sectors/sector-m/places/bakery/
+- /places/sector-m/ -> /sectors/sector-m/places/banks/
+- /places/sector-m/ -> /sectors/sector-m/places/cafes/
+- /places/sector-m/ -> /sectors/sector-m/places/clinic/
+- /places/sector-m/ -> /sectors/sector-m/places/colleges/
+- /places/sector-m/ -> /sectors/sector-m/places/courier-services/
+- /places/sector-m/ -> /sectors/sector-m/places/gym/
+- /places/sector-m/ -> /sectors/sector-m/places/mosque/
+- /places/sector-m/ -> /sectors/sector-m/places/park/
+- /places/sector-m/ -> /sectors/sector-m/places/pharmacy/
+- /places/sector-m/ -> /sectors/sector-m/places/restaurants/
+- /places/sector-m/ -> /sectors/sector-m/places/schools/
+- /places/sector-m/ -> /sectors/sector-m/places/supermarkets/
+- /places/sector-n/ -> /sectors/sector-n/places/bakery/
+- /places/sector-n/ -> /sectors/sector-n/places/banks/
+- /places/sector-n/ -> /sectors/sector-n/places/cafes/
+- /places/sector-n/ -> /sectors/sector-n/places/colleges/
+- /places/sector-n/ -> /sectors/sector-n/places/gym/
+- /places/sector-n/ -> /sectors/sector-n/places/hospital/
+- /places/sector-n/ -> /sectors/sector-n/places/hotel/
+- /places/sector-n/ -> /sectors/sector-n/places/mosque/
+- /places/sector-n/ -> /sectors/sector-n/places/park/
+- /places/sector-n/ -> /sectors/sector-n/places/pharmacy/
+- /places/sector-n/ -> /sectors/sector-n/places/restaurants/
+- /places/sector-n/ -> /sectors/sector-n/places/schools/
+- /places/sector-n/ -> /sectors/sector-n/places/supermarkets/
+- /places/main-boulevard-commercial/ -> /sectors/main-boulevard-commercial/places/cafes/
+- /places/main-boulevard-commercial/ -> /sectors/main-boulevard-commercial/places/fast-food/
+- /places/main-boulevard-commercial/ -> /sectors/main-boulevard-commercial/places/park/
+- /places/main-boulevard-commercial/ -> /sectors/main-boulevard-commercial/places/restaurants/
+- /places/main-boulevard-commercial/ -> /sectors/main-boulevard-commercial/places/services/
+- /places/main-boulevard-commercial/ -> /sectors/main-boulevard-commercial/places/shopping/
+- /places/main-boulevard-commercial/ -> /sectors/main-boulevard-commercial/places/supermarkets/
+- /places/raya-commercial/ -> /sectors/raya-commercial/places/cafes/
+- /places/raya-commercial/ -> /sectors/raya-commercial/places/restaurants/
+- /places/defence-raya/ -> /sectors/defence-raya/places/club/
+- /places/defence-raya/ -> /sectors/defence-raya/places/mosque/
+- /places/mosques/ -> /sectors/cca/mosque/
+- /places/mosques/ -> /sectors/defence-raya/mosque/
+- /places/mosques/ -> /sectors/sector-a/places/mosque/
+- /places/mosques/ -> /sectors/sector-b/places/mosque/
+- /places/mosques/ -> /sectors/sector-c/places/mosque/
+- /places/mosques/ -> /sectors/sector-d/places/mosque/
+- /places/mosques/ -> /sectors/sector-e/places/mosque/
+- /places/mosques/ -> /sectors/sector-f/places/mosque/
+- /places/mosques/ -> /sectors/sector-g/places/mosque/
+- /places/mosques/ -> /sectors/sector-h/places/mosque/
+- /places/mosques/ -> /sectors/sector-j/places/mosque/
+- /places/mosques/ -> /sectors/sector-k/places/mosque/
+- /places/mosques/ -> /sectors/sector-l/places/mosque/
+- /places/mosques/ -> /sectors/sector-m/places/mosque/
+- /places/mosques/ -> /sectors/sector-n/places/mosque/
+- /places/mosques/ -> /sectors/cca/places/mosque/
+- /places/mosques/ -> /sectors/defence-raya/places/mosque/
+- /places/parks/ -> /sectors/sector-c/park/
+- /places/parks/ -> /sectors/sector-e/park/
+- /places/parks/ -> /sectors/sector-g/park/
+- /places/parks/ -> /sectors/sector-k/park/
+- /places/parks/ -> /sectors/sector-a/park/
+- /places/parks/ -> /sectors/sector-b/park/
+- /places/parks/ -> /sectors/sector-d/park/
+- /places/parks/ -> /sectors/sector-f/park/
+- /places/parks/ -> /sectors/sector-h/park/
+- /places/parks/ -> /sectors/sector-j/park/
+- /places/parks/ -> /sectors/sector-l/park/
+- /places/parks/ -> /sectors/sector-m/park/
+- /places/parks/ -> /sectors/sector-n/park/
+- /places/parks/ -> /sectors/main-boulevard-commercial/park/
+- /places/parks/ -> /sectors/sector-a/places/park/
+- /places/parks/ -> /sectors/sector-b/places/park/
+- /places/parks/ -> /sectors/sector-c/places/park/
+- /places/parks/ -> /sectors/sector-d/places/park/
+- /places/parks/ -> /sectors/sector-e/places/park/
+- /places/parks/ -> /sectors/sector-f/places/park/
+- /places/parks/ -> /sectors/sector-g/places/park/
+- /places/parks/ -> /sectors/sector-h/places/park/
+- /places/parks/ -> /sectors/sector-j/places/park/
+- /places/parks/ -> /sectors/sector-k/places/park/
+- /places/parks/ -> /sectors/sector-l/places/park/
+- /places/parks/ -> /sectors/sector-m/places/park/
+- /places/parks/ -> /sectors/sector-n/places/park/
+- /places/parks/ -> /sectors/main-boulevard-commercial/places/park/
+- /places/gyms/ -> /sectors/sector-b/gym/
+- /places/gyms/ -> /sectors/sector-c/gym/
+- /places/gyms/ -> /sectors/sector-d/gym/
+- /places/gyms/ -> /sectors/sector-e/gym/
+- /places/gyms/ -> /sectors/sector-j/gym/
+- /places/gyms/ -> /sectors/sector-m/gym/
+- /places/gyms/ -> /sectors/sector-n/gym/
+- /places/gyms/ -> /sectors/cca/gym/
+- /places/gyms/ -> /sectors/sector-a/gym/
+- /places/gyms/ -> /sectors/sector-f/gym/
+- /places/gyms/ -> /sectors/sector-g/gym/
+- /places/gyms/ -> /sectors/sector-h/gym/
+- /places/gyms/ -> /sectors/sector-k/gym/
+- /places/gyms/ -> /sectors/sector-l/gym/
+- /places/gyms/ -> /sectors/sector-a/places/gym/
+- /places/gyms/ -> /sectors/sector-b/places/gym/
+- /places/gyms/ -> /sectors/sector-c/places/gym/
+- /places/gyms/ -> /sectors/sector-d/places/gym/
+- /places/gyms/ -> /sectors/sector-e/places/gym/
+- /places/gyms/ -> /sectors/sector-f/places/gym/
+- /places/gyms/ -> /sectors/sector-g/places/gym/
+- /places/gyms/ -> /sectors/sector-h/places/gym/
+- /places/gyms/ -> /sectors/sector-j/places/gym/
+- /places/gyms/ -> /sectors/sector-k/places/gym/
+- /places/gyms/ -> /sectors/sector-l/places/gym/
+- /places/gyms/ -> /sectors/sector-m/places/gym/
+- /places/gyms/ -> /sectors/sector-n/places/gym/
+- /places/gyms/ -> /sectors/cca/places/gym/
+- /places/hospitals/ -> /sectors/sector-a/hospital/
+- /places/hospitals/ -> /sectors/sector-c/hospital/
+- /places/hospitals/ -> /sectors/sector-e/hospital/
+- /places/hospitals/ -> /sectors/sector-g/hospital/
+- /places/hospitals/ -> /sectors/sector-a/places/hospital/
+- /places/hospitals/ -> /sectors/sector-c/places/hospital/
+- /places/hospitals/ -> /sectors/sector-e/places/hospital/
+- /places/hospitals/ -> /sectors/sector-g/places/hospital/
+- /places/hospitals/ -> /sectors/sector-n/places/hospital/
+- /places/supermarket/ -> /sectors/sector-a/supermarkets/
+- /places/supermarket/ -> /sectors/cca/supermarkets/
+- /places/supermarket/ -> /sectors/sector-b/supermarkets/
+- /places/supermarket/ -> /sectors/sector-d/supermarkets/
+- /places/supermarket/ -> /sectors/sector-e/supermarkets/
+- /places/supermarket/ -> /sectors/sector-g/supermarkets/
+- /places/supermarket/ -> /sectors/sector-h/supermarkets/
+- /places/supermarket/ -> /sectors/sector-k/supermarkets/
+- /places/supermarket/ -> /sectors/sector-l/supermarkets/
+- /places/supermarket/ -> /sectors/sector-m/supermarkets/
+- /places/supermarket/ -> /sectors/sector-n/supermarkets/
+- /places/supermarket/ -> /sectors/main-boulevard-commercial/supermarkets/
+- /places/supermarket/ -> /sectors/sector-a/places/supermarkets/
+- /places/supermarket/ -> /sectors/sector-b/places/supermarkets/
+- /places/supermarket/ -> /sectors/sector-c/places/supermarkets/
+- /places/supermarket/ -> /sectors/sector-d/places/supermarkets/
+- /places/supermarket/ -> /sectors/sector-e/places/supermarkets/
+- /places/supermarket/ -> /sectors/sector-f/places/supermarkets/
+- /places/supermarket/ -> /sectors/sector-g/places/supermarkets/
+- /places/supermarket/ -> /sectors/sector-h/places/supermarkets/
+- /places/supermarket/ -> /sectors/sector-j/places/supermarkets/
+- /places/supermarket/ -> /sectors/sector-k/places/supermarkets/
+- /places/supermarket/ -> /sectors/sector-l/places/supermarkets/
+- /places/supermarket/ -> /sectors/sector-m/places/supermarkets/
+- /places/supermarket/ -> /sectors/sector-n/places/supermarkets/
+- /places/supermarket/ -> /sectors/cca/places/supermarkets/
+- /places/supermarket/ -> /sectors/main-boulevard-commercial/places/supermarkets/
+- /places/school/ -> /sectors/sector-a/schools/
+- /places/school/ -> /sectors/sector-c/schools/
+- /places/school/ -> /sectors/sector-f/schools/
+- /places/school/ -> /sectors/sector-a/places/schools/
+- /places/school/ -> /sectors/sector-b/places/schools/
+- /places/school/ -> /sectors/sector-c/places/schools/
+- /places/school/ -> /sectors/sector-d/places/schools/
+- /places/school/ -> /sectors/sector-e/places/schools/
+- /places/school/ -> /sectors/sector-f/places/schools/
+- /places/school/ -> /sectors/sector-g/places/schools/
+- /places/school/ -> /sectors/sector-h/places/schools/
+- /places/school/ -> /sectors/sector-j/places/schools/
+- /places/school/ -> /sectors/sector-k/places/schools/
+- /places/school/ -> /sectors/sector-l/places/schools/
+- /places/school/ -> /sectors/sector-m/places/schools/
+- /places/school/ -> /sectors/sector-n/places/schools/
+- /places/bank/ -> /sectors/sector-b/banks/
+- /places/bank/ -> /sectors/sector-e/banks/
+- /places/bank/ -> /sectors/sector-a/places/banks/
+- /places/bank/ -> /sectors/sector-b/places/banks/
+- /places/bank/ -> /sectors/sector-c/places/banks/
+- /places/bank/ -> /sectors/sector-d/places/banks/
+- /places/bank/ -> /sectors/sector-e/places/banks/
+- /places/bank/ -> /sectors/sector-f/places/banks/
+- /places/bank/ -> /sectors/sector-g/places/banks/
+- /places/bank/ -> /sectors/sector-h/places/banks/
+- /places/bank/ -> /sectors/sector-j/places/banks/
+- /places/bank/ -> /sectors/sector-k/places/banks/
+- /places/bank/ -> /sectors/sector-l/places/banks/
+- /places/bank/ -> /sectors/sector-m/places/banks/
+- /places/bank/ -> /sectors/sector-n/places/banks/
+- /places/bank/ -> /sectors/cca/places/banks/
+- /places/cafe/ -> /sectors/sector-a/cafes/
+- /places/cafe/ -> /sectors/sector-b/cafes/
+- /places/cafe/ -> /sectors/sector-d/cafes/
+- /places/cafe/ -> /sectors/sector-g/cafes/
+- /places/cafe/ -> /sectors/sector-k/cafes/
+- /places/cafe/ -> /sectors/sector-c/cafes/
+- /places/cafe/ -> /sectors/sector-e/cafes/
+- /places/cafe/ -> /sectors/sector-f/cafes/
+- /places/cafe/ -> /sectors/sector-h/cafes/
+- /places/cafe/ -> /sectors/sector-j/cafes/
+- /places/cafe/ -> /sectors/sector-l/cafes/
+- /places/cafe/ -> /sectors/sector-m/cafes/
+- /places/cafe/ -> /sectors/sector-n/cafes/
+- /places/cafe/ -> /sectors/cca/cafes/
+- /places/cafe/ -> /sectors/main-boulevard-commercial/cafes/
+- /places/cafe/ -> /sectors/sector-a/places/cafes/
+- /places/cafe/ -> /sectors/sector-b/places/cafes/
+- /places/cafe/ -> /sectors/sector-c/places/cafes/
+- /places/cafe/ -> /sectors/sector-d/places/cafes/
+- /places/cafe/ -> /sectors/sector-e/places/cafes/
+- /places/cafe/ -> /sectors/sector-f/places/cafes/
+- /places/cafe/ -> /sectors/sector-g/places/cafes/
+- /places/cafe/ -> /sectors/sector-h/places/cafes/
+- /places/cafe/ -> /sectors/sector-j/places/cafes/
+- /places/cafe/ -> /sectors/sector-k/places/cafes/
+- /places/cafe/ -> /sectors/sector-l/places/cafes/
+- /places/cafe/ -> /sectors/sector-m/places/cafes/
+- /places/cafe/ -> /sectors/sector-n/places/cafes/
+- /places/cafe/ -> /sectors/cca/places/cafes/
+- /places/cafe/ -> /sectors/main-boulevard-commercial/places/cafes/
+- /places/cafe/ -> /sectors/raya-commercial/places/cafes/
+- /places/restaurant/ -> /sectors/sector-h/restaurants/
+- /places/restaurant/ -> /sectors/main-boulevard-commercial/restaurants/
+- /places/restaurant/ -> /sectors/sector-a/places/restaurants/
+- /places/restaurant/ -> /sectors/sector-b/places/restaurants/
+- /places/restaurant/ -> /sectors/sector-c/places/restaurants/
+- /places/restaurant/ -> /sectors/sector-d/places/restaurants/
+- /places/restaurant/ -> /sectors/sector-e/places/restaurants/
+- /places/restaurant/ -> /sectors/sector-f/places/restaurants/
+- /places/restaurant/ -> /sectors/sector-g/places/restaurants/
+- /places/restaurant/ -> /sectors/sector-h/places/restaurants/
+- /places/restaurant/ -> /sectors/sector-j/places/restaurants/
+- /places/restaurant/ -> /sectors/sector-k/places/restaurants/
+- /places/restaurant/ -> /sectors/sector-l/places/restaurants/
+- /places/restaurant/ -> /sectors/sector-m/places/restaurants/
+- /places/restaurant/ -> /sectors/sector-n/places/restaurants/
+- /places/restaurant/ -> /sectors/main-boulevard-commercial/places/restaurants/
+- /places/restaurant/ -> /sectors/raya-commercial/places/restaurants/
+- /plots-near-commercial-dha-phase-6-lahore/ -> /places/cca/supermarkets/
+- /plots-near-commercial-dha-phase-6-lahore/ -> /places/main-boulevard-commercial/restaurants/
+- /properties/1-kanal-residential-plot-asking-price-sample/ -> /sectors/dha phase 6/properties/
+- /properties/1-kanal-residential-plot-asking-price-sample/ -> /dha-phase-6-dha phase 6-lahore/
+- /properties/1-kanal-residential-plot-asking-price-sample/ -> /entities/dha-phase-6-dha phase 6/
+- /properties/1-kanal-residential-plot-asking-price-sample/ -> /sectors/dha phase 6/properties/
+- /properties/10-marla-house-asking-price-sample/ -> /sectors/dha phase 6/properties/
+- /properties/10-marla-house-asking-price-sample/ -> /dha-phase-6-dha phase 6-lahore/
+- /properties/10-marla-house-asking-price-sample/ -> /entities/dha-phase-6-dha phase 6/
+- /properties/10-marla-house-asking-price-sample/ -> /sectors/dha phase 6/properties/
+- /properties/8-marla-commercial-plot-cca-2-snapshot/ -> /sectors/cca 2/properties/
+- /properties/8-marla-commercial-plot-cca-2-snapshot/ -> /dha-phase-6-cca 2-lahore/
+- /properties/8-marla-commercial-plot-cca-2-snapshot/ -> /entities/dha-phase-6-cca 2/
+- /properties/8-marla-commercial-plot-cca-2-snapshot/ -> /sectors/cca 2/properties/
+- /properties/8-marla-commercial-pair-main-boulevard-snapshot/ -> /sectors/main boulevard/properties/
+- /properties/8-marla-commercial-pair-main-boulevard-snapshot/ -> /dha-phase-6-main boulevard-lahore/
+- /properties/8-marla-commercial-pair-main-boulevard-snapshot/ -> /entities/dha-phase-6-main boulevard/
+- /properties/8-marla-commercial-pair-main-boulevard-snapshot/ -> /sectors/main boulevard/properties/
+- /search-property/ -> /properties/${prop.slug}/
+- /search-property/ -> /properties/${prop.slug}/
+- /search-property/ -> /properties/${item.slug}/
+- /sectors/cca/places/restaurants/ -> /sectors/sector-a/places/restaurants/
+- /sectors/cca/places/restaurants/ -> /sectors/sector-b/places/restaurants/
+- /sectors/cca/places/restaurants/ -> /sectors/sector-c/places/restaurants/
+- /sectors/cca/places/restaurants/ -> /sectors/sector-d/places/restaurants/
+- /sectors/cca/places/restaurants/ -> /sectors/sector-e/places/restaurants/
+- /sectors/cca/places/restaurants/ -> /sectors/sector-f/places/restaurants/
+- /sectors/cca/places/restaurants/ -> /sectors/sector-g/places/restaurants/
+- /sectors/cca/places/restaurants/ -> /sectors/sector-h/places/restaurants/
+- /sectors/cca/places/restaurants/ -> /sectors/sector-j/places/restaurants/
+- /sectors/cca/places/restaurants/ -> /sectors/sector-k/places/restaurants/
+- /sectors/cca/places/restaurants/ -> /sectors/sector-l/places/restaurants/
+- /sectors/cca/places/restaurants/ -> /sectors/sector-m/places/restaurants/
+- /sectors/cca/places/restaurants/ -> /sectors/sector-n/places/restaurants/
+- /sectors/cca/places/restaurants/ -> /sectors/main-boulevard-commercial/places/restaurants/
+- /sectors/cca/places/restaurants/ -> /sectors/raya-commercial/places/restaurants/
+- /sectors/cca/places/restaurants/ -> /sectors/cca/places/bakery/
+- /sectors/cca/places/restaurants/ -> /sectors/cca/places/banks/
+- /sectors/cca/places/restaurants/ -> /sectors/cca/places/beauty-salons/
+- /sectors/cca/places/restaurants/ -> /sectors/cca/places/cafes/
+- /sectors/cca/places/restaurants/ -> /sectors/cca/places/fast-food/
+- /sectors/cca/places/restaurants/ -> /sectors/cca/places/gym/
+- /sectors/cca/places/restaurants/ -> /sectors/cca/places/idc/
+- /sectors/cca/places/restaurants/ -> /sectors/cca/places/mosque/
+- /sectors/cca/places/restaurants/ -> /sectors/cca/places/pharmacy/
+- /sectors/cca/places/restaurants/ -> /sectors/cca/places/services/
+- /sectors/cca/places/restaurants/ -> /sectors/cca/places/supermarkets/
+- /sectors/cca/places/shopping/ -> /sectors/main-boulevard-commercial/places/shopping/
+- /sectors/cca/places/shopping/ -> /sectors/cca/places/bakery/
+- /sectors/cca/places/shopping/ -> /sectors/cca/places/banks/
+- /sectors/cca/places/shopping/ -> /sectors/cca/places/beauty-salons/
+- /sectors/cca/places/shopping/ -> /sectors/cca/places/cafes/
+- /sectors/cca/places/shopping/ -> /sectors/cca/places/fast-food/
+- /sectors/cca/places/shopping/ -> /sectors/cca/places/gym/
+- /sectors/cca/places/shopping/ -> /sectors/cca/places/idc/
+- /sectors/cca/places/shopping/ -> /sectors/cca/places/mosque/
+- /sectors/cca/places/shopping/ -> /sectors/cca/places/pharmacy/
+- /sectors/cca/places/shopping/ -> /sectors/cca/places/services/
+- /sectors/cca/places/shopping/ -> /sectors/cca/places/supermarkets/
+- /sectors/cca/places/ -> /sectors/cca/places/banks/
+- /sectors/cca/places/ -> /sectors/cca/places/beauty-salons/
+- /sectors/cca/places/ -> /sectors/cca/places/fast-food/
+- /sectors/cca/places/ -> /sectors/cca/places/bakery/
+- /sectors/cca/places/ -> /sectors/cca/places/gym/
+- /sectors/cca/places/ -> /sectors/cca/places/pharmacy/
+- /sectors/sector-a/places/ -> /sectors/sector-a/places/restaurants/
+- /sectors/sector-a/places/ -> /sectors/sector-a/places/banks/
+- /sectors/sector-a/places/ -> /sectors/sector-a/places/mosque/
+- /sectors/sector-a/places/ -> /sectors/sector-a/places/beauty-salons/
+- /sectors/sector-a/places/ -> /sectors/sector-a/places/cafes/
+- /sectors/sector-a/places/ -> /sectors/sector-a/places/pharmacy/
+- /sectors/sector-a/places/ -> /sectors/sector-a/places/schools/
+- /sectors/sector-a/places/ -> /sectors/sector-a/places/supermarkets/
+- /sectors/sector-b/places/ -> /sectors/sector-b/places/restaurants/
+- /sectors/sector-b/places/ -> /sectors/sector-b/places/mosque/
+- /sectors/sector-b/places/ -> /sectors/sector-b/places/schools/
+- /sectors/sector-b/places/ -> /sectors/sector-b/places/banks/
+- /sectors/sector-b/places/ -> /sectors/sector-b/places/cafes/
+- /sectors/sector-b/places/ -> /sectors/sector-b/places/gym/
+- /sectors/sector-b/places/ -> /sectors/sector-b/places/pharmacy/
+- /sectors/sector-b/places/ -> /sectors/sector-b/places/bakery/
+- /sectors/sector-c/places/ -> /sectors/sector-c/places/restaurants/
+- /sectors/sector-c/places/ -> /sectors/sector-c/places/banks/
+- /sectors/sector-c/places/ -> /sectors/sector-c/places/mosque/
+- /sectors/sector-c/places/ -> /sectors/sector-c/places/supermarkets/
+- /sectors/sector-c/places/ -> /sectors/sector-c/places/bakery/
+- /sectors/sector-c/places/ -> /sectors/sector-c/places/clinic/
+- /sectors/sector-c/places/ -> /sectors/sector-c/places/gym/
+- /sectors/sector-c/places/ -> /sectors/sector-c/places/park/
+- /sectors/sector-d/places/ -> /sectors/sector-d/places/restaurants/
+- /sectors/sector-d/places/ -> /sectors/sector-d/places/schools/
+- /sectors/sector-d/places/ -> /sectors/sector-d/places/banks/
+- /sectors/sector-d/places/ -> /sectors/sector-d/places/mosque/
+- /sectors/sector-d/places/ -> /sectors/sector-d/places/services/
+- /sectors/sector-d/places/ -> /sectors/sector-d/places/cafes/
+- /sectors/sector-d/places/ -> /sectors/sector-d/places/gym/
+- /sectors/sector-d/places/ -> /sectors/sector-d/places/pharmacy/
+- /sectors/sector-e/places/ -> /sectors/sector-e/places/restaurants/
+- /sectors/sector-e/places/ -> /sectors/sector-e/places/mosque/
+- /sectors/sector-e/places/ -> /sectors/sector-e/places/schools/
+- /sectors/sector-e/places/ -> /sectors/sector-e/places/banks/
+- /sectors/sector-e/places/ -> /sectors/sector-e/places/clinic/
+- /sectors/sector-e/places/ -> /sectors/sector-e/places/gym/
+- /sectors/sector-e/places/ -> /sectors/sector-e/places/park/
+- /sectors/sector-e/places/ -> /sectors/sector-e/places/bakery/
+- /sectors/sector-f/places/ -> /sectors/sector-f/places/restaurants/
+- /sectors/sector-f/places/ -> /sectors/sector-f/places/banks/
+- /sectors/sector-f/places/ -> /sectors/sector-f/places/mosque/
+- /sectors/sector-f/places/ -> /sectors/sector-f/places/supermarkets/
+- /sectors/sector-f/places/ -> /sectors/sector-f/places/schools/
+- /sectors/sector-f/places/ -> /sectors/sector-f/places/bakery/
+- /sectors/sector-f/places/ -> /sectors/sector-f/places/cafes/
+- /sectors/sector-f/places/ -> /sectors/sector-f/places/clinic/
+- /sectors/sector-g/places/ -> /sectors/sector-g/places/restaurants/
+- /sectors/sector-g/places/ -> /sectors/sector-g/places/banks/
+- /sectors/sector-g/places/ -> /sectors/sector-g/places/mosque/
+- /sectors/sector-g/places/ -> /sectors/sector-g/places/schools/
+- /sectors/sector-g/places/ -> /sectors/sector-g/places/cafes/
+- /sectors/sector-g/places/ -> /sectors/sector-g/places/park/
+- /sectors/sector-g/places/ -> /sectors/sector-g/places/bakery/
+- /sectors/sector-g/places/ -> /sectors/sector-g/places/clinic/
+- /sectors/sector-h/places/ -> /sectors/sector-h/places/banks/
+- /sectors/sector-h/places/ -> /sectors/sector-h/places/mosque/
+- /sectors/sector-h/places/ -> /sectors/sector-h/places/schools/
+- /sectors/sector-h/places/ -> /sectors/sector-h/places/restaurants/
+- /sectors/sector-h/places/ -> /sectors/sector-h/places/bakery/
+- /sectors/sector-h/places/ -> /sectors/sector-h/places/cafes/
+- /sectors/sector-h/places/ -> /sectors/sector-h/places/clinic/
+- /sectors/sector-h/places/ -> /sectors/sector-h/places/fast-food/
+- /sectors/sector-j/places/ -> /sectors/sector-j/places/restaurants/
+- /sectors/sector-j/places/ -> /sectors/sector-j/places/banks/
+- /sectors/sector-j/places/ -> /sectors/sector-j/places/mosque/
+- /sectors/sector-j/places/ -> /sectors/sector-j/places/schools/
+- /sectors/sector-j/places/ -> /sectors/sector-j/places/supermarkets/
+- /sectors/sector-j/places/ -> /sectors/sector-j/places/colleges/
+- /sectors/sector-j/places/ -> /sectors/sector-j/places/gym/
+- /sectors/sector-j/places/ -> /sectors/sector-j/places/bakery/
+- /sectors/sector-k/places/ -> /sectors/sector-k/places/restaurants/
+- /sectors/sector-k/places/ -> /sectors/sector-k/places/banks/
+- /sectors/sector-k/places/ -> /sectors/sector-k/places/mosque/
+- /sectors/sector-k/places/ -> /sectors/sector-k/places/schools/
+- /sectors/sector-k/places/ -> /sectors/sector-k/places/cafes/
+- /sectors/sector-k/places/ -> /sectors/sector-k/places/park/
+- /sectors/sector-k/places/ -> /sectors/sector-k/places/bakery/
+- /sectors/sector-k/places/ -> /sectors/sector-k/places/beauty-salons/
+- /sectors/sector-l/places/ -> /sectors/sector-l/places/restaurants/
+- /sectors/sector-l/places/ -> /sectors/sector-l/places/banks/
+- /sectors/sector-l/places/ -> /sectors/sector-l/places/mosque/
+- /sectors/sector-l/places/ -> /sectors/sector-l/places/schools/
+- /sectors/sector-l/places/ -> /sectors/sector-l/places/bakery/
+- /sectors/sector-l/places/ -> /sectors/sector-l/places/cafes/
+- /sectors/sector-l/places/ -> /sectors/sector-l/places/clinic/
+- /sectors/sector-l/places/ -> /sectors/sector-l/places/colleges/
+- /sectors/sector-m/places/ -> /sectors/sector-m/places/restaurants/
+- /sectors/sector-m/places/ -> /sectors/sector-m/places/banks/
+- /sectors/sector-m/places/ -> /sectors/sector-m/places/mosque/
+- /sectors/sector-m/places/ -> /sectors/sector-m/places/schools/
+- /sectors/sector-m/places/ -> /sectors/sector-m/places/gym/
+- /sectors/sector-m/places/ -> /sectors/sector-m/places/bakery/
+- /sectors/sector-m/places/ -> /sectors/sector-m/places/cafes/
+- /sectors/sector-m/places/ -> /sectors/sector-m/places/clinic/
+- /sectors/sector-n/places/ -> /sectors/sector-n/places/restaurants/
+- /sectors/sector-n/places/ -> /sectors/sector-n/places/banks/
+- /sectors/sector-n/places/ -> /sectors/sector-n/places/hospital/
+- /sectors/sector-n/places/ -> /sectors/sector-n/places/mosque/
+- /sectors/sector-n/places/ -> /sectors/sector-n/places/schools/
+- /sectors/sector-n/places/ -> /sectors/sector-n/places/gym/
+- /sectors/sector-n/places/ -> /sectors/sector-n/places/bakery/
+- /sectors/sector-n/places/ -> /sectors/sector-n/places/cafes/
+- /sectors/main-boulevard-commercial/places/ -> /sectors/main-boulevard-commercial/places/shopping/
+- /sectors/main-boulevard-commercial/places/ -> /sectors/main-boulevard-commercial/places/fast-food/
+- /sectors/main-boulevard-commercial/places/ -> /sectors/main-boulevard-commercial/places/services/
+- /sectors/main-boulevard-commercial/places/ -> /sectors/main-boulevard-commercial/places/cafes/
+- /sectors/main-boulevard-commercial/places/ -> /sectors/main-boulevard-commercial/places/park/
+- /sectors/main-boulevard-commercial/places/ -> /sectors/main-boulevard-commercial/places/restaurants/
+- /sectors/main-boulevard-commercial/places/ -> /sectors/main-boulevard-commercial/places/supermarkets/
+- /sectors/raya-commercial/places/ -> /sectors/raya-commercial/places/cafes/
+- /sectors/raya-commercial/places/ -> /sectors/raya-commercial/places/restaurants/
+- /sectors/defence-raya/places/ -> /sectors/defence-raya/places/club/
+- /sectors/defence-raya/places/ -> /sectors/defence-raya/places/mosque/
+- /sectors/cca-1/ -> /sectors/cca-1/properties/
+- /sectors/cca-2/ -> /sectors/cca-2/properties/
+- / -> /places/hotel/
+- / -> /places/flower-shop/
+- / -> /places/hostels/
+- / -> /places/hotel/
+- / -> /places/idc/
+- / -> /places/internet-providers/
+- / -> /places/courier-services/
+- / -> /places/police-station/
+- / -> /places/post-office/
+
+## Orphan Pages
+
+- /5-marla-plots-dha-phase-6-lahore/
+- /dha-phase-6-lahore-sectors/
+- /find-my-property/
+- /gallery/
+- /map/
+- /places/mosques/
+- /places/parks/
+- /places/gyms/
+- /places/hospitals/
+- /places/supermarket/
+- /places/school/
+- /places/bank/
+- /places/cafe/
+- /places/restaurant/
+- /property-dealer/
+- /search/
+- /sectors/cca/bank/
+- /sectors/cca/restaurant/
+- /sectors/sector-a/mosques/
+- /sectors/sector-a/bank/
+- /sectors/sector-a/restaurant/
+- /sectors/sector-b/mosques/
+- /sectors/sector-b/school/
+- /sectors/sector-b/restaurant/
+- /sectors/sector-c/mosques/
+- /sectors/sector-c/bank/
+- /sectors/sector-c/restaurant/
+- /sectors/sector-c/supermarket/
+- /sectors/sector-d/school/
+- /sectors/sector-d/mosques/
+- /sectors/sector-d/restaurant/
+- /sectors/sector-d/bank/
+- /sectors/sector-e/mosques/
+- /sectors/sector-e/school/
+- /sectors/sector-e/restaurant/
+- /sectors/sector-f/mosques/
+- /sectors/sector-f/bank/
+- /sectors/sector-f/supermarket/
+- /sectors/sector-f/restaurant/
+- /sectors/sector-g/mosques/
+- /sectors/sector-g/bank/
+- /sectors/sector-g/school/
+- /sectors/sector-g/restaurant/
+- /sectors/sector-h/mosques/
+- /sectors/sector-h/bank/
+- /sectors/sector-h/school/
+- /sectors/sector-j/mosques/
+- /sectors/sector-j/bank/
+- /sectors/sector-j/school/
+- /sectors/sector-j/restaurant/
+- /sectors/sector-j/supermarket/
+- /sectors/sector-k/mosques/
+- /sectors/sector-k/bank/
+- /sectors/sector-k/school/
+- /sectors/sector-k/restaurant/
+- /sectors/sector-l/school/
+- /sectors/sector-l/mosques/
+- /sectors/sector-l/bank/
+- /sectors/sector-l/restaurant/
+- /sectors/sector-m/school/
+- /sectors/sector-m/mosques/
+- /sectors/sector-m/restaurant/
+- /sectors/sector-m/bank/
+- /sectors/sector-n/hospitals/
+- /sectors/sector-n/mosques/
+- /sectors/sector-n/school/
+- /sectors/sector-n/restaurant/
+- /sectors/sector-n/bank/
+- /sectors/raya-commercial/restaurant/
+- /sectors/raya-commercial/cafe/
+
+## Low Internal Link Pages
+
+- /1-kanal-plots-dha-phase-6-lahore/ (1)
+- /5-marla-plots-dha-phase-6-lahore/ (0)
+- /blog/5-mistakes-buyers-make-before-purchasing-property/ (1)
+- /blog/how-to-compare-dha-phase-6-plot-prices/ (1)
+- /blog/dha-phase-6-sector-comparison-checklist/ (1)
+- /blog/dha-phase-6-property-verification-checklist/ (1)
+- /blog/how-to-read-dha-phase-6-lahore-map/ (1)
+- /blog/dha-phase-6-house-inspection-guide/ (1)
+- /blog/dha-phase-6-commercial-property-due-diligence/ (1)
+- /blog/dha-phase-6-lahore-property-market-update-2026/ (1)
+- /blog/buying-5-marla-house-in-dha-phase-6/ (1)
+- /blog/buying-10-marla-house-in-dha-phase-6/ (1)
+- /blog/living-cost-in-dha-phase-6-lahore/ (1)
+- /blog/complete-dha-lahore-transfer-process/ (1)
+- /contact-property-advisor/ (1)
+- /dha-phase-6-lahore-amenities/ (1)
+- /dha-phase-6-lahore-sectors/ (0)
+- /dha-phase-6-vs-lake-city-lahore/ (1)
+- /dha-phase-6-vs-phase-7-lahore/ (1)
+- /find-my-property/ (0)
+- /gallery/ (0)
+- /jobs/business-development-representative-khired-networks/ (1)
+- /jobs/site-supervisor-construction-dha-6-lahore/ (1)
+- /jobs/interior-designer-dha-6-lahore/ (1)
+- /jobs/assistant-manager-accounts-dha-6-lahore/ (1)
+- /jobs/front-desk-officer-guest-relations-defence-raya/ (1)
+- /jobs/project-engineer-infrastructure-roads-dha-6/ (1)
+- /jobs/customer-relationship-manager-real-estate-phase-6/ (1)
+- /jobs/graphic-designer-social-media-specialist-nitro-fox/ (1)
+- /jobs/health-safety-auditor-commercial-complexes-phase-6/ (1)
+- /map/ (0)
+- /places/cca/restaurants/ (1)
+- /places/cca/shopping/ (1)
+- /places/mosques/ (0)
+- /places/parks/ (0)
+- /places/gyms/ (0)
+- /places/hospitals/ (0)
+- /places/supermarket/ (0)
+- /places/school/ (0)
+- /places/bank/ (0)
+- /places/cafe/ (0)
+- /places/restaurant/ (0)
+- /property-dealer/ (0)
+- /search/ (0)
+- /sectors/cca/bank/ (0)
+- /sectors/cca/restaurant/ (0)
+- /sectors/cca/bakery/ (1)
+- /sectors/cca/fast-food/ (1)
+- /sectors/cca/beauty-salons/ (1)
+- /sectors/cca/shopping/ (1)
+- /sectors/sector-a/mosques/ (0)
+- /sectors/sector-a/bank/ (0)
+- /sectors/sector-a/restaurant/ (0)
+- /sectors/sector-b/mosques/ (0)
+- /sectors/sector-b/school/ (0)
+- /sectors/sector-b/restaurant/ (0)
+- /sectors/sector-c/mosques/ (0)
+- /sectors/sector-c/bank/ (0)
+- /sectors/sector-c/restaurant/ (0)
+- /sectors/sector-c/supermarket/ (0)
+- /sectors/sector-d/school/ (0)
+- /sectors/sector-d/mosques/ (0)
+- /sectors/sector-d/services/ (1)
+- /sectors/sector-d/restaurant/ (0)
+- /sectors/sector-d/bank/ (0)
+- /sectors/sector-e/mosques/ (0)
+- /sectors/sector-e/school/ (0)
+- /sectors/sector-e/restaurant/ (0)
+- /sectors/sector-f/mosques/ (0)
+- /sectors/sector-f/bank/ (0)
+- /sectors/sector-f/supermarket/ (0)
+- /sectors/sector-f/restaurant/ (0)
+- /sectors/sector-g/mosques/ (0)
+- /sectors/sector-g/bank/ (0)
+- /sectors/sector-g/school/ (0)
+- /sectors/sector-g/restaurant/ (0)
+- /sectors/sector-h/mosques/ (0)
+- /sectors/sector-h/bank/ (0)
+- /sectors/sector-h/school/ (0)
+- /sectors/sector-j/mosques/ (0)
+- /sectors/sector-j/bank/ (0)
+- /sectors/sector-j/school/ (0)
+- /sectors/sector-j/restaurant/ (0)
+- /sectors/sector-j/supermarket/ (0)
+- /sectors/sector-k/mosques/ (0)
+- /sectors/sector-k/bank/ (0)
+- /sectors/sector-k/school/ (0)
+- /sectors/sector-k/restaurant/ (0)
+- /sectors/sector-l/school/ (0)
+- /sectors/sector-l/mosques/ (0)
+- /sectors/sector-l/bank/ (0)
+- /sectors/sector-l/restaurant/ (0)
+- /sectors/sector-m/school/ (0)
+- /sectors/sector-m/mosques/ (0)
+- /sectors/sector-m/restaurant/ (0)
+- /sectors/sector-m/bank/ (0)
+- /sectors/sector-n/hospitals/ (0)
+- /sectors/sector-n/mosques/ (0)
+- /sectors/sector-n/school/ (0)
+- /sectors/sector-n/restaurant/ (0)
+- /sectors/sector-n/bank/ (0)
+- /sectors/main-boulevard-commercial/shopping/ (1)
+- /sectors/raya-commercial/restaurant/ (0)
+- /sectors/raya-commercial/cafe/ (0)
+- /sectors/defence-raya/club/ (1)
+- /sectors/cca-1/ (1)
+

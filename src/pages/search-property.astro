@@ -219,8 +219,7 @@ const structuredData = {
     let properties = [];
     try {
       properties = JSON.parse(rawDataEl.textContent || '[]');
-    } catch (e) {
-      console.error('Failed to parse properties dataset', e);
+    } catch {
       return;
     }
 
@@ -230,8 +229,6 @@ const structuredData = {
     const sectorFilter = document.getElementById('sectorFilter');
     const priceFilter = document.getElementById('priceFilter');
     const sortFilter = document.getElementById('sortFilter');
-    const resetBtn = document.getElementById('resetFiltersBtn');
-    const clearAllBtn = document.getElementById('clearAllBtn');
     const grid = document.getElementById('propertiesGrid');
     const visibleCountEl = document.getElementById('visibleCount');
     const noResultsBox = document.getElementById('noResultsBox');
@@ -368,16 +365,6 @@ const structuredData = {
       renderProperties(filtered);
     }
 
-    function resetFilters() {
-      searchInput.value = '';
-      typeFilter.value = 'all';
-      sizeFilter.value = 'all';
-      sectorFilter.value = 'all';
-      priceFilter.value = 'all';
-      sortFilter.value = 'featured';
-      applyFilters();
-    }
-
     searchInput.addEventListener('input', applyFilters);
     typeFilter.addEventListener('change', applyFilters);
     sizeFilter.addEventListener('change', applyFilters);
@@ -424,8 +411,8 @@ const structuredData = {
             </div>
           </a>
         `).join('');
-      } catch (err) {
-        console.warn('Unable to load recently viewed', err);
+      } catch {
+        recentSection.style.display = 'none';
       }
     }
 

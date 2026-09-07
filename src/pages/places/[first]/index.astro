@@ -663,7 +663,7 @@ const relatedCategories =
           <h2>Also search nearby sectors</h2>
           <div>
             {nearbySectors.map((sector) => (
-              <a href={type === 'category' && categoryMeta ? `/places/${sector.key}/${categoryMeta.key}/` : `/places/${sector.key}/`}>
+              <a href={type === 'category' && categoryMeta ? `/sectors/${sector.key}/places/${categoryMeta.key}/` : `/places/${sector.key}/`}>
                 {sector.label}
               </a>
             ))}
@@ -677,7 +677,7 @@ const relatedCategories =
           <h2>Related places and services</h2>
           <div>
             {relatedCategories.map((category) => (
-              <a href={type === 'sector' && sectorMeta ? `/places/${sectorMeta.key}/${category.key}/` : `/places/${category.key}/`}>
+              <a href={type === 'sector' && sectorMeta ? `/sectors/${sectorMeta.key}/places/${category.key}/` : `/places/${category.key}/`}>
                 {category.label}
               </a>
             ))}

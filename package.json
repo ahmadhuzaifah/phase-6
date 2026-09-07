@@ -14,6 +14,7 @@
     "check": "astro check",
     "places:import": "python scripts/import_google_maps_places.py --sector sector-a --category all --limit 3",
     "seo:audit": "node scripts/seo-audit.mjs",
+    "link:audit": "node --experimental-strip-types scripts/internal-link-audit.ts",
     "lint": "eslint .",
     "format": "prettier --write ."
   },

@@ -413,7 +413,7 @@ const pillarSchema = {
                     <td>
                       <a href={`/dha-phase-6-${s.key}-lahore/`} class="table-link">Read Guide &rarr;</a>
                       <br/>
-                      <a href={`/entities/dha-phase-6-${s.key}/`} class="table-sublink">Entity Profile</a>
+                      <a href={s.type === 'residential' ? `/entities/dha-phase-6-${s.key}/` : `/dha-phase-6-${s.key}-lahore/`} class="table-sublink">Entity Profile</a>
                     </td>
                   </tr>
                 ))}

@@ -838,8 +838,8 @@ const structuredData = {
       recent.unshift(viewedItem);
       if (recent.length > 6) recent = recent.slice(0, 6);
       localStorage.setItem('dha6_recent_views', JSON.stringify(recent));
-    } catch (e) {
-      console.warn('Could not persist recently viewed property', e);
+    } catch {
+      // Local storage may be unavailable in privacy-restricted browsers.
     }
   });
 </script>
