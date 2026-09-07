@@ -43,4 +43,67 @@ def generate_report(metrics: dict[str, Any], records: list[dict[str, Any]], conf
         "",
     ]
     config.report_file.write_text("\n".join(lines), encoding="utf-8")
+    sectors = Counter((record.get("location") or {}).get("sector") or record.get("block", "Unclassified") for record in records)
+    coverage_targets = (
+        ("Houses", {"house", "villa"}, (("5", "marla"), ("8", "marla"), ("10", "marla"), ("1", "kanal"), ("2", "kanal"))),
+        ("Residential plots", {"residential-plot"}, (("5", "marla"), ("10", "marla"), ("1", "kanal"), ("2", "kanal"))),
+        ("Commercial", {"commercial-plot", "shop"}, (("4", "marla"), ("8", "marla"), ("1", "kanal"))),
+    )
+    coverage_lines: list[str] = []
+    missing: list[str] = []
+    for label, property_types, sizes in coverage_targets:
+        for size, unit in sizes:
+            count = sum(
+                record.get("propertyType") in property_types
+                and str(record.get("size")) == size
+                and record.get("unit") == unit
+                for record in records
+            )
+            name = f"{label} - {size} {unit.title()}"
+            coverage_lines.append(f"- {name}: {count}")
+            if count == 0:
+                missing.append(name)
+
+    expansion_lines = [
+        "# Property Expansion Report",
+        "",
+        f"Generated: {datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')}",
+        "",
+        "## Expansion Summary",
+        "",
+        "- Before: 72 published records (initial Phase 10.21 baseline)",
+        f"- After: {len(records)} published records",
+        f"- Newly scraped in this run: {metrics.get('total_scraped', 0)}",
+        f"- Sale: {purposes.get('sale', 0)}",
+        f"- Rent: {purposes.get('rent', 0)}",
+        f"- Commercial: {types.get('commercial-plot', 0) + types.get('shop', 0)}",
+        f"- Duplicates removed: {metrics.get('duplicates_removed', 0)}",
+        f"- Records rejected below quality score {config.minimum_quality_score}: {metrics.get('quality_rejected', 0)}",
+        "",
+        "## Intent And Size Coverage",
+        "",
+        *coverage_lines,
+        "",
+        "## Sector Distribution",
+        "",
+        *(f"- {sector}: {count}" for sector, count in sorted(sectors.items())),
+        "",
+        "## Image Status",
+        "",
+        *(f"- {status}: {count}" for status, count in sorted(images.items())),
+        "",
+        "## Missing Coverage",
+        "",
+        *(f"- {item}" for item in missing),
+        *([] if missing else ["- None across the requested type/size matrix."]),
+        "",
+        "## Publication Controls",
+        "",
+        "- Every public record scores at least 60/100 for completeness, image handling, location, description, and freshness.",
+        "- Duplicate source URLs and duplicate slugs are rejected before publication.",
+        "- Zameen coverage uses intent, size, sector, commercial, rental, and Defence Raya discovery URLs.",
+        "- Graana remains disabled unless written reuse authorization is configured.",
+        "",
+    ]
+    config.expansion_report_file.write_text("\n".join(expansion_lines), encoding="utf-8")
     return config.report_file

@@ -6,36 +6,60 @@
 import PageLayout from '@layouts/PageLayout.astro';
 import { SITE } from '@data/site';
 import properties from '@data/properties-import.json';
+import priceHistory from '@data/property-price-history.json';
+import { isPublishableProperty } from '@utils/propertyQualityScore';
 
 const title = "DHA Phase 6 Property Market Dashboard 2026 — Live Pricing, Sector Demand & Yield Analytics";
 const description = "Interactive real-time property market dashboard for DHA Phase 6 Lahore. Explore live average prices for 1 Kanal, 10 Marla and 5 Marla plots and houses, sector-by-sector demand rankings, commercial yields, and trend charts.";
 const canonical = `${SITE.url}/dha-phase-6-property-market-dashboard/`;
 
-// Quantitative aggregation from properties dataset and market benchmarks
-const totalListings = properties.length;
-const oneKanalPlots = properties.filter(p => p.propertyType === 'residential-plot' && p.size === '1');
-const avgOneKanalPlotPrice = oneKanalPlots.length > 0 
-  ? Math.round(oneKanalPlots.reduce((acc, curr) => acc + curr.price, 0) / oneKanalPlots.length)
-  : 54500000;
+const activeProperties = properties.filter(property => isPublishableProperty(property) && property.listingStatus !== 'EXPIRED');
+const totalListings = activeProperties.length;
+const saleCount = activeProperties.filter(property => property.purpose === 'sale').length;
+const rentCount = activeProperties.filter(property => property.purpose === 'rent').length;
+const houses = activeProperties.filter(property => ['house', 'villa'].includes(property.propertyType));
+const plots = activeProperties.filter(property => property.propertyType === 'residential-plot');
+const average = (records: typeof properties) => records.length ? Math.round(records.reduce((sum, record) => sum + record.price, 0) / records.length) : 0;
+const avgHousePrice = average(houses);
+const avgPlotPrice = average(plots);
+const formatPrice = (num: number) => num ? `PKR ${(num / 10_000_000).toFixed(2)} Cr` : 'No records';
+const ratio = rentCount ? `${(saleCount / rentCount).toFixed(1)}:1` : `${saleCount}:0`;
 
-const formatCr = (num: number) => `PKR ${(num / 10000000).toFixed(2)} Cr`;
+const sectors = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N'];
+const sectorRows = sectors.map(letter => {
+  const sector = `Sector ${letter}`;
+  const records = activeProperties.filter(property => property.block === sector || property.location.sector === sector);
+  const oneKanalPlots = records.filter(property => property.propertyType === 'residential-plot' && property.size === '1' && property.unit === 'kanal');
+  const oneKanalHouses = records.filter(property => ['house', 'villa'].includes(property.propertyType) && property.size === '1' && property.unit === 'kanal');
+  return { sector, count: records.length, avgPlot1K: average(oneKanalPlots), avgHouse1K: average(oneKanalHouses) };
+});
+const ranked = [...sectorRows].sort((a, b) => b.count - a.count || a.sector.localeCompare(b.sector));
+const sectorMetrics = sectorRows.map(row => ({ ...row, demandRank: ranked.findIndex(item => item.sector === row.sector) + 1 }));
+const maxSectorCount = Math.max(1, ...sectorMetrics.map(item => item.count));
 
-// Sector Comparison Matrix Data
-const sectorMetrics = [
-  { sector: "Sector A", avgPlot1K: 5.85, avgHouse1K: 12.20, demandRank: 4, yield: "4.6%", zone: "Executive Living" },
-  { sector: "Sector B", avgPlot1K: 5.60, avgHouse1K: 11.80, demandRank: 5, yield: "4.7%", zone: "Education & Family" },
-  { sector: "Sector C", avgPlot1K: 6.20, avgHouse1K: 13.50, demandRank: 1, yield: "4.5%", zone: "Prime Luxury" },
-  { sector: "Sector D", avgPlot1K: 5.75, avgHouse1K: 12.00, demandRank: 2, yield: "4.8%", zone: "Commercial Proximity" },
-  { sector: "Sector E", avgPlot1K: 5.30, avgHouse1K: 11.20, demandRank: 7, yield: "4.9%", zone: "Healthcare Hub" },
-  { sector: "Sector F", avgPlot1K: 5.15, avgHouse1K: 10.90, demandRank: 8, yield: "4.8%", zone: "Quiet Residential" },
-  { sector: "Sector G", avgPlot1K: 4.80, avgHouse1K: 10.40, demandRank: 6, yield: "5.1%", zone: "Value Growth" },
-  { sector: "Sector H", avgPlot1K: 5.20, avgHouse1K: 11.00, demandRank: 9, yield: "5.0%", zone: "Mixed Format" },
-  { sector: "Sector J", avgPlot1K: 5.40, avgHouse1K: 11.50, demandRank: 3, yield: "5.2%", zone: "10 Marla / School Fav" },
-  { sector: "Sector K", avgPlot1K: 4.45, avgHouse1K: 9.80, demandRank: 10, yield: "5.3%", zone: "High ROI Potential" },
-  { sector: "Sector L", avgPlot1K: 4.30, avgHouse1K: 9.50, demandRank: 11, yield: "5.4%", zone: "Ring Road Transit" },
-  { sector: "Sector M", avgPlot1K: 6.80, avgHouse1K: 14.50, demandRank: 12, yield: "4.2%", zone: "Golf Resort Edge" },
-  { sector: "Sector N", avgPlot1K: 5.25, avgHouse1K: 11.10, demandRank: 13, yield: "4.9%", zone: "Northern Gateway" }
-];
+const sizeCounts = new Map<string, number>();
+for (const property of activeProperties) {
+  const label = `${property.size} ${property.unit} ${property.propertyType.replaceAll('-', ' ')}`;
+  sizeCounts.set(label, (sizeCounts.get(label) || 0) + 1);
+}
+const sizeDemand = [...sizeCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 4).map(([label, count]) => ({
+  label,
+  count,
+  percent: Math.round(count / Math.max(1, totalListings) * 100),
+}));
+type PriceHistoryEntry = { date: string; price: number; previousPrice?: number | null; newPrice?: number };
+const historyEntries = Object.values(priceHistory as Record<string, PriceHistoryEntry[]>).flat();
+const priceChanges = historyEntries.filter(entry => entry.previousPrice && entry.previousPrice !== entry.newPrice).length;
+const historyBuckets = new Map<string, number[]>();
+for (const entry of historyEntries) {
+  const month = entry.date?.slice(0, 7);
+  if (month) historyBuckets.set(month, [...(historyBuckets.get(month) || []), entry.price]);
+}
+const priceTrend = [...historyBuckets.entries()].sort(([a], [b]) => a.localeCompare(b)).slice(-6).map(([month, prices]) => ({
+  month,
+  average: Math.round(prices.reduce((sum, price) => sum + price, 0) / prices.length),
+}));
+const maxTrendPrice = Math.max(1, ...priceTrend.map(item => item.average));
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -85,29 +109,29 @@ const structuredData = {
       <!-- TOP METRIC KPI CARDS -->
       <div class="kpi-grid">
         <div class="kpi-card">
-          <span class="kpi-title">Avg 1 Kanal Plot</span>
-          <strong class="kpi-val">{formatCr(avgOneKanalPlotPrice)}</strong>
-          <span class="kpi-sub positive">▲ +4.2% YoY Stability</span>
+          <span class="kpi-title">Average House Demand</span>
+          <strong class="kpi-val">{formatPrice(avgHousePrice)}</strong>
+          <span class="kpi-sub positive">From {houses.length} active records</span>
         </div>
         <div class="kpi-card">
-          <span class="kpi-title">Avg 10 Marla Plot</span>
-          <strong class="kpi-val">PKR 3.15 Cr</strong>
-          <span class="kpi-sub positive">▲ +6.5% Strong Liquidity</span>
+          <span class="kpi-title">Average Plot Demand</span>
+          <strong class="kpi-val">{formatPrice(avgPlotPrice)}</strong>
+          <span class="kpi-sub positive">From {plots.length} active records</span>
         </div>
         <div class="kpi-card">
-          <span class="kpi-title">Avg 1 Kanal Luxury House</span>
-          <strong class="kpi-val">PKR 11.75 Cr</strong>
-          <span class="kpi-sub neutral">■ Stable Construction Replacement Cost</span>
+          <span class="kpi-title">Sale to Rent Ratio</span>
+          <strong class="kpi-val">{ratio}</strong>
+          <span class="kpi-sub neutral">{saleCount} sale / {rentCount} rent</span>
         </div>
         <div class="kpi-card">
-          <span class="kpi-title">CCA 1 Commercial Yield</span>
-          <strong class="kpi-val">7.2% Gross</strong>
-          <span class="kpi-sub positive">▲ 94% Retail Occupancy</span>
+          <span class="kpi-title">Recorded Price Changes</span>
+          <strong class="kpi-val">{priceChanges}</strong>
+          <span class="kpi-sub positive">Across retained price history</span>
         </div>
         <div class="kpi-card">
           <span class="kpi-title">Active Market Records</span>
-          <strong class="kpi-val">{totalListings} Verified Snapshots</strong>
-          <span class="kpi-sub">7-Stage Audit Verification</span>
+          <strong class="kpi-val">{totalListings} Snapshots</strong>
+          <span class="kpi-sub">Quality score 60 or higher</span>
         </div>
       </div>
 
@@ -120,8 +144,8 @@ const structuredData = {
     <section class="dash-section">
       <div class="section-title-bar">
         <div>
-          <h2>1 Kanal Plot Price Comparison by Sector (PKR Crore)</h2>
-          <p>Comparative baseline pricing across all residential sectors based on 2026 market observations.</p>
+          <h2>Active Listing Coverage by Sector</h2>
+          <p>Published source-referenced records in each residential sector.</p>
         </div>
         <span class="badge-audit">Independent Price Survey</span>
       </div>
@@ -130,10 +154,10 @@ const structuredData = {
       <div class="chart-container">
         <div class="bar-chart">
           {sectorMetrics.map(item => {
-            const heightPercent = Math.min(100, Math.round((item.avgPlot1K / 7.0) * 100));
+            const heightPercent = Math.max(2, Math.round((item.count / maxSectorCount) * 100));
             return (
               <div class="bar-col">
-                <div class="bar-val">{item.avgPlot1K.toFixed(2)} Cr</div>
+                <div class="bar-val">{item.count}</div>
                 <div class="bar-track">
                   <div class="bar-fill" style={`height: ${heightPercent}%;`}></div>
                 </div>
@@ -142,6 +166,25 @@ const structuredData = {
             );
           })}
         </div>
+      </div>
+    </section>
+
+    <section class="dash-section">
+      <div class="section-title-bar">
+        <div>
+          <h2>Recorded Asking-Price Trend</h2>
+          <p>Monthly average of retained listing snapshots in the local price-history dataset.</p>
+        </div>
+        <span class="badge-audit">Build-time static chart</span>
+      </div>
+      <div class="trend-chart">
+        {priceTrend.map(item => (
+          <div class="trend-row">
+            <time datetime={item.month}>{item.month}</time>
+            <div class="trend-track"><span style={`width: ${Math.max(2, Math.round(item.average / maxTrendPrice * 100))}%`}></span></div>
+            <strong>{formatPrice(item.average)}</strong>
+          </div>
+        ))}
       </div>
     </section>
 
@@ -163,8 +206,8 @@ const structuredData = {
               <th>Demand Rank</th>
               <th>Avg 1 Kanal Plot</th>
               <th>Avg 1 Kanal House</th>
-              <th>Gross Rental Yield</th>
-              <th>Strategic Zone</th>
+              <th>Active Records</th>
+              <th>Coverage</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -179,10 +222,10 @@ const structuredData = {
                     #{item.demandRank}
                   </span>
                 </td>
-                <td>PKR {item.avgPlot1K.toFixed(2)} Cr</td>
-                <td>PKR {item.avgHouse1K.toFixed(2)} Cr</td>
-                <td><strong class="yield-badge">{item.yield}</strong></td>
-                <td><span class="zone-pill">{item.zone}</span></td>
+                <td>{formatPrice(item.avgPlot1K)}</td>
+                <td>{formatPrice(item.avgHouse1K)}</td>
+                <td><strong class="yield-badge">{item.count}</strong></td>
+                <td><span class="zone-pill">{item.count ? 'Covered' : 'Gap'}</span></td>
                 <td>
                   <a href={`/dha-phase-6-${item.sector.toLowerCase().replace(' ', '-')}-lahore/`} class="table-link">
                     Sector Details →
@@ -200,38 +243,16 @@ const structuredData = {
       <div class="grid-card">
         <h3>Most In-Demand Property Sizes (2026)</h3>
         <ul class="size-list">
-          <li>
-            <div class="size-meta">
-              <strong>1 Kanal Residential (500 sq yds)</strong>
-              <span>52% Total Inquiries</span>
-            </div>
-            <div class="progress-bar"><div class="progress-fill" style="width: 52%;"></div></div>
-            <small>Gold standard for prestige end-user living and elite villas in Sectors A, B, C, D.</small>
-          </li>
-          <li>
-            <div class="size-meta">
-              <strong>10 Marla Residential (250 sq yds)</strong>
-              <span>31% Total Inquiries</span>
-            </div>
-            <div class="progress-bar"><div class="progress-fill" style="width: 31%;"></div></div>
-            <small>Fastest transaction velocity; high family demand in Sectors J, G, and H near schools.</small>
-          </li>
-          <li>
-            <div class="size-meta">
-              <strong>4 &amp; 8 Marla Commercial Plazas</strong>
-              <span>12% Total Inquiries</span>
-            </div>
-            <div class="progress-bar"><div class="progress-fill" style="width: 12%;"></div></div>
-            <small>High cash-flow rental yields across CCA 1, CCA 2, and Main Boulevard frontage.</small>
-          </li>
-          <li>
-            <div class="size-meta">
-              <strong>2 Kanal Executive Mansions</strong>
-              <span>5% Total Inquiries</span>
-            </div>
-            <div class="progress-bar"><div class="progress-fill" style="width: 5%;"></div></div>
-            <small>Exclusive luxury estates in Sectors A, B, and Raya Golf View plots.</small>
-          </li>
+          {sizeDemand.map(item => (
+            <li>
+              <div class="size-meta">
+                <strong>{item.label}</strong>
+                <span>{item.count} records ({item.percent}%)</span>
+              </div>
+              <div class="progress-bar"><div class="progress-fill" style={`width: ${Math.max(2, item.percent)}%;`}></div></div>
+              <small>Share of current publishable source-referenced inventory.</small>
+            </li>
+          ))}
         </ul>
       </div>
 
@@ -420,6 +441,12 @@ const structuredData = {
     border-radius: 12px;
     border: 1px solid #e2e8f0;
   }
+  .trend-chart { display: grid; gap: 0.8rem; }
+  .trend-row { display: grid; grid-template-columns: 7rem minmax(8rem, 1fr) 9rem; align-items: center; gap: 1rem; }
+  .trend-track { height: 12px; overflow: hidden; border-radius: 999px; background: #e2e8f0; }
+  .trend-track span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #c8960c, #facc15); }
+  .trend-row time { color: #64748b; }
+  .trend-row strong { color: #0f172a; text-align: right; }
   .bar-chart {
     display: flex;
     justify-content: space-between;
@@ -678,5 +705,7 @@ const structuredData = {
     .bar-chart {
       min-width: 500px;
     }
+    .trend-row { grid-template-columns: 5.5rem 1fr; }
+    .trend-row strong { grid-column: 2; text-align: left; }
   }
 </style>

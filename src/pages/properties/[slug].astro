@@ -2,12 +2,14 @@
 import PageLayout from '@layouts/PageLayout.astro';
 import PropertyCard from '@components/property/PropertyCard.astro';
 import properties from '@data/properties-import.json';
+import priceHistory from '@data/property-price-history.json';
 import places from '@data/google-places-import.json';
 import { SITE } from '@data/site';
 import { CONTACTS } from '@data/contacts';
+import { isPublishableProperty } from '@utils/propertyQualityScore';
 
 export function getStaticPaths() {
-  return properties.map((property) => ({ params: { slug: property.slug }, props: { property } }));
+  return properties.filter(isPublishableProperty).map((property) => ({ params: { slug: property.slug }, props: { property } }));
 }
 
 const { property } = Astro.props as { property: any };
@@ -22,6 +24,23 @@ const checked = new Intl.DateTimeFormat('en-PK', { dateStyle: 'long' }).format(
 
 const propId = property.id || `DHA6-${property.slug.substring(0, 8).toUpperCase()}`;
 const contactUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hello, I want to verify this DHA Phase 6 market record (ID: ${propId}): ${property.title}. Link: https://dhaphase6lahore.pk/properties/${property.slug}/`)}`;
+const history = (priceHistory as Record<string, Array<{ date: string; price: number; previousPrice?: number | null; newPrice?: number }>>)[propId] || [];
+const mapQuery = encodeURIComponent(property.location.coordinates
+  ? `${property.location.coordinates.lat},${property.location.coordinates.lng}`
+  : property.location.address);
+const mapUrl = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
+const isHouse = ['house', 'villa'].includes(property.propertyType);
+const isPlot = property.propertyType === 'residential-plot';
+const priceGuideUrl = isHouse ? '/dha-phase-6-lahore-house-prices/' : isPlot ? '/dha-phase-6-lahore-plot-prices/' : '/dha-phase-6-commercial-areas/';
+const sizeGuideMap: Record<string, string> = {
+  'house-5-marla': '/5-marla-house-for-sale-dha-phase-6-lahore/',
+  'house-10-marla': '/10-marla-house-for-sale-dha-phase-6-lahore/',
+  'house-1-kanal': '/1-kanal-house-for-sale-dha-phase-6-lahore/',
+  'residential-plot-5-marla': '/5-marla-plot-for-sale-dha-phase-6-lahore/',
+  'residential-plot-10-marla': '/10-marla-plot-for-sale-dha-phase-6-lahore/',
+  'residential-plot-1-kanal': '/1-kanal-plot-for-sale-dha-phase-6-lahore/',
+};
+const sizeGuideUrl = sizeGuideMap[`${property.propertyType}-${property.size}-${property.unit}`];
 
 // Sector matching for places
 const cleanSectorKey = property.block.toLowerCase().replace('sector ', 'sector-').trim();
@@ -178,6 +197,28 @@ const structuredData = {
             <p class="property-source-disclaimer">{property.legalNotice || 'Property information is collected from publicly available sources. Buyers should independently verify availability, ownership, and pricing before any transaction.'}</p>
           </section>
 
+          <section class="prop-section prop-card intelligence-grid">
+            <div>
+              <h2>Price History</h2>
+              {history.length > 0 ? (
+                <ol class="history-list">
+                  {history.slice().reverse().map((entry) => (
+                    <li>
+                      <time datetime={entry.date}>{new Intl.DateTimeFormat('en-PK', { dateStyle: 'medium' }).format(new Date(entry.date))}</time>
+                      <strong>{entry.price >= 10_000_000 ? `PKR ${(entry.price / 10_000_000).toFixed(2)} Crore` : `PKR ${(entry.price / 100_000).toFixed(2)} Lakh`}</strong>
+                      {entry.previousPrice && entry.previousPrice !== entry.price && <span>Previously PKR {(entry.previousPrice / 10_000_000).toFixed(2)} Crore</span>}
+                    </li>
+                  ))}
+                </ol>
+              ) : <p>No recorded price changes yet.</p>}
+            </div>
+            <div>
+              <h2>Location Map</h2>
+              <iframe src={mapUrl} title={`Map for ${property.title}`} width="600" height="320" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              <p class="map-note">Map location is based on the source address and may represent the sector rather than an exact plot.</p>
+            </div>
+          </section>
+
           <!-- Buyer Due Diligence -->
           <section class="prop-section prop-card due-diligence-card">
             <h2>Buyer Due Diligence Protocol</h2>
@@ -282,6 +323,10 @@ const structuredData = {
                 <span class="tr-label">Verification Window:</span>
                 <span class="tr-value">{property.verificationLabel || 'Verified Recently'}</span>
               </div>
+              <div class="trust-row">
+                <span class="tr-label">Quality Score:</span>
+                <span class="tr-value">{property.qualityScore || 60}/100</span>
+              </div>
               {sourceLinkUrl && (
                 <div class="trust-row">
                   <span class="tr-label">Original Listing:</span>
@@ -298,7 +343,7 @@ const structuredData = {
               <p>Need assistance verifying this property or arranging an independent site inspection?</p>
               <a href={contactUrl} target="_blank" rel="noopener noreferrer" class="cta-whatsapp-prop">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-                Verify on WhatsApp
+                Check availability on WhatsApp
               </a>
               <a href="/contact/" class="cta-contact-prop">Contact Property Desk</a>
             </div>
@@ -316,6 +361,11 @@ const structuredData = {
               <li><a href={entityUrl}>{property.block} Entity Profile &rarr;</a></li>
               <li><a href="/dha-phase-6-lahore/">DHA Phase 6 Master Pillar &rarr;</a></li>
               <li><a href="/dha-phase-6-market-analysis/">2026 Market Analysis &rarr;</a></li>
+              <li><a href={priceGuideUrl}>Relevant Price Guide &rarr;</a></li>
+              {sizeGuideUrl && <li><a href={sizeGuideUrl}>{property.size} {property.unit} Guide &rarr;</a></li>}
+              <li><a href="/investment-guide/">Property Investment Guide &rarr;</a></li>
+              <li><a href="/schools-in-dha-phase-6-lahore/">Nearby Schools Guide &rarr;</a></li>
+              <li><a href="/hospitals-in-dha-phase-6-lahore/">Nearby Healthcare Guide &rarr;</a></li>
               <li><a href="/dha-phase-6-price-history/">Historical Price Trends &rarr;</a></li>
               <li><a href="/dha-phase-6-commercial-areas/">Commercial Areas Hub &rarr;</a></li>
               <li><a href="/dha-phase-6-property-calculator/">Transfer Cost Calculator &rarr;</a></li>
@@ -854,6 +904,38 @@ const structuredData = {
     .gallery-thumbs {
       grid-template-columns: repeat(2, 1fr);
     }
+  }
+  .intelligence-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: 1.5rem;
+  }
+  .intelligence-grid iframe {
+    width: 100%;
+    border: 0;
+    border-radius: 10px;
+  }
+  .history-list {
+    display: grid;
+    gap: 0.75rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .history-list li {
+    display: grid;
+    gap: 0.2rem;
+    border-left: 3px solid #c8960c;
+    padding-left: 0.8rem;
+  }
+  .history-list time,
+  .history-list span,
+  .map-note {
+    color: #94a3b8;
+    font-size: 0.82rem;
+  }
+  @media (max-width: 768px) {
+    .intelligence-grid { grid-template-columns: 1fr; }
   }
 </style>
 

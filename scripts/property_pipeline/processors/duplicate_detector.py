@@ -53,10 +53,23 @@ def merge_duplicate(primary: dict[str, Any], duplicate: dict[str, Any]) -> dict[
 def deduplicate(records: list[dict[str, Any]], threshold: float = 0.82) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     unique: list[dict[str, Any]] = []
     duplicates: list[dict[str, Any]] = []
+    url_index: dict[str, int] = {}
+    bucket_index: dict[tuple[Any, ...], list[int]] = {}
     for record in sorted(records, key=lambda item: (item.get("source", ""), item.get("id", ""))):
-        match_index = next((index for index, item in enumerate(unique) if duplicate_score(item, record) >= threshold), None)
+        source_url = str(record.get("sourceUrl", ""))
+        bucket = tuple(record.get(key) for key in ("propertyType", "purpose", "size", "unit"))
+        match_index = url_index.get(source_url) if source_url else None
+        if match_index is None:
+            match_index = next(
+                (index for index in bucket_index.get(bucket, []) if duplicate_score(unique[index], record) >= threshold),
+                None,
+            )
         if match_index is None:
             unique.append(record)
+            index = len(unique) - 1
+            if source_url:
+                url_index[source_url] = index
+            bucket_index.setdefault(bucket, []).append(index)
             continue
         duplicate_of = unique[match_index].get("id", "")
         duplicates.append({"id": record.get("id"), "duplicateOf": duplicate_of, "score": round(duplicate_score(unique[match_index], record), 3)})

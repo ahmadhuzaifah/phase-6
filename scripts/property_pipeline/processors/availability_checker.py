@@ -27,13 +27,18 @@ def update_lifecycle(record: dict[str, Any], source_available: bool | None = Non
     updated = dict(record)
     if source_available is True:
         updated["availabilityStatus"] = "AVAILABLE"
+        updated["listingStatus"] = "PRICE_CHANGED" if updated.get("priceChanged") else "ACTIVE"
         updated["lastCheckedDate"] = utc_now()
+        updated["lastSeenAt"] = updated["lastCheckedDate"]
         updated["consecutiveCheckFailures"] = 0
     elif source_available is False:
         failures = int(record.get("consecutiveCheckFailures", 0)) + 1
         updated["consecutiveCheckFailures"] = failures
         if failures >= 2:
             updated["availabilityStatus"] = "EXPIRED"
+            updated["listingStatus"] = "EXPIRED"
+        else:
+            updated["listingStatus"] = "NOT_FOUND"
     updated["verificationLabel"] = verification_label(updated.get("lastCheckedDate", ""))
     return updated
 

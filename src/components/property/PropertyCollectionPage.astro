@@ -5,6 +5,7 @@ import PropertyCard from './PropertyCard.astro';
 import { SITE } from '@data/site';
 import properties from '@data/properties-import.json';
 import { SECTORS_DIRECTORY } from '@data/places/index';
+import { isPublishableProperty } from '@utils/propertyQualityScore';
 
 interface Props {
   title: string;
@@ -16,7 +17,11 @@ interface Props {
 }
 
 const { title, description, heading, eyebrow, types, canonicalPath } = Astro.props;
-const listings = properties.filter((property) => types.includes(property.propertyType));
+const listings = properties.filter((property) => types.includes(property.propertyType) && isPublishableProperty(property));
+const freshnessFor = (value?: string) => {
+  const days = value ? Math.max(0, (Date.now() - new Date(value).getTime()) / 86_400_000) : Infinity;
+  return days <= 30 ? 'fresh' : days <= 60 ? 'review' : 'stale';
+};
 
 const breadcrumbSchema = {
   itemListElement: [
@@ -129,9 +134,46 @@ const breadcrumbSchema = {
           <label for="filter-status">Status</label>
           <select id="filter-status">
             <option value="all">All Statuses</option>
-            <option value="available">Available</option>
-            <option value="reserved">Reserved</option>
-            <option value="sold">Sold</option>
+            <option value="active">Active</option>
+            <option value="price_changed">Price Changed</option>
+            <option value="not_found">Not Found</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filter-bedrooms">Bedrooms</label>
+          <select id="filter-bedrooms">
+            <option value="all">Any Bedrooms</option>
+            <option value="1">1+</option><option value="2">2+</option><option value="3">3+</option>
+            <option value="4">4+</option><option value="5">5+</option><option value="6">6+</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filter-bathrooms">Bathrooms</label>
+          <select id="filter-bathrooms">
+            <option value="all">Any Bathrooms</option>
+            <option value="1">1+</option><option value="2">2+</option><option value="3">3+</option>
+            <option value="4">4+</option><option value="5">5+</option><option value="6">6+</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filter-freshness">Freshness</label>
+          <select id="filter-freshness">
+            <option value="all">Any Freshness</option>
+            <option value="fresh">Seen within 30 days</option>
+            <option value="review">Seen within 31-60 days</option>
+            <option value="stale">Older than 60 days</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filter-verified">Verification</label>
+          <select id="filter-verified">
+            <option value="all">Any Verification</option>
+            <option value="verified">Verified</option>
+            <option value="unverified">Needs Verification</option>
           </select>
         </div>
 
@@ -159,8 +201,12 @@ const breadcrumbSchema = {
               data-unit={property.unit}
               data-sector={property.block}
               data-price={property.price}
-              data-status={property.availabilityStatus || 'available'}
-              data-date={property.lastCheckedDate || '2026-09-02'}
+              data-status={property.listingStatus || 'ACTIVE'}
+              data-date={property.lastSeenAt || property.lastCheckedDate}
+              data-bedrooms={property.bedrooms || 0}
+              data-bathrooms={property.bathrooms || 0}
+              data-freshness={freshnessFor(property.lastSeenAt || property.lastCheckedDate)}
+              data-verified={property.verificationStatus === 'verified' ? 'verified' : 'unverified'}
             >
               <PropertyCard
                 title={property.title}
@@ -202,6 +248,10 @@ const breadcrumbSchema = {
       const sectorSelect = document.getElementById('filter-sector');
       const priceSelect = document.getElementById('filter-price');
       const statusSelect = document.getElementById('filter-status');
+      const bedroomsSelect = document.getElementById('filter-bedrooms');
+      const bathroomsSelect = document.getElementById('filter-bathrooms');
+      const freshnessSelect = document.getElementById('filter-freshness');
+      const verifiedSelect = document.getElementById('filter-verified');
       const sortSelect = document.getElementById('filter-sort');
       const resetBtn = document.getElementById('reset-filters-btn');
       const grid = document.getElementById('property-grid');
@@ -218,6 +268,10 @@ const breadcrumbSchema = {
         const sector = sectorSelect ? sectorSelect.value : 'all';
         const price = priceSelect ? priceSelect.value : 'all';
         const status = statusSelect ? statusSelect.value : 'all';
+        const bedrooms = bedroomsSelect ? bedroomsSelect.value : 'all';
+        const bathrooms = bathroomsSelect ? bathroomsSelect.value : 'all';
+        const freshness = freshnessSelect ? freshnessSelect.value : 'all';
+        const verified = verifiedSelect ? verifiedSelect.value : 'all';
         const sort = sortSelect ? sortSelect.value : 'latest';
 
         let visibleCount = 0;
@@ -230,6 +284,10 @@ const breadcrumbSchema = {
           const itemSector = item.dataset.sector || '';
           const itemPrice = parseFloat(item.dataset.price || '0');
           const itemStatus = (item.dataset.status || 'available').toLowerCase();
+          const itemBedrooms = Number(item.dataset.bedrooms || 0);
+          const itemBathrooms = Number(item.dataset.bathrooms || 0);
+          const itemFreshness = item.dataset.freshness || 'stale';
+          const itemVerified = item.dataset.verified || 'unverified';
 
           // Category match
           let matchCat = cat === 'all';
@@ -272,14 +330,13 @@ const breadcrumbSchema = {
           }
 
           // Status match
-          let matchStatus = status === 'all';
-          if (!matchStatus) {
-            if (status === 'available') matchStatus = itemStatus.includes('available') || itemStatus.includes('source-check');
-            else if (status === 'reserved') matchStatus = itemStatus.includes('reserved');
-            else if (status === 'sold') matchStatus = itemStatus.includes('sold');
-          }
+          const matchStatus = status === 'all' || itemStatus === status;
+          const matchBedrooms = bedrooms === 'all' || itemBedrooms >= Number(bedrooms);
+          const matchBathrooms = bathrooms === 'all' || itemBathrooms >= Number(bathrooms);
+          const matchFreshness = freshness === 'all' || itemFreshness === freshness;
+          const matchVerified = verified === 'all' || itemVerified === verified;
 
-          if (matchPurpose && matchCat && matchSize && matchSector && matchPrice && matchStatus) {
+          if (matchPurpose && matchCat && matchSize && matchSector && matchPrice && matchStatus && matchBedrooms && matchBathrooms && matchFreshness && matchVerified) {
             item.style.display = '';
             visibleCount++;
           } else {
@@ -306,7 +363,7 @@ const breadcrumbSchema = {
         if (noMatch) noMatch.style.display = visibleCount === 0 ? 'block' : 'none';
       }
 
-      [purposeSelect, catSelect, sizeSelect, sectorSelect, priceSelect, statusSelect, sortSelect].forEach(sel => {
+      [purposeSelect, catSelect, sizeSelect, sectorSelect, priceSelect, statusSelect, bedroomsSelect, bathroomsSelect, freshnessSelect, verifiedSelect, sortSelect].forEach(sel => {
         if (sel) sel.addEventListener('change', applyFilters);
       });
 
@@ -318,6 +375,10 @@ const breadcrumbSchema = {
           if (sectorSelect) sectorSelect.value = 'all';
           if (priceSelect) priceSelect.value = 'all';
           if (statusSelect) statusSelect.value = 'all';
+          if (bedroomsSelect) bedroomsSelect.value = 'all';
+          if (bathroomsSelect) bathroomsSelect.value = 'all';
+          if (freshnessSelect) freshnessSelect.value = 'all';
+          if (verifiedSelect) verifiedSelect.value = 'all';
           if (sortSelect) sortSelect.value = 'latest';
           applyFilters();
         });

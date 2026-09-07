@@ -39,6 +39,8 @@ export type VerificationStatus =
   | 'expired'       // Sold or delisted
   | 'disputed';     // Warning flag
 
+export type ListingStatus = 'ACTIVE' | 'PRICE_CHANGED' | 'NOT_FOUND' | 'EXPIRED';
+
 export type PossessionStatus =
   | 'possession'
   | 'non-possession'
@@ -125,6 +127,19 @@ export interface PropertyModel {
   sourceType: SourceType;
   verificationStatus: VerificationStatus;
   availabilityStatus?: 'AVAILABLE' | 'RESERVED' | 'SOLD' | 'EXPIRED' | 'available' | 'reserved' | 'sold' | 'expired' | 'removed' | 'source-check-required';
+  listingStatus?: ListingStatus;
+  createdAt?: Date | string;
+  lastSeenAt?: Date | string;
+  lastPrice?: number;
+  priceChanged?: boolean;
+  qualityScore?: number;
+  qualityBreakdown?: {
+    completeness: number;
+    images: number;
+    locationAccuracy: number;
+    description: number;
+    freshness: number;
+  };
   verificationLabel?: 'Verified Recently' | 'Needs Verification' | 'Expired Review';
   primaryImage?: string;
   primaryImageSourceUrl?: string;

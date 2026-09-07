@@ -1,20 +1,20 @@
 # Property Import Report
 
-Generated: 2026-09-07T17:52:36.335100Z
+Generated: 2026-09-07T21:06:37.959854Z
 
 ## Import Summary
 
-- Total scraped: 113
-- Zameen: 113
+- Total scraped: 1007
+- Zameen: 1007
 - Graana: 0
-- Sale: 53
-- Rent: 19
-- Commercial: 21
-- Duplicates removed: 3
+- Sale: 564
+- Rent: 86
+- Commercial: 128
+- Duplicates removed: 42
 - Images accepted: 0
 - Images branded/watermarked: 0
-- Images rejected or unavailable: 72
-- Final imported listings: 72
+- Images rejected or unavailable: 650
+- Final imported listings: 650
 
 ## Compliance
 

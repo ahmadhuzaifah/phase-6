@@ -10,7 +10,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from property_pipeline.processors.availability_checker import update_lifecycle, verification_label
 from property_pipeline.processors.cleaner import clean_raw_listing
 from property_pipeline.processors.duplicate_detector import deduplicate
-from property_pipeline.processors.normalizer import normalize_price, normalize_record, normalize_size
+from property_pipeline.processors.normalizer import normalize_block, normalize_price, normalize_record, normalize_size
+from property_pipeline.processors.quality_scorer import score_property
 
 
 RAW = {
@@ -35,6 +36,10 @@ class PipelineTests(unittest.TestCase):
     def test_price_and_size_normalization(self) -> None:
         self.assertEqual(normalize_price("PKR 8.75 Crore"), 87_500_000)
         self.assertEqual(normalize_size("10 Marla house"), ("10", "marla"))
+
+    def test_size_after_cca_is_not_parsed_as_area_number(self) -> None:
+        sector, block, commercial = normalize_block("8 Marla plaza in CCA DHA Phase 6")
+        self.assertEqual((sector, block, commercial), ("", "DHA Phase 6", "CCA"))
 
     def test_invalid_source_host_is_rejected(self) -> None:
         invalid = {**RAW, "source_url": "https://example.com/fake"}
@@ -68,8 +73,15 @@ class PipelineTests(unittest.TestCase):
     def test_availability_requires_two_failed_checks(self) -> None:
         first = update_lifecycle({"availabilityStatus": "AVAILABLE", "lastCheckedDate": "2026-09-07T00:00:00Z"}, False)
         second = update_lifecycle(first, False)
-        self.assertEqual(first["availabilityStatus"], "AVAILABLE")
+        self.assertEqual(first["listingStatus"], "NOT_FOUND")
         self.assertEqual(second["availabilityStatus"], "EXPIRED")
+        self.assertEqual(second["listingStatus"], "EXPIRED")
+
+    def test_quality_score_is_deterministic_and_publishable(self) -> None:
+        normalized = normalize_record(clean_raw_listing(RAW) or {})
+        scored = score_property(normalized or {}, datetime(2026, 9, 7, tzinfo=timezone.utc))
+        self.assertEqual(scored["qualityScore"], 78)
+        self.assertGreaterEqual(scored["qualityScore"], 60)
 
     def test_verification_windows(self) -> None:
         now = datetime(2026, 9, 7, tzinfo=timezone.utc)

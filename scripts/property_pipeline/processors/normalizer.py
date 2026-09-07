@@ -90,10 +90,13 @@ def normalize_block(*values: str) -> tuple[str, str, str]:
     if sector_match:
         sector = f"Sector {sector_match.group(1).upper()}"
         block = sector
-    cca_match = re.search(r"\bCCA\s*[-:]?\s*(\d+)\b", text, flags=re.I)
+    cca_match = re.search(r"\bCCA\s*[-:]?\s*([12])\b", text, flags=re.I)
     if cca_match:
         commercial_area = f"CCA {cca_match.group(1)}"
         block = commercial_area
+    elif re.search(r"\bCCA\b", text, flags=re.I):
+        commercial_area = "CCA"
+        block = block or "DHA Phase 6"
     elif re.search(r"main\s+boulevard", text, flags=re.I):
         commercial_area = "Main Boulevard Commercial"
         block = commercial_area
@@ -200,6 +203,11 @@ def normalize_record(record: dict[str, Any], config: PipelineConfig = CONFIG) ->
             "height": 800,
         }],
         "availabilityStatus": "AVAILABLE",
+        "listingStatus": "ACTIVE",
+        "createdAt": checked,
+        "lastSeenAt": checked,
+        "lastPrice": price,
+        "priceChanged": False,
         "verificationLabel": "Verified Recently",
         "verificationStatus": "unverified",
         "lastCheckedDate": checked,

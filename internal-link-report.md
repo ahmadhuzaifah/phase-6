@@ -1,9 +1,9 @@
 # Internal Link Report
 
-Generated: 2026-09-07T19:51:05.756Z
+Generated: 2026-09-07T21:10:37.499Z
 
-- Pages scanned: 845
-- Internal routes discovered: 845
+- Pages scanned: 1423
+- Internal routes discovered: 1423
 - Broken internal links: 0
 - Orphan pages: 131
 - Pages with fewer than two inbound links: 160

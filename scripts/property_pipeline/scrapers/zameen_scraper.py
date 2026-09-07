@@ -28,6 +28,7 @@ def scrape(config: PipelineConfig = CONFIG) -> ScrapeResult:
 
     client = RobotsAwareClient(config)
     seen_ids: set[str] = set()
+    seen_listing_urls: set[str] = set()
     seen_pages: set[str] = set()
     queue = list(config.zameen_seeds)
     search_pages_visited = 0
@@ -50,6 +51,9 @@ def scrape(config: PipelineConfig = CONFIG) -> ScrapeResult:
 
         new_ids = 0
         for listing_url in discover_links(html, page_url, PROPERTY_LINK):
+            if listing_url in seen_listing_urls:
+                continue
+            seen_listing_urls.add(listing_url)
             try:
                 detail_html = client.fetch_text(listing_url)
                 result.pages_visited += 1
