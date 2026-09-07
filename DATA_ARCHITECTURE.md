@@ -10,7 +10,7 @@ This keeps the existing routes, generated HTML, and build behavior unchanged. A 
 
 ### Properties
 
-`src/data/properties-import.json` is imported by property indexes, search pages, SEO landing pages, and property detail routes. Shared presentation and audit logic lives in `src/components/property/` and `src/utils/propertyAudit.ts`. Property slugs are used by `src/pages/properties/[slug].astro` and must remain stable.
+`scripts/property_pipeline/` writes source snapshots to ignored staging storage, then cleans, normalizes, deduplicates, validates, and atomically exports `src/data/properties-import.json`. Property indexes, search pages, SEO landing pages, and `src/pages/properties/[slug].astro` consume that file. Existing slugs are retained during updates so published URLs remain stable.
 
 ### Places
 

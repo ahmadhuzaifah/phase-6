@@ -15,6 +15,11 @@
     "places:import": "python scripts/import_google_maps_places.py --sector sector-a --category all --limit 3",
     "seo:audit": "node scripts/seo-audit.mjs",
     "link:audit": "node --experimental-strip-types scripts/internal-link-audit.ts",
+    "properties:scrape:zameen": "python scripts/property_pipeline/scrapers/zameen_scraper.py",
+    "properties:scrape:graana": "python scripts/property_pipeline/scrapers/graana_scraper.py",
+    "properties:import": "python scripts/property_pipeline/exporters/astro_importer.py",
+    "properties:update": "python scripts/property_pipeline/update_properties.py",
+    "properties:test": "python -m unittest discover scripts/property_pipeline/tests",
     "lint": "eslint .",
     "format": "prettier --write ."
   },

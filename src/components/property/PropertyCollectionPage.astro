@@ -34,7 +34,7 @@ const breadcrumbSchema = {
       <h1>{heading}</h1>
       <div class="collection-hero__intro">
         <p>{description}</p>
-        <span>Source checked 2 September 2026</span>
+        <span>Each record shows its own source-check date</span>
       </div>
     </div>
   </header>
@@ -42,7 +42,7 @@ const breadcrumbSchema = {
   <section class="source-notice">
     <div class="container">
       <strong>Market snapshot, not verified inventory.</strong>
-      <p>Cards summarize public third-party asking prices and link to the source. Confirm live availability, ownership, condition, dues and transfer requirements independently. Third-party listing photos are not copied or altered.</p>
+      <p>Cards summarize public source references. Confirm live availability, ownership, condition, dues and transfer requirements independently. Third-party content is used only when reuse permission is documented.</p>
     </div>
   </section>
 
@@ -59,12 +59,23 @@ const breadcrumbSchema = {
       <!-- PREMIUM FILTER PANEL (Phase 10.17) -->
       <div class="filter-panel" id="property-filters">
         <div class="filter-group">
+          <label for="filter-purpose">Purpose</label>
+          <select id="filter-purpose">
+            <option value="all">Sale &amp; Rent</option>
+            <option value="sale">For Sale</option>
+            <option value="rent">For Rent</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
           <label for="filter-category">Category</label>
           <select id="filter-category">
             <option value="all">All Categories</option>
             <option value="house">House / Villa</option>
             <option value="residential-plot">Residential Plot</option>
             <option value="commercial">Commercial</option>
+            <option value="apartment">Flat / Apartment</option>
+            <option value="portion-floor">Portion / Floor</option>
           </select>
         </div>
 
@@ -143,6 +154,7 @@ const breadcrumbSchema = {
             <div
               class="property-item"
               data-type={property.propertyType}
+              data-purpose={property.purpose}
               data-size={property.size}
               data-unit={property.unit}
               data-sector={property.block}
@@ -166,7 +178,7 @@ const breadcrumbSchema = {
                 availabilityStatus={property.availabilityStatus}
                 lastVerifiedDate={property.lastVerifiedDate}
                 sourceName={property.source}
-                sourceURL={property.sourceURL}
+                sourceURL={property.sourceLinkAllowed === false ? undefined : property.sourceUrl}
                 isFeatured={property.isFeatured}
               />
             </div>
@@ -185,6 +197,7 @@ const breadcrumbSchema = {
   <script is:inline>
     (function initPropertyFilter() {
       const catSelect = document.getElementById('filter-category');
+      const purposeSelect = document.getElementById('filter-purpose');
       const sizeSelect = document.getElementById('filter-size');
       const sectorSelect = document.getElementById('filter-sector');
       const priceSelect = document.getElementById('filter-price');
@@ -200,6 +213,7 @@ const breadcrumbSchema = {
 
       function applyFilters() {
         const cat = catSelect ? catSelect.value : 'all';
+        const purpose = purposeSelect ? purposeSelect.value : 'all';
         const size = sizeSelect ? sizeSelect.value : 'all';
         const sector = sectorSelect ? sectorSelect.value : 'all';
         const price = priceSelect ? priceSelect.value : 'all';
@@ -210,6 +224,7 @@ const breadcrumbSchema = {
 
         items.forEach((item) => {
           const itemType = (item.dataset.type || '').toLowerCase();
+          const itemPurpose = (item.dataset.purpose || '').toLowerCase();
           const itemSize = (item.dataset.size || '').toLowerCase();
           const itemUnit = (item.dataset.unit || '').toLowerCase();
           const itemSector = item.dataset.sector || '';
@@ -222,7 +237,11 @@ const breadcrumbSchema = {
             if (cat === 'house' && (itemType.includes('house') || itemType.includes('villa'))) matchCat = true;
             else if (cat === 'residential-plot' && itemType.includes('plot') && !itemType.includes('commercial')) matchCat = true;
             else if (cat === 'commercial' && (itemType.includes('commercial') || itemType.includes('shop'))) matchCat = true;
+            else if (cat === 'apartment' && (itemType.includes('apartment') || itemType.includes('flat'))) matchCat = true;
+            else if (cat === 'portion-floor' && itemType.includes('portion')) matchCat = true;
           }
+
+          const matchPurpose = purpose === 'all' || itemPurpose === purpose;
 
           // Size match
           let matchSize = size === 'all';
@@ -260,7 +279,7 @@ const breadcrumbSchema = {
             else if (status === 'sold') matchStatus = itemStatus.includes('sold');
           }
 
-          if (matchCat && matchSize && matchSector && matchPrice && matchStatus) {
+          if (matchPurpose && matchCat && matchSize && matchSector && matchPrice && matchStatus) {
             item.style.display = '';
             visibleCount++;
           } else {
@@ -287,13 +306,14 @@ const breadcrumbSchema = {
         if (noMatch) noMatch.style.display = visibleCount === 0 ? 'block' : 'none';
       }
 
-      [catSelect, sizeSelect, sectorSelect, priceSelect, statusSelect, sortSelect].forEach(sel => {
+      [purposeSelect, catSelect, sizeSelect, sectorSelect, priceSelect, statusSelect, sortSelect].forEach(sel => {
         if (sel) sel.addEventListener('change', applyFilters);
       });
 
       if (resetBtn) {
         resetBtn.addEventListener('click', () => {
           if (catSelect) catSelect.value = 'all';
+          if (purposeSelect) purposeSelect.value = 'all';
           if (sizeSelect) sizeSelect.value = 'all';
           if (sectorSelect) sectorSelect.value = 'all';
           if (priceSelect) priceSelect.value = 'all';
@@ -390,7 +410,7 @@ const breadcrumbSchema = {
   /* Premium Filter Panel */
   .filter-panel {
     display: grid;
-    grid-template-columns: repeat(6, 1fr) auto;
+    grid-template-columns: repeat(4, 1fr);
     gap: 0.85rem;
     align-items: flex-end;
     background: #111128;

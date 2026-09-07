@@ -10,9 +10,11 @@ export type PropertyType =
   | 'villa'
   | 'shop'
   | 'apartment'
+  | 'flat'
   | 'portion-floor'
   | 'penthouse'
-  | 'farm-house';
+  | 'farm-house'
+  | 'other';
 
 export type PropertyPurpose = 'sale' | 'rent' | 'lease';
 
@@ -78,6 +80,10 @@ export interface PropertyCoordinates {
 
 export interface PropertyLocation {
   address: string;
+  phase?: string;
+  sector?: string;
+  block?: string;
+  commercialArea?: string;
   city?: string;
   province?: string;
   coordinates?: PropertyCoordinates;
@@ -97,6 +103,9 @@ export interface PropertyModel {
   unit: SizeUnit;       // e.g. "marla", "kanal"
   bedrooms?: number;    // Applicable for houses / villas / apartments
   bathrooms?: number;
+  floors?: number;
+  condition?: string;
+  constructionStatus?: string;
   location: PropertyLocation;
   block: string;        // e.g. "Sector A", "CCA 2"
   description: string;
@@ -106,11 +115,23 @@ export interface PropertyModel {
   watermarkedImages?: WatermarkedImage[];
   source: string;       // e.g. "Zameen.com" or an owner/dealer submission
   sourceUrl?: string;   // Canonical original listing URL
+  sourceLinkAllowed?: boolean;
   sourceName?: string;
   sourceURL?: string;
+  sources?: string[];
+  sourceUrls?: string[];
+  sourceListingDate?: Date | string;
+  sourceUpdatedDate?: Date | string;
   sourceType: SourceType;
   verificationStatus: VerificationStatus;
-  availabilityStatus?: 'available' | 'reserved' | 'sold' | 'expired' | 'removed' | 'source-check-required';
+  availabilityStatus?: 'AVAILABLE' | 'RESERVED' | 'SOLD' | 'EXPIRED' | 'available' | 'reserved' | 'sold' | 'expired' | 'removed' | 'source-check-required';
+  verificationLabel?: 'Verified Recently' | 'Needs Verification' | 'Expired Review';
+  primaryImage?: string;
+  primaryImageSourceUrl?: string;
+  imageBackupSourceUrl?: string;
+  imageStatus?: 'approved' | 'branded' | 'watermarked' | 'rejected' | 'pending-review';
+  imageSource?: string;
+  seo?: { title: string; description: string };
   lastVerifiedDate?: Date | string;
   verifiedBy?: string;
   expiryDate?: Date | string;

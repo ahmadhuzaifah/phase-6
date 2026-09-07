@@ -72,7 +72,6 @@ const lines = [
   '## Low Internal Link Pages',
   '',
   ...(lowLinkPages.length ? lowLinkPages.map((item) => `- ${item} (${inbound.get(item)?.size || 0})`) : ['None detected.']),
-  '',
 ];
 fs.writeFileSync(reportPath, `${lines.join('\n')}\n`);
 process.stdout.write(`Internal link audit: ${pages.length} pages, ${broken.length} broken links.\n`);

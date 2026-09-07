@@ -10,7 +10,7 @@ export function getStaticPaths() {
   return properties.map((property) => ({ params: { slug: property.slug }, props: { property } }));
 }
 
-const { property } = Astro.props;
+const { property } = Astro.props as { property: any };
 
 const formattedPrice = property.price >= 10_000_000
   ? `PKR ${(property.price / 10_000_000).toFixed(2)} Crore`
@@ -27,8 +27,12 @@ const contactUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, 
 const cleanSectorKey = property.block.toLowerCase().replace('sector ', 'sector-').trim();
 const sectorKeyAliases: Record<string, string> = {
   'dha phase 6': '',
+  'cca 1': 'cca',
   'cca 2': 'cca',
   'main boulevard': 'main-boulevard-commercial',
+  'main boulevard commercial': 'main-boulevard-commercial',
+  'raya commercial': 'raya-commercial',
+  'defence raya': 'defence-raya',
 };
 const normalizedSectorKey = sectorKeyAliases[cleanSectorKey] ?? cleanSectorKey;
 const hasResidentialSector = normalizedSectorKey.startsWith('sector-');
@@ -59,10 +63,14 @@ const similarProperties = properties
 
 const mainImage = property.images?.[0]?.url || '/images/placeholders/property-placeholder.svg';
 const imageAlt = property.images?.[0]?.alt || `${property.title} in DHA Phase 6 Lahore`;
+const sourceUrl = property.sourceUrl;
+const sourceLinkUrl = property.sourceLinkAllowed === false ? '' : sourceUrl;
+const imageStatus = property.imageStatus || (mainImage.includes('/placeholders/') ? 'rejected' : 'approved');
+const imageLabel = imageStatus === 'approved' ? 'Authorized property image' : imageStatus === 'watermarked' ? 'Source watermarked image' : imageStatus === 'branded' ? 'Source branded image' : 'No verified image available';
 
 const canonical = `${SITE.url}/properties/${property.slug}/`;
-const pageTitle = `${property.title} in ${property.block} | DHA Phase 6 Lahore Real Estate`;
-const pageDesc = `Verified market snapshot: ${property.title} in ${property.block}, DHA Phase 6 Lahore. Asking demand: ${formattedPrice}. Located near premier schools, mosques, and CCA commercial hubs with 100% underground utilities.`;
+const pageTitle = property.seo?.title || `${property.title} in ${property.block} | DHA Phase 6 Lahore Real Estate`;
+const pageDesc = property.seo?.description || `Source-referenced market snapshot: ${property.title} in ${property.block}, DHA Phase 6 Lahore. Asking demand: ${formattedPrice}. Verify availability and pricing independently.`;
 
 const landmarkContext = `Located in prestigious ${property.block}, DHA Phase 6 Lahore, this ${property.size} ${property.unit} ${property.propertyType.replaceAll('-', ' ')} enjoys immediate proximity to key sector landmarks including Grand Jamia mosques, neighborhood parks, premier educational institutions, and arterial boulevards with direct access to Lahore Ring Road and Bedian Road.`;
 
@@ -80,7 +88,8 @@ const structuredData = {
         "@type": "Offer",
         "price": property.price,
         "priceCurrency": "PKR",
-        "availability": "https://schema.org/InStock"
+        "availability": ['SOLD', 'EXPIRED', 'sold', 'expired'].includes(property.availabilityStatus) ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
+        "url": sourceLinkUrl || canonical
       }
     },
     {
@@ -134,12 +143,12 @@ const structuredData = {
           <!-- Gallery -->
           <div class="prop-gallery">
             <div class="gallery-hero">
-              <img src={mainImage} alt={imageAlt} width="1000" height="650" loading="eager" />
-              <span class="gallery-watermark-free">✓ Verified Clean Listing</span>
+              <img src={mainImage} alt={imageAlt} width={property.images?.[0]?.width || 1200} height={property.images?.[0]?.height || 800} loading="eager" fetchpriority="high" />
+              <span class="gallery-watermark-free">{imageLabel}</span>
             </div>
             {property.images && property.images.length > 1 && (
               <div class="gallery-thumbs">
-                {property.images.map((img, idx) => (
+                {property.images.map((img: { url: string; alt?: string }, idx: number) => (
                   <div class="gallery-thumb">
                     <img src={img.url} alt={img.alt || `Photo ${idx + 1}`} width="150" height="100" loading="lazy" />
                   </div>
@@ -154,13 +163,19 @@ const structuredData = {
             <p class="landmark-context-lead"><strong>Neighborhood Setting:</strong> {landmarkContext}</p>
             <p class="lead-desc">{property.description}</p>
             <div class="features-list">
-              {property.features.map((feat) => (
+              {property.features.map((feat: string) => (
                 <span class="feat-pill">✓ {feat}</span>
               ))}
               <span class="feat-pill">📐 Size: {property.size} {property.unit}</span>
               <span class="feat-pill">🏷️ Purpose: For {property.purpose}</span>
               <span class="feat-pill">🏢 Sector: {property.block}</span>
+              {property.bedrooms && <span class="feat-pill">Bedrooms: {property.bedrooms}</span>}
+              {property.bathrooms && <span class="feat-pill">Bathrooms: {property.bathrooms}</span>}
+              {property.floors && <span class="feat-pill">Floors: {property.floors}</span>}
+              {property.condition && <span class="feat-pill">Condition: {property.condition}</span>}
+              {property.constructionStatus && <span class="feat-pill">Construction: {property.constructionStatus}</span>}
             </div>
+            <p class="property-source-disclaimer">{property.legalNotice || 'Property information is collected from publicly available sources. Buyers should independently verify availability, ownership, and pricing before any transaction.'}</p>
           </section>
 
           <!-- Buyer Due Diligence -->
@@ -249,7 +264,7 @@ const structuredData = {
             <div class="trust-panel-body">
               <div class="trust-row">
                 <span class="tr-label">Verification Status:</span>
-                <span class="tr-value status-active">✓ Verified Market Record</span>
+                <span class="tr-value status-active">{property.availabilityStatus || 'AVAILABLE'}</span>
               </div>
               <div class="trust-row">
                 <span class="tr-label">Last Checked:</span>
@@ -263,6 +278,16 @@ const structuredData = {
                 <span class="tr-label">Market Source:</span>
                 <span class="tr-value">{property.source || 'Public Market Record'}</span>
               </div>
+              <div class="trust-row">
+                <span class="tr-label">Verification Window:</span>
+                <span class="tr-value">{property.verificationLabel || 'Verified Recently'}</span>
+              </div>
+              {sourceLinkUrl && (
+                <div class="trust-row">
+                  <span class="tr-label">Original Listing:</span>
+                  <a class="tr-value source-record-link" href={sourceLinkUrl} target="_blank" rel="nofollow noopener noreferrer">View source</a>
+                </div>
+              )}
               <div class="trust-row">
                 <span class="tr-label">Independent Portal:</span>
                 <span class="tr-value">Zero Commission Advisory</span>
@@ -330,7 +355,7 @@ const structuredData = {
                 availabilityStatus={simProp.availabilityStatus}
                 lastVerifiedDate={simProp.lastVerifiedDate}
                 sourceName={simProp.source}
-                sourceURL={simProp.sourceURL}
+                sourceURL={simProp.sourceLinkAllowed === false ? undefined : simProp.sourceUrl}
                 isFeatured={simProp.isFeatured}
               />
             ))}

@@ -75,7 +75,7 @@ const whatsappUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g,
     </div>
     <div class="market-card__trust-row">
       {sourceURL ? (
-        <a href={sourceURL} class="trust-source" target="_blank" rel="noopener noreferrer">🛡️ {sourceName}</a>
+        <a href={sourceURL} class="trust-source" target="_blank" rel="nofollow noopener noreferrer">🛡️ {sourceName}</a>
       ) : (
         <span class="trust-source">🛡️ {sourceName}</span>
       )}

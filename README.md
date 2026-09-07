@@ -28,6 +28,8 @@ scripts/            Audits, imports, and maintenance tooling
 
 Properties are sourced from `src/data/properties-import.json`. Places are assembled from sector datasets under `src/data/places/`. Editorial articles, FAQs, dealers, jobs, amenities, and development updates are maintained as typed data modules. See [DATA_ARCHITECTURE.md](DATA_ARCHITECTURE.md) for the complete flow.
 
+The automated Python property pipeline lives in `scripts/property_pipeline/`. It performs robots-aware acquisition, cleaning, normalization, duplicate detection, one-image processing, availability tracking, report generation, and atomic Astro export. See [PROPERTY_PIPELINE.md](PROPERTY_PIPELINE.md).
+
 The project intentionally does not use Astro Content Collections. The previous configuration had empty loaders and no page consumer, so direct data modules remain the single source of truth.
 
 ## SEO strategy
@@ -49,11 +51,13 @@ npm run preview    # Preview the generated site
 npm run lint       # Run ESLint
 npm run seo:audit  # Audit generated metadata and internal links
 npm run link:audit # Generate internal-link-report.md
+npm run properties:update # Run the complete property acquisition pipeline
+npm run properties:test   # Run pipeline unit tests
 ```
 
 ## Environment
 
-`PUBLIC_SITE_URL` optionally overrides the canonical site URL. If omitted, the production default is `https://dhaphase6lahore.pk`.
+`PUBLIC_SITE_URL` optionally overrides the canonical site URL. If omitted, the production default is `https://dhaphase6lahore.pk`. Property crawler limits and explicit third-party republication authorization flags are documented in `.env.example`; all authorization flags default to off.
 
 ## Deployment
 
