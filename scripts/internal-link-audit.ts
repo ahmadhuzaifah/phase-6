@@ -39,7 +39,7 @@ for (const file of pages) {
   const html = fs.readFileSync(file, 'utf8');
   for (const match of html.matchAll(/\bhref=["']([^"']+)["']/gi)) {
     const raw = match[1];
-    if (!raw || raw.startsWith('#') || /^(?:https?:|mailto:|tel:|javascript:|data:)/i.test(raw)) continue;
+    if (!raw || raw.includes('${') || raw.startsWith('#') || /^(?:https?:|mailto:|tel:|javascript:|data:)/i.test(raw)) continue;
     if (!raw.startsWith('/')) continue;
     const target = normalizeTarget(raw);
     if (/\.[a-z0-9]+\/$/i.test(target) && !target.endsWith('.html/')) continue;

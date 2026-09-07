@@ -4,6 +4,7 @@
  * Route: /10-marla-plot-for-sale-dha-phase-6-lahore/
  */
 import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
 import { SITE } from '@data/site';
 import { CONTACTS } from '@data/contacts';
 
@@ -13,6 +14,7 @@ const metaDesc = `Explore 10 Marla residential plots for sale in DHA Phase 6 Lah
 ---
 
 <PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+  <Schema type="ItemList" data={{ name: pageTitle, itemListElement: [] }} />
   <header class="search-hero">
     <div class="container">
       <nav class="breadcrumb">

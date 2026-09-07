@@ -4,6 +4,7 @@
  * Route: /5-marla-house-for-sale-dha-phase-6-lahore/
  */
 import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
 import { SITE } from '@data/site';
 import { CONTACTS } from '@data/contacts';
 import propertiesRaw from '@data/properties-import.json';
@@ -27,6 +28,7 @@ const listings = allProps.filter(p => (p.size === '5' || p.title.toLowerCase().i
 ---
 
 <PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+  <Schema type="ItemList" data={{ name: pageTitle, itemListElement: [] }} />
   <header class="search-hero">
     <div class="container">
       <nav class="breadcrumb">
