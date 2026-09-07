@@ -134,6 +134,12 @@ export function getPopulatedCategories(minPlaces: number = 6): PlaceCategoryMeta
   });
 }
 
+export function getCategoryHubPath(categoryKey: string): string {
+  return getPopulatedCategories().some((category) => category.key === categoryKey)
+    ? `/places/${categoryKey}/`
+    : '/places/';
+}
+
 /**
  * Returns only (sector, category) combinations that have at least 6 verified places.
  * Enforces Phase 10.11 / Task 7 requirement: eliminates thin sector-category pages.
@@ -272,4 +278,3 @@ export function getPlaceImage(place: {
   // Priority 3: Category placeholder
   return { src: placeholder, isOriginal: false, placeholder };
 }
-

@@ -4,6 +4,7 @@ import {
   SECTORS_DIRECTORY,
   getSectorCategoryPlaces,
   getCategorySectors,
+  hasSectorCategoryPage,
   getPopulatedSectorCategoryPairs,
   getPlaceImage,
   type SectorMeta,
@@ -33,12 +34,12 @@ const description = `A focused local guide to ${categoryMeta.label.toLowerCase()
 
 // Only link to sectors that actually have places in this category
 const nearbySectors = getCategorySectors(categoryMeta.key)
-  .filter((s) => s.sector.key !== sectorMeta.key)
+  .filter((s) => s.sector.key !== sectorMeta.key && hasSectorCategoryPage(s.sector.key, categoryMeta.key))
   .map((s) => s.sector);
 
 // Only link to categories that actually have places in this sector
 const relatedCategories = PLACE_CATEGORIES.filter(
-  (c) => getSectorCategoryPlaces(sectorMeta.key, c.key).length > 0 && c.key !== categoryMeta.key
+  (c) => hasSectorCategoryPage(sectorMeta.key, c.key) && c.key !== categoryMeta.key
 );
 
 const publishedDate = places[0]?.retrievedAt || '2026-09-03';

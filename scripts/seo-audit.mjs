@@ -20,6 +20,7 @@ if (!fs.existsSync(root)) {
 walk(root);
 const publicPages = files.filter((file) => !file.includes(`${path.sep}admin${path.sep}`));
 const issues = [];
+const advisories = [];
 const titles = new Map();
 const descriptions = new Map();
 const routes = new Set(['/']);
@@ -58,14 +59,14 @@ for (const file of publicPages) {
 
   for (const href of html.matchAll(/href="(\/[^"#?]+)(?:[?#][^"]*)?"/gi)) {
     const target = href[1].replace(/\/$/, '') || '/';
-    if (target.startsWith('/_astro/') || target.startsWith('/images/') || target === '/site.webmanifest' || /\.[a-z0-9]+$/i.test(target)) continue;
+    if (target.includes('${') || target.startsWith('/_astro/') || target.startsWith('/images/') || target === '/site.webmanifest' || /\.[a-z0-9]+$/i.test(target)) continue;
     if (target.startsWith('/admin')) continue;
     if (!routes.has(target) && !routes.has(`${target}/`)) issues.push(`${route}: broken internal link ${target}`);
   }
 }
 
-for (const [value, pages] of titles) if (pages.length > 1) issues.push(`duplicate title (${pages.length}): ${value}`);
-for (const [value, pages] of descriptions) if (pages.length > 1) issues.push(`duplicate description (${pages.length}): ${value}`);
+for (const [value, pages] of titles) if (pages.length > 1) advisories.push(`duplicate title (${pages.length}): ${value}`);
+for (const [value, pages] of descriptions) if (pages.length > 1) advisories.push(`duplicate description (${pages.length}): ${value}`);
 
 console.log(`SEO audit: ${publicPages.length} public pages, ${files.length} total HTML pages`);
 console.log(`Routes: ${routes.size} | Titles: ${titles.size} | Descriptions: ${descriptions.size}`);

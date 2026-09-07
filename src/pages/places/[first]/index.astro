@@ -14,8 +14,8 @@ import {
   getSectorPlaces,
   getCategoryPlaces,
   getPopulatedCategories,
-  getSectorCategoryPlaces,
   getCategorySectors,
+  hasSectorCategoryPage,
   getPlaceImage,
   type PlaceRecord,
   type SectorMeta,
@@ -157,7 +157,7 @@ const sectorDistribution =
           count: secPlaces.length,
         };
       })
-        .filter((item) => item.count > 0)
+        .filter((item) => hasSectorCategoryPage(item.sector.key, categoryMeta?.key || ''))
         .sort((a, b) => b.count - a.count)
     : [];
 
@@ -354,13 +354,13 @@ const formattedDate = new Intl.DateTimeFormat('en-PK', { dateStyle: 'long' }).fo
 // Sectors for "Also search nearby sectors" (only sectors with places for this category)
 const nearbySectors =
   type === 'category' && categoryMeta
-    ? getCategorySectors(categoryMeta.key).map((s) => s.sector)
+    ? getCategorySectors(categoryMeta.key).filter((s) => hasSectorCategoryPage(s.sector.key, categoryMeta.key)).map((s) => s.sector)
     : SECTORS_DIRECTORY.filter((s) => s.key !== sectorMeta?.key);
 
 // Categories for "Related places and services" (only categories that actually exist in this sector)
 const relatedCategories =
   type === 'sector' && sectorMeta
-    ? PLACE_CATEGORIES.filter((c) => getSectorCategoryPlaces(sectorMeta.key, c.key).length > 0)
+    ? PLACE_CATEGORIES.filter((c) => hasSectorCategoryPage(sectorMeta.key, c.key))
     : getPopulatedCategories().filter((c) => c.key !== categoryMeta?.key);
 ---
 
@@ -433,7 +433,7 @@ const relatedCategories =
           <p class="sector-breakdown-desc">Explore where {categoryMeta?.label?.toLowerCase()} are concentrated across DHA Phase 6 sectors and commercial centers:</p>
           <div class="sector-dist-pills">
             {sectorDistribution.map((item) => (
-              <a href={`/sectors/${item.sector.key}/${categoryMeta?.key}/`} class="sector-dist-pill">
+              <a href={`/sectors/${item.sector.key}/places/${categoryMeta?.key}/`} class="sector-dist-pill">
                 <span class="sector-pill-name">{item.sector.label}</span>
                 <span class="sector-pill-count">{item.count} {item.count === 1 ? 'place' : 'places'}</span>
               </a>

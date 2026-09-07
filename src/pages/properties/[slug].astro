@@ -25,7 +25,17 @@ const contactUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, 
 
 // Sector matching for places
 const cleanSectorKey = property.block.toLowerCase().replace('sector ', 'sector-').trim();
-const sectorPlaces = places.filter(p => p.sector === cleanSectorKey || p.sectorLabel?.toLowerCase().includes(cleanSectorKey));
+const sectorKeyAliases: Record<string, string> = {
+  'dha phase 6': '',
+  'cca 2': 'cca',
+  'main boulevard': 'main-boulevard-commercial',
+};
+const normalizedSectorKey = sectorKeyAliases[cleanSectorKey] ?? cleanSectorKey;
+const hasResidentialSector = normalizedSectorKey.startsWith('sector-');
+const sectorPropertiesUrl = normalizedSectorKey ? `/sectors/${normalizedSectorKey}/properties/` : '/properties/';
+const sectorGuideUrl = hasResidentialSector ? `/dha-phase-6-${normalizedSectorKey}-lahore/` : '/dha-phase-6-lahore/';
+const entityUrl = hasResidentialSector ? `/entities/dha-phase-6-${normalizedSectorKey}/` : sectorGuideUrl;
+const sectorPlaces = places.filter(p => p.sector === normalizedSectorKey || p.sectorLabel?.toLowerCase().includes(cleanSectorKey));
 
 const nearbySchools = places.filter(p => (p.category === 'schools' || p.category === 'school') && (p.sector === cleanSectorKey || sectorPlaces.includes(p))).slice(0, 3);
 const nearbyHospitals = places.filter(p => (p.category === 'hospitals' || p.category === 'hospital' || p.category === 'pharmacies')).slice(0, 3);
@@ -79,7 +89,7 @@ const structuredData = {
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE.url },
         { "@type": "ListItem", "position": 2, "name": "Properties", "item": `${SITE.url}/properties/` },
-        { "@type": "ListItem", "position": 3, "name": property.block, "item": `${SITE.url}/sectors/${cleanSectorKey}/properties/` },
+        { "@type": "ListItem", "position": 3, "name": property.block, "item": `${SITE.url}${sectorPropertiesUrl}` },
         { "@type": "ListItem", "position": 4, "name": property.title, "item": canonical }
       ]
     }
@@ -96,7 +106,7 @@ const structuredData = {
       <nav class="prop-breadcrumbs" aria-label="Breadcrumbs">
         <a href="/">Home</a> <span>/</span>
         <a href="/properties/">Properties</a> <span>/</span>
-        <a href={`/sectors/${cleanSectorKey}/properties/`}>{property.block}</a> <span>/</span>
+        <a href={sectorPropertiesUrl}>{property.block}</a> <span>/</span>
         <span class="active-crumb">{property.title}</span>
       </nav>
 
@@ -277,8 +287,8 @@ const structuredData = {
           <div class="prop-knowledge-box">
             <h4>Knowledge Hub &amp; Due Diligence</h4>
             <ul class="prop-internal-links">
-              <li><a href={`/dha-phase-6-${cleanSectorKey}-lahore/`}>Complete {property.block} Guide &rarr;</a></li>
-              <li><a href={`/entities/dha-phase-6-${cleanSectorKey}/`}>{property.block} Entity Profile &rarr;</a></li>
+              <li><a href={sectorGuideUrl}>Complete {property.block} Guide &rarr;</a></li>
+              <li><a href={entityUrl}>{property.block} Entity Profile &rarr;</a></li>
               <li><a href="/dha-phase-6-lahore/">DHA Phase 6 Master Pillar &rarr;</a></li>
               <li><a href="/dha-phase-6-market-analysis/">2026 Market Analysis &rarr;</a></li>
               <li><a href="/dha-phase-6-price-history/">Historical Price Trends &rarr;</a></li>
@@ -298,7 +308,7 @@ const structuredData = {
               <span class="subhead-pill">Curated Selection</span>
               <h2>Similar Properties in DHA Phase 6</h2>
             </div>
-            <a href={`/sectors/${cleanSectorKey}/properties/`} class="view-sector-link">
+            <a href={sectorPropertiesUrl} class="view-sector-link">
               View More in {property.block} →
             </a>
           </div>

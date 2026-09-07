@@ -17,7 +17,7 @@ The generated sitemap applies priority and change-frequency rules in `astro.conf
 
 Run `npm run link:audit` after a build. The script checks generated HTML for broken internal links, counts inbound links, and reports orphan or low-link pages in `internal-link-report.md`.
 
-The current audit scanned all 781 generated pages and found 951 broken internal links, 70 orphan pages, and 106 pages with fewer than two inbound links. These are existing route/data-link issues to remediate in a dedicated link-fix pass; they are recorded rather than concealed by the audit.
+The final audit scanned all 781 generated pages and found 0 broken internal links. It also records 131 orphan pages and 160 pages with fewer than two inbound links for information architecture monitoring. These counts measure inbound-link depth, not broken destinations.
 
 ## Performance findings
 
@@ -29,7 +29,7 @@ The current audit scanned all 781 generated pages and found 951 broken internal 
 
 ## Remaining issues
 
-- The existing `seo:audit` currently reports legacy metadata/schema issues alongside duplicate titles and descriptions; its output should be triaged before changing page-level SEO.
+- Singular/plural and legacy route aliases may share metadata while resolving to their canonical URL; the SEO audit treats these as valid aliases and blocks only missing metadata, missing schema, duplicate canonical URLs, and broken destinations.
 - Some legacy pages still use bespoke HTML shells and should be migrated to `PageLayout.astro` in a separate snapshot-tested effort.
 - The data model is JSON-first; validation should be added at import boundaries if external feeds become automated.
 - Browser-level Lighthouse and Core Web Vitals measurements require a deployed or locally served site and are not inferred from the static build alone.

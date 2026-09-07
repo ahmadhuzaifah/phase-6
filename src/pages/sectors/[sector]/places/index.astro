@@ -9,6 +9,7 @@ import {
   PLACE_CATEGORIES,
   getSectorPlaces,
   getSectorCategoryPlaces,
+  hasSectorCategoryPage,
   getPlaceImage,
   type SectorMeta,
 } from '@data/places/index';
@@ -55,7 +56,7 @@ function getGroupCount(groupKey: string): number {
 // Build category summary cards (categories with ≥1 place in this sector)
 const categorySummary = PLACE_CATEGORIES
   .map(cat => ({ cat, count: getSectorCategoryPlaces(sectorMeta.key, cat.key).length }))
-  .filter(x => x.count > 0)
+  .filter(x => hasSectorCategoryPage(sectorMeta.key, x.cat.key))
   .sort((a, b) => b.count - a.count);
 
 const topCats = categorySummary.slice(0, 8);

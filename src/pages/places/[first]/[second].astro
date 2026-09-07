@@ -12,9 +12,10 @@ import {
   PLACE_CATEGORIES,
   getAllPlaces,
   getSectorPlaces,
-  getSectorCategoryPlaces,
   getCategorySectors,
+  hasSectorCategoryPage,
   getPopulatedSectorCategoryPairs,
+  getCategoryHubPath,
   getPlaceImage,
   type PlaceRecord,
   type SectorMeta,
@@ -140,6 +141,7 @@ const formattedDate = new Intl.DateTimeFormat('en-PK', { dateStyle: 'long' }).fo
 // Only link to sectors that actually have places in this category
 const nearbySectors = categoryMeta
   ? getCategorySectors(categoryMeta.key)
+      .filter((s) => hasSectorCategoryPage(s.sector.key, categoryMeta.key))
       .map((s) => s.sector)
       .filter((s) => s.key !== sectorMeta?.key)
   : [];
@@ -147,7 +149,7 @@ const nearbySectors = categoryMeta
 // Only link to categories that actually exist in this sector
 const relatedCategories = sectorMeta
   ? PLACE_CATEGORIES.filter(
-      (c) => getSectorCategoryPlaces(sectorMeta.key, c.key).length > 0 && c.key !== categoryMeta?.key
+      (c) => hasSectorCategoryPage(sectorMeta.key, c.key) && c.key !== categoryMeta?.key
     )
   : [];
 
@@ -214,7 +216,7 @@ const structuredData = isDetail
           itemListElement: [
             { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url },
             { '@type': 'ListItem', position: 2, name: 'Places', item: `${SITE.url}/places/` },
-            { '@type': 'ListItem', position: 3, name: place.categoryLabel, item: `${SITE.url}/places/${place.category}/` },
+            { '@type': 'ListItem', position: 3, name: place.categoryLabel, item: `${SITE.url}${getCategoryHubPath(place.category)}` },
             { '@type': 'ListItem', position: 4, name: place.sectorLabel, item: `${SITE.url}/sectors/${place.sector}/places/` },
             { '@type': 'ListItem', position: 5, name: place.name, item: canonical },
           ],
@@ -293,7 +295,7 @@ const structuredData = isDetail
             <span>/</span>
             <a href="/places/">Places</a>
             <span>/</span>
-            <a href={`/places/${place.category}/`}>{place.categoryLabel}</a>
+            <a href={getCategoryHubPath(place.category)}>{place.categoryLabel}</a>
             <span>/</span>
             <a href={`/sectors/${place.sector}/places/`}>{place.sectorLabel}</a>
             <span>/</span>
@@ -620,7 +622,7 @@ const structuredData = isDetail
                       <small>All verified places</small>
                     </div>
                   </a>
-                  <a href={`/places/${place.category}/`} class="sidebar-nav-btn">
+                  <a href={getCategoryHubPath(place.category)} class="sidebar-nav-btn">
                     <span>📑</span>
                     <div>
                       <strong>All {place.categoryLabel}</strong>
@@ -651,7 +653,7 @@ const structuredData = isDetail
             <p class="section-kicker"><span></span> DHA Phase 6 Local Intelligence Trail</p>
             <h2>Explore Connected Guides &amp; Sectors</h2>
             <div class="hub-breadcrumbs-trail">
-              <a href={`/places/${place.category}/`} class="hub-pill">
+              <a href={getCategoryHubPath(place.category)} class="hub-pill">
                 <span>Category:</span> {place.categoryLabel}
               </a>
               <span class="hub-arrow">→</span>

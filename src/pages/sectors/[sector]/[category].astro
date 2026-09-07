@@ -16,6 +16,7 @@ import {
   type SectorMeta,
 } from '@data/places/index';
 import { SITE } from '@data/site';
+import { getCategoryHubPath } from '@data/places/index';
 
 export function getStaticPaths() {
   const CATEGORY_NAMES: Record<string, string> = {
@@ -301,7 +302,7 @@ const structuredData: { '@context': string; '@graph': any[] } = {
         <a href={`/sectors/${sectorMeta.key}/places/`} class="hero-btn-primary">
           All {sectorMeta.label} Facilities Guide →
         </a>
-        <a href={`/places/${categoryKey}/`} class="hero-btn-secondary">
+        <a href={getCategoryHubPath(categoryKey)} class="hero-btn-secondary">
           Browse All {categoryLabel} in Phase 6 →
         </a>
       </div>
@@ -490,7 +491,7 @@ const structuredData: { '@context': string; '@graph': any[] } = {
           <a href={`/sectors/${sectorMeta.key}/`}>{sectorMeta.label} Sector Guide</a>
           <a href={`/sectors/${sectorMeta.key}/places/`}>{sectorMeta.label} All Facilities</a>
           <a href={`/sectors/${sectorMeta.key}/properties/`}>{sectorMeta.label} Real Estate</a>
-          <a href={`/places/${categoryKey}/`}>All Phase 6 {categoryLabel}</a>
+          <a href={getCategoryHubPath(categoryKey)}>All Phase 6 {categoryLabel}</a>
           <a href="/places/">DHA Phase 6 Places Directory</a>
           <a href="/properties/">All Phase 6 Properties</a>
         </div>
