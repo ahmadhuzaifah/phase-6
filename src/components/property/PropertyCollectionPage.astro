@@ -19,11 +19,14 @@ interface Props {
 }
 
 const { title, description, heading, eyebrow, types, canonicalPath } = Astro.props;
-const listings = properties.filter((property) =>
-  types.includes(property.propertyType)
-  && isPublishableProperty(property)
-  && isActiveProperty(property)
+const listings = properties.filter(
+  (property) =>
+    types.includes(property.propertyType) &&
+    isPublishableProperty(property) &&
+    isActiveProperty(property),
 );
+const sectorCount = new Set(listings.map((property) => property.block)).size;
+const isPlotCollection = canonicalPath === '/plots';
 
 const breadcrumbSchema = {
   itemListElement: [
@@ -37,19 +40,33 @@ const breadcrumbSchema = {
   <Schema type="BreadcrumbList" data={breadcrumbSchema} />
   <header class="collection-hero">
     <div class="container">
-      <p>{eyebrow}</p>
+      <nav class="collection-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a><span>/</span><span aria-current="page"
+          >{isPlotCollection ? 'Plots' : 'Properties'}</span
+        >
+      </nav>
+      <p class="collection-eyebrow">{eyebrow}</p>
       <h1>{heading}</h1>
       <div class="collection-hero__intro">
         <p>{description}</p>
-        <span>Each record shows its own source-check date</span>
+        <div class="collection-stats" aria-label="Collection summary">
+          <span><strong>{listings.length}</strong> live records</span>
+          <span><strong>{sectorCount}</strong> locations</span>
+          <span><strong>100%</strong> source dated</span>
+        </div>
       </div>
     </div>
   </header>
 
   <section class="source-notice">
     <div class="container">
-      <strong>Market snapshot, not verified inventory.</strong>
-      <p>Cards summarize public source references. Confirm live availability, ownership, condition, dues and transfer requirements independently. Third-party content is used only when reuse permission is documented.</p>
+      <span class="source-notice__mark">i</span>
+      <strong>Market snapshot, not verified inventory</strong>
+      <p>
+        Cards summarize public source references. Confirm live availability, ownership, condition,
+        dues and transfer requirements independently. Third-party content is used only when reuse
+        permission is documented.
+      </p>
     </div>
   </section>
 
@@ -65,6 +82,12 @@ const breadcrumbSchema = {
 
       <!-- PREMIUM FILTER PANEL (Phase 10.17) -->
       <div class="filter-panel" id="property-filters">
+        <div class="filter-panel__heading">
+          <div>
+            <span>Refine listings</span><strong>Find the right DHA Phase 6 property</strong>
+          </div>
+          <small>Filters update results instantly</small>
+        </div>
         <div class="filter-group">
           <label for="filter-purpose">Purpose</label>
           <select id="filter-purpose">
@@ -191,50 +214,66 @@ const breadcrumbSchema = {
         <button type="button" id="reset-filters-btn" class="reset-btn">Reset</button>
       </div>
 
-      {listings.length > 0 ? (
-        <div class="collection-grid" id="property-grid">
-          {listings.map((property) => (
-            <div
-              class="property-item"
-              data-type={property.propertyType}
-              data-purpose={property.purpose}
-              data-size={property.size}
-              data-unit={property.unit}
-              data-sector={property.block}
-              data-price={property.price}
-              data-status={property.availabilityStatus}
-              data-date={property.lastSeenAt || property.lastCheckedDate}
-              data-bedrooms={property.bedrooms || 0}
-              data-bathrooms={property.bathrooms || 0}
-              data-freshness={getPropertyFreshness(property.lastSeenAt || property.lastCheckedDate).key}
-              data-verified={property.verificationStatus === 'verified' ? 'verified' : 'unverified'}
-            >
-              <PropertyCard
-                title={property.title}
-                slug={property.slug}
-                propertyType={property.propertyType}
-                purpose={property.purpose}
-                price={property.price}
-                priceUnit={property.priceUnit}
-                size={property.size}
-                sizeUnit={property.unit}
-                block={property.block}
-                location={property.location.address}
-                image={property.images[0]}
-                verificationStatus={property.verificationStatus}
-                availabilityStatus={property.availabilityStatus}
-                lastVerifiedDate={property.lastVerifiedDate}
-                lastCheckedDate={property.lastSeenAt || property.lastCheckedDate}
-                sourceName={property.source}
-                sourceURL={property.sourceLinkAllowed === false ? undefined : property.sourceUrl}
-                isFeatured={property.isFeatured}
-              />
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div class="empty-state"><h2>No source-referenced records yet</h2><p>Use the contact page to submit owner-authorized inventory with clean, licensed images.</p></div>
-      )}
+      {
+        listings.length > 0 ? (
+          <div class="collection-grid" id="property-grid">
+            {listings.map((property) => (
+              <div
+                class="property-item"
+                data-type={property.propertyType}
+                data-purpose={property.purpose}
+                data-size={property.size}
+                data-unit={property.unit}
+                data-sector={property.block}
+                data-price={property.price}
+                data-status={property.availabilityStatus}
+                data-date={property.lastSeenAt || property.lastCheckedDate}
+                data-bedrooms={property.bedrooms || 0}
+                data-bathrooms={property.bathrooms || 0}
+                data-freshness={
+                  getPropertyFreshness(property.lastSeenAt || property.lastCheckedDate).key
+                }
+                data-verified={
+                  property.verificationStatus === 'verified' ? 'verified' : 'unverified'
+                }
+              >
+                <PropertyCard
+                  title={property.title}
+                  slug={property.slug}
+                  propertyType={property.propertyType}
+                  purpose={property.purpose}
+                  price={property.price}
+                  priceUnit={property.priceUnit}
+                  size={property.size}
+                  sizeUnit={property.unit}
+                  block={property.block}
+                  location={property.location.address}
+                  image={property.images[0]}
+                  verificationStatus={property.verificationStatus}
+                  availabilityStatus={property.availabilityStatus}
+                  lastVerifiedDate={property.lastVerifiedDate}
+                  lastCheckedDate={property.lastSeenAt || property.lastCheckedDate}
+                  sourceName={property.source}
+                  sourceURL={property.sourceLinkAllowed === false ? undefined : property.sourceUrl}
+                  isFeatured={property.isFeatured}
+                  bedrooms={property.bedrooms}
+                  bathrooms={property.bathrooms}
+                />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div class="empty-state">
+            <>
+              <h2>No source-referenced records yet</h2>
+              <p>
+                Use the contact page to submit owner-authorized inventory with clean, licensed
+                images.
+              </p>
+            </>
+          </div>
+        )
+      }
       <div id="no-filter-match" class="empty-state" style="display: none; margin-top: 2rem;">
         <h2>No properties match your current filters</h2>
         <p>Try broadening your price range, sector, or size criteria.</p>
@@ -294,10 +333,24 @@ const breadcrumbSchema = {
           // Category match
           let matchCat = cat === 'all';
           if (!matchCat) {
-            if (cat === 'house' && (itemType.includes('house') || itemType.includes('villa'))) matchCat = true;
-            else if (cat === 'residential-plot' && itemType.includes('plot') && !itemType.includes('commercial')) matchCat = true;
-            else if (cat === 'commercial' && (itemType.includes('commercial') || itemType.includes('shop'))) matchCat = true;
-            else if (cat === 'apartment' && (itemType.includes('apartment') || itemType.includes('flat'))) matchCat = true;
+            if (cat === 'house' && (itemType.includes('house') || itemType.includes('villa')))
+              matchCat = true;
+            else if (
+              cat === 'residential-plot' &&
+              itemType.includes('plot') &&
+              !itemType.includes('commercial')
+            )
+              matchCat = true;
+            else if (
+              cat === 'commercial' &&
+              (itemType.includes('commercial') || itemType.includes('shop'))
+            )
+              matchCat = true;
+            else if (
+              cat === 'apartment' &&
+              (itemType.includes('apartment') || itemType.includes('flat'))
+            )
+              matchCat = true;
             else if (cat === 'portion-floor' && itemType.includes('portion')) matchCat = true;
           }
 
@@ -307,18 +360,22 @@ const breadcrumbSchema = {
           let matchSize = size === 'all';
           if (!matchSize) {
             if (size === '1-kanal' && itemSize === '1' && itemUnit === 'kanal') matchSize = true;
-            else if (size === '2-kanal' && itemSize === '2' && itemUnit === 'kanal') matchSize = true;
+            else if (size === '2-kanal' && itemSize === '2' && itemUnit === 'kanal')
+              matchSize = true;
             else if (size === '10' && itemSize === '10' && itemUnit === 'marla') matchSize = true;
             else if (size === '5' && itemSize === '5' && itemUnit === 'marla') matchSize = true;
             else if (size === '3' && itemSize === '3' && itemUnit === 'marla') matchSize = true;
-            else if (size === '4-marla' && itemSize === '4' && itemUnit === 'marla') matchSize = true;
-            else if (size === '8-marla' && itemSize === '8' && itemUnit === 'marla') matchSize = true;
+            else if (size === '4-marla' && itemSize === '4' && itemUnit === 'marla')
+              matchSize = true;
+            else if (size === '8-marla' && itemSize === '8' && itemUnit === 'marla')
+              matchSize = true;
           }
 
           // Sector match
           let matchSector = sector === 'all';
           if (!matchSector) {
-            if (sector === 'CCA') matchSector = itemSector.includes('CCA') || itemSector.includes('Commercial');
+            if (sector === 'CCA')
+              matchSector = itemSector.includes('CCA') || itemSector.includes('Commercial');
             else matchSector = itemSector.includes(sector);
           }
 
@@ -326,8 +383,10 @@ const breadcrumbSchema = {
           let matchPrice = price === 'all';
           if (!matchPrice) {
             if (price === 'under-1cr' && itemPrice < 10000000) matchPrice = true;
-            else if (price === '1cr-3cr' && itemPrice >= 10000000 && itemPrice <= 30000000) matchPrice = true;
-            else if (price === '3cr-5cr' && itemPrice > 30000000 && itemPrice <= 50000000) matchPrice = true;
+            else if (price === '1cr-3cr' && itemPrice >= 10000000 && itemPrice <= 30000000)
+              matchPrice = true;
+            else if (price === '3cr-5cr' && itemPrice > 30000000 && itemPrice <= 50000000)
+              matchPrice = true;
             else if (price === '5cr-plus' && itemPrice > 50000000) matchPrice = true;
           }
 
@@ -338,7 +397,18 @@ const breadcrumbSchema = {
           const matchFreshness = freshness === 'all' || itemFreshness === freshness;
           const matchVerified = verified === 'all' || itemVerified === verified;
 
-          if (matchPurpose && matchCat && matchSize && matchSector && matchPrice && matchStatus && matchBedrooms && matchBathrooms && matchFreshness && matchVerified) {
+          if (
+            matchPurpose &&
+            matchCat &&
+            matchSize &&
+            matchSector &&
+            matchPrice &&
+            matchStatus &&
+            matchBedrooms &&
+            matchBathrooms &&
+            matchFreshness &&
+            matchVerified
+          ) {
             item.style.display = '';
             visibleCount++;
           } else {
@@ -347,7 +417,7 @@ const breadcrumbSchema = {
         });
 
         // Sorting
-        const visibleItems = items.filter(it => it.style.display !== 'none');
+        const visibleItems = items.filter((it) => it.style.display !== 'none');
         visibleItems.sort((a, b) => {
           const priceA = parseFloat(a.dataset.price || '0');
           const priceB = parseFloat(b.dataset.price || '0');
@@ -359,13 +429,25 @@ const breadcrumbSchema = {
           if (sort === 'recent' || sort === 'latest') return dateB - dateA;
           return 0;
         });
-        visibleItems.forEach(it => grid.appendChild(it));
+        visibleItems.forEach((it) => grid.appendChild(it));
 
         if (counter) counter.textContent = visibleCount.toString();
         if (noMatch) noMatch.style.display = visibleCount === 0 ? 'block' : 'none';
       }
 
-      [purposeSelect, catSelect, sizeSelect, sectorSelect, priceSelect, statusSelect, bedroomsSelect, bathroomsSelect, freshnessSelect, verifiedSelect, sortSelect].forEach(sel => {
+      [
+        purposeSelect,
+        catSelect,
+        sizeSelect,
+        sectorSelect,
+        priceSelect,
+        statusSelect,
+        bedroomsSelect,
+        bathroomsSelect,
+        freshnessSelect,
+        verifiedSelect,
+        sortSelect,
+      ].forEach((sel) => {
         if (sel) sel.addEventListener('change', applyFilters);
       });
 
@@ -398,12 +480,14 @@ const breadcrumbSchema = {
         </div>
       </div>
       <div class="sector-nav-grid">
-        {SECTORS_DIRECTORY.filter((s) => s.type === 'residential').map((sector) => (
-          <a href={`/sectors/${sector.key}/properties/`} class="sector-nav-card">
-            <strong>{sector.label}</strong>
-            <span>Plot &amp; House Guide →</span>
-          </a>
-        ))}
+        {
+          SECTORS_DIRECTORY.filter((s) => s.type === 'residential').map((sector) => (
+            <a href={`/sectors/${sector.key}/properties/`} class="sector-nav-card">
+              <strong>{sector.label}</strong>
+              <span>Plot &amp; House Guide →</span>
+            </a>
+          ))
+        }
       </div>
     </div>
   </section>
@@ -454,129 +538,467 @@ const breadcrumbSchema = {
 </PageLayout>
 
 <style>
-  .collection-hero { padding: clamp(5rem,10vw,8rem) 0 4.5rem; background: radial-gradient(circle at 80% 10%,#25254d,#111128 38%,#0a0a1a 76%); color:#fff; border-bottom:1px solid rgba(16,185,129,.18); }
-  .collection-hero>div>p,.collection-heading p { margin:0 0 .65rem;color:#10b981;font-size:.72rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase; }
-  .collection-hero h1 { max-width:900px;margin:0;color:#fff;font-family:var(--font-display);font-size:clamp(2.7rem,7vw,5.7rem);line-height:1;letter-spacing:-.035em; }
-  .collection-hero__intro { display:grid;grid-template-columns:minmax(0,680px) auto;gap:2rem;align-items:end;margin-top:1.6rem; }
-  .collection-hero__intro p { margin:0;color:#9a9ab5;font-size:1.12rem;line-height:1.7; }
-  .collection-hero__intro span { color:#6a6a85;font-size:.78rem; }
-  .source-notice { padding:1.4rem 0;background:linear-gradient(135deg,#059669,#10b981);color:#042014; }
-  .source-notice .container { display:grid;grid-template-columns:280px 1fr;gap:2rem; }
-  .source-notice p { margin:0;line-height:1.55; }
-  .collection-section { padding:clamp(3.5rem,8vw,7rem) 0;background:#0a0a1a; }
-  .collection-heading { display:flex;justify-content:space-between;gap:2rem;align-items:end;margin-bottom:2rem; }
-  .collection-heading h2 { margin:0;color:#f0f0f5;font-family:var(--font-display);font-size:clamp(2rem,4vw,3.2rem); }
-  .collection-heading a { color:#10b981;font-weight:800; }
-  .collection-grid { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem; }
-  .empty-state { padding:3rem;background:#161635;border:1px solid rgba(255,255,255,.08); }
-
-  /* Premium Filter Panel */
+  .collection-hero,
+  .collection-section,
+  .sector-guides-section,
+  .location-seo-section {
+    --collection-bg: #080f12;
+    --collection-panel: #101e21;
+    --collection-border: rgba(185, 215, 202, 0.14);
+    --collection-muted: #91a49e;
+    --collection-accent: #30c487;
+    --collection-gold: #e3b85a;
+  }
+  .collection-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 7.2rem 0 2.8rem;
+    border-bottom: 1px solid var(--collection-border);
+    background:
+      linear-gradient(105deg, rgba(8, 19, 21, 0.96), rgba(9, 29, 27, 0.84)),
+      repeating-linear-gradient(120deg, transparent 0 34px, rgba(48, 196, 135, 0.035) 34px 35px);
+    color: #e8f0ed;
+  }
+  .collection-hero::after {
+    position: absolute;
+    right: -8rem;
+    bottom: -15rem;
+    width: 34rem;
+    height: 34rem;
+    border: 1px solid rgba(48, 196, 135, 0.16);
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 5rem rgba(48, 196, 135, 0.025),
+      0 0 0 10rem rgba(48, 196, 135, 0.018);
+    content: '';
+    pointer-events: none;
+  }
+  .collection-hero .container {
+    position: relative;
+    z-index: 1;
+  }
+  .collection-breadcrumb {
+    display: flex;
+    gap: 0.55rem;
+    align-items: center;
+    margin-bottom: 1.35rem;
+    color: #6f8580;
+    font-size: 0.76rem;
+  }
+  .collection-breadcrumb a {
+    color: #9db0aa;
+    text-decoration: none;
+  }
+  .collection-breadcrumb a:hover {
+    color: var(--collection-accent);
+  }
+  .collection-eyebrow,
+  .collection-heading p {
+    margin: 0 0 0.55rem;
+    color: var(--collection-accent);
+    font-size: 0.67rem;
+    font-weight: 850;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+  .collection-hero h1 {
+    max-width: 900px;
+    margin: 0;
+    color: #fff;
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(2.25rem, 5vw, 4rem);
+    font-weight: 650;
+    line-height: 1.06;
+    letter-spacing: -0.035em;
+  }
+  .collection-hero__intro {
+    display: grid;
+    grid-template-columns: minmax(0, 680px) auto;
+    gap: 2rem;
+    align-items: end;
+    margin-top: 1.15rem;
+  }
+  .collection-hero__intro > p {
+    margin: 0;
+    color: #9baca7;
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+  .collection-stats {
+    display: flex;
+    gap: 1.4rem;
+  }
+  .collection-stats span {
+    color: #71847e;
+    font-size: 0.63rem;
+    white-space: nowrap;
+  }
+  .collection-stats strong {
+    display: block;
+    margin-bottom: 0.12rem;
+    color: #e9f1ee;
+    font-family: var(--font-display, Georgia, serif);
+    font-size: 1.05rem;
+  }
+  .source-notice {
+    padding: 0.95rem 0;
+    border-bottom: 1px solid rgba(48, 196, 135, 0.18);
+    background: #0c191b;
+    color: #a9b9b4;
+  }
+  .source-notice .container {
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr);
+    gap: 0.75rem;
+    align-items: center;
+  }
+  .source-notice__mark {
+    display: grid;
+    width: 1.6rem;
+    height: 1.6rem;
+    place-items: center;
+    border: 1px solid rgba(48, 196, 135, 0.42);
+    border-radius: 50%;
+    color: #55dca4;
+    font-family: Georgia, serif;
+    font-size: 0.75rem;
+    font-weight: 800;
+  }
+  .source-notice strong {
+    color: #dbe6e2;
+    font-size: 0.72rem;
+    white-space: nowrap;
+  }
+  .source-notice p {
+    margin: 0;
+    color: #71847e;
+    font-size: 0.66rem;
+    line-height: 1.5;
+  }
+  .collection-section {
+    padding: 3rem 0 5rem;
+    background:
+      radial-gradient(circle at 10% 10%, rgba(31, 140, 104, 0.07), transparent 28rem),
+      var(--collection-bg);
+    color: #e8f0ed;
+  }
+  .collection-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    align-items: end;
+    margin-bottom: 1.4rem;
+  }
+  .collection-heading h2 {
+    margin: 0;
+    color: #f1f6f4;
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(1.6rem, 3vw, 2.3rem);
+    font-weight: 650;
+    letter-spacing: -0.025em;
+  }
+  .collection-heading > a {
+    color: #54d9a1;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-decoration: none;
+  }
   .filter-panel {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.85rem;
-    align-items: flex-end;
-    background: #111128;
-    border: 1px solid rgba(16, 185, 129, 0.25);
-    border-radius: 0.75rem;
-    padding: 1.25rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.8rem;
+    align-items: end;
+    margin-bottom: 1.8rem;
+    padding: 1.1rem;
+    border: 1px solid rgba(48, 196, 135, 0.22);
+    border-radius: 9px;
+    background: linear-gradient(145deg, rgba(19, 35, 37, 0.96), rgba(11, 23, 26, 0.97));
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.24);
+  }
+  .filter-panel__heading {
+    display: flex;
+    grid-column: 1/-1;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid var(--collection-border);
+  }
+  .filter-panel__heading span,
+  .filter-panel__heading strong {
+    display: block;
+  }
+  .filter-panel__heading span {
+    margin-bottom: 0.15rem;
+    color: #4fd79f;
+    font-size: 0.6rem;
+    font-weight: 850;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .filter-panel__heading strong {
+    color: #e8efec;
+    font-family: var(--font-display, Georgia, serif);
+    font-size: 1rem;
+  }
+  .filter-panel__heading small {
+    color: #6d8079;
+    font-size: 0.62rem;
   }
   .filter-group {
     display: flex;
+    min-width: 0;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.36rem;
   }
   .filter-group label {
-    font-size: 0.7rem;
+    color: #79c9aa;
+    font-size: 0.6rem;
     font-weight: 800;
+    letter-spacing: 0.07em;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #10b981;
   }
   .filter-group select {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 0.4rem;
-    color: #fff;
-    padding: 0.6rem 0.75rem;
-    font-size: 0.78rem;
+    width: 100%;
+    min-height: 2.5rem;
+    padding: 0.55rem 2rem 0.55rem 0.65rem;
+    border: 1px solid var(--collection-border);
+    border-radius: 4px;
     outline: none;
+    background: #0c191c;
+    color: #d9e4df;
+    font-size: 0.7rem;
     cursor: pointer;
   }
   .filter-group select:focus {
-    border-color: #10b981;
+    border-color: #30c487;
+    box-shadow: 0 0 0 2px rgba(48, 196, 135, 0.1);
   }
   .filter-group select option {
-    background: #0f0f26;
-    color: #fff;
+    background: #0c191c;
+    color: #e8f0ed;
   }
   .reset-btn {
-    padding: 0.62rem 1.1rem;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: #94a3b8;
-    border-radius: 0.4rem;
-    font-size: 0.78rem;
-    font-weight: 700;
+    min-height: 2.5rem;
+    padding: 0.55rem 0.8rem;
+    border: 1px solid rgba(227, 184, 90, 0.32);
+    border-radius: 4px;
+    background: rgba(227, 184, 90, 0.06);
+    color: #dbb75f;
+    font-size: 0.68rem;
+    font-weight: 800;
     cursor: pointer;
-    transition: all 0.2s ease;
   }
   .reset-btn:hover {
-    background: rgba(239, 68, 68, 0.15);
-    border-color: rgba(239, 68, 68, 0.4);
-    color: #f87171;
+    border-color: #e3b85a;
+    background: rgba(227, 184, 90, 0.12);
+  }
+  .collection-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.15rem;
   }
   .property-item {
     display: flex;
+    min-width: 0;
     flex-direction: column;
   }
-
+  .empty-state {
+    padding: 2rem;
+    border: 1px solid var(--collection-border);
+    border-radius: 8px;
+    background: var(--collection-panel);
+    color: #94a69f;
+  }
+  .empty-state h2 {
+    color: #edf4f1;
+    font-family: var(--font-display, Georgia, serif);
+  }
+  .sector-guides-section,
+  .location-seo-section {
+    padding: 4rem 0;
+    border-top: 1px solid var(--collection-border);
+    background: #0b1518;
+    color: #e8f0ed;
+  }
+  .location-seo-section {
+    background: #080f12;
+  }
+  .sector-nav-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+  .sector-nav-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--collection-border);
+    border-radius: 6px;
+    background: linear-gradient(145deg, rgba(18, 34, 36, 0.94), rgba(11, 22, 25, 0.95));
+    text-decoration: none;
+    transition:
+      border-color 180ms ease,
+      transform 180ms ease;
+  }
+  .sector-nav-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(48, 196, 135, 0.45);
+  }
+  .sector-nav-card strong {
+    margin-bottom: 0.18rem;
+    color: #eef5f2;
+    font-size: 0.86rem;
+  }
+  .sector-nav-card span {
+    color: #55d9a1;
+    font-size: 0.62rem;
+    font-weight: 750;
+  }
+  .location-nav-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.85rem;
+  }
+  .location-nav-card {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    padding: 1.15rem;
+    border: 1px solid var(--collection-border);
+    border-radius: 7px;
+    background: linear-gradient(145deg, rgba(17, 32, 34, 0.94), rgba(10, 21, 24, 0.95));
+    text-decoration: none;
+    transition:
+      border-color 180ms ease,
+      transform 180ms ease;
+  }
+  .location-nav-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(227, 184, 90, 0.42);
+  }
+  .loc-badge {
+    align-self: flex-start;
+    margin-bottom: 0.65rem;
+    padding: 0.25rem 0.42rem;
+    border: 1px solid rgba(227, 184, 90, 0.2);
+    border-radius: 3px;
+    background: rgba(227, 184, 90, 0.07);
+    color: #e3b85a;
+    font-size: 0.55rem;
+    font-weight: 850;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .location-nav-card strong {
+    margin-bottom: 0.32rem;
+    color: #eef5f2;
+    font-family: var(--font-display, Georgia, serif);
+    font-size: 0.92rem;
+  }
+  .location-nav-card p {
+    margin: 0;
+    color: #758780;
+    font-size: 0.68rem;
+    line-height: 1.55;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .collection-hero .container {
+      animation: collection-rise 500ms ease both;
+    }
+    .filter-panel {
+      animation: collection-rise 560ms 80ms ease both;
+    }
+    .property-item {
+      animation: collection-rise 500ms ease both;
+    }
+    @keyframes collection-rise {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  }
   @media (max-width: 1100px) {
     .filter-panel {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
     .reset-btn {
       grid-column: span 3;
     }
+    .collection-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .sector-nav-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
-  @media (max-width: 680px) {
+  @media (max-width: 760px) {
+    .collection-hero {
+      padding-top: 6.2rem;
+    }
+    .collection-hero__intro {
+      grid-template-columns: 1fr;
+    }
+    .collection-stats {
+      flex-wrap: wrap;
+    }
+    .source-notice .container {
+      grid-template-columns: auto 1fr;
+    }
+    .source-notice p {
+      grid-column: 1/-1;
+    }
     .filter-panel {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .reset-btn {
+      grid-column: span 2;
+    }
+    .filter-panel__heading {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+    .filter-panel__heading small {
+      display: none;
+    }
+    .collection-heading {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+    .sector-nav-grid,
+    .location-nav-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 540px) {
+    .collection-hero h1 {
+      font-size: 2.15rem;
+    }
+    .collection-stats {
+      gap: 1rem;
+    }
+    .source-notice strong {
+      white-space: normal;
+    }
+    .filter-panel,
+    .collection-grid,
+    .sector-nav-grid,
+    .location-nav-grid {
       grid-template-columns: 1fr;
     }
     .reset-btn {
       grid-column: span 1;
     }
-  }
-
-  /* Sector Navigation Grid */
-  .sector-guides-section { padding: 4.5rem 0; background: #0e0e24; border-top: 1px solid rgba(255, 255, 255, 0.08); }
-  .sector-nav-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
-  .sector-nav-card { display: flex; flex-direction: column; padding: 1.25rem 1.4rem; border-radius: 8px; background: #161635; border: 1px solid rgba(255, 255, 255, 0.08); text-decoration: none; transition: all 0.2s; }
-  .sector-nav-card:hover { border-color: #10b981; transform: translateY(-2px); }
-  .sector-nav-card strong { color: #ffffff; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.25rem; }
-  .sector-nav-card span { color: #10b981; font-size: 0.72rem; font-weight: 700; }
-
-  /* Location Navigation Grid */
-  .location-seo-section { padding: 4.5rem 0; background: #090919; border-top: 1px solid rgba(255, 255, 255, 0.08); }
-  .location-nav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
-  .location-nav-card { display: flex; flex-direction: column; padding: 1.5rem; border-radius: 10px; background: #12122b; border: 1px solid rgba(255, 255, 255, 0.08); text-decoration: none; transition: all 0.25s; }
-  .location-nav-card:hover { border-color: #f0c857; transform: translateY(-2px); }
-  .loc-badge { align-self: flex-start; padding: 0.2rem 0.5rem; border-radius: 4px; background: rgba(212, 168, 68, 0.15); color: #f0c857; font-size: 0.6rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.75rem; }
-  .location-nav-card strong { color: #ffffff; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.4rem; }
-  .location-nav-card p { color: #9292ad; font-size: 0.8rem; line-height: 1.5; margin: 0; }
-
-  @media(max-width:950px){
-    .collection-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
-    .sector-nav-grid{grid-template-columns:repeat(2, 1fr);}
-    .location-nav-grid{grid-template-columns:repeat(2, 1fr);}
-  }
-  @media(max-width:680px){
-    .collection-grid,.collection-hero__intro,.source-notice .container{grid-template-columns:1fr}
-    .sector-nav-grid{grid-template-columns:1fr;}
-    .location-nav-grid{grid-template-columns:1fr;}
-    .collection-heading{align-items:start;flex-direction:column}
-    .source-notice{padding:1.25rem 0}
+    .collection-section {
+      padding-top: 1.6rem;
+    }
+    .collection-heading > a {
+      font-size: 0.68rem;
+    }
   }
 </style>

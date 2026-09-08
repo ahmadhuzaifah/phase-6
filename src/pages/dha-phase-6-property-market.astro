@@ -1,0 +1,55 @@
+---
+import RequestPropertyForm from '@components/property/RequestPropertyForm.astro';
+import Schema from '@components/seo/Schema.astro';
+import PageLayout from '@layouts/PageLayout.astro';
+import properties from '@data/properties-import.json';
+import { SITE } from '@data/site';
+import { isActiveProperty } from '@utils/propertyLifecycle';
+import { isPublishableProperty } from '@utils/propertyQualityScore';
+import { createPriceRows, createSectorRankings, formatMarketPrice, summarizeMarket, type MarketProperty } from '@utils/marketIntelligence';
+
+const active = (properties as MarketProperty[]).filter((property) => isPublishableProperty(property) && isActiveProperty(property));
+const summary = summarizeMarket(active);
+const priceRows = createPriceRows(active);
+const rankings = createSectorRankings(active);
+const updated = new Intl.DateTimeFormat('en-PK', { dateStyle: 'long' }).format(new Date(Math.max(...active.map((property) => new Date(property.lastCheckedDate || property.lastSeenAt || 0).getTime()))));
+const canonical = `${SITE.url}/dha-phase-6-property-market/`;
+const title = 'DHA Phase 6 Property Market Intelligence | Live Asking Prices';
+const description = `Build-time market intelligence from ${summary.total} active DHA Phase 6 Lahore property records, including price benchmarks, inventory mix and sector performance.`;
+const schema = {
+  name: 'DHA Phase 6 Lahore Property Market Dataset', description, url: canonical,
+  dateModified: new Date().toISOString(),
+  spatialCoverage: 'DHA Phase 6, Lahore, Punjab, Pakistan',
+  variableMeasured: ['Active asking-price records', 'Average asking price', 'Property category', 'Sector coverage'],
+};
+---
+
+<PageLayout title={title} description={description} canonical={canonical}>
+  <Schema type="Dataset" data={schema} />
+  <Schema type="BreadcrumbList" data={{ itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url }, { '@type': 'ListItem', position: 2, name: 'Property Market', item: canonical }] }} />
+  <main class="market-page">
+    <header class="market-hero"><div class="container"><nav><a href="/">Home</a><span>/</span><span>Property market</span></nav><p>Build-time market intelligence</p><h1>DHA Phase 6 Lahore <em>Property Market</em></h1><div class="hero-copy"><span>Explore current source-referenced asking-price inventory, category benchmarks and sector-level coverage. Figures are market snapshots, not completed transaction evidence.</span><small>Dataset checked through {updated}</small></div></div></header>
+
+    <section class="metric-band"><div class="container metric-grid">
+      <div><span>Total active</span><strong>{summary.total}</strong></div><div><span>Houses</span><strong>{summary.houses}</strong></div><div><span>Plots</span><strong>{summary.plots}</strong></div><div><span>Commercial</span><strong>{summary.commercial}</strong></div><div><span>Rental inventory</span><strong>{summary.rentals}</strong></div><div><span>Average demand</span><strong>{formatMarketPrice(summary.average)}</strong></div>
+    </div></section>
+
+    <div class="container market-body">
+      <section class="market-section"><div class="section-heading"><div><p>Price intelligence</p><h2>Current asking-price benchmarks</h2></div><span>Updated {updated}</span></div><div class="table-wrap"><table><thead><tr><th>Property segment</th><th>Records</th><th>Average price</th><th>Observed range</th><th>Demand level</th><th>Updated</th></tr></thead><tbody>{priceRows.map((row) => <tr><td><strong>{row.label}</strong></td><td>{row.count}</td><td class="price">{formatMarketPrice(row.average)}</td><td>{formatMarketPrice(row.minimum)} - {formatMarketPrice(row.maximum)}</td><td><span class:list={['demand', `demand--${row.demand.toLowerCase().replaceAll(' ', '-')}`]}>{row.demand}</span></td><td>{updated}</td></tr>)}</tbody></table></div><p class="method-note">Averages use active, publishable asking-price records in the local dataset. They are not valuation advice and should not be treated as registered sale prices.</p></section>
+
+      <section class="market-section"><div class="section-heading"><div><p>Sector performance</p><h2>Comparative location and demand matrix</h2></div><a href="/dha-phase-6-sector-ranking/">Read ranking methodology</a></div><div class="ranking-grid">{rankings.map((sector, index) => <article><span class="rank">#{index + 1}</span><div><h3>{sector.sector}</h3><small>{sector.listings} records / {formatMarketPrice(sector.average)} average</small></div><strong>{sector.score}<small>/100</small></strong><dl><div><dt>Location</dt><dd>{sector.location}</dd></div><div><dt>Amenities</dt><dd>{sector.amenities}</dd></div><div><dt>Demand</dt><dd>{sector.demand}</dd></div><div><dt>Investment</dt><dd>{sector.investment}</dd></div></dl><p>{sector.trend}</p></article>)}</div><p class="method-note">Scores combine editorial location and amenity assessments with live dataset coverage. A high score does not guarantee appreciation, rent, liquidity or suitability for a particular buyer.</p></section>
+
+      <section class="market-section analysis-grid"><article><p>How to use this page</p><h2>Start with evidence, then inspect</h2><p>Use averages to frame a shortlist, not to price an individual property. Street position, plot orientation, construction condition, possession, title history, dues and seller urgency can produce large differences within the same sector.</p><a href="/verification-and-transfer/">Open buyer verification checklist</a></article><article><p>Related intelligence</p><h2>Continue your research</h2><a href="/dha-phase-6-property-prices/">Historical price analysis</a><a href="/compare-properties/">Compare two properties</a><a href="/best-sector-to-invest-in-dha-phase-6-lahore/">Investment sector framework</a><a href="/properties/">Browse active market records</a></article></section>
+      <RequestPropertyForm />
+    </div>
+  </main>
+</PageLayout>
+
+<style>
+  .market-page{background:#080f12;color:#e8f0ed}.market-hero{padding:7.2rem 0 3.2rem;border-bottom:1px solid rgba(48,196,135,.18);background:radial-gradient(circle at 82% 60%,rgba(21,107,81,.22),transparent 26rem),linear-gradient(110deg,#071113,#0b2421)}.market-hero nav{display:flex;gap:.55rem;margin-bottom:1.5rem;color:#6f8580;font-size:.75rem}.market-hero nav a{color:#9db0aa}.market-hero>div>p,.section-heading p,.analysis-grid article>p:first-child{margin:0 0 .55rem;color:#30c487;font-size:.67rem;font-weight:850;letter-spacing:.13em;text-transform:uppercase}.market-hero h1{max-width:900px;margin:0;color:#fff;font-family:var(--font-display,Georgia,serif);font-size:clamp(2.5rem,6vw,5rem);line-height:1}.market-hero h1 em{color:#e3b85a;font-style:normal}.hero-copy{display:flex;max-width:970px;align-items:end;justify-content:space-between;gap:2rem;margin-top:1.4rem;color:#9aada6;line-height:1.7}.hero-copy span{max-width:720px}.hero-copy small{color:#6f837c;white-space:nowrap}
+  .metric-band{border-bottom:1px solid rgba(48,196,135,.18);background:#0d1c1e}.metric-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}.metric-grid div{padding:1.25rem .9rem;border-right:1px solid rgba(185,215,202,.12)}.metric-grid span,.metric-grid strong{display:block}.metric-grid span{margin-bottom:.25rem;color:#71847e;font-size:.6rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase}.metric-grid strong{color:#eff6f3;font-family:var(--font-display,Georgia,serif);font-size:1.05rem}.metric-grid div:last-child strong{color:#e3b85a;font-size:.85rem}
+  .market-body{padding-top:3.5rem;padding-bottom:5rem}.market-section{margin-bottom:4rem}.section-heading{display:flex;align-items:end;justify-content:space-between;gap:2rem;margin-bottom:1.3rem}.section-heading h2,.analysis-grid h2{margin:0;color:#f2f7f5;font-family:var(--font-display,Georgia,serif);font-size:clamp(1.6rem,3vw,2.4rem)}.section-heading>span,.section-heading>a{color:#71847e;font-size:.68rem}.section-heading>a{color:#50d69e}.table-wrap{overflow-x:auto;border:1px solid rgba(185,215,202,.14);border-radius:8px}table{width:100%;border-collapse:collapse;background:#0d1b1e;font-size:.72rem}th,td{padding:.85rem .9rem;border-bottom:1px solid rgba(185,215,202,.11);text-align:left}th{background:#122326;color:#75c9a8;font-size:.59rem;letter-spacing:.07em;text-transform:uppercase}td{color:#9fb0aa}td strong{color:#e4ece9}.price{color:#e3b85a;font-weight:800}.demand{padding:.28rem .45rem;border:1px solid rgba(48,196,135,.25);border-radius:3px;color:#52d9a1;font-size:.58rem;font-weight:800}.demand--data-gap{color:#e99b91}.method-note{margin-top:.8rem;color:#647770;font-size:.64rem;line-height:1.55}
+  .ranking-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.8rem}.ranking-grid article{display:grid;grid-template-columns:auto 1fr auto;gap:.65rem;padding:1rem;border:1px solid rgba(185,215,202,.14);border-radius:7px;background:linear-gradient(145deg,#112124,#0b171a)}.rank{display:grid;width:2rem;height:2rem;place-items:center;border:1px solid rgba(48,196,135,.3);border-radius:50%;color:#4bd39b;font-size:.6rem;font-weight:900}.ranking-grid h3{margin:0;color:#eef5f2;font-size:.88rem}.ranking-grid article>div>small{color:#6f827b;font-size:.58rem}.ranking-grid article>strong{color:#e3b85a;font-size:1.2rem}.ranking-grid article>strong small{font-size:.55rem}.ranking-grid dl{display:grid;grid-column:1/-1;grid-template-columns:repeat(4,1fr);margin:.35rem 0 0;padding-top:.65rem;border-top:1px solid rgba(185,215,202,.1)}.ranking-grid dl div{text-align:center}.ranking-grid dt{color:#657871;font-size:.52rem}.ranking-grid dd{margin:.18rem 0 0;color:#cbd7d2;font-size:.68rem;font-weight:800}.ranking-grid article>p{grid-column:1/-1;margin:0;color:#42ce96;font-size:.58rem;text-align:right;text-transform:uppercase}
+  .analysis-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}.analysis-grid article{padding:1.4rem;border:1px solid rgba(185,215,202,.14);border-radius:8px;background:#0d1b1e}.analysis-grid article>p:not(:first-child){color:#8fa19a;font-size:.78rem;line-height:1.7}.analysis-grid a{display:block;margin-top:.65rem;color:#51d79f;font-size:.72rem;font-weight:750}
+  @media(max-width:980px){.metric-grid{grid-template-columns:repeat(3,1fr)}.ranking-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:650px){.market-hero{padding-top:6rem}.hero-copy,.section-heading{align-items:flex-start;flex-direction:column}.metric-grid{grid-template-columns:repeat(2,1fr)}.ranking-grid,.analysis-grid{grid-template-columns:1fr}.ranking-grid dl{grid-template-columns:repeat(2,1fr);gap:.5rem}.hero-copy small{white-space:normal}}
+</style>

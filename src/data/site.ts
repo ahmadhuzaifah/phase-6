@@ -25,17 +25,13 @@ export const SOCIAL = {
 
 export const NAVIGATION = [
   { label: 'Home', href: '/' },
-  { label: 'Guide', href: '/dha-phase-6-lahore-guide/' },
-  { label: 'Properties', href: '/properties/' },
-  { label: 'Houses', href: '/houses/' },
-  { label: 'Plots', href: '/plots/' },
-  { label: 'Commercial', href: '/commercial/' },
   { label: 'Sectors', href: '/sectors/' },
+  { label: 'Properties', href: '/properties/' },
   { label: 'Places', href: '/places/' },
-  { label: 'Prices', href: '/dha-phase-6-lahore-prices/' },
-  { label: 'Investment', href: '/best-investment-area-in-dha-phase-6-lahore/' },
-  { label: 'Blog', href: '/blog/' },
-  { label: 'Contact', href: '/contact/' },
+  { label: 'Plots', href: '/plots/' },
+  { label: 'Jobs', href: '/jobs/' },
+  { label: 'Dealers', href: '/dealers/' },
+  { label: 'Map', href: '/map/' },
 ] as const;
 
 export type NavItem = (typeof NAVIGATION)[number];

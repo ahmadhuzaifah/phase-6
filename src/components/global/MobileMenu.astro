@@ -4,23 +4,41 @@
  * Triggered by the hamburger button in the Header.
  */
 
+import { CONTACTS } from '@data/contacts';
 import { NAVIGATION, SITE } from '@data/site';
 
 const currentPath = Astro.url.pathname;
+const isActive = (href: string) => {
+  if (href === '/') return currentPath === '/';
+  if (href === '/sectors/')
+    return currentPath.startsWith('/sectors/') || currentPath.includes('-sector-');
+  return currentPath.startsWith(href);
+};
 ---
 
-<div class="mobile-menu" id="mobile-menu" aria-hidden="true" role="dialog" aria-label={`${SITE.name} Navigation menu`}>
+<div
+  class="mobile-menu"
+  id="mobile-menu"
+  aria-hidden="true"
+  role="dialog"
+  aria-label={`${SITE.name} Navigation menu`}
+>
   <div class="mobile-menu__overlay" id="mobile-menu-overlay"></div>
 
   <nav class="mobile-menu__panel">
     <div class="mobile-menu__eyebrow">Independent Property Guide</div>
 
-    <button
-      class="mobile-menu__close"
-      id="mobile-menu-close"
-      aria-label="Close navigation menu"
-    >
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <button class="mobile-menu__close" id="mobile-menu-close" aria-label="Close navigation menu">
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
         <line x1="18" y1="6" x2="6" y2="18"></line>
         <line x1="6" y1="6" x2="18" y2="18"></line>
       </svg>
@@ -34,10 +52,10 @@ const currentPath = Astro.url.pathname;
               href={item.href}
               class:list={[
                 'mobile-menu__link',
-                { 'mobile-menu__link--active': currentPath === item.href },
-                { 'mobile-menu__link--accent': item.label === 'Properties' || item.label === 'Guide' }
+                { 'mobile-menu__link--active': isActive(item.href) },
+                { 'mobile-menu__link--accent': item.label === 'Properties' },
               ]}
-              aria-current={currentPath === item.href ? 'page' : undefined}
+              aria-current={isActive(item.href) ? 'page' : undefined}
             >
               {item.label}
             </a>
@@ -47,9 +65,12 @@ const currentPath = Astro.url.pathname;
     </ul>
 
     <div class="mobile-menu__actions">
-      <a href="/search-property/" class="mobile-action-btn search-cta">⚡ Search Properties</a>
-      <a href="/dha-phase-6-property-calculator/" class="mobile-action-btn calc-cta">📊 Property Calculator</a>
-      <a href="https://wa.me/923257800001?text=Hello%2C%20I%20need%20assistance%20with%20DHA%20Phase%206%20property." target="_blank" rel="noopener noreferrer" class="mobile-action-btn wa-cta">💬 WhatsApp Support</a>
+      <a
+        href={CONTACTS.whatsapp.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mobile-action-btn wa-cta">WhatsApp</a
+      >
     </div>
   </nav>
 </div>
@@ -120,7 +141,7 @@ const currentPath = Astro.url.pathname;
     width: min(320px, 85vw);
     height: 100%;
     background: linear-gradient(180deg, rgba(10, 17, 40, 0.98), rgba(5, 8, 22, 0.98));
-    color: #FFFFFF;
+    color: #ffffff;
     padding: 24px;
     transform: translateX(100%);
     transition: transform 0.3s ease;
@@ -141,7 +162,7 @@ const currentPath = Astro.url.pathname;
     font-weight: 800;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: #F3D375;
+    color: #f3d375;
     background: rgba(197, 155, 39, 0.12);
     border: 1px solid rgba(243, 211, 117, 0.16);
     padding: 5px 10px;
@@ -160,7 +181,7 @@ const currentPath = Astro.url.pathname;
     background: none;
     border: none;
     cursor: pointer;
-    color: #FFFFFF;
+    color: #ffffff;
     border-radius: 8px;
   }
 
@@ -184,23 +205,25 @@ const currentPath = Astro.url.pathname;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.82);
     border-radius: 8px;
-    transition: color 0.2s, background-color 0.2s;
+    transition:
+      color 0.2s,
+      background-color 0.2s;
     text-decoration: none;
   }
 
   .mobile-menu__link:hover {
-    color: #FFFFFF;
-    background-color: rgba(243, 211, 117, 0.10);
+    color: #ffffff;
+    background-color: rgba(243, 211, 117, 0.1);
   }
 
   .mobile-menu__link--active {
-    color: #FFFFFF;
+    color: #ffffff;
     background: rgba(197, 155, 39, 0.18);
     font-weight: 600;
   }
 
   .mobile-menu__link--accent {
-    color: #F3D375;
+    color: #f3d375;
     font-weight: 700;
   }
 
@@ -221,22 +244,13 @@ const currentPath = Astro.url.pathname;
     font-weight: 800;
     text-decoration: none;
   }
-  .search-cta {
+  .wa-cta {
     background: linear-gradient(135deg, #059669, #10b981);
     color: #042014;
-  }
-  .calc-cta {
-    background: rgba(255, 255, 255, 0.08);
-    color: #f1f5f9;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-  }
-  .wa-cta {
-    background: rgba(16, 185, 129, 0.15);
-    color: #34d399;
-    border: 1px solid rgba(16, 185, 129, 0.3);
+    border: 1px solid rgba(16, 185, 129, 0.45);
   }
 
-  @media (min-width: 1220px) {
+  @media (min-width: 1080px) {
     .mobile-menu {
       display: none;
     }

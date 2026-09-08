@@ -91,6 +91,7 @@ export function getStaticPaths() {
             categoryKey: rawCategory,
             categoryLabel: label,
             places,
+            isAlias: false,
           },
         });
       }
@@ -108,6 +109,7 @@ export function getStaticPaths() {
               categoryKey: rawCategory,
               categoryLabel: CATEGORY_NAMES[altKey] || label,
               places,
+              isAlias: true,
             },
           });
         }
@@ -123,6 +125,7 @@ interface Props {
   categoryKey: string;
   categoryLabel: string;
   places: PlaceRecord[];
+  isAlias?: boolean;
 }
 
 const { sectorMeta, categoryKey, categoryLabel, places } = Astro.props as Props;
@@ -275,7 +278,7 @@ const structuredData: { '@context': string; '@graph': any[] } = {
 };
 ---
 
-<PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+<PageLayout title={pageTitle} description={metaDesc} canonical={canonical} noindex>
   <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
 
   <header class="sector-cat-hero">

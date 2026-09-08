@@ -1,6 +1,6 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
-import PropertyCard from '@components/property/PropertyCard.astro';
+import RequestPropertyForm from '@components/property/RequestPropertyForm.astro';
 import properties from '@data/properties-import.json';
 import priceHistory from '@data/property-price-history.json';
 import places from '@data/google-places-import.json';
@@ -18,9 +18,11 @@ export function getStaticPaths() {
 
 const { property } = Astro.props as { property: any };
 
-const formattedPrice = property.price >= 10_000_000
-  ? `PKR ${(property.price / 10_000_000).toFixed(2)} Crore`
-  : `PKR ${(property.price / 100_000).toFixed(2)} Lakh`;
+const formatPrice = (price: number) =>
+  price >= 10_000_000
+    ? `PKR ${(price / 10_000_000).toFixed(2)} Crore`
+    : `PKR ${(price / 100_000).toFixed(2)} Lakh`;
+const formattedPrice = formatPrice(property.price);
 
 const dateFormatter = new Intl.DateTimeFormat('en-PK', { dateStyle: 'long' });
 const checkedAt = property.lastSeenAt || property.lastCheckedDate || property.lastVerifiedDate;
@@ -28,23 +30,38 @@ const checked = dateFormatter.format(new Date(checkedAt));
 const verified = dateFormatter.format(new Date(property.lastVerifiedDate || checkedAt));
 const freshness = getPropertyFreshness(checkedAt);
 const availabilityStatus = property.availabilityStatus.toLowerCase();
-const availabilityLabel = availabilityStatus === 'removed' ? 'EXPIRED' : availabilityStatus.toUpperCase();
+const availabilityLabel =
+  availabilityStatus === 'removed' ? 'EXPIRED' : availabilityStatus.toUpperCase();
 
 const propId = property.id || `DHA6-${property.slug.substring(0, 8).toUpperCase()}`;
 const inquiryContext = `Property ID: ${propId}; Sector: ${property.block}; Size: ${property.size} ${property.unit}; Type: ${property.propertyType.replaceAll('-', ' ')}`;
 const whatsappNumber = CONTACTS.whatsapp.number.replace(/[^0-9]/g, '');
-const whatsappUrl = (request: string) => `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`${request}. ${inquiryContext}. Link: https://dhaphase6lahore.pk/properties/${property.slug}/`)}`;
+const whatsappUrl = (request: string) =>
+  `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`${request}. ${inquiryContext}. Link: https://dhaphase6lahore.pk/properties/${property.slug}/`)}`;
 const inquiryUrl = whatsappUrl(`I am interested in DHA Phase 6 Lahore property ${propId}`);
 const priceUpdateUrl = whatsappUrl('Please send me the latest price update for this property');
 const visitUrl = whatsappUrl('I would like to schedule a visit for this property');
-const history = (priceHistory as Record<string, Array<{ date: string; price: number; previousPrice?: number | null; newPrice?: number }>>)[propId] || [];
-const mapQuery = encodeURIComponent(property.location.coordinates
-  ? `${property.location.coordinates.lat},${property.location.coordinates.lng}`
-  : property.location.address);
+const phoneUrl = `tel:${CONTACTS.phone.primary.replace(/[^+0-9]/g, '')}`;
+const history =
+  (
+    priceHistory as Record<
+      string,
+      Array<{ date: string; price: number; previousPrice?: number | null; newPrice?: number }>
+    >
+  )[propId] || [];
+const mapQuery = encodeURIComponent(
+  property.location.coordinates
+    ? `${property.location.coordinates.lat},${property.location.coordinates.lng}`
+    : property.location.address,
+);
 const mapUrl = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
 const isHouse = ['house', 'villa'].includes(property.propertyType);
 const isPlot = property.propertyType === 'residential-plot';
-const priceGuideUrl = isHouse ? '/dha-phase-6-lahore-house-prices/' : isPlot ? '/dha-phase-6-lahore-plot-prices/' : '/dha-phase-6-commercial-areas/';
+const priceGuideUrl = isHouse
+  ? '/dha-phase-6-lahore-house-prices/'
+  : isPlot
+    ? '/dha-phase-6-lahore-plot-prices/'
+    : '/dha-phase-6-commercial-areas/';
 const sizeGuideMap: Record<string, string> = {
   'house-5-marla': '/5-marla-house-for-sale-dha-phase-6-lahore/',
   'house-10-marla': '/10-marla-house-for-sale-dha-phase-6-lahore/',
@@ -68,19 +85,43 @@ const sectorKeyAliases: Record<string, string> = {
 };
 const normalizedSectorKey = sectorKeyAliases[cleanSectorKey] ?? cleanSectorKey;
 const hasResidentialSector = normalizedSectorKey.startsWith('sector-');
-const sectorPropertiesUrl = normalizedSectorKey ? `/sectors/${normalizedSectorKey}/properties/` : '/properties/';
-const nearbyPlacesUrl = normalizedSectorKey ? `/sectors/${normalizedSectorKey}/places/` : '/places/';
-const sectorGuideUrl = hasResidentialSector ? `/dha-phase-6-${normalizedSectorKey}-lahore/` : '/dha-phase-6-lahore/';
-const entityUrl = hasResidentialSector ? `/entities/dha-phase-6-${normalizedSectorKey}/` : sectorGuideUrl;
-const sectorPlaces = places.filter(p => p.sector === normalizedSectorKey || p.sectorLabel?.toLowerCase().includes(cleanSectorKey));
+const sectorPropertiesUrl = normalizedSectorKey
+  ? `/sectors/${normalizedSectorKey}/properties/`
+  : '/properties/';
+const nearbyPlacesUrl = normalizedSectorKey
+  ? `/sectors/${normalizedSectorKey}/places/`
+  : '/places/';
+const sectorGuideUrl = hasResidentialSector
+  ? `/dha-phase-6-${normalizedSectorKey}-lahore/`
+  : '/dha-phase-6-lahore/';
+const entityUrl = hasResidentialSector
+  ? `/entities/dha-phase-6-${normalizedSectorKey}/`
+  : sectorGuideUrl;
+const sectorPlaces = places.filter(
+  (p) => p.sector === normalizedSectorKey || p.sectorLabel?.toLowerCase().includes(cleanSectorKey),
+);
 
-const nearbySchools = places.filter(p => (p.category === 'schools' || p.category === 'school') && (p.sector === cleanSectorKey || sectorPlaces.includes(p))).slice(0, 3);
-const nearbyHospitals = places.filter(p => (p.category === 'hospitals' || p.category === 'hospital' || p.category === 'pharmacies')).slice(0, 3);
-const nearbyRestaurants = places.filter(p => (p.category === 'restaurants' || p.category === 'restaurant' || p.category === 'cafes')).slice(0, 3);
+const nearbySchools = places
+  .filter(
+    (p) =>
+      (p.category === 'schools' || p.category === 'school') &&
+      (p.sector === cleanSectorKey || sectorPlaces.includes(p)),
+  )
+  .slice(0, 3);
+const nearbyHospitals = places
+  .filter(
+    (p) => p.category === 'hospitals' || p.category === 'hospital' || p.category === 'pharmacies',
+  )
+  .slice(0, 3);
+const nearbyRestaurants = places
+  .filter(
+    (p) => p.category === 'restaurants' || p.category === 'restaurant' || p.category === 'cafes',
+  )
+  .slice(0, 3);
 
 // Rank active alternatives by sector, type, size, then proportional price proximity.
 const similarProperties = properties
-  .filter(p => p.slug !== property.slug && isActiveProperty(p))
+  .filter((p) => p.slug !== property.slug && isActiveProperty(p))
   .sort((a, b) => {
     let scoreA = 0;
     let scoreB = 0;
@@ -100,949 +141,1419 @@ const mainImage = property.images?.[0]?.url || '/images/placeholders/property-pl
 const imageAlt = property.images?.[0]?.alt || `${property.title} in DHA Phase 6 Lahore`;
 const sourceUrl = property.sourceUrl;
 const sourceLinkUrl = property.sourceLinkAllowed === false ? '' : sourceUrl;
-const imageStatus = property.imageStatus || (mainImage.includes('/placeholders/') ? 'rejected' : 'approved');
-const imageLabel = imageStatus === 'approved' ? 'Authorized property image' : imageStatus === 'watermarked' ? 'Source watermarked image' : imageStatus === 'branded' ? 'Source branded image' : 'No verified image available';
+const imageStatus =
+  property.imageStatus || (mainImage.includes('/placeholders/') ? 'rejected' : 'approved');
+const imageLabel =
+  imageStatus === 'approved'
+    ? 'Authorized property image'
+    : imageStatus === 'watermarked'
+      ? 'Source watermarked image'
+      : imageStatus === 'branded'
+        ? 'Source branded image'
+        : 'No verified image available';
 
 const canonical = `${SITE.url}/properties/${property.slug}/`;
-const typeLabel = property.propertyType.replaceAll('-', ' ').replace(/\b\w/g, (character: string) => character.toUpperCase());
+const typeLabel = property.propertyType
+  .replaceAll('-', ' ')
+  .replace(/\b\w/g, (character: string) => character.toUpperCase());
 const purposeLabel = property.purpose === 'rent' ? 'Rent' : 'Sale';
 const pageTitle = `${property.size} ${property.unit.replace(/\b\w/g, (character: string) => character.toUpperCase())} ${typeLabel} for ${purposeLabel} in DHA Phase 6 Lahore ${property.block} | ${propId}`;
-const pageDesc = `${property.size} ${property.unit} ${property.propertyType.replaceAll('-', ' ')} in ${property.block}, DHA Phase 6 Lahore. ${availabilityLabel}; advertised at ${formattedPrice}. Source information last checked ${checked}.`;
+const pageDesc = `${property.size} ${property.unit} ${property.propertyType.replaceAll('-', ' ')} in ${property.block}, DHA Phase 6 Lahore. ${availabilityLabel}; advertised at ${formattedPrice}. Reference ${propId}, checked ${checked}.`;
 
 const landmarkContext = `Located in prestigious ${property.block}, DHA Phase 6 Lahore, this ${property.size} ${property.unit} ${property.propertyType.replaceAll('-', ' ')} enjoys immediate proximity to key sector landmarks including Grand Jamia mosques, neighborhood parks, premier educational institutions, and arterial boulevards with direct access to Lahore Ring Road and Bedian Road.`;
 
 const structuredData = {
-  "@context": "https://schema.org",
-  "@graph": [
+  '@context': 'https://schema.org',
+  '@graph': [
     {
-      "@type": "RealEstateListing",
-      "@id": `${canonical}#listing`,
-      "name": property.title,
-      "description": property.description,
-      "url": canonical,
-      "datePosted": property.publishedDate || "2026-09-02",
-      "image": {
-        "@type": "ImageObject",
-        "contentUrl": `${SITE.url}${mainImage}`,
-        "caption": imageAlt
+      '@type': 'RealEstateListing',
+      '@id': `${canonical}#listing`,
+      name: property.title,
+      description: property.description,
+      url: canonical,
+      datePosted: property.publishedDate || '2026-09-02',
+      image: {
+        '@type': 'ImageObject',
+        contentUrl: `${SITE.url}${mainImage}`,
+        caption: imageAlt,
       },
-      "offers": {
-        "@type": "Offer",
-        "price": property.price,
-        "priceCurrency": "PKR",
-        "availability": ['sold', 'removed'].includes(availabilityStatus) ? "https://schema.org/OutOfStock" : availabilityStatus === 'reserved' ? "https://schema.org/LimitedAvailability" : "https://schema.org/InStock",
-        "url": sourceLinkUrl || canonical
+      offers: {
+        '@type': 'Offer',
+        price: property.price,
+        priceCurrency: 'PKR',
+        availability: ['sold', 'removed'].includes(availabilityStatus)
+          ? 'https://schema.org/OutOfStock'
+          : availabilityStatus === 'reserved'
+            ? 'https://schema.org/LimitedAvailability'
+            : 'https://schema.org/InStock',
+        url: sourceLinkUrl || canonical,
       },
-      "spatialCoverage": { "@id": `${canonical}#place` }
+      spatialCoverage: { '@id': `${canonical}#place` },
     },
     {
-      "@type": "Place",
-      "@id": `${canonical}#place`,
-      "name": `${property.block}, DHA Phase 6 Lahore`,
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": property.location.address,
-        "addressLocality": "Lahore",
-        "addressRegion": "Punjab",
-        "addressCountry": "PK"
-      }
+      '@type': 'Place',
+      '@id': `${canonical}#place`,
+      name: `${property.block}, DHA Phase 6 Lahore`,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: property.location.address,
+        addressLocality: 'Lahore',
+        addressRegion: 'Punjab',
+        addressCountry: 'PK',
+      },
     },
     {
-      "@type": "BreadcrumbList",
-      "@id": `${canonical}#breadcrumb`,
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE.url },
-        { "@type": "ListItem", "position": 2, "name": "Properties", "item": `${SITE.url}/properties/` },
-        { "@type": "ListItem", "position": 3, "name": property.block, "item": `${SITE.url}${sectorPropertiesUrl}` },
-        { "@type": "ListItem", "position": 4, "name": property.title, "item": canonical }
-      ]
-    }
-  ]
+      '@type': 'BreadcrumbList',
+      '@id': `${canonical}#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url },
+        { '@type': 'ListItem', position: 2, name: 'Properties', item: `${SITE.url}/properties/` },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: property.block,
+          item: `${SITE.url}${sectorPropertiesUrl}`,
+        },
+        { '@type': 'ListItem', position: 4, name: property.title, item: canonical },
+      ],
+    },
+  ],
 };
 ---
 
-<PageLayout title={pageTitle} description={pageDesc} canonical={canonical}>
+<PageLayout
+  title={pageTitle}
+  description={pageDesc}
+  canonical={canonical}
+  ogImage={mainImage}
+  ogType="product"
+>
   <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
 
   <article class="property-detail-page">
-    <div class="container">
-      <!-- Breadcrumbs -->
-      <nav class="prop-breadcrumbs" aria-label="Breadcrumbs">
-        <a href="/">Home</a> <span>/</span>
-        <a href="/properties/">Properties</a> <span>/</span>
-        <a href={sectorPropertiesUrl}>{property.block}</a> <span>/</span>
-        <span class="active-crumb">{property.title}</span>
-      </nav>
-
-      <!-- Main Property Header -->
-      <div class="prop-header">
-        <div class="prop-header-main">
-          <div class="prop-badges-row">
-            <span class="badge-sector">{property.block}</span>
-            <span class="badge-type">{property.propertyType.replaceAll('-', ' ')}</span>
-            <span class:list={['badge-avail', `badge-avail--${availabilityStatus}`]}>{availabilityLabel}</span>
-            <span class:list={['badge-freshness', `badge-freshness--${freshness.key}`]}>{freshness.label}</span>
-          </div>
-          <h1>{property.title}</h1>
-          <p class="prop-location-pin">📍 {property.location.address}, DHA Phase 6, Lahore</p>
+    <header class="listing-hero">
+      <div class="container">
+        <nav class="listing-breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a><span>/</span><a href="/properties/">Properties</a><span>/</span><a
+            href={sectorPropertiesUrl}>{property.block}</a
+          >
+        </nav>
+        <div class="listing-badges">
+          <span class="badge-sector">{property.block}</span>
+          <span class="badge-type">{typeLabel}</span>
+          <span class:list={['badge-avail', `badge-avail--${availabilityStatus}`]}
+            >{availabilityLabel}</span
+          >
+          <span class:list={['badge-freshness', `badge-freshness--${freshness.key}`]}
+            >{freshness.label}</span
+          >
         </div>
-        <div class="prop-header-price">
-          <small>Advertised Market Demand</small>
-          <strong>{formattedPrice}</strong>
-          <span>({property.size} {property.unit})</span>
+        <h1 class="listing-title">{property.title}</h1>
+        <p class="listing-location">
+          <svg viewBox="0 0 24 24" aria-hidden="true"
+            ><path d="M20 10c0 5.5-8 11-8 11S4 15.5 4 10a8 8 0 1 1 16 0Z"></path><circle
+              cx="12"
+              cy="10"
+              r="2.5"></circle></svg
+          >
+          {property.location.address}, DHA Phase 6, Lahore
+        </p>
+      </div>
+    </header>
+
+    <section class="listing-content">
+      <div class="container">
+        <div class="listing-grid">
+          <div class="listing-main">
+            <div
+              class="gallery-container"
+              data-property-gallery
+              tabindex="0"
+              aria-label={`${property.title} image gallery`}
+            >
+              <div class="gallery-main">
+                <img
+                  data-gallery-main
+                  src={mainImage}
+                  alt={imageAlt}
+                  width={property.images?.[0]?.width || 1200}
+                  height={property.images?.[0]?.height || 800}
+                  loading="eager"
+                  fetchpriority="high"
+                  decoding="async"
+                  onerror="this.onerror=null;this.src='/images/placeholders/property-placeholder.webp'"
+                />
+                <span class="gallery-counter"
+                  ><span data-gallery-current>1</span> / {property.images?.length || 1}</span
+                >
+                <span class="gallery-image-label">{imageLabel}</span>
+              </div>
+              {
+                property.images?.length > 1 && (
+                  <div class="gallery-thumbnails" aria-label="Choose property image">
+                    {property.images.map((img: { url: string; alt?: string }, index: number) => (
+                      <button
+                        class:list={['gallery-thumbnail', { active: index === 0 }]}
+                        type="button"
+                        data-gallery-src={img.url}
+                        data-gallery-alt={img.alt || `${property.title} image ${index + 1}`}
+                        aria-label={`Show image ${index + 1}`}
+                      >
+                        <img
+                          src={img.url}
+                          alt=""
+                          width="180"
+                          height="112"
+                          loading="lazy"
+                          decoding="async"
+                          onerror="this.onerror=null;this.src='/images/placeholders/property-placeholder.webp'"
+                        />
+                      </button>
+                    ))}
+                  </div>
+                )
+              }
+            </div>
+
+            <div class="price-card glass-card mobile-price-card">
+              <span class="price-kicker">Advertised demand</span><strong>{formattedPrice}</strong>
+              <p>{property.size} {property.unit} · For {purposeLabel}</p>
+              <div class="price-actions">
+                <a href={inquiryUrl} target="_blank" rel="noopener noreferrer">WhatsApp</a><a
+                  href={phoneUrl}>Call</a>
+              </div>
+            </div>
+
+            <div class="listing-quick-stats">
+              <div class="quick-stat">
+                <span class="quick-icon">BR</span><div>
+                  <strong>{property.bedrooms || 'N/A'}</strong><span>Bedrooms</span>
+                </div>
+              </div>
+              <div class="quick-stat">
+                <span class="quick-icon">BA</span><div>
+                  <strong>{property.bathrooms || 'N/A'}</strong><span>Bathrooms</span>
+                </div>
+              </div>
+              <div class="quick-stat">
+                <span class="quick-icon">SZ</span><div>
+                  <strong>{property.size} {property.unit}</strong><span>Area</span>
+                </div>
+              </div>
+              <div class="quick-stat">
+                <span class="quick-icon">PT</span><div>
+                  <strong>{typeLabel}</strong><span>Property type</span>
+                </div>
+              </div>
+            </div>
+
+            <section class="listing-section" aria-labelledby="overview-heading">
+              <h2 id="overview-heading">Overview</h2>
+              <dl class="details-grid">
+                <div><dt>Type</dt><dd>{typeLabel}</dd></div><div>
+                  <dt>Purpose</dt><dd>For {purposeLabel}</dd>
+                </div>
+                <div><dt>Price</dt><dd class="highlight">{formattedPrice}</dd></div><div>
+                  <dt>Sector</dt><dd>{property.block}</dd>
+                </div>
+                <div><dt>Bedroom(s)</dt><dd>{property.bedrooms || 'Not specified'}</dd></div><div>
+                  <dt>Bath(s)</dt><dd>{property.bathrooms || 'Not specified'}</dd>
+                </div>
+                <div><dt>Area</dt><dd>{property.size} {property.unit}</dd></div><div>
+                  <dt>Construction</dt><dd>
+                    {
+                      property.constructionStatus ||
+                        property.condition ||
+                        (isPlot ? 'Plot' : 'Not specified')
+                    }
+                  </dd>
+                </div>
+                <div><dt>Property ID</dt><dd class="code-id">{propId}</dd></div><div>
+                  <dt>Last checked</dt><dd>{checked}</dd>
+                </div>
+              </dl>
+            </section>
+
+            <section class="listing-section" aria-labelledby="description-heading">
+              <h2 id="description-heading">Property Description</h2>
+              <div class="listing-description-text">
+                <p>{property.description}</p><p>
+                  <strong>Neighborhood setting:</strong>
+                  {landmarkContext}
+                </p>
+              </div>
+              <div class="feature-chips">
+                {property.features.map((feature: string) => <span>{feature}</span>)}
+                {property.floors && <span>{property.floors} floors</span>}
+                {property.condition && <span>{property.condition}</span>}
+              </div>
+              <p class="source-notice">
+                {
+                  property.legalNotice ||
+                    'Property information is collected from publicly available sources. Buyers should independently verify availability, ownership, and pricing before any transaction.'
+                }
+              </p>
+            </section>
+
+            <section class="listing-section location-section" aria-labelledby="location-heading">
+              <h2 id="location-heading">Location &amp; Price History</h2>
+              <div class="location-card">
+                <div>
+                  <strong>{property.block}, DHA Phase 6</strong><span
+                    >{property.location.address}, Lahore, Punjab, Pakistan</span>
+                </div>
+              </div>
+              <iframe
+                src={mapUrl}
+                title={`Map for ${property.title}`}
+                width="800"
+                height="360"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+              <p class="map-note">
+                The map is based on the source address and may identify the sector rather than an
+                exact plot.
+              </p>
+              <div class="history-strip">
+                {
+                  history.length > 0 ? (
+                    history
+                      .slice()
+                      .reverse()
+                      .slice(0, 3)
+                      .map((entry) => (
+                        <div>
+                          <>
+                            <time datetime={entry.date}>
+                              {new Intl.DateTimeFormat('en-PK', { dateStyle: 'medium' }).format(
+                                new Date(entry.date),
+                              )}
+                            </time>
+                            <strong>{formatPrice(entry.price)}</strong>
+                          </>
+                        </div>
+                      ))
+                  ) : (
+                    <p>No recorded price changes yet.</p>
+                  )
+                }
+              </div>
+            </section>
+
+            <section class="listing-section" aria-labelledby="amenities-heading">
+              <h2 id="amenities-heading">Nearby Facilities</h2>
+              <div class="amenity-groups">
+                <div>
+                  <h3>Schools</h3>{
+                    nearbySchools.length ? (
+                      nearbySchools.map((place) => (
+                        <a href={nearbyPlacesUrl}>
+                          {place.name}
+                          <small>{place.address}</small>
+                        </a>
+                      ))
+                    ) : (
+                      <p>
+                        LGS, Beaconhouse and Roots Millennium campuses are accessible from Phase 6.
+                      </p>
+                    )
+                  }
+                </div>
+                <div>
+                  <h3>Healthcare</h3>{
+                    nearbyHospitals.length ? (
+                      nearbyHospitals.map((place) => (
+                        <a href={nearbyPlacesUrl}>
+                          {place.name}
+                          <small>{place.address}</small>
+                        </a>
+                      ))
+                    ) : (
+                      <p>DHA Medical Centre and PKLI are accessible via Main Boulevard.</p>
+                    )
+                  }
+                </div>
+                <div>
+                  <h3>Dining</h3>{
+                    nearbyRestaurants.length ? (
+                      nearbyRestaurants.map((place) => (
+                        <a href={nearbyPlacesUrl}>
+                          {place.name}
+                          <small>{place.address}</small>
+                        </a>
+                      ))
+                    ) : (
+                      <p>CCA and Defence Raya dining districts are within easy reach.</p>
+                    )
+                  }
+                </div>
+              </div>
+            </section>
+
+            <section class="listing-section diligence-section" aria-labelledby="diligence-heading">
+              <span class="section-label">Before you buy</span><h2 id="diligence-heading">
+                Buyer Due Diligence
+              </h2>
+              <ol>
+                <li>
+                  <strong>Inspect the site:</strong> Confirm the location, street width, condition and
+                  utilities on ground.
+                </li><li>
+                  <strong>Check title documents:</strong> Match the original allotment or transfer letter
+                  with the seller's identity.
+                </li><li>
+                  <strong>Request the NDC:</strong> Confirm dues and development charges through official
+                  DHA channels.
+                </li><li>
+                  <strong>Use the transfer office:</strong> Complete transfer procedures only through
+                  the official DHA Lahore office.
+                </li>
+              </ol>
+              <div class="inline-links">
+                <a href="/verification-and-transfer/">Transfer verification guide</a><a
+                  href="/dha-phase-6-property-calculator/">Calculate transfer costs</a>
+              </div>
+            </section>
+          </div>
+
+          <aside class="listing-sidebar">
+            <div class="price-card glass-card">
+              <span class="price-kicker">Advertised demand</span><strong>{formattedPrice}</strong><p
+              >
+                {property.size}
+                {property.unit} · For {purposeLabel}
+              </p>
+              <div class="price-actions">
+                <a href={inquiryUrl} target="_blank" rel="noopener noreferrer">WhatsApp</a><a
+                  href={phoneUrl}>Call</a>
+              </div>
+              <a
+                class="secondary-action"
+                href={priceUpdateUrl}
+                target="_blank"
+                rel="noopener noreferrer">Request Price Update</a
+              >
+              <a class="secondary-action" href={visitUrl} target="_blank" rel="noopener noreferrer"
+                >Schedule Visit</a
+              >
+            </div>
+
+            <div class="verification-card glass-card">
+              <span class="verification-eyebrow">Property Information Verified</span><h2>
+                Source Check &amp; Availability
+              </h2>
+              <p class="verification-copy">
+                Listing facts were checked against the cited source. This does not certify legal
+                title or ownership.
+              </p>
+              <dl>
+                <div>
+                  <dt>Availability</dt><dd class:list={[`status--${availabilityStatus}`]}>
+                    {availabilityLabel}
+                  </dd>
+                </div><div><dt>Verified date</dt><dd>{verified}</dd></div><div>
+                  <dt>Last checked</dt><dd>{checked}</dd>
+                </div><div><dt>Freshness</dt><dd>{freshness.label}</dd></div><div>
+                  <dt>Source</dt><dd>{property.source || 'Public market record'}</dd>
+                </div><div><dt>Quality score</dt><dd>{property.qualityScore || 60}/100</dd></div>
+              </dl>
+              {
+                sourceLinkUrl && (
+                  <a
+                    class="source-link"
+                    href={sourceLinkUrl}
+                    target="_blank"
+                    rel="nofollow noopener noreferrer"
+                  >
+                    View original source
+                  </a>
+                )
+              }
+              <small
+                >Independent zero-commission information portal. Confirm ownership, dues, condition,
+                price and availability before committing funds.</small
+              >
+            </div>
+
+            <nav class="knowledge-card glass-card" aria-label="Related property guides">
+              <span class="section-label">Explore related pages</span><h2>
+                Property Knowledge Hub
+              </h2>
+              <a href={sectorGuideUrl}>{property.block} guide <span>→</span></a><a href={entityUrl}
+                >{property.block} profile <span>→</span></a
+              ><a href={priceGuideUrl}>Relevant price guide <span>→</span></a>{
+                sizeGuideUrl && (
+                  <a href={sizeGuideUrl}>
+                    {property.size} {property.unit} guide <span>→</span>
+                  </a>
+                )
+              }<a href={nearbyPlacesUrl}>Nearby Places Directory <span>→</span></a><a
+                href="/dha-phase-6-property-market/">Market analysis <span>→</span></a
+              ><a href="/best-sector-to-invest-in-dha-phase-6-lahore/">Investment guide <span>→</span></a
+              ><a href="/verification-and-transfer/">Verification process <span>→</span></a>
+            </nav>
+          </aside>
         </div>
       </div>
+    </section>
 
-      <!-- Gallery & Trust Grid -->
-      <div class="prop-layout-grid">
-        <div class="prop-left-col">
-          <!-- Gallery -->
-          <div class="prop-gallery">
-            <div class="gallery-hero">
-              <img src={mainImage} alt={imageAlt} width={property.images?.[0]?.width || 1200} height={property.images?.[0]?.height || 800} loading="eager" fetchpriority="high" decoding="async" onerror="this.onerror=null;this.src='/images/placeholders/property-placeholder.webp'" />
-              <span class="gallery-watermark-free">{imageLabel}</span>
-            </div>
-            {property.images && property.images.length > 1 && (
-              <div class="gallery-thumbs">
-                {property.images.map((img: { url: string; alt?: string }, idx: number) => (
-                  <div class="gallery-thumb">
-                    <img src={img.url} alt={img.alt || `Photo ${idx + 1}`} width="150" height="100" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='/images/placeholders/property-placeholder.webp'" />
-                  </div>
+    {
+      similarProperties.length > 0 && (
+        <section class="similar-properties">
+          <div class="container">
+            <>
+              <span class="section-label">You may also like</span>
+              <div class="similar-heading">
+                <>
+                  <h2>Similar Properties in DHA Phase 6</h2>
+                  <a href={sectorPropertiesUrl}>View more in {property.block} →</a>
+                </>
+              </div>
+              <div class="similar-track">
+                {similarProperties.map((similar) => (
+                  <article class="similar-card glass-card">
+                    <a class="similar-image" href={`/properties/${similar.slug}`}>
+                      <img
+                        src={
+                          similar.images?.[0]?.url ||
+                          '/images/placeholders/property-placeholder.webp'
+                        }
+                        alt={similar.images?.[0]?.alt || similar.title}
+                        width={similar.images?.[0]?.width || 800}
+                        height={similar.images?.[0]?.height || 560}
+                        loading="lazy"
+                        decoding="async"
+                        onerror="this.onerror=null;this.src='/images/placeholders/property-placeholder.webp'"
+                      />
+                      <span>{similar.block}</span>
+                    </a>
+                    <div class="similar-body">
+                      <strong>{formatPrice(similar.price)}</strong>
+                      <h3>
+                        <a href={`/properties/${similar.slug}`}>{similar.title}</a>
+                      </h3>
+                      <p>
+                        {similar.bedrooms ? `${similar.bedrooms} Beds · ` : ''}
+                        {similar.bathrooms ? `${similar.bathrooms} Baths · ` : ''}
+                        {similar.size} {similar.unit}
+                      </p>
+                      <a class="view-property" href={`/properties/${similar.slug}`}>
+                        View property →
+                      </a>
+                    </div>
+                  </article>
                 ))}
               </div>
-            )}
-          </div>
-
-          <section class="prop-section prop-card property-facts" aria-labelledby="property-facts-heading">
-            <h2 id="property-facts-heading">Property Facts</h2>
-            <dl class="property-facts-grid">
-              <div><dt>Type</dt><dd>{typeLabel}</dd></div>
-              <div><dt>Sector</dt><dd>{property.block}</dd></div>
-              <div><dt>Size</dt><dd>{property.size} {property.unit}</dd></div>
-              <div><dt>Price</dt><dd>{formattedPrice}</dd></div>
-              <div><dt>Purpose</dt><dd>For {purposeLabel}</dd></div>
-              <div><dt>Bedrooms</dt><dd>{property.bedrooms || 'Not specified'}</dd></div>
-              <div><dt>Bathrooms</dt><dd>{property.bathrooms || 'Not specified'}</dd></div>
-              <div><dt>Construction</dt><dd>{property.constructionStatus || property.condition || (isPlot ? 'Plot' : 'Not specified')}</dd></div>
-              <div><dt>Verified date</dt><dd>{verified}</dd></div>
-            </dl>
-          </section>
-
-          <!-- Description Section -->
-          <section class="prop-section prop-card">
-            <h2>Property Overview &amp; Sector Context</h2>
-            <p class="landmark-context-lead"><strong>Neighborhood Setting:</strong> {landmarkContext}</p>
-            <p class="lead-desc">{property.description}</p>
-            <div class="features-list">
-              {property.features.map((feat: string) => (
-                <span class="feat-pill">✓ {feat}</span>
-              ))}
-              <span class="feat-pill">📐 Size: {property.size} {property.unit}</span>
-              <span class="feat-pill">🏷️ Purpose: For {property.purpose}</span>
-              <span class="feat-pill">🏢 Sector: {property.block}</span>
-              {property.bedrooms && <span class="feat-pill">Bedrooms: {property.bedrooms}</span>}
-              {property.bathrooms && <span class="feat-pill">Bathrooms: {property.bathrooms}</span>}
-              {property.floors && <span class="feat-pill">Floors: {property.floors}</span>}
-              {property.condition && <span class="feat-pill">Condition: {property.condition}</span>}
-              {property.constructionStatus && <span class="feat-pill">Construction: {property.constructionStatus}</span>}
-            </div>
-            <p class="property-source-disclaimer">{property.legalNotice || 'Property information is collected from publicly available sources. Buyers should independently verify availability, ownership, and pricing before any transaction.'}</p>
-          </section>
-
-          <section class="prop-section prop-card intelligence-grid">
-            <div>
-              <h2>Price History</h2>
-              {history.length > 0 ? (
-                <ol class="history-list">
-                  {history.slice().reverse().map((entry) => (
-                    <li>
-                      <time datetime={entry.date}>{new Intl.DateTimeFormat('en-PK', { dateStyle: 'medium' }).format(new Date(entry.date))}</time>
-                      <strong>{entry.price >= 10_000_000 ? `PKR ${(entry.price / 10_000_000).toFixed(2)} Crore` : `PKR ${(entry.price / 100_000).toFixed(2)} Lakh`}</strong>
-                      {entry.previousPrice && entry.previousPrice !== entry.price && <span>Previously PKR {(entry.previousPrice / 10_000_000).toFixed(2)} Crore</span>}
-                    </li>
-                  ))}
-                </ol>
-              ) : <p>No recorded price changes yet.</p>}
-            </div>
-            <div>
-              <h2>Location Map</h2>
-              <iframe src={mapUrl} title={`Map for ${property.title}`} width="600" height="320" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-              <p class="map-note">Map location is based on the source address and may represent the sector rather than an exact plot.</p>
-            </div>
-          </section>
-
-          <!-- Buyer Due Diligence -->
-          <section class="prop-section prop-card due-diligence-card">
-            <h2>Buyer Due Diligence Protocol</h2>
-            <p>Before executing any property purchase or making financial commitments in DHA Phase 6 Lahore, perform independent verification through official DHA channels:</p>
-            <ul class="diligence-steps">
-              <li><strong>Physical Site Inspection:</strong> Inspect the plot/house location on ground. Verify street width and surrounding utility fixtures.</li>
-              <li><strong>Title &amp; Allocation Check:</strong> Inspect the original allotment/transfer letter and match ownership with NADRA CNIC.</li>
-              <li><strong>No Demand Certificate (NDC):</strong> Verify that the seller has applied for or can obtain an official DHA NDC ensuring all dues and development charges are cleared.</li>
-              <li><strong>Transfer Office Verification:</strong> Conduct transfer procedures only at the official DHA Lahore Main Office (Phase 6 Complex).</li>
-            </ul>
-            <div class="action-links-row">
-              <a href="/verification-and-transfer/" class="sub-link">→ View Step-by-Step Transfer Process</a>
-              <a href="/dha-phase-6-property-calculator/" class="sub-link">→ Calculate Transfer &amp; FBR Taxes</a>
-            </div>
-          </section>
-
-          <!-- Nearby Amenities -->
-          <section class="prop-section prop-card">
-            <h2>Nearby Facilities &amp; Lifestyle Amenities</h2>
-            <p>Key lifestyle and civic facilities located within or immediately adjacent to {property.block}:</p>
-
-            <div class="amenities-grid">
-              <!-- Schools -->
-              <div class="amenity-box">
-                <h3>🎓 Nearby Schools</h3>
-                {nearbySchools.length > 0 ? (
-                  <ul>
-                    {nearbySchools.map(s => (
-                      <li>
-                        <strong>{s.name}</strong>
-                        <small>{s.address}</small>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p class="empty-amenity">Premier campuses including LGS, Beaconhouse &amp; Roots Millennium are within 5 minutes drive.</p>
-                )}
-              </div>
-
-              <!-- Healthcare -->
-              <div class="amenity-box">
-                <h3>🏥 Healthcare &amp; Clinics</h3>
-                {nearbyHospitals.length > 0 ? (
-                  <ul>
-                    {nearbyHospitals.map(h => (
-                      <li>
-                        <strong>{h.name}</strong>
-                        <small>{h.address}</small>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p class="empty-amenity">DHA Medical Centre &amp; PKLI Hospital are accessible via Main Boulevard.</p>
-                )}
-              </div>
-
-              <!-- Dining -->
-              <div class="amenity-box">
-                <h3>🍽️ Restaurants &amp; Cafes</h3>
-                {nearbyRestaurants.length > 0 ? (
-                  <ul>
-                    {nearbyRestaurants.map(r => (
-                      <li>
-                        <strong>{r.name}</strong>
-                        <small>{r.address}</small>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p class="empty-amenity">CCA 1, CCA 2 and Defence Raya dining promenades are within easy reach.</p>
-                )}
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <!-- Sidebar / Trust Panel -->
-        <aside class="prop-sidebar">
-          <div class="trust-panel">
-            <div class="trust-panel-header">
-              <span class="trust-badge-shield">Property Information Verified</span>
-              <h3>Source Check &amp; Availability</h3>
-              <p>Listing facts were checked against the cited source. This is not legal title or ownership certification.</p>
-            </div>
-            <div class="trust-panel-body">
-              <div class="trust-row">
-                <span class="tr-label">Availability status:</span>
-                <span class:list={['tr-value', 'status-active', `status-active--${availabilityStatus}`]}>{availabilityLabel}</span>
-              </div>
-              <div class="trust-row">
-                <span class="tr-label">Verified date:</span>
-                <span class="tr-value">{verified}</span>
-              </div>
-              <div class="trust-row">
-                <span class="tr-label">Last checked:</span>
-                <span class="tr-value">{checked}</span>
-              </div>
-              <div class="trust-row">
-                <span class="tr-label">Property ID:</span>
-                <span class="tr-value code-id">{propId}</span>
-              </div>
-              <div class="trust-row">
-                <span class="tr-label">Source:</span>
-                <span class="tr-value">{property.source || 'Public Market Record'}</span>
-              </div>
-              <div class="trust-row">
-                <span class="tr-label">Freshness:</span>
-                <span class="tr-value">{freshness.label}</span>
-              </div>
-              <div class="trust-row">
-                <span class="tr-label">Quality Score:</span>
-                <span class="tr-value">{property.qualityScore || 60}/100</span>
-              </div>
-              {sourceLinkUrl && (
-                <div class="trust-row">
-                  <span class="tr-label">Original Listing:</span>
-                  <a class="tr-value source-record-link" href={sourceLinkUrl} target="_blank" rel="nofollow noopener noreferrer">View source</a>
-                </div>
-              )}
-              <div class="trust-row">
-                <span class="tr-label">Independent Portal:</span>
-                <span class="tr-value">Zero Commission Advisory</span>
-              </div>
-            </div>
-
-            <div class="trust-cta-box">
-              <p>Need assistance verifying this property or arranging an independent site inspection?</p>
-              <a href={inquiryUrl} target="_blank" rel="noopener noreferrer" class="cta-whatsapp-prop">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-                WhatsApp Property Inquiry
-              </a>
-              <a href={priceUpdateUrl} target="_blank" rel="noopener noreferrer" class="cta-contact-prop">Request Price Update</a>
-              <a href={visitUrl} target="_blank" rel="noopener noreferrer" class="cta-contact-prop">Schedule Visit</a>
-            </div>
-
-            <div class="trust-disclaimer">
-              <small>Notice: This is an independent market research platform and is not affiliated with or endorsed by DHA Lahore. Advertised prices reflect public listings and are subject to confirmation.</small>
-            </div>
-          </div>
-
-          <!-- Semantic Internal Linking Authority Box -->
-          <div class="prop-knowledge-box">
-            <h4>Knowledge Hub &amp; Due Diligence</h4>
-            <ul class="prop-internal-links">
-              <li><a href={sectorGuideUrl}>Complete {property.block} Guide &rarr;</a></li>
-              <li><a href={entityUrl}>{property.block} Entity Profile &rarr;</a></li>
-              <li><a href="/dha-phase-6-lahore/">DHA Phase 6 Master Pillar &rarr;</a></li>
-              <li><a href="/dha-phase-6-market-analysis/">2026 Market Analysis &rarr;</a></li>
-              <li><a href={priceGuideUrl}>Relevant Price Guide &rarr;</a></li>
-              {sizeGuideUrl && <li><a href={sizeGuideUrl}>{property.size} {property.unit} Guide &rarr;</a></li>}
-              <li><a href="/investment-guide/">Property Investment Guide &rarr;</a></li>
-              <li><a href={nearbyPlacesUrl}>Nearby Places Directory &rarr;</a></li>
-              <li><a href="/schools-in-dha-phase-6-lahore/">Nearby Schools Guide &rarr;</a></li>
-              <li><a href="/hospitals-in-dha-phase-6-lahore/">Nearby Healthcare Guide &rarr;</a></li>
-              <li><a href="/dha-phase-6-price-history/">Historical Price Trends &rarr;</a></li>
-              <li><a href="/dha-phase-6-commercial-areas/">Commercial Areas Hub &rarr;</a></li>
-              <li><a href="/dha-phase-6-property-calculator/">Transfer Cost Calculator &rarr;</a></li>
-              <li><a href="/how-we-collect-property-data/">Data Verification Protocol &rarr;</a></li>
-            </ul>
-          </div>
-        </aside>
-      </div>
-
-      <!-- Similar Properties Section -->
-      {similarProperties.length > 0 && (
-        <section class="similar-properties-section">
-          <div class="similar-header">
-            <div>
-              <span class="subhead-pill">Curated Selection</span>
-              <h2>Similar Properties in DHA Phase 6</h2>
-            </div>
-            <a href={sectorPropertiesUrl} class="view-sector-link">
-              View More in {property.block} →
-            </a>
-          </div>
-          <div class="similar-grid">
-            {similarProperties.map((simProp) => (
-              <PropertyCard
-                title={simProp.title}
-                slug={simProp.slug}
-                propertyType={simProp.propertyType}
-                purpose={simProp.purpose}
-                price={simProp.price}
-                priceUnit={simProp.priceUnit}
-                size={simProp.size}
-                sizeUnit={simProp.unit}
-                block={simProp.block}
-                location={simProp.location.address}
-                image={simProp.images[0]}
-                verificationStatus={simProp.verificationStatus}
-                availabilityStatus={simProp.availabilityStatus}
-                lastVerifiedDate={simProp.lastVerifiedDate}
-                lastCheckedDate={simProp.lastSeenAt || simProp.lastCheckedDate}
-                sourceName={simProp.source}
-                sourceURL={simProp.sourceLinkAllowed === false ? undefined : simProp.sourceUrl}
-                isFeatured={simProp.isFeatured}
-              />
-            ))}
+            </>
           </div>
         </section>
-      )}
-    </div>
+      )
+    }
+    <section class="property-request-section"><div class="container"><RequestPropertyForm /></div></section>
   </article>
 </PageLayout>
 
 <style>
   .property-detail-page {
-    padding: 3rem 0 6rem;
-    background: #0a0a1a;
-    color: #e2e8f0;
+    --listing-bg: #080f12;
+    --listing-panel: rgba(17, 31, 34, 0.88);
+    --listing-border: rgba(185, 215, 202, 0.14);
+    --listing-muted: #91a49e;
+    --listing-text: #e8f0ed;
+    --listing-accent: #30c487;
+    --listing-gold: #e3b85a;
+    padding: 0;
+    overflow: clip;
+    color: var(--listing-text);
+    background:
+      radial-gradient(circle at 12% 17%, rgba(31, 140, 104, 0.09), transparent 28rem),
+      linear-gradient(180deg, #091114 0%, var(--listing-bg) 55%, #081012 100%);
   }
-  .prop-breadcrumbs {
+  .property-request-section { padding: 1rem 0 5rem; background: var(--listing-bg); }
+
+  .property-detail-page :is(h1, h2, h3, p) {
+    margin-top: 0;
+  }
+  .property-detail-page a {
+    text-underline-offset: 3px;
+  }
+
+  .listing-hero {
+    position: relative;
+    padding: 7.25rem 0 2.4rem;
+    overflow: hidden;
+    border-bottom: 1px solid var(--listing-border);
+    background:
+      linear-gradient(105deg, rgba(8, 19, 21, 0.94), rgba(9, 29, 27, 0.82)),
+      repeating-linear-gradient(120deg, transparent 0 34px, rgba(48, 196, 135, 0.035) 34px 35px);
+  }
+  .listing-hero::after {
+    content: '';
+    position: absolute;
+    right: -8rem;
+    bottom: -14rem;
+    width: 32rem;
+    height: 32rem;
+    border: 1px solid rgba(48, 196, 135, 0.16);
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 5rem rgba(48, 196, 135, 0.025),
+      0 0 0 10rem rgba(48, 196, 135, 0.018);
+    pointer-events: none;
+  }
+  .listing-hero .container {
+    position: relative;
+    z-index: 1;
+  }
+  .listing-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-bottom: 1.35rem;
+    color: #6f8580;
+    font-size: 0.76rem;
+  }
+  .listing-breadcrumb a {
+    color: #9db0aa;
+    text-decoration: none;
+  }
+  .listing-breadcrumb a:hover {
+    color: var(--listing-accent);
+  }
+  .listing-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin-bottom: 0.85rem;
+  }
+  .listing-badges > span {
+    padding: 0.36rem 0.68rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.045);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
+  }
+  .listing-badges .badge-sector {
+    color: #5fe0aa;
+    border-color: rgba(48, 196, 135, 0.3);
+    background: rgba(48, 196, 135, 0.1);
+  }
+  .listing-title {
+    max-width: 880px;
+    margin-bottom: 0.65rem;
+    color: #fff;
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(2rem, 4.6vw, 3.55rem);
+    font-weight: 650;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+  }
+  .listing-location {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 0.78rem;
-    color: #64748b;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-  }
-  .prop-breadcrumbs a {
-    color: #94a3b8;
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .prop-breadcrumbs a:hover {
-    color: #34d399;
-  }
-  .active-crumb {
-    color: #cbd5e1;
-    font-weight: 600;
-  }
-
-  /* Property Header */
-  .prop-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 2rem;
-    margin-bottom: 2.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  }
-  .prop-badges-row {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 0.75rem;
-    flex-wrap: wrap;
-  }
-  .badge-sector {
-    padding: 0.3rem 0.65rem;
-    background: rgba(16, 185, 129, 0.15);
-    color: #34d399;
-    border: 1px solid rgba(16, 185, 129, 0.35);
-    border-radius: 4px;
-    font-size: 0.72rem;
-    font-weight: 800;
-    text-transform: uppercase;
-  }
-  .badge-type {
-    padding: 0.3rem 0.65rem;
-    background: rgba(255, 255, 255, 0.06);
-    color: #cbd5e1;
-    border-radius: 4px;
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: capitalize;
-  }
-  .badge-avail {
-    padding: 0.3rem 0.65rem;
-    background: rgba(5, 150, 105, 0.25);
-    color: #10b981;
-    border-radius: 4px;
-    font-size: 0.72rem;
-    font-weight: 800;
-  }
-  .badge-avail--reserved { background: rgba(251, 191, 36, 0.15); color: #fcd34d; }
-  .badge-avail--sold,.badge-avail--removed { background: rgba(251, 113, 133, 0.14); color: #fda4af; }
-  .badge-freshness {
-    padding: 0.3rem 0.65rem;
-    border: 1px solid rgba(52, 211, 153, 0.28);
-    border-radius: 4px;
-    color: #6ee7b7;
-    font-size: 0.72rem;
-    font-weight: 700;
-  }
-  .badge-freshness--recent { color: #7dd3fc; border-color: rgba(125, 211, 252, 0.3); }
-  .badge-freshness--needs-verification { color: #fcd34d; border-color: rgba(252, 211, 77, 0.3); }
-  .badge-freshness--verification-required { color: #fda4af; border-color: rgba(253, 164, 175, 0.3); }
-  .prop-header h1 {
-    font-family: var(--font-display, inherit);
-    font-size: clamp(1.8rem, 4vw, 2.6rem);
-    color: #fff;
-    line-height: 1.2;
-    margin: 0 0 0.5rem;
-  }
-  .prop-location-pin {
-    color: #94a3b8;
-    font-size: 0.88rem;
-    margin: 0;
-  }
-  .prop-header-price {
-    text-align: right;
-    white-space: nowrap;
-  }
-  .prop-header-price small {
-    display: block;
-    color: #64748b;
-    font-size: 0.74rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  .prop-header-price strong {
-    display: block;
-    font-family: var(--font-display, inherit);
-    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
-    color: #fbbf24;
-    line-height: 1.1;
-    margin: 0.25rem 0;
-  }
-  .prop-header-price span {
-    color: #94a3b8;
-    font-size: 0.84rem;
-  }
-
-  /* Grid Layout */
-  .prop-layout-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.8fr) minmax(320px, 1fr);
-    gap: 2.5rem;
-  }
-  .prop-gallery {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-  .gallery-hero {
-    position: relative;
-    border-radius: 12px;
-    overflow: hidden;
-    background: #111128;
-    aspect-ratio: 16/10;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-  }
-  .gallery-hero img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .gallery-watermark-free {
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-    padding: 0.4rem 0.8rem;
-    background: rgba(10, 10, 26, 0.88);
-    backdrop-filter: blur(8px);
-    border-radius: 6px;
-    font-size: 0.72rem;
-    font-weight: 800;
-    color: #34d399;
-    border: 1px solid rgba(16, 185, 129, 0.3);
-  }
-  .gallery-thumbs {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.75rem;
-  }
-  .gallery-thumb {
-    border-radius: 8px;
-    overflow: hidden;
-    aspect-ratio: 16/10;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  .gallery-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .prop-card {
-    background: #111128;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-  }
-  .prop-card h2 {
-    font-size: 1.35rem;
-    color: #fff;
-    margin: 0 0 1rem;
-    font-family: var(--font-display, inherit);
-  }
-  .property-facts-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.75rem;
-    margin: 0;
-  }
-  .property-facts-grid div {
-    padding: 0.85rem;
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.025);
-  }
-  .property-facts-grid dt { color: #64748b; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; }
-  .property-facts-grid dd { margin: 0.25rem 0 0; color: #f1f5f9; font-size: 0.88rem; font-weight: 700; text-transform: capitalize; }
-  .lead-desc {
-    color: #cbd5e1;
-    font-size: 0.95rem;
-    line-height: 1.7;
-    margin-bottom: 1.5rem;
-  }
-  .features-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-  }
-  .feat-pill {
-    padding: 0.45rem 0.85rem;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 6px;
-    font-size: 0.8rem;
-    color: #94a3b8;
-  }
-
-  .due-diligence-card {
-    border-color: rgba(212, 168, 68, 0.25);
-    background: linear-gradient(180deg, #161638, #111128);
-  }
-  .diligence-steps {
-    margin: 1rem 0 1.5rem;
-    padding-left: 1.25rem;
-    color: #94a3b8;
-    line-height: 1.7;
+    margin-bottom: 0;
+    color: #9baca7;
     font-size: 0.9rem;
   }
-  .diligence-steps strong {
-    color: #e2e8f0;
-  }
-  .action-links-row {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding-top: 1rem;
-  }
-  .sub-link {
-    color: #34d399;
-    font-size: 0.84rem;
-    font-weight: 700;
-    text-decoration: none;
-  }
-  .sub-link:hover {
-    text-decoration: underline;
+  .listing-location svg {
+    width: 1rem;
+    height: 1rem;
+    fill: none;
+    stroke: var(--listing-accent);
+    stroke-width: 1.8;
   }
 
-  /* Amenities Grid */
-  .amenities-grid {
+  .listing-content {
+    padding: 2.5rem 0 5rem;
+  }
+  .listing-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
-    margin-top: 1.25rem;
+    grid-template-columns: minmax(0, 1fr) 380px;
+    gap: 2.5rem;
+    align-items: start;
   }
-  .amenity-box {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 8px;
-    padding: 1.2rem;
+  .listing-main {
+    min-width: 0;
   }
-  .amenity-box h3 {
-    font-size: 0.88rem;
-    color: #10b981;
-    margin: 0 0 0.8rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-  .amenity-box ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  .amenity-box li strong {
-    display: block;
-    color: #f1f5f9;
-    font-size: 0.82rem;
-  }
-  .amenity-box li small {
-    color: #64748b;
-    font-size: 0.72rem;
-  }
-  .empty-amenity {
-    font-size: 0.8rem;
-    color: #94a3b8;
-    line-height: 1.5;
-    margin: 0;
+  .glass-card {
+    border: 1px solid var(--listing-border);
+    background: linear-gradient(145deg, rgba(20, 37, 39, 0.94), rgba(12, 24, 27, 0.93));
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
   }
 
-  /* Sidebar Trust Panel */
-  .prop-sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+  .gallery-container {
+    margin-bottom: 1.8rem;
+    outline: none;
   }
-  .trust-panel {
-    position: sticky;
-    top: 96px;
-    background: #111128;
-    border: 1px solid rgba(16, 185, 129, 0.3);
-    border-radius: 12px;
+  .gallery-main {
+    position: relative;
+    aspect-ratio: 16 / 10;
     overflow: hidden;
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+    border: 1px solid var(--listing-border);
+    border-radius: 12px;
+    background: #101b1e;
+    box-shadow: 0 24px 58px rgba(0, 0, 0, 0.32);
   }
-  .trust-panel-header {
-    background: linear-gradient(135deg, rgba(5, 150, 105, 0.2), rgba(16, 185, 129, 0.08));
-    padding: 1.25rem 1.5rem;
-    border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+  .gallery-main > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 180ms ease;
   }
-  .trust-badge-shield {
-    display: inline-block;
-    color: #34d399;
+  .gallery-counter,
+  .gallery-image-label {
+    position: absolute;
+    bottom: 1rem;
+    padding: 0.46rem 0.72rem;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 5px;
+    background: rgba(5, 12, 14, 0.82);
+    color: #e8f0ed;
+    backdrop-filter: blur(10px);
     font-size: 0.7rem;
-    font-weight: 900;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 0.35rem;
+    font-weight: 750;
   }
-  .trust-panel-header h3 {
-    margin: 0;
-    font-size: 1.15rem;
-    color: #fff;
-    font-family: var(--font-display, inherit);
+  .gallery-counter {
+    right: 1rem;
   }
-  .trust-panel-header p { margin: 0.45rem 0 0; color: #94a3b8; font-size: 0.72rem; line-height: 1.45; }
-  .trust-panel-body {
-    padding: 1.5rem;
+  .gallery-image-label {
+    left: 1rem;
+    color: #70e1b1;
+  }
+  .gallery-thumbnails {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.65rem;
+    margin-top: 0.75rem;
+  }
+  .gallery-thumbnail {
+    padding: 0;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid var(--listing-border);
+    border-radius: 6px;
+    background: #101b1e;
+    opacity: 0.58;
+    transition:
+      opacity 160ms ease,
+      border-color 160ms ease,
+      transform 160ms ease;
+  }
+  .gallery-thumbnail:hover,
+  .gallery-thumbnail.active {
+    opacity: 1;
+    border-color: var(--listing-accent);
+    transform: translateY(-2px);
+  }
+  .gallery-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .mobile-price-card {
+    display: none;
+  }
+  .listing-quick-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-top: 1px solid var(--listing-border);
+    border-bottom: 1px solid var(--listing-border);
+  }
+  .quick-stat {
     display: flex;
-    flex-direction: column;
-    gap: 0.85rem;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+    padding: 1.25rem 0.85rem;
   }
-  .trust-row {
+  .quick-stat + .quick-stat {
+    border-left: 1px solid var(--listing-border);
+  }
+  .quick-icon {
+    display: grid;
+    flex: 0 0 auto;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid rgba(48, 196, 135, 0.28);
+    border-radius: 50%;
+    color: var(--listing-accent);
+    font-size: 0.58rem;
+    font-weight: 900;
+  }
+  .quick-stat strong {
+    display: block;
+    overflow: hidden;
+    color: #f6faf8;
+    font-size: 0.9rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .quick-stat div span {
+    color: var(--listing-muted);
+    font-size: 0.69rem;
+  }
+
+  .listing-section {
+    padding: 2.35rem 0;
+    border-bottom: 1px solid var(--listing-border);
+  }
+  .listing-section > h2,
+  .similar-heading h2 {
+    margin-bottom: 1.35rem;
+    color: #f5faf7;
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(1.45rem, 2.5vw, 2rem);
+    font-weight: 650;
+    letter-spacing: -0.025em;
+  }
+  .details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 0;
+    border-top: 1px solid var(--listing-border);
+  }
+  .details-grid > div {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    font-size: 0.82rem;
-    padding-bottom: 0.65rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    gap: 1rem;
+    padding: 0.85rem 0.2rem;
+    border-bottom: 1px solid var(--listing-border);
   }
-  .tr-label {
-    color: #64748b;
+  .details-grid > div:nth-child(odd) {
+    padding-right: 1.5rem;
   }
-  .tr-value {
-    color: #f1f5f9;
-    font-weight: 600;
+  .details-grid > div:nth-child(even) {
+    padding-left: 1.5rem;
+    border-left: 1px solid var(--listing-border);
   }
-  .status-active {
-    color: #34d399;
-    font-weight: 800;
+  .details-grid dt {
+    color: var(--listing-muted);
+    font-size: 0.77rem;
   }
-  .status-active--reserved { color: #fcd34d; }
-  .status-active--sold,.status-active--removed { color: #fda4af; }
-  .code-id {
-    font-family: monospace;
-    color: #fbbf24;
-  }
-  .trust-cta-box {
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.02);
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  .trust-cta-box p {
+  .details-grid dd {
     margin: 0;
-    font-size: 0.82rem;
-    color: #94a3b8;
-    line-height: 1.5;
+    color: #edf4f1;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-align: right;
+    text-transform: capitalize;
   }
-  .cta-whatsapp-prop {
+  .details-grid .highlight {
+    color: var(--listing-gold);
+  }
+  .code-id {
+    color: #78ddb4;
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  }
+
+  .listing-description-text {
+    color: #aebdb8;
+    font-size: 0.92rem;
+    line-height: 1.8;
+  }
+  .listing-description-text p {
+    margin-bottom: 1rem;
+  }
+  .listing-description-text strong {
+    color: #dfe8e4;
+  }
+  .feature-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin-top: 1.25rem;
+  }
+  .feature-chips span {
+    padding: 0.46rem 0.72rem;
+    border: 1px solid var(--listing-border);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.025);
+    color: #b6c4bf;
+    font-size: 0.74rem;
+  }
+  .source-notice,
+  .map-note {
+    margin: 1.2rem 0 0;
+    color: #71847e;
+    font-size: 0.7rem;
+    line-height: 1.6;
+  }
+
+  .location-card {
+    margin-bottom: 0.8rem;
+    padding-left: 0.85rem;
+    border-left: 2px solid var(--listing-accent);
+  }
+  .location-card strong,
+  .location-card span {
+    display: block;
+  }
+  .location-card strong {
+    color: #ecf4f1;
+    font-size: 0.86rem;
+  }
+  .location-card span {
+    margin-top: 0.2rem;
+    color: var(--listing-muted);
+    font-size: 0.76rem;
+  }
+  .location-section iframe {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: 310px;
+    border: 0;
+    border-radius: 8px;
+    filter: saturate(0.75) contrast(0.95);
+  }
+  .history-strip {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.6rem;
+    margin-top: 1.1rem;
+  }
+  .history-strip div {
+    padding: 0.8rem;
+    border: 1px solid var(--listing-border);
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .history-strip time,
+  .history-strip strong {
+    display: block;
+  }
+  .history-strip time {
+    margin-bottom: 0.3rem;
+    color: var(--listing-muted);
+    font-size: 0.66rem;
+  }
+  .history-strip strong {
+    color: var(--listing-gold);
+    font-size: 0.78rem;
+  }
+  .history-strip > p {
+    color: var(--listing-muted);
+    font-size: 0.8rem;
+  }
+
+  .amenity-groups {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .amenity-groups > div {
+    min-width: 0;
+    padding: 1rem;
+    border: 1px solid var(--listing-border);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.018);
+  }
+  .amenity-groups h3 {
+    margin-bottom: 0.85rem;
+    color: #71ddaf;
+    font-size: 0.73rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .amenity-groups a {
+    display: block;
+    margin-top: 0.75rem;
+    overflow: hidden;
+    color: #d5dfdb;
+    font-size: 0.76rem;
+    text-decoration: none;
+    text-overflow: ellipsis;
+  }
+  .amenity-groups small {
+    display: block;
+    margin-top: 0.15rem;
+    overflow: hidden;
+    color: #70827c;
+    font-size: 0.64rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .amenity-groups p {
+    margin-bottom: 0;
+    color: var(--listing-muted);
+    font-size: 0.74rem;
+    line-height: 1.65;
+  }
+
+  .diligence-section {
+    border-bottom: 0;
+  }
+  .section-label {
+    display: block;
+    margin-bottom: 0.45rem;
+    color: var(--listing-accent);
+    font-size: 0.65rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .diligence-section ol {
+    display: grid;
+    gap: 0.85rem;
+    margin: 0;
+    padding-left: 1.25rem;
+    color: #91a39d;
+    font-size: 0.8rem;
+    line-height: 1.65;
+  }
+  .diligence-section strong {
+    color: #dbe5e1;
+  }
+  .inline-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.3rem;
+    margin-top: 1.35rem;
+  }
+  .inline-links a {
+    color: #5bd9a3;
+    font-size: 0.77rem;
+    font-weight: 700;
+  }
+
+  .listing-sidebar {
+    position: sticky;
+    top: 6.5rem;
+    display: grid;
+    gap: 1rem;
+  }
+  .price-card,
+  .verification-card,
+  .knowledge-card {
+    border-radius: 9px;
+    padding: 1.4rem;
+  }
+  .price-kicker {
+    display: block;
+    margin-bottom: 0.4rem;
+    color: var(--listing-muted);
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .price-card > strong {
+    display: block;
+    color: var(--listing-gold);
+    font-family: var(--font-display, Georgia, serif);
+    font-size: 2.05rem;
+    line-height: 1.2;
+  }
+  .price-card > p {
+    margin: 0.35rem 0 1.15rem;
+    color: #879a94;
+    font-size: 0.74rem;
+  }
+  .price-actions {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 0.6rem;
+  }
+  .price-actions a,
+  .secondary-action {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    background: linear-gradient(135deg, #059669, #10b981);
-    color: #042014;
-    padding: 0.85rem;
-    border-radius: 8px;
-    font-weight: 900;
-    font-size: 0.88rem;
-    text-decoration: none;
-    transition: opacity 0.2s;
-  }
-  .cta-whatsapp-prop:hover {
-    opacity: 0.95;
-  }
-  .cta-contact-prop {
-    display: block;
-    text-align: center;
-    padding: 0.75rem;
-    background: rgba(255, 255, 255, 0.06);
-    color: #e2e8f0;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 8px;
-    font-size: 0.82rem;
-    font-weight: 700;
+    min-height: 2.65rem;
+    border-radius: 5px;
+    font-size: 0.76rem;
+    font-weight: 850;
     text-decoration: none;
   }
-  .trust-disclaimer {
-    padding: 1rem 1.5rem;
-    background: rgba(0, 0, 0, 0.2);
-    border-top: 1px solid rgba(255, 255, 255, 0.04);
+  .price-actions a:first-child {
+    border: 1px solid #2ac17f;
+    color: #56dfa5;
   }
-  .trust-disclaimer small {
-    display: block;
-    font-size: 0.68rem;
-    color: #64748b;
-    line-height: 1.5;
+  .price-actions a:last-child {
+    border: 1px solid #2ac17f;
+    background: #25ad73;
+    color: #04140e;
   }
-  .prop-knowledge-box {
-    background: #111128;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    padding: 1.25rem 1.5rem;
+  .secondary-action {
+    margin-top: 0.6rem;
+    border: 1px solid var(--listing-border);
+    color: #cad7d2;
+    background: rgba(255, 255, 255, 0.025);
   }
-  .prop-knowledge-box h4 {
-    margin: 0 0 0.85rem;
-    font-size: 0.88rem;
-    color: #10b981;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-  .prop-internal-links {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.55rem;
-  }
-  .prop-internal-links a {
-    color: #94a3b8;
-    text-decoration: none;
-    font-size: 0.82rem;
-    transition: color 0.15s;
-  }
-  .prop-internal-links a:hover {
-    color: #34d399;
-    text-decoration: underline;
+  .price-actions a:hover,
+  .secondary-action:hover {
+    filter: brightness(1.12);
   }
 
-  /* Similar Properties */
-  .similar-properties-section {
-    margin-top: 5rem;
-    padding-top: 3.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  .verification-card {
+    border-color: rgba(48, 196, 135, 0.24);
   }
-  .similar-header {
+  .verification-eyebrow {
+    display: block;
+    color: #58dda5;
+    font-size: 0.67rem;
+    font-weight: 900;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
+  }
+  .verification-eyebrow::before {
+    content: '✓';
+    margin-right: 0.4rem;
+  }
+  .verification-card h2,
+  .knowledge-card h2 {
+    margin: 0.55rem 0 0.6rem;
+    color: #f1f7f4;
+    font-family: var(--font-display, Georgia, serif);
+    font-size: 1.22rem;
+    line-height: 1.25;
+  }
+  .verification-copy {
+    color: #879992;
+    font-size: 0.7rem;
+    line-height: 1.55;
+  }
+  .verification-card dl {
+    margin: 1rem 0;
+  }
+  .verification-card dl > div {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 2rem;
+    gap: 1rem;
+    padding: 0.62rem 0;
+    border-bottom: 1px solid var(--listing-border);
   }
-  .subhead-pill {
-    display: inline-block;
-    color: #10b981;
-    font-size: 0.72rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 0.35rem;
+  .verification-card dt {
+    color: #71847d;
+    font-size: 0.68rem;
   }
-  .similar-header h2 {
+  .verification-card dd {
+    max-width: 58%;
     margin: 0;
-    font-size: 1.85rem;
-    color: #fff;
-    font-family: var(--font-display, inherit);
+    color: #d9e3df;
+    font-size: 0.69rem;
+    font-weight: 750;
+    text-align: right;
   }
-  .view-sector-link {
-    color: #34d399;
-    font-size: 0.84rem;
-    font-weight: 700;
+  .verification-card dd[class*='status--available'] {
+    color: #52d99f;
+  }
+  .verification-card dd[class*='status--reserved'] {
+    color: #f0c665;
+  }
+  .verification-card dd[class*='status--sold'] {
+    color: #f29b8f;
+  }
+  .source-link {
+    display: inline-block;
+    margin-bottom: 0.9rem;
+    color: #53d9a1;
+    font-size: 0.71rem;
+    font-weight: 750;
+  }
+  .verification-card > small {
+    display: block;
+    color: #64766f;
+    font-size: 0.62rem;
+    line-height: 1.55;
+  }
+
+  .knowledge-card a {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.63rem 0;
+    border-bottom: 1px solid var(--listing-border);
+    color: #aab9b4;
+    font-size: 0.73rem;
     text-decoration: none;
   }
-  .similar-grid {
+  .knowledge-card a:last-child {
+    border-bottom: 0;
+  }
+  .knowledge-card a span {
+    color: var(--listing-accent);
+  }
+  .knowledge-card a:hover {
+    color: #eef5f2;
+  }
+
+  .similar-properties {
+    padding: 4rem 0 5.5rem;
+    border-top: 1px solid var(--listing-border);
+    background: rgba(2, 9, 10, 0.34);
+  }
+  .similar-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.4rem;
+  }
+  .similar-heading h2 {
+    margin-bottom: 0;
+  }
+  .similar-heading > a {
+    color: #55d8a1;
+    font-size: 0.76rem;
+    font-weight: 750;
+    text-decoration: none;
+  }
+  .similar-track {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    grid-auto-columns: minmax(260px, 32%);
+    grid-auto-flow: column;
+    gap: 1rem;
+    overflow-x: auto;
+    padding: 0.15rem 0 1rem;
+    scroll-snap-type: x proximity;
+    scrollbar-color: rgba(48, 196, 135, 0.42) transparent;
+  }
+  .similar-card {
+    overflow: hidden;
+    border-radius: 8px;
+    scroll-snap-align: start;
+  }
+  .similar-image {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #102023;
+  }
+  .similar-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 350ms ease;
+  }
+  .similar-image:hover img {
+    transform: scale(1.035);
+  }
+  .similar-image span {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    padding: 0.33rem 0.52rem;
+    border-radius: 3px;
+    background: rgba(5, 13, 14, 0.82);
+    color: #62dfa9;
+    font-size: 0.61rem;
+    font-weight: 850;
+  }
+  .similar-body {
+    padding: 1rem;
+  }
+  .similar-body > strong {
+    display: block;
+    margin-bottom: 0.35rem;
+    color: var(--listing-gold);
+    font-size: 0.84rem;
+  }
+  .similar-body h3 {
+    min-height: 2.35em;
+    margin-bottom: 0.45rem;
+    font-size: 0.84rem;
+    line-height: 1.35;
+  }
+  .similar-body h3 a {
+    color: #e8f0ed;
+    text-decoration: none;
+  }
+  .similar-body p {
+    color: #7f918b;
+    font-size: 0.68rem;
+  }
+  .view-property {
+    color: #52d49d;
+    font-size: 0.69rem;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .listing-hero .container {
+      animation: listing-rise 500ms ease both;
+    }
+    .gallery-container {
+      animation: listing-rise 560ms 80ms ease both;
+    }
+    .listing-sidebar {
+      animation: listing-rise 560ms 150ms ease both;
+    }
+    @keyframes listing-rise {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
   }
 
   @media (max-width: 1024px) {
-    .prop-layout-grid {
+    .listing-grid {
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 1.5rem;
+    }
+    .quick-stat {
+      padding-inline: 0.55rem;
+    }
+    .quick-icon {
+      display: none;
+    }
+    .amenity-groups {
       grid-template-columns: 1fr;
     }
-    .prop-header {
-      flex-direction: column;
+    .similar-track {
+      grid-auto-columns: minmax(260px, 46%);
+    }
+  }
+
+  @media (max-width: 800px) {
+    .listing-hero {
+      padding-top: 6.25rem;
+    }
+    .listing-grid {
+      display: block;
+    }
+    .mobile-price-card {
+      display: block;
+      margin-bottom: 1rem;
+    }
+    .listing-sidebar {
+      position: static;
+      margin-top: 1rem;
+    }
+    .listing-sidebar > .price-card {
+      display: none;
+    }
+    .listing-sidebar {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 600px) {
+    .listing-hero {
+      padding-bottom: 1.8rem;
+    }
+    .listing-breadcrumb {
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .listing-title {
+      font-size: 2rem;
+    }
+    .listing-location {
       align-items: flex-start;
+      font-size: 0.78rem;
+      line-height: 1.45;
     }
-    .prop-header-price {
-      text-align: left;
+    .listing-content {
+      padding-top: 1rem;
     }
-    .similar-grid {
-      grid-template-columns: repeat(2, 1fr);
+    .gallery-main {
+      border-radius: 7px;
     }
-    .amenities-grid {
+    .gallery-image-label {
+      display: none;
+    }
+    .gallery-thumbnails {
+      grid-template-columns: repeat(4, 1fr);
+      overflow-x: auto;
+    }
+    .listing-quick-stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .quick-stat {
+      padding: 0.9rem 0.5rem;
+    }
+    .quick-stat:nth-child(3) {
+      border-left: 0;
+      border-top: 1px solid var(--listing-border);
+    }
+    .quick-stat:nth-child(4) {
+      border-top: 1px solid var(--listing-border);
+    }
+    .details-grid {
       grid-template-columns: 1fr;
     }
-  }
-  @media (max-width: 680px) {
-    .similar-grid {
+    .details-grid > div:nth-child(n) {
+      padding: 0.78rem 0.1rem;
+      border-left: 0;
+    }
+    .history-strip {
       grid-template-columns: 1fr;
     }
-    .gallery-thumbs {
-      grid-template-columns: repeat(2, 1fr);
+    .listing-sidebar {
+      grid-template-columns: 1fr;
     }
-    .property-facts-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-  .intelligence-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-    gap: 1.5rem;
-  }
-  .intelligence-grid iframe {
-    width: 100%;
-    border: 0;
-    border-radius: 10px;
-  }
-  .history-list {
-    display: grid;
-    gap: 0.75rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  .history-list li {
-    display: grid;
-    gap: 0.2rem;
-    border-left: 3px solid #c8960c;
-    padding-left: 0.8rem;
-  }
-  .history-list time,
-  .history-list span,
-  .map-note {
-    color: #94a3b8;
-    font-size: 0.82rem;
-  }
-  @media (max-width: 768px) {
-    .intelligence-grid { grid-template-columns: 1fr; }
+    .similar-heading {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+    .similar-track {
+      grid-auto-columns: minmax(250px, 84%);
+    }
   }
 </style>
 
-<script is:inline define:vars={{
-  viewedItem: {
-    slug: property.slug,
-    title: property.title,
-    block: property.block,
-    price: formattedPrice,
-    image: mainImage
-  }
-}}>
+<script is:inline>
+  document.querySelectorAll('[data-property-gallery]').forEach((gallery) => {
+    const mainImage = gallery.querySelector('[data-gallery-main]');
+    const current = gallery.querySelector('[data-gallery-current]');
+    const thumbnails = [...gallery.querySelectorAll('[data-gallery-src]')];
+
+    const showImage = (thumbnail, index) => {
+      if (!(mainImage instanceof HTMLImageElement) || !(thumbnail instanceof HTMLElement)) return;
+      const source = thumbnail.dataset.gallerySrc;
+      if (!source) return;
+      mainImage.style.opacity = '0.3';
+      mainImage.src = source;
+      mainImage.alt = thumbnail.dataset.galleryAlt || mainImage.alt;
+      mainImage.addEventListener(
+        'load',
+        () => {
+          mainImage.style.opacity = '1';
+        },
+        { once: true },
+      );
+      thumbnails.forEach((item) => item.classList.remove('active'));
+      thumbnail.classList.add('active');
+      if (current) current.textContent = String(index + 1);
+    };
+
+    thumbnails.forEach((thumbnail, index) => {
+      thumbnail.addEventListener('click', () => showImage(thumbnail, index));
+    });
+  });
+</script>
+
+<script
+  is:inline
+  define:vars={{
+    viewedItem: {
+      slug: property.slug,
+      title: property.title,
+      block: property.block,
+      price: formattedPrice,
+      image: mainImage,
+    },
+  }}
+>
   document.addEventListener('DOMContentLoaded', () => {
     try {
       let recent = JSON.parse(localStorage.getItem('dha6_recent_views') || '[]');
-      recent = recent.filter(item => item.slug !== viewedItem.slug);
+      recent = recent.filter((item) => item.slug !== viewedItem.slug);
       recent.unshift(viewedItem);
       if (recent.length > 6) recent = recent.slice(0, 6);
       localStorage.setItem('dha6_recent_views', JSON.stringify(recent));

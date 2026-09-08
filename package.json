@@ -15,6 +15,7 @@
     "places:import": "python scripts/import_google_maps_places.py --sector sector-a --category all --limit 3",
     "seo:audit": "node scripts/seo-audit.mjs",
     "link:audit": "node --experimental-strip-types scripts/internal-link-audit.ts",
+    "authority:audit": "node scripts/authority-audit.mjs",
     "properties:scrape:zameen": "python scripts/property_pipeline/scrapers/zameen_scraper.py",
     "properties:scrape:graana": "python scripts/property_pipeline/scrapers/graana_scraper.py",
     "properties:import": "python scripts/property_pipeline/exporters/astro_importer.py",

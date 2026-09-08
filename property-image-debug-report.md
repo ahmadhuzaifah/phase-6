@@ -1,6 +1,6 @@
 # Property Image Debug Report
 
-Generated: 2026-09-08T07:39:08.513992Z
+Generated: 2026-09-08T13:43:22.658456Z
 
 ## Audit Summary
 

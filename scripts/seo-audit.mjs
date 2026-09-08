@@ -20,7 +20,6 @@ if (!fs.existsSync(root)) {
 walk(root);
 const publicPages = files.filter((file) => !file.includes(`${path.sep}admin${path.sep}`));
 const issues = [];
-const advisories = [];
 const titles = new Map();
 const descriptions = new Map();
 const routes = new Set(['/']);
@@ -65,11 +64,11 @@ for (const file of publicPages) {
   }
 }
 
-for (const [value, pages] of titles) if (pages.length > 1) advisories.push(`duplicate title (${pages.length}): ${value}`);
-for (const [value, pages] of descriptions) if (pages.length > 1) advisories.push(`duplicate description (${pages.length}): ${value}`);
+for (const [value, pages] of titles) if (pages.length > 1) issues.push(`duplicate indexable title (${pages.length}) on ${pages.join(', ')}: ${value}`);
+for (const [value, pages] of descriptions) if (pages.length > 1) issues.push(`duplicate indexable description (${pages.length}) on ${pages.join(', ')}: ${value}`);
 
 console.log(`SEO audit: ${publicPages.length} public pages, ${files.length} total HTML pages`);
-console.log(`Routes: ${routes.size} | Titles: ${titles.size} | Descriptions: ${descriptions.size}`);
+console.log(`Routes: ${routes.size} | Unique indexable titles: ${titles.size} | Unique indexable descriptions: ${descriptions.size}`);
 if (issues.length) {
   console.error(`Issues found: ${issues.length}`);
   for (const issue of issues) console.error(`- ${issue}`);

@@ -1,0 +1,41 @@
+---
+import type { MarketProperty } from '@utils/marketIntelligence';
+import { formatMarketPrice } from '@utils/marketIntelligence';
+
+interface Props { properties: MarketProperty[]; initialA?: MarketProperty; initialB?: MarketProperty; interactive?: boolean }
+const { properties, initialA = properties[0], initialB = properties[1] || properties[0], interactive = true } = Astro.props;
+const concise = properties.map((property) => ({ id: property.id, slug: property.slug, title: property.title, price: property.price, size: property.size, unit: property.unit, block: property.block, propertyType: property.propertyType, location: property.location.address, bedrooms: property.bedrooms, bathrooms: property.bathrooms, construction: property.constructionStatus || 'Not specified', verified: property.lastVerifiedDate || property.lastCheckedDate || 'Not recorded', image: property.images?.[0]?.url || '/images/placeholders/property-placeholder.webp' }));
+const nearby = (property: MarketProperty) => `${property.block} places directory, schools, healthcare and daily services`;
+---
+
+<section class="comparison" data-comparison>
+  {interactive && <div class="comparison-selectors"><label>Property A<select data-select-a>{properties.map((property) => <option value={property.id} selected={property.id === initialA.id}>{property.title}</option>)}</select></label><span>VS</span><label>Property B<select data-select-b>{properties.map((property) => <option value={property.id} selected={property.id === initialB.id}>{property.title}</option>)}</select></label></div>}
+  <div class="comparison-grid">
+    {[initialA, initialB].map((property, index) => <article data-card={index === 0 ? 'a' : 'b'}><img data-field="image" src={property.images?.[0]?.url || '/images/placeholders/property-placeholder.webp'} alt={property.title} width="800" height="560" loading="lazy" onerror="this.onerror=null;this.src='/images/placeholders/property-placeholder.webp'"/><div class="compare-body"><span data-field="block">{property.block}</span><h2 data-field="title">{property.title}</h2><strong data-field="price">{formatMarketPrice(property.price)}</strong><dl><div><dt>Size</dt><dd data-field="size">{property.size} {property.unit}</dd></div><div><dt>Sector</dt><dd data-field="sector">{property.block}</dd></div><div><dt>Location</dt><dd data-field="location">{property.location.address}</dd></div><div><dt>Bedrooms</dt><dd data-field="bedrooms">{property.bedrooms || 'N/A'}</dd></div><div><dt>Bathrooms</dt><dd data-field="bathrooms">{property.bathrooms || 'N/A'}</dd></div><div><dt>Construction</dt><dd data-field="construction">{property.constructionStatus || 'Not specified'}</dd></div><div><dt>Verification date</dt><dd data-field="verified">{property.lastVerifiedDate || property.lastCheckedDate || 'Not recorded'}</dd></div><div><dt>Nearby facilities</dt><dd data-field="nearby">{nearby(property)}</dd></div></dl><a data-field="link" href={`/properties/${property.slug}/`}>View complete property</a></div></article>)}
+  </div>
+  <script type="application/json" data-comparison-data is:inline set:html={JSON.stringify(concise)} />
+</section>
+
+<script>
+  const price = (value: number) => value >= 10_000_000 ? `PKR ${(value / 10_000_000).toFixed(2)} Crore` : `PKR ${(value / 100_000).toFixed(2)} Lakh`;
+  document.querySelectorAll<HTMLElement>('[data-comparison]').forEach((root) => {
+    const source = root.querySelector<HTMLScriptElement>('[data-comparison-data]');
+    if (!source) return;
+    const records = JSON.parse(source.textContent || '[]');
+    const update = (side: string, id: string) => {
+      const record = records.find((item: { id: string }) => item.id === id);
+      const card = root.querySelector<HTMLElement>(`[data-card="${side}"]`);
+      if (!record || !card) return;
+      const values: Record<string, string> = { title: record.title, price: price(record.price), block: record.block, size: `${record.size} ${record.unit}`, sector: record.block, location: record.location, bedrooms: record.bedrooms || 'N/A', bathrooms: record.bathrooms || 'N/A', construction: record.construction, verified: record.verified, nearby: `${record.block} places directory, schools, healthcare and daily services` };
+      Object.entries(values).forEach(([field, value]) => { const element = card.querySelector(`[data-field="${field}"]`); if (element) element.textContent = value; });
+      const image = card.querySelector<HTMLImageElement>('[data-field="image"]'); if (image) { image.src = record.image; image.alt = record.title; }
+      const link = card.querySelector<HTMLAnchorElement>('[data-field="link"]'); if (link) link.href = `/properties/${record.slug}/`;
+    };
+    root.querySelector<HTMLSelectElement>('[data-select-a]')?.addEventListener('change', (event) => update('a', (event.currentTarget as HTMLSelectElement).value));
+    root.querySelector<HTMLSelectElement>('[data-select-b]')?.addEventListener('change', (event) => update('b', (event.currentTarget as HTMLSelectElement).value));
+  });
+</script>
+
+<style>
+  .comparison-selectors{display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:end;margin-bottom:1rem;padding:1rem;border:1px solid rgba(48,196,135,.22);border-radius:8px;background:#102023}.comparison-selectors label{display:flex;min-width:0;flex-direction:column;gap:.4rem;color:#55d9a1;font-size:.62rem;font-weight:850;text-transform:uppercase}.comparison-selectors select{width:100%;min-height:2.7rem;padding:.6rem;border:1px solid rgba(185,215,202,.16);border-radius:4px;background:#081416;color:#e5eeea;font-size:.7rem}.comparison-selectors>span{display:grid;width:2.4rem;height:2.4rem;place-items:center;border:1px solid rgba(227,184,90,.3);border-radius:50%;color:#e3b85a;font-size:.65rem;font-weight:900}.comparison-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.comparison-grid article{overflow:hidden;border:1px solid rgba(185,215,202,.14);border-radius:8px;background:linear-gradient(145deg,#122326,#0b171a)}.comparison-grid article>img{width:100%;aspect-ratio:16/9;object-fit:cover}.compare-body{padding:1.2rem}.compare-body>span{color:#4fd69e;font-size:.62rem;font-weight:850;text-transform:uppercase}.compare-body h2{min-height:2.5em;margin:.5rem 0;color:#eef5f2;font-family:var(--font-display,Georgia,serif);font-size:1.15rem}.compare-body>strong{display:block;margin-bottom:1rem;color:#e3b85a;font-size:1.35rem}.compare-body dl{margin:0}.compare-body dl div{display:flex;justify-content:space-between;gap:1rem;padding:.65rem 0;border-bottom:1px solid rgba(185,215,202,.11)}.compare-body dt{color:#70837c;font-size:.65rem}.compare-body dd{max-width:64%;margin:0;color:#d4dfda;font-size:.67rem;font-weight:700;text-align:right}.compare-body>a{display:block;margin-top:1rem;padding:.75rem;border-radius:4px;background:#26b276;color:#04150f;font-size:.7rem;font-weight:900;text-align:center}@media(max-width:650px){.comparison-selectors{grid-template-columns:1fr}.comparison-selectors>span{margin:auto}.comparison-grid{grid-template-columns:1fr}}
+</style>

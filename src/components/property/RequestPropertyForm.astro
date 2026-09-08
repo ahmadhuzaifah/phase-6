@@ -1,0 +1,49 @@
+---
+import { BLOCKS } from '@data/blocks';
+import { CONTACTS } from '@data/contacts';
+
+interface Props { compact?: boolean }
+const { compact = false } = Astro.props;
+---
+
+<section class:list={['request-card', { 'request-card--compact': compact }]} aria-labelledby="request-property-title">
+  <div class="request-copy"><span>Property brief</span><h2 id="request-property-title">Request a DHA Phase 6 property</h2><p>Share your requirements to open a pre-filled WhatsApp conversation. No form data is stored on this website.</p></div>
+  <form class="request-form" data-property-request data-whatsapp={CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}>
+    <label>Name<input name="name" required autocomplete="name" placeholder="Your name" /></label>
+    <label>Phone<input name="phone" required type="tel" autocomplete="tel" placeholder="03xx xxxxxxx" /></label>
+    <label>WhatsApp<input name="whatsapp" type="tel" autocomplete="tel" placeholder="If different" /></label>
+    <label>Budget<input name="budget" required placeholder="Example: PKR 3 Crore" /></label>
+    <label>Purpose<select name="purpose"><option>Buy</option><option>Rent</option><option>Investment</option></select></label>
+    <label>Preferred sector<select name="sector"><option>Any sector</option>{BLOCKS.map((block) => <option>{block.name}</option>)}</select></label>
+    <label>Property type<select name="type"><option>House</option><option>Residential plot</option><option>Commercial property</option><option>Apartment</option><option>Portion / floor</option></select></label>
+    <label>Size<select name="size"><option>3 Marla</option><option>5 Marla</option><option>8 Marla</option><option>10 Marla</option><option>1 Kanal</option><option>2 Kanal</option><option>Flexible</option></select></label>
+    <label class="request-detail">Requirement<textarea name="requirement" rows="3" placeholder="Location, bedrooms, construction or timing preferences"></textarea></label>
+    <button type="submit">Create WhatsApp request</button>
+  </form>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-property-request]').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const values = new FormData(form);
+      const message = [
+        'DHA Phase 6 Lahore property request',
+        `Name: ${values.get('name')}`,
+        `Phone: ${values.get('phone')}`,
+        `WhatsApp: ${values.get('whatsapp') || 'Same as phone'}`,
+        `Budget: ${values.get('budget')}`,
+        `Purpose: ${values.get('purpose')}`,
+        `Preferred sector: ${values.get('sector')}`,
+        `Property type: ${values.get('type')}`,
+        `Size: ${values.get('size')}`,
+        `Requirement: ${values.get('requirement') || 'Not specified'}`,
+      ].join('\n');
+      window.open(`https://wa.me/${form.dataset.whatsapp}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+    });
+  });
+</script>
+
+<style>
+  .request-card{padding:clamp(1.4rem,4vw,2.4rem);border:1px solid rgba(48,196,135,.3);border-radius:10px;background:linear-gradient(145deg,#132527,#0b171a);color:#e8f0ed}.request-copy span{color:#42d399;font-size:.66rem;font-weight:850;letter-spacing:.12em;text-transform:uppercase}.request-copy h2{margin:.45rem 0;color:#fff;font-family:var(--font-display,Georgia,serif);font-size:clamp(1.5rem,3vw,2.2rem)}.request-copy p{color:#8da19a;font-size:.8rem}.request-form{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.75rem;margin-top:1.2rem}.request-form label{display:flex;min-width:0;flex-direction:column;gap:.35rem;color:#78caaa;font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase}.request-form input,.request-form select,.request-form textarea{width:100%;min-height:2.65rem;padding:.58rem .7rem;border:1px solid rgba(185,215,202,.16);border-radius:4px;outline:none;background:#091416;color:#e7efec;font:inherit;font-size:.7rem;text-transform:none}.request-form textarea{resize:vertical}.request-form input:focus,.request-form select:focus,.request-form textarea:focus{border-color:#30c487}.request-detail{grid-column:span 4}.request-form button{grid-column:span 4;min-height:2.8rem;border:0;border-radius:4px;background:linear-gradient(135deg,#059669,#30c487);color:#04150f;font-size:.72rem;font-weight:900;cursor:pointer}.request-card--compact .request-form{grid-template-columns:repeat(2,minmax(0,1fr))}.request-card--compact .request-detail,.request-card--compact .request-form button{grid-column:span 2}@media(max-width:850px){.request-form{grid-template-columns:repeat(2,minmax(0,1fr))}.request-detail,.request-form button{grid-column:span 2}}@media(max-width:520px){.request-form,.request-card--compact .request-form{grid-template-columns:1fr}.request-detail,.request-form button,.request-card--compact .request-detail,.request-card--compact .request-form button{grid-column:span 1}}
+</style>

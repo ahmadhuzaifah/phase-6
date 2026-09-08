@@ -31,6 +31,10 @@ if (!fs.existsSync(root)) {
 
 walk(root);
 const routes = new Set(pages.map(routeFor));
+const indexableRoutes = new Set(pages.filter((file) => {
+  const html = fs.readFileSync(file, 'utf8');
+  return !/<meta\s+name=["']robots["']\s+content=["'][^"']*noindex/i.test(html);
+}).map(routeFor));
 const inbound = new Map<string, Set<string>>([...routes].map((route) => [route, new Set()]));
 const broken: string[] = [];
 
@@ -48,8 +52,8 @@ for (const file of pages) {
   }
 }
 
-const orphanPages = [...routes].filter((route) => route !== '/' && !inbound.get(route)?.size);
-const lowLinkPages = [...routes].filter((route) => route !== '/' && (inbound.get(route)?.size || 0) < 2);
+const orphanPages = [...indexableRoutes].filter((route) => route !== '/' && !inbound.get(route)?.size);
+const lowLinkPages = [...indexableRoutes].filter((route) => route !== '/' && (inbound.get(route)?.size || 0) < 2);
 const lines = [
   '# Internal Link Report',
   '',
@@ -57,6 +61,7 @@ const lines = [
   '',
   `- Pages scanned: ${pages.length}`,
   `- Internal routes discovered: ${routes.size}`,
+  `- Indexable routes scored: ${indexableRoutes.size}`,
   `- Broken internal links: ${broken.length}`,
   `- Orphan pages: ${orphanPages.length}`,
   `- Pages with fewer than two inbound links: ${lowLinkPages.length}`,
@@ -74,6 +79,6 @@ const lines = [
   ...(lowLinkPages.length ? lowLinkPages.map((item) => `- ${item} (${inbound.get(item)?.size || 0})`) : ['None detected.']),
 ];
 fs.writeFileSync(reportPath, `${lines.join('\n')}\n`);
-process.stdout.write(`Internal link audit: ${pages.length} pages, ${broken.length} broken links.\n`);
+process.stdout.write(`Internal link audit: ${pages.length} pages, ${indexableRoutes.size} indexable, ${broken.length} broken links.\n`);
 process.stdout.write(`Report written to ${reportPath}\n`);
 if (broken.length) process.exit(1);

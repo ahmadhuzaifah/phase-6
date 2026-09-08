@@ -1,0 +1,75 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import Schema from '@components/seo/Schema.astro';
+import propertiesData from '@data/properties-import.json';
+import { SITE } from '@data/site';
+import { getAllPlaces, SECTORS_DIRECTORY, type PlaceRecord } from '@data/places/index';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath: string;
+  eyebrow: string;
+  categoryKeys: string[];
+  categorySummary: string;
+}
+
+const { title, description, canonicalPath, eyebrow, categoryKeys, categorySummary } = Astro.props;
+const places = getAllPlaces().filter((place) => categoryKeys.includes(place.category));
+const sectors = SECTORS_DIRECTORY.map((sector) => ({
+  ...sector,
+  count: places.filter((place) => place.sector === sector.key).length,
+})).filter((sector) => sector.count > 0);
+const activeProperties = (propertiesData as any[]).filter((property) => property.availabilityStatus === 'available').slice(0, 6);
+const canonical = `${SITE.url}${canonicalPath}/`;
+const mapCenter = places[0] || { lat: 31.4725, lng: 74.453 } as PlaceRecord;
+---
+
+<PageLayout title={title} description={description} canonical={canonical}>
+  <Schema type="BreadcrumbList" data={{ itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url },
+    { '@type': 'ListItem', position: 2, name: 'Places', item: `${SITE.url}/places/` },
+    { '@type': 'ListItem', position: 3, name: title, item: canonical },
+  ] }} />
+  <Schema type="ItemList" data={{
+    name: title,
+    numberOfItems: places.length,
+    itemListElement: places.map((place, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'LocalBusiness',
+        name: place.name,
+        address: place.address,
+        geo: { '@type': 'GeoCoordinates', latitude: place.lat, longitude: place.lng },
+        url: `${SITE.url}/places/${place.category}/${place.slug}/`,
+      },
+    })),
+  }} />
+
+  <main class="place-hub">
+    <header class="place-hero"><div class="container">
+      <nav><a href="/">Home</a><span>/</span><a href="/places/">Places</a><span>/</span><span>{title}</span></nav>
+      <p>{eyebrow}</p><h1>{title}</h1><div class="hero-foot"><span>{description}</span><strong>{places.length}<small>directory records</small></strong></div>
+    </div></header>
+
+    <section class="overview"><div class="container overview-grid">
+      <div><span class="section-label">Local entity overview</span><h2>Compare operational places by sector</h2><p>{categorySummary}</p><p>Directory details are provided for local research and can change. Confirm hours, services, admissions, appointments, accessibility and directions with the organization before travelling.</p></div>
+      <iframe title={`Map of ${title}`} src={`https://maps.google.com/maps?q=${mapCenter.lat},${mapCenter.lng}&z=13&output=embed`} width="640" height="360" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div></section>
+
+    <section class="directory"><div class="container"><div class="section-head"><div><span class="section-label">Verified directory records</span><h2>{places.length} places across DHA Phase 6</h2></div><p>Use the source map for current directions and review each location in relation to the property’s exact street.</p></div>
+      <div class="place-grid">{places.map((place) => <article class="place-card"><div><span>{place.categoryLabel}</span><em>{place.rating ? `${place.rating.toFixed(1)} rating` : 'Rating not recorded'}</em></div><h3>{place.name}</h3><p>{place.description}</p><address>{place.address}</address><footer><a href={`/places/${place.category}/${place.slug}/`}>Place details</a><a href={place.googleMapsUrl} target="_blank" rel="noopener noreferrer">Open map</a></footer></article>)}</div>
+    </div></section>
+
+    <section class="sector-links"><div class="container"><span class="section-label">Nearby sectors</span><h2>Explore local context by sector</h2><div>{sectors.map((sector) => <a href={`/dha-phase-6-${sector.key.replace('sector-', 'sector-')}-lahore/`}><strong>{sector.label}</strong><small>{sector.count} matching places</small></a>)}</div></div></section>
+
+    <section class="property-links"><div class="container"><div class="section-head"><div><span class="section-label">Property connections</span><h2>Active properties to research nearby</h2></div><a class="all-link" href="/properties/">View all active properties</a></div><div class="property-grid">{activeProperties.map((property) => <a href={`/properties/${property.slug}/`}><span>{property.location?.sector || property.block}</span><h3>{property.title}</h3><p>{property.size} {property.unit} · {property.propertyType} · for {property.purpose}</p></a>)}</div></div></section>
+
+    <section class="authority-links"><div class="container"><a href="/dha-phase-6-property-market/"><span>Market intelligence</span><strong>Review live inventory context</strong></a><a href="/dha-phase-6-property-prices/"><span>Price intelligence</span><strong>Read the 2015-2026 timeline</strong></a><a href="/best-sector-to-invest-in-dha-phase-6-lahore/"><span>Investment research</span><strong>Compare sectors responsibly</strong></a></div></section>
+  </main>
+</PageLayout>
+
+<style>
+  .place-hub{background:#080f12;color:#eaf2ef}.place-hero{padding:7rem 0 3.5rem;background:radial-gradient(circle at 82% 35%,rgba(219,175,80,.13),transparent 25rem),linear-gradient(120deg,#071315,#0c2923);border-bottom:1px solid rgba(58,202,144,.2)}.place-hero nav{display:flex;gap:.55rem;margin-bottom:1.6rem;color:#778d85;font-size:.7rem}.place-hero nav a{color:#a0b4ac}.place-hero>div>p,.section-label{display:block;margin:0 0 .7rem;color:#3dca91;font-size:.64rem;font-weight:850;letter-spacing:.13em;text-transform:uppercase}.place-hero h1{max-width:940px;margin:0;color:#fff;font-family:var(--font-display,Georgia,serif);font-size:clamp(2.8rem,6.5vw,5.6rem);line-height:.96}.hero-foot{display:flex;max-width:950px;justify-content:space-between;align-items:end;gap:2rem;margin-top:1.6rem;color:#9aaca5;line-height:1.7}.hero-foot>span{max-width:700px}.hero-foot strong{color:#e5bc61;font-size:2.4rem;line-height:1}.hero-foot small{display:block;color:#748880;font-size:.58rem;text-transform:uppercase}.overview,.directory,.sector-links,.property-links,.authority-links{padding:4rem 0;border-bottom:1px solid rgba(167,200,187,.1)}.overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}.overview h2,.section-head h2,.sector-links h2{margin:0 0 1rem;color:#eff6f3;font-family:var(--font-display,Georgia,serif);font-size:clamp(1.8rem,4vw,3rem)}.overview p,.section-head p{color:#8fa39b;line-height:1.75}.overview iframe{width:100%;border:1px solid rgba(58,202,144,.18);border-radius:7px;filter:saturate(.7) contrast(1.05)}.directory{background:#0b1619}.section-head{display:flex;justify-content:space-between;align-items:end;gap:2rem;margin-bottom:2rem}.section-head p{max-width:430px}.place-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem}.place-card{display:flex;min-height:275px;flex-direction:column;padding:1.25rem;border:1px solid rgba(167,200,187,.12);border-radius:6px;background:#0e1d20}.place-card>div{display:flex;justify-content:space-between;gap:1rem;color:#4ed69f;font-size:.61rem;font-weight:800;text-transform:uppercase}.place-card em{color:#798e86;font-style:normal}.place-card h3{margin:1rem 0 .65rem;color:#e8f0ed;font-size:1rem}.place-card p,.place-card address{color:#82968e;font-size:.72rem;line-height:1.65}.place-card address{margin-top:auto;padding-top:1rem;font-style:normal}.place-card footer{display:flex;gap:1rem;margin-top:.8rem;padding-top:.7rem;border-top:1px solid rgba(167,200,187,.1)}.place-card a,.all-link{color:#55d7a3;font-size:.68rem;font-weight:800}.sector-links>div>div{display:grid;grid-template-columns:repeat(4,1fr);gap:.65rem}.sector-links a{padding:1rem;border:1px solid rgba(167,200,187,.12);background:#0d1b1e}.sector-links strong,.sector-links small{display:block}.sector-links strong{color:#e4ece9}.sector-links small{margin-top:.35rem;color:#71867e;font-size:.65rem}.property-links{background:#0b1619}.property-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem}.property-grid a{padding:1.15rem;border-left:2px solid #38c88e;background:#0e1d20}.property-grid span{color:#45ce98;font-size:.61rem;font-weight:850;text-transform:uppercase}.property-grid h3{margin:.6rem 0;color:#e6eeeb;font-size:.85rem}.property-grid p{margin:0;color:#7e918a;font-size:.68rem}.authority-links>div{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}.authority-links a{padding:1.25rem;border:1px solid rgba(229,188,97,.2);background:linear-gradient(135deg,#10211f,#0b1719)}.authority-links span,.authority-links strong{display:block}.authority-links span{color:#d9b45f;font-size:.6rem;font-weight:850;text-transform:uppercase}.authority-links strong{margin-top:.5rem;color:#e8efec}@media(max-width:900px){.overview-grid{grid-template-columns:1fr}.place-grid,.property-grid{grid-template-columns:repeat(2,1fr)}.sector-links>div>div{grid-template-columns:repeat(3,1fr)}}@media(max-width:620px){.hero-foot,.section-head{align-items:flex-start;flex-direction:column}.place-grid,.property-grid,.authority-links>div{grid-template-columns:1fr}.sector-links>div>div{grid-template-columns:repeat(2,1fr)}}
+</style>

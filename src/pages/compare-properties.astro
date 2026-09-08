@@ -1,0 +1,18 @@
+---
+import PropertyComparison from '@components/property/PropertyComparison.astro';
+import RequestPropertyForm from '@components/property/RequestPropertyForm.astro';
+import Schema from '@components/seo/Schema.astro';
+import PageLayout from '@layouts/PageLayout.astro';
+import properties from '@data/properties-import.json';
+import { SITE } from '@data/site';
+import { isActiveProperty } from '@utils/propertyLifecycle';
+import { isPublishableProperty } from '@utils/propertyQualityScore';
+import type { MarketProperty } from '@utils/marketIntelligence';
+const active = (properties as MarketProperty[]).filter((property) => isPublishableProperty(property) && isActiveProperty(property));
+const canonical = `${SITE.url}/compare-properties/`;
+---
+<PageLayout title="Compare DHA Phase 6 Lahore Properties" description="Compare active DHA Phase 6 Lahore properties by asking price, size, sector, bedrooms, bathrooms, construction, verification date and nearby facilities." canonical={canonical}>
+  <Schema type="BreadcrumbList" data={{ itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url }, { '@type': 'ListItem', position: 2, name: 'Compare Properties', item: canonical }] }} />
+  <main class="compare-page"><header><div class="container"><nav><a href="/">Home</a><span>/</span><span>Compare properties</span></nav><p>Side-by-side research</p><h1>Compare DHA Phase 6 Properties</h1><span>Review comparable facts before arranging inspections and document checks.</span></div></header><div class="container compare-body-page"><PropertyComparison properties={active} /><section class="compare-note"><h2>What comparison cannot establish</h2><p>This tool compares published fields and source-check dates. It cannot establish ownership, structural condition, exact street category, dues, transfer eligibility or a final executable price. Inspect and verify both properties independently.</p><a href="/compare/10-marla-house-sector-a-vs-sector-b/">Open an SEO comparison example</a></section><RequestPropertyForm /></div></main>
+</PageLayout>
+<style>.compare-page{min-height:100vh;background:#080f12;color:#e8f0ed}.compare-page>header{padding:7rem 0 3rem;border-bottom:1px solid rgba(48,196,135,.18);background:linear-gradient(110deg,#071113,#0b2421)}header nav{display:flex;gap:.55rem;margin-bottom:1.4rem;color:#71847d;font-size:.74rem}header nav a{color:#9aada6}header p{margin:0 0 .5rem;color:#30c487;font-size:.67rem;font-weight:850;letter-spacing:.12em;text-transform:uppercase}header h1{margin:0 0 1rem;color:#fff;font-family:var(--font-display,Georgia,serif);font-size:clamp(2.4rem,6vw,4.7rem)}header>div>span{color:#91a49e}.compare-body-page{padding-top:3rem;padding-bottom:5rem}.compare-note{margin:3rem 0;padding:1.5rem;border-left:3px solid #e3b85a;background:#0d1b1e}.compare-note h2{color:#eef5f2;font-family:var(--font-display,Georgia,serif)}.compare-note p{color:#8da099;line-height:1.7}.compare-note a{color:#4fd69e;font-weight:800}</style>

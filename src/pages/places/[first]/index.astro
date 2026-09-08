@@ -44,6 +44,7 @@ export function getStaticPaths() {
       sectorMeta: null,
       categoryMeta: category,
       places: getCategoryPlaces(category.key),
+      isAlias: false,
     },
   }));
 
@@ -69,6 +70,7 @@ export function getStaticPaths() {
         sectorMeta: null,
         categoryMeta: category || null,
         places: category ? getCategoryPlaces(canonicalKey) : [],
+        isAlias: true,
       },
     };
   }).filter((p) => p.props.categoryMeta !== null);
@@ -81,9 +83,10 @@ interface Props {
   sectorMeta: SectorMeta | null;
   categoryMeta: PlaceCategoryMeta | null;
   places: PlaceRecord[];
+  isAlias?: boolean;
 }
 
-const { type, sectorMeta, categoryMeta, places } = Astro.props as Props;
+const { type, sectorMeta, categoryMeta, places, isAlias = false } = Astro.props as Props;
 
 // Page titles and meta descriptions
 const pageTitle =
@@ -365,7 +368,7 @@ const relatedCategories =
     : getPopulatedCategories().filter((c) => c.key !== categoryMeta?.key);
 ---
 
-<PageLayout title={pageTitle} description={metaDesc} canonical={canonical}>
+<PageLayout title={pageTitle} description={metaDesc} canonical={canonical} noindex={isAlias}>
   <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
 
   <header class="page-hero">

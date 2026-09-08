@@ -3,6 +3,16 @@ import { defineConfig } from 'astro/config';
 import sitemap, { ChangeFreqEnum } from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
+const sitemapExclusions = [
+  /^\/admin\//,
+  /^\/private\//,
+  /^\/map\/$/,
+  /^\/property-dealer\/$/,
+  /^\/places\/(?:mosques|parks|gyms|hospitals|supermarket|school|bank|cafe|restaurant)\/$/,
+  /^\/sectors\/[^/]+\/(?:mosques|school|bank|supermarket|cafe|hospitals|restaurant)\/$/,
+  /^\/sectors\/[^/]+\/(?:restaurants?|mosques?|schools?|banks?|supermarkets?|cafes?|bakery|beauty-salons|fast-food|shopping|club|services|hospitals?)\/$/,
+];
+
 // https://astro.build/config
 export default defineConfig({
   site: process.env.PUBLIC_SITE_URL || 'https://dhaphase6lahore.pk',
@@ -11,13 +21,14 @@ export default defineConfig({
     sitemap({
       changefreq: 'weekly',
       priority: 0.7,
-      filter: (page) => !page.includes('/admin/') && !page.includes('/private/'),
+      filter: (page) => !sitemapExclusions.some((pattern) => pattern.test(new URL(page).pathname)),
       serialize: (item) => {
         // Pillar Master Guides & Primary Dashboards get highest priority (1.0)
         if (
           item.url === 'https://dhaphase6lahore.pk/' ||
           item.url.endsWith('/dha-phase-6-lahore/') ||
           item.url.endsWith('/dha-phase-6-lahore-guide/') ||
+          item.url.endsWith('/dha-phase-6-property-market/') ||
           item.url.endsWith('/dha-phase-6-property-market-dashboard/') ||
           item.url.endsWith('/dha-phase-6-market-updates/') ||
           item.url.endsWith('/dha-phase-6-faq/')
