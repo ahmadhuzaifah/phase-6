@@ -80,7 +80,7 @@ const similarProperties = properties
   })
   .slice(0, 3);
 
-const mainImage = property.images?.[0]?.url || '/images/placeholders/property-placeholder.svg';
+const mainImage = property.images?.[0]?.url || '/images/placeholders/property-placeholder.webp';
 const imageAlt = property.images?.[0]?.alt || `${property.title} in DHA Phase 6 Lahore`;
 const sourceUrl = property.sourceUrl;
 const sourceLinkUrl = property.sourceLinkAllowed === false ? '' : sourceUrl;
@@ -103,6 +103,11 @@ const structuredData = {
       "description": property.description,
       "url": canonical,
       "datePosted": property.publishedDate || "2026-09-02",
+      "image": {
+        "@type": "ImageObject",
+        "contentUrl": `${SITE.url}${mainImage}`,
+        "caption": imageAlt
+      },
       "offers": {
         "@type": "Offer",
         "price": property.price,
@@ -162,14 +167,14 @@ const structuredData = {
           <!-- Gallery -->
           <div class="prop-gallery">
             <div class="gallery-hero">
-              <img src={mainImage} alt={imageAlt} width={property.images?.[0]?.width || 1200} height={property.images?.[0]?.height || 800} loading="eager" fetchpriority="high" />
+              <img src={mainImage} alt={imageAlt} width={property.images?.[0]?.width || 1200} height={property.images?.[0]?.height || 800} loading="eager" fetchpriority="high" decoding="async" onerror="this.onerror=null;this.src='/images/placeholders/property-placeholder.webp'" />
               <span class="gallery-watermark-free">{imageLabel}</span>
             </div>
             {property.images && property.images.length > 1 && (
               <div class="gallery-thumbs">
                 {property.images.map((img: { url: string; alt?: string }, idx: number) => (
                   <div class="gallery-thumb">
-                    <img src={img.url} alt={img.alt || `Photo ${idx + 1}`} width="150" height="100" loading="lazy" />
+                    <img src={img.url} alt={img.alt || `Photo ${idx + 1}`} width="150" height="100" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='/images/placeholders/property-placeholder.webp'" />
                   </div>
                 ))}
               </div>

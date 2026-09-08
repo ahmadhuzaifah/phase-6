@@ -1,6 +1,6 @@
 # Property Import Report
 
-Generated: 2026-09-07T21:06:37.959854Z
+Generated: 2026-09-08T05:15:08.055675Z
 
 ## Import Summary
 
@@ -11,9 +11,9 @@ Generated: 2026-09-07T21:06:37.959854Z
 - Rent: 86
 - Commercial: 128
 - Duplicates removed: 42
-- Images accepted: 0
+- Images accepted: 537
 - Images branded/watermarked: 0
-- Images rejected or unavailable: 650
+- Images rejected or unavailable: 113
 - Final imported listings: 650
 
 ## Compliance

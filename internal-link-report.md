@@ -1,6 +1,6 @@
 # Internal Link Report
 
-Generated: 2026-09-07T21:10:37.499Z
+Generated: 2026-09-08T05:27:32.672Z
 
 - Pages scanned: 1423
 - Internal routes discovered: 1423
@@ -14,7 +14,6 @@ None detected.
 
 ## Orphan Pages
 
-- /5-marla-plots-dha-phase-6-lahore/
 - /dha-phase-6-lahore-sectors/
 - /find-my-property/
 - /gallery/
@@ -145,24 +144,10 @@ None detected.
 - /sectors/raya-commercial/cafes/
 - /sectors/raya-commercial/cafe/
 - /sectors/defence-raya/club/
+- /5-marla-plots-dha-phase-6-lahore/
 
 ## Low Internal Link Pages
 
-- /1-kanal-plots-dha-phase-6-lahore/ (1)
-- /5-marla-plots-dha-phase-6-lahore/ (0)
-- /blog/5-mistakes-buyers-make-before-purchasing-property/ (1)
-- /blog/how-to-compare-dha-phase-6-plot-prices/ (1)
-- /blog/dha-phase-6-sector-comparison-checklist/ (1)
-- /blog/dha-phase-6-property-verification-checklist/ (1)
-- /blog/how-to-read-dha-phase-6-lahore-map/ (1)
-- /blog/dha-phase-6-house-inspection-guide/ (1)
-- /blog/dha-phase-6-commercial-property-due-diligence/ (1)
-- /blog/dha-phase-6-lahore-property-market-update-2026/ (1)
-- /blog/buying-5-marla-house-in-dha-phase-6/ (1)
-- /blog/buying-10-marla-house-in-dha-phase-6/ (1)
-- /blog/living-cost-in-dha-phase-6-lahore/ (1)
-- /blog/complete-dha-lahore-transfer-process/ (1)
-- /contact-property-advisor/ (1)
 - /dha-phase-6-lahore-amenities/ (1)
 - /dha-phase-6-lahore-sectors/ (0)
 - /dha-phase-6-vs-lake-city-lahore/ (1)
@@ -308,3 +293,18 @@ None detected.
 - /sectors/raya-commercial/cafe/ (0)
 - /sectors/defence-raya/club/ (0)
 - /sectors/cca-1/ (1)
+- /1-kanal-plots-dha-phase-6-lahore/ (1)
+- /5-marla-plots-dha-phase-6-lahore/ (0)
+- /blog/5-mistakes-buyers-make-before-purchasing-property/ (1)
+- /blog/how-to-compare-dha-phase-6-plot-prices/ (1)
+- /blog/dha-phase-6-sector-comparison-checklist/ (1)
+- /blog/dha-phase-6-property-verification-checklist/ (1)
+- /blog/how-to-read-dha-phase-6-lahore-map/ (1)
+- /blog/dha-phase-6-house-inspection-guide/ (1)
+- /blog/dha-phase-6-commercial-property-due-diligence/ (1)
+- /blog/dha-phase-6-lahore-property-market-update-2026/ (1)
+- /blog/buying-5-marla-house-in-dha-phase-6/ (1)
+- /blog/buying-10-marla-house-in-dha-phase-6/ (1)
+- /blog/living-cost-in-dha-phase-6-lahore/ (1)
+- /blog/complete-dha-lahore-transfer-process/ (1)
+- /contact-property-advisor/ (1)

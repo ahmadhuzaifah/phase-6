@@ -13,7 +13,7 @@ interface Props {
   sizeUnit?: string;
   block: string;
   location?: string;
-  image?: { url: string; alt: string };
+  image?: { url: string; alt: string; width?: number; height?: number };
   verificationStatus?: string;
   availabilityStatus?: string;
   lastVerifiedDate?: string;
@@ -43,7 +43,7 @@ const formatPKR = (value: number) => {
 };
 const cleanBlock = block || 'Phase 6';
 const typeLabel = propertyType.replaceAll('-', ' ');
-const imageUrl = image?.url || '/images/placeholders/property-placeholder.svg';
+const imageUrl = image?.url || '/images/placeholders/property-placeholder.webp';
 const seoImageAlt = image?.alt && !image.alt.includes('placeholder')
   ? image.alt
   : `${title} - ${size} ${sizeUnit} ${typeLabel} in ${cleanBlock}, DHA Phase 6 Lahore`;
@@ -55,7 +55,7 @@ const whatsappUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g,
 <article class:list={['market-card', { 'market-card--featured': isFeatured }]}>
   <a class="market-card__visual" href={`/properties/${slug}`} aria-label={`Read ${title}`}>
     <figure class="market-card__figure">
-      <img src={imageUrl} alt={seoImageAlt} width="800" height="560" loading="lazy" />
+      <img src={imageUrl} alt={seoImageAlt} width={image?.width || 800} height={image?.height || 560} loading="lazy" decoding="async" onerror="this.onerror=null;this.src='/images/placeholders/property-placeholder.webp'" />
       <figcaption class="sr-only">{imageCaption}</figcaption>
     </figure>
     <span class="trust-badge">✓ {verificationStatus}</span>

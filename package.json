@@ -20,6 +20,8 @@
     "properties:import": "python scripts/property_pipeline/exporters/astro_importer.py",
     "properties:update": "python scripts/update_properties.py",
     "properties:test": "python -m unittest discover scripts/property_pipeline/tests",
+    "properties:images:fix": "python scripts/fix_property_images.py",
+    "properties:images:validate": "python scripts/validate_property_images.py",
     "lint": "eslint .",
     "format": "prettier --write ."
   },

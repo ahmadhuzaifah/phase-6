@@ -1,6 +1,6 @@
 # Property Expansion Report
 
-Generated: 2026-09-07T21:06:37.970597Z
+Generated: 2026-09-08T05:15:08.069384Z
 
 ## Expansion Summary
 
@@ -51,7 +51,8 @@ Generated: 2026-09-07T21:06:37.970597Z
 
 ## Image Status
 
-- rejected: 650
+- approved: 537
+- rejected: 113
 
 ## Missing Coverage
 

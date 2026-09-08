@@ -105,7 +105,7 @@ def _merge_existing(existing: list[dict[str, Any]], incoming: list[dict[str, Any
         old_price = previous.get("price")
         new_price = record.get("price")
         changed = bool(old_price and new_price and old_price != new_price)
-        merged[key] = {
+        merged_record = {
             **previous,
             **record,
             "slug": stable_slug,
@@ -115,6 +115,11 @@ def _merge_existing(existing: list[dict[str, Any]], incoming: list[dict[str, Any
             "priceChanged": changed,
             "listingStatus": "PRICE_CHANGED" if changed else "ACTIVE",
         }
+        if str(previous.get("primaryImage", "")).startswith("/images/properties/dha-phase-6/"):
+            for image_field in ("primaryImage", "images", "imageStatus", "imageSource"):
+                merged_record[image_field] = previous.get(image_field)
+            merged_record.pop("imageRejectionReason", None)
+        merged[key] = merged_record
     return list(merged.values())
 
 
