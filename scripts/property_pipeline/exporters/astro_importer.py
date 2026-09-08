@@ -16,6 +16,7 @@ from property_pipeline.images.image_downloader import download_images
 from property_pipeline.images.image_processor import process_images
 from property_pipeline.images.image_validator import validate_images
 from property_pipeline.processors.cleaner import clean_records
+from property_pipeline.processors.availability_checker import verification_label
 from property_pipeline.processors.duplicate_detector import deduplicate
 from property_pipeline.processors.normalizer import normalize_records
 from property_pipeline.processors.quality_scorer import score_records
@@ -42,7 +43,7 @@ def validate_record(record: dict[str, Any]) -> list[str]:
         errors.append("sourceUrl:https")
     if not isinstance(record.get("price"), int) or record.get("price", 0) <= 0:
         errors.append("price:positive-integer")
-    if record.get("availabilityStatus") not in {"AVAILABLE", "RESERVED", "SOLD", "EXPIRED"}:
+    if record.get("availabilityStatus") not in {"available", "reserved", "sold", "removed"}:
         errors.append("availabilityStatus:invalid")
     if record.get("listingStatus") not in {"ACTIVE", "PRICE_CHANGED", "NOT_FOUND", "EXPIRED"}:
         errors.append("listingStatus:invalid")
@@ -60,27 +61,31 @@ def _upgrade_existing(record: dict[str, Any]) -> dict[str, Any]:
     upgraded.setdefault("sourceLinkAllowed", source_label.lower() != "graana")
     upgraded.setdefault("sources", [source_label])
     upgraded.setdefault("sourceUrls", [source_url] if source_url else [])
-    status = str(upgraded.get("availabilityStatus", "AVAILABLE")).lower()
+    status = str(upgraded.get("availabilityStatus", "available")).lower()
     upgraded["availabilityStatus"] = {
-        "reserved": "RESERVED",
-        "sold": "SOLD",
-        "expired": "EXPIRED",
-        "removed": "EXPIRED",
-    }.get(status, "AVAILABLE")
+        "reserved": "reserved",
+        "sold": "sold",
+        "expired": "removed",
+        "removed": "removed",
+    }.get(status, "available")
     first_image = (upgraded.get("images") or [{}])[0]
     image_url = first_image.get("url", "/images/placeholders/property-placeholder.webp")
     upgraded.setdefault("primaryImage", image_url)
     upgraded.setdefault("imageStatus", "rejected" if "/placeholders/" in image_url else "branded")
     upgraded.setdefault("imageSource", source_label)
-    upgraded.setdefault("verificationLabel", "Verified Recently")
     checked = upgraded.get("lastCheckedDate") or upgraded.get("updatedAt") or upgraded.get("publishedDate")
     upgraded.setdefault("createdAt", upgraded.get("publishedDate") or checked)
     upgraded.setdefault("lastSeenAt", checked)
+    upgraded["verificationLabel"] = verification_label(str(upgraded.get("lastSeenAt") or checked or ""))
     upgraded.setdefault("lastPrice", upgraded.get("price"))
     upgraded.setdefault("priceChanged", False)
-    upgraded.setdefault("listingStatus", "EXPIRED" if upgraded["availabilityStatus"] == "EXPIRED" else "ACTIVE")
+    if upgraded["availabilityStatus"] == "removed":
+        upgraded["listingStatus"] = "EXPIRED"
+    else:
+        upgraded.setdefault("listingStatus", "ACTIVE")
     location = dict(upgraded.get("location") or {})
-    location.setdefault("sector", upgraded.get("block", "") if str(upgraded.get("block", "")).startswith("Sector ") else "")
+    if not location.get("sector"):
+        location["sector"] = upgraded.get("block", "") if str(upgraded.get("block", "")).startswith("Sector ") else "DHA Phase 6"
     location.setdefault("block", upgraded.get("block", "DHA Phase 6"))
     location.setdefault("commercialArea", upgraded.get("block", "") if "CCA" in str(upgraded.get("block", "")) or "Commercial" in str(upgraded.get("block", "")) else "")
     upgraded["location"] = location
@@ -115,6 +120,9 @@ def _merge_existing(existing: list[dict[str, Any]], incoming: list[dict[str, Any
             "priceChanged": changed,
             "listingStatus": "PRICE_CHANGED" if changed else "ACTIVE",
         }
+        previous_status = str(previous.get("availabilityStatus", "")).lower()
+        if previous_status in {"reserved", "sold"}:
+            merged_record["availabilityStatus"] = previous_status
         if str(previous.get("primaryImage", "")).startswith("/images/properties/dha-phase-6/"):
             for image_field in ("primaryImage", "images", "imageStatus", "imageSource"):
                 merged_record[image_field] = previous.get(image_field)

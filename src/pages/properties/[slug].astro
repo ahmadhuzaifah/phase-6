@@ -7,9 +7,13 @@ import places from '@data/google-places-import.json';
 import { SITE } from '@data/site';
 import { CONTACTS } from '@data/contacts';
 import { isPublishableProperty } from '@utils/propertyQualityScore';
+import { getPropertyFreshness } from '@utils/propertyFreshness';
+import { isActiveProperty, isRoutableProperty } from '@utils/propertyLifecycle';
 
 export function getStaticPaths() {
-  return properties.filter(isPublishableProperty).map((property) => ({ params: { slug: property.slug }, props: { property } }));
+  return properties
+    .filter((property) => isPublishableProperty(property) && isRoutableProperty(property))
+    .map((property) => ({ params: { slug: property.slug }, props: { property } }));
 }
 
 const { property } = Astro.props as { property: any };
@@ -18,12 +22,21 @@ const formattedPrice = property.price >= 10_000_000
   ? `PKR ${(property.price / 10_000_000).toFixed(2)} Crore`
   : `PKR ${(property.price / 100_000).toFixed(2)} Lakh`;
 
-const checked = new Intl.DateTimeFormat('en-PK', { dateStyle: 'long' }).format(
-  new Date(property.lastCheckedDate || '2026-09-02')
-);
+const dateFormatter = new Intl.DateTimeFormat('en-PK', { dateStyle: 'long' });
+const checkedAt = property.lastSeenAt || property.lastCheckedDate || property.lastVerifiedDate;
+const checked = dateFormatter.format(new Date(checkedAt));
+const verified = dateFormatter.format(new Date(property.lastVerifiedDate || checkedAt));
+const freshness = getPropertyFreshness(checkedAt);
+const availabilityStatus = property.availabilityStatus.toLowerCase();
+const availabilityLabel = availabilityStatus === 'removed' ? 'EXPIRED' : availabilityStatus.toUpperCase();
 
 const propId = property.id || `DHA6-${property.slug.substring(0, 8).toUpperCase()}`;
-const contactUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hello, I want to verify this DHA Phase 6 market record (ID: ${propId}): ${property.title}. Link: https://dhaphase6lahore.pk/properties/${property.slug}/`)}`;
+const inquiryContext = `Property ID: ${propId}; Sector: ${property.block}; Size: ${property.size} ${property.unit}; Type: ${property.propertyType.replaceAll('-', ' ')}`;
+const whatsappNumber = CONTACTS.whatsapp.number.replace(/[^0-9]/g, '');
+const whatsappUrl = (request: string) => `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`${request}. ${inquiryContext}. Link: https://dhaphase6lahore.pk/properties/${property.slug}/`)}`;
+const inquiryUrl = whatsappUrl(`I am interested in DHA Phase 6 Lahore property ${propId}`);
+const priceUpdateUrl = whatsappUrl('Please send me the latest price update for this property');
+const visitUrl = whatsappUrl('I would like to schedule a visit for this property');
 const history = (priceHistory as Record<string, Array<{ date: string; price: number; previousPrice?: number | null; newPrice?: number }>>)[propId] || [];
 const mapQuery = encodeURIComponent(property.location.coordinates
   ? `${property.location.coordinates.lat},${property.location.coordinates.lng}`
@@ -56,6 +69,7 @@ const sectorKeyAliases: Record<string, string> = {
 const normalizedSectorKey = sectorKeyAliases[cleanSectorKey] ?? cleanSectorKey;
 const hasResidentialSector = normalizedSectorKey.startsWith('sector-');
 const sectorPropertiesUrl = normalizedSectorKey ? `/sectors/${normalizedSectorKey}/properties/` : '/properties/';
+const nearbyPlacesUrl = normalizedSectorKey ? `/sectors/${normalizedSectorKey}/places/` : '/places/';
 const sectorGuideUrl = hasResidentialSector ? `/dha-phase-6-${normalizedSectorKey}-lahore/` : '/dha-phase-6-lahore/';
 const entityUrl = hasResidentialSector ? `/entities/dha-phase-6-${normalizedSectorKey}/` : sectorGuideUrl;
 const sectorPlaces = places.filter(p => p.sector === normalizedSectorKey || p.sectorLabel?.toLowerCase().includes(cleanSectorKey));
@@ -64,18 +78,20 @@ const nearbySchools = places.filter(p => (p.category === 'schools' || p.category
 const nearbyHospitals = places.filter(p => (p.category === 'hospitals' || p.category === 'hospital' || p.category === 'pharmacies')).slice(0, 3);
 const nearbyRestaurants = places.filter(p => (p.category === 'restaurants' || p.category === 'restaurant' || p.category === 'cafes')).slice(0, 3);
 
-// Similar properties algorithm: same sector, same size, or similar price
+// Rank active alternatives by sector, type, size, then proportional price proximity.
 const similarProperties = properties
-  .filter(p => p.slug !== property.slug)
+  .filter(p => p.slug !== property.slug && isActiveProperty(p))
   .sort((a, b) => {
     let scoreA = 0;
     let scoreB = 0;
     if (a.block === property.block) scoreA += 3;
     if (b.block === property.block) scoreB += 3;
+    if (a.propertyType === property.propertyType) scoreA += 3;
+    if (b.propertyType === property.propertyType) scoreB += 3;
     if (a.size === property.size) scoreA += 2;
     if (b.size === property.size) scoreB += 2;
-    if (Math.abs(a.price - property.price) < 25000000) scoreA += 1;
-    if (Math.abs(b.price - property.price) < 25000000) scoreB += 1;
+    if (Math.abs(a.price - property.price) <= property.price * 0.2) scoreA += 1;
+    if (Math.abs(b.price - property.price) <= property.price * 0.2) scoreB += 1;
     return scoreB - scoreA;
   })
   .slice(0, 3);
@@ -88,8 +104,10 @@ const imageStatus = property.imageStatus || (mainImage.includes('/placeholders/'
 const imageLabel = imageStatus === 'approved' ? 'Authorized property image' : imageStatus === 'watermarked' ? 'Source watermarked image' : imageStatus === 'branded' ? 'Source branded image' : 'No verified image available';
 
 const canonical = `${SITE.url}/properties/${property.slug}/`;
-const pageTitle = property.seo?.title || `${property.title} in ${property.block} | DHA Phase 6 Lahore Real Estate`;
-const pageDesc = property.seo?.description || `Source-referenced market snapshot: ${property.title} in ${property.block}, DHA Phase 6 Lahore. Asking demand: ${formattedPrice}. Verify availability and pricing independently.`;
+const typeLabel = property.propertyType.replaceAll('-', ' ').replace(/\b\w/g, (character: string) => character.toUpperCase());
+const purposeLabel = property.purpose === 'rent' ? 'Rent' : 'Sale';
+const pageTitle = `${property.size} ${property.unit.replace(/\b\w/g, (character: string) => character.toUpperCase())} ${typeLabel} for ${purposeLabel} in DHA Phase 6 Lahore ${property.block} | ${propId}`;
+const pageDesc = `${property.size} ${property.unit} ${property.propertyType.replaceAll('-', ' ')} in ${property.block}, DHA Phase 6 Lahore. ${availabilityLabel}; advertised at ${formattedPrice}. Source information last checked ${checked}.`;
 
 const landmarkContext = `Located in prestigious ${property.block}, DHA Phase 6 Lahore, this ${property.size} ${property.unit} ${property.propertyType.replaceAll('-', ' ')} enjoys immediate proximity to key sector landmarks including Grand Jamia mosques, neighborhood parks, premier educational institutions, and arterial boulevards with direct access to Lahore Ring Road and Bedian Road.`;
 
@@ -112,8 +130,21 @@ const structuredData = {
         "@type": "Offer",
         "price": property.price,
         "priceCurrency": "PKR",
-        "availability": ['SOLD', 'EXPIRED', 'sold', 'expired'].includes(property.availabilityStatus) ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
+        "availability": ['sold', 'removed'].includes(availabilityStatus) ? "https://schema.org/OutOfStock" : availabilityStatus === 'reserved' ? "https://schema.org/LimitedAvailability" : "https://schema.org/InStock",
         "url": sourceLinkUrl || canonical
+      },
+      "spatialCoverage": { "@id": `${canonical}#place` }
+    },
+    {
+      "@type": "Place",
+      "@id": `${canonical}#place`,
+      "name": `${property.block}, DHA Phase 6 Lahore`,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": property.location.address,
+        "addressLocality": "Lahore",
+        "addressRegion": "Punjab",
+        "addressCountry": "PK"
       }
     },
     {
@@ -149,7 +180,8 @@ const structuredData = {
           <div class="prop-badges-row">
             <span class="badge-sector">{property.block}</span>
             <span class="badge-type">{property.propertyType.replaceAll('-', ' ')}</span>
-            <span class="badge-avail">✓ {property.availabilityStatus || 'Available for Verification'}</span>
+            <span class:list={['badge-avail', `badge-avail--${availabilityStatus}`]}>{availabilityLabel}</span>
+            <span class:list={['badge-freshness', `badge-freshness--${freshness.key}`]}>{freshness.label}</span>
           </div>
           <h1>{property.title}</h1>
           <p class="prop-location-pin">📍 {property.location.address}, DHA Phase 6, Lahore</p>
@@ -180,6 +212,21 @@ const structuredData = {
               </div>
             )}
           </div>
+
+          <section class="prop-section prop-card property-facts" aria-labelledby="property-facts-heading">
+            <h2 id="property-facts-heading">Property Facts</h2>
+            <dl class="property-facts-grid">
+              <div><dt>Type</dt><dd>{typeLabel}</dd></div>
+              <div><dt>Sector</dt><dd>{property.block}</dd></div>
+              <div><dt>Size</dt><dd>{property.size} {property.unit}</dd></div>
+              <div><dt>Price</dt><dd>{formattedPrice}</dd></div>
+              <div><dt>Purpose</dt><dd>For {purposeLabel}</dd></div>
+              <div><dt>Bedrooms</dt><dd>{property.bedrooms || 'Not specified'}</dd></div>
+              <div><dt>Bathrooms</dt><dd>{property.bathrooms || 'Not specified'}</dd></div>
+              <div><dt>Construction</dt><dd>{property.constructionStatus || property.condition || (isPlot ? 'Plot' : 'Not specified')}</dd></div>
+              <div><dt>Verified date</dt><dd>{verified}</dd></div>
+            </dl>
+          </section>
 
           <!-- Description Section -->
           <section class="prop-section prop-card">
@@ -304,16 +351,21 @@ const structuredData = {
         <aside class="prop-sidebar">
           <div class="trust-panel">
             <div class="trust-panel-header">
-              <span class="trust-badge-shield">🛡️ Independent Verification</span>
-              <h3>Listing Verification Panel</h3>
+              <span class="trust-badge-shield">Property Information Verified</span>
+              <h3>Source Check &amp; Availability</h3>
+              <p>Listing facts were checked against the cited source. This is not legal title or ownership certification.</p>
             </div>
             <div class="trust-panel-body">
               <div class="trust-row">
-                <span class="tr-label">Verification Status:</span>
-                <span class="tr-value status-active">{property.availabilityStatus || 'AVAILABLE'}</span>
+                <span class="tr-label">Availability status:</span>
+                <span class:list={['tr-value', 'status-active', `status-active--${availabilityStatus}`]}>{availabilityLabel}</span>
               </div>
               <div class="trust-row">
-                <span class="tr-label">Last Checked:</span>
+                <span class="tr-label">Verified date:</span>
+                <span class="tr-value">{verified}</span>
+              </div>
+              <div class="trust-row">
+                <span class="tr-label">Last checked:</span>
                 <span class="tr-value">{checked}</span>
               </div>
               <div class="trust-row">
@@ -321,12 +373,12 @@ const structuredData = {
                 <span class="tr-value code-id">{propId}</span>
               </div>
               <div class="trust-row">
-                <span class="tr-label">Market Source:</span>
+                <span class="tr-label">Source:</span>
                 <span class="tr-value">{property.source || 'Public Market Record'}</span>
               </div>
               <div class="trust-row">
-                <span class="tr-label">Verification Window:</span>
-                <span class="tr-value">{property.verificationLabel || 'Verified Recently'}</span>
+                <span class="tr-label">Freshness:</span>
+                <span class="tr-value">{freshness.label}</span>
               </div>
               <div class="trust-row">
                 <span class="tr-label">Quality Score:</span>
@@ -346,11 +398,12 @@ const structuredData = {
 
             <div class="trust-cta-box">
               <p>Need assistance verifying this property or arranging an independent site inspection?</p>
-              <a href={contactUrl} target="_blank" rel="noopener noreferrer" class="cta-whatsapp-prop">
+              <a href={inquiryUrl} target="_blank" rel="noopener noreferrer" class="cta-whatsapp-prop">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-                Check availability on WhatsApp
+                WhatsApp Property Inquiry
               </a>
-              <a href="/contact/" class="cta-contact-prop">Contact Property Desk</a>
+              <a href={priceUpdateUrl} target="_blank" rel="noopener noreferrer" class="cta-contact-prop">Request Price Update</a>
+              <a href={visitUrl} target="_blank" rel="noopener noreferrer" class="cta-contact-prop">Schedule Visit</a>
             </div>
 
             <div class="trust-disclaimer">
@@ -369,6 +422,7 @@ const structuredData = {
               <li><a href={priceGuideUrl}>Relevant Price Guide &rarr;</a></li>
               {sizeGuideUrl && <li><a href={sizeGuideUrl}>{property.size} {property.unit} Guide &rarr;</a></li>}
               <li><a href="/investment-guide/">Property Investment Guide &rarr;</a></li>
+              <li><a href={nearbyPlacesUrl}>Nearby Places Directory &rarr;</a></li>
               <li><a href="/schools-in-dha-phase-6-lahore/">Nearby Schools Guide &rarr;</a></li>
               <li><a href="/hospitals-in-dha-phase-6-lahore/">Nearby Healthcare Guide &rarr;</a></li>
               <li><a href="/dha-phase-6-price-history/">Historical Price Trends &rarr;</a></li>
@@ -409,6 +463,7 @@ const structuredData = {
                 verificationStatus={simProp.verificationStatus}
                 availabilityStatus={simProp.availabilityStatus}
                 lastVerifiedDate={simProp.lastVerifiedDate}
+                lastCheckedDate={simProp.lastSeenAt || simProp.lastCheckedDate}
                 sourceName={simProp.source}
                 sourceURL={simProp.sourceLinkAllowed === false ? undefined : simProp.sourceUrl}
                 isFeatured={simProp.isFeatured}
@@ -492,6 +547,19 @@ const structuredData = {
     font-size: 0.72rem;
     font-weight: 800;
   }
+  .badge-avail--reserved { background: rgba(251, 191, 36, 0.15); color: #fcd34d; }
+  .badge-avail--sold,.badge-avail--removed { background: rgba(251, 113, 133, 0.14); color: #fda4af; }
+  .badge-freshness {
+    padding: 0.3rem 0.65rem;
+    border: 1px solid rgba(52, 211, 153, 0.28);
+    border-radius: 4px;
+    color: #6ee7b7;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+  .badge-freshness--recent { color: #7dd3fc; border-color: rgba(125, 211, 252, 0.3); }
+  .badge-freshness--needs-verification { color: #fcd34d; border-color: rgba(252, 211, 77, 0.3); }
+  .badge-freshness--verification-required { color: #fda4af; border-color: rgba(253, 164, 175, 0.3); }
   .prop-header h1 {
     font-family: var(--font-display, inherit);
     font-size: clamp(1.8rem, 4vw, 2.6rem);
@@ -598,6 +666,20 @@ const structuredData = {
     margin: 0 0 1rem;
     font-family: var(--font-display, inherit);
   }
+  .property-facts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin: 0;
+  }
+  .property-facts-grid div {
+    padding: 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.025);
+  }
+  .property-facts-grid dt { color: #64748b; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .property-facts-grid dd { margin: 0.25rem 0 0; color: #f1f5f9; font-size: 0.88rem; font-weight: 700; text-transform: capitalize; }
   .lead-desc {
     color: #cbd5e1;
     font-size: 0.95rem;
@@ -729,6 +811,7 @@ const structuredData = {
     color: #fff;
     font-family: var(--font-display, inherit);
   }
+  .trust-panel-header p { margin: 0.45rem 0 0; color: #94a3b8; font-size: 0.72rem; line-height: 1.45; }
   .trust-panel-body {
     padding: 1.5rem;
     display: flex;
@@ -754,6 +837,8 @@ const structuredData = {
     color: #34d399;
     font-weight: 800;
   }
+  .status-active--reserved { color: #fcd34d; }
+  .status-active--sold,.status-active--removed { color: #fda4af; }
   .code-id {
     font-family: monospace;
     color: #fbbf24;
@@ -909,6 +994,7 @@ const structuredData = {
     .gallery-thumbs {
       grid-template-columns: repeat(2, 1fr);
     }
+    .property-facts-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   .intelligence-grid {
     display: grid;

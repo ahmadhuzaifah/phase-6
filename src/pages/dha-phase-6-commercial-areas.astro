@@ -13,6 +13,7 @@ import mainBlvdPlaces from '@data/places/main-boulevard-commercial.json';
 import rayaPlaces from '@data/places/raya-commercial.json';
 import defRayaPlaces from '@data/places/defence-raya.json';
 import propertiesRaw from '@data/properties-import.json';
+import { isActiveProperty } from '@utils/propertyLifecycle';
 
 const canonical = `${SITE.url}/dha-phase-6-commercial-areas/`;
 const pageTitle = `DHA Phase 6 Commercial Areas Lahore — Complete Business & Investment Guide`;
@@ -31,7 +32,7 @@ interface PropertyItem {
   unit?: string;
   block?: string;
 }
-const allProperties = (Array.isArray(propertiesRaw) ? (propertiesRaw as any[]) : []) as PropertyItem[];
+const allProperties = (Array.isArray(propertiesRaw) ? propertiesRaw.filter(isActiveProperty) : []) as PropertyItem[];
 const commercialProps = allProperties.filter(p => 
   p.propertyType.toLowerCase().includes('commercial') || 
   (p.block || '').toLowerCase().includes('cca') ||

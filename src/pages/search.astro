@@ -10,6 +10,7 @@ import { BLOCKS } from '@data/blocks';
 import { PLACES_DATA } from '@data/places';
 import { FAQS_DATA } from '@data/faqs';
 import propertiesData from '@data/properties-import.json';
+import { isActiveProperty } from '@utils/propertyLifecycle';
 
 const pageSchema = {
   name: `Global Search — ${SITE.name}`,
@@ -19,7 +20,7 @@ const pageSchema = {
 
 // Compile searchable items
 const searchableItems = [
-  ...propertiesData.map((p) => ({
+  ...propertiesData.filter(isActiveProperty).map((p) => ({
     type: 'Property',
     typeBadge: '🏠 Property',
     title: p.title,

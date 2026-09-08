@@ -14,6 +14,7 @@ import {
 } from '@data/places/index';
 import { SEO_ARTICLES } from '@data/articles';
 import propertiesRaw from '@data/properties-import.json';
+import { isActiveProperty } from '@utils/propertyLifecycle';
 
 export function getStaticPaths() {
   const residentialSectors = SECTORS_DIRECTORY.filter(s => s.key.startsWith('sector-'));
@@ -48,7 +49,7 @@ interface PropertyItem {
   block?: string;
   location?: { address?: string; block?: string };
 }
-const allProperties = (Array.isArray(propertiesRaw) ? (propertiesRaw as any[]) : []) as PropertyItem[];
+const allProperties = (Array.isArray(propertiesRaw) ? propertiesRaw.filter(isActiveProperty) : []) as PropertyItem[];
 const relatedProperties = allProperties.filter((p) => {
   const blockLower = (p.block || '').toLowerCase();
   const addressLower = (p.location?.address || '').toLowerCase();

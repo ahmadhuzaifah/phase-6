@@ -8,6 +8,7 @@ import Schema from '@components/seo/Schema.astro';
 import { SITE } from '@data/site';
 import { CONTACTS } from '@data/contacts';
 import propertiesRaw from '@data/properties-import.json';
+import { isActiveProperty } from '@utils/propertyLifecycle';
 
 const canonical = `${SITE.url}/10-marla-house-for-sale-dha-phase-6-lahore/`;
 const pageTitle = `10 Marla House for Sale DHA Phase 6 Lahore — 2026 Luxury Villas`;
@@ -23,7 +24,7 @@ interface PropertyItem {
   unit?: string;
   block?: string;
 }
-const allProps = (Array.isArray(propertiesRaw) ? propertiesRaw : []) as PropertyItem[];
+const allProps = (Array.isArray(propertiesRaw) ? propertiesRaw.filter(isActiveProperty) : []) as PropertyItem[];
 const listings = allProps.filter(p => (p.size === '10' || p.title.toLowerCase().includes('10 marla')) && p.propertyType.toLowerCase().includes('house')).slice(0, 4);
 ---
 

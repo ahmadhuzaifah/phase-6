@@ -7,6 +7,7 @@ import PageLayout from '@layouts/PageLayout.astro';
 import propertiesRaw from '@data/properties-import.json';
 import { SECTORS_DIRECTORY } from '@data/places/index';
 import { SITE } from '@data/site';
+import { isActiveProperty } from '@utils/propertyLifecycle';
 
 const canonical = `${SITE.url}/commercial-property-dha-phase-6-lahore/`;
 const pageTitle = 'Commercial Property in DHA Phase 6 Lahore — Plazas, Shops & Commercial Plots';
@@ -24,7 +25,7 @@ interface PropertyItem {
   location?: { address?: string; block?: string };
 }
 
-const allProperties = (Array.isArray(propertiesRaw) ? (propertiesRaw as any[]) : []) as PropertyItem[];
+const allProperties = (Array.isArray(propertiesRaw) ? propertiesRaw.filter(isActiveProperty) : []) as PropertyItem[];
 const commercialProps = allProperties.filter((p) => p.propertyType === 'commercial');
 const displayCommercial = (commercialProps.length > 0 ? commercialProps : allProperties.slice(0, 8));
 

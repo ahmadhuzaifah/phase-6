@@ -22,6 +22,7 @@
     "properties:test": "python -m unittest discover scripts/property_pipeline/tests",
     "properties:images:fix": "python scripts/fix_property_images.py",
     "properties:images:validate": "python scripts/validate_property_images.py",
+    "properties:quality:audit": "python scripts/property_quality_audit.py",
     "lint": "eslint .",
     "format": "prettier --write ."
   },

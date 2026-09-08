@@ -7,12 +7,13 @@ import LocationSeoTemplate from '@components/seo/LocationSeoTemplate.astro';
 import { getCategoryPlaces } from '@data/places/index';
 import propertiesRaw from '@data/properties-import.json';
 import { SITE } from '@data/site';
+import { isActiveProperty } from '@utils/propertyLifecycle';
 
 const canonical = `${SITE.url}/properties-near-hospitals-dha-phase-6-lahore/`;
 const hospitals = getCategoryPlaces('hospital').slice(0, 6);
 
 const relevantProperties = (Array.isArray(propertiesRaw) ? (propertiesRaw as any[]) : []).filter(
-  (p) => p.propertyType === 'house' || p.propertyType === 'plot'
+  (p) => isActiveProperty(p) && (p.propertyType === 'house' || p.propertyType === 'plot')
 ).slice(0, 4);
 
 const tableRows = [

@@ -1,5 +1,6 @@
 ---
 import { CONTACTS } from '@data/contacts';
+import { getPropertyFreshness } from '@utils/propertyFreshness';
 
 interface Props {
   id?: string;
@@ -17,6 +18,7 @@ interface Props {
   verificationStatus?: string;
   availabilityStatus?: string;
   lastVerifiedDate?: string;
+  lastCheckedDate?: string;
   sourceName?: string;
   sourceURL?: string;
   isFeatured?: boolean;
@@ -28,9 +30,9 @@ const {
   sizeUnit = 'marla',
   location = 'DHA Phase 6, Lahore',
   image,
-  verificationStatus = 'verified',
   availabilityStatus = 'available',
   lastVerifiedDate = '2026-09-02',
+  lastCheckedDate,
   sourceName = 'Independent listing information',
   sourceURL,
   isFeatured = false,
@@ -49,7 +51,10 @@ const seoImageAlt = image?.alt && !image.alt.includes('placeholder')
   : `${title} - ${size} ${sizeUnit} ${typeLabel} in ${cleanBlock}, DHA Phase 6 Lahore`;
 const imageCaption = `${size} ${sizeUnit} in ${cleanBlock}, DHA Phase 6 Lahore`;
 const propId = id || `DHA6-${slug.substring(0, 10).toUpperCase()}`;
-const whatsappUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Please help me verify this DHA Phase 6 market record (${propId}): ${title}.`)}`;
+const canonicalAvailability = availabilityStatus.toLowerCase();
+const availabilityLabel = canonicalAvailability === 'removed' ? 'EXPIRED' : canonicalAvailability.toUpperCase();
+const freshness = getPropertyFreshness(lastCheckedDate || lastVerifiedDate);
+const whatsappUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`I am interested in DHA Phase 6 Lahore property ${propId}. Sector: ${cleanBlock}; Size: ${size} ${sizeUnit}; Type: ${typeLabel}.`)}`;
 ---
 
 <article class:list={['market-card', { 'market-card--featured': isFeatured }]}>
@@ -58,8 +63,8 @@ const whatsappUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g,
       <img src={imageUrl} alt={seoImageAlt} width={image?.width || 800} height={image?.height || 560} loading="lazy" decoding="async" onerror="this.onerror=null;this.src='/images/placeholders/property-placeholder.webp'" />
       <figcaption class="sr-only">{imageCaption}</figcaption>
     </figure>
-    <span class="trust-badge">✓ {verificationStatus}</span>
-    <span class="avail-badge">{availabilityStatus}</span>
+    <span class="trust-badge" title="Source information checked; legal title is not certified.">Property Information Verified</span>
+    <span class:list={['avail-badge', `avail-badge--${canonicalAvailability}`]}>{availabilityLabel}</span>
   </a>
   <div class="market-card__body">
     <div class="market-card__meta">
@@ -81,14 +86,15 @@ const whatsappUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g,
       )}
       <span class="trust-date">Verified: {lastVerifiedDate}</span>
     </div>
+    <span class:list={['freshness-badge', `freshness-badge--${freshness.key}`]}>{freshness.label}</span>
     <footer>
       <div><small>Advertised demand</small><strong>PKR {formatPKR(price)}</strong></div>
       <div class="market-card__actions">
-        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">Verify</a>
+        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">Inquire</a>
         <a href={`/properties/${slug}`}>Details</a>
       </div>
     </footer>
-    <p class="market-card__caveat">Independent property record verified against active DHA Phase 6 market data.</p>
+    <p class="market-card__caveat">Source information checked independently. Confirm availability, ownership and title before committing funds.</p>
   </div>
 </article>
 
@@ -100,6 +106,8 @@ const whatsappUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g,
   .market-card:hover .market-card__visual img{transform:scale(1.025)}
   .trust-badge{position:absolute;top:0.8rem;left:0.8rem;padding:.35rem .65rem;border-radius:999px;background:linear-gradient(135deg,#059669,#10b981);color:#042014;font-size:.66rem;font-weight:900;letter-spacing:.04em;text-transform:uppercase}
   .avail-badge{position:absolute;top:0.8rem;right:0.8rem;padding:.35rem .65rem;border-radius:999px;background:rgba(15,15,35,0.85);backdrop-filter:blur(4px);color:#34d399;border:1px solid rgba(16,185,129,0.3);font-size:.66rem;font-weight:900;letter-spacing:.04em;text-transform:uppercase}
+  .avail-badge--reserved{color:#fbbf24;border-color:rgba(251,191,36,.55)}
+  .avail-badge--sold,.avail-badge--removed{color:#fda4af;border-color:rgba(251,113,133,.5)}
   .market-card__body{display:flex;flex:1;flex-direction:column;padding:1.15rem}
   .market-card__meta{display:flex;justify-content:space-between;gap:1rem;font-size:.72rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
   .sector-badge{color:#10b981}
@@ -112,6 +120,10 @@ const whatsappUrl = `https://wa.me/${CONTACTS.whatsapp.number.replace(/[^0-9]/g,
   .market-card__trust-row{display:flex;justify-content:space-between;gap:.5rem;margin-top:auto;padding:.65rem 0;border-top:1px solid rgba(255,255,255,.08);font-size:.7rem}
   .trust-source{color:#34d399;font-weight:600}
   .trust-date{color:#64748b}
+  .freshness-badge{align-self:flex-start;margin-bottom:.35rem;padding:.25rem .5rem;border-radius:999px;background:rgba(52,211,153,.1);color:#6ee7b7;font-size:.67rem;font-weight:800}
+  .freshness-badge--recent{background:rgba(56,189,248,.1);color:#7dd3fc}
+  .freshness-badge--needs-verification{background:rgba(251,191,36,.1);color:#fcd34d}
+  .freshness-badge--verification-required{background:rgba(251,113,133,.1);color:#fda4af}
   footer{display:flex;justify-content:space-between;gap:1rem;align-items:end;margin-top:.6rem}
   footer small{display:block;color:#6a6a85;font-size:.68rem;text-transform:uppercase}
   footer strong{display:block;margin-top:.18rem;font-size:1.15rem;color:#fbbf24}

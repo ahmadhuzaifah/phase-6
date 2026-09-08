@@ -8,6 +8,7 @@ import PageLayout from '@layouts/PageLayout.astro';
 import { SITE } from '@data/site';
 import { getAllPlaces } from '@data/places/index';
 import propertiesRaw from '@data/properties-import.json';
+import { isActiveProperty } from '@utils/propertyLifecycle';
 
 const allPlaces = getAllPlaces();
 const healthcare = allPlaces.filter(p => ['hospitals', 'hospital', 'clinic', 'pharmacy', 'idc'].includes(p.category));
@@ -26,7 +27,7 @@ interface PropertyItem {
   unit?: string;
   block?: string;
 }
-const allProps = (Array.isArray(propertiesRaw) ? propertiesRaw : []) as PropertyItem[];
+const allProps = (Array.isArray(propertiesRaw) ? propertiesRaw.filter(isActiveProperty) : []) as PropertyItem[];
 const nearbyHouses = allProps.filter(p => p.propertyType.toLowerCase().includes('house')).slice(0, 4);
 
 const hospitalSchema = {

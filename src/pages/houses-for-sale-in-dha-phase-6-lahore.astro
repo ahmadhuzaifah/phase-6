@@ -5,6 +5,7 @@
  */
 import PageLayout from '@layouts/PageLayout.astro';
 import propertiesRaw from '@data/properties-import.json';
+import { isActiveProperty } from '@utils/propertyLifecycle';
 import { SECTORS_DIRECTORY } from '@data/places/index';
 import { SITE } from '@data/site';
 
@@ -26,7 +27,7 @@ interface PropertyItem {
   location?: { address?: string; block?: string };
 }
 
-const allProperties = (Array.isArray(propertiesRaw) ? (propertiesRaw as any[]) : []) as PropertyItem[];
+const allProperties = (Array.isArray(propertiesRaw) ? propertiesRaw.filter(isActiveProperty) : []) as PropertyItem[];
 const houses = allProperties.filter((p) => p.propertyType === 'house' || p.propertyType === 'villa');
 const displayHouses = (houses.length > 0 ? houses : allProperties.slice(0, 8));
 

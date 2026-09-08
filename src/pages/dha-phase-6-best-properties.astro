@@ -7,13 +7,14 @@ import PageLayout from '@layouts/PageLayout.astro';
 import PropertyCard from '@components/property/PropertyCard.astro';
 import properties from '@data/properties-import.json';
 import { SITE } from '@data/site';
+import { isActiveProperty } from '@utils/propertyLifecycle';
 
 const title = "Best Properties in DHA Phase 6 Lahore — Curated Luxury Houses, Plots & Commercial Plazas";
 const description = "Explore our handpicked curation of the best properties in DHA Phase 6 Lahore. Filter top ready-to-move designer houses, prime investment plots in Sectors C, D, J & K, and high-yield commercial assets.";
 const canonical = `${SITE.url}/dha-phase-6-best-properties/`;
 
 // Curated selections from property data
-const featuredProperties = properties.slice(0, 6);
+const featuredProperties = properties.filter(isActiveProperty).slice(0, 6);
 
 const categories = [
   {

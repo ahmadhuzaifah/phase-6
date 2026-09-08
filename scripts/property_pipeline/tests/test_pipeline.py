@@ -71,10 +71,10 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(set(unique[0]["sources"]), {"Zameen", "Graana"})
 
     def test_availability_requires_two_failed_checks(self) -> None:
-        first = update_lifecycle({"availabilityStatus": "AVAILABLE", "lastCheckedDate": "2026-09-07T00:00:00Z"}, False)
+        first = update_lifecycle({"availabilityStatus": "available", "lastCheckedDate": "2026-09-07T00:00:00Z"}, False)
         second = update_lifecycle(first, False)
         self.assertEqual(first["listingStatus"], "NOT_FOUND")
-        self.assertEqual(second["availabilityStatus"], "EXPIRED")
+        self.assertEqual(second["availabilityStatus"], "removed")
         self.assertEqual(second["listingStatus"], "EXPIRED")
 
     def test_quality_score_is_deterministic_and_publishable(self) -> None:
@@ -85,9 +85,14 @@ class PipelineTests(unittest.TestCase):
 
     def test_verification_windows(self) -> None:
         now = datetime(2026, 9, 7, tzinfo=timezone.utc)
-        self.assertEqual(verification_label("2026-08-20T00:00:00Z", now), "Verified Recently")
+        self.assertEqual(verification_label("2026-09-03T00:00:00Z", now), "Fresh Listing")
+        self.assertEqual(verification_label("2026-08-20T00:00:00Z", now), "Recently Checked")
         self.assertEqual(verification_label("2026-07-20T00:00:00Z", now), "Needs Verification")
-        self.assertEqual(verification_label("2026-06-01T00:00:00Z", now), "Expired Review")
+        self.assertEqual(verification_label("2026-06-01T00:00:00Z", now), "Verification Required")
+
+    def test_available_check_preserves_manual_reservation(self) -> None:
+        reserved = update_lifecycle({"availabilityStatus": "reserved"}, True)
+        self.assertEqual(reserved["availabilityStatus"], "reserved")
 
 
 if __name__ == "__main__":

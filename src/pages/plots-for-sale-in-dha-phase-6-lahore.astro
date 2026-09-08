@@ -5,6 +5,7 @@
  */
 import PageLayout from '@layouts/PageLayout.astro';
 import propertiesRaw from '@data/properties-import.json';
+import { isActiveProperty } from '@utils/propertyLifecycle';
 import { SECTORS_DIRECTORY } from '@data/places/index';
 import { SITE } from '@data/site';
 
@@ -24,7 +25,7 @@ interface PropertyItem {
   location?: { address?: string; block?: string };
 }
 
-const allProperties = (Array.isArray(propertiesRaw) ? (propertiesRaw as any[]) : []) as PropertyItem[];
+const allProperties = (Array.isArray(propertiesRaw) ? propertiesRaw.filter(isActiveProperty) : []) as PropertyItem[];
 const plots = allProperties.filter((p) => p.propertyType === 'plot');
 const displayPlots = (plots.length > 0 ? plots : allProperties.slice(0, 8));
 

@@ -14,7 +14,8 @@ import MarketInsights from '@components/home/MarketInsights.astro';
 import FAQSection from '@components/home/FAQSection.astro';
 import CTASection from '@components/home/CTASection.astro';
 import propertiesData from '@data/properties-import.json';
-const featuredProperties = propertiesData.slice(0, 3);
+import { isActiveProperty } from '@utils/propertyLifecycle';
+const featuredProperties = propertiesData.filter(isActiveProperty).slice(0, 3);
 ---
 
 <!DOCTYPE html>

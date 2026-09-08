@@ -8,12 +8,13 @@ import { SITE } from '@data/site';
 import properties from '@data/properties-import.json';
 import priceHistory from '@data/property-price-history.json';
 import { isPublishableProperty } from '@utils/propertyQualityScore';
+import { isActiveProperty } from '@utils/propertyLifecycle';
 
 const title = "DHA Phase 6 Property Market Dashboard 2026 — Live Pricing, Sector Demand & Yield Analytics";
 const description = "Interactive real-time property market dashboard for DHA Phase 6 Lahore. Explore live average prices for 1 Kanal, 10 Marla and 5 Marla plots and houses, sector-by-sector demand rankings, commercial yields, and trend charts.";
 const canonical = `${SITE.url}/dha-phase-6-property-market-dashboard/`;
 
-const activeProperties = properties.filter(property => isPublishableProperty(property) && property.listingStatus !== 'EXPIRED');
+const activeProperties = properties.filter(property => isPublishableProperty(property) && isActiveProperty(property));
 const totalListings = activeProperties.length;
 const saleCount = activeProperties.filter(property => property.purpose === 'sale').length;
 const rentCount = activeProperties.filter(property => property.purpose === 'rent').length;

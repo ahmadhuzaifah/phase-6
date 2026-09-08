@@ -6,12 +6,14 @@
 import PageLayout from '@layouts/PageLayout.astro';
 import { SITE } from '@data/site';
 import propertiesData from '@data/properties-import.json';
+import { isActiveProperty } from '@utils/propertyLifecycle';
 
 const title = "Search Properties in DHA Phase 6 Lahore — Advanced Filter & Price Sort";
 const description = "Search verified houses, residential plots, and commercial properties in DHA Phase 6 Lahore. Filter by sector, Marla/Kanal size, price range, and availability status.";
 const canonical = `${SITE.url}/search-property/`;
 
-const initialCount = propertiesData.length;
+const activeProperties = propertiesData.filter(isActiveProperty);
+const initialCount = activeProperties.length;
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -209,7 +211,7 @@ const structuredData = {
 </PageLayout>
 
 <!-- EMBEDDED PROPERTIES DATASET FOR INSTANT CLIENT FILTERING -->
-<script id="propertiesDataset" type="application/json" is:inline set:html={JSON.stringify(propertiesData)}></script>
+<script id="propertiesDataset" type="application/json" is:inline set:html={JSON.stringify(activeProperties)}></script>
 
 <script is:inline>
   document.addEventListener('DOMContentLoaded', () => {

@@ -1,6 +1,6 @@
 # Property Expansion Report
 
-Generated: 2026-09-08T05:15:08.069384Z
+Generated: 2026-09-08T06:22:20.798246Z
 
 ## Expansion Summary
 
@@ -30,11 +30,7 @@ Generated: 2026-09-08T05:15:08.069384Z
 
 ## Sector Distribution
 
-- CCA 1: 9
-- CCA 2: 3
-- DHA Phase 6: 114
-- Main Boulevard: 1
-- Main Boulevard Commercial: 32
+- DHA Phase 6: 159
 - Sector A: 56
 - Sector B: 32
 - Sector C: 38

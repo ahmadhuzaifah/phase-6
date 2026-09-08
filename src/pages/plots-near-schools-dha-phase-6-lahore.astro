@@ -6,13 +6,14 @@
 import LocationSeoTemplate from '@components/seo/LocationSeoTemplate.astro';
 import { getCategoryPlaces } from '@data/places/index';
 import propertiesRaw from '@data/properties-import.json';
+import { isActiveProperty } from '@utils/propertyLifecycle';
 import { SITE } from '@data/site';
 
 const canonical = `${SITE.url}/plots-near-schools-dha-phase-6-lahore/`;
 const schools = getCategoryPlaces('schools').slice(0, 6);
 
 const plotProperties = (propertiesRaw as any[]).filter(
-  (p) => p.propertyType === 'residential-plot'
+  (p) => isActiveProperty(p) && p.propertyType === 'residential-plot'
 ).slice(0, 3);
 
 const tableRows = [

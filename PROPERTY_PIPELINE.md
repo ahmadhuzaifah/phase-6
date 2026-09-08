@@ -53,13 +53,14 @@ Only the first image is attempted; the second is a fallback if the first cannot 
 
 ## Availability
 
-New records start as `AVAILABLE`. Source checks retain `AVAILABLE`, while two consecutive unavailable checks mark a listing `EXPIRED`. The verification label is derived from `lastCheckedDate`:
+New records start as `available`. Source checks retain `available`, while two consecutive unavailable checks mark a listing `removed`. The verification label is derived from `lastCheckedDate`:
 
-- 0-30 days: `Verified Recently`
-- 31-60 days: `Needs Verification`
-- 60+ days: `Expired Review`
+- 0-7 days: `Fresh Listing`
+- 8-30 days: `Recently Checked`
+- 31-59 days: `Needs Verification`
+- 60+ days: `Verification Required`
 
-`RESERVED` and `SOLD` remain supported for authorized owner or agent updates.
+`reserved` and `sold` remain supported for authorized owner or agent updates. Reserved records stay in active results with a warning; sold records retain their SEO detail route but leave active results; removed records do not generate a detail route.
 
 ## Environment variables
 

@@ -16,6 +16,7 @@ import {
 
 import PlaceImage from '@components/places/PlaceImage.astro';
 import propertiesRaw from '@data/properties-import.json';
+import { isActiveProperty } from '@utils/propertyLifecycle';
 import { SITE } from '@data/site';
 
 export function getStaticPaths() {
@@ -68,6 +69,7 @@ const nearbySectors = SECTORS_DIRECTORY
 
 // Property integration (Phase 10.13 Task 1)
 const sectorProperties = (propertiesRaw as any[]).filter((prop) => {
+  if (!isActiveProperty(prop)) return false;
   return (
     prop.block?.toLowerCase().includes(sectorMeta.label.toLowerCase()) ||
     prop.location?.address?.toLowerCase().includes(sectorMeta.label.toLowerCase())
@@ -76,7 +78,7 @@ const sectorProperties = (propertiesRaw as any[]).filter((prop) => {
 
 // Nearby properties fallback (other sectors) if few in this sector
 const otherSectorProperties = (propertiesRaw as any[])
-  .filter((prop) => !sectorProperties.some((sp) => sp.id === prop.id))
+  .filter((prop) => isActiveProperty(prop) && !sectorProperties.some((sp) => sp.id === prop.id))
   .slice(0, Math.max(0, 3 - sectorProperties.length));
 
 const displayedProperties = [...sectorProperties, ...otherSectorProperties].slice(0, 3);

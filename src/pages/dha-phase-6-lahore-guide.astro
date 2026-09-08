@@ -6,12 +6,13 @@
 import PageLayout from '@layouts/PageLayout.astro';
 import { SITE } from '@data/site';
 import propertiesData from '@data/properties-import.json';
+import { isActiveProperty } from '@utils/propertyLifecycle';
 
 const title = "Complete Guide to DHA Phase 6 Lahore — Sectors, Prices, Lifestyle & Investment";
 const description = "The definitive 2026 authority guide to DHA Phase 6 Lahore. Explore all 17 sectors, plot and house prices, Defence Raya, top schools, healthcare, and investment analysis.";
 const canonical = `${SITE.url}/dha-phase-6-lahore-guide/`;
 
-const sampleProperties = propertiesData.slice(0, 4);
+const sampleProperties = propertiesData.filter(isActiveProperty).slice(0, 4);
 
 const faqs = [
   {

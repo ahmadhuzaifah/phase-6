@@ -16,17 +16,20 @@ def verification_label(last_checked: str, now: datetime | None = None) -> str:
     except (ValueError, AttributeError):
         return "Expired Review"
     age = max(0, (current - checked).days)
+    if age <= 7:
+        return "Fresh Listing"
     if age <= 30:
-        return "Verified Recently"
-    if age <= 60:
+        return "Recently Checked"
+    if age < 60:
         return "Needs Verification"
-    return "Expired Review"
+    return "Verification Required"
 
 
 def update_lifecycle(record: dict[str, Any], source_available: bool | None = None) -> dict[str, Any]:
     updated = dict(record)
     if source_available is True:
-        updated["availabilityStatus"] = "AVAILABLE"
+        current_status = str(updated.get("availabilityStatus", "available")).lower()
+        updated["availabilityStatus"] = current_status if current_status in {"reserved", "sold"} else "available"
         updated["listingStatus"] = "PRICE_CHANGED" if updated.get("priceChanged") else "ACTIVE"
         updated["lastCheckedDate"] = utc_now()
         updated["lastSeenAt"] = updated["lastCheckedDate"]
@@ -35,7 +38,7 @@ def update_lifecycle(record: dict[str, Any], source_available: bool | None = Non
         failures = int(record.get("consecutiveCheckFailures", 0)) + 1
         updated["consecutiveCheckFailures"] = failures
         if failures >= 2:
-            updated["availabilityStatus"] = "EXPIRED"
+            updated["availabilityStatus"] = "removed"
             updated["listingStatus"] = "EXPIRED"
         else:
             updated["listingStatus"] = "NOT_FOUND"

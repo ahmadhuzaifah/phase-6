@@ -53,6 +53,7 @@ npm run seo:audit  # Audit generated metadata and internal links
 npm run link:audit # Generate internal-link-report.md
 npm run properties:update # Run the complete property acquisition pipeline
 npm run properties:test   # Run pipeline unit tests
+npm run properties:quality:audit # Audit required fields and duplicates
 ```
 
 ## Environment

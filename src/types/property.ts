@@ -41,6 +41,8 @@ export type VerificationStatus =
 
 export type ListingStatus = 'ACTIVE' | 'PRICE_CHANGED' | 'NOT_FOUND' | 'EXPIRED';
 
+export type AvailabilityStatus = 'available' | 'reserved' | 'sold' | 'removed';
+
 export type PossessionStatus =
   | 'possession'
   | 'non-possession'
@@ -126,7 +128,7 @@ export interface PropertyModel {
   sourceUpdatedDate?: Date | string;
   sourceType: SourceType;
   verificationStatus: VerificationStatus;
-  availabilityStatus?: 'AVAILABLE' | 'RESERVED' | 'SOLD' | 'EXPIRED' | 'available' | 'reserved' | 'sold' | 'expired' | 'removed' | 'source-check-required';
+  availabilityStatus: AvailabilityStatus;
   listingStatus?: ListingStatus;
   createdAt?: Date | string;
   lastSeenAt?: Date | string;
@@ -140,7 +142,7 @@ export interface PropertyModel {
     description: number;
     freshness: number;
   };
-  verificationLabel?: 'Verified Recently' | 'Needs Verification' | 'Expired Review';
+  verificationLabel?: 'Fresh Listing' | 'Recently Checked' | 'Needs Verification' | 'Verification Required';
   primaryImage?: string;
   primaryImageSourceUrl?: string;
   imageBackupSourceUrl?: string;

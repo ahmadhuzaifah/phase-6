@@ -9,6 +9,7 @@ import { SITE } from '@data/site';
 import { CONTACTS } from '@data/contacts';
 import ccaPlaces from '@data/places/cca.json';
 import propertiesRaw from '@data/properties-import.json';
+import { isActiveProperty } from '@utils/propertyLifecycle';
 
 const canonical = `${SITE.url}/cca-1-dha-phase-6-lahore/`;
 const pageTitle = `CCA 1 DHA Phase 6 Lahore — Complete Commercial, Dining & Investment Guide`;
@@ -29,7 +30,7 @@ interface PropertyItem {
   unit?: string;
   block?: string;
 }
-const allProps = (Array.isArray(propertiesRaw) ? propertiesRaw : []) as PropertyItem[];
+const allProps = (Array.isArray(propertiesRaw) ? propertiesRaw.filter(isActiveProperty) : []) as PropertyItem[];
 const nearbyProps = allProps.filter(p => (p.block || '').toLowerCase().includes('cca') || (p.title || '').toLowerCase().includes('cca')).slice(0, 3);
 
 const cca1Schema = {

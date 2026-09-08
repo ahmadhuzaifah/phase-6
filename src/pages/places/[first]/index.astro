@@ -8,6 +8,7 @@
 import PageLayout from '@layouts/PageLayout.astro';
 import PlaceImage from '@components/places/PlaceImage.astro';
 import propertiesRaw from '@data/properties-import.json';
+import { isActiveProperty } from '@utils/propertyLifecycle';
 import {
   SECTORS_DIRECTORY,
   PLACE_CATEGORIES,
@@ -252,7 +253,7 @@ interface PropertyItem {
   block?: string;
   location?: { address?: string; block?: string };
 }
-const allProperties = (Array.isArray(propertiesRaw) ? (propertiesRaw as any[]) : []) as PropertyItem[];
+const allProperties = (Array.isArray(propertiesRaw) ? propertiesRaw.filter(isActiveProperty) : []) as PropertyItem[];
 const categorySectorKeys = new Set(places.map((p) => p.sector));
 const categoryProps = allProperties.filter((prop) => {
   const blockLower = (prop.block || '').toLowerCase();

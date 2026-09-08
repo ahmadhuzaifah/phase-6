@@ -22,6 +22,7 @@ import {
 } from '@data/places/index';
 import type { PlaceCategoryMeta } from '@data/places';
 import propertiesRaw from '@data/properties-import.json';
+import { isActiveProperty } from '@utils/propertyLifecycle';
 import { SITE } from '@data/site';
 
 export function getStaticPaths() {
@@ -100,6 +101,7 @@ const currentSectorLabel = isDetail ? place.sectorLabel : sectorMeta?.label;
 
 // Property connections (Task 3)
 const sectorDirectProperties = (propertiesRaw as any[]).filter((prop) => {
+  if (!isActiveProperty(prop)) return false;
   if (!currentSectorLabel) return false;
   return (
     prop.block?.toLowerCase().includes(currentSectorLabel.toLowerCase()) ||
@@ -108,7 +110,7 @@ const sectorDirectProperties = (propertiesRaw as any[]).filter((prop) => {
 });
 
 const otherProperties = (propertiesRaw as any[]).filter(
-  (prop) => !sectorDirectProperties.some((dp) => dp.id === prop.id)
+  (prop) => isActiveProperty(prop) && !sectorDirectProperties.some((dp) => dp.id === prop.id)
 );
 
 const allPropsPool = [...sectorDirectProperties, ...otherProperties];

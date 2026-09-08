@@ -19,7 +19,7 @@ Run `npm run link:audit` after a build. The script checks generated HTML for bro
 
 The final audit scanned all 1,423 generated pages and found 0 broken internal links. It also records 131 orphan pages and 160 pages with fewer than two inbound links for information architecture monitoring. These counts measure inbound-link depth, not broken destinations.
 
-All 650 imported property records generate stable detail routes with canonical metadata, breadcrumb JSON-LD, `RealEstateListing` JSON-LD, source tracking, quality scores, price history, and sitemap coverage.
+All 650 imported property records currently generate stable detail routes with canonical metadata, breadcrumb JSON-LD, `RealEstateListing`, `Offer`, `Place`, and `ImageObject` JSON-LD, source tracking, quality scores, price history, and sitemap coverage. Lifecycle rules preserve sold pages for SEO, exclude sold records from active modules, and omit removed records from static route generation.
 
 ## Performance findings
 
@@ -34,6 +34,7 @@ All 650 imported property records generate stable detail routes with canonical m
 - Singular/plural and legacy route aliases may share metadata while resolving to their canonical URL; the SEO audit treats these as valid aliases and blocks only missing metadata, missing schema, duplicate canonical URLs, and broken destinations.
 - The automated Python property import boundary validates required fields, HTTPS source tracking, positive prices, lifecycle statuses, quality thresholds, unique source URLs, and duplicate slugs before replacing the JSON dataset.
 - The final SEO audit passed metadata, headings, schema, and internal-link validation across all generated HTML.
+- The property quality audit passed all 650 records with 0 missing required fields and 0 duplicate IDs, slugs, or source URLs.
 - Browser-level Lighthouse and Core Web Vitals measurements require a deployed or locally served site and are not inferred from the static build alone.
 
 No blocking technical SEO, schema, sitemap, route, or internal-link issues were detected in the final static build.
