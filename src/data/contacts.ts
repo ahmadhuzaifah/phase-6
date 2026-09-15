@@ -2,14 +2,14 @@
  * DHA Phase 6 Lahore — Contact Information
  */
 
-const whatsappNumber = import.meta.env.PUBLIC_WHATSAPP_NUMBER || '+923257800001';
+const whatsappNumber = import.meta.env.PUBLIC_WHATSAPP_NUMBER || '+923034228402';
 const whatsappDefaultMessage = 'Hello! I am interested in DHA Phase 6 Lahore properties.';
 const cleanWhatsapp = whatsappNumber.replace(/[^0-9]/g, '');
 
 export const CONTACTS = {
   phone: {
-    primary: import.meta.env.PUBLIC_CONTACT_PHONE || '+923257800001',
-    display: '0325 7800001',
+    primary: import.meta.env.PUBLIC_CONTACT_PHONE || '+923034228402',
+    display: '0303 4228402',
   },
   whatsapp: {
     number: whatsappNumber,
